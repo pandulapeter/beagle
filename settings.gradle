@@ -1,2 +1,5 @@
-include ':app'
-rootProject.name='DebugMenu'
+include ":debugMenuCore"
+include ":debugMenu"
+include ":debugMenuNoOp"
+include ":app"
+rootProject.name = "DebugMenu"

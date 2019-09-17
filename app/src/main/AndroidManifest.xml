@@ -3,6 +3,7 @@
     package="com.pandulapeter.debugMenuExample">
 
     <application
+        android:name=".DebugMenuExampleApplication"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
