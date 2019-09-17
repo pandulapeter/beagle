@@ -4,5 +4,5 @@ import android.app.Application
 
 interface DebugMenu {
 
-    fun initialize(application: Application)
+    fun initialize(application: Application, configuration: DebugMenuConfiguration)
 }

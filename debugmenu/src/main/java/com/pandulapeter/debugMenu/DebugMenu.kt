@@ -5,10 +5,12 @@ import android.app.Application
 import android.os.Bundle
 import android.view.ViewGroup
 import com.pandulapeter.debugMenuCore.DebugMenu
+import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
 
 object DebugMenu : DebugMenu {
 
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
+    private var configuration = DebugMenuConfiguration()
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -20,14 +22,16 @@ object DebugMenu : DebugMenu {
         }
     }
 
-    override fun initialize(application: Application) {
+    override fun initialize(application: Application, configuration: DebugMenuConfiguration) {
+        this.configuration = configuration
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
 
-    private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
-
-    private fun createAndAddDrawerLayout(activity: Activity) = DebugMenuDrawer(activity).also { drawer ->
+    private fun createAndAddDrawerLayout(activity: Activity) = DebugMenuDrawer(
+        context = activity,
+        configuration = configuration
+    ).also { drawer ->
         activity.findRootViewGroup().run {
             post {
                 val oldViews = (0 until childCount).map { getChildAt(it) }
@@ -44,4 +48,6 @@ object DebugMenu : DebugMenu {
             }
         }
     }
+
+    private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 }
