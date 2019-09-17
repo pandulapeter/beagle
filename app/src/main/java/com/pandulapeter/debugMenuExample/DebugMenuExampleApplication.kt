@@ -8,6 +8,6 @@ class DebugMenuExampleApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        DebugMenu.initialize()
+        DebugMenu.initialize(this)
     }
 }

@@ -1,6 +1,8 @@
 package com.pandulapeter.debugMenuCore
 
+import android.app.Application
+
 interface DebugMenu {
 
-    fun initialize()
+    fun initialize(application: Application)
 }
