@@ -15,8 +15,6 @@ import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
-import com.pandulapeter.debugMenuCore.modules.HeaderModule
-import com.pandulapeter.debugMenuCore.modules.SettingsLinkModule
 
 
 internal class DebugMenuDrawer @JvmOverloads constructor(
@@ -63,19 +61,13 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
             }
         ).apply {
             val items = mutableListOf<DrawerItem>()
-            configuration.modules.forEach { module ->
 
-                // Set up Header module
-                if (module is HeaderModule) {
-                    items.add(HeaderViewModel(textColor, module))
-                }
+            // Set up Header module
+            configuration.headerModule?.let { headerModule -> items.add(HeaderViewModel(textColor, headerModule)) }
 
-                // Set up SettingsLink module
-                if (module is SettingsLinkModule) {
-                    items.add(SettingsLinkViewModel(textColor, module))
-                }
-            }
-            submitList(items) //TODO: Make sure distinct items cannot be added twice.
+            // Set up SettingsLink module
+            configuration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(settingsLinkModule)) }
+            submitList(items)
         }
     }
 

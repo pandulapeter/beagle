@@ -14,15 +14,11 @@ class DebugMenuExampleApplication : Application() {
         DebugMenu.initialize(
             application = this,
             configuration = DebugMenuConfiguration(
-                modules = listOf(
-                    HeaderModule(
-                        title = getString(R.string.app_name),
-                        subtitle = "v${BuildConfig.VERSION_NAME}",
-                        shouldShowBuildDate = true,
-                        shouldShowBuildTime = true
-                    ),
-                    SettingsLinkModule()
-                )
+                headerModule = HeaderModule(
+                    title = getString(R.string.app_name),
+                    subtitle = "v${BuildConfig.VERSION_NAME}"
+                ),
+                settingsLinkModule = SettingsLinkModule()
             )
         )
     }

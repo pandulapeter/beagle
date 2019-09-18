@@ -3,5 +3,4 @@ package com.pandulapeter.debugMenu.views.items
 internal interface DrawerItem {
 
     val id: String
-    val textColor: Int
 }

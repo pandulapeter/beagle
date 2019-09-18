@@ -4,7 +4,7 @@ import com.pandulapeter.debugMenu.BuildConfig
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenuCore.modules.HeaderModule
 
-internal data class HeaderViewModel(override val textColor: Int, private val headerModule: HeaderModule) : DrawerItem {
+internal data class HeaderViewModel(val textColor: Int, private val headerModule: HeaderModule) : DrawerItem {
 
     override val id = "Header"
     val title = headerModule.title
