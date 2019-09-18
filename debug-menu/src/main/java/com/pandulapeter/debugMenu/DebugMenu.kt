@@ -4,6 +4,9 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.view.ViewGroup
+import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
+import com.pandulapeter.debugMenu.views.DebugMenuDrawer
+import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenuCore.DebugMenu
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
 

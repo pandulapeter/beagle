@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenu
+package com.pandulapeter.debugMenu.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import androidx.annotation.Dimension
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.dimension
 
 internal class DebugMenuDrawerLayout @JvmOverloads constructor(
