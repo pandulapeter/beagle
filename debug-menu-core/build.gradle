@@ -6,13 +6,12 @@ group = "com.github.pandulapeter.debug-menu"
 version = libraryVersion
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    compileSdkVersion targetSdkVersion
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "0.0.1"
+        minSdkVersion minSdkVersion
+        targetSdkVersion targetSdkVersion
+        versionCode versionCode
+        versionName libraryVersion
         consumerProguardFiles "consumer-rules.pro"
     }
 }
@@ -21,4 +20,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.annotation:annotation:1.1.0"
+    implementation "com.squareup.okhttp3:okhttp:4.0.1"
 }

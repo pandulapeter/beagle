@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pandulapeter.debugMenuExample">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".DebugMenuExampleApplication"
         android:allowBackup="true"

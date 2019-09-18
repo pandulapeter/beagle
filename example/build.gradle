@@ -1,10 +1,10 @@
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.pandulapeter.debugMenuExample"
         minSdkVersion 21
@@ -45,6 +45,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.appcompat:appcompat:1.1.0"
+    def retrofitVersion = "2.6.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    def moshiVersion = "1.8.0"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    def okHttpVersion = "4.0.1"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
     debugImplementation project(":debug-menu")
     releaseImplementation project(":debug-menu-noop")
 }

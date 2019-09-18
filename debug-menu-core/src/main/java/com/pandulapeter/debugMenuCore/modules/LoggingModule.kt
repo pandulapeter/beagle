@@ -1,7 +1,7 @@
 package com.pandulapeter.debugMenuCore.modules
 
 /**
- * Displays an expandable list of custom log messages. Use DebugMenu.log() to push a new message to the top of the list.
+ * Displays an expandable list of custom log messages. Use DebugMenu.log() to push a new message to the top of the list. This can be useful for debugging analytics events.
  * @param title - The title of the module. "Logs" by default.
  * @param maxMessageCount - The maximum number of messages that will appear when expanded. 10 by default.
  * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.

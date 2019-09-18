@@ -20,7 +20,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     configuration: DebugMenuConfiguration = DebugMenuConfiguration(),
-    onLoggingHeaderPressed: () -> Unit = {}
+    onLoggingHeaderPressed: () -> Unit = {},
+    onNetworkLoggingHeaderPressed: () -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
     private val debugMenuAdapter = DebugMenuAdapter(
@@ -39,7 +40,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
                 data = Uri.fromParts("package", context.packageName, null)
             })
         },
-        onLoggingHeaderPressed = onLoggingHeaderPressed
+        onLoggingHeaderPressed = onLoggingHeaderPressed,
+        onNetworkLoggingHeaderPressed = onNetworkLoggingHeaderPressed
     )
 
     init {

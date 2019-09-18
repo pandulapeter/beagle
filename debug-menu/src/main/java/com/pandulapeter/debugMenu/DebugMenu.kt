@@ -12,6 +12,7 @@ import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
 import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewModel
+import com.pandulapeter.debugMenu.views.items.networkLoggingHeader.NetworkLoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.DebugMenu
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
@@ -82,6 +83,16 @@ object DebugMenu : DebugMenu {
             field = value
             updateItems()
         }
+    private var networkLogs = emptyList<Pair<Long, String>>()
+        set(value) {
+            field = value
+            updateItems()
+        }
+    private var areNetworkLogsExpanded = false
+        set(value) {
+            field = value
+            updateItems()
+        }
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -100,7 +111,8 @@ object DebugMenu : DebugMenu {
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
         configuration = configuration,
-        onLoggingHeaderPressed = { areLogMessagesExpanded = !areLogMessagesExpanded }
+        onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded },
+        onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded }
     ).also { drawer ->
         drawer.updateItems(items)
         activity.findRootViewGroup().run {
@@ -135,6 +147,14 @@ object DebugMenu : DebugMenu {
 
         // Set up SettingsLink module
         configuration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(settingsLinkModule)) }
+
+        // Set up the NetworkLogging module
+        configuration.networkLoggingModule?.let { networkLoggingModule ->
+            items.add(NetworkLoggingHeaderViewModel(networkLoggingModule, areNetworkLogsExpanded, networkLogs.isNotEmpty()))
+            if (areNetworkLogsExpanded) {
+                //TODO items.addAll(networkLogs.map { LogMessageViewModel(loggingModule, it) })
+            }
+        }
 
         // Set up the Logging module
         configuration.loggingModule?.let { loggingModule ->

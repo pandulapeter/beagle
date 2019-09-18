@@ -5,6 +5,7 @@ import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
 import com.pandulapeter.debugMenuCore.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.modules.LoggingModule
+import com.pandulapeter.debugMenuCore.modules.NetworkLoggingModule
 import com.pandulapeter.debugMenuCore.modules.SettingsLinkModule
 
 @Suppress("unused")
@@ -21,6 +22,7 @@ class DebugMenuExampleApplication : Application() {
                     text = "Hello QA person!"
                 ),
                 settingsLinkModule = SettingsLinkModule(),
+                networkLoggingModule = NetworkLoggingModule(),
                 loggingModule = LoggingModule(
                     shouldShowTimestamp = true
                 )

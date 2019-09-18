@@ -4,6 +4,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import com.pandulapeter.debugMenuCore.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.modules.LoggingModule
+import com.pandulapeter.debugMenuCore.modules.NetworkLoggingModule
 import com.pandulapeter.debugMenuCore.modules.SettingsLinkModule
 
 /**
@@ -13,6 +14,7 @@ import com.pandulapeter.debugMenuCore.modules.SettingsLinkModule
  * @param drawerWidth - Custom width for the drawer. If null, 280dp will be used.
  * @param headerModule - Allows to add a [HeaderModule] to the drawer.
  * @param settingsLinkModule - Allows to add a [SettingsLinkModule] to the drawer.
+ * @param networkLoggingModule - Allows to add a [NetworkLoggingModule] to the drawer.
  * @param loggingModule - Allows to add a [LoggingModule] to the drawer.
  */
 data class DebugMenuConfiguration(
@@ -21,5 +23,6 @@ data class DebugMenuConfiguration(
     @Dimension val drawerWidth: Int? = null,
     val headerModule: HeaderModule? = null,
     val settingsLinkModule: SettingsLinkModule? = null,
+    val networkLoggingModule: NetworkLoggingModule? = null,
     val loggingModule: LoggingModule? = null
 )

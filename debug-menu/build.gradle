@@ -6,13 +6,12 @@ group = "com.github.pandulapeter.debug-menu"
 version = libraryVersion
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    compileSdkVersion targetSdkVersion
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "0.0.1"
+        minSdkVersion minSdkVersion
+        targetSdkVersion targetSdkVersion
+        versionCode versionCode
+        versionName libraryVersion
         consumerProguardFiles "consumer-rules.pro"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
         buildConfigField("String", "BUILD_TIME", "\"${new Date().format("HH:mm")}\"")
