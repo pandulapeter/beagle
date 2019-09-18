@@ -138,7 +138,7 @@ object DebugMenu : DebugMenu {
 
         // Set up the Logging module
         configuration.loggingModule?.let { loggingModule ->
-            items.add(LoggingHeaderViewModel(loggingModule, areLogMessagesExpanded))
+            items.add(LoggingHeaderViewModel(loggingModule, areLogMessagesExpanded, logMessages.isNotEmpty()))
             if (areLogMessagesExpanded) {
                 items.addAll(logMessages.map { LogMessageViewModel(loggingModule, it) })
             }

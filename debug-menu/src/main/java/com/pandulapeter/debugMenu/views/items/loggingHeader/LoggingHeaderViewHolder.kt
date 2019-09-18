@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
+import com.pandulapeter.debugMenu.utils.visible
 
 internal class LoggingHeaderViewHolder(root: View, onItemClicked: () -> Unit) : RecyclerView.ViewHolder(root) {
 
@@ -24,6 +25,7 @@ internal class LoggingHeaderViewHolder(root: View, onItemClicked: () -> Unit) : 
         titleTextView.setTextColor(textColor)
         iconImageView.setImageResource(if (viewModel.isExpanded) R.drawable.ic_collapse else R.drawable.ic_expand)
         ImageViewCompat.setImageTintList(iconImageView, ColorStateList.valueOf(textColor))
+        iconImageView.visible = viewModel.areThereLogMessages
     }
 
     companion object {
