@@ -6,10 +6,10 @@ group = "com.github.pandulapeter.debug-menu"
 version = libraryVersion
 
 android {
-    compileSdkVersion targetSdkVersion
+    compileSdkVersion 29
     defaultConfig {
-        minSdkVersion minSdkVersion
-        targetSdkVersion targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode versionCode
         versionName libraryVersion
         consumerProguardFiles "consumer-rules.pro"
@@ -19,5 +19,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     api project(":debug-menu-core")
 }

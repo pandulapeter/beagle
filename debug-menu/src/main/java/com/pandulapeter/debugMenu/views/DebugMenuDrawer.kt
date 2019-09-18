@@ -10,6 +10,7 @@ import android.view.WindowInsets
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.debugMenu.utils.NetworkEvent
 import com.pandulapeter.debugMenu.utils.color
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
@@ -21,7 +22,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     configuration: DebugMenuConfiguration = DebugMenuConfiguration(),
     onLoggingHeaderPressed: () -> Unit = {},
-    onNetworkLoggingHeaderPressed: () -> Unit = {}
+    onNetworkLoggingHeaderPressed: () -> Unit = {},
+    onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
     private val debugMenuAdapter = DebugMenuAdapter(
@@ -41,7 +43,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
             })
         },
         onLoggingHeaderPressed = onLoggingHeaderPressed,
-        onNetworkLoggingHeaderPressed = onNetworkLoggingHeaderPressed
+        onNetworkLoggingHeaderPressed = onNetworkLoggingHeaderPressed,
+        onNetworkLogEventClicked = onNetworkLogEventClicked
     )
 
     init {

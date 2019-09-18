@@ -4,7 +4,9 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.Toast
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
+import com.pandulapeter.debugMenu.utils.NetworkEvent
 import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
@@ -12,6 +14,7 @@ import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
 import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewModel
+import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
 import com.pandulapeter.debugMenu.views.items.networkLoggingHeader.NetworkLoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.DebugMenu
@@ -83,7 +86,7 @@ object DebugMenu : DebugMenu {
             field = value
             updateItems()
         }
-    private var networkLogs = emptyList<Pair<Long, String>>()
+    private var networkLogs = emptyList<NetworkEvent>()
         set(value) {
             field = value
             updateItems()
@@ -108,11 +111,18 @@ object DebugMenu : DebugMenu {
         }
     }
 
+    internal fun logNetworkEvent(networkEvent: NetworkEvent) {
+        configuration.networkLoggingModule?.run {
+            networkLogs = networkLogs.toMutableList().apply { add(0, networkEvent) }.take(maxMessageCount)
+        }
+    }
+
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
         configuration = configuration,
         onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded },
-        onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded }
+        onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
+        onNetworkLogEventClicked = { Toast.makeText(activity, "Work in progress", Toast.LENGTH_SHORT).show() }
     ).also { drawer ->
         drawer.updateItems(items)
         activity.findRootViewGroup().run {
@@ -152,7 +162,7 @@ object DebugMenu : DebugMenu {
         configuration.networkLoggingModule?.let { networkLoggingModule ->
             items.add(NetworkLoggingHeaderViewModel(networkLoggingModule, areNetworkLogsExpanded, networkLogs.isNotEmpty()))
             if (areNetworkLogsExpanded) {
-                //TODO items.addAll(networkLogs.map { LogMessageViewModel(loggingModule, it) })
+                items.addAll(networkLogs.map { NetworkLogEventViewModel(networkLoggingModule, it) })
             }
         }
 
