@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.utils.color
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
-import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
 
 
@@ -21,8 +19,28 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    configuration: DebugMenuConfiguration = DebugMenuConfiguration()
+    configuration: DebugMenuConfiguration = DebugMenuConfiguration(),
+    onLoggingHeaderPressed: () -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {
+
+    private val debugMenuAdapter = DebugMenuAdapter(
+        textColor = configuration.textColor.let { configurationTextColor ->
+            if (configurationTextColor == null) {
+                val typedValue = TypedValue()
+                context.theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
+                context.color(typedValue.run { if (resourceId != 0) resourceId else data })
+            } else {
+                configurationTextColor
+            }
+        },
+        onSettingsLinkButtonPressed = {
+            context.startActivity(Intent().apply {
+                action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                data = Uri.fromParts("package", context.packageName, null)
+            })
+        },
+        onLoggingHeaderPressed = onLoggingHeaderPressed
+    )
 
     init {
         // Set background color
@@ -39,37 +57,10 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
             setBackgroundColor(backgroundColor)
         }
 
-        // Set text color
-        val configurationTextColor = configuration.textColor
-        val textColor = if (configurationTextColor == null) {
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
-            context.color(typedValue.run { if (resourceId != 0) resourceId else data })
-        } else {
-            configurationTextColor
-        }
-
-        // Add the modules
+        // Initialize the layout
         clipToPadding = false
         layoutManager = LinearLayoutManager(context)
-        adapter = DebugMenuAdapter(
-            onSettingsLinkButtonPressed = {
-                context.startActivity(Intent().apply {
-                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                    data = Uri.fromParts("package", context.packageName, null)
-                })
-            }
-        ).apply {
-            val items = mutableListOf<DrawerItem>()
-
-            // Set up Header module
-            configuration.headerModule?.let { headerModule -> items.add(HeaderViewModel(textColor, headerModule)) }
-
-            // Set up SettingsLink module
-            configuration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(textColor, settingsLinkModule)) }
-
-            submitList(items)
-        }
+        adapter = debugMenuAdapter
     }
 
     override fun onAttachedToWindow() {
@@ -80,4 +71,6 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     override fun dispatchApplyWindowInsets(insets: WindowInsets?): WindowInsets = super.dispatchApplyWindowInsets(insets?.also {
         setPadding(paddingLeft, it.systemWindowInsetTop, paddingRight, it.systemWindowInsetBottom)
     })
+
+    fun updateItems(items: List<DrawerItem>) = debugMenuAdapter.submitList(items)
 }

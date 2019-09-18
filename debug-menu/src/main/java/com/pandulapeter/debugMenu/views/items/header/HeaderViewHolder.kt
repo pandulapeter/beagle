@@ -13,11 +13,13 @@ internal class HeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     private val titleTextView = itemView.findViewById<TextView>(R.id.title)
     private val subtitleTextView = itemView.findViewById<TextView>(R.id.subtitle)
     private val buildTimeTextView = itemView.findViewById<TextView>(R.id.build_time)
+    private val hintTextView = itemView.findViewById<TextView>(R.id.hint)
 
-    fun bind(viewModel: HeaderViewModel) {
-        titleTextView.setUpWithText(viewModel.title, viewModel.textColor)
-        subtitleTextView.setUpWithText(viewModel.subtitle, viewModel.textColor)
-        buildTimeTextView.setUpWithText(viewModel.buildTime, viewModel.textColor)
+    fun bind(viewModel: HeaderViewModel, textColor: Int) {
+        titleTextView.setUpWithText(viewModel.title, textColor)
+        subtitleTextView.setUpWithText(viewModel.subtitle, textColor)
+        buildTimeTextView.setUpWithText(viewModel.buildTime, textColor)
+        hintTextView.setUpWithText(viewModel.text, textColor)
     }
 
     private fun TextView.setUpWithText(content: String?, textColor: Int) {

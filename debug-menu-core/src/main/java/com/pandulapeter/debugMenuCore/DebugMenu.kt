@@ -13,4 +13,6 @@ interface DebugMenu {
     fun closeDrawer(activity: Activity): Boolean
 
     fun openDrawer(activity: Activity)
+
+    fun log(message: String)
 }

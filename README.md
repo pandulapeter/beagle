@@ -33,7 +33,7 @@ The library has to be initialized in the Application class. See the [example](ht
 * Add module with OkHttp request / response logging capabilities
 * Add module with custom logging capabilities
 * Add module with test accounts dialog
-* Add support for dynamically changing the modules
+* Add support for dynamically changing / updating the modules
 * Add support for writing custom modules
 * Double-check dependencies, make sure everything is encapsulated
 * Double-check the way the drawer is inserted into the layout hierarchy, make sure it doesn't break Activity transitions

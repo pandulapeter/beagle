@@ -15,15 +15,18 @@ object DebugMenu : DebugMenu {
      */
     override fun initialize(application: Application, configuration: DebugMenuConfiguration) = Unit
 
-
     /**
-     * Does nothing and returns fale.
+     * Does nothing and returns false.
      */
     override fun closeDrawer(activity: Activity) = false
-
 
     /**
      * Does nothing.
      */
     override fun openDrawer(activity: Activity) = Unit
+
+    /**
+     * Does nothing.
+     */
+    override fun log(message: String) = Unit
 }

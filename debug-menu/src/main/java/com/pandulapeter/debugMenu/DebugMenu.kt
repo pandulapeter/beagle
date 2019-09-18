@@ -8,8 +8,13 @@ import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
+import com.pandulapeter.debugMenu.views.items.DrawerItem
+import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
+import com.pandulapeter.debugMenu.views.items.logging.LoggingHeaderViewModel
+import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.DebugMenu
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
+import com.pandulapeter.debugMenuCore.modules.LoggingModule
 
 /**
  * The main singleton that handles the debug drawer's functionality.
@@ -25,6 +30,7 @@ object DebugMenu : DebugMenu {
      */
     override fun initialize(application: Application, configuration: DebugMenuConfiguration) {
         this.configuration = configuration
+        updateItems()
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
@@ -49,12 +55,32 @@ object DebugMenu : DebugMenu {
             drawerLayout?.closeDrawers()
         }
     }
+
+    /**
+     * Adds a log message item which will be displayed at the top of the list if the [LoggingModule] is enabled.
+     */
+    override fun log(message: String) {
+        configuration.loggingModule?.run {
+            logMessages = logMessages.toMutableList().apply { add(0, message) }.take(maxMessageCount)
+        }
+    }
     //endregion
 
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private var configuration = DebugMenuConfiguration()
+    private var items = emptyList<DrawerItem>()
+    private var logMessages = emptyList<String>()
+        set(value) {
+            field = value
+            updateItems()
+        }
+    private var areLogMessagesExpanded = false
+        set(value) {
+            field = value
+            updateItems()
+        }
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -72,8 +98,10 @@ object DebugMenu : DebugMenu {
 
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
-        configuration = configuration
+        configuration = configuration,
+        onLoggingHeaderPressed = { areLogMessagesExpanded = !areLogMessagesExpanded }
     ).also { drawer ->
+        drawer.updateItems(items)
         activity.findRootViewGroup().run {
             post {
                 val oldViews = (0 until childCount).map { getChildAt(it) }
@@ -84,7 +112,11 @@ object DebugMenu : DebugMenu {
                         oldViews = oldViews,
                         drawer = drawer,
                         drawerWidth = configuration.drawerWidth
-                    ).apply { if (shouldOpenDrawer) openDrawer(drawer) },
+                    ).apply {
+                        if (shouldOpenDrawer) {
+                            openDrawer(drawer)
+                        }
+                    },
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
@@ -93,5 +125,27 @@ object DebugMenu : DebugMenu {
     }
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
+
+    private fun updateItems() {
+        val items = mutableListOf<DrawerItem>()
+
+        // Set up Header module
+        configuration.headerModule?.let { headerModule -> items.add(HeaderViewModel(headerModule)) }
+
+        // Set up SettingsLink module
+        configuration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(settingsLinkModule)) }
+
+        // Set up the Logging module
+        configuration.loggingModule?.let { loggingModule ->
+            items.add(LoggingHeaderViewModel(loggingModule, areLogMessagesExpanded))
+            if (areLogMessagesExpanded) {
+                //TODO: Add each log message
+            }
+        }
+
+        // Update the UI
+        this.items = items
+        drawers.values.forEach { it.updateItems(items) }
+    }
     //endregion
 }
