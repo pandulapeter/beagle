@@ -1,6 +1,9 @@
 package com.pandulapeter.debugMenu.views
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.WindowInsets
@@ -10,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.utils.color
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
+import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
 import com.pandulapeter.debugMenuCore.modules.HeaderModule
+import com.pandulapeter.debugMenuCore.modules.SettingsLinkModule
 
 
 internal class DebugMenuDrawer @JvmOverloads constructor(
@@ -49,16 +54,28 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
         // Add the modules
         clipToPadding = false
         layoutManager = LinearLayoutManager(context)
-        adapter = DebugMenuAdapter().apply {
+        adapter = DebugMenuAdapter(
+            onSettingsLinkButtonPressed = {
+                context.startActivity(Intent().apply {
+                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    data = Uri.fromParts("package", context.packageName, null)
+                })
+            }
+        ).apply {
             val items = mutableListOf<DrawerItem>()
             configuration.modules.forEach { module ->
 
-                // Set up header module
+                // Set up Header module
                 if (module is HeaderModule) {
                     items.add(HeaderViewModel(textColor, module))
                 }
+
+                // Set up SettingsLink module
+                if (module is SettingsLinkModule) {
+                    items.add(SettingsLinkViewModel(textColor, module))
+                }
             }
-            submitList(items)
+            submitList(items) //TODO: Make sure distinct items cannot be added twice.
         }
     }
 
