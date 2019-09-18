@@ -21,7 +21,9 @@ class DebugMenuExampleApplication : Application() {
                     text = "Hello QA person!"
                 ),
                 settingsLinkModule = SettingsLinkModule(),
-                loggingModule = LoggingModule()
+                loggingModule = LoggingModule(
+                    shouldShowTimestamp = true
+                )
             )
         )
     }

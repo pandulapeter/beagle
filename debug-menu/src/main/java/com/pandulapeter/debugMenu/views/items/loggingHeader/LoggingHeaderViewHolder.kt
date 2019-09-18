@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenu.views.items.logging
+package com.pandulapeter.debugMenu.views.items.loggingHeader
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater

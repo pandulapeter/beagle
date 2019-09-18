@@ -9,8 +9,10 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewHolder
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
-import com.pandulapeter.debugMenu.views.items.logging.LoggingHeaderViewHolder
-import com.pandulapeter.debugMenu.views.items.logging.LoggingHeaderViewModel
+import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewHolder
+import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
+import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewHolder
+import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewHolder
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 
@@ -30,6 +32,7 @@ internal class DebugMenuAdapter(
         is HeaderViewModel -> R.layout.item_header
         is SettingsLinkViewModel -> R.layout.item_settings_link
         is LoggingHeaderViewModel -> R.layout.item_logging_header
+        is LogMessageViewModel -> R.layout.item_log_message
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
@@ -37,6 +40,7 @@ internal class DebugMenuAdapter(
         R.layout.item_header -> HeaderViewHolder.create(parent)
         R.layout.item_settings_link -> SettingsLinkViewHolder.create(parent, onSettingsLinkButtonPressed)
         R.layout.item_logging_header -> LoggingHeaderViewHolder.create(parent, onLoggingHeaderPressed)
+        R.layout.item_log_message -> LogMessageViewHolder.create(parent)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
@@ -44,6 +48,7 @@ internal class DebugMenuAdapter(
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewModel, textColor)
         is SettingsLinkViewHolder -> holder.bind(getItem(position) as SettingsLinkViewModel, textColor)
         is LoggingHeaderViewHolder -> holder.bind(getItem(position) as LoggingHeaderViewModel, textColor)
+        is LogMessageViewHolder -> holder.bind(getItem(position) as LogMessageViewModel, textColor)
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 }

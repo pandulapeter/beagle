@@ -2,5 +2,6 @@
 
     <string name="app_name">DebugMenu Example (debug)</string>
     <string name="open_debug_menu">Open Debug Menu</string>
+    <string name="add_log_message">Add random log message</string>
 
 </resources>

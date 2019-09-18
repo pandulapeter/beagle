@@ -10,7 +10,8 @@ import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
-import com.pandulapeter.debugMenu.views.items.logging.LoggingHeaderViewModel
+import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
+import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.DebugMenu
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
@@ -61,7 +62,7 @@ object DebugMenu : DebugMenu {
      */
     override fun log(message: String) {
         configuration.loggingModule?.run {
-            logMessages = logMessages.toMutableList().apply { add(0, message) }.take(maxMessageCount)
+            logMessages = logMessages.toMutableList().apply { add(0, System.currentTimeMillis() to message) }.take(maxMessageCount)
         }
     }
     //endregion
@@ -71,7 +72,7 @@ object DebugMenu : DebugMenu {
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private var configuration = DebugMenuConfiguration()
     private var items = emptyList<DrawerItem>()
-    private var logMessages = emptyList<String>()
+    private var logMessages = emptyList<Pair<Long, String>>()
         set(value) {
             field = value
             updateItems()
@@ -139,7 +140,7 @@ object DebugMenu : DebugMenu {
         configuration.loggingModule?.let { loggingModule ->
             items.add(LoggingHeaderViewModel(loggingModule, areLogMessagesExpanded))
             if (areLogMessagesExpanded) {
-                //TODO: Add each log message
+                items.addAll(logMessages.map { LogMessageViewModel(loggingModule, it) })
             }
         }
 
