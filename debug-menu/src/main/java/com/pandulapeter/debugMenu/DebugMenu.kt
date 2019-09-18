@@ -28,12 +28,16 @@ object DebugMenu : DebugMenu {
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
 
-    override fun closeDrawerIfOpen(activity: Activity): Boolean {
+    override fun closeDrawer(activity: Activity): Boolean {
         val drawer = drawers[activity]
         val drawerLayout = drawer?.parent as? DebugMenuDrawerLayout?
         return (drawerLayout?.isDrawerOpen(drawer) == true).also {
             drawerLayout?.closeDrawers()
         }
+    }
+
+    override fun openDrawer(activity: Activity) {
+        drawers[activity]?.run { (parent as? DebugMenuDrawerLayout?)?.openDrawer(this) }
     }
 
     private fun createAndAddDrawerLayout(activity: Activity) = DebugMenuDrawer(

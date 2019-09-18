@@ -9,5 +9,7 @@ object DebugMenu : DebugMenu {
 
     override fun initialize(application: Application, configuration: DebugMenuConfiguration) = Unit
 
-    override fun closeDrawerIfOpen(activity: Activity) = false
+    override fun closeDrawer(activity: Activity) = false
+
+    override fun openDrawer(activity: Activity) = Unit
 }

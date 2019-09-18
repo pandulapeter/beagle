@@ -6,7 +6,7 @@ import com.pandulapeter.debugMenu.DebugMenu
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onBackPressed() {
-        if (!DebugMenu.closeDrawerIfOpen(this)) {
+        if (!DebugMenu.closeDrawer(this)) {
             super.onBackPressed()
         }
     }

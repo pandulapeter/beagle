@@ -1,6 +1,7 @@
 package com.pandulapeter.debugMenuExample
 
 import android.app.Application
+import android.graphics.Color
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
 import com.pandulapeter.debugMenuCore.modules.HeaderModule
@@ -13,6 +14,8 @@ class DebugMenuExampleApplication : Application() {
         DebugMenu.initialize(
             application = this,
             configuration = DebugMenuConfiguration(
+                backgroundColor = Color.BLACK,
+                textColor = Color.WHITE,
                 modules = listOf(
                     HeaderModule(
                         title = getString(R.string.app_name),

@@ -7,5 +7,7 @@ interface DebugMenu {
 
     fun initialize(application: Application, configuration: DebugMenuConfiguration)
 
-    fun closeDrawerIfOpen(activity: Activity): Boolean
+    fun closeDrawer(activity: Activity): Boolean
+
+    fun openDrawer(activity: Activity)
 }
