@@ -10,7 +10,7 @@ import android.view.WindowInsets
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.debugMenu.utils.NetworkEvent
+import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.utils.color
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration

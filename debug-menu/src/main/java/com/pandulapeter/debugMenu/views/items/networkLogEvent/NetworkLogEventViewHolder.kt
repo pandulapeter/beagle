@@ -9,11 +9,13 @@ import android.widget.TextView
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
+import com.pandulapeter.debugMenu.utils.visible
 
 internal class NetworkLogEventViewHolder(root: View, onNetworkLogEventClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
 
     private val iconImageView = itemView.findViewById<ImageView>(R.id.icon)
     private val urlTextView = itemView.findViewById<TextView>(R.id.url)
+    private val timestampTextView = itemView.findViewById<TextView>(R.id.timestamp)
 
     init {
         itemView.setOnClickListener {
@@ -30,6 +32,9 @@ internal class NetworkLogEventViewHolder(root: View, onNetworkLogEventClicked: (
         ImageViewCompat.setImageTintList(iconImageView, ColorStateList.valueOf(textColor))
         urlTextView.text = viewModel.url
         urlTextView.setTextColor(textColor)
+        timestampTextView.setTextColor(textColor)
+        timestampTextView.text = viewModel.timestamp
+        timestampTextView.visible = viewModel.timestamp != null
     }
 
     companion object {

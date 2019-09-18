@@ -5,8 +5,9 @@ import android.app.Application
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Toast
+import com.pandulapeter.debugMenu.models.LogMessage
+import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
-import com.pandulapeter.debugMenu.utils.NetworkEvent
 import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
@@ -66,7 +67,7 @@ object DebugMenu : DebugMenu {
      */
     override fun log(message: String) {
         configuration.loggingModule?.run {
-            logMessages = logMessages.toMutableList().apply { add(0, System.currentTimeMillis() to message) }.take(maxMessageCount)
+            logMessages = logMessages.toMutableList().apply { add(0, LogMessage(message = message)) }.take(maxMessageCount)
         }
     }
     //endregion
@@ -76,7 +77,7 @@ object DebugMenu : DebugMenu {
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private var configuration = DebugMenuConfiguration()
     private var items = emptyList<DrawerItem>()
-    private var logMessages = emptyList<Pair<Long, String>>()
+    private var logMessages = emptyList<LogMessage>()
         set(value) {
             field = value
             updateItems()

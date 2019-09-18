@@ -1,6 +1,6 @@
 package com.pandulapeter.debugMenu
 
-import com.pandulapeter.debugMenu.utils.NetworkEvent
+import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenuCore.DebugMenuInterceptor
 import okhttp3.Headers
 import okhttp3.Interceptor
@@ -28,6 +28,8 @@ object DebugMenuInterceptor : DebugMenuInterceptor {
         val hasRequestBody = requestBody != null
 
         val connection = chain.connection()
+
+
         var requestStartMessage = ("--> "
                 + request.method
                 + ' '.toString() + request.url
@@ -36,6 +38,14 @@ object DebugMenuInterceptor : DebugMenuInterceptor {
             requestStartMessage += " (" + requestBody!!.contentLength() + "-byte body)"
         }
         //debugMenu.log(requestStartMessage)
+
+        DebugMenu.logNetworkEvent(
+            NetworkEvent(
+                isOutgoing = true,
+                url = "[${request.method}] ${request.url}"
+            )
+        )
+
 
         if (logHeaders) {
             if (hasRequestBody) {
@@ -112,6 +122,14 @@ object DebugMenuInterceptor : DebugMenuInterceptor {
 //                    + " (" + tookMs + "ms)")
 //        )
 
+
+        DebugMenu.logNetworkEvent(
+            NetworkEvent(
+                isOutgoing = false,
+                url = "${response.code} [${request.method}] ${request.url}"
+            )
+        )
+
         if (logHeaders) {
             val headers = response.headers
             var i = 0
@@ -170,12 +188,6 @@ object DebugMenuInterceptor : DebugMenuInterceptor {
                 }
             }
         }
-        DebugMenu.logNetworkEvent(
-            NetworkEvent(
-                isOutgoing = true,
-                url = "${request.method} ${request.url}"
-            )
-        )
         return response
     }
 

@@ -22,7 +22,9 @@ class DebugMenuExampleApplication : Application() {
                     text = "Hello QA person!"
                 ),
                 settingsLinkModule = SettingsLinkModule(),
-                networkLoggingModule = NetworkLoggingModule(),
+                networkLoggingModule = NetworkLoggingModule(
+                    shouldShowTimestamp = true
+                ),
                 loggingModule = LoggingModule(
                     shouldShowTimestamp = true
                 )
