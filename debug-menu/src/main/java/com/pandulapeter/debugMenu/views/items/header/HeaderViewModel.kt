@@ -9,5 +9,9 @@ internal data class HeaderViewModel(override val textColor: Int, private val hea
     override val id = "Header"
     val title = headerModule.title
     val subtitle = headerModule.subtitle
-    val buildTime = if (headerModule.shouldShowBuildTime) BuildConfig.BUILD_TIME else null
+    val buildTime = if (headerModule.shouldShowBuildDate) {
+        if (headerModule.shouldShowBuildTime) "${BuildConfig.BUILD_DATE}, ${BuildConfig.BUILD_TIME}" else BuildConfig.BUILD_DATE
+    } else {
+        if (headerModule.shouldShowBuildTime) BuildConfig.BUILD_TIME else null
+    }
 }

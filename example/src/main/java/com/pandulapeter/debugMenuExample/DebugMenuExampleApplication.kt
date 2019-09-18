@@ -19,7 +19,8 @@ class DebugMenuExampleApplication : Application() {
                 modules = listOf(
                     HeaderModule(
                         title = getString(R.string.app_name),
-                        subtitle = BuildConfig.VERSION_NAME,
+                        subtitle = "v${BuildConfig.VERSION_NAME}",
+                        shouldShowBuildDate = true,
                         shouldShowBuildTime = true
                     )
                 )

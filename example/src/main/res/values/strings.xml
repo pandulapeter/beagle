@@ -1,5 +1,6 @@
 <resources>
 
-    <string name="app_name">DebugMenu (debug)</string>
+    <string name="app_name">DebugMenu Example (debug)</string>
+    <string name="open_debug_menu">Open Debug Menu</string>
 
 </resources>

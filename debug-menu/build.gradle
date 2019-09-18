@@ -14,7 +14,8 @@ android {
         versionCode 1
         versionName "0.0.1"
         consumerProguardFiles "consumer-rules.pro"
-        buildConfigField("String", "BUILD_TIME", "\"${new Date().format("yyyy.MM.dd.")}\"")
+        buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
+        buildConfigField("String", "BUILD_TIME", "\"${new Date().format("HH:mm")}\"")
     }
 }
 

@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="large_content_padding">16dp</dimen>
+
+</resources>
