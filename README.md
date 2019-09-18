@@ -22,8 +22,21 @@ debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:0.0.2"
 releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:0.0.2"
 ```
 
-The library has to be initialized in the Application class. See the example module for details.
- 
+The library has to be initialized in the Application class. See the [example](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/DebugMenuExampleApplication.kt) for details.
+
+### To do
+* Add module with a button that opens the app settings page.
+* Add module with device information
+* Add module with OS information
+* Add module with OkHttp request / response logging capabilities
+* Add module with custom logging capabilities
+* Add module with test accounts dialog
+* Add support for dynamically changing the modules
+* Add support for writing custom modules
+* Double-check dependencies, make sure everything is encapsulated
+* Double-check the way the drawer is inserted into the layout hierarchy, make sure it doesn't break Activity transitions
+* Test with Android 10 gestures
+
 ### License
 ```
 Copyright 2019 Pandula Péter
