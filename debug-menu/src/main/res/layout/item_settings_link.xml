@@ -4,5 +4,8 @@
     android:id="@+id/button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/large_content_padding"
+    android:layout_marginStart="@dimen/large_content_padding"
+    android:layout_marginEnd="@dimen/large_content_padding"
+    android:paddingStart="@dimen/large_content_padding"
+    android:paddingEnd="@dimen/large_content_padding"
     tools:text="Open Settings" />

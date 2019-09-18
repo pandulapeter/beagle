@@ -66,7 +66,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
             configuration.headerModule?.let { headerModule -> items.add(HeaderViewModel(textColor, headerModule)) }
 
             // Set up SettingsLink module
-            configuration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(settingsLinkModule)) }
+            configuration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(textColor, settingsLinkModule)) }
+
             submitList(items)
         }
     }

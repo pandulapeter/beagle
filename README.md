@@ -1,7 +1,7 @@
 # DebugMenu (Android)
 *Add a smart side drawer to your applications to simplify development.*
 
-This library is in a very early stage of development.
+**This library is in a very early stage of development.**
 
 ### Usage
 Add the following to your top level Gradle file:
@@ -22,7 +22,7 @@ debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:0.0.2"
 releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:0.0.2"
 ```
 
-The library has to be initialized in the Application class. See the [example](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/DebugMenuExampleApplication.kt) for details.
+The library has to be initialized in the Application class. See the [example](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/DebugMenuExampleApplication.kt) for details. Also, if you want to properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/MainActivity.kt).
 
 ### To do
 * Add module with device information

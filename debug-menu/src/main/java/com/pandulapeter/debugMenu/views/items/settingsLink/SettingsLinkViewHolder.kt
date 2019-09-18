@@ -17,6 +17,7 @@ internal class SettingsLinkViewHolder(root: View, onButtonClicked: () -> Unit) :
 
     fun bind(viewModel: SettingsLinkViewModel) {
         button.text = viewModel.text
+        button.setTextColor(viewModel.textColor)
     }
 
     companion object {

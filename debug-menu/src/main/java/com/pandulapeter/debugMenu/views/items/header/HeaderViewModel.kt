@@ -6,7 +6,7 @@ import com.pandulapeter.debugMenuCore.modules.HeaderModule
 
 internal data class HeaderViewModel(val textColor: Int, private val headerModule: HeaderModule) : DrawerItem {
 
-    override val id = "Header"
+    override val id = "header"
     val title = headerModule.title
     val subtitle = headerModule.subtitle
     val buildTime = if (headerModule.shouldShowBuildDate) {
