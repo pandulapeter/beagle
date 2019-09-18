@@ -10,8 +10,47 @@ import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenuCore.DebugMenu
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
 
+/**
+ * The main singleton that handles the debug drawer's functionality.
+ */
 object DebugMenu : DebugMenu {
 
+    //region Public API
+    /**
+     * Hooks up the library to the Application's lifecycle. After this is called, a debug drawer will be inserted into every activity. This should be called
+     * in the Application's onCreate() method.
+     * @param application - The [Application] instance.
+     * @param configuration - The [DebugMenuConfiguration] that specifies the appearance and contents of the drawer.
+     */
+    override fun initialize(application: Application, configuration: DebugMenuConfiguration) {
+        this.configuration = configuration
+        application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
+        application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
+    }
+
+    /**
+     * Tries to open the current Activity's debug drawer.
+     * @param activity - The current [Activity] instance.
+     */
+    override fun openDrawer(activity: Activity) {
+        drawers[activity]?.run { (parent as? DebugMenuDrawerLayout?)?.openDrawer(this) }
+    }
+
+    /**
+     * Tries to close the current Activity's debug drawer. For proper UX this should be used in onBackPressed() to block any other logic if it returns true.
+     * @param activity - The current [Activity] instance.
+     * @return - True if the drawer was open, false otherwise
+     */
+    override fun closeDrawer(activity: Activity): Boolean {
+        val drawer = drawers[activity]
+        val drawerLayout = drawer?.parent as? DebugMenuDrawerLayout?
+        return (drawerLayout?.isDrawerOpen(drawer) == true).also {
+            drawerLayout?.closeDrawers()
+        }
+    }
+    //endregion
+
+    //region Implementation details
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private var configuration = DebugMenuConfiguration()
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
@@ -23,24 +62,6 @@ object DebugMenu : DebugMenu {
         override fun onActivityDestroyed(activity: Activity) {
             drawers.remove(activity)
         }
-    }
-
-    override fun initialize(application: Application, configuration: DebugMenuConfiguration) {
-        this.configuration = configuration
-        application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
-        application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
-    }
-
-    override fun closeDrawer(activity: Activity): Boolean {
-        val drawer = drawers[activity]
-        val drawerLayout = drawer?.parent as? DebugMenuDrawerLayout?
-        return (drawerLayout?.isDrawerOpen(drawer) == true).also {
-            drawerLayout?.closeDrawers()
-        }
-    }
-
-    override fun openDrawer(activity: Activity) {
-        drawers[activity]?.run { (parent as? DebugMenuDrawerLayout?)?.openDrawer(this) }
     }
 
     private fun createAndAddDrawerLayout(activity: Activity) = DebugMenuDrawer(
@@ -66,4 +87,5 @@ object DebugMenu : DebugMenu {
     }
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
+    //endregion
 }
