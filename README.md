@@ -20,8 +20,8 @@ allprojects {
 ```groovy
 dependencies {
     …
-    debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:0.0.2"
-    releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:0.0.2"
+    debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:0.0.3"
+    releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:0.0.3"
 }
 ```
 
