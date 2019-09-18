@@ -28,6 +28,14 @@ object DebugMenu : DebugMenu {
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
 
+    override fun closeDrawerIfOpen(activity: Activity): Boolean {
+        val drawer = drawers[activity]
+        val drawerLayout = drawer?.parent as? DebugMenuDrawerLayout?
+        return (drawerLayout?.isDrawerOpen(drawer) == true).also {
+            drawerLayout?.closeDrawers()
+        }
+    }
+
     private fun createAndAddDrawerLayout(activity: Activity) = DebugMenuDrawer(
         context = activity,
         configuration = configuration
@@ -40,7 +48,8 @@ object DebugMenu : DebugMenu {
                     DebugMenuDrawerLayout(
                         context = activity,
                         oldViews = oldViews,
-                        drawer = drawer
+                        drawer = drawer,
+                        drawerWidth = configuration.drawerWidth
                     ),
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT

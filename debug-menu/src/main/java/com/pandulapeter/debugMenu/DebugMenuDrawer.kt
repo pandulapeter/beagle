@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
+import com.pandulapeter.debugMenuCore.modules.HeaderModule
 
 
 internal class DebugMenuDrawer @JvmOverloads constructor(
@@ -19,15 +20,31 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
 
     init {
         orientation = VERTICAL
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
-        if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
-            setBackgroundColor(typedValue.data)
+
+        // Set background color
+        val backgroundColor = configuration.backgroundColor
+        if (backgroundColor == null) {
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
+            if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+                setBackgroundColor(typedValue.data)
+            } else {
+                background = AppCompatResources.getDrawable(context, typedValue.resourceId)
+            }
         } else {
-            background = AppCompatResources.getDrawable(context, typedValue.resourceId)
+            setBackgroundColor(backgroundColor)
         }
-        configuration.title?.also { title -> addView(TextView(context).apply { text = title }) }
-        configuration.version?.also { version -> addView(TextView(context).apply { text = version }) }
+
+        // Set up header module
+        configuration.modules.forEach { module ->
+            if (module is HeaderModule) {
+                module.title?.also { title -> addView(TextView(context).apply { text = title }) }
+                module.subtitle?.also { subtitle -> addView(TextView(context).apply { text = subtitle }) }
+                if (module.shouldShowBuildTime) {
+                    addView(TextView(context).apply { text = BuildConfig.BUILD_TIME })
+                }
+            }
+        }
     }
 
     override fun onAttachedToWindow() {

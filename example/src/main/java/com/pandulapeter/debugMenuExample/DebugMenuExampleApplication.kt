@@ -3,6 +3,7 @@ package com.pandulapeter.debugMenuExample
 import android.app.Application
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
+import com.pandulapeter.debugMenuCore.modules.HeaderModule
 
 @Suppress("unused")
 class DebugMenuExampleApplication : Application() {
@@ -12,8 +13,13 @@ class DebugMenuExampleApplication : Application() {
         DebugMenu.initialize(
             application = this,
             configuration = DebugMenuConfiguration(
-                title = getString(R.string.app_name),
-                version = BuildConfig.VERSION_NAME
+                modules = listOf(
+                    HeaderModule(
+                        title = getString(R.string.app_name),
+                        subtitle = BuildConfig.VERSION_NAME,
+                        shouldShowBuildTime = true
+                    )
+                )
             )
         )
     }

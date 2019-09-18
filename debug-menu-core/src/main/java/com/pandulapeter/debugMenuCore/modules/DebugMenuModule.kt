@@ -1,0 +1,3 @@
+package com.pandulapeter.debugMenuCore.modules
+
+interface DebugMenuModule
