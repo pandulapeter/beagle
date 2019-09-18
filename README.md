@@ -20,10 +20,13 @@ allprojects {
 ```groovy
 dependencies {
     …
-    debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:0.0.3"
-    releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:0.0.3"
+    def debugMenuVersion = "0.0.3" // See below for the latest version
+    debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:$debugMenuVersion"
+    releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:$debugMenuVersion"
 }
 ```
+
+The latest version is: [![](https://jitpack.io/v/pandulapeter/debug-menu.svg)](https://jitpack.io/#pandulapeter/debug-menu)
 
 The library has to be initialized in the Application class. See the [example](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/DebugMenuExampleApplication.kt) for details. Also, if you want to properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/MainActivity.kt).
 
