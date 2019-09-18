@@ -35,7 +35,6 @@ The library has to be initialized in the Application class. See the [example](ht
 * Double-check dependencies, make sure everything is encapsulated
 * Double-check the way the drawer is inserted into the layout hierarchy, make sure it doesn't break Activity transitions
 * Test with Android 10 gestures
-* Implement state restoration
 
 ### License
 ```

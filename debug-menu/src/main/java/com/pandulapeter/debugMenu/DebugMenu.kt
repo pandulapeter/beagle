@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.view.ViewGroup
+import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
@@ -51,12 +52,17 @@ object DebugMenu : DebugMenu {
     //endregion
 
     //region Implementation details
+    private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private var configuration = DebugMenuConfiguration()
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            drawers[activity] = createAndAddDrawerLayout(activity)
+            drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity, p1: Bundle) {
+            p1.isDrawerOpen = drawers[activity]?.let { drawer -> (drawer.parent as? DebugMenuDrawerLayout?)?.isDrawerOpen(drawer) } ?: false
         }
 
         override fun onActivityDestroyed(activity: Activity) {
@@ -64,7 +70,7 @@ object DebugMenu : DebugMenu {
         }
     }
 
-    private fun createAndAddDrawerLayout(activity: Activity) = DebugMenuDrawer(
+    private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
         configuration = configuration
     ).also { drawer ->
@@ -78,7 +84,7 @@ object DebugMenu : DebugMenu {
                         oldViews = oldViews,
                         drawer = drawer,
                         drawerWidth = configuration.drawerWidth
-                    ),
+                    ).apply { if (shouldOpenDrawer) openDrawer(drawer) },
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
