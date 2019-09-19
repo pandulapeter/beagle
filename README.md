@@ -34,7 +34,6 @@ The library has to be initialized in the Application class. See the [example](ht
 To use the NetworkLoggingModule a custom interceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/NetworkingManager.kt).
 
 ### To do
-* Update section headers and switch items using payloads.
 * Add module for test account login details
 * Add support for filtering log messages based on tags
 * Add support for log message payloads

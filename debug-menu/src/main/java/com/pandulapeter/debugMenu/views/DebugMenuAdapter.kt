@@ -37,7 +37,13 @@ internal class DebugMenuAdapter(
     @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(oldItem: DrawerItem, newItem: DrawerItem) = oldItem == newItem
 
+    override fun getChangePayload(oldItem: DrawerItem, newItem: DrawerItem): Any? = if (
+        (oldItem is KeylineOverlayViewModel && newItem is KeylineOverlayViewModel)
+        || (oldItem is NetworkLoggingHeaderViewModel && newItem is NetworkLoggingHeaderViewModel)
+        || (oldItem is LoggingHeaderViewModel && newItem is LoggingHeaderViewModel)
+    ) "" else null
 }) {
+
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is HeaderViewModel -> R.layout.item_header
         is SettingsLinkViewModel -> R.layout.item_settings_link
