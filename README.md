@@ -15,12 +15,12 @@ allprojects {
 }
 ```
 
-...and this to the module-level build script:
+...and this to the module-level build script (check the widget below the code snippet for the latest version):
 
 ```groovy
 dependencies {
     …
-    def debugMenuVersion = "0.0.4" // See the widget below for the latest version
+    def debugMenuVersion = "0.0.5"
     debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:$debugMenuVersion"
     releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:$debugMenuVersion"
 }
