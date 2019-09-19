@@ -15,6 +15,8 @@ import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenu.views.items.DrawerItem
+import com.pandulapeter.debugMenu.views.items.authenticationHelperHeader.AuthenticationHelperHeaderViewModel
+import com.pandulapeter.debugMenu.views.items.authenticationHelperItem.AuthenticationHelperItemViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.keylineOverlay.KeylineOverlayViewModel
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
@@ -102,10 +104,15 @@ object DebugMenu : DebugMenuContract {
             if (field != value) {
                 field = value
                 updateItems()
-                (if (value) items.filterIsInstance<KeylineOverlayViewModel>().firstOrNull()?.keylineOverlayModule else null).let { keylineOverlayModule ->
+                (if (value) moduleConfiguration.keylineOverlayModule else null).let { keylineOverlayModule ->
                     drawers.values.forEach { drawer -> (drawer.parent as? DebugMenuDrawerLayout?)?.keylineOverlay = keylineOverlayModule }
                 }
             }
+        }
+    private var areTestAccountsExpanded = false
+        set(value) {
+            field = value
+            updateItems()
         }
     private var logMessages = emptyList<LogMessage>()
         set(value) {
@@ -152,6 +159,8 @@ object DebugMenu : DebugMenuContract {
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
         onKeylineOverlaySwitchChanged = { isKeylineOverlayEnabled = !isKeylineOverlayEnabled },
+        onAuthenticationHelperHeaderPressed = { areTestAccountsExpanded = !areTestAccountsExpanded },
+        onAuthenticationHelperItemClicked = { account -> moduleConfiguration.authenticationHelperModule?.onAccountSelected?.invoke(account) },
         onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
         onNetworkLogEventClicked = { Toast.makeText(activity, "Work in progress", Toast.LENGTH_SHORT).show() },
         onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded }
@@ -173,7 +182,7 @@ object DebugMenu : DebugMenuContract {
                             openDrawer(drawer)
                         }
                         if (isKeylineOverlayEnabled) {
-                            keylineOverlay = items.filterIsInstance<KeylineOverlayViewModel>().firstOrNull()?.keylineOverlayModule
+                            keylineOverlay = moduleConfiguration.keylineOverlayModule
                         }
                     },
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -197,6 +206,14 @@ object DebugMenu : DebugMenuContract {
 
         // Set up the KeylineOverlay module
         moduleConfiguration.keylineOverlayModule?.let { keylineOverlayModule -> items.add(KeylineOverlayViewModel(keylineOverlayModule, isKeylineOverlayEnabled)) }
+
+        // Set up the AuthenticationHelper module
+        moduleConfiguration.authenticationHelperModule?.let { authenticationHelperModule ->
+            items.add(AuthenticationHelperHeaderViewModel(authenticationHelperModule, areTestAccountsExpanded))
+            if (areTestAccountsExpanded) {
+                items.addAll(authenticationHelperModule.accounts.map { AuthenticationHelperItemViewModel(it) })
+            }
+        }
 
         // Set up the NetworkLogging module
         moduleConfiguration.networkLoggingModule?.let { networkLoggingModule ->

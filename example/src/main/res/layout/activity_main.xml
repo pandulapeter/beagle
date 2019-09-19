@@ -34,4 +34,11 @@
         android:layout_marginTop="@dimen/large_content_padding"
         android:text="@string/add_log_message" />
 
+    <Button
+        android:id="@+id/open_login_screen_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_content_padding"
+        android:text="@string/open_login_screen" />
+
 </LinearLayout>

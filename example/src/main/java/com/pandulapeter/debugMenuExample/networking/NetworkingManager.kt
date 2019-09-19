@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenuExample
+package com.pandulapeter.debugMenuExample.networking
 
 import com.pandulapeter.debugMenu.DebugMenuInterceptor
 import com.squareup.moshi.Moshi
@@ -16,5 +16,6 @@ object NetworkingManager {
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
         .build()
-    val musicGeneratorService: MusicGenreGeneratorService = retrofit.create(MusicGenreGeneratorService::class.java)
+    val musicGeneratorService: MusicGenreGeneratorService = retrofit.create(
+        MusicGenreGeneratorService::class.java)
 }

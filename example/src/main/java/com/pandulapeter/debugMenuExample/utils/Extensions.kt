@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenuExample
+package com.pandulapeter.debugMenuExample.utils
 
 import retrofit2.Call
 import retrofit2.Callback

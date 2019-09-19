@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".screens.MainActivity">
 
             <intent-filter>
 
@@ -25,6 +25,8 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name=".screens.LoginActivity" />
 
     </application>
 

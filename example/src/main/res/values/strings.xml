@@ -4,6 +4,10 @@
     <string name="open_debug_menu">Open Debug Menu</string>
     <string name="generate_music_genre">Generate music genre</string>
     <string name="add_log_message">Add random log message</string>
+    <string name="open_login_screen">Open login screen</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="back">Back</string>
     <string name="something_went_wrong">Something went wrong</string>
 
 </resources>

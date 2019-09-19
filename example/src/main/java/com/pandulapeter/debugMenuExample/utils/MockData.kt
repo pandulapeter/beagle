@@ -1,5 +1,16 @@
-package com.pandulapeter.debugMenuExample
+package com.pandulapeter.debugMenuExample.utils
 
+val mockAccounts = listOf(
+    "User 1" to "password 1",
+    "User 2" to "password 2",
+    "User 3" to "password 3",
+    "User 4" to "password 4",
+    "User 5" to "password 5",
+    "User 6" to "password 6",
+    "User 7" to "password 7",
+    "User 8" to "password 8",
+    "User 9" to "password 9"
+)
 val logMessages = listOf(
     "Adding Hidden Agendas",
     "Adjusting Bell Curves",

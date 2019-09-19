@@ -17,6 +17,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit = {},
+    onAuthenticationHelperHeaderPressed: () -> Unit = {},
+    onAuthenticationHelperItemClicked: (item: Pair<String, String>) -> Unit = {},
     onNetworkLoggingHeaderPressed: () -> Unit = {},
     onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {},
     onLoggingHeaderPressed: () -> Unit = {}
@@ -29,6 +31,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
                 data = Uri.fromParts("package", context.packageName, null)
             })
         },
+        onAuthenticationHelperHeaderPressed = onAuthenticationHelperHeaderPressed,
+        onAuthenticationHelperItemClicked = onAuthenticationHelperItemClicked,
         onKeylineOverlaySwitchChanged = onKeylineOverlaySwitchChanged,
         onNetworkLoggingHeaderPressed = onNetworkLoggingHeaderPressed,
         onNetworkLogEventClicked = onNetworkLogEventClicked,
