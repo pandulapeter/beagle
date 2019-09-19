@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenuCore.modules
+package com.pandulapeter.debugMenuCore.configuration.modules
 
 /**
  * Displays an expandable list of historical network activity. Use DebugMenuInterceptorContract to push a new message to the top of the list.

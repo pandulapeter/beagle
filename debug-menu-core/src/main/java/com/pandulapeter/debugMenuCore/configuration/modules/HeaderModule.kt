@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenuCore.modules
+package com.pandulapeter.debugMenuCore.configuration.modules
 
 /**
  * Displays a header on top of the drawer with general information about the build.

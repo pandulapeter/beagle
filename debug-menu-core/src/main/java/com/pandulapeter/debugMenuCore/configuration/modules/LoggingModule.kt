@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenuCore.modules
+package com.pandulapeter.debugMenuCore.configuration.modules
 
 /**
  * Displays an expandable list of custom log messages. Use DebugMenu.log() to push a new message to the top of the list. This can be useful for debugging analytics events.

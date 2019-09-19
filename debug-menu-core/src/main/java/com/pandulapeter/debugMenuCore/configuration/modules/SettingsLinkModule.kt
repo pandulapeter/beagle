@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenuCore.modules
+package com.pandulapeter.debugMenuCore.configuration.modules
 
 /**
  * Displays a button which opens the app's Android Settings page, when pressed.

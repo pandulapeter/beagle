@@ -34,13 +34,13 @@ The library has to be initialized in the Application class. See the [example](ht
 To use the NetworkLoggingModule a custom interceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/NetworkingManager.kt).
 
 ### To do
-* Add module for keylines overlay
-* Add module for taking a screenshot
+* Update section headers and switch items using payloads.
+* Add module for test account login details
 * Add support for filtering log messages based on tags
 * Add support for log message payloads
 * Add support for displaying the JSON request / response data
 * Add module with device / OS information
-* Add dynamic module with test accounts
+* Add module for taking a screenshot
 * Add support for writing custom modules
 * Double-check the way the drawer is inserted into the layout hierarchy, make sure it doesn't break Activity shared element transitions
 * Test with Android 10 gestures

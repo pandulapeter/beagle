@@ -2,11 +2,12 @@ package com.pandulapeter.debugMenuExample
 
 import android.app.Application
 import com.pandulapeter.debugMenu.DebugMenu
-import com.pandulapeter.debugMenuCore.ModuleConfiguration
-import com.pandulapeter.debugMenuCore.modules.HeaderModule
-import com.pandulapeter.debugMenuCore.modules.LoggingModule
-import com.pandulapeter.debugMenuCore.modules.NetworkLoggingModule
-import com.pandulapeter.debugMenuCore.modules.SettingsLinkModule
+import com.pandulapeter.debugMenuCore.configuration.ModuleConfiguration
+import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
+import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayModule
+import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
+import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
+import com.pandulapeter.debugMenuCore.configuration.modules.SettingsLinkModule
 
 @Suppress("unused")
 class DebugMenuExampleApplication : Application() {
@@ -22,6 +23,7 @@ class DebugMenuExampleApplication : Application() {
                     text = "Hello QA person!"
                 ),
                 settingsLinkModule = SettingsLinkModule(),
+                keylineOverlayModule = KeylineOverlayModule(),
                 networkLoggingModule = NetworkLoggingModule(
                     shouldShowTimestamp = true
                 ),

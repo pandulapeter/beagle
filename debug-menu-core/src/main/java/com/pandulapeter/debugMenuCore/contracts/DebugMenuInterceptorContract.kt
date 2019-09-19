@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenuCore
+package com.pandulapeter.debugMenuCore.contracts
 
 import okhttp3.Interceptor
 

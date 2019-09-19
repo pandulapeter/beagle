@@ -2,7 +2,7 @@ package com.pandulapeter.debugMenu.views.items.networkLogEvent
 
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenuCore.modules.NetworkLoggingModule
+import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
 import java.text.SimpleDateFormat
 import java.util.Locale
 

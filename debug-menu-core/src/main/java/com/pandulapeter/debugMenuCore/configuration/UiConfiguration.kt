@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenuCore
+package com.pandulapeter.debugMenuCore.configuration
 
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension

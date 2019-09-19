@@ -2,9 +2,9 @@ package com.pandulapeter.debugMenu
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.debugMenuCore.DebugMenuContract
-import com.pandulapeter.debugMenuCore.ModuleConfiguration
-import com.pandulapeter.debugMenuCore.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.ModuleConfiguration
+import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 
 /**
  * Fake implementation to be used in release builds.
@@ -34,5 +34,5 @@ object DebugMenu : DebugMenuContract {
     /**
      * Does nothing.
      */
-    override fun log(message: String) = Unit
+    override fun log(message: String, tag: String?, payload: String?) = Unit
 }

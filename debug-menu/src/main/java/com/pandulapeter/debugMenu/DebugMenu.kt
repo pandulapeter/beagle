@@ -2,6 +2,7 @@ package com.pandulapeter.debugMenu
 
 import android.app.Activity
 import android.app.Application
+import android.graphics.Color
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Toast
@@ -9,19 +10,22 @@ import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
+import com.pandulapeter.debugMenu.utils.getTextColor
+import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
+import com.pandulapeter.debugMenu.views.items.keylineOverlay.KeylineOverlayViewModel
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
 import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
 import com.pandulapeter.debugMenu.views.items.networkLoggingHeader.NetworkLoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
-import com.pandulapeter.debugMenuCore.DebugMenuContract
-import com.pandulapeter.debugMenuCore.ModuleConfiguration
-import com.pandulapeter.debugMenuCore.UiConfiguration
-import com.pandulapeter.debugMenuCore.modules.LoggingModule
+import com.pandulapeter.debugMenuCore.configuration.ModuleConfiguration
+import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
+import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 
 /**
  * The main singleton that handles the debug drawer's functionality.
@@ -30,7 +34,7 @@ object DebugMenu : DebugMenuContract {
 
     //region Public API
     /**
-     * Update this field at any time to change the moodule configuration of the drawer. Using the copy function of the data class is recommended.
+     * Update this property at any time to change the module configuration of the drawer. Using the copy function of the data classes is recommended to avoid code duplication.
      */
     override var moduleConfiguration = ModuleConfiguration()
         set(value) {
@@ -75,19 +79,34 @@ object DebugMenu : DebugMenuContract {
 
     /**
      * Adds a log message item which will be displayed at the top of the list if the [LoggingModule] is enabled.
+     * @param message - The message that should be logged.
+     * @param tag - An optional tag that can be later used for filtering. Null by default.
+     * @param payload - An optional String payload that can be opened in a dialog when the user clicks on a log message. Null by default.
      */
-    override fun log(message: String) {
+    override fun log(message: String, tag: String?, payload: String?) {
         moduleConfiguration.loggingModule?.run {
-            logMessages = logMessages.toMutableList().apply { add(0, LogMessage(message = message)) }.take(maxMessageCount)
+            logMessages = logMessages.toMutableList().apply { add(0, LogMessage(message = message, tag = tag, payload = payload)) }.take(maxMessageCount)
         }
     }
     //endregion
 
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
-    private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private var uiConfiguration = UiConfiguration()
+    internal var textColor = Color.WHITE
+        private set
+    private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private var items = emptyList<DrawerItem>()
+    private var isKeylineOverlayEnabled = false
+        set(value) {
+            if (field != value) {
+                field = value
+                updateItems()
+                (if (value) items.filterIsInstance<KeylineOverlayViewModel>().firstOrNull()?.keylineOverlayModule else null).let { keylineOverlayModule ->
+                    drawers.values.forEach { drawer -> (drawer.parent as? DebugMenuDrawerLayout?)?.keylineOverlay = keylineOverlayModule }
+                }
+            }
+        }
     private var logMessages = emptyList<LogMessage>()
         set(value) {
             field = value
@@ -111,6 +130,7 @@ object DebugMenu : DebugMenuContract {
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            textColor = activity.getTextColor(uiConfiguration)
             drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
         }
 
@@ -131,11 +151,12 @@ object DebugMenu : DebugMenuContract {
 
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
-        uiConfiguration = uiConfiguration,
-        onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded },
+        onKeylineOverlaySwitchChanged = { isKeylineOverlayEnabled = !isKeylineOverlayEnabled },
         onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
-        onNetworkLogEventClicked = { Toast.makeText(activity, "Work in progress", Toast.LENGTH_SHORT).show() }
+        onNetworkLogEventClicked = { Toast.makeText(activity, "Work in progress", Toast.LENGTH_SHORT).show() },
+        onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded }
     ).also { drawer ->
+        drawer.setBackground(uiConfiguration)
         drawer.updateItems(items)
         activity.findRootViewGroup().run {
             post {
@@ -151,6 +172,9 @@ object DebugMenu : DebugMenuContract {
                         if (shouldOpenDrawer) {
                             openDrawer(drawer)
                         }
+                        if (isKeylineOverlayEnabled) {
+                            keylineOverlay = items.filterIsInstance<KeylineOverlayViewModel>().firstOrNull()?.keylineOverlayModule
+                        }
                     },
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
@@ -158,6 +182,7 @@ object DebugMenu : DebugMenuContract {
             }
         }
     }
+
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
@@ -169,6 +194,9 @@ object DebugMenu : DebugMenuContract {
 
         // Set up SettingsLink module
         moduleConfiguration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(settingsLinkModule)) }
+
+        // Set up the KeylineOverlay module
+        moduleConfiguration.keylineOverlayModule?.let { keylineOverlayModule -> items.add(KeylineOverlayViewModel(keylineOverlayModule, isKeylineOverlayEnabled)) }
 
         // Set up the NetworkLogging module
         moduleConfiguration.networkLoggingModule?.let { networkLoggingModule ->

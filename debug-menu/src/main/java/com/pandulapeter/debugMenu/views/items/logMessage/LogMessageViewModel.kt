@@ -2,7 +2,7 @@ package com.pandulapeter.debugMenu.views.items.logMessage
 
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenuCore.modules.LoggingModule
+import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
 import java.text.SimpleDateFormat
 import java.util.Locale
 
