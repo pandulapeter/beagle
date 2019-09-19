@@ -35,6 +35,8 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 
 ### To do
 * Fix keyline overlay setting not being synchronised between activities.
+* Fix inset handling bugs
+* Add module for environment switching
 * Add support for filtering log messages based on tags
 * Add support for log message payloads
 * Add support for displaying the JSON request / response data

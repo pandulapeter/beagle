@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
+import com.pandulapeter.debugMenu.utils.animatedDrawable
 import com.pandulapeter.debugMenu.utils.visible
 
 internal class NetworkLoggingHeaderViewHolder(root: View, onItemClicked: () -> Unit) : RecyclerView.ViewHolder(root) {
 
     private val titleTextView = itemView.findViewById<TextView>(R.id.title)
     private val iconImageView = itemView.findViewById<ImageView>(R.id.icon)
+    private val drawableExpand by lazy { itemView.context.animatedDrawable(R.drawable.avd_expand) }
+    private val drawableCollapse by lazy { itemView.context.animatedDrawable(R.drawable.avd_collapse) }
 
     init {
         itemView.setOnClickListener { onItemClicked() }
@@ -24,9 +26,11 @@ internal class NetworkLoggingHeaderViewHolder(root: View, onItemClicked: () -> U
         itemView.isClickable = viewModel.areThereLogs
         titleTextView.text = viewModel.title
         titleTextView.setTextColor(textColor)
-        iconImageView.setImageResource(if (viewModel.isExpanded) R.drawable.ic_collapse else R.drawable.ic_expand)
-        ImageViewCompat.setImageTintList(iconImageView, ColorStateList.valueOf(textColor))
         iconImageView.visible = viewModel.areThereLogs
+        iconImageView.setImageDrawable((if (viewModel.isExpanded) drawableExpand else drawableCollapse)?.apply {
+            setTintList(ColorStateList.valueOf(textColor))
+            start()
+        })
     }
 
     companion object {

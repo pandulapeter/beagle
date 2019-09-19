@@ -8,7 +8,10 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+
+internal fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)
 
 internal fun Context.color(@ColorRes colorResInt: Int) = ContextCompat.getColor(this, colorResInt)
 
