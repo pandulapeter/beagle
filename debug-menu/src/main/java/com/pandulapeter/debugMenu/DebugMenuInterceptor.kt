@@ -1,7 +1,7 @@
 package com.pandulapeter.debugMenu
 
 import com.pandulapeter.debugMenu.models.NetworkEvent
-import com.pandulapeter.debugMenuCore.DebugMenuInterceptor
+import com.pandulapeter.debugMenuCore.DebugMenuInterceptorContract
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -12,7 +12,7 @@ import java.io.EOFException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
-object DebugMenuInterceptor : DebugMenuInterceptor {
+object DebugMenuInterceptor : DebugMenuInterceptorContract {
 
     @Volatile
     private var headersToRedact = emptySet<String>()

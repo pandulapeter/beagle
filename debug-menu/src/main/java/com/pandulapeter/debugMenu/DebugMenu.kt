@@ -18,25 +18,36 @@ import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewMod
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
 import com.pandulapeter.debugMenu.views.items.networkLoggingHeader.NetworkLoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
-import com.pandulapeter.debugMenuCore.DebugMenu
-import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
+import com.pandulapeter.debugMenuCore.DebugMenuContract
+import com.pandulapeter.debugMenuCore.ModuleConfiguration
+import com.pandulapeter.debugMenuCore.UiConfiguration
 import com.pandulapeter.debugMenuCore.modules.LoggingModule
 
 /**
  * The main singleton that handles the debug drawer's functionality.
  */
-object DebugMenu : DebugMenu {
+object DebugMenu : DebugMenuContract {
 
     //region Public API
+    /**
+     * Update this field at any time to change the moodule configuration of the drawer. Using the copy function of the data class is recommended.
+     */
+    override var moduleConfiguration = ModuleConfiguration()
+        set(value) {
+            field = value
+            updateItems()
+        }
+
     /**
      * Hooks up the library to the Application's lifecycle. After this is called, a debug drawer will be inserted into every activity. This should be called
      * in the Application's onCreate() method.
      * @param application - The [Application] instance.
-     * @param configuration - The [DebugMenuConfiguration] that specifies the appearance and contents of the drawer.
+     * @param uiConfiguration - The [UiConfiguration] that specifies the appearance the drawer.
+     * @param moduleConfiguration - The [ModuleConfiguration] that specifies the contents of the drawer.
      */
-    override fun initialize(application: Application, configuration: DebugMenuConfiguration) {
-        this.configuration = configuration
-        updateItems()
+    override fun initialize(application: Application, uiConfiguration: UiConfiguration, moduleConfiguration: ModuleConfiguration) {
+        this.uiConfiguration = uiConfiguration
+        this.moduleConfiguration = moduleConfiguration
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
@@ -66,7 +77,7 @@ object DebugMenu : DebugMenu {
      * Adds a log message item which will be displayed at the top of the list if the [LoggingModule] is enabled.
      */
     override fun log(message: String) {
-        configuration.loggingModule?.run {
+        moduleConfiguration.loggingModule?.run {
             logMessages = logMessages.toMutableList().apply { add(0, LogMessage(message = message)) }.take(maxMessageCount)
         }
     }
@@ -75,7 +86,7 @@ object DebugMenu : DebugMenu {
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
-    private var configuration = DebugMenuConfiguration()
+    private var uiConfiguration = UiConfiguration()
     private var items = emptyList<DrawerItem>()
     private var logMessages = emptyList<LogMessage>()
         set(value) {
@@ -113,14 +124,14 @@ object DebugMenu : DebugMenu {
     }
 
     internal fun logNetworkEvent(networkEvent: NetworkEvent) {
-        configuration.networkLoggingModule?.run {
+        moduleConfiguration.networkLoggingModule?.run {
             networkLogs = networkLogs.toMutableList().apply { add(0, networkEvent) }.take(maxMessageCount)
         }
     }
 
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
-        configuration = configuration,
+        uiConfiguration = uiConfiguration,
         onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded },
         onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
         onNetworkLogEventClicked = { Toast.makeText(activity, "Work in progress", Toast.LENGTH_SHORT).show() }
@@ -135,7 +146,7 @@ object DebugMenu : DebugMenu {
                         context = activity,
                         oldViews = oldViews,
                         drawer = drawer,
-                        drawerWidth = configuration.drawerWidth
+                        drawerWidth = uiConfiguration.drawerWidth
                     ).apply {
                         if (shouldOpenDrawer) {
                             openDrawer(drawer)
@@ -154,13 +165,13 @@ object DebugMenu : DebugMenu {
         val items = mutableListOf<DrawerItem>()
 
         // Set up Header module
-        configuration.headerModule?.let { headerModule -> items.add(HeaderViewModel(headerModule)) }
+        moduleConfiguration.headerModule?.let { headerModule -> items.add(HeaderViewModel(headerModule)) }
 
         // Set up SettingsLink module
-        configuration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(settingsLinkModule)) }
+        moduleConfiguration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(settingsLinkModule)) }
 
         // Set up the NetworkLogging module
-        configuration.networkLoggingModule?.let { networkLoggingModule ->
+        moduleConfiguration.networkLoggingModule?.let { networkLoggingModule ->
             items.add(NetworkLoggingHeaderViewModel(networkLoggingModule, areNetworkLogsExpanded, networkLogs.isNotEmpty()))
             if (areNetworkLogsExpanded) {
                 items.addAll(networkLogs.map { NetworkLogEventViewModel(networkLoggingModule, it) })
@@ -168,7 +179,7 @@ object DebugMenu : DebugMenu {
         }
 
         // Set up the Logging module
-        configuration.loggingModule?.let { loggingModule ->
+        moduleConfiguration.loggingModule?.let { loggingModule ->
             items.add(LoggingHeaderViewModel(loggingModule, areLogMessagesExpanded, logMessages.isNotEmpty()))
             if (areLogMessagesExpanded) {
                 items.addAll(logMessages.map { LogMessageViewModel(loggingModule, it) })

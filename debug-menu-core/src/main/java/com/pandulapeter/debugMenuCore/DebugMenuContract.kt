@@ -6,9 +6,11 @@ import android.app.Application
 /**
  * This interface assures that the real implementation and the "noop" variant have the same API. See one of those for the method documentations.
  */
-interface DebugMenu {
+interface DebugMenuContract {
 
-    fun initialize(application: Application, configuration: DebugMenuConfiguration)
+    var moduleConfiguration: ModuleConfiguration
+
+    fun initialize(application: Application, uiConfiguration: UiConfiguration = UiConfiguration(), moduleConfiguration: ModuleConfiguration = ModuleConfiguration())
 
     fun closeDrawer(activity: Activity): Boolean
 

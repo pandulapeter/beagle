@@ -13,21 +13,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.utils.color
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
+import com.pandulapeter.debugMenuCore.UiConfiguration
 
 
 internal class DebugMenuDrawer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    configuration: DebugMenuConfiguration = DebugMenuConfiguration(),
+    uiConfiguration: UiConfiguration = UiConfiguration(),
     onLoggingHeaderPressed: () -> Unit = {},
     onNetworkLoggingHeaderPressed: () -> Unit = {},
     onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
     private val debugMenuAdapter = DebugMenuAdapter(
-        textColor = configuration.textColor.let { configurationTextColor ->
+        textColor = uiConfiguration.textColor.let { configurationTextColor ->
             if (configurationTextColor == null) {
                 val typedValue = TypedValue()
                 context.theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
@@ -49,7 +49,7 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
 
     init {
         // Set background color
-        val backgroundColor = configuration.backgroundColor
+        val backgroundColor = uiConfiguration.backgroundColor
         if (backgroundColor == null) {
             val typedValue = TypedValue()
             context.theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)

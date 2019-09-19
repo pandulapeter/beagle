@@ -2,18 +2,24 @@ package com.pandulapeter.debugMenu
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.debugMenuCore.DebugMenu
-import com.pandulapeter.debugMenuCore.DebugMenuConfiguration
+import com.pandulapeter.debugMenuCore.DebugMenuContract
+import com.pandulapeter.debugMenuCore.ModuleConfiguration
+import com.pandulapeter.debugMenuCore.UiConfiguration
 
 /**
  * Fake implementation to be used in release builds.
  */
-object DebugMenu : DebugMenu {
+object DebugMenu : DebugMenuContract {
 
     /**
      * Does nothing.
      */
-    override fun initialize(application: Application, configuration: DebugMenuConfiguration) = Unit
+    override var moduleConfiguration = ModuleConfiguration()
+
+    /**
+     * Does nothing.
+     */
+    override fun initialize(application: Application, uiConfiguration: UiConfiguration, moduleConfiguration: ModuleConfiguration) = Unit
 
     /**
      * Does nothing and returns false.

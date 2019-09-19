@@ -1,26 +1,18 @@
 package com.pandulapeter.debugMenuCore
 
-import androidx.annotation.ColorInt
-import androidx.annotation.Dimension
 import com.pandulapeter.debugMenuCore.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.modules.LoggingModule
 import com.pandulapeter.debugMenuCore.modules.NetworkLoggingModule
 import com.pandulapeter.debugMenuCore.modules.SettingsLinkModule
 
 /**
- * Specifies the customization options and modules for the debug drawer. All parameters are optional.
- * @param backgroundColor - The resolved background color for the drawer. If null, the default window background will be used.
- * @param textColor - The resolved text color to be used for all texts. If null, textColorPrimary will be used.
- * @param drawerWidth - Custom width for the drawer. If null, 280dp will be used.
+ * Specifies the module configuration for the debug drawer. All parameters are optional.
  * @param headerModule - Allows to add a [HeaderModule] to the drawer.
  * @param settingsLinkModule - Allows to add a [SettingsLinkModule] to the drawer.
  * @param networkLoggingModule - Allows to add a [NetworkLoggingModule] to the drawer.
  * @param loggingModule - Allows to add a [LoggingModule] to the drawer.
  */
-data class DebugMenuConfiguration(
-    @ColorInt val backgroundColor: Int? = null,
-    @ColorInt val textColor: Int? = null,
-    @Dimension val drawerWidth: Int? = null,
+data class ModuleConfiguration(
     val headerModule: HeaderModule? = null,
     val settingsLinkModule: SettingsLinkModule? = null,
     val networkLoggingModule: NetworkLoggingModule? = null,
