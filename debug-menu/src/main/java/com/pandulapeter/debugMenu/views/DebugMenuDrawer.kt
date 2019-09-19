@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.WindowInsets
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 
@@ -18,10 +19,11 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit = {},
     onAuthenticationHelperHeaderPressed: () -> Unit = {},
-    onAuthenticationHelperItemClicked: (item: Pair<String, String>) -> Unit = {},
+    onAuthenticationHelperItemClicked: (account: Pair<String, String>) -> Unit = {},
     onNetworkLoggingHeaderPressed: () -> Unit = {},
     onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {},
-    onLoggingHeaderPressed: () -> Unit = {}
+    onLoggingHeaderPressed: () -> Unit = {},
+    onLogMessageClicked: (logMessage: LogMessage) -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
     private val debugMenuAdapter = DebugMenuAdapter(
@@ -36,7 +38,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
         onKeylineOverlaySwitchChanged = onKeylineOverlaySwitchChanged,
         onNetworkLoggingHeaderPressed = onNetworkLoggingHeaderPressed,
         onNetworkLogEventClicked = onNetworkLogEventClicked,
-        onLoggingHeaderPressed = onLoggingHeaderPressed
+        onLoggingHeaderPressed = onLoggingHeaderPressed,
+        onLogMessageClicked = onLogMessageClicked
     )
 
     init {

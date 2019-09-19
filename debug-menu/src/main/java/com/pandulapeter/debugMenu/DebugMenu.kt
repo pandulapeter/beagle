@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import com.pandulapeter.debugMenu.dialogs.LogPayloadDialog
 import com.pandulapeter.debugMenu.dialogs.NetworkEventBodyDialog
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
@@ -166,10 +167,9 @@ object DebugMenu : DebugMenuContract {
         onAuthenticationHelperHeaderPressed = { areTestAccountsExpanded = !areTestAccountsExpanded },
         onAuthenticationHelperItemClicked = { account -> moduleConfiguration.authenticationHelperModule?.onAccountSelected?.invoke(account) },
         onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
-        onNetworkLogEventClicked = { networkEvent ->
-            (activity as? AppCompatActivity?)?.let { activity -> NetworkEventBodyDialog.show(activity.supportFragmentManager, networkEvent, uiConfiguration) }
-        },
-        onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded }
+        onNetworkLogEventClicked = { networkEvent -> activity.openNetworkEventBodyDialog(networkEvent) },
+        onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded },
+        onLogMessageClicked = { logMessage -> activity.openLogPayloadDialog(logMessage) }
     ).also { drawer ->
         drawer.setBackground(uiConfiguration)
         drawer.updateItems(items)
@@ -210,6 +210,14 @@ object DebugMenu : DebugMenuContract {
 
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
+
+    private fun Activity.openNetworkEventBodyDialog(networkEvent: NetworkEvent) {
+        (this as? AppCompatActivity?)?.run { NetworkEventBodyDialog.show(supportFragmentManager, networkEvent, uiConfiguration) }
+    }
+
+    private fun Activity.openLogPayloadDialog(logMessage: LogMessage) {
+        (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logMessage, uiConfiguration) }
+    }
 
     private fun updateItems() {
         val items = mutableListOf<DrawerItem>()

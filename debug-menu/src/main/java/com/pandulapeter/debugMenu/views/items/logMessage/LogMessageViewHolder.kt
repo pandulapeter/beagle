@@ -8,12 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.visible
 
-internal class LogMessageViewHolder(root: View) : RecyclerView.ViewHolder(root) {
+internal class LogMessageViewHolder(root: View, onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
 
     private val messageTextView = itemView.findViewById<TextView>(R.id.message)
     private val timestampTextView = itemView.findViewById<TextView>(R.id.timestamp)
 
+    init {
+        itemView.setOnClickListener {
+            adapterPosition.let { adapterPosition ->
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onItemClicked(adapterPosition)
+                }
+            }
+        }
+    }
+
     fun bind(viewModel: LogMessageViewModel, textColor: Int) {
+        itemView.isClickable = viewModel.logMessage.payload != null
         messageTextView.text = viewModel.message
         messageTextView.setTextColor(textColor)
         timestampTextView.setTextColor(textColor)
@@ -22,7 +33,7 @@ internal class LogMessageViewHolder(root: View) : RecyclerView.ViewHolder(root) 
     }
 
     companion object {
-        fun create(parent: ViewGroup) =
-            LogMessageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_log_message, parent, false))
+        fun create(parent: ViewGroup, onItemClicked: (position: Int) -> Unit) =
+            LogMessageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_log_message, parent, false), onItemClicked)
     }
 }

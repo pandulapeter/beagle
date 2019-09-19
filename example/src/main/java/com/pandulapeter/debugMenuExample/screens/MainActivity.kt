@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
         findViewById<View>(R.id.open_debug_menu_button).setOnClickListener { DebugMenu.openDrawer(this) }
         findViewById<View>(R.id.generate_music_genre_button).setOnClickListener { generateMusicGenre() }
-        findViewById<View>(R.id.add_log_message_button).setOnClickListener { DebugMenu.log(logMessages.random()) }
+        findViewById<View>(R.id.add_log_message_button).setOnClickListener { DebugMenu.log(message = logMessages.random(), payload = listOf("Random payload", null).random()) }
         findViewById<View>(R.id.open_login_screen_button).setOnClickListener { startActivity(Intent(this, LoginActivity::class.java)) }
     }
 

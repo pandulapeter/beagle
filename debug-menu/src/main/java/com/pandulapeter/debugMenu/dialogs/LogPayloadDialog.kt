@@ -10,18 +10,18 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
-import com.pandulapeter.debugMenu.models.NetworkEvent
+import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.utils.withArguments
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
 
-internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
+internal class LogPayloadDialog : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         context?.let {
-            arguments?.networkEvent?.let { networkEvent ->
+            arguments?.logMessage?.let { logMessage ->
                 return AlertDialog.Builder(it).apply {
                     setView(LinearLayout(context).apply {
                         arguments?.uiConfiguration?.let { setBackground(it) }
@@ -30,11 +30,11 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
                         setPadding(padding, padding, padding, padding)
                         addView(AppCompatTextView(context).apply {
                             setTypeface(typeface, Typeface.BOLD)
-                            text = "${networkEvent.url}${networkEvent.duration?.let { " (duration: $it ms)" } ?: ""}"
+                            text = logMessage.message
                             setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                         addView(AppCompatTextView(context).apply {
-                            text = networkEvent.body.run { if (isEmpty()) "No payload" else this }
+                            text = logMessage.payload
                             setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = padding })
                     })
@@ -45,11 +45,11 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
     }
 
     companion object {
-        private var Bundle.networkEvent by BundleArgumentDelegate.Parcelable<NetworkEvent>("networkEvent")
+        private var Bundle.logMessage by BundleArgumentDelegate.Parcelable<LogMessage>("logMessage")
         private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiConfiguration>("uiConfiguration")
 
-        fun show(fragmentManager: FragmentManager, networkEvent: NetworkEvent, uiConfiguration: UiConfiguration) = NetworkEventBodyDialog().withArguments {
-            it.networkEvent = networkEvent
+        fun show(fragmentManager: FragmentManager, logMessage: LogMessage, uiConfiguration: UiConfiguration) = LogPayloadDialog().withArguments {
+            it.logMessage = logMessage
             it.uiConfiguration = uiConfiguration
         }.run { show(fragmentManager, tag) }
     }

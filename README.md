@@ -39,7 +39,6 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 * Fix inset handling bugs
 * Add module for environment switching
 * Add support for filtering log messages based on tags
-* Add support for log message payloads
 * Add module with device / OS information
 * Add module for taking a screenshot
 * Add support for writing custom modules

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
+import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenu.views.items.authenticationHelperHeader.AuthenticationHelperHeaderViewHolder
@@ -35,7 +36,8 @@ internal class DebugMenuAdapter(
     private val onAuthenticationHelperItemClicked: (item: Pair<String, String>) -> Unit,
     private val onNetworkLoggingHeaderPressed: () -> Unit,
     private val onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit,
-    private val onLoggingHeaderPressed: () -> Unit
+    private val onLoggingHeaderPressed: () -> Unit,
+    private val onLogMessageClicked: (logMessage: LogMessage) -> Unit
 ) : ListAdapter<DrawerItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItem>() {
 
     override fun areItemsTheSame(oldItem: DrawerItem, newItem: DrawerItem) = oldItem.id == newItem.id
@@ -72,7 +74,7 @@ internal class DebugMenuAdapter(
         R.layout.item_network_logging_header -> NetworkLoggingHeaderViewHolder.create(parent, onNetworkLoggingHeaderPressed)
         R.layout.item_network_log_event -> NetworkLogEventViewHolder.create(parent) { position -> onNetworkLogEventClicked((getItem(position) as NetworkLogEventViewModel).networkEvent) }
         R.layout.item_logging_header -> LoggingHeaderViewHolder.create(parent, onLoggingHeaderPressed)
-        R.layout.item_log_message -> LogMessageViewHolder.create(parent)
+        R.layout.item_log_message -> LogMessageViewHolder.create(parent) { position -> onLogMessageClicked((getItem(position) as LogMessageViewModel).logMessage) }
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
