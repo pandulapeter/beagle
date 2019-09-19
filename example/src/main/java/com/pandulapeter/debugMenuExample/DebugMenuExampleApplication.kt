@@ -8,6 +8,7 @@ import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
 import com.pandulapeter.debugMenuCore.configuration.modules.SettingsLinkModule
+import com.pandulapeter.debugMenuExample.networking.NetworkingManager
 
 @Suppress("unused")
 class DebugMenuExampleApplication : Application() {
@@ -25,6 +26,7 @@ class DebugMenuExampleApplication : Application() {
                 settingsLinkModule = SettingsLinkModule(),
                 keylineOverlayModule = KeylineOverlayModule(),
                 networkLoggingModule = NetworkLoggingModule(
+                    baseUrl = NetworkingManager.BASE_URL,
                     shouldShowTimestamp = true
                 ),
                 loggingModule = LoggingModule(

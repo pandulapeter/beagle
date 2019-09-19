@@ -10,6 +10,6 @@ internal data class NetworkLogEventViewModel(private val networkLoggingModule: N
 
     override val id = "networkLogMessage_${networkEvent.id}"
     val timestamp = if (networkLoggingModule.shouldShowTimestamp) SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(networkEvent.timestamp) else null
-    val url = networkEvent.url
+    val url = networkEvent.url.replace(networkLoggingModule.baseUrl, "")
     val isOutgoing = networkEvent.isOutgoing
 }

@@ -164,7 +164,7 @@ object DebugMenu : DebugMenuContract {
         onAuthenticationHelperItemClicked = { account -> moduleConfiguration.authenticationHelperModule?.onAccountSelected?.invoke(account) },
         onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
         onNetworkLogEventClicked = { networkEvent ->
-            (activity as? AppCompatActivity?)?.let { activity -> NetworkEventBodyDialog.show(activity.supportFragmentManager, networkEvent) }
+            (activity as? AppCompatActivity?)?.let { activity -> NetworkEventBodyDialog.show(activity.supportFragmentManager, networkEvent, uiConfiguration) }
         },
         onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded }
     ).also { drawer ->
