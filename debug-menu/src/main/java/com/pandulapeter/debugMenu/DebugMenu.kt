@@ -4,14 +4,17 @@ import android.app.Activity
 import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.debugMenu.dialogs.NetworkEventBodyDialog
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.debugMenu.utils.getTextColor
+import com.pandulapeter.debugMenu.utils.hideKeyboard
 import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
@@ -187,6 +190,16 @@ object DebugMenu : DebugMenuContract {
                         if (isKeylineOverlayEnabled) {
                             keylineOverlay = moduleConfiguration.keylineOverlayModule
                         }
+                        addDrawerListener(object : DrawerLayout.DrawerListener {
+
+                            override fun onDrawerStateChanged(newState: Int) = Unit
+
+                            override fun onDrawerSlide(drawerView: View, slideOffset: Float) = activity.currentFocus?.hideKeyboard() ?: Unit
+
+                            override fun onDrawerClosed(drawerView: View) = Unit
+
+                            override fun onDrawerOpened(drawerView: View) = Unit
+                        })
                     },
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT

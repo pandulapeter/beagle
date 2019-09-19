@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
@@ -29,6 +30,11 @@ internal fun Context.getTextColor(uiConfiguration: UiConfiguration) = uiConfigur
     } else {
         configurationTextColor
     }
+}
+
+internal fun View.hideKeyboard() {
+    clearFocus()
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
 }
 
 internal inline fun <T : Fragment> T.withArguments(bundleOperations: (Bundle) -> Unit): T = apply {
