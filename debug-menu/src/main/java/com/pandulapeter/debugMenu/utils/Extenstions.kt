@@ -1,6 +1,7 @@
 package com.pandulapeter.debugMenu.utils
 
 import android.content.Context
+import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import androidx.annotation.ColorRes
@@ -8,6 +9,7 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
 
@@ -27,6 +29,10 @@ internal fun Context.getTextColor(uiConfiguration: UiConfiguration) = uiConfigur
     } else {
         configurationTextColor
     }
+}
+
+internal inline fun <T : Fragment> T.withArguments(bundleOperations: (Bundle) -> Unit): T = apply {
+    arguments = Bundle().apply { bundleOperations(this) }
 }
 
 internal fun View.setBackground(uiConfiguration: UiConfiguration) {

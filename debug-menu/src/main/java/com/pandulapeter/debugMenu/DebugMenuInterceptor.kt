@@ -39,14 +39,6 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
         }
         //debugMenu.log(requestStartMessage)
 
-        DebugMenu.logNetworkEvent(
-            NetworkEvent(
-                isOutgoing = true,
-                url = "[${request.method}] ${request.url}"
-            )
-        )
-
-
         if (logHeaders) {
             if (hasRequestBody) {
                 // Request body headers are only present when installed as a network interceptor. Force
@@ -101,6 +93,14 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
             }
         }
 
+        DebugMenu.logNetworkEvent(
+            NetworkEvent(
+                isOutgoing = true,
+                body = request.body?.toString() ?: "",
+                url = "[${request.method}] ${request.url}"
+            )
+        )
+
         val startNs = System.nanoTime()
         val response: Response
         try {
@@ -121,14 +121,6 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
 //                    + ' '.toString() + response.request.url
 //                    + " (" + tookMs + "ms)")
 //        )
-
-
-        DebugMenu.logNetworkEvent(
-            NetworkEvent(
-                isOutgoing = false,
-                url = "${response.code} [${request.method}] ${request.url}"
-            )
-        )
 
         if (logHeaders) {
             val headers = response.headers
@@ -170,7 +162,7 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
                 if (!isPlaintext(buffer)) {
 //                    debugMenu.log("")
 //                    debugMenu.log("<-- END HTTP (binary " + buffer.size + "-byte body omitted)")
-                    return response
+                    //return response
                 }
 
                 if (contentLength != 0L) {
@@ -188,6 +180,15 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
                 }
             }
         }
+        DebugMenu.logNetworkEvent(
+            NetworkEvent(
+                isOutgoing = false,
+                body = response.body?.string() ?: response.message,
+                url = "${response.code} [${request.method}] ${request.url}",
+                duration = tookMs
+            )
+        )
+
         return response
     }
 

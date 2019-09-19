@@ -34,12 +34,12 @@ The library has to be initialized in the Application class. See the [example](ht
 To use the NetworkLoggingModule a custom interceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/NetworkingManager.kt).
 
 ### To do
+* Properly format JSON request / response data
 * Fix keyline overlay setting not being synchronised between activities.
 * Fix inset handling bugs
 * Add module for environment switching
 * Add support for filtering log messages based on tags
 * Add support for log message payloads
-* Add support for displaying the JSON request / response data
 * Add module with device / OS information
 * Add module for taking a screenshot
 * Add support for writing custom modules

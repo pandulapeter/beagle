@@ -5,7 +5,8 @@ import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.pandulapeter.debugMenu.dialogs.NetworkEventBodyDialog
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
@@ -162,7 +163,9 @@ object DebugMenu : DebugMenuContract {
         onAuthenticationHelperHeaderPressed = { areTestAccountsExpanded = !areTestAccountsExpanded },
         onAuthenticationHelperItemClicked = { account -> moduleConfiguration.authenticationHelperModule?.onAccountSelected?.invoke(account) },
         onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
-        onNetworkLogEventClicked = { Toast.makeText(activity, "Work in progress", Toast.LENGTH_SHORT).show() },
+        onNetworkLogEventClicked = { networkEvent ->
+            (activity as? AppCompatActivity?)?.let { activity -> NetworkEventBodyDialog.show(activity.supportFragmentManager, networkEvent) }
+        },
         onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded }
     ).also { drawer ->
         drawer.setBackground(uiConfiguration)
