@@ -18,21 +18,23 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
     override fun onResume() {
         super.onResume()
-        DebugMenu.moduleConfiguration = DebugMenu.moduleConfiguration.copy(
-            authenticationHelperModule = AuthenticationHelperModule(
+        //TODO: Come up with a nicer API for this functionality.
+        DebugMenu.modules = DebugMenu.modules.toMutableList().apply {
+            add(AuthenticationHelperModule(
                 accounts = mockAccounts,
                 onAccountSelected = { account ->
                     findViewById<EditText>(R.id.username_input).setText(account.first)
                     findViewById<EditText>(R.id.password_input).setText(account.second)
-                    DebugMenu.closeDrawer(this)
+                    DebugMenu.closeDrawer(this@LoginActivity)
                 }
-            )
-        )
+            ))
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        DebugMenu.moduleConfiguration = DebugMenu.moduleConfiguration.copy(authenticationHelperModule = null)
+        //TODO: Come up with a nicer API for this functionality.
+        DebugMenu.modules = DebugMenu.modules.toMutableList().apply { removeAll { it is AuthenticationHelperModule } }
     }
 
     override fun onBackPressed() {

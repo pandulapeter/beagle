@@ -1,3 +1,6 @@
 package com.pandulapeter.debugMenuCore.configuration.modules
 
-interface DebugMenuModule
+interface DebugMenuModule {
+
+    val id: String
+}

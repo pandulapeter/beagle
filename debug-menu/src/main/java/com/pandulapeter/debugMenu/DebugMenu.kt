@@ -29,9 +29,14 @@ import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewMod
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
 import com.pandulapeter.debugMenu.views.items.networkLoggingHeader.NetworkLoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
-import com.pandulapeter.debugMenuCore.configuration.ModuleConfiguration
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
+import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
+import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
+import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
+import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
+import com.pandulapeter.debugMenuCore.configuration.modules.SettingsLinkModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 
 /**
@@ -43,9 +48,9 @@ object DebugMenu : DebugMenuContract {
     /**
      * Update this property at any time to change the module configuration of the drawer. Using the copy function of the data classes is recommended to avoid code duplication.
      */
-    override var moduleConfiguration = ModuleConfiguration()
+    override var modules = emptyList<DebugMenuModule>()
         set(value) {
-            field = value
+            field = value.distinctBy { it.id }.sortedBy { it !is HeaderModule }
             updateItems()
         }
 
@@ -54,11 +59,11 @@ object DebugMenu : DebugMenuContract {
      * in the Application's onCreate() method.
      * @param application - The [Application] instance.
      * @param uiConfiguration - The [UiConfiguration] that specifies the appearance the drawer.
-     * @param moduleConfiguration - The [ModuleConfiguration] that specifies the contents of the drawer.
+     * @param modules - The list of [DebugMenuModule] implementations that specifies the contents of the drawer.
      */
-    override fun initialize(application: Application, uiConfiguration: UiConfiguration, moduleConfiguration: ModuleConfiguration) {
+    override fun initialize(application: Application, uiConfiguration: UiConfiguration, modules: List<DebugMenuModule>) {
         this.uiConfiguration = uiConfiguration
-        this.moduleConfiguration = moduleConfiguration
+        this.modules = modules
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
@@ -91,7 +96,8 @@ object DebugMenu : DebugMenuContract {
      * @param payload - An optional String payload that can be opened in a dialog when the user clicks on a log message. Null by default.
      */
     override fun log(message: String, tag: String?, payload: String?) {
-        moduleConfiguration.loggingModule?.run {
+        //TODO: Logs should be saved even if there is no loggingModule added.
+        loggingModule?.run {
             logMessages = logMessages.toMutableList().apply { add(0, LogMessage(message = message, tag = tag, payload = payload)) }.take(maxMessageCount)
         }
     }
@@ -102,6 +108,9 @@ object DebugMenu : DebugMenuContract {
     private var uiConfiguration = UiConfiguration()
     internal var textColor = Color.WHITE
         private set
+    private val loggingModule get() = modules.filterIsInstance<LoggingModule>().firstOrNull()
+    private val networkLoggingModule get() = modules.filterIsInstance<NetworkLoggingModule>().firstOrNull()
+    private val keylineOverlayModule get() = modules.filterIsInstance<KeylineOverlayModule>().firstOrNull()
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private var items = emptyList<DrawerItem>()
     private var isKeylineOverlayEnabled = false
@@ -109,7 +118,7 @@ object DebugMenu : DebugMenuContract {
             if (field != value) {
                 field = value
                 updateItems()
-                (if (value) moduleConfiguration.keylineOverlayModule else null).let { keylineOverlayModule ->
+                (if (value) keylineOverlayModule else null).let { keylineOverlayModule ->
                     drawers.values.forEach { drawer -> (drawer.parent as? DebugMenuDrawerLayout?)?.keylineOverlay = keylineOverlayModule }
                 }
             }
@@ -156,7 +165,8 @@ object DebugMenu : DebugMenuContract {
     }
 
     internal fun logNetworkEvent(networkEvent: NetworkEvent) {
-        moduleConfiguration.networkLoggingModule?.run {
+        //TODO: Network logs should be saved even if there is no networkLoggingModule added.
+        networkLoggingModule?.run {
             networkLogs = networkLogs.toMutableList().apply { add(0, networkEvent) }.take(maxMessageCount)
         }
     }
@@ -165,7 +175,7 @@ object DebugMenu : DebugMenuContract {
         context = activity,
         onKeylineOverlaySwitchChanged = { isKeylineOverlayEnabled = !isKeylineOverlayEnabled },
         onAuthenticationHelperHeaderPressed = { areTestAccountsExpanded = !areTestAccountsExpanded },
-        onAuthenticationHelperItemClicked = { account -> moduleConfiguration.authenticationHelperModule?.onAccountSelected?.invoke(account) },
+        onAuthenticationHelperItemClicked = { authenticationHelperModule, account -> authenticationHelperModule.onAccountSelected(account) },
         onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
         onNetworkLogEventClicked = { networkEvent -> activity.openNetworkEventBodyDialog(networkEvent) },
         onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded },
@@ -188,7 +198,7 @@ object DebugMenu : DebugMenuContract {
                             openDrawer(drawer)
                         }
                         if (isKeylineOverlayEnabled) {
-                            keylineOverlay = moduleConfiguration.keylineOverlayModule
+                            keylineOverlay = keylineOverlayModule
                         }
                         addDrawerListener(object : DrawerLayout.DrawerListener {
 
@@ -214,10 +224,10 @@ object DebugMenu : DebugMenuContract {
     private fun Activity.openNetworkEventBodyDialog(networkEvent: NetworkEvent) {
         (this as? AppCompatActivity?)?.run {
             NetworkEventBodyDialog.show(
-                supportFragmentManager,
-                networkEvent,
-                uiConfiguration,
-                moduleConfiguration.networkLoggingModule?.shouldShowHeaders == true
+                fragmentManager = supportFragmentManager,
+                networkEvent = networkEvent,
+                uiConfiguration = uiConfiguration,
+                shouldShowHeaders = networkLoggingModule?.shouldShowHeaders == true
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
@@ -229,41 +239,31 @@ object DebugMenu : DebugMenuContract {
 
     private fun updateItems() {
         val items = mutableListOf<DrawerItem>()
-
-        // Set up Header module
-        moduleConfiguration.headerModule?.let { headerModule -> items.add(HeaderViewModel(headerModule)) }
-
-        // Set up SettingsLink module
-        moduleConfiguration.settingsLinkModule?.let { settingsLinkModule -> items.add(SettingsLinkViewModel(settingsLinkModule)) }
-
-        // Set up the KeylineOverlay module
-        moduleConfiguration.keylineOverlayModule?.let { keylineOverlayModule -> items.add(KeylineOverlayViewModel(keylineOverlayModule, isKeylineOverlayEnabled)) }
-
-        // Set up the AuthenticationHelper module
-        moduleConfiguration.authenticationHelperModule?.let { authenticationHelperModule ->
-            items.add(AuthenticationHelperHeaderViewModel(authenticationHelperModule, areTestAccountsExpanded))
-            if (areTestAccountsExpanded) {
-                items.addAll(authenticationHelperModule.accounts.map { AuthenticationHelperItemViewModel(it) })
+        modules.forEach { module ->
+            when (module) {
+                is HeaderModule -> items.add(HeaderViewModel(module))
+                is SettingsLinkModule -> items.add(SettingsLinkViewModel(module))
+                is KeylineOverlayModule -> items.add(KeylineOverlayViewModel(module, isKeylineOverlayEnabled))
+                is AuthenticationHelperModule -> {
+                    items.add(AuthenticationHelperHeaderViewModel(module, areTestAccountsExpanded))
+                    if (areTestAccountsExpanded) {
+                        items.addAll(module.accounts.map { AuthenticationHelperItemViewModel(module, it) })
+                    }
+                }
+                is NetworkLoggingModule -> {
+                    items.add(NetworkLoggingHeaderViewModel(module, areNetworkLogsExpanded, networkLogs.isNotEmpty()))
+                    if (areNetworkLogsExpanded) {
+                        items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) })
+                    }
+                }
+                is LoggingModule -> {
+                    items.add(LoggingHeaderViewModel(module, areLogMessagesExpanded, logMessages.isNotEmpty()))
+                    if (areLogMessagesExpanded) {
+                        items.addAll(logMessages.map { LogMessageViewModel(module, it) })
+                    }
+                }
             }
         }
-
-        // Set up the NetworkLogging module
-        moduleConfiguration.networkLoggingModule?.let { networkLoggingModule ->
-            items.add(NetworkLoggingHeaderViewModel(networkLoggingModule, areNetworkLogsExpanded, networkLogs.isNotEmpty()))
-            if (areNetworkLogsExpanded) {
-                items.addAll(networkLogs.map { NetworkLogEventViewModel(networkLoggingModule, it) })
-            }
-        }
-
-        // Set up the Logging module
-        moduleConfiguration.loggingModule?.let { loggingModule ->
-            items.add(LoggingHeaderViewModel(loggingModule, areLogMessagesExpanded, logMessages.isNotEmpty()))
-            if (areLogMessagesExpanded) {
-                items.addAll(logMessages.map { LogMessageViewModel(loggingModule, it) })
-            }
-        }
-
-        // Update the UI
         this.items = items
         drawers.values.forEach { it.updateItems(items) }
     }

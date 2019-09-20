@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
+import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
 
 
 internal class DebugMenuDrawer @JvmOverloads constructor(
@@ -19,7 +20,7 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit = {},
     onAuthenticationHelperHeaderPressed: () -> Unit = {},
-    onAuthenticationHelperItemClicked: (account: Pair<String, String>) -> Unit = {},
+    onAuthenticationHelperItemClicked: (authenticationHelperModule: AuthenticationHelperModule, account: Pair<String, String>) -> Unit = { _, _ -> },
     onNetworkLoggingHeaderPressed: () -> Unit = {},
     onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {},
     onLoggingHeaderPressed: () -> Unit = {},

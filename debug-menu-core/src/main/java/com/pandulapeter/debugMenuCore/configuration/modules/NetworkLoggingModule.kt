@@ -2,6 +2,8 @@ package com.pandulapeter.debugMenuCore.configuration.modules
 
 /**
  * Displays an expandable list of historical network activity. Use DebugMenuInterceptorContract to push a new message to the top of the list.
+ * This module can only be added once.
+ *
  * @param title - The title of the module. "Network activity" by default.
  * @param baseUrl - When not empty, all URL-s will have the specified String filtered out. Empty by default.
  * @param shouldShowHeaders - Whether of not the detail dialog should also contain the request / response headers. False by default.
@@ -15,6 +17,8 @@ data class NetworkLoggingModule(
     val maxMessageCount: Int = 10,
     val shouldShowTimestamp: Boolean = false
 ) : DebugMenuModule {
+
+    override val id = "networkLogging"
 
     init {
         require(maxMessageCount > 0) { "DebugMenu: maxMessageCount must be larger than 0 for the NetworkLoggingModule." }

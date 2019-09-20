@@ -2,8 +2,8 @@ package com.pandulapeter.debugMenu
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.debugMenuCore.configuration.ModuleConfiguration
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 
 /**
@@ -14,12 +14,12 @@ object DebugMenu : DebugMenuContract {
     /**
      * Does nothing.
      */
-    override var moduleConfiguration = ModuleConfiguration()
+    override var modules = emptyList<DebugMenuModule>()
 
     /**
      * Does nothing.
      */
-    override fun initialize(application: Application, uiConfiguration: UiConfiguration, moduleConfiguration: ModuleConfiguration) = Unit
+    override fun initialize(application: Application, uiConfiguration: UiConfiguration, modules: List<DebugMenuModule>) = Unit
 
     /**
      * Does nothing and returns false.

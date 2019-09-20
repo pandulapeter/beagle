@@ -102,7 +102,7 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
             }
             return true
         } catch (e: EOFException) {
-            return false // Truncated UTF-8 sequence.
+            return false
         }
 
     }

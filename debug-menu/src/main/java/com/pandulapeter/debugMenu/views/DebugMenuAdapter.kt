@@ -28,12 +28,13 @@ import com.pandulapeter.debugMenu.views.items.networkLoggingHeader.NetworkLoggin
 import com.pandulapeter.debugMenu.views.items.networkLoggingHeader.NetworkLoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewHolder
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
+import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
 
 internal class DebugMenuAdapter(
     private val onSettingsLinkButtonPressed: () -> Unit,
     private val onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit,
     private val onAuthenticationHelperHeaderPressed: () -> Unit,
-    private val onAuthenticationHelperItemClicked: (item: Pair<String, String>) -> Unit,
+    private val onAuthenticationHelperItemClicked: (authenticationHelperModule: AuthenticationHelperModule, item: Pair<String, String>) -> Unit,
     private val onNetworkLoggingHeaderPressed: () -> Unit,
     private val onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit,
     private val onLoggingHeaderPressed: () -> Unit,
@@ -70,7 +71,11 @@ internal class DebugMenuAdapter(
         R.layout.item_settings_link -> SettingsLinkViewHolder.create(parent, onSettingsLinkButtonPressed)
         R.layout.item_keyline_overlay -> KeylineOverlayViewHolder.create(parent, onKeylineOverlaySwitchChanged)
         R.layout.item_authentication_helper_header -> AuthenticationHelperHeaderViewHolder.create(parent, onAuthenticationHelperHeaderPressed)
-        R.layout.item_authentication_helper_item -> AuthenticationHelperItemViewHolder.create(parent) { position -> onAuthenticationHelperItemClicked((getItem(position) as AuthenticationHelperItemViewModel).item) }
+        R.layout.item_authentication_helper_item -> AuthenticationHelperItemViewHolder.create(parent) { position ->
+            (getItem(position) as AuthenticationHelperItemViewModel).let {
+                onAuthenticationHelperItemClicked(it.authenticationHelperModule, it.item)
+            }
+        }
         R.layout.item_network_logging_header -> NetworkLoggingHeaderViewHolder.create(parent, onNetworkLoggingHeaderPressed)
         R.layout.item_network_log_event -> NetworkLogEventViewHolder.create(parent) { position -> onNetworkLogEventClicked((getItem(position) as NetworkLogEventViewModel).networkEvent) }
         R.layout.item_logging_header -> LoggingHeaderViewHolder.create(parent, onLoggingHeaderPressed)

@@ -36,6 +36,7 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 
 ### To do
 #### Bug fixes
+* Set maximum size for Interceptor data
 * Fix keyline overlay setting not being synchronised between activities
 * Dialog background not set if it is a drawable
 * Request headers are not parsed
@@ -44,7 +45,6 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 
 #### Features
 * Implement dialog 2D scrolling
-* Rewrite the API for setting the module configuration to support custom order and duplicated modules
 * Make the expandable list module more generic (single select, multiple select, simple click), add examples (environment switching)
 * Add a module for displaying a list of custom key-value pairs. An example implementation should contain device / OS information
 * Add a module for displaying a button. An example implementation should be taking a screenshot of the main view or opening the app settings page
