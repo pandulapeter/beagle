@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def debugMenuVersion = "0.0.5"
+    def debugMenuVersion = "0.0.6"
     debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:$debugMenuVersion"
     releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:$debugMenuVersion"
 }
@@ -41,7 +41,8 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 * Investigate edge-case inset handling bugs
 
 #### Features
-* Properly format JSON request / response data
+* Improve the way JSON request / response data is displayed
+* Mark logs that have payloads in the  list
 * Rewrite the API for setting the module configuration to support custom order and duplicated modules
 * Make the expandable list module more generic (single select, multiple select, simple click), add examples (environment switching)
 * Add a module for displaying a list of custom key-value pairs. An example implementation should contain device / OS information
