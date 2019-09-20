@@ -36,8 +36,13 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
                             setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                         addView(ScrollView(context).apply {
+                            val headers = if (arguments?.shouldShowHeaders == true) {
+                                "Headers:\n" +
+                                        (if (networkEvent.headers.isEmpty()) "No headers" else networkEvent.headers.joinToString("\n")) +
+                                        "\n\nPayload:\n"
+                            } else ""
                             addView(AppCompatTextView(context).apply {
-                                text = networkEvent.body.run { if (isEmpty()) "No payload" else this }
+                                text = headers + networkEvent.body.run { if (isEmpty()) "No payload" else this }
                                 setTextColor(DebugMenu.textColor)
                             }, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                         }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = padding })
@@ -51,10 +56,13 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
     companion object {
         private var Bundle.networkEvent by BundleArgumentDelegate.Parcelable<NetworkEvent>("networkEvent")
         private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiConfiguration>("uiConfiguration")
+        private var Bundle.shouldShowHeaders by BundleArgumentDelegate.Boolean("shouldShowHeaders")
 
-        fun show(fragmentManager: FragmentManager, networkEvent: NetworkEvent, uiConfiguration: UiConfiguration) = NetworkEventBodyDialog().withArguments {
-            it.networkEvent = networkEvent
-            it.uiConfiguration = uiConfiguration
-        }.run { show(fragmentManager, tag) }
+        fun show(fragmentManager: FragmentManager, networkEvent: NetworkEvent, uiConfiguration: UiConfiguration, shouldShowHeaders: Boolean) =
+            NetworkEventBodyDialog().withArguments {
+                it.networkEvent = networkEvent
+                it.uiConfiguration = uiConfiguration
+                it.shouldShowHeaders = shouldShowHeaders
+            }.run { show(fragmentManager, tag) }
     }
 }

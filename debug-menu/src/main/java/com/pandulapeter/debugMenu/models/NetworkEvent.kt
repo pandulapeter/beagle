@@ -10,6 +10,7 @@ internal data class NetworkEvent(
     val isOutgoing: Boolean,
     val url: String,
     val body: String,
+    val headers: List<String> = emptyList(),
     val timestamp: Long = System.currentTimeMillis(),
     val duration: Long? = null
 ) : Parcelable

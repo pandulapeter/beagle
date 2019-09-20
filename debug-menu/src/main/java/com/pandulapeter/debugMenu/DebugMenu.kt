@@ -212,11 +212,19 @@ object DebugMenu : DebugMenuContract {
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
     private fun Activity.openNetworkEventBodyDialog(networkEvent: NetworkEvent) {
-        (this as? AppCompatActivity?)?.run { NetworkEventBodyDialog.show(supportFragmentManager, networkEvent, uiConfiguration) }
+        (this as? AppCompatActivity?)?.run {
+            NetworkEventBodyDialog.show(
+                supportFragmentManager,
+                networkEvent,
+                uiConfiguration,
+                moduleConfiguration.networkLoggingModule?.shouldShowHeaders == true
+            )
+        } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
     private fun Activity.openLogPayloadDialog(logMessage: LogMessage) {
         (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logMessage, uiConfiguration) }
+            ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
     private fun updateItems() {

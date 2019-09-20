@@ -27,6 +27,7 @@ class DebugMenuExampleApplication : Application() {
                 keylineOverlayModule = KeylineOverlayModule(),
                 networkLoggingModule = NetworkLoggingModule(
                     baseUrl = NetworkingManager.BASE_URL,
+                    shouldShowHeaders = true,
                     shouldShowTimestamp = true
                 ),
                 loggingModule = LoggingModule(
