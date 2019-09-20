@@ -27,6 +27,7 @@ dependencies {
 ```
 
 The latest version is:
+
 [![](https://jitpack.io/v/pandulapeter/debug-menu.svg)](https://jitpack.io/#pandulapeter/debug-menu)
 
 The library has to be initialized in the Application class. See the [example](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/DebugMenuExampleApplication.kt) for details. Also, if you want to properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/MainActivity.kt).
@@ -34,17 +35,22 @@ The library has to be initialized in the Application class. See the [example](ht
 To use the NetworkLoggingModule a custom interceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/NetworkingManager.kt).
 
 ### To do
-* Properly format JSON request / response data
-* Fix keyline overlay setting not being synchronised between activities.
-* Fix inset handling bugs
-* Add module for environment switching
-* Add support for filtering log messages based on tags
-* Add module with device / OS information
-* Add module for taking a screenshot
-* Add support for writing custom modules
+#### Bug fixes
+* Fix keyline overlay setting not being synchronised between activities
 * Double-check the way the drawer is inserted into the layout hierarchy, make sure it doesn't break Activity shared element transitions
+* Investigate edge-case inset handling bugs
+
+#### Features
+* Properly format JSON request / response data
+* Rewrite the API for setting the module configuration to support custom order and duplicated modules
+* Make the expandable list module more generic (single select, multiple select, simple click), add examples (environment switching)
+* Add a module for displaying a list of custom key-value pairs. An example implementation should contain device / OS information
+* Add a module for displaying a button. An example implementation should be taking a screenshot of the main view or opening the app settings page
+* Add support for writing custom modules?
+
+#### Other
 * Test with Android 10 gestures
-* Improve this readme.
+* Add screenshots and a more detailed description to this readme.
 
 ### License
 ```

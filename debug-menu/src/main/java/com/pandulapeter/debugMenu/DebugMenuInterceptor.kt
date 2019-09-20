@@ -5,12 +5,18 @@ import com.pandulapeter.debugMenuCore.contracts.DebugMenuInterceptorContract
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.internal.http.promisesBody
 import okio.Buffer
 import okio.GzipSource
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import org.json.JSONTokener
 import java.io.EOFException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
+
 
 object DebugMenuInterceptor : DebugMenuInterceptorContract {
 
@@ -180,16 +186,24 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
                 }
             }
         }
+
+        val rawJson = response.body?.string()
+
+        val jsonLog = try {
+            val obj = JSONTokener(rawJson).nextValue()
+            if (obj is JSONObject) obj.toString(4) else (obj as? JSONArray)?.toString(4) ?: (obj as String)
+        } catch (e: JSONException) {
+            null
+        }
         DebugMenu.logNetworkEvent(
             NetworkEvent(
                 isOutgoing = false,
-                body = response.body?.string() ?: response.message,
+                body = jsonLog ?: response.message,
                 url = "${response.code} [${request.method}] ${request.url}",
                 duration = tookMs
             )
         )
-
-        return response
+        return response.newBuilder().body(rawJson?.toResponseBody(responseBody.contentType())).build()
     }
 
 
