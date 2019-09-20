@@ -3,7 +3,9 @@ package com.pandulapeter.debugMenu.dialogs
 import android.app.Dialog
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
@@ -32,19 +34,25 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
                         setPadding(padding, padding, padding, padding)
                         addView(AppCompatTextView(context).apply {
                             setTypeface(typeface, Typeface.BOLD)
-                            text = "${networkEvent.url}${networkEvent.duration?.let { " (duration: $it ms)" } ?: ""}"
+                            text = "${networkEvent.url}${networkEvent.duration?.let { "\nDuration: $it ms" } ?: ""}"
                             setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                         addView(ScrollView(context).apply {
-                            val headers = if (arguments?.shouldShowHeaders == true) {
-                                "Headers:\n" +
-                                        (if (networkEvent.headers.isEmpty()) "No headers" else networkEvent.headers.joinToString("\n")) +
-                                        "\n\nPayload:\n"
-                            } else ""
-                            addView(AppCompatTextView(context).apply {
-                                text = headers + networkEvent.body.run { if (isEmpty()) "No payload" else this }
-                                setTextColor(DebugMenu.textColor)
-                            }, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                            addView(HorizontalScrollView(context).apply {
+                                val headers = if (arguments?.shouldShowHeaders == true) {
+                                    "Headers:\n" +
+                                            (if (networkEvent.headers.isEmpty()) "No headers" else networkEvent.headers.joinToString("\n")) +
+                                            "\n\nPayload:\n"
+                                } else ""
+                                addView(AppCompatTextView(context).apply {
+                                    text = headers + networkEvent.body.run { if (isEmpty()) "No payload" else this }
+                                    setTextColor(DebugMenu.textColor)
+                                }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                                isHorizontalScrollBarEnabled = false
+                                overScrollMode = View.OVER_SCROLL_NEVER
+                            }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                            isVerticalScrollBarEnabled = false
+                            overScrollMode = View.OVER_SCROLL_NEVER
                         }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = padding })
                     })
                 }.create()

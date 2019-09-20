@@ -37,6 +37,7 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 ### To do
 #### Bug fixes
 * Fix keyline overlay setting not being synchronised between activities
+* Dialog background not set if it is a drawable
 * Double-check the way the drawer is inserted into the layout hierarchy, make sure it doesn't break Activity shared element transitions
 * Investigate edge-case inset handling bugs
 
@@ -49,7 +50,6 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 * Add support for writing custom modules?
 
 #### Other
-* Test with Android 10 gestures
 * Add screenshots and a more detailed description to this readme.
 
 ### License
