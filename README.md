@@ -38,11 +38,12 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 #### Bug fixes
 * Fix keyline overlay setting not being synchronised between activities
 * Dialog background not set if it is a drawable
+* Request headers are not parsed
 * Double-check the way the drawer is inserted into the layout hierarchy, make sure it doesn't break Activity shared element transitions
 * Investigate edge-case inset handling bugs
 
 #### Features
-* Improve the way JSON request / response data is displayed
+* Implement dialog 2D scrolling
 * Rewrite the API for setting the module configuration to support custom order and duplicated modules
 * Make the expandable list module more generic (single select, multiple select, simple click), add examples (environment switching)
 * Add a module for displaying a list of custom key-value pairs. An example implementation should contain device / OS information

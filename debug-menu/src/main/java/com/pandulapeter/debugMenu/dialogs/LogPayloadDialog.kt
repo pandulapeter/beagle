@@ -3,6 +3,7 @@ package com.pandulapeter.debugMenu.dialogs
 import android.app.Dialog
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ScrollView
@@ -29,15 +30,20 @@ internal class LogPayloadDialog : AppCompatDialogFragment() {
                         arguments?.uiConfiguration?.let { setBackground(it) }
                         orientation = LinearLayout.VERTICAL
                         val padding = context.dimension(R.dimen.large_content_padding)
-                        setPadding(padding, padding, padding, padding)
                         addView(AppCompatTextView(context).apply {
+                            setPadding(padding, padding, padding, 0)
                             setTypeface(typeface, Typeface.BOLD)
                             text = logMessage.message
                             setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                         addView(ScrollView(context).apply {
+                            isHorizontalScrollBarEnabled = false
+                            overScrollMode = View.OVER_SCROLL_NEVER
+                            setPadding(0, padding, 0, padding)
+                            clipToPadding = false
                             addView(AppCompatTextView(context).apply {
                                 text = logMessage.payload
+                                setPadding(padding, 0, padding, 0)
                                 setTextColor(DebugMenu.textColor)
                             }, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                         }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = padding })

@@ -31,14 +31,18 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
                         arguments?.uiConfiguration?.let { setBackground(it) }
                         orientation = LinearLayout.VERTICAL
                         val padding = context.dimension(R.dimen.large_content_padding)
-                        setPadding(padding, padding, padding, padding)
                         addView(AppCompatTextView(context).apply {
                             setTypeface(typeface, Typeface.BOLD)
+                            setPadding(padding, padding, padding, 0)
                             text = "${networkEvent.url}${networkEvent.duration?.let { "\nDuration: $it ms" } ?: ""}"
                             setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                         addView(ScrollView(context).apply {
+                            setPadding(0, padding, 0, padding)
+                            clipToPadding = false
                             addView(HorizontalScrollView(context).apply {
+                                setPadding(padding, 0, padding, 0)
+                                clipToPadding = false
                                 val headers = if (arguments?.shouldShowHeaders == true) {
                                     "Headers:\n" +
                                             (if (networkEvent.headers.isEmpty()) "No headers" else networkEvent.headers.joinToString("\n")) +
