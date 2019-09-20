@@ -45,64 +45,55 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
         }
         //debugMenu.log(requestStartMessage)
 
-        if (logHeaders) {
-            if (hasRequestBody) {
-                // Request body headers are only present when installed as a network interceptor. Force
-                // them to be included (when available) so there values are known.
-                if (requestBody!!.contentType() != null) {
+        if (hasRequestBody) {
+            // Request body headers are only present when installed as a network interceptor. Force
+            // them to be included (when available) so there values are known.
+            if (requestBody!!.contentType() != null) {
 //                    debugMenu.log("Content-Type: " + requestBody.contentType()!!)
-                }
-                if (requestBody.contentLength() != -1L) {
+            }
+            if (requestBody.contentLength() != -1L) {
 //                    debugMenu.log("Content-Length: " + requestBody.contentLength())
-                }
+            }
+        }
+
+        val headers = request.headers
+        var i = 0
+        val count = headers.size
+        while (i < count) {
+            val name = headers.name(i)
+            // Skip headers from the request body as they are explicitly logged above.
+            if (!"Content-Type".equals(name, ignoreCase = true) && !"Content-Length".equals(name, ignoreCase = true)) {
+                logHeader(headers, i)
+            }
+            i++
+        }
+
+        val requestJson = if (!logBody || !hasRequestBody) {
+            ""
+        } else if (bodyHasUnknownEncoding(request.headers)) {
+            "[encoded]"
+        } else {
+            val buffer = Buffer()
+            requestBody!!.writeTo(buffer)
+
+            var charset: Charset? = UTF8
+            val contentType = requestBody.contentType()
+            if (contentType != null) {
+                charset = contentType.charset(UTF8)
             }
 
-            val headers = request.headers
-            var i = 0
-            val count = headers.size
-            while (i < count) {
-                val name = headers.name(i)
-                // Skip headers from the request body as they are explicitly logged above.
-                if (!"Content-Type".equals(name, ignoreCase = true) && !"Content-Length".equals(name, ignoreCase = true)) {
-                    logHeader(headers, i)
-                }
-                i++
-            }
-
-            if (!logBody || !hasRequestBody) {
-//                debugMenu.log("--> END " + request.method)
-            } else if (bodyHasUnknownEncoding(request.headers)) {
-//                debugMenu.log("--> END " + request.method + " (encoded body omitted)")
+            //debugMenu.log("")
+            if (isPlaintext(buffer)) {
+                charset?.let { buffer.readString(it) } ?: ""
             } else {
-                val buffer = Buffer()
-                requestBody!!.writeTo(buffer)
-
-                var charset: Charset? = UTF8
-                val contentType = requestBody.contentType()
-                if (contentType != null) {
-                    charset = contentType.charset(UTF8)
-                }
-
-                //debugMenu.log("")
-                if (isPlaintext(buffer)) {
-//                    debugMenu.log(buffer.readString(charset!!))
-//                    debugMenu.log(
-//                        "--> END " + request.method
-//                                + " (" + requestBody.contentLength() + "-byte body)"
-//                    )
-                } else {
-//                    debugMenu.log(
-//                        ("--> END " + request.method + " (binary "
-//                                + requestBody.contentLength() + "-byte body omitted)")
-//                    )
-                }
+                "[Binary ${requestBody.contentLength()} -byte body]"
             }
         }
 
         DebugMenu.logNetworkEvent(
             NetworkEvent(
                 isOutgoing = true,
-                body = request.body?.toString() ?: "",
+                body = requestJson,
                 url = "[${request.method}] ${request.url}"
             )
         )

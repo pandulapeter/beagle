@@ -3,7 +3,9 @@ package com.pandulapeter.debugMenu.dialogs
 import android.app.Dialog
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.appcompat.widget.AppCompatTextView
@@ -33,9 +35,11 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
                             text = "${networkEvent.url}${networkEvent.duration?.let { " (duration: $it ms)" } ?: ""}"
                             setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                        addView(AppCompatTextView(context).apply {
-                            text = networkEvent.body.run { if (isEmpty()) "No payload" else this }
-                            setTextColor(DebugMenu.textColor)
+                        addView(ScrollView(context).apply {
+                            addView(AppCompatTextView(context).apply {
+                                text = networkEvent.body.run { if (isEmpty()) "No payload" else this }
+                                setTextColor(DebugMenu.textColor)
+                            }, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                         }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = padding })
                     })
                 }.create()
