@@ -42,7 +42,6 @@ To use the NetworkLoggingModule a custom interceptor needs to be added to the Ok
 
 #### Features
 * Improve the way JSON request / response data is displayed
-* Mark logs that have payloads in the  list
 * Rewrite the API for setting the module configuration to support custom order and duplicated modules
 * Make the expandable list module more generic (single select, multiple select, simple click), add examples (environment switching)
 * Add a module for displaying a list of custom key-value pairs. An example implementation should contain device / OS information

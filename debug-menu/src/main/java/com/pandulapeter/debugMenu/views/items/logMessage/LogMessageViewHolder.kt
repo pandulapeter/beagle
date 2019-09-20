@@ -25,7 +25,7 @@ internal class LogMessageViewHolder(root: View, onItemClicked: (position: Int) -
 
     fun bind(viewModel: LogMessageViewModel, textColor: Int) {
         itemView.isClickable = viewModel.logMessage.payload != null
-        messageTextView.text = viewModel.message
+        messageTextView.text = viewModel.message + if (viewModel.hasPayload) " *" else ""
         messageTextView.setTextColor(textColor)
         timestampTextView.setTextColor(textColor)
         timestampTextView.text = viewModel.timestamp

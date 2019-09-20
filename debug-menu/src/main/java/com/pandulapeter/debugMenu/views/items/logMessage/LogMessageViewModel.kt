@@ -11,4 +11,5 @@ internal data class LogMessageViewModel(private val loggingModule: LoggingModule
     override val id = "logMessage_${logMessage.id}"
     val timestamp = if (loggingModule.shouldShowTimestamp) SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(logMessage.timestamp) else null
     val message = logMessage.message
+    val hasPayload = logMessage.payload != null
 }
