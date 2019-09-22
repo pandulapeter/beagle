@@ -28,10 +28,10 @@ import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
-import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ExpandableDebugMenuModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ItemListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
@@ -178,7 +178,7 @@ object DebugMenu : DebugMenuContract {
             expandCollapseStates[id] = !(expandCollapseStates[id] ?: false)
             updateItems()
         },
-        onAuthenticationHelperItemClicked = { authenticationHelperModule, itemId -> authenticationHelperModule.onItemSelected(itemId) },
+        onListItemPressed = { itemListModule, itemId -> itemListModule.onItemSelected(itemId) },
         onNetworkLogEventClicked = { networkEvent -> activity.openNetworkEventBodyDialog(networkEvent) },
         onLogMessageClicked = { logMessage -> activity.openLogPayloadDialog(logMessage) }
     ).also { drawer ->
@@ -218,7 +218,6 @@ object DebugMenu : DebugMenuContract {
             }
         }
     }
-
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
@@ -261,7 +260,7 @@ object DebugMenu : DebugMenuContract {
                 is HeaderModule -> items.add(HeaderViewModel(module))
                 is SettingsLinkModule -> items.add(SettingsLinkViewModel(module))
                 is KeylineOverlayModule -> items.add(KeylineOverlayViewModel(module, isKeylineOverlayEnabled))
-                is AuthenticationHelperModule<*> -> addExpandCollapseModule(module, true) { items.addAll(module.accounts.map { AuthenticationHelperItemViewModel(module, it) }) }
+                is ItemListModule<*> -> addExpandCollapseModule(module, true) { items.addAll(module.items.map { AuthenticationHelperItemViewModel(module, it) }) }
                 is NetworkLoggingModule -> addExpandCollapseModule(module, networkLogs.isNotEmpty()) { items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) }) }
                 is LoggingModule -> addExpandCollapseModule(module, logMessages.isNotEmpty()) { items.addAll(logMessages.map { LogMessageViewModel(module, it) }) }
             }

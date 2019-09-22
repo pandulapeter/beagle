@@ -26,6 +26,13 @@
         android:inputType="textVisiblePassword" />
 
     <Button
+        android:id="@+id/open_debug_menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_content_padding"
+        android:text="@string/open_debug_menu" />
+
+    <Button
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ItemListModule
 
 
 internal class DebugMenuDrawer @JvmOverloads constructor(
@@ -20,7 +20,7 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit = {},
     onExpandCollapseHeaderPressed: (id: String) -> Unit = {},
-    onAuthenticationHelperItemClicked: (authenticationHelperModule: AuthenticationHelperModule<*>, itemId: String) -> Unit = { _, _ -> },
+    onListItemPressed: (itemListModule: ItemListModule<*>, itemId: String) -> Unit = { _, _ -> },
     onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {},
     onLogMessageClicked: (logMessage: LogMessage) -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {
@@ -32,7 +32,7 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
                 data = Uri.fromParts("package", context.packageName, null)
             })
         },
-        onAuthenticationHelperItemClicked = onAuthenticationHelperItemClicked,
+        onListItemPressed = onListItemPressed,
         onKeylineOverlaySwitchChanged = onKeylineOverlaySwitchChanged,
         onExpandCollapseHeaderPressed = onExpandCollapseHeaderPressed,
         onNetworkLogEventClicked = onNetworkLogEventClicked,

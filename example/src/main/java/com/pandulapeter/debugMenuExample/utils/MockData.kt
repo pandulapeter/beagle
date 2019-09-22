@@ -1,8 +1,8 @@
 package com.pandulapeter.debugMenuExample.utils
 
-import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ItemListModule
 
-data class Account(val username: String, val password: String) : AuthenticationHelperModule.Item {
+data class Account(val username: String, val password: String) : ItemListModule.Item {
     override val id = username
     override val name = username
 }
@@ -17,6 +17,16 @@ val mockAccounts = listOf(
     Account("User 7", "password 7"),
     Account("User 8", "password 8"),
     Account("User 9", "password 9")
+)
+
+data class BackendEnvironment(override val name: String) : ItemListModule.Item {
+    override val id = name
+}
+
+val mockBackendEnvironments = listOf(
+    BackendEnvironment("Develop"),
+    BackendEnvironment("Internal"),
+    BackendEnvironment("Production")
 )
 
 val logMessages = listOf(
