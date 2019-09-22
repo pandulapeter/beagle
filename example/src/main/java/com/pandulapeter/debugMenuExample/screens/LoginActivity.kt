@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.pandulapeter.debugMenu.DebugMenu
-import com.pandulapeter.debugMenuCore.configuration.modules.ItemListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuExample.R
 import com.pandulapeter.debugMenuExample.utils.mockAccounts
 
@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         super.onResume()
         //TODO: Come up with a nicer API for this functionality.
         DebugMenu.modules = DebugMenu.modules.toMutableList().apply {
-            add(3, ItemListModule(
+            add(3, ListModule(
                 id = TEST_ACCOUNTS_MODULE_ID,
                 title = "Test accounts",
                 items = mockAccounts,

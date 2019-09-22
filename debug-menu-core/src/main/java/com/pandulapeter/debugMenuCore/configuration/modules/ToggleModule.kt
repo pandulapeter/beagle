@@ -1,0 +1,19 @@
+package com.pandulapeter.debugMenuCore.configuration.modules
+
+import java.util.UUID
+
+/**
+ * Displays a switch that with a configurable name, initial value and behavior. Ideal for feature toggles.
+ * This module can only be added once.
+ *
+ * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
+ * @param title - The text that appears near the switch. "Keyline overlay" by default.
+ * @param initialValue - The initial value of the toggle. False by default.
+ * @param onValueChanged - Callback that gets invoked when the user changes the value of the toggle.
+ */
+data class ToggleModule(
+    override val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val initialValue: Boolean = false,
+    val onValueChanged: (newValue: Boolean) -> Unit
+) : DebugMenuModule

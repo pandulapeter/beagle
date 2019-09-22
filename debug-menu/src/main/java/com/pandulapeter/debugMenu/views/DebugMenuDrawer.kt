@@ -11,16 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenuCore.configuration.modules.ItemListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 
 
 internal class DebugMenuDrawer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit = {},
     onExpandCollapseHeaderPressed: (id: String) -> Unit = {},
-    onListItemPressed: (itemListModule: ItemListModule<*>, itemId: String) -> Unit = { _, _ -> },
+    onListItemPressed: (itemListModule: ListModule<*>, itemId: String) -> Unit = { _, _ -> },
     onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {},
     onLogMessageClicked: (logMessage: LogMessage) -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {
@@ -33,7 +32,6 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
             })
         },
         onListItemPressed = onListItemPressed,
-        onKeylineOverlaySwitchChanged = onKeylineOverlaySwitchChanged,
         onExpandCollapseHeaderPressed = onExpandCollapseHeaderPressed,
         onNetworkLogEventClicked = onNetworkLogEventClicked,
         onLogMessageClicked = onLogMessageClicked

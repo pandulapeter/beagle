@@ -10,27 +10,26 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewHolder
-import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
-import com.pandulapeter.debugMenu.views.items.expandCollapseHeader.ExpandCollapseHeaderViewHolder
-import com.pandulapeter.debugMenu.views.items.expandCollapseHeader.ExpandCollapseHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewHolder
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
-import com.pandulapeter.debugMenu.views.items.keylineOverlay.KeylineOverlayViewHolder
-import com.pandulapeter.debugMenu.views.items.keylineOverlay.KeylineOverlayViewModel
+import com.pandulapeter.debugMenu.views.items.listHeader.ListHeaderViewHolder
+import com.pandulapeter.debugMenu.views.items.listHeader.ListHeaderViewModel
+import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewHolder
+import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewHolder
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewHolder
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewHolder
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
-import com.pandulapeter.debugMenuCore.configuration.modules.ItemListModule
+import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewHolder
+import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
+import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 
 internal class DebugMenuAdapter(
     private val onSettingsLinkButtonPressed: () -> Unit,
-    private val onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit,
     private val onExpandCollapseHeaderPressed: (id: String) -> Unit,
-    private val onListItemPressed: (itemListModule: ItemListModule<*>, itemId: String) -> Unit,
+    private val onListItemPressed: (itemListModule: ListModule<*>, itemId: String) -> Unit,
     private val onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit,
     private val onLogMessageClicked: (logMessage: LogMessage) -> Unit
 ) : ListAdapter<DrawerItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItem>() {
@@ -46,9 +45,9 @@ internal class DebugMenuAdapter(
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is HeaderViewModel -> R.layout.item_header
         is SettingsLinkViewModel -> R.layout.item_button
-        is KeylineOverlayViewModel -> R.layout.item_switch
-        is ExpandCollapseHeaderViewModel -> R.layout.item_expand_collapse_header
-        is ListItemViewModel -> R.layout.item_list_element_simple
+        is ToggleViewModel -> R.layout.item_toggle
+        is ListHeaderViewModel -> R.layout.item_list_header
+        is ListItemViewModel -> R.layout.item_list
         is NetworkLogEventViewModel -> R.layout.item_network_log_event
         is LogMessageViewModel -> R.layout.item_log_message
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
@@ -57,9 +56,9 @@ internal class DebugMenuAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         R.layout.item_header -> HeaderViewHolder.create(parent)
         R.layout.item_button -> SettingsLinkViewHolder.create(parent, onSettingsLinkButtonPressed)
-        R.layout.item_switch -> KeylineOverlayViewHolder.create(parent, onKeylineOverlaySwitchChanged)
-        R.layout.item_expand_collapse_header -> ExpandCollapseHeaderViewHolder.create(parent) { position -> onExpandCollapseHeaderPressed(getItem(position).id) }
-        R.layout.item_list_element_simple -> ListItemViewHolder.create(parent) { position ->
+        R.layout.item_toggle -> ToggleViewHolder.create(parent)
+        R.layout.item_list_header -> ListHeaderViewHolder.create(parent) { position -> onExpandCollapseHeaderPressed(getItem(position).id) }
+        R.layout.item_list -> ListItemViewHolder.create(parent) { position ->
             (getItem(position) as ListItemViewModel).let {
                 onListItemPressed(it.itemListModule, it.item.id)
             }
@@ -72,8 +71,8 @@ internal class DebugMenuAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewModel, DebugMenu.textColor)
         is SettingsLinkViewHolder -> holder.bind(getItem(position) as SettingsLinkViewModel, DebugMenu.textColor)
-        is KeylineOverlayViewHolder -> holder.bind(getItem(position) as KeylineOverlayViewModel, DebugMenu.textColor)
-        is ExpandCollapseHeaderViewHolder -> holder.bind(getItem(position) as ExpandCollapseHeaderViewModel, DebugMenu.textColor)
+        is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel, DebugMenu.textColor)
+        is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel, DebugMenu.textColor)
         is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel, DebugMenu.textColor)
         is NetworkLogEventViewHolder -> holder.bind(getItem(position) as NetworkLogEventViewModel, DebugMenu.textColor)
         is LogMessageViewHolder -> holder.bind(getItem(position) as LogMessageViewModel, DebugMenu.textColor)

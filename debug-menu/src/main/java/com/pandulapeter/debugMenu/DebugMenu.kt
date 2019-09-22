@@ -20,22 +20,23 @@ import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
-import com.pandulapeter.debugMenu.views.items.expandCollapseHeader.ExpandCollapseHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
-import com.pandulapeter.debugMenu.views.items.keylineOverlay.KeylineOverlayViewModel
+import com.pandulapeter.debugMenu.views.items.listHeader.ListHeaderViewModel
+import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
+import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ExpandableDebugMenuModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
-import com.pandulapeter.debugMenuCore.configuration.modules.ItemListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
 import com.pandulapeter.debugMenuCore.configuration.modules.SettingsLinkModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 
 /**
@@ -114,6 +115,7 @@ object DebugMenu : DebugMenuContract {
     private val keylineOverlayModule get() = modules.filterIsInstance<KeylineOverlayModule>().firstOrNull()
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
+    private val toggles = mutableMapOf<String, Boolean>()
     private var items = emptyList<DrawerItem>()
     private var isKeylineOverlayEnabled = false
         set(value) {
@@ -173,7 +175,6 @@ object DebugMenu : DebugMenuContract {
     //TODO: Make sure this doesn't break Activity shared element transitions.
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
-        onKeylineOverlaySwitchChanged = { isKeylineOverlayEnabled = !isKeylineOverlayEnabled },
         onExpandCollapseHeaderPressed = { id ->
             expandCollapseStates[id] = !(expandCollapseStates[id] ?: false)
             updateItems()
@@ -242,7 +243,7 @@ object DebugMenu : DebugMenuContract {
 
         fun addExpandCollapseModule(module: ExpandableDebugMenuModule, shouldShowIcon: Boolean, addItems: () -> Unit) {
             items.add(
-                ExpandCollapseHeaderViewModel(
+                ListHeaderViewModel(
                     id = module.id,
                     title = module.title,
                     isExpanded = expandCollapseStates[module.id] == true,
@@ -259,8 +260,12 @@ object DebugMenu : DebugMenuContract {
             when (module) {
                 is HeaderModule -> items.add(HeaderViewModel(module))
                 is SettingsLinkModule -> items.add(SettingsLinkViewModel(module))
-                is KeylineOverlayModule -> items.add(KeylineOverlayViewModel(module, isKeylineOverlayEnabled))
-                is ItemListModule<*> -> addExpandCollapseModule(module, true) { items.addAll(module.items.map { ListItemViewModel(module, it) }) }
+                is KeylineOverlayModule -> items.add(ToggleViewModel(module.id, module.title, isKeylineOverlayEnabled) { newValue -> isKeylineOverlayEnabled = newValue })
+                is ToggleModule -> items.add(ToggleViewModel(module.id, module.title, toggles[module.id] ?: module.initialValue) { newValue ->
+                    toggles[module.id] = newValue
+                    module.onValueChanged(newValue)
+                })
+                is ListModule<*> -> addExpandCollapseModule(module, true) { items.addAll(module.items.map { ListItemViewModel(module, it) }) }
                 is NetworkLoggingModule -> addExpandCollapseModule(module, networkLogs.isNotEmpty()) { items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) }) }
                 is LoggingModule -> addExpandCollapseModule(module, logMessages.isNotEmpty()) { items.addAll(logMessages.map { LogMessageViewModel(module, it) }) }
             }

@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenu.views.items.expandCollapseHeader
+package com.pandulapeter.debugMenu.views.items.listHeader
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.animatedDrawable
 import com.pandulapeter.debugMenu.utils.visible
 
-internal class ExpandCollapseHeaderViewHolder(root: View, onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
+internal class ListHeaderViewHolder(root: View, onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
 
     private val titleTextView = itemView.findViewById<TextView>(R.id.title)
     private val iconImageView = itemView.findViewById<ImageView>(R.id.icon)
@@ -28,7 +28,7 @@ internal class ExpandCollapseHeaderViewHolder(root: View, onItemClicked: (positi
         }
     }
 
-    fun bind(viewModel: ExpandCollapseHeaderViewModel, textColor: Int) {
+    fun bind(viewModel: ListHeaderViewModel, textColor: Int) {
         itemView.isClickable = viewModel.shouldShowIcon
         titleTextView.text = viewModel.title
         titleTextView.setTextColor(textColor)
@@ -41,6 +41,6 @@ internal class ExpandCollapseHeaderViewHolder(root: View, onItemClicked: (positi
 
     companion object {
         fun create(parent: ViewGroup, onItemClicked: (position: Int) -> Unit) =
-            ExpandCollapseHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_expand_collapse_header, parent, false), onItemClicked)
+            ListHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_header, parent, false), onItemClicked)
     }
 }

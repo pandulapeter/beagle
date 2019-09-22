@@ -13,7 +13,6 @@ import androidx.annotation.Dimension
  * @param keylinePrimary - The distance between the edge of the screen and the secondary keyline. 72dp by default (80dp on tablets).
  * @param gridColor - The color to be used when drawing the grid. By default it will be the debug menu's text color.
  */
-//TODO: Create a generic parent module for switches.
 data class KeylineOverlayModule(
     val title: String = "Keyline overlay",
     @Dimension val keylineGrid: Int? = null,
@@ -22,5 +21,9 @@ data class KeylineOverlayModule(
     @ColorInt val gridColor: Int? = null
 ) : DebugMenuModule {
 
-    override val id = "keylineOverlay"
+    override val id = ID
+
+    companion object {
+        const val ID = "keylineOverlay"
+    }
 }

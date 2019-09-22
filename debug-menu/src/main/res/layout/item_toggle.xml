@@ -2,11 +2,11 @@
 <androidx.appcompat.widget.SwitchCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/keyline_overlay_switch"
+    android:id="@+id/toggle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/large_content_padding"
     android:paddingStart="@dimen/large_content_padding"
     android:paddingEnd="@dimen/large_content_padding"
     app:switchPadding="@dimen/large_content_padding"
-    tools:text="Keyline overlay" />
+    tools:text="Toggle" />
