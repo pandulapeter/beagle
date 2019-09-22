@@ -14,7 +14,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
-import com.pandulapeter.debugMenu.models.NetworkEvent
+import com.pandulapeter.debugMenu.models.NetworkLogItem
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenu.utils.setBackground
@@ -66,13 +66,13 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
     }
 
     companion object {
-        private var Bundle.networkEvent by BundleArgumentDelegate.Parcelable<NetworkEvent>("networkEvent")
+        private var Bundle.networkEvent by BundleArgumentDelegate.Parcelable<NetworkLogItem>("networkLogItem")
         private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiConfiguration>("uiConfiguration")
         private var Bundle.shouldShowHeaders by BundleArgumentDelegate.Boolean("shouldShowHeaders")
 
-        fun show(fragmentManager: FragmentManager, networkEvent: NetworkEvent, uiConfiguration: UiConfiguration, shouldShowHeaders: Boolean) =
+        fun show(fragmentManager: FragmentManager, networkLogItem: NetworkLogItem, uiConfiguration: UiConfiguration, shouldShowHeaders: Boolean) =
             NetworkEventBodyDialog().withArguments {
-                it.networkEvent = networkEvent
+                it.networkEvent = networkLogItem
                 it.uiConfiguration = uiConfiguration
                 it.shouldShowHeaders = shouldShowHeaders
             }.run { show(fragmentManager, tag) }

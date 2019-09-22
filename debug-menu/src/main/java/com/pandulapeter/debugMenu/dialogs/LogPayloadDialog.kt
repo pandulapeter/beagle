@@ -13,7 +13,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
-import com.pandulapeter.debugMenu.models.LogMessage
+import com.pandulapeter.debugMenu.models.LogItem
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenu.utils.setBackground
@@ -55,11 +55,11 @@ internal class LogPayloadDialog : AppCompatDialogFragment() {
     }
 
     companion object {
-        private var Bundle.logMessage by BundleArgumentDelegate.Parcelable<LogMessage>("logMessage")
+        private var Bundle.logMessage by BundleArgumentDelegate.Parcelable<LogItem>("logItem")
         private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiConfiguration>("uiConfiguration")
 
-        fun show(fragmentManager: FragmentManager, logMessage: LogMessage, uiConfiguration: UiConfiguration) = LogPayloadDialog().withArguments {
-            it.logMessage = logMessage
+        fun show(fragmentManager: FragmentManager, logItem: LogItem, uiConfiguration: UiConfiguration) = LogPayloadDialog().withArguments {
+            it.logMessage = logItem
             it.uiConfiguration = uiConfiguration
         }.run { show(fragmentManager, tag) }
     }

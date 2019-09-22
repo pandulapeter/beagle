@@ -8,7 +8,7 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  * @param maxMessageCount - The maximum number of messages that will appear when expanded. 10 by default.
  * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
  */
-data class LoggingModule(
+data class LogListModule(
     override val title: String = "Logs",
     val maxMessageCount: Int = 10,
     val shouldShowTimestamp: Boolean = false
@@ -17,7 +17,7 @@ data class LoggingModule(
     override val id = ID
 
     init {
-        require(maxMessageCount > 0) { "DebugMenu: maxMessageCount must be larger than 0 for the LoggingModule." }
+        require(maxMessageCount > 0) { "DebugMenu: maxMessageCount must be larger than 0 for the LogListModule." }
     }
 
     companion object {

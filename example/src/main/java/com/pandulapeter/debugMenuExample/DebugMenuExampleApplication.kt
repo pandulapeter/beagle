@@ -7,9 +7,10 @@ import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
-import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
-import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
+import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.SettingsButtonModule
+import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuExample.networking.NetworkingManager
 import com.pandulapeter.debugMenuExample.utils.mockBackendEnvironments
@@ -28,6 +29,9 @@ class DebugMenuExampleApplication : Application() {
                     text = "Hello QA person!"
                 ),
                 SettingsButtonModule(),
+                TextModule(
+                    text = "Random text 1"
+                ),
                 KeylineOverlayToggleModule(),
                 ToggleModule(
                     title = "Feature toggle 1",
@@ -37,16 +41,19 @@ class DebugMenuExampleApplication : Application() {
                     title = "Feature toggle 2",
                     onValueChanged = { isOn -> "Feature 2 is ${if (isOn) "on" else "off"}".showToast() }
                 ),
-                NetworkLoggingModule(
+                NetworkLogListModule(
                     baseUrl = NetworkingManager.BASE_URL,
                     shouldShowHeaders = true,
                     shouldShowTimestamp = true
                 ),
-                LoggingModule(shouldShowTimestamp = true),
+                LogListModule(shouldShowTimestamp = true),
                 ListModule(
                     title = "Environment",
                     items = mockBackendEnvironments,
                     onItemSelected = { id -> mockBackendEnvironments.firstOrNull { it.id == id }?.also { environment -> environment.url.showToast() } }
+                ),
+                TextModule(
+                    text = "Random text 2"
                 ),
                 ButtonModule(
                     text = "Show a toast",

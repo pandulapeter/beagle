@@ -5,12 +5,10 @@ import kotlinx.android.parcel.Parcelize
 import java.util.UUID
 
 @Parcelize
-internal data class NetworkEvent(
+internal data class LogItem(
     val id: String = UUID.randomUUID().toString(),
-    val isOutgoing: Boolean,
-    val url: String,
-    val body: String,
-    val headers: List<String> = emptyList(),
     val timestamp: Long = System.currentTimeMillis(),
-    val duration: Long? = null
+    val message: String,
+    val tag: String?,
+    val payload: String?
 ) : Parcelable

@@ -28,6 +28,6 @@ internal class ListItemViewHolder(root: View, onItemSelected: (position: Int) ->
 
     companion object {
         fun create(parent: ViewGroup, onItemSelected: (position: Int) -> Unit) =
-            ListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false), onItemSelected)
+            ListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_item, parent, false), onItemSelected)
     }
 }

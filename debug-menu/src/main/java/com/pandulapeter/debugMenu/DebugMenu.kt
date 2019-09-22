@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.debugMenu.dialogs.LogPayloadDialog
 import com.pandulapeter.debugMenu.dialogs.NetworkEventBodyDialog
-import com.pandulapeter.debugMenu.models.LogMessage
-import com.pandulapeter.debugMenu.models.NetworkEvent
+import com.pandulapeter.debugMenu.models.LogItem
+import com.pandulapeter.debugMenu.models.NetworkLogItem
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.debugMenu.utils.getTextColor
@@ -27,8 +27,9 @@ import com.pandulapeter.debugMenu.views.items.button.ButtonViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.listHeader.ListHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
-import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
-import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
+import com.pandulapeter.debugMenu.views.items.logItem.LogItemViewModel
+import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewModel
+import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
 import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
@@ -37,9 +38,10 @@ import com.pandulapeter.debugMenuCore.configuration.modules.ExpandableDebugMenuM
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
-import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
-import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
+import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.SettingsButtonModule
+import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 
@@ -95,7 +97,7 @@ object DebugMenu : DebugMenuContract {
     }
 
     /**
-     * Adds a log message item which will be displayed at the top of the list if the [LoggingModule] is enabled.
+     * Adds a log message item which will be displayed at the top of the list if the [LogListModule] is enabled.
      *
      * @param message - The message that should be logged.
      * @param tag - An optional tag that can be later used for filtering. Null by default.
@@ -104,7 +106,7 @@ object DebugMenu : DebugMenuContract {
     override fun log(message: String, tag: String?, payload: String?) {
         //TODO: Logs should be saved even if there is no loggingModule added.
         loggingModule?.run {
-            logMessages = logMessages.toMutableList().apply { add(0, LogMessage(message = message, tag = tag, payload = payload)) }.take(maxMessageCount)
+            logMessages = logMessages.toMutableList().apply { add(0, LogItem(message = message, tag = tag, payload = payload)) }.take(maxMessageCount)
         }
     }
     //endregion
@@ -114,8 +116,8 @@ object DebugMenu : DebugMenuContract {
     private var uiConfiguration = UiConfiguration()
     internal var textColor = Color.WHITE
         private set
-    private val loggingModule get() = modules.filterIsInstance<LoggingModule>().firstOrNull()
-    private val networkLoggingModule get() = modules.filterIsInstance<NetworkLoggingModule>().firstOrNull()
+    private val loggingModule get() = modules.filterIsInstance<LogListModule>().firstOrNull()
+    private val networkLoggingModule get() = modules.filterIsInstance<NetworkLogListModule>().firstOrNull()
     private val keylineOverlayModule get() = modules.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
@@ -131,12 +133,12 @@ object DebugMenu : DebugMenuContract {
                 }
             }
         }
-    private var logMessages = emptyList<LogMessage>()
+    private var logMessages = emptyList<LogItem>()
         set(value) {
             field = value
             updateItems()
         }
-    private var networkLogs = emptyList<NetworkEvent>()
+    private var networkLogs = emptyList<NetworkLogItem>()
         set(value) {
             field = value
             updateItems()
@@ -169,10 +171,10 @@ object DebugMenu : DebugMenuContract {
         )
     }
 
-    internal fun logNetworkEvent(networkEvent: NetworkEvent) {
+    internal fun logNetworkEvent(networkLogItem: NetworkLogItem) {
         //TODO: Network logs should be saved even if there is no networkLoggingModule added.
         networkLoggingModule?.run {
-            networkLogs = networkLogs.toMutableList().apply { add(0, networkEvent) }.take(maxMessageCount)
+            networkLogs = networkLogs.toMutableList().apply { add(0, networkLogItem) }.take(maxMessageCount)
         }
     }
 
@@ -226,19 +228,19 @@ object DebugMenu : DebugMenuContract {
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
-    private fun Activity.openNetworkEventBodyDialog(networkEvent: NetworkEvent) {
+    private fun Activity.openNetworkEventBodyDialog(networkLogItem: NetworkLogItem) {
         (this as? AppCompatActivity?)?.run {
             NetworkEventBodyDialog.show(
                 fragmentManager = supportFragmentManager,
-                networkEvent = networkEvent,
+                networkLogItem = networkLogItem,
                 uiConfiguration = uiConfiguration,
                 shouldShowHeaders = networkLoggingModule?.shouldShowHeaders == true
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
-    private fun Activity.openLogPayloadDialog(logMessage: LogMessage) {
-        (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logMessage, uiConfiguration) }
+    private fun Activity.openLogPayloadDialog(logItem: LogItem) {
+        (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logItem, uiConfiguration) }
             ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
@@ -261,9 +263,10 @@ object DebugMenu : DebugMenuContract {
 
         modules.forEach { module ->
             when (module) {
-                is HeaderModule -> items.add(
-                    HeaderViewModel(
-                        headerModule = module
+                is TextModule -> items.add(
+                    TextViewModel(
+                        id = module.id,
+                        text = module.text
                     )
                 )
                 is ToggleModule -> items.add(
@@ -272,16 +275,11 @@ object DebugMenu : DebugMenuContract {
                         title = module.title,
                         isEnabled = toggles[module.id] ?: module.initialValue,
                         onToggleStateChanged = { newValue ->
-                            toggles[module.id] = newValue
-                            module.onValueChanged(newValue)
+                            if (toggles[module.id] != newValue) {
+                                module.onValueChanged(newValue)
+                                toggles[module.id] = newValue
+                            }
                         })
-                )
-                is KeylineOverlayToggleModule -> items.add(
-                    ToggleViewModel(
-                        id = module.id,
-                        title = module.title,
-                        isEnabled = isKeylineOverlayEnabled,
-                        onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
                 )
                 is ButtonModule -> items.add(
                     ButtonViewModel(
@@ -289,6 +287,23 @@ object DebugMenu : DebugMenuContract {
                         text = module.text,
                         onButtonPressed = module.onButtonPressed
                     )
+                )
+                is ListModule<*> -> addExpandCollapseModule(
+                    module = module,
+                    shouldShowIcon = true,
+                    addItems = { items.addAll(module.items.map { ListItemViewModel(module, it) }) }
+                )
+                is HeaderModule -> items.add(
+                    HeaderViewModel(
+                        headerModule = module
+                    )
+                )
+                is KeylineOverlayToggleModule -> items.add(
+                    ToggleViewModel(
+                        id = module.id,
+                        title = module.title,
+                        isEnabled = isKeylineOverlayEnabled,
+                        onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
                 )
                 is SettingsButtonModule -> items.add(
                     ButtonViewModel(
@@ -303,21 +318,15 @@ object DebugMenu : DebugMenuContract {
                             }
                         })
                 )
-
-                is ListModule<*> -> addExpandCollapseModule(
-                    module = module,
-                    shouldShowIcon = true,
-                    addItems = { items.addAll(module.items.map { ListItemViewModel(module, it) }) }
-                )
-                is NetworkLoggingModule -> addExpandCollapseModule(
+                is NetworkLogListModule -> addExpandCollapseModule(
                     module = module,
                     shouldShowIcon = networkLogs.isNotEmpty(),
-                    addItems = { items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) }) }
+                    addItems = { items.addAll(networkLogs.map { NetworkLogItemViewModel(module, it) }) }
                 )
-                is LoggingModule -> addExpandCollapseModule(
+                is LogListModule -> addExpandCollapseModule(
                     module = module,
                     shouldShowIcon = logMessages.isNotEmpty(),
-                    addItems = { items.addAll(logMessages.map { LogMessageViewModel(module, it) }) }
+                    addItems = { items.addAll(logMessages.map { LogItemViewModel(module, it) }) }
                 )
             }
         }

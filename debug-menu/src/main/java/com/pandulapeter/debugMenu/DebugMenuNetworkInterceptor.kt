@@ -1,7 +1,7 @@
 package com.pandulapeter.debugMenu
 
-import com.pandulapeter.debugMenu.models.NetworkEvent
-import com.pandulapeter.debugMenuCore.contracts.DebugMenuInterceptorContract
+import com.pandulapeter.debugMenu.models.NetworkLogItem
+import com.pandulapeter.debugMenuCore.contracts.DebugMenuNetworkInterceptorContract
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -16,7 +16,7 @@ import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
 //TODO: Set maximum size for Strings to avoid crashes when parsing huge JSON-s.
-object DebugMenuInterceptor : DebugMenuInterceptorContract {
+object DebugMenuNetworkInterceptor : DebugMenuNetworkInterceptorContract {
 
     private val UTF8 = Charset.forName("UTF-8")
 
@@ -43,7 +43,7 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
         }
         //TODO: Request headers are not properly parsed
         DebugMenu.logNetworkEvent(
-            NetworkEvent(
+            NetworkLogItem(
                 isOutgoing = true,
                 body = requestJson.formatToJson() ?: "",
                 headers = request.headers.map { "[${it.first}]: ${it.second}" },
@@ -56,7 +56,7 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
             response = chain.proceed(request)
         } catch (exception: Exception) {
             DebugMenu.logNetworkEvent(
-                NetworkEvent(
+                NetworkLogItem(
                     isOutgoing = false,
                     body = exception.message ?: "HTTP Failed",
                     url = "FAIL [${request.method}] ${request.url}",
@@ -69,7 +69,7 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
         val responseBody = response.body
         val responseJson = response.body?.string()
         DebugMenu.logNetworkEvent(
-            NetworkEvent(
+            NetworkLogItem(
                 isOutgoing = false,
                 body = responseJson?.formatToJson() ?: response.message,
                 headers = response.headers.map { "[${it.first}]: ${it.second}" },

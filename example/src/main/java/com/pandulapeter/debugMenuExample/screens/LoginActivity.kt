@@ -17,8 +17,8 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         findViewById<View>(R.id.back_button).setOnClickListener { supportFinishAfterTransition() }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         //TODO: Come up with a nicer API for this functionality.
         DebugMenu.modules = DebugMenu.modules.toMutableList().apply {
             add(3, ListModule(
@@ -36,8 +36,8 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         //TODO: Come up with a nicer API for this functionality.
         DebugMenu.modules = DebugMenu.modules.filterNot { it.id == TEST_ACCOUNTS_MODULE_ID }
     }
