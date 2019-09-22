@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         super.onStart()
         //TODO: Come up with a nicer API for this functionality.
         DebugMenu.modules = DebugMenu.modules.toMutableList().apply {
-            add(3, ListModule(
+            add(0, ListModule(
                 id = TEST_ACCOUNTS_MODULE_ID,
                 title = "Test accounts",
                 items = mockAccounts,

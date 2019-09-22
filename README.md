@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def debugMenuVersion = "0.0.8"
+    def debugMenuVersion = "0.0.9"
     debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:$debugMenuVersion"
     releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:$debugMenuVersion"
 }
@@ -62,7 +62,7 @@ Unique modules can only be added once as they are specific to a single use case:
 * Create a base class for dialogs with proper 2D scrolling
 * Add a generic module for displaying a list of custom key-value pairs
 * Add a unique module that displays device / OS information
-* Add a unique module for taking a screenshot of the app
+* Add a unique button module for taking a screenshot of the app
 * Add support for dividers
 * Add screenshots and a more detailed description to this readme
 
