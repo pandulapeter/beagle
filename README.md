@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def debugMenuVersion = "0.0.7"
+    def debugMenuVersion = "0.0.8"
     debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:$debugMenuVersion"
     releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:$debugMenuVersion"
 }
@@ -41,7 +41,7 @@ After this a list of modules needs to be provided, but this can be changed at an
 
 ### Modules
 Any number of generic modules can be added in any order as long as they have a unique ID:
-* [Text](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/TextModule.kt) - This module displays simple string.
+* [Text](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/TextModule.kt) - This module displays simple text content.
 * [Toggle](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ToggleModule.kt) - This module displays a switch with a custom title and behavior - ideal for feature toggles.
 * [Button](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ButtonModule.kt) - This module displays a button with configurable text and action.
 * [List](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ListModule.kt) - This module will display an expandable list of items configured by you. When an item is selected, a custom callback gets invoked. Possible use cases could be providing a list of test accounts to make the login process faster or allowing the user to switch between backend environments.
