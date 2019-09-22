@@ -59,11 +59,9 @@ object DebugMenu : DebugMenuContract {
      * in the Application's onCreate() method.
      * @param application - The [Application] instance.
      * @param uiConfiguration - The [UiConfiguration] that specifies the appearance the drawer.
-     * @param modules - The list of [DebugMenuModule] implementations that specifies the contents of the drawer.
      */
-    override fun initialize(application: Application, uiConfiguration: UiConfiguration, modules: List<DebugMenuModule>) {
+    override fun initialize(application: Application, uiConfiguration: UiConfiguration) {
         this.uiConfiguration = uiConfiguration
-        this.modules = modules
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
@@ -162,6 +160,18 @@ object DebugMenu : DebugMenuContract {
         override fun onActivityDestroyed(activity: Activity) {
             drawers.remove(activity)
         }
+    }
+
+    init {
+        modules = listOf(
+            HeaderModule(
+                title = "DebugMenu",
+                subtitle = "Version ${BuildConfig.VERSION_NAME}",
+                text = "Configure the list of modules by changing the value of DebugMenu.modules.",
+                shouldShowBuildDate = false,
+                shouldShowBuildTime = false
+            )
+        )
     }
 
     internal fun logNetworkEvent(networkEvent: NetworkEvent) {

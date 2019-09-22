@@ -8,6 +8,8 @@
     android:paddingTop="@dimen/large_content_padding"
     android:paddingEnd="@dimen/large_content_padding">
 
+    <!--TODO: Use a single TextView with Spannable. -->
+
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"

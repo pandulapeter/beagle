@@ -12,7 +12,7 @@ interface DebugMenuContract {
 
     var modules: List<DebugMenuModule>
 
-    fun initialize(application: Application, uiConfiguration: UiConfiguration = UiConfiguration(), modules: List<DebugMenuModule> = emptyList())
+    fun initialize(application: Application, uiConfiguration: UiConfiguration = UiConfiguration())
 
     fun closeDrawer(activity: Activity): Boolean
 

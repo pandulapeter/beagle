@@ -14,9 +14,9 @@ class DebugMenuExampleApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        DebugMenu.initialize(
-            application = this,
-            modules = listOf(
+        if (BuildConfig.DEBUG) {
+            DebugMenu.initialize(this)
+            DebugMenu.modules = listOf(
                 HeaderModule(
                     title = getString(R.string.app_name),
                     subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
@@ -31,6 +31,6 @@ class DebugMenuExampleApplication : Application() {
                 ),
                 LoggingModule(shouldShowTimestamp = true)
             )
-        )
+        }
     }
 }
