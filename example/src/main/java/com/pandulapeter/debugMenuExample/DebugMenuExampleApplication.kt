@@ -50,7 +50,7 @@ class DebugMenuExampleApplication : Application() {
                 ListModule(
                     title = "Environment",
                     items = mockBackendEnvironments,
-                    onItemSelected = { id -> mockBackendEnvironments.firstOrNull { it.id == id }?.also { environment -> environment.url.showToast() } }
+                    onItemSelected = { backendEnvironment -> backendEnvironment.url.showToast() }
                 ),
                 TextModule(
                     text = "Random text 2"

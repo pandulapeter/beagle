@@ -1,6 +1,6 @@
 package com.pandulapeter.debugMenu.views.items
 
-internal interface DrawerItem {
+internal interface DrawerItemViewModel {
 
     val id: String
     val shouldUsePayloads: Boolean get() = false

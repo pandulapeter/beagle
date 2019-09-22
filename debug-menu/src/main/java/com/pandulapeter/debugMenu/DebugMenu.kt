@@ -22,7 +22,7 @@ import com.pandulapeter.debugMenu.utils.hideKeyboard
 import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
-import com.pandulapeter.debugMenu.views.items.DrawerItem
+import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 import com.pandulapeter.debugMenu.views.items.button.ButtonViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.listHeader.ListHeaderViewModel
@@ -122,7 +122,7 @@ object DebugMenu : DebugMenuContract {
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private val toggles = mutableMapOf<String, Boolean>()
-    private var items = emptyList<DrawerItem>()
+    private var items = emptyList<DrawerItemViewModel>()
     private var isKeylineOverlayEnabled = false
         set(value) {
             if (field != value) {
@@ -185,7 +185,6 @@ object DebugMenu : DebugMenuContract {
             expandCollapseStates[id] = !(expandCollapseStates[id] ?: false)
             updateItems()
         },
-        onListItemPressed = { itemListModule, itemId -> itemListModule.onItemSelected(itemId) },
         onNetworkLogEventClicked = { networkEvent -> activity.openNetworkEventBodyDialog(networkEvent) },
         onLogMessageClicked = { logMessage -> activity.openLogPayloadDialog(logMessage) }
     ).also { drawer ->
@@ -245,9 +244,9 @@ object DebugMenu : DebugMenuContract {
     }
 
     private fun updateItems() {
-        val items = mutableListOf<DrawerItem>()
+        val items = mutableListOf<DrawerItemViewModel>()
 
-        fun addExpandCollapseModule(module: ExpandableDebugMenuModule, shouldShowIcon: Boolean, addItems: () -> Unit) {
+        fun addListModule(module: ExpandableDebugMenuModule, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
             items.add(
                 ListHeaderViewModel(
                     id = module.id,
@@ -257,7 +256,7 @@ object DebugMenu : DebugMenuContract {
                 )
             )
             if (expandCollapseStates[module.id] == true) {
-                addItems()
+                items.addAll(addItems())
             }
         }
 
@@ -288,10 +287,18 @@ object DebugMenu : DebugMenuContract {
                         onButtonPressed = module.onButtonPressed
                     )
                 )
-                is ListModule<*> -> addExpandCollapseModule(
+                is ListModule<*> -> addListModule(
                     module = module,
                     shouldShowIcon = true,
-                    addItems = { items.addAll(module.items.map { ListItemViewModel(module, it) }) }
+                    addItems = {
+                        module.items.map { item ->
+                            ListItemViewModel(
+                                listModuleId = module.id,
+                                item = item,
+                                onItemSelected = { module.invokeItemSelectedCallback(item.id) }
+                            )
+                        }
+                    }
                 )
                 is HeaderModule -> items.add(
                     HeaderViewModel(
@@ -318,15 +325,15 @@ object DebugMenu : DebugMenuContract {
                             }
                         })
                 )
-                is NetworkLogListModule -> addExpandCollapseModule(
+                is NetworkLogListModule -> addListModule(
                     module = module,
                     shouldShowIcon = networkLogs.isNotEmpty(),
-                    addItems = { items.addAll(networkLogs.map { NetworkLogItemViewModel(module, it) }) }
+                    addItems = { networkLogs.map { NetworkLogItemViewModel(module, it) } }
                 )
-                is LogListModule -> addExpandCollapseModule(
+                is LogListModule -> addListModule(
                     module = module,
                     shouldShowIcon = logMessages.isNotEmpty(),
-                    addItems = { items.addAll(logMessages.map { LogItemViewModel(module, it) }) }
+                    addItems = { logMessages.map { LogItemViewModel(module, it) } }
                 )
             }
         }

@@ -58,6 +58,7 @@ Unique modules can only be added once as they are specific to a single use case:
 * To properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/screens/MainActivity.kt).
 
 ### To do
+* Add API to dynamically enable / disable the drawer
 * Create a base class for dialogs with proper 2D scrolling
 * Add a generic module for displaying a list of custom key-value pairs
 * Add a unique module that displays device / OS information

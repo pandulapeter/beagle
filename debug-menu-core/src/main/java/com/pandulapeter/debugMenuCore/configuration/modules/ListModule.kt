@@ -10,22 +10,24 @@ import java.util.UUID
  *
  * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the list, a suitable default value is auto-generated.
  * @param title - The text that appears in the header of the module.
- * @param items - The hardcoded list of items.
- * @param onItemSelected - The callback that will be executed when an item is selected.
+ * @param items - The hardcoded list of items implementing the [ListModule.Item] interface.
+ * @param onItemSelected - The callback that will get executed when an item is selected.
  */
 //TODO: Create a more generic implementation that also supports selection states (normal, checkbox, radio button).
 data class ListModule<T : ListModule.Item>(
     override val id: String = UUID.randomUUID().toString(),
     override val title: String,
     val items: List<T>,
-    val onItemSelected: (id: String) -> Unit
+    val onItemSelected: (item: T) -> Unit
 ) : ExpandableDebugMenuModule {
 
+    fun invokeItemSelectedCallback(id: String) = onItemSelected(items.first { it.id == id })
+
     /**
-     * Represents a single item from the list. The ID must be a unique to the list (it's used in the callback) while the name is the text displayed on the UI.
+     * Represents a single item from the list. The ID must be a unique to the list while the name is the text displayed on the UI.
      */
     interface Item {
-        val id: String
+        val id: String get() = name
         val name: String
     }
 }

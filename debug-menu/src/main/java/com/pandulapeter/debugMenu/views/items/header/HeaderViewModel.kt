@@ -1,12 +1,12 @@
 package com.pandulapeter.debugMenu.views.items.header
 
 import com.pandulapeter.debugMenu.BuildConfig
-import com.pandulapeter.debugMenu.views.items.DrawerItem
+import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 
 internal data class HeaderViewModel(
     private val headerModule: HeaderModule
-) : DrawerItem {
+) : DrawerItemViewModel {
 
     override val id = ID
     val title = headerModule.title

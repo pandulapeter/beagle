@@ -25,11 +25,9 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                 id = TEST_ACCOUNTS_MODULE_ID,
                 title = "Test accounts",
                 items = mockAccounts,
-                onItemSelected = { id ->
-                    mockAccounts.firstOrNull { it.id == id }?.let { account ->
-                        findViewById<EditText>(R.id.username_input).setText(account.username)
-                        findViewById<EditText>(R.id.password_input).setText(account.password)
-                    }
+                onItemSelected = { account ->
+                    findViewById<EditText>(R.id.username_input).setText(account.name)
+                    findViewById<EditText>(R.id.password_input).setText(account.password)
                     DebugMenu.closeDrawer(this@LoginActivity)
                 }
             ))

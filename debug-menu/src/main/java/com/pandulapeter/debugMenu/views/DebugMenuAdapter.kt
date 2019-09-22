@@ -9,7 +9,7 @@ import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.models.LogItem
 import com.pandulapeter.debugMenu.models.NetworkLogItem
-import com.pandulapeter.debugMenu.views.items.DrawerItem
+import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 import com.pandulapeter.debugMenu.views.items.button.ButtonViewHolder
 import com.pandulapeter.debugMenu.views.items.button.ButtonViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewHolder
@@ -26,21 +26,19 @@ import com.pandulapeter.debugMenu.views.items.text.TextViewHolder
 import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewHolder
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
-import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 
 internal class DebugMenuAdapter(
     private val onExpandCollapseHeaderPressed: (id: String) -> Unit,
-    private val onListItemSelected: (itemListModule: ListModule<*>, itemId: String) -> Unit,
     private val onNetworkLogEventClicked: (networkLogItem: NetworkLogItem) -> Unit,
     private val onLogMessageClicked: (logItem: LogItem) -> Unit
-) : ListAdapter<DrawerItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItem>() {
+) : ListAdapter<DrawerItemViewModel, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItemViewModel>() {
 
-    override fun areItemsTheSame(oldItem: DrawerItem, newItem: DrawerItem) = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: DrawerItemViewModel, newItem: DrawerItemViewModel) = oldItem.id == newItem.id
 
     @SuppressLint("DiffUtilEquals")
-    override fun areContentsTheSame(oldItem: DrawerItem, newItem: DrawerItem) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: DrawerItemViewModel, newItem: DrawerItemViewModel) = oldItem == newItem
 
-    override fun getChangePayload(oldItem: DrawerItem, newItem: DrawerItem): Any? = if (oldItem.shouldUsePayloads && newItem.shouldUsePayloads) "" else null
+    override fun getChangePayload(oldItem: DrawerItemViewModel, newItem: DrawerItemViewModel): Any? = if (oldItem.shouldUsePayloads && newItem.shouldUsePayloads) "" else null
 }) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
@@ -48,7 +46,7 @@ internal class DebugMenuAdapter(
         is ToggleViewModel -> R.layout.item_toggle
         is ButtonViewModel -> R.layout.item_button
         is ListHeaderViewModel -> R.layout.item_list_header
-        is ListItemViewModel -> R.layout.item_list_item
+        is ListItemViewModel<*> -> R.layout.item_list_item
         is HeaderViewModel -> R.layout.item_header
         is NetworkLogItemViewModel -> R.layout.item_network_log_event
         is LogItemViewModel -> R.layout.item_log_message
@@ -60,11 +58,7 @@ internal class DebugMenuAdapter(
         R.layout.item_toggle -> ToggleViewHolder.create(parent)
         R.layout.item_button -> ButtonViewHolder.create(parent)
         R.layout.item_list_header -> ListHeaderViewHolder.create(parent) { position -> onExpandCollapseHeaderPressed(getItem(position).id) }
-        R.layout.item_list_item -> ListItemViewHolder.create(parent) { position ->
-            (getItem(position) as ListItemViewModel).let {
-                onListItemSelected(it.itemListModule, it.item.id)
-            }
-        }
+        R.layout.item_list_item -> ListItemViewHolder.create(parent)
         R.layout.item_header -> HeaderViewHolder.create(parent)
         R.layout.item_network_log_event -> NetworkLogItemViewHolder.create(parent) { position -> onNetworkLogEventClicked((getItem(position) as NetworkLogItemViewModel).networkLogItem) }
         R.layout.item_log_message -> LogItemViewHolder.create(parent) { position -> onLogMessageClicked((getItem(position) as LogItemViewModel).logItem) }
@@ -76,7 +70,7 @@ internal class DebugMenuAdapter(
         is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel, DebugMenu.textColor)
         is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel, DebugMenu.textColor)
         is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel, DebugMenu.textColor)
-        is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel, DebugMenu.textColor)
+        is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel<*>, DebugMenu.textColor)
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewModel, DebugMenu.textColor)
         is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewModel, DebugMenu.textColor)
         is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewModel, DebugMenu.textColor)
