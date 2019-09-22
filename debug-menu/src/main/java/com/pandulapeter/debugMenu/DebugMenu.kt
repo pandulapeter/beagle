@@ -178,7 +178,7 @@ object DebugMenu : DebugMenuContract {
             expandCollapseStates[id] = !(expandCollapseStates[id] ?: false)
             updateItems()
         },
-        onAuthenticationHelperItemClicked = { authenticationHelperModule, account -> authenticationHelperModule.onAccountSelected(account) },
+        onAuthenticationHelperItemClicked = { authenticationHelperModule, itemId -> authenticationHelperModule.onItemSelected(itemId) },
         onNetworkLogEventClicked = { networkEvent -> activity.openNetworkEventBodyDialog(networkEvent) },
         onLogMessageClicked = { logMessage -> activity.openLogPayloadDialog(logMessage) }
     ).also { drawer ->
@@ -261,7 +261,7 @@ object DebugMenu : DebugMenuContract {
                 is HeaderModule -> items.add(HeaderViewModel(module))
                 is SettingsLinkModule -> items.add(SettingsLinkViewModel(module))
                 is KeylineOverlayModule -> items.add(KeylineOverlayViewModel(module, isKeylineOverlayEnabled))
-                is AuthenticationHelperModule -> addExpandCollapseModule(module, true) { items.addAll(module.accounts.map { AuthenticationHelperItemViewModel(module, it) }) }
+                is AuthenticationHelperModule<*> -> addExpandCollapseModule(module, true) { items.addAll(module.accounts.map { AuthenticationHelperItemViewModel(module, it) }) }
                 is NetworkLoggingModule -> addExpandCollapseModule(module, networkLogs.isNotEmpty()) { items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) }) }
                 is LoggingModule -> addExpandCollapseModule(module, logMessages.isNotEmpty()) { items.addAll(logMessages.map { LogMessageViewModel(module, it) }) }
             }

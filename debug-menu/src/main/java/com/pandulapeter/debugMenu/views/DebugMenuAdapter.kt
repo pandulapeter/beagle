@@ -30,7 +30,7 @@ internal class DebugMenuAdapter(
     private val onSettingsLinkButtonPressed: () -> Unit,
     private val onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit,
     private val onExpandCollapseHeaderPressed: (id: String) -> Unit,
-    private val onAuthenticationHelperItemClicked: (authenticationHelperModule: AuthenticationHelperModule, item: Pair<String, String>) -> Unit,
+    private val onAuthenticationHelperItemClicked: (authenticationHelperModule: AuthenticationHelperModule<*>, itemId: String) -> Unit,
     private val onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit,
     private val onLogMessageClicked: (logMessage: LogMessage) -> Unit
 ) : ListAdapter<DrawerItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItem>() {
@@ -61,7 +61,7 @@ internal class DebugMenuAdapter(
         R.layout.item_expand_collapse_header -> ExpandCollapseHeaderViewHolder.create(parent) { position -> onExpandCollapseHeaderPressed(getItem(position).id) }
         R.layout.item_list_element_simple -> AuthenticationHelperItemViewHolder.create(parent) { position ->
             (getItem(position) as AuthenticationHelperItemViewModel).let {
-                onAuthenticationHelperItemClicked(it.authenticationHelperModule, it.item)
+                onAuthenticationHelperItemClicked(it.authenticationHelperModule, it.item.id)
             }
         }
         R.layout.item_network_log_event -> NetworkLogEventViewHolder.create(parent) { position -> onNetworkLogEventClicked((getItem(position) as NetworkLogEventViewModel).networkEvent) }

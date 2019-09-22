@@ -22,9 +22,11 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         DebugMenu.modules = DebugMenu.modules.toMutableList().apply {
             add(AuthenticationHelperModule(
                 accounts = mockAccounts,
-                onAccountSelected = { account ->
-                    findViewById<EditText>(R.id.username_input).setText(account.first)
-                    findViewById<EditText>(R.id.password_input).setText(account.second)
+                onItemSelected = { accountId ->
+                    mockAccounts.firstOrNull { it.id == accountId }?.let { account ->
+                        findViewById<EditText>(R.id.username_input).setText(account.username)
+                        findViewById<EditText>(R.id.password_input).setText(account.password)
+                    }
                     DebugMenu.closeDrawer(this@LoginActivity)
                 }
             ))
@@ -34,7 +36,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
     override fun onPause() {
         super.onPause()
         //TODO: Come up with a nicer API for this functionality.
-        DebugMenu.modules = DebugMenu.modules.toMutableList().apply { removeAll { it is AuthenticationHelperModule } }
+        DebugMenu.modules = DebugMenu.modules.toMutableList().apply { removeAll { it is AuthenticationHelperModule<*> } }
     }
 
     override fun onBackPressed() {

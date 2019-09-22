@@ -22,7 +22,7 @@ internal class AuthenticationHelperItemViewHolder(root: View, onItemClicked: (po
     }
 
     fun bind(viewModel: AuthenticationHelperItemViewModel, textColor: Int) {
-        nameTextView.text = viewModel.item.first
+        nameTextView.text = viewModel.name
         nameTextView.setTextColor(textColor)
     }
 

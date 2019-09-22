@@ -20,7 +20,7 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit = {},
     onExpandCollapseHeaderPressed: (id: String) -> Unit = {},
-    onAuthenticationHelperItemClicked: (authenticationHelperModule: AuthenticationHelperModule, account: Pair<String, String>) -> Unit = { _, _ -> },
+    onAuthenticationHelperItemClicked: (authenticationHelperModule: AuthenticationHelperModule<*>, itemId: String) -> Unit = { _, _ -> },
     onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {},
     onLogMessageClicked: (logMessage: LogMessage) -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {

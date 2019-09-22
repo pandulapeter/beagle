@@ -1,16 +1,24 @@
 package com.pandulapeter.debugMenuExample.utils
 
+import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
+
+data class Account(val username: String, val password: String) : AuthenticationHelperModule.Item {
+    override val id = username
+    override val name = username
+}
+
 val mockAccounts = listOf(
-    "User 1" to "password 1",
-    "User 2" to "password 2",
-    "User 3" to "password 3",
-    "User 4" to "password 4",
-    "User 5" to "password 5",
-    "User 6" to "password 6",
-    "User 7" to "password 7",
-    "User 8" to "password 8",
-    "User 9" to "password 9"
+    Account("User 1", "password 1"),
+    Account("User 3", "password 3"),
+    Account("User 2", "password 2"),
+    Account("User 4", "password 4"),
+    Account("User 5", "password 5"),
+    Account("User 6", "password 6"),
+    Account("User 7", "password 7"),
+    Account("User 8", "password 8"),
+    Account("User 9", "password 9")
 )
+
 val logMessages = listOf(
     "Adding Hidden Agendas",
     "Adjusting Bell Curves",
