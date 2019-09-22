@@ -20,6 +20,6 @@ internal class KeylineOverlayViewHolder(root: View, private val onSwitchStateCha
 
     companion object {
         fun create(parent: ViewGroup, onSwitchStateChanged: (isEnabled: Boolean) -> Unit) =
-            KeylineOverlayViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_keyline_overlay, parent, false), onSwitchStateChanged)
+            KeylineOverlayViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_switch, parent, false), onSwitchStateChanged)
     }
 }

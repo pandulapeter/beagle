@@ -28,6 +28,6 @@ internal class AuthenticationHelperItemViewHolder(root: View, onItemClicked: (po
 
     companion object {
         fun create(parent: ViewGroup, onItemClicked: (position: Int) -> Unit) =
-            AuthenticationHelperItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_authentication_helper_item, parent, false), onItemClicked)
+            AuthenticationHelperItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_element_simple, parent, false), onItemClicked)
     }
 }

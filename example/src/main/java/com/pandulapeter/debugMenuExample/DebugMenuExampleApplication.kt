@@ -15,7 +15,7 @@ class DebugMenuExampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
-            DebugMenu.initialize(this)
+            DebugMenu.attachToUi(this)
             DebugMenu.modules = listOf(
                 HeaderModule(
                     title = getString(R.string.app_name),

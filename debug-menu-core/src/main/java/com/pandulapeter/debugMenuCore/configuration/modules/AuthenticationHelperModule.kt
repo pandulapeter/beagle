@@ -15,5 +15,9 @@ data class AuthenticationHelperModule(
     val onAccountSelected: (account: Pair<String, String>) -> Unit
 ) : DebugMenuModule {
 
-    override val id = "authenticationHelper"
+    override val id = ID
+
+    companion object {
+        const val ID = "authenticationHelper"
+    }
 }

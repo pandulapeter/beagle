@@ -14,9 +14,13 @@ data class LoggingModule(
     val shouldShowTimestamp: Boolean = false
 ) : DebugMenuModule {
 
-    override val id = "logging"
+    override val id = ID
 
     init {
         require(maxMessageCount > 0) { "DebugMenu: maxMessageCount must be larger than 0 for the LoggingModule." }
+    }
+
+    companion object {
+        const val ID = "logging"
     }
 }

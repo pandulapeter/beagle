@@ -20,14 +20,12 @@ import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenu.views.items.authenticationHelperHeader.AuthenticationHelperHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.authenticationHelperItem.AuthenticationHelperItemViewModel
+import com.pandulapeter.debugMenu.views.items.expandCollapseHeader.ExpandCollapseHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.keylineOverlay.KeylineOverlayViewModel
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
-import com.pandulapeter.debugMenu.views.items.loggingHeader.LoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
-import com.pandulapeter.debugMenu.views.items.networkLoggingHeader.NetworkLoggingHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
 import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
@@ -57,10 +55,11 @@ object DebugMenu : DebugMenuContract {
     /**
      * Hooks up the library to the Application's lifecycle. After this is called, a debug drawer will be inserted into every activity. This should be called
      * in the Application's onCreate() method.
+     *
      * @param application - The [Application] instance.
      * @param uiConfiguration - The [UiConfiguration] that specifies the appearance the drawer.
      */
-    override fun initialize(application: Application, uiConfiguration: UiConfiguration) {
+    override fun attachToUi(application: Application, uiConfiguration: UiConfiguration) {
         this.uiConfiguration = uiConfiguration
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
@@ -68,6 +67,7 @@ object DebugMenu : DebugMenuContract {
 
     /**
      * Tries to open the current Activity's debug drawer.
+     *
      * @param activity - The current [Activity] instance.
      */
     override fun openDrawer(activity: Activity) {
@@ -76,6 +76,7 @@ object DebugMenu : DebugMenuContract {
 
     /**
      * Tries to close the current Activity's debug drawer. For proper UX this should be used in onBackPressed() to block any other logic if it returns true.
+     *
      * @param activity - The current [Activity] instance.
      * @return - True if the drawer was open, false otherwise
      */
@@ -89,6 +90,7 @@ object DebugMenu : DebugMenuContract {
 
     /**
      * Adds a log message item which will be displayed at the top of the list if the [LoggingModule] is enabled.
+     *
      * @param message - The message that should be logged.
      * @param tag - An optional tag that can be later used for filtering. Null by default.
      * @param payload - An optional String payload that can be opened in a dialog when the user clicks on a log message. Null by default.
@@ -184,11 +186,15 @@ object DebugMenu : DebugMenuContract {
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
         onKeylineOverlaySwitchChanged = { isKeylineOverlayEnabled = !isKeylineOverlayEnabled },
-        onAuthenticationHelperHeaderPressed = { areTestAccountsExpanded = !areTestAccountsExpanded },
+        onExpandCollapseHeaderPressed = { id ->
+            when (id) {
+                AuthenticationHelperModule.ID -> areTestAccountsExpanded = !areTestAccountsExpanded
+                NetworkLoggingModule.ID -> if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded
+                LoggingModule.ID -> if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded
+            }
+        },
         onAuthenticationHelperItemClicked = { authenticationHelperModule, account -> authenticationHelperModule.onAccountSelected(account) },
-        onNetworkLoggingHeaderPressed = { if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded },
         onNetworkLogEventClicked = { networkEvent -> activity.openNetworkEventBodyDialog(networkEvent) },
-        onLoggingHeaderPressed = { if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded },
         onLogMessageClicked = { logMessage -> activity.openLogPayloadDialog(logMessage) }
     ).also { drawer ->
         drawer.setBackground(uiConfiguration)
@@ -255,19 +261,39 @@ object DebugMenu : DebugMenuContract {
                 is SettingsLinkModule -> items.add(SettingsLinkViewModel(module))
                 is KeylineOverlayModule -> items.add(KeylineOverlayViewModel(module, isKeylineOverlayEnabled))
                 is AuthenticationHelperModule -> {
-                    items.add(AuthenticationHelperHeaderViewModel(module, areTestAccountsExpanded))
+                    items.add(
+                        ExpandCollapseHeaderViewModel(
+                            id = module.id,
+                            title = module.title,
+                            isExpanded = areTestAccountsExpanded
+                        )
+                    )
                     if (areTestAccountsExpanded) {
                         items.addAll(module.accounts.map { AuthenticationHelperItemViewModel(module, it) })
                     }
                 }
                 is NetworkLoggingModule -> {
-                    items.add(NetworkLoggingHeaderViewModel(module, areNetworkLogsExpanded, networkLogs.isNotEmpty()))
+                    items.add(
+                        ExpandCollapseHeaderViewModel(
+                            id = module.id,
+                            title = module.title,
+                            isExpanded = areNetworkLogsExpanded,
+                            shouldShowIcon = networkLogs.isNotEmpty()
+                        )
+                    )
                     if (areNetworkLogsExpanded) {
                         items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) })
                     }
                 }
                 is LoggingModule -> {
-                    items.add(LoggingHeaderViewModel(module, areLogMessagesExpanded, logMessages.isNotEmpty()))
+                    items.add(
+                        ExpandCollapseHeaderViewModel(
+                            id = module.id,
+                            title = module.title,
+                            isExpanded = areLogMessagesExpanded,
+                            shouldShowIcon = logMessages.isNotEmpty()
+                        )
+                    )
                     if (areLogMessagesExpanded) {
                         items.addAll(logMessages.map { LogMessageViewModel(module, it) })
                     }

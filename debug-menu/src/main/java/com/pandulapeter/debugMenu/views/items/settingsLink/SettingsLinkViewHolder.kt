@@ -22,6 +22,6 @@ internal class SettingsLinkViewHolder(root: View, onButtonClicked: () -> Unit) :
 
     companion object {
         fun create(parent: ViewGroup, onButtonClicked: () -> Unit) =
-            SettingsLinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_settings_link, parent, false), onButtonClicked)
+            SettingsLinkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_button, parent, false), onButtonClicked)
     }
 }

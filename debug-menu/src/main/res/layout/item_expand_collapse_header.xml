@@ -11,13 +11,15 @@
     android:paddingEnd="@dimen/large_content_padding"
     android:paddingBottom="@dimen/content_padding">
 
+    <!--TODO: Use a ConstraintLayout, move chevron to the end. -->
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textStyle="bold"
-        tools:text="Logs" />
+        tools:text="Test accounts" />
 
     <ImageView
         android:id="@+id/icon"
@@ -26,6 +28,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/large_content_padding"
         android:importantForAccessibility="no"
-        tools:src="@drawable/ic_expand" />
+        tools:src="@drawable/avd_expand" />
 
 </LinearLayout>

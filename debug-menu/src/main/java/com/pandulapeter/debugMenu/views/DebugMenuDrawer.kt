@@ -19,11 +19,9 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     onKeylineOverlaySwitchChanged: (isEnabled: Boolean) -> Unit = {},
-    onAuthenticationHelperHeaderPressed: () -> Unit = {},
+    onExpandCollapseHeaderPressed: (id: String) -> Unit = {},
     onAuthenticationHelperItemClicked: (authenticationHelperModule: AuthenticationHelperModule, account: Pair<String, String>) -> Unit = { _, _ -> },
-    onNetworkLoggingHeaderPressed: () -> Unit = {},
     onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit = {},
-    onLoggingHeaderPressed: () -> Unit = {},
     onLogMessageClicked: (logMessage: LogMessage) -> Unit = {}
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
@@ -34,12 +32,10 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
                 data = Uri.fromParts("package", context.packageName, null)
             })
         },
-        onAuthenticationHelperHeaderPressed = onAuthenticationHelperHeaderPressed,
         onAuthenticationHelperItemClicked = onAuthenticationHelperItemClicked,
         onKeylineOverlaySwitchChanged = onKeylineOverlaySwitchChanged,
-        onNetworkLoggingHeaderPressed = onNetworkLoggingHeaderPressed,
+        onExpandCollapseHeaderPressed = onExpandCollapseHeaderPressed,
         onNetworkLogEventClicked = onNetworkLogEventClicked,
-        onLoggingHeaderPressed = onLoggingHeaderPressed,
         onLogMessageClicked = onLogMessageClicked
     )
 

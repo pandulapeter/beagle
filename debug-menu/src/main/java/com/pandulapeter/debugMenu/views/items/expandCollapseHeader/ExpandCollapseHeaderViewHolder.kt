@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenu.views.items.loggingHeader
+package com.pandulapeter.debugMenu.views.items.expandCollapseHeader
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.animatedDrawable
 import com.pandulapeter.debugMenu.utils.visible
 
-internal class LoggingHeaderViewHolder(root: View, onItemClicked: () -> Unit) : RecyclerView.ViewHolder(root) {
+internal class ExpandCollapseHeaderViewHolder(root: View, onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
 
     private val titleTextView = itemView.findViewById<TextView>(R.id.title)
     private val iconImageView = itemView.findViewById<ImageView>(R.id.icon)
@@ -19,22 +19,27 @@ internal class LoggingHeaderViewHolder(root: View, onItemClicked: () -> Unit) : 
     private val drawableCollapse by lazy { itemView.context.animatedDrawable(R.drawable.avd_collapse) }
 
     init {
-        itemView.setOnClickListener { onItemClicked() }
+        itemView.setOnClickListener {
+            adapterPosition.let { adapterPosition ->
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onItemClicked(adapterPosition)
+                }
+            }
+        }
     }
 
-    fun bind(viewModel: LoggingHeaderViewModel, textColor: Int) {
-        itemView.isClickable = viewModel.areThereLogMessages
+    fun bind(viewModel: ExpandCollapseHeaderViewModel, textColor: Int) {
         titleTextView.text = viewModel.title
         titleTextView.setTextColor(textColor)
-        iconImageView.visible = viewModel.areThereLogMessages
         iconImageView.setImageDrawable((if (viewModel.isExpanded) drawableExpand else drawableCollapse)?.apply {
             setTintList(ColorStateList.valueOf(textColor))
             start()
         })
+        iconImageView.visible = viewModel.shouldShowIcon
     }
 
     companion object {
-        fun create(parent: ViewGroup, onItemClicked: () -> Unit) =
-            LoggingHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_logging_header, parent, false), onItemClicked)
+        fun create(parent: ViewGroup, onItemClicked: (position: Int) -> Unit) =
+            ExpandCollapseHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_expand_collapse_header, parent, false), onItemClicked)
     }
 }

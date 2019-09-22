@@ -19,7 +19,7 @@ object DebugMenu : DebugMenuContract {
     /**
      * Does nothing.
      */
-    override fun initialize(application: Application, uiConfiguration: UiConfiguration) = Unit
+    override fun attachToUi(application: Application, uiConfiguration: UiConfiguration) = Unit
 
     /**
      * Does nothing and returns false.
