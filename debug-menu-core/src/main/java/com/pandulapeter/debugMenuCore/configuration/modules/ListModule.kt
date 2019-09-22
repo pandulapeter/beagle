@@ -6,6 +6,7 @@ import java.util.UUID
  * Displays an expandable list of custom items and exposes a callback when the user makes a selection.
  * Possible use cases could be providing a list of test accounts to make the login process faster or allowing the user to switch between backend environments.
  * The class is generic to a representation of a list item which must implement the [ListModule.Item] interface.
+ * This module can be added multiple times as long as the ID is unique.
  *
  * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the list, a suitable default value is auto-generated.
  * @param title - The text that appears in the header of the module.

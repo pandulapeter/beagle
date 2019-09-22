@@ -1,9 +1,6 @@
 package com.pandulapeter.debugMenu.views
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
 import android.util.AttributeSet
 import android.view.WindowInsets
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,13 +22,7 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
     private val debugMenuAdapter = DebugMenuAdapter(
-        onSettingsLinkButtonPressed = {
-            context.startActivity(Intent().apply {
-                action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                data = Uri.fromParts("package", context.packageName, null)
-            })
-        },
-        onListItemPressed = onListItemPressed,
+        onListItemSelected = onListItemPressed,
         onExpandCollapseHeaderPressed = onExpandCollapseHeaderPressed,
         onNetworkLogEventClicked = onNetworkLogEventClicked,
         onLogMessageClicked = onLogMessageClicked
@@ -49,8 +40,8 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     }
 
     //TODO: This doesn't seem to be working in all cases.
-    override fun dispatchApplyWindowInsets(insets: WindowInsets?): WindowInsets = super.dispatchApplyWindowInsets(insets?.also {
-        setPadding(paddingLeft, it.systemWindowInsetTop, paddingRight, it.systemWindowInsetBottom)
+    override fun dispatchApplyWindowInsets(insets: WindowInsets?): WindowInsets = super.dispatchApplyWindowInsets(insets?.also { windowsInsets ->
+        setPadding(paddingLeft, windowsInsets.systemWindowInsetTop, paddingRight, windowsInsets.systemWindowInsetBottom)
     })
 
     fun updateItems(items: List<DrawerItem>) = debugMenuAdapter.submitList(items)

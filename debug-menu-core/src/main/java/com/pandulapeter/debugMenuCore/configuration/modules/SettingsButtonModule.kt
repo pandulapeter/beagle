@@ -6,10 +6,13 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  *
  * @param text - The text that should be displayed on the button. "Open Settings" by default.
  */
-//TODO: Create a more generic parent module for buttons.
-data class SettingsLinkModule(
+data class SettingsButtonModule(
     val text: String = "Open Settings"
 ) : DebugMenuModule {
 
-    override val id = "settingsLink"
+    override val id = ID
+
+    companion object {
+        const val ID = "settingsButton"
+    }
 }

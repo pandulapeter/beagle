@@ -10,6 +10,8 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
+import com.pandulapeter.debugMenu.views.items.button.ButtonViewHolder
+import com.pandulapeter.debugMenu.views.items.button.ButtonViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewHolder
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.listHeader.ListHeaderViewHolder
@@ -20,16 +22,13 @@ import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewHolder
 import com.pandulapeter.debugMenu.views.items.logMessage.LogMessageViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewHolder
 import com.pandulapeter.debugMenu.views.items.networkLogEvent.NetworkLogEventViewModel
-import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewHolder
-import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewHolder
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 
 internal class DebugMenuAdapter(
-    private val onSettingsLinkButtonPressed: () -> Unit,
     private val onExpandCollapseHeaderPressed: (id: String) -> Unit,
-    private val onListItemPressed: (itemListModule: ListModule<*>, itemId: String) -> Unit,
+    private val onListItemSelected: (itemListModule: ListModule<*>, itemId: String) -> Unit,
     private val onNetworkLogEventClicked: (networkEvent: NetworkEvent) -> Unit,
     private val onLogMessageClicked: (logMessage: LogMessage) -> Unit
 ) : ListAdapter<DrawerItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItem>() {
@@ -44,7 +43,7 @@ internal class DebugMenuAdapter(
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is HeaderViewModel -> R.layout.item_header
-        is SettingsLinkViewModel -> R.layout.item_button
+        is ButtonViewModel -> R.layout.item_button
         is ToggleViewModel -> R.layout.item_toggle
         is ListHeaderViewModel -> R.layout.item_list_header
         is ListItemViewModel -> R.layout.item_list
@@ -55,12 +54,12 @@ internal class DebugMenuAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         R.layout.item_header -> HeaderViewHolder.create(parent)
-        R.layout.item_button -> SettingsLinkViewHolder.create(parent, onSettingsLinkButtonPressed)
+        R.layout.item_button -> ButtonViewHolder.create(parent)
         R.layout.item_toggle -> ToggleViewHolder.create(parent)
         R.layout.item_list_header -> ListHeaderViewHolder.create(parent) { position -> onExpandCollapseHeaderPressed(getItem(position).id) }
         R.layout.item_list -> ListItemViewHolder.create(parent) { position ->
             (getItem(position) as ListItemViewModel).let {
-                onListItemPressed(it.itemListModule, it.item.id)
+                onListItemSelected(it.itemListModule, it.item.id)
             }
         }
         R.layout.item_network_log_event -> NetworkLogEventViewHolder.create(parent) { position -> onNetworkLogEventClicked((getItem(position) as NetworkLogEventViewModel).networkEvent) }
@@ -70,7 +69,7 @@ internal class DebugMenuAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewModel, DebugMenu.textColor)
-        is SettingsLinkViewHolder -> holder.bind(getItem(position) as SettingsLinkViewModel, DebugMenu.textColor)
+        is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel, DebugMenu.textColor)
         is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel, DebugMenu.textColor)
         is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel, DebugMenu.textColor)
         is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel, DebugMenu.textColor)

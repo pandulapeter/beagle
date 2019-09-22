@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
 
-internal class ListItemViewHolder(root: View, onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
+internal class ListItemViewHolder(root: View, onItemSelected: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
 
     private val nameTextView = itemView.findViewById<TextView>(R.id.name)
 
@@ -15,7 +15,7 @@ internal class ListItemViewHolder(root: View, onItemClicked: (position: Int) -> 
         itemView.setOnClickListener {
             adapterPosition.let { adapterPosition ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onItemClicked(adapterPosition)
+                    onItemSelected(adapterPosition)
                 }
             }
         }
@@ -27,7 +27,7 @@ internal class ListItemViewHolder(root: View, onItemClicked: (position: Int) -> 
     }
 
     companion object {
-        fun create(parent: ViewGroup, onItemClicked: (position: Int) -> Unit) =
-            ListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false), onItemClicked)
+        fun create(parent: ViewGroup, onItemSelected: (position: Int) -> Unit) =
+            ListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false), onItemSelected)
     }
 }

@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.dimension
-import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayModule
+import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 
 internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
     context: Context,
@@ -16,7 +16,7 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    var keylineOverlay: KeylineOverlayModule? = null
+    var keylineOverlayToggle: KeylineOverlayToggleModule? = null
         set(value) {
             field = value
             if (value != null) {
@@ -39,7 +39,7 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
         canvas?.run {
-            if (keylineOverlay != null) {
+            if (keylineOverlayToggle != null) {
                 for (x in 0..width step keylineGrid) {
                     drawLine(x.toFloat(), 0f, x.toFloat(), height.toFloat(), gridPaint)
                 }

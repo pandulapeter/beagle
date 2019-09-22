@@ -3,12 +3,13 @@ package com.pandulapeter.debugMenuExample
 import android.app.Application
 import android.widget.Toast
 import com.pandulapeter.debugMenu.DebugMenu
+import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
-import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayModule
+import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLoggingModule
-import com.pandulapeter.debugMenuCore.configuration.modules.SettingsLinkModule
+import com.pandulapeter.debugMenuCore.configuration.modules.SettingsButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuExample.networking.NetworkingManager
 import com.pandulapeter.debugMenuExample.utils.mockBackendEnvironments
@@ -26,8 +27,8 @@ class DebugMenuExampleApplication : Application() {
                     subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                     text = "Hello QA person!"
                 ),
-                SettingsLinkModule(),
-                KeylineOverlayModule(),
+                SettingsButtonModule(),
+                KeylineOverlayToggleModule(),
                 ToggleModule(
                     title = "Feature toggle 1",
                     onValueChanged = { isOn -> "Feature 1 is ${if (isOn) "on" else "off"}".showToast() }
@@ -46,6 +47,10 @@ class DebugMenuExampleApplication : Application() {
                     title = "Environment",
                     items = mockBackendEnvironments,
                     onItemSelected = { id -> mockBackendEnvironments.firstOrNull { it.id == id }?.also { environment -> environment.url.showToast() } }
+                ),
+                ButtonModule(
+                    text = "Show a toast",
+                    onButtonPressed = { "Here is a toast".showToast() }
                 )
             )
         }

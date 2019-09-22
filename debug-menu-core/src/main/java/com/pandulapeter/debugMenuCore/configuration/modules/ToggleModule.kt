@@ -4,7 +4,7 @@ import java.util.UUID
 
 /**
  * Displays a switch that with a configurable name, initial value and behavior. Ideal for feature toggles.
- * This module can only be added once.
+ * This module can be added multiple times as long as the ID is unique.
  *
  * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
  * @param title - The text that appears near the switch. "Keyline overlay" by default.

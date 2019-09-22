@@ -20,9 +20,9 @@ internal class DebugMenuDrawerLayout @JvmOverloads constructor(
 
     private val container = KeylineOverlayFrameLayout(context)
     var keylineOverlay
-        get() = container.keylineOverlay
+        get() = container.keylineOverlayToggle
         set(value) {
-            container.keylineOverlay = value
+            container.keylineOverlayToggle = value
         }
 
     init {
