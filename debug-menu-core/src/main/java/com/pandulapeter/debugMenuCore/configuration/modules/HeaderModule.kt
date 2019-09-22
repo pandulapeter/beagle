@@ -11,11 +11,11 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  * @param text - Additional text you want to display on the debug drawer. Null by default (hidden text).
  */
 data class HeaderModule(
-    val title: String? = null,
-    val subtitle: String? = null,
+    val title: CharSequence? = null,
+    val subtitle: CharSequence? = null,
     val shouldShowBuildDate: Boolean = true,
     val shouldShowBuildTime: Boolean = true,
-    val text: String? = null
+    val text: CharSequence? = null
 ) : DebugMenuModule {
 
     override val id = "header"

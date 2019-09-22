@@ -12,6 +12,6 @@ import java.util.UUID
  */
 data class ButtonModule(
     override val id: String = UUID.randomUUID().toString(),
-    val text: String,
+    val text: CharSequence,
     val onButtonPressed: () -> Unit
 ) : DebugMenuModule

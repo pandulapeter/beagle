@@ -16,7 +16,7 @@ import java.util.UUID
 //TODO: Create a more generic implementation that also supports selection states (normal, checkbox, radio button).
 data class ListModule<T : ListModule.Item>(
     override val id: String = UUID.randomUUID().toString(),
-    override val title: String,
+    override val title: CharSequence,
     val items: List<T>,
     val onItemSelected: (item: T) -> Unit
 ) : ExpandableDebugMenuModule {

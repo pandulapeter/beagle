@@ -13,7 +13,7 @@ import java.util.UUID
  */
 data class ToggleModule(
     override val id: String = UUID.randomUUID().toString(),
-    val title: String,
+    val title: CharSequence,
     val initialValue: Boolean = false,
     val onValueChanged: (newValue: Boolean) -> Unit
 ) : DebugMenuModule

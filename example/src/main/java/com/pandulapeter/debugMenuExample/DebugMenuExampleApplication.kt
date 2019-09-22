@@ -9,7 +9,7 @@ import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggle
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
-import com.pandulapeter.debugMenuCore.configuration.modules.SettingsButtonModule
+import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuExample.networking.NetworkingManager
@@ -28,7 +28,7 @@ class DebugMenuExampleApplication : Application() {
                     subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                     text = "Hello QA person!"
                 ),
-                SettingsButtonModule(),
+                AppInfoButtonModule(),
                 TextModule(
                     text = "Random text 1"
                 ),

@@ -4,7 +4,7 @@ import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 
 internal data class ListHeaderViewModel(
     override val id: String,
-    val title: String,
+    val title: CharSequence,
     val isExpanded: Boolean,
     val shouldShowIcon: Boolean = true,
     val onItemSelected: () -> Unit

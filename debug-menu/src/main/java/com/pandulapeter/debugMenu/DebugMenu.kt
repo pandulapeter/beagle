@@ -41,7 +41,7 @@ import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggle
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
-import com.pandulapeter.debugMenuCore.configuration.modules.SettingsButtonModule
+import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
@@ -320,7 +320,7 @@ object DebugMenu : DebugMenuContract {
                         isEnabled = isKeylineOverlayEnabled,
                         onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
                 )
-                is SettingsButtonModule -> items.add(
+                is AppInfoButtonModule -> items.add(
                     ButtonViewModel(
                         id = module.id,
                         text = module.text,

@@ -22,7 +22,7 @@ internal class HeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
         hintTextView.setUpWithText(viewModel.text, textColor)
     }
 
-    private fun TextView.setUpWithText(content: String?, textColor: Int) {
+    private fun TextView.setUpWithText(content: CharSequence?, textColor: Int) {
         visible = content != null
         text = content
         setTextColor(textColor)

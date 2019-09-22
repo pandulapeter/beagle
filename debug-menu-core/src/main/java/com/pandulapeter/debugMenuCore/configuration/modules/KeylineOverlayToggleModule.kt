@@ -14,7 +14,7 @@ import androidx.annotation.Dimension
  * @param gridColor - The color to be used when drawing the grid. By default it will be the debug menu's text color.
  */
 data class KeylineOverlayToggleModule(
-    val title: String = "Keyline overlay",
+    val title: CharSequence = "Keyline overlay",
     @Dimension val keylineGrid: Int? = null,
     @Dimension val keylinePrimary: Int? = null,
     @Dimension val keylineSecondary: Int? = null,
