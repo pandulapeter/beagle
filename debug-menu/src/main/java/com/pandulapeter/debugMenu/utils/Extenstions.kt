@@ -41,6 +41,7 @@ internal inline fun <T : Fragment> T.withArguments(bundleOperations: (Bundle) ->
     arguments = Bundle().apply { bundleOperations(this) }
 }
 
+//TODO: Doesn't seem to be working for dialogs.
 internal fun View.setBackground(uiConfiguration: UiConfiguration) {
     val backgroundColor = uiConfiguration.backgroundColor
     if (backgroundColor == null) {

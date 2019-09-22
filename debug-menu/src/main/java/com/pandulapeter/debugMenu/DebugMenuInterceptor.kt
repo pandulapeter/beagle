@@ -15,7 +15,7 @@ import java.io.EOFException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
-
+//TODO: Set maximum size for Strings to avoid crashes when parsing huge JSON-s.
 object DebugMenuInterceptor : DebugMenuInterceptorContract {
 
     private val UTF8 = Charset.forName("UTF-8")
@@ -41,6 +41,7 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
                 "[Binary ${requestBody.contentLength()} -byte body]"
             }
         }
+        //TODO: Request headers are not properly parsed
         DebugMenu.logNetworkEvent(
             NetworkEvent(
                 isOutgoing = true,
@@ -104,12 +105,10 @@ object DebugMenuInterceptor : DebugMenuInterceptorContract {
         } catch (e: EOFException) {
             return false
         }
-
     }
 
-    private fun bodyHasUnknownEncoding(headers: Headers): Boolean {
-        val contentEncoding = headers["Content-Encoding"]
-        return (contentEncoding != null
+    private fun bodyHasUnknownEncoding(headers: Headers) = headers["Content-Encoding"].let { contentEncoding ->
+        (contentEncoding != null
                 && !contentEncoding.equals("identity", ignoreCase = true)
                 && !contentEncoding.equals("gzip", ignoreCase = true))
     }

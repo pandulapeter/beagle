@@ -183,6 +183,7 @@ object DebugMenu : DebugMenuContract {
         }
     }
 
+    //TODO: Make sure this doesn't break Activity shared element transitions.
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
         context = activity,
         onKeylineOverlaySwitchChanged = { isKeylineOverlayEnabled = !isKeylineOverlayEnabled },

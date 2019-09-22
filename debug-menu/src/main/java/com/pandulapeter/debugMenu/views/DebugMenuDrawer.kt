@@ -50,6 +50,7 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
         requestApplyInsets()
     }
 
+    //TODO: This doesn't seem to be working in all cases.
     override fun dispatchApplyWindowInsets(insets: WindowInsets?): WindowInsets = super.dispatchApplyWindowInsets(insets?.also {
         setPadding(paddingLeft, it.systemWindowInsetTop, paddingRight, it.systemWindowInsetBottom)
     })
