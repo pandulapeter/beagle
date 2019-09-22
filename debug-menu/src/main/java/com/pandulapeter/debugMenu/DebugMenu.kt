@@ -20,7 +20,7 @@ import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenu.views.items.authenticationHelperItem.AuthenticationHelperItemViewModel
+import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
 import com.pandulapeter.debugMenu.views.items.expandCollapseHeader.ExpandCollapseHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.keylineOverlay.KeylineOverlayViewModel
@@ -260,7 +260,7 @@ object DebugMenu : DebugMenuContract {
                 is HeaderModule -> items.add(HeaderViewModel(module))
                 is SettingsLinkModule -> items.add(SettingsLinkViewModel(module))
                 is KeylineOverlayModule -> items.add(KeylineOverlayViewModel(module, isKeylineOverlayEnabled))
-                is ItemListModule<*> -> addExpandCollapseModule(module, true) { items.addAll(module.items.map { AuthenticationHelperItemViewModel(module, it) }) }
+                is ItemListModule<*> -> addExpandCollapseModule(module, true) { items.addAll(module.items.map { ListItemViewModel(module, it) }) }
                 is NetworkLoggingModule -> addExpandCollapseModule(module, networkLogs.isNotEmpty()) { items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) }) }
                 is LoggingModule -> addExpandCollapseModule(module, logMessages.isNotEmpty()) { items.addAll(logMessages.map { LogMessageViewModel(module, it) }) }
             }

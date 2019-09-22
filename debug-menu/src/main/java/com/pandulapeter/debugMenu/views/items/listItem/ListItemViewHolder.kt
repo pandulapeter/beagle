@@ -1,4 +1,4 @@
-package com.pandulapeter.debugMenu.views.items.authenticationHelperItem
+package com.pandulapeter.debugMenu.views.items.listItem
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
 
-internal class AuthenticationHelperItemViewHolder(root: View, onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
+internal class ListItemViewHolder(root: View, onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
 
     private val nameTextView = itemView.findViewById<TextView>(R.id.name)
 
@@ -21,13 +21,13 @@ internal class AuthenticationHelperItemViewHolder(root: View, onItemClicked: (po
         }
     }
 
-    fun bind(viewModel: AuthenticationHelperItemViewModel, textColor: Int) {
+    fun bind(viewModel: ListItemViewModel, textColor: Int) {
         nameTextView.text = viewModel.name
         nameTextView.setTextColor(textColor)
     }
 
     companion object {
         fun create(parent: ViewGroup, onItemClicked: (position: Int) -> Unit) =
-            AuthenticationHelperItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_element_simple, parent, false), onItemClicked)
+            ListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_element_simple, parent, false), onItemClicked)
     }
 }

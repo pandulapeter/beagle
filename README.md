@@ -40,7 +40,7 @@ DebugMenu.attachToUi(this)
 After this a list of modules needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this example](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/DebugMenuExampleApplication.kt) for details.
 
 ### Modules
-The library currently supports the following modules (unique modules can only be added once):
+The library currently supports the following modules (unique modules can only be added once while generic modules don't have this limitation as long as they are initialized with a unique ID):
 * [Header](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/HeaderModule.kt) - This unique module will always stay at the top of the drawer and display general information about the app / build provided by you.
 * [SettingsLink](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/SettingsLinkModule.kt) - This unique module displays a button that opens the Android Settings page for your app.
 * [KeylineOverlay](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/KeylineOverlayModule.kt) - This unique module displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.

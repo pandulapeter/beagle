@@ -1,9 +1,9 @@
-package com.pandulapeter.debugMenu.views.items.authenticationHelperItem
+package com.pandulapeter.debugMenu.views.items.listItem
 
 import com.pandulapeter.debugMenu.views.items.DrawerItem
 import com.pandulapeter.debugMenuCore.configuration.modules.ItemListModule
 
-internal data class AuthenticationHelperItemViewModel(
+internal data class ListItemViewModel(
     val itemListModule: ItemListModule<*>,
     val item: ItemListModule.Item
 ) : DrawerItem {

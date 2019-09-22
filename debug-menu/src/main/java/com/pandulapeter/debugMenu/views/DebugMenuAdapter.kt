@@ -10,8 +10,8 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.models.LogMessage
 import com.pandulapeter.debugMenu.models.NetworkEvent
 import com.pandulapeter.debugMenu.views.items.DrawerItem
-import com.pandulapeter.debugMenu.views.items.authenticationHelperItem.AuthenticationHelperItemViewHolder
-import com.pandulapeter.debugMenu.views.items.authenticationHelperItem.AuthenticationHelperItemViewModel
+import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewHolder
+import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
 import com.pandulapeter.debugMenu.views.items.expandCollapseHeader.ExpandCollapseHeaderViewHolder
 import com.pandulapeter.debugMenu.views.items.expandCollapseHeader.ExpandCollapseHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewHolder
@@ -48,7 +48,7 @@ internal class DebugMenuAdapter(
         is SettingsLinkViewModel -> R.layout.item_button
         is KeylineOverlayViewModel -> R.layout.item_switch
         is ExpandCollapseHeaderViewModel -> R.layout.item_expand_collapse_header
-        is AuthenticationHelperItemViewModel -> R.layout.item_list_element_simple
+        is ListItemViewModel -> R.layout.item_list_element_simple
         is NetworkLogEventViewModel -> R.layout.item_network_log_event
         is LogMessageViewModel -> R.layout.item_log_message
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
@@ -59,8 +59,8 @@ internal class DebugMenuAdapter(
         R.layout.item_button -> SettingsLinkViewHolder.create(parent, onSettingsLinkButtonPressed)
         R.layout.item_switch -> KeylineOverlayViewHolder.create(parent, onKeylineOverlaySwitchChanged)
         R.layout.item_expand_collapse_header -> ExpandCollapseHeaderViewHolder.create(parent) { position -> onExpandCollapseHeaderPressed(getItem(position).id) }
-        R.layout.item_list_element_simple -> AuthenticationHelperItemViewHolder.create(parent) { position ->
-            (getItem(position) as AuthenticationHelperItemViewModel).let {
+        R.layout.item_list_element_simple -> ListItemViewHolder.create(parent) { position ->
+            (getItem(position) as ListItemViewModel).let {
                 onListItemPressed(it.itemListModule, it.item.id)
             }
         }
@@ -74,7 +74,7 @@ internal class DebugMenuAdapter(
         is SettingsLinkViewHolder -> holder.bind(getItem(position) as SettingsLinkViewModel, DebugMenu.textColor)
         is KeylineOverlayViewHolder -> holder.bind(getItem(position) as KeylineOverlayViewModel, DebugMenu.textColor)
         is ExpandCollapseHeaderViewHolder -> holder.bind(getItem(position) as ExpandCollapseHeaderViewModel, DebugMenu.textColor)
-        is AuthenticationHelperItemViewHolder -> holder.bind(getItem(position) as AuthenticationHelperItemViewModel, DebugMenu.textColor)
+        is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel, DebugMenu.textColor)
         is NetworkLogEventViewHolder -> holder.bind(getItem(position) as NetworkLogEventViewModel, DebugMenu.textColor)
         is LogMessageViewHolder -> holder.bind(getItem(position) as LogMessageViewModel, DebugMenu.textColor)
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
