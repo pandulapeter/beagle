@@ -11,21 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.visible
 
-internal class NetworkLogItemViewHolder(root: View, onNetworkLogEventClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(root) {
+internal class NetworkLogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     private val iconImageView = itemView.findViewById<ImageView>(R.id.icon)
     private val urlTextView = itemView.findViewById<TextView>(R.id.url)
     private val timestampTextView = itemView.findViewById<TextView>(R.id.timestamp)
-
-    init {
-        itemView.setOnClickListener {
-            adapterPosition.let { adapterPosition ->
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onNetworkLogEventClicked(adapterPosition)
-                }
-            }
-        }
-    }
 
     fun bind(viewModel: NetworkLogItemViewModel, textColor: Int) {
         iconImageView.setImageResource(if (viewModel.isOutgoing) R.drawable.ic_outgoing else R.drawable.ic_incoming)
@@ -35,10 +25,11 @@ internal class NetworkLogItemViewHolder(root: View, onNetworkLogEventClicked: (p
         timestampTextView.setTextColor(textColor)
         timestampTextView.text = viewModel.timestamp
         timestampTextView.visible = viewModel.timestamp != null
+        itemView.setOnClickListener { viewModel.onItemSelected() }
     }
 
     companion object {
-        fun create(parent: ViewGroup, onNetworkLogEventClicked: (position: Int) -> Unit) =
-            NetworkLogItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_network_log_event, parent, false), onNetworkLogEventClicked)
+        fun create(parent: ViewGroup) =
+            NetworkLogItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_network_log_event, parent, false))
     }
 }

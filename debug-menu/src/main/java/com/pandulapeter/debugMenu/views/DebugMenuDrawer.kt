@@ -6,26 +6,17 @@ import android.view.WindowInsets
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
-import com.pandulapeter.debugMenu.models.LogItem
-import com.pandulapeter.debugMenu.models.NetworkLogItem
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 
-
+//TODO: Scroll position is not restored.
 internal class DebugMenuDrawer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    onExpandCollapseHeaderPressed: (id: String) -> Unit = {},
-    onNetworkLogEventClicked: (networkLogItem: NetworkLogItem) -> Unit = {},
-    onLogMessageClicked: (logItem: LogItem) -> Unit = {}
+    defStyleAttr: Int = 0
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
-    private val debugMenuAdapter = DebugMenuAdapter(
-        onExpandCollapseHeaderPressed = onExpandCollapseHeaderPressed,
-        onNetworkLogEventClicked = onNetworkLogEventClicked,
-        onLogMessageClicked = onLogMessageClicked
-    )
+    private val debugMenuAdapter = DebugMenuAdapter()
 
     init {
         clipToPadding = false

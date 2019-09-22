@@ -1,5 +1,6 @@
 package com.pandulapeter.debugMenu
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
@@ -48,6 +49,7 @@ import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 /**
  * The main singleton that handles the debug drawer's functionality.
  */
+@SuppressLint("StaticFieldLeak")
 object DebugMenu : DebugMenuContract {
 
     //region Public API
@@ -117,8 +119,8 @@ object DebugMenu : DebugMenuContract {
     internal var textColor = Color.WHITE
         private set
     private val loggingModule get() = modules.filterIsInstance<LogListModule>().firstOrNull()
-    private val networkLoggingModule get() = modules.filterIsInstance<NetworkLogListModule>().firstOrNull()
-    private val keylineOverlayModule get() = modules.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
+    private val networkLogListModule get() = modules.filterIsInstance<NetworkLogListModule>().firstOrNull()
+    private val keylineOverlayToggleModule get() = modules.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private val toggles = mutableMapOf<String, Boolean>()
@@ -128,7 +130,7 @@ object DebugMenu : DebugMenuContract {
             if (field != value) {
                 field = value
                 updateItems()
-                (if (value) keylineOverlayModule else null).let { keylineOverlayModule ->
+                (if (value) keylineOverlayToggleModule else null).let { keylineOverlayModule ->
                     drawers.values.forEach { drawer -> (drawer.parent as? DebugMenuDrawerLayout?)?.keylineOverlay = keylineOverlayModule }
                 }
             }
@@ -143,11 +145,18 @@ object DebugMenu : DebugMenuContract {
             field = value
             updateItems()
         }
+    //TODO: Should not leak. Test it to make sure.
+    private var currentActivity: Activity? = null
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             textColor = activity.getTextColor(uiConfiguration)
             drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
+        }
+
+        override fun onActivityResumed(activity: Activity) {
+            super.onActivityResumed(activity)
+            currentActivity = activity
         }
 
         override fun onActivitySaveInstanceState(activity: Activity, p1: Bundle) {
@@ -156,6 +165,9 @@ object DebugMenu : DebugMenuContract {
 
         override fun onActivityDestroyed(activity: Activity) {
             drawers.remove(activity)
+            if (activity == currentActivity) {
+                currentActivity = null
+            }
         }
     }
 
@@ -164,7 +176,7 @@ object DebugMenu : DebugMenuContract {
             HeaderModule(
                 title = "DebugMenu",
                 subtitle = "Version ${BuildConfig.VERSION_NAME}",
-                text = "Configure the list of modules by changing the value of DebugMenu.modules.",
+                text = "Configure the list of modules by setting the value of DebugMenu.modules.",
                 shouldShowBuildDate = false,
                 shouldShowBuildTime = false
             )
@@ -172,22 +184,14 @@ object DebugMenu : DebugMenuContract {
     }
 
     internal fun logNetworkEvent(networkLogItem: NetworkLogItem) {
-        //TODO: Network logs should be saved even if there is no networkLoggingModule added.
-        networkLoggingModule?.run {
+        //TODO: Network logs should be saved even if there is no networkLogListModule added.
+        networkLogListModule?.run {
             networkLogs = networkLogs.toMutableList().apply { add(0, networkLogItem) }.take(maxMessageCount)
         }
     }
 
     //TODO: Make sure this doesn't break Activity shared element transitions.
-    private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(
-        context = activity,
-        onExpandCollapseHeaderPressed = { id ->
-            expandCollapseStates[id] = !(expandCollapseStates[id] ?: false)
-            updateItems()
-        },
-        onNetworkLogEventClicked = { networkEvent -> activity.openNetworkEventBodyDialog(networkEvent) },
-        onLogMessageClicked = { logMessage -> activity.openLogPayloadDialog(logMessage) }
-    ).also { drawer ->
+    private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(activity).also { drawer ->
         drawer.setBackground(uiConfiguration)
         drawer.updateItems(items)
         activity.findRootViewGroup().run {
@@ -205,7 +209,7 @@ object DebugMenu : DebugMenuContract {
                             openDrawer(drawer)
                         }
                         if (isKeylineOverlayEnabled) {
-                            keylineOverlay = keylineOverlayModule
+                            keylineOverlay = keylineOverlayToggleModule
                         }
                         addDrawerListener(object : DrawerLayout.DrawerListener {
 
@@ -233,7 +237,7 @@ object DebugMenu : DebugMenuContract {
                 fragmentManager = supportFragmentManager,
                 networkLogItem = networkLogItem,
                 uiConfiguration = uiConfiguration,
-                shouldShowHeaders = networkLoggingModule?.shouldShowHeaders == true
+                shouldShowHeaders = networkLogListModule?.shouldShowHeaders == true
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
@@ -252,7 +256,11 @@ object DebugMenu : DebugMenuContract {
                     id = module.id,
                     title = module.title,
                     isExpanded = expandCollapseStates[module.id] == true,
-                    shouldShowIcon = shouldShowIcon
+                    shouldShowIcon = shouldShowIcon,
+                    onItemSelected = {
+                        expandCollapseStates[module.id] = !(expandCollapseStates[module.id] ?: false)
+                        updateItems()
+                    }
                 )
             )
             if (expandCollapseStates[module.id] == true) {
@@ -289,7 +297,7 @@ object DebugMenu : DebugMenuContract {
                 )
                 is ListModule<*> -> addListModule(
                     module = module,
-                    shouldShowIcon = true,
+                    shouldShowIcon = module.items.isNotEmpty(),
                     addItems = {
                         module.items.map { item ->
                             ListItemViewModel(
@@ -317,7 +325,7 @@ object DebugMenu : DebugMenuContract {
                         id = module.id,
                         text = module.text,
                         onButtonPressed = {
-                            drawers.keys.firstOrNull()?.run {
+                            currentActivity?.run {
                                 startActivity(Intent().apply {
                                     action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                                     data = Uri.fromParts("package", packageName, null)
@@ -328,12 +336,28 @@ object DebugMenu : DebugMenuContract {
                 is NetworkLogListModule -> addListModule(
                     module = module,
                     shouldShowIcon = networkLogs.isNotEmpty(),
-                    addItems = { networkLogs.map { NetworkLogItemViewModel(module, it) } }
+                    addItems = {
+                        networkLogs.map { networkLogItem ->
+                            NetworkLogItemViewModel(
+                                networkLogListModule = module,
+                                networkLogItem = networkLogItem,
+                                onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem) }
+                            )
+                        }
+                    }
                 )
                 is LogListModule -> addListModule(
                     module = module,
                     shouldShowIcon = logMessages.isNotEmpty(),
-                    addItems = { logMessages.map { LogItemViewModel(module, it) } }
+                    addItems = {
+                        logMessages.map { logItem ->
+                            LogItemViewModel(
+                                logListModule = module,
+                                logItem = logItem,
+                                onItemSelected = { currentActivity?.openLogPayloadDialog(logItem) }
+                            )
+                        }
+                    }
                 )
             }
         }

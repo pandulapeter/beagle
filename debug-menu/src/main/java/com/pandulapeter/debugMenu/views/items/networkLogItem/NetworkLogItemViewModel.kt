@@ -6,7 +6,11 @@ import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-internal data class NetworkLogItemViewModel(private val networkLogListModule: NetworkLogListModule, val networkLogItem: NetworkLogItem) : DrawerItemViewModel {
+internal data class NetworkLogItemViewModel(
+    private val networkLogListModule: NetworkLogListModule,
+    val networkLogItem: NetworkLogItem,
+    val onItemSelected: () -> Unit
+) : DrawerItemViewModel {
 
     override val id = "networkLogMessage_${networkLogItem.id}"
     val timestamp = if (networkLogListModule.shouldShowTimestamp) SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(networkLogItem.timestamp) else null

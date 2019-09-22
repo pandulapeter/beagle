@@ -6,7 +6,8 @@ internal data class ListHeaderViewModel(
     override val id: String,
     val title: String,
     val isExpanded: Boolean,
-    val shouldShowIcon: Boolean = true
+    val shouldShowIcon: Boolean = true,
+    val onItemSelected: () -> Unit
 ) : DrawerItemViewModel {
 
     override val shouldUsePayloads = true

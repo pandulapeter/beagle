@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
-import com.pandulapeter.debugMenu.models.LogItem
-import com.pandulapeter.debugMenu.models.NetworkLogItem
 import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 import com.pandulapeter.debugMenu.views.items.button.ButtonViewHolder
 import com.pandulapeter.debugMenu.views.items.button.ButtonViewModel
@@ -27,11 +25,7 @@ import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewHolder
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
 
-internal class DebugMenuAdapter(
-    private val onExpandCollapseHeaderPressed: (id: String) -> Unit,
-    private val onNetworkLogEventClicked: (networkLogItem: NetworkLogItem) -> Unit,
-    private val onLogMessageClicked: (logItem: LogItem) -> Unit
-) : ListAdapter<DrawerItemViewModel, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItemViewModel>() {
+internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItemViewModel>() {
 
     override fun areItemsTheSame(oldItem: DrawerItemViewModel, newItem: DrawerItemViewModel) = oldItem.id == newItem.id
 
@@ -57,11 +51,11 @@ internal class DebugMenuAdapter(
         R.layout.item_text -> TextViewHolder.create(parent)
         R.layout.item_toggle -> ToggleViewHolder.create(parent)
         R.layout.item_button -> ButtonViewHolder.create(parent)
-        R.layout.item_list_header -> ListHeaderViewHolder.create(parent) { position -> onExpandCollapseHeaderPressed(getItem(position).id) }
+        R.layout.item_list_header -> ListHeaderViewHolder.create(parent)
         R.layout.item_list_item -> ListItemViewHolder.create(parent)
         R.layout.item_header -> HeaderViewHolder.create(parent)
-        R.layout.item_network_log_event -> NetworkLogItemViewHolder.create(parent) { position -> onNetworkLogEventClicked((getItem(position) as NetworkLogItemViewModel).networkLogItem) }
-        R.layout.item_log_message -> LogItemViewHolder.create(parent) { position -> onLogMessageClicked((getItem(position) as LogItemViewModel).logItem) }
+        R.layout.item_network_log_event -> NetworkLogItemViewHolder.create(parent)
+        R.layout.item_log_message -> LogItemViewHolder.create(parent)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
