@@ -9,10 +9,10 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
  */
 data class LoggingModule(
-    val title: String = "Logs",
+    override val title: String = "Logs",
     val maxMessageCount: Int = 10,
     val shouldShowTimestamp: Boolean = false
-) : DebugMenuModule {
+) : ExpandableDebugMenuModule {
 
     override val id = ID
 

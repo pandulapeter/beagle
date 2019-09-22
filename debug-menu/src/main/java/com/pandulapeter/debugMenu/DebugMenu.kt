@@ -30,6 +30,7 @@ import com.pandulapeter.debugMenu.views.items.settingsLink.SettingsLinkViewModel
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
 import com.pandulapeter.debugMenuCore.configuration.modules.AuthenticationHelperModule
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ExpandableDebugMenuModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LoggingModule
@@ -112,6 +113,7 @@ object DebugMenu : DebugMenuContract {
     private val networkLoggingModule get() = modules.filterIsInstance<NetworkLoggingModule>().firstOrNull()
     private val keylineOverlayModule get() = modules.filterIsInstance<KeylineOverlayModule>().firstOrNull()
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
+    private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private var items = emptyList<DrawerItem>()
     private var isKeylineOverlayEnabled = false
         set(value) {
@@ -123,27 +125,12 @@ object DebugMenu : DebugMenuContract {
                 }
             }
         }
-    private var areTestAccountsExpanded = false
-        set(value) {
-            field = value
-            updateItems()
-        }
     private var logMessages = emptyList<LogMessage>()
         set(value) {
             field = value
             updateItems()
         }
-    private var areLogMessagesExpanded = false
-        set(value) {
-            field = value
-            updateItems()
-        }
     private var networkLogs = emptyList<NetworkEvent>()
-        set(value) {
-            field = value
-            updateItems()
-        }
-    private var areNetworkLogsExpanded = false
         set(value) {
             field = value
             updateItems()
@@ -188,11 +175,8 @@ object DebugMenu : DebugMenuContract {
         context = activity,
         onKeylineOverlaySwitchChanged = { isKeylineOverlayEnabled = !isKeylineOverlayEnabled },
         onExpandCollapseHeaderPressed = { id ->
-            when (id) {
-                AuthenticationHelperModule.ID -> areTestAccountsExpanded = !areTestAccountsExpanded
-                NetworkLoggingModule.ID -> if (networkLogs.isNotEmpty()) areNetworkLogsExpanded = !areNetworkLogsExpanded
-                LoggingModule.ID -> if (logMessages.isNotEmpty()) areLogMessagesExpanded = !areLogMessagesExpanded
-            }
+            expandCollapseStates[id] = !(expandCollapseStates[id] ?: false)
+            updateItems()
         },
         onAuthenticationHelperItemClicked = { authenticationHelperModule, account -> authenticationHelperModule.onAccountSelected(account) },
         onNetworkLogEventClicked = { networkEvent -> activity.openNetworkEventBodyDialog(networkEvent) },
@@ -256,49 +240,30 @@ object DebugMenu : DebugMenuContract {
 
     private fun updateItems() {
         val items = mutableListOf<DrawerItem>()
+
+        fun addExpandCollapseModule(module: ExpandableDebugMenuModule, shouldShowIcon: Boolean, addItems: () -> Unit) {
+            items.add(
+                ExpandCollapseHeaderViewModel(
+                    id = module.id,
+                    title = module.title,
+                    isExpanded = expandCollapseStates[module.id] == true,
+                    shouldShowIcon = shouldShowIcon
+                )
+            )
+            if (expandCollapseStates[module.id] == true) {
+                addItems()
+            }
+
+        }
+
         modules.forEach { module ->
             when (module) {
                 is HeaderModule -> items.add(HeaderViewModel(module))
                 is SettingsLinkModule -> items.add(SettingsLinkViewModel(module))
                 is KeylineOverlayModule -> items.add(KeylineOverlayViewModel(module, isKeylineOverlayEnabled))
-                is AuthenticationHelperModule -> {
-                    items.add(
-                        ExpandCollapseHeaderViewModel(
-                            id = module.id,
-                            title = module.title,
-                            isExpanded = areTestAccountsExpanded
-                        )
-                    )
-                    if (areTestAccountsExpanded) {
-                        items.addAll(module.accounts.map { AuthenticationHelperItemViewModel(module, it) })
-                    }
-                }
-                is NetworkLoggingModule -> {
-                    items.add(
-                        ExpandCollapseHeaderViewModel(
-                            id = module.id,
-                            title = module.title,
-                            isExpanded = areNetworkLogsExpanded,
-                            shouldShowIcon = networkLogs.isNotEmpty()
-                        )
-                    )
-                    if (areNetworkLogsExpanded) {
-                        items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) })
-                    }
-                }
-                is LoggingModule -> {
-                    items.add(
-                        ExpandCollapseHeaderViewModel(
-                            id = module.id,
-                            title = module.title,
-                            isExpanded = areLogMessagesExpanded,
-                            shouldShowIcon = logMessages.isNotEmpty()
-                        )
-                    )
-                    if (areLogMessagesExpanded) {
-                        items.addAll(logMessages.map { LogMessageViewModel(module, it) })
-                    }
-                }
+                is AuthenticationHelperModule -> addExpandCollapseModule(module, true) { items.addAll(module.accounts.map { AuthenticationHelperItemViewModel(module, it) }) }
+                is NetworkLoggingModule -> addExpandCollapseModule(module, networkLogs.isNotEmpty()) { items.addAll(networkLogs.map { NetworkLogEventViewModel(module, it) }) }
+                is LoggingModule -> addExpandCollapseModule(module, logMessages.isNotEmpty()) { items.addAll(logMessages.map { LogMessageViewModel(module, it) }) }
             }
         }
         this.items = items

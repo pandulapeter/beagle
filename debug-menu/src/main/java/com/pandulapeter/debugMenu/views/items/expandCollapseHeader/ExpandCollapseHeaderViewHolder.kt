@@ -29,6 +29,7 @@ internal class ExpandCollapseHeaderViewHolder(root: View, onItemClicked: (positi
     }
 
     fun bind(viewModel: ExpandCollapseHeaderViewModel, textColor: Int) {
+        itemView.isClickable = viewModel.shouldShowIcon
         titleTextView.text = viewModel.title
         titleTextView.setTextColor(textColor)
         iconImageView.setImageDrawable((if (viewModel.isExpanded) drawableExpand else drawableCollapse)?.apply {

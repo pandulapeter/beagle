@@ -10,10 +10,10 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  */
 //TODO: Create a more generic implementation that also supports selection states.
 data class AuthenticationHelperModule(
-    val title: String = "Test accounts",
+    override val title: String = "Test accounts",
     val accounts: List<Pair<String, String>>,
     val onAccountSelected: (account: Pair<String, String>) -> Unit
-) : DebugMenuModule {
+) : ExpandableDebugMenuModule {
 
     override val id = ID
 

@@ -11,12 +11,12 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
  */
 data class NetworkLoggingModule(
-    val title: String = "Network activity",
+    override val title: String = "Network activity",
     val baseUrl: String = "",
     val shouldShowHeaders: Boolean = false,
     val maxMessageCount: Int = 10,
     val shouldShowTimestamp: Boolean = false
-) : DebugMenuModule {
+) : ExpandableDebugMenuModule {
 
     override val id = ID
 
