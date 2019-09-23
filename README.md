@@ -42,7 +42,7 @@ After this a list of modules needs to be provided, but this can be changed at an
 ### Modules
 Any number of generic modules can be added in any order as long as they have a unique ID:
 * [Text](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/TextModule.kt) - This module displays simple text content.
-* LongText - TODO: Display a text that can be collapsed into a title.
+* [LongText](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/LongTextModule.kt) - This module displays a longer piece of text that can be collapsed into a title.
 * TextInput - TODO: Allows the user to enter free text.
 * Slider - TODO: Allows the user to adjust a numeric value.
 * ColorPicker - TODO: Allows the user to pick a color.

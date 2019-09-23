@@ -11,6 +11,7 @@ import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
+import com.pandulapeter.debugMenuCore.configuration.modules.LongTextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuExample.networking.NetworkingManager
 import com.pandulapeter.debugMenuExample.utils.mockBackendEnvironments
@@ -55,6 +56,10 @@ class DebugMenuExampleApplication : Application() {
                 ),
                 TextModule(
                     text = "Random text 2"
+                ),
+                LongTextModule(
+                    title = "Long text",
+                    text = "Here is a longer piece of text that occupies more space so it doesn't make sense to always have it fully displayed."
                 ),
                 ButtonModule(
                     text = "Show a toast",

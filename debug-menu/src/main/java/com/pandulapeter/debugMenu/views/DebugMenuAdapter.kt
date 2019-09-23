@@ -18,6 +18,8 @@ import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewHolder
 import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
 import com.pandulapeter.debugMenu.views.items.logItem.LogItemViewHolder
 import com.pandulapeter.debugMenu.views.items.logItem.LogItemViewModel
+import com.pandulapeter.debugMenu.views.items.longText.LongTextViewHolder
+import com.pandulapeter.debugMenu.views.items.longText.LongTextViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewHolder
 import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewModel
 import com.pandulapeter.debugMenu.views.items.text.TextViewHolder
@@ -37,6 +39,7 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is TextViewModel -> R.layout.item_text
+        is LongTextViewModel -> R.layout.item_long_text
         is ToggleViewModel -> R.layout.item_toggle
         is ButtonViewModel -> R.layout.item_button
         is ListHeaderViewModel -> R.layout.item_list_header
@@ -49,6 +52,7 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         R.layout.item_text -> TextViewHolder.create(parent)
+        R.layout.item_long_text -> LongTextViewHolder.create(parent)
         R.layout.item_toggle -> ToggleViewHolder.create(parent)
         R.layout.item_button -> ButtonViewHolder.create(parent)
         R.layout.item_list_header -> ListHeaderViewHolder.create(parent)
@@ -61,6 +65,7 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is TextViewHolder -> holder.bind(getItem(position) as TextViewModel, DebugMenu.textColor)
+        is LongTextViewHolder -> holder.bind(getItem(position) as LongTextViewModel, DebugMenu.textColor)
         is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel, DebugMenu.textColor)
         is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel, DebugMenu.textColor)
         is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel, DebugMenu.textColor)

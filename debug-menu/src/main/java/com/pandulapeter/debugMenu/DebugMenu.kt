@@ -29,6 +29,7 @@ import com.pandulapeter.debugMenu.views.items.header.HeaderViewModel
 import com.pandulapeter.debugMenu.views.items.listHeader.ListHeaderViewModel
 import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
 import com.pandulapeter.debugMenu.views.items.logItem.LogItemViewModel
+import com.pandulapeter.debugMenu.views.items.longText.LongTextViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewModel
 import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
@@ -41,6 +42,7 @@ import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.LongTextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
@@ -267,6 +269,18 @@ object DebugMenu : DebugMenuContract {
                         text = module.text,
                         isTitle = module.isTitle
                     )
+                )
+                is LongTextModule -> addListModule(
+                    module = module,
+                    shouldShowIcon = true,
+                    addItems = {
+                        listOf(
+                            LongTextViewModel(
+                                id = "longText_${module.id}",
+                                text = module.text
+                            )
+                        )
+                    }
                 )
                 is ToggleModule -> items.add(
                     ToggleViewModel(
