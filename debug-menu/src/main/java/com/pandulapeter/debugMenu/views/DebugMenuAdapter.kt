@@ -22,6 +22,8 @@ import com.pandulapeter.debugMenu.views.items.longText.LongTextViewHolder
 import com.pandulapeter.debugMenu.views.items.longText.LongTextViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewHolder
 import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewModel
+import com.pandulapeter.debugMenu.views.items.singleSelectionListItem.SingleSelectionListItemViewHolder
+import com.pandulapeter.debugMenu.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
 import com.pandulapeter.debugMenu.views.items.text.TextViewHolder
 import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewHolder
@@ -44,6 +46,7 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
         is ButtonViewModel -> R.layout.item_button
         is ListHeaderViewModel -> R.layout.item_list_header
         is ListItemViewModel<*> -> R.layout.item_list_item
+        is SingleSelectionListItemViewModel<*> -> R.layout.item_single_selection_list_item
         is HeaderViewModel -> R.layout.item_header
         is NetworkLogItemViewModel -> R.layout.item_network_log
         is LogItemViewModel -> R.layout.item_log
@@ -57,6 +60,7 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
         R.layout.item_button -> ButtonViewHolder.create(parent)
         R.layout.item_list_header -> ListHeaderViewHolder.create(parent)
         R.layout.item_list_item -> ListItemViewHolder.create(parent)
+        R.layout.item_single_selection_list_item -> SingleSelectionListItemViewHolder.create(parent)
         R.layout.item_header -> HeaderViewHolder.create(parent)
         R.layout.item_network_log -> NetworkLogItemViewHolder.create(parent)
         R.layout.item_log -> LogItemViewHolder.create(parent)
@@ -70,6 +74,7 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
         is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel, DebugMenu.textColor)
         is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel, DebugMenu.textColor)
         is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel<*>, DebugMenu.textColor)
+        is SingleSelectionListItemViewHolder -> holder.bind(getItem(position) as SingleSelectionListItemViewModel<*>, DebugMenu.textColor)
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewModel, DebugMenu.textColor)
         is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewModel, DebugMenu.textColor)
         is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewModel, DebugMenu.textColor)

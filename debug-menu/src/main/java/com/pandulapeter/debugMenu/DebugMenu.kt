@@ -31,6 +31,7 @@ import com.pandulapeter.debugMenu.views.items.listItem.ListItemViewModel
 import com.pandulapeter.debugMenu.views.items.logItem.LogItemViewModel
 import com.pandulapeter.debugMenu.views.items.longText.LongTextViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewModel
+import com.pandulapeter.debugMenu.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
 import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
 import com.pandulapeter.debugMenuCore.ModulePositioning
@@ -45,6 +46,7 @@ import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LongTextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.SingleSelectionListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
@@ -87,7 +89,7 @@ object DebugMenu : DebugMenuContract {
      * @param modules - The new list of modules.
      */
     override fun setModules(modules: List<DebugMenuModule>) {
-        _modules = modules
+        moduleList = modules
     }
 
     /**
@@ -97,7 +99,7 @@ object DebugMenu : DebugMenuContract {
      * @param positioning - The positioning of the new module. [ModulePositioning.Bottom] by default.
      */
     override fun putModule(module: DebugMenuModule, positioning: ModulePositioning) {
-        _modules = _modules.toMutableList().apply {
+        moduleList = moduleList.toMutableList().apply {
             indexOfFirst { it.id == module.id }.also { currentIndex ->
                 if (currentIndex != -1) {
                     removeAt(currentIndex)
@@ -136,7 +138,7 @@ object DebugMenu : DebugMenuContract {
      * @param id - The ID of the module to be removed.
      */
     override fun removeModule(id: String) {
-        _modules = _modules.filter { it.id == id }
+        moduleList = moduleList.filter { it.id == id }
     }
 
     /**
@@ -168,7 +170,7 @@ object DebugMenu : DebugMenuContract {
      * Adds a log message item which will be displayed at the top of the list if the [LogListModule] is enabled.
      *
      * @param message - The message that should be logged.
-     * @param tag - An optional tag that can be later used for filtering. Null by default.
+     * @param tag - An optional tag that can be later used for filtering. Null by default. //TODO: Implement filtering by tag.
      * @param payload - An optional String payload that can be opened in a dialog when the user clicks on a log message. Null by default.
      */
     override fun log(message: String, tag: String?, payload: String?) {
@@ -182,15 +184,16 @@ object DebugMenu : DebugMenuContract {
     private var uiConfiguration = UiCustomization()
     internal var textColor = Color.WHITE
         private set
-    private var _modules = emptyList<DebugMenuModule>()
+    private var moduleList = emptyList<DebugMenuModule>()
         set(value) {
             field = value.distinctBy { it.id }.sortedBy { it !is HeaderModule }
             updateItems()
         }
-    private val keylineOverlayToggleModule get() = _modules.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
+    private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private val toggles = mutableMapOf<String, Boolean>()
+    private val singleSelectionListStates = mutableMapOf<String, String>()
     private var items = emptyList<DrawerItemViewModel>()
     private var isKeylineOverlayEnabled = false
         set(value) {
@@ -239,7 +242,7 @@ object DebugMenu : DebugMenuContract {
     }
 
     init {
-        _modules = listOf(
+        moduleList = listOf(
             HeaderModule(
                 title = "DebugMenu",
                 subtitle = "Version ${BuildConfig.VERSION_NAME}",
@@ -326,11 +329,11 @@ object DebugMenu : DebugMenuContract {
                 )
             )
             if (expandCollapseStates[module.id] ?: module.isInitiallyExpanded) {
-                items.addAll(addItems())
+                items.addAll(addItems().distinctBy { it.id })
             }
         }
 
-        _modules.forEach { module ->
+        moduleList.forEach { module ->
             when (module) {
                 is TextModule -> items.add(
                     TextViewModel(
@@ -379,6 +382,24 @@ object DebugMenu : DebugMenuContract {
                                 listModuleId = module.id,
                                 item = item,
                                 onItemSelected = { module.invokeItemSelectedCallback(item.id) }
+                            )
+                        }
+                    }
+                )
+                is SingleSelectionListModule<*> -> addListModule(
+                    module = module,
+                    shouldShowIcon = module.items.isNotEmpty(),
+                    addItems = {
+                        module.items.map { item ->
+                            SingleSelectionListItemViewModel(
+                                listModuleId = module.id,
+                                item = item,
+                                isSelected = (singleSelectionListStates[module.id] ?: module.initialSelectionId) == item.id,
+                                onItemSelected = { itemId ->
+                                    singleSelectionListStates[module.id] = itemId
+                                    updateItems()
+                                    module.invokeItemSelectedCallback(itemId)
+                                }
                             )
                         }
                     }

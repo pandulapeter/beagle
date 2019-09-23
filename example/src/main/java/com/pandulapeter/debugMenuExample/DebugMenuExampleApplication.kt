@@ -12,6 +12,7 @@ import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LongTextModule
+import com.pandulapeter.debugMenuCore.configuration.modules.SingleSelectionListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuExample.networking.NetworkingManager
 import com.pandulapeter.debugMenuExample.utils.mockBackendEnvironments
@@ -49,11 +50,12 @@ class DebugMenuExampleApplication : Application() {
                         shouldShowTimestamp = true
                     ),
                     LogListModule(shouldShowTimestamp = true),
-                    ListModule(
+                    SingleSelectionListModule(
                         title = "Environment",
                         items = mockBackendEnvironments,
                         isInitiallyExpanded = true,
-                        onItemSelected = { backendEnvironment -> backendEnvironment.url.showToast() }
+                        initialSelectionId = "Develop",
+                        onItemSelectionChanged = { backendEnvironment -> backendEnvironment.url.showToast() }
                     ),
                     TextModule(
                         text = "Random text 2"

@@ -50,7 +50,7 @@ Any number of generic modules can be added in any order as long as they have a u
 * [Button](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ButtonModule.kt) - Displays a button with configurable text and action.
 * TODO: KeyValue - Displays a list of key-value pairs that can be collapsed into a title.
 * [List](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ListModule.kt) - Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
-* TODO: SingleSelectionList - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
+* [SingleSelectionList](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/SingleSelectionListModule.kt) - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
 * TODO: MultipleSelectionList - Displays a lst of checkboxes.
 
 Unique modules can only be added once as they are specific to a single use case:
@@ -68,7 +68,6 @@ Unique modules can only be added once as they are specific to a single use case:
 * The drawers can be disabled / enabled at any time by modifying the value of DebugMenu.isEnabled.
 
 ### To do
-* Encapsulate the module list to make it safer to use
 * Create a base class for dialogs with proper 2D scrolling
 * Add support for dividers
 * Add screenshots and a more detailed description to this readme
