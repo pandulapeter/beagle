@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.pandulapeter.debugMenu.DebugMenu
+import com.pandulapeter.debugMenuCore.ModulePositioning
+import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuExample.R
 import com.pandulapeter.debugMenuExample.utils.mockAccounts
@@ -19,9 +21,8 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
     override fun onStart() {
         super.onStart()
-        //TODO: Come up with a nicer API for this functionality.
-        DebugMenu.modules = DebugMenu.modules.toMutableList().apply {
-            add(0, ListModule(
+        DebugMenu.putModule(
+            module = ListModule(
                 id = TEST_ACCOUNTS_MODULE_ID,
                 title = "Test accounts",
                 items = mockAccounts,
@@ -30,14 +31,14 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                     findViewById<EditText>(R.id.password_input).setText(account.password)
                     DebugMenu.closeDrawer(this@LoginActivity)
                 }
-            ))
-        }
+            ),
+            positioning = ModulePositioning.Below(AppInfoButtonModule.ID)
+        )
     }
 
     override fun onStop() {
         super.onStop()
-        //TODO: Come up with a nicer API for this functionality.
-        DebugMenu.modules = DebugMenu.modules.filterNot { it.id == TEST_ACCOUNTS_MODULE_ID }
+        DebugMenu.removeModule(TEST_ACCOUNTS_MODULE_ID)
     }
 
     override fun onBackPressed() {

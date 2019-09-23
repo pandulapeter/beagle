@@ -33,6 +33,7 @@ import com.pandulapeter.debugMenu.views.items.longText.LongTextViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewModel
 import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
+import com.pandulapeter.debugMenuCore.ModulePositioning
 import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
@@ -54,14 +55,17 @@ import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 @SuppressLint("StaticFieldLeak")
 object DebugMenu : DebugMenuContract {
 
-    //region Public API
     /**
-     * Update this property at any time to change the module configuration of the drawer. Using the copy function of the data classes is recommended to avoid code duplication.
+     * Use this flag to disable the debug drawer at runtime.
      */
-    override var modules = emptyList<DebugMenuModule>()
+    override var isEnabled = true
         set(value) {
-            field = value.distinctBy { it.id }.sortedBy { it !is HeaderModule }
-            updateItems()
+            if (field != value) {
+                field = value
+                drawers.values.forEach { drawer ->
+                    (drawer.parent as? DebugMenuDrawerLayout?)?.setDrawerLockMode(if (value) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                }
+            }
         }
 
     /**
@@ -71,10 +75,68 @@ object DebugMenu : DebugMenuContract {
      * @param application - The [Application] instance.
      * @param uiCustomization - The [UiCustomization] that specifies the appearance the drawer.
      */
-    override fun attachToUi(application: Application, uiCustomization: UiCustomization) {
+    override fun attachToApplication(application: Application, uiCustomization: UiCustomization) {
         this.uiConfiguration = uiCustomization
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
+    }
+
+    /**
+     * Use this function to clear the contents of the menu and set a new list of modules.
+     *
+     * @param modules - The new list of modules.
+     */
+    override fun setModules(modules: List<DebugMenuModule>) {
+        _modules = modules
+    }
+
+    /**
+     * Use this function to add a new module to the list. If there already is a module with the same ID, it will be updated.
+     *
+     * @param module - The new module to be added.
+     * @param positioning - The positioning of the new module. [ModulePositioning.Bottom] by default.
+     */
+    override fun putModule(module: DebugMenuModule, positioning: ModulePositioning) {
+        _modules = _modules.toMutableList().apply {
+            indexOfFirst { it.id == module.id }.also { currentIndex ->
+                if (currentIndex != -1) {
+                    removeAt(currentIndex)
+                    add(currentIndex, module)
+                } else {
+                    when (positioning) {
+                        ModulePositioning.Bottom -> add(module)
+                        ModulePositioning.Top -> add(0, module)
+                        is ModulePositioning.Below -> {
+                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                if (referencePosition == -1) {
+                                    add(module)
+                                } else {
+                                    add(referencePosition + 1, module)
+                                }
+                            }
+                        }
+                        is ModulePositioning.Above -> {
+                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                if (referencePosition == -1) {
+                                    add(0, module)
+                                } else {
+                                    add(referencePosition, module)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Removes the module with the specified ID from the list of modules. The ID-s of unique modules can be accessed through their companion objects.
+     *
+     * @param id - The ID of the module to be removed.
+     */
+    override fun removeModule(id: String) {
+        _modules = _modules.filter { it.id == id }
     }
 
     /**
@@ -83,7 +145,9 @@ object DebugMenu : DebugMenuContract {
      * @param activity - The current [Activity] instance.
      */
     override fun openDrawer(activity: Activity) {
-        drawers[activity]?.run { (parent as? DebugMenuDrawerLayout?)?.openDrawer(this) }
+        if (isEnabled) {
+            drawers[activity]?.run { (parent as? DebugMenuDrawerLayout?)?.openDrawer(this) }
+        }
     }
 
     /**
@@ -118,7 +182,12 @@ object DebugMenu : DebugMenuContract {
     private var uiConfiguration = UiCustomization()
     internal var textColor = Color.WHITE
         private set
-    private val keylineOverlayToggleModule get() = modules.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
+    private var _modules = emptyList<DebugMenuModule>()
+        set(value) {
+            field = value.distinctBy { it.id }.sortedBy { it !is HeaderModule }
+            updateItems()
+        }
+    private val keylineOverlayToggleModule get() = _modules.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private val toggles = mutableMapOf<String, Boolean>()
@@ -170,7 +239,7 @@ object DebugMenu : DebugMenuContract {
     }
 
     init {
-        modules = listOf(
+        _modules = listOf(
             HeaderModule(
                 title = "DebugMenu",
                 subtitle = "Version ${BuildConfig.VERSION_NAME}",
@@ -261,7 +330,7 @@ object DebugMenu : DebugMenuContract {
             }
         }
 
-        modules.forEach { module ->
+        _modules.forEach { module ->
             when (module) {
                 is TextModule -> items.add(
                     TextViewModel(

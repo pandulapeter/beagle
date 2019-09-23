@@ -2,6 +2,7 @@ package com.pandulapeter.debugMenu
 
 import android.app.Activity
 import android.app.Application
+import com.pandulapeter.debugMenuCore.ModulePositioning
 import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
@@ -14,12 +15,28 @@ object DebugMenu : DebugMenuContract {
     /**
      * Does nothing.
      */
-    override var modules = emptyList<DebugMenuModule>()
+    override var isEnabled = false
+        set(_) = Unit
 
     /**
      * Does nothing.
      */
-    override fun attachToUi(application: Application, uiCustomization: UiCustomization) = Unit
+    override fun attachToApplication(application: Application, uiCustomization: UiCustomization) = Unit
+
+    /**
+     * Does nothing.
+     */
+    override fun setModules(modules: List<DebugMenuModule>) = Unit
+
+    /**
+     * Does nothing.
+     */
+    override fun putModule(module: DebugMenuModule, positioning: ModulePositioning) = Unit
+
+    /**
+     * Does nothing.
+     */
+    override fun removeModule(id: String) = Unit
 
     /**
      * Does nothing and returns false.
