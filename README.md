@@ -1,7 +1,7 @@
 # DebugMenu (Android)
 *A smart side drawer for debugging your Android apps.*
 
-<img src="screenshots/general01.png" width="20%" /> <img src="screenshots/general02.png" width="20%" />
+<img src="screenshots/general01.png" width="30%" /> <img src="screenshots/general02.png" width="30%" />
 
 **This library is in very early stages of development. New features will be added and the API might change.**
 
