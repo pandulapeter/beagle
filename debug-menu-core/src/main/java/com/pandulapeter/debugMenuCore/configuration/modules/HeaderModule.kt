@@ -14,5 +14,9 @@ data class HeaderModule(
     val text: CharSequence? = null
 ) : DebugMenuModule {
 
-    override val id = "header"
+    override val id = ID
+
+    companion object {
+        const val ID = "header"
+    }
 }

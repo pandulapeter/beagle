@@ -138,7 +138,7 @@ object DebugMenu : DebugMenuContract {
      * @param id - The ID of the module to be removed.
      */
     override fun removeModule(id: String) {
-        moduleList = moduleList.filter { it.id == id }
+        moduleList = moduleList.filterNot { it.id == id }
     }
 
     /**
