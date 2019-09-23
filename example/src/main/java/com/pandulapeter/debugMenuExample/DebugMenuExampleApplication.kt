@@ -7,7 +7,6 @@ import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
-import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
