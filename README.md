@@ -52,7 +52,7 @@ Any number of generic modules can be added in any order as long as they have a u
 * [Button](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ButtonModule.kt) [[Screenshot]](/screenshots/moduleButton.png) - Displays a button with configurable text and action.
 * TODO: KeyValue - Displays a list of key-value pairs that can be collapsed into a title.
 * [List](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ListModule.kt) [[Screenshot]](/screenshots/moduleList.png) - Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
-* [SingleSelectionList](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/SingleSelectionListModule.kt) - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
+* [SingleSelectionList](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/SingleSelectionListModule.kt) [[Screenshot]](/screenshots/moduleSingleSelectionList.png) - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
 * TODO: MultipleSelectionList - Displays a lst of checkboxes.
 
 Unique modules can only be added once as they are specific to a single use case:
