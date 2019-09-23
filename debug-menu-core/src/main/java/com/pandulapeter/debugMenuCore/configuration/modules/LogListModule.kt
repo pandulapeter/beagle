@@ -1,7 +1,8 @@
 package com.pandulapeter.debugMenuCore.configuration.modules
 
 /**
- * Displays an expandable list of custom log messages. Use DebugMenu.log() to push a new message to the top of the list. This can be useful for debugging analytics events.
+ * Displays an expandable list of your custom logs. An example use case could be logging analytics events.
+ * Use DebugMenu.log() to push a new message to the top of the list.
  * This module can only be added once.
  *
  * @param title - The title of the module. "Logs" by default.

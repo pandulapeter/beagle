@@ -1,7 +1,7 @@
 package com.pandulapeter.debugMenuCore.configuration.modules
 
 /**
- * Displays a header on top of the drawer with general information about the build.
+ * Displays a header on top of the drawer with general information about the app / build.
  * This module can only be added once and will always appear on top.
  *
  * @param title - The title of the app / the debug menu. Null by default (hidden title).

@@ -4,7 +4,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 
 /**
- * Displays a switch that draws a keyline grid over the application window when enabled.
+ * Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.
  * This module can only be added once.
  *
  * @param title - The text that appears near the switch. "Keyline overlay" by default.

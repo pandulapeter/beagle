@@ -3,8 +3,7 @@ package com.pandulapeter.debugMenuCore.configuration.modules
 import java.util.UUID
 
 /**
- * Displays an expandable list of custom items and exposes a callback when the user makes a selection.
- * Possible use cases could be providing a list of test accounts to make the login process faster or allowing the user to switch between backend environments.
+ * Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
  * The class is generic to a representation of a list item which must implement the [ListModule.Item] interface.
  * This module can be added multiple times as long as the ID is unique.
  *

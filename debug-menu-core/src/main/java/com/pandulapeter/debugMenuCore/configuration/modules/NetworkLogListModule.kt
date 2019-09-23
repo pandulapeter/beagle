@@ -1,7 +1,8 @@
 package com.pandulapeter.debugMenuCore.configuration.modules
 
 /**
- * Displays an expandable list of historical network activity. Use DebugMenuNetworkInterceptorContract to push a new message to the top of the list.
+ * Displays an expandable list of historical network activity.
+ * Use DebugMenuNetworkInterceptorContract to push a new message to the top of the list.
  * This module can only be added once.
  *
  * @param title - The title of the module. "Network activity" by default.
