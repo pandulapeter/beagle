@@ -11,7 +11,7 @@ import java.util.UUID
  * @param title - The text that appears in the header of the module.
  * @param items - The hardcoded list of items implementing the [ListModule.Item] interface.
  * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
- * @param initialSelectionId - The ID of the item that is selected when the drawer is opened for the first time.
+ * @param initialSelectionId - The ID of the item that is selected when the drawer is opened for the first time, or null if no selection should be made initially. Null by default.
  * @param onItemSelectionChanged - The callback that will get executed when the selected item is changed.
  */
 data class SingleSelectionListModule<T : ListModule.Item>(
@@ -19,7 +19,7 @@ data class SingleSelectionListModule<T : ListModule.Item>(
     override val title: CharSequence,
     override val isInitiallyExpanded: Boolean = false,
     val items: List<T>,
-    val initialSelectionId: String,
+    val initialSelectionId: String? = null,
     val onItemSelectionChanged: (item: T) -> Unit
 ) : ExpandableDebugMenuModule {
 
