@@ -64,6 +64,14 @@ Unique modules can only be added once as they are specific to a single use case:
 * [LogList](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/LogListModule.kt) [[Screenshot]](/screenshots/moduleLogList.png) - Displays an expandable list of your custom logs. An example use case could be logging analytics events. Each item can be tapped for more information if you specified a payload. To log an event, simply call DebugMenu.log().
 * TODO: DeviceConfigurationKeyValue - Displays information about the current device and the OS.
 
+The module list can be changed at any time (from any thread) using the following functions:
+
+```kotlin
+DebugMenu.setModules(modules)
+DebugMenu.putModule(module, positioning)
+DebugMenu.removeModule(id)
+```
+
 ### Customization
 * The UI of the drawer can be personalized by specifying a [UiCustomization](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/UiCustomization.kt) instance when initializing the library.
 * To properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/screens/MainActivity.kt).

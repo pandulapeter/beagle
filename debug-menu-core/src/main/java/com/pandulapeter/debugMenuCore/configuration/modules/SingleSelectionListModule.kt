@@ -4,7 +4,7 @@ import java.util.UUID
 
 /**
  * Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
- * The class is generic to a representation of a list item which must implement the [SingleSelectionListModule.Item] interface.
+ * The class is generic to a representation of a list item which must implement the [ListModule.Item] interface.
  * This module can be added multiple times as long as the ID is unique.
  *
  * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the list, a suitable default value is auto-generated.
