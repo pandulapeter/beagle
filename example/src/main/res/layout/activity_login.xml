@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:hint="@string/username"
         android:importantForAutofill="no"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/password_input"
@@ -23,20 +24,23 @@
         android:layout_marginTop="@dimen/large_content_padding"
         android:hint="@string/password"
         android:importantForAutofill="no"
-        android:inputType="textVisiblePassword" />
+        android:inputType="textVisiblePassword"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/open_debug_menu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large_content_padding"
-        android:text="@string/open_debug_menu" />
+        android:text="@string/open_debug_menu"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large_content_padding"
-        android:text="@string/back" />
+        android:text="@string/back"
+        android:visibility="gone" />
 
 </LinearLayout>
