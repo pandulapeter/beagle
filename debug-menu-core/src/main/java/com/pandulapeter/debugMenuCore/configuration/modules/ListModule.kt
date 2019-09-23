@@ -13,7 +13,7 @@ import java.util.UUID
  * @param items - The hardcoded list of items implementing the [ListModule.Item] interface.
  * @param onItemSelected - The callback that will get executed when an item is selected.
  */
-//TODO: Create a more generic implementation that also supports selection states (normal, checkbox, radio button).
+//TODO: Expose an "isInitiallyExpanded" parameter
 data class ListModule<T : ListModule.Item>(
     override val id: String = UUID.randomUUID().toString(),
     override val title: CharSequence,

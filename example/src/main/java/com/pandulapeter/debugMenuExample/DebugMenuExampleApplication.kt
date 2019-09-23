@@ -3,13 +3,13 @@ package com.pandulapeter.debugMenuExample
 import android.app.Application
 import android.widget.Toast
 import com.pandulapeter.debugMenu.DebugMenu
+import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
-import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuExample.networking.NetworkingManager
@@ -26,7 +26,7 @@ class DebugMenuExampleApplication : Application() {
                 HeaderModule(
                     title = getString(R.string.app_name),
                     subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
-                    text = "Hello QA person!"
+                    text = "Built on ${BuildConfig.BUILD_DATE}"
                 ),
                 AppInfoButtonModule(),
                 TextModule(

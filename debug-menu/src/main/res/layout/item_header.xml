@@ -26,17 +26,9 @@
         tools:text="Subtitle" />
 
     <TextView
-        android:id="@+id/build_time"
+        android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Build time" />
-
-    <TextView
-        android:id="@+id/hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_padding"
-        android:textStyle="italic"
-        tools:text="Hint" />
+        tools:text="Text" />
 
 </LinearLayout>

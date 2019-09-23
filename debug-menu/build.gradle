@@ -13,8 +13,6 @@ android {
         versionCode versionCode
         versionName libraryVersion
         consumerProguardFiles "consumer-rules.pro"
-        buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
-        buildConfigField("String", "BUILD_TIME", "\"${new Date().format("HH:mm")}\"")
     }
 }
 

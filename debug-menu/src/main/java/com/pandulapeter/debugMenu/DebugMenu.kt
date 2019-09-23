@@ -33,6 +33,7 @@ import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewM
 import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
 import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ExpandableDebugMenuModule
@@ -41,7 +42,6 @@ import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggle
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
-import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
@@ -176,9 +176,7 @@ object DebugMenu : DebugMenuContract {
             HeaderModule(
                 title = "DebugMenu",
                 subtitle = "Version ${BuildConfig.VERSION_NAME}",
-                text = "Configure the list of modules by setting the value of DebugMenu.modules.",
-                shouldShowBuildDate = false,
-                shouldShowBuildTime = false
+                text = "Configure the list of modules by setting the value of DebugMenu.modules."
             )
         )
     }

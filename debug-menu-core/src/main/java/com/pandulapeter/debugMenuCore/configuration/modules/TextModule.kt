@@ -9,6 +9,7 @@ import java.util.UUID
  * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
  * @param text - The text that should be displayed.
  */
+//TODO: Add "isTitle" parameter
 data class TextModule(
     override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence

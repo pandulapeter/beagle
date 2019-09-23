@@ -42,16 +42,26 @@ After this a list of modules needs to be provided, but this can be changed at an
 ### Modules
 Any number of generic modules can be added in any order as long as they have a unique ID:
 * [Text](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/TextModule.kt) - This module displays simple text content.
+* LongText - TODO: Display a text that can be collapsed into a title.
+* TextInput - TODO: Allows the user to enter free text.
+* Slider - TODO: Allows the user to adjust a numeric value.
+* ColorPicker - TODO: Allows the user to pick a color.
 * [Toggle](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ToggleModule.kt) - This module displays a switch with a custom title and behavior - ideal for feature toggles.
 * [Button](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ButtonModule.kt) - This module displays a button with configurable text and action.
-* [List](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ListModule.kt) - This module will display an expandable list of items configured by you. When an item is selected, a custom callback gets invoked. Possible use cases could be providing a list of test accounts to make the login process faster or allowing the user to switch between backend environments.
+* KeyValue - TODO: Displays a list of key-value pairs that can be collapsed into a title.
+* [List](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ListModule.kt) - This module displays an expandable list of items configured by you. When an item is selected, a custom callback gets invoked. Possible use cases could be providing a list of test accounts to make the login process faster.
+* SingleSelectionList - TODO: Displays a list of radio buttons.
+* MultipleSelectionList - TODO: Displays a lst of checkboxes.
+
 
 Unique modules can only be added once as they are specific to a single use case:
 * [Header](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/HeaderModule.kt) - This module will always stay at the top of the drawer and display general information about the app / build provided by you.
 * [KeylineOverlayToggle](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/KeylineOverlayToggleModule.kt) - This module displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.
 * [AppInfoButton](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/AppInfoButtonModule.kt) - This module displays a button that links to the Android App Info page for your app.
+* ScreenshotButton - TODO: Displays a button that takes a screenshot of the current layout and allows the user to share it.
 * [NetworkLogListModule](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/NetworkLogListModule.kt) - This module will display an expandable list of your OkHttp network activity. Each item can be tapped for more information. To use this functionality, the custom DebugMenuNetworkInterceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/networking/NetworkingManager.kt).
 * [LogListModule](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/LogListModule.kt) - This module will display an expandable list of your custom logs. Each item can be tapped for more information if you specified a payload. To log an event, simply call DebugMenu.log().
+* DeviceConfigurationKeyValue - TODO: Display information about the device and the OS.
 
 ### Customization
 * The UI of the drawer can be personalized by specifying a [UiConfiguration](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/UiConfiguration.kt) instance when initializing the library.
@@ -59,10 +69,8 @@ Unique modules can only be added once as they are specific to a single use case:
 
 ### To do
 * Add API to dynamically enable / disable the drawer
+* Encapsulate the module list to make it safer to use
 * Create a base class for dialogs with proper 2D scrolling
-* Add a generic module for displaying a list of custom key-value pairs
-* Add a unique module that displays device / OS information
-* Add a unique button module for taking a screenshot of the app
 * Add support for dividers
 * Add screenshots and a more detailed description to this readme
 
