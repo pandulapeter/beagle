@@ -256,6 +256,7 @@ object DebugMenu : DebugMenuContract {
     }
 
     //TODO: Make sure this doesn't break Activity shared element transitions.
+    //TODO: Find a smart way to handle the case when the root view is already a DrawerLayout.
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(activity).also { drawer ->
         drawer.setBackground(uiConfiguration)
         drawer.updateItems(items)

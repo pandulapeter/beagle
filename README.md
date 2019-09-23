@@ -1,6 +1,8 @@
 # DebugMenu (Android)
 *A smart side drawer for debugging your Android apps.*
 
+<img src="screenshots/general01.png" width="20%" /> <img src="screenshots/general02.png" width="20%" />
+
 **This library is in very early stages of development. New features will be added and the API might change.**
 
 ### Usage
@@ -70,7 +72,7 @@ Unique modules can only be added once as they are specific to a single use case:
 ### To do
 * Create a base class for dialogs with proper 2D scrolling
 * Add support for dividers
-* Add screenshots and a more detailed description to this readme
+* Expose the DebugMenuDrawer view
 
 ### License
 ```
