@@ -68,6 +68,9 @@ Any number of generic modules can be added in any order as long as they have a u
     <img src="screenshots/moduleToggle.png" width="20%" />
 
 * [Button](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ButtonModule.kt) - Displays a button with configurable text and action.
+
+    <img src="screenshots/moduleButton.png" width="20%" />
+
 * TODO: KeyValue - Displays a list of key-value pairs that can be collapsed into a title.
 
     This module is not ready yet.
