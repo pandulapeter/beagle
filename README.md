@@ -64,6 +64,9 @@ Any number of generic modules can be added in any order as long as they have a u
     This module is not ready yet.
 
 * [Toggle](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ToggleModule.kt) - Displays a switch with configurable title and behavior - ideal for feature toggles.
+
+    <img src="screenshots/moduleToggle.png" width="20%" />
+
 * [Button](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ButtonModule.kt) - Displays a button with configurable text and action.
 * TODO: KeyValue - Displays a list of key-value pairs that can be collapsed into a title.
 
