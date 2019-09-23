@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def debugMenuVersion = "0.0.11"
+    def debugMenuVersion = "0.0.12"
     debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:$debugMenuVersion"
     releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:$debugMenuVersion"
 }
