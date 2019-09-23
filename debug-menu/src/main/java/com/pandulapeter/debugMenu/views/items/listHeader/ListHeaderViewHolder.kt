@@ -17,6 +17,7 @@ internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) 
     private val iconImageView = itemView.findViewById<ImageView>(R.id.icon)
     private val drawableExpand by lazy { itemView.context.animatedDrawable(R.drawable.avd_expand) }
     private val drawableCollapse by lazy { itemView.context.animatedDrawable(R.drawable.avd_collapse) }
+    private var isExpanded :Boolean? = null
 
     fun bind(viewModel: ListHeaderViewModel, textColor: Int) {
         itemView.isClickable = viewModel.shouldShowIcon
@@ -24,7 +25,10 @@ internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) 
         titleTextView.setTextColor(textColor)
         iconImageView.setImageDrawable((if (viewModel.isExpanded) drawableExpand else drawableCollapse)?.apply {
             setTintList(ColorStateList.valueOf(textColor))
-            start()
+            if (viewModel.isExpanded!=isExpanded) {
+                isExpanded = viewModel.isExpanded
+                start()
+            }
         })
         iconImageView.visible = viewModel.shouldShowIcon
         if (viewModel.shouldShowIcon) {
