@@ -8,9 +8,10 @@ import java.util.UUID
  *
  * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
  * @param text - The text that should be displayed.
+ * @param isTitle - Whether or not the text should appear in bold style. False by default.
  */
-//TODO: Add "isTitle" parameter
 data class TextModule(
     override val id: String = UUID.randomUUID().toString(),
-    val text: CharSequence
+    val text: CharSequence,
+    val isTitle: Boolean = false
 ) : DebugMenuModule

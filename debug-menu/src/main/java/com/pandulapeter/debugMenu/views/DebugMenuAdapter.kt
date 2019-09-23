@@ -42,8 +42,8 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
         is ListHeaderViewModel -> R.layout.item_list_header
         is ListItemViewModel<*> -> R.layout.item_list_item
         is HeaderViewModel -> R.layout.item_header
-        is NetworkLogItemViewModel -> R.layout.item_network_log_event
-        is LogItemViewModel -> R.layout.item_log_message
+        is NetworkLogItemViewModel -> R.layout.item_network_log
+        is LogItemViewModel -> R.layout.item_log
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
@@ -54,8 +54,8 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
         R.layout.item_list_header -> ListHeaderViewHolder.create(parent)
         R.layout.item_list_item -> ListItemViewHolder.create(parent)
         R.layout.item_header -> HeaderViewHolder.create(parent)
-        R.layout.item_network_log_event -> NetworkLogItemViewHolder.create(parent)
-        R.layout.item_log_message -> LogItemViewHolder.create(parent)
+        R.layout.item_network_log -> NetworkLogItemViewHolder.create(parent)
+        R.layout.item_log -> LogItemViewHolder.create(parent)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 

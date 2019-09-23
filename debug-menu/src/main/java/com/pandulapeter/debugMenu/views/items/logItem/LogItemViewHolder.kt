@@ -30,6 +30,6 @@ internal class LogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     companion object {
         fun create(parent: ViewGroup) =
-            LogItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_log_message, parent, false))
+            LogItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_log, parent, false))
     }
 }

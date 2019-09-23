@@ -264,7 +264,8 @@ object DebugMenu : DebugMenuContract {
                 is TextModule -> items.add(
                     TextViewModel(
                         id = module.id,
-                        text = module.text
+                        text = module.text,
+                        isTitle = module.isTitle
                     )
                 )
                 is ToggleModule -> items.add(

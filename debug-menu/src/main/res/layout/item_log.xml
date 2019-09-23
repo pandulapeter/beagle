@@ -21,8 +21,8 @@
         android:id="@+id/timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="@dimen/content_padding"
+        android:layout_marginStart="@dimen/content_padding"
+        android:layout_marginTop="@dimen/small_content_padding"
         android:alpha="0.5"
         android:textStyle="italic"
         tools:text="Timestamp" />

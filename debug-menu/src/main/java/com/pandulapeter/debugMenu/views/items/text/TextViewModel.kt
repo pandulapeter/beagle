@@ -4,5 +4,6 @@ import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 
 internal data class TextViewModel(
     override val id: String,
-    val text: CharSequence
+    val text: CharSequence,
+    val isTitle: Boolean
 ) : DrawerItemViewModel

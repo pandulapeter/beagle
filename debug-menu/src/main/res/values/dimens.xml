@@ -1,5 +1,6 @@
 <resources>
     <dimen name="drawer_width">280dp</dimen>
+    <dimen name="small_content_padding">4dp</dimen>
     <dimen name="content_padding">8dp</dimen>
     <dimen name="large_content_padding">16dp</dimen>
     <dimen name="title_font">20sp</dimen>

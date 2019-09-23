@@ -9,7 +9,7 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  * @param shouldShowHeaders - Whether of not the detail dialog should also contain the request / response headers. False by default.
  * @param maxItemCount - The maximum number of messages that will appear when expanded. 10 by default.
  * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
- * @param isInitiallyExpanded - Whether or not the list should be expanded by default.
+ * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
 data class NetworkLogListModule(
     override val title: CharSequence = "Network activity",

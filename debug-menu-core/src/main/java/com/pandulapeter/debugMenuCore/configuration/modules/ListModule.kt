@@ -11,7 +11,7 @@ import java.util.UUID
  * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the list, a suitable default value is auto-generated.
  * @param title - The text that appears in the header of the module.
  * @param items - The hardcoded list of items implementing the [ListModule.Item] interface.
- * @param isInitiallyExpanded - Whether or not the list should be expanded by default.
+ * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  * @param onItemSelected - The callback that will get executed when an item is selected.
  */
 data class ListModule<T : ListModule.Item>(
