@@ -5,19 +5,21 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  * This module can only be added once.
  *
  * @param title - The title of the module. "Logs" by default.
- * @param maxMessageCount - The maximum number of messages that will appear when expanded. 10 by default.
+ * @param maxItemCount - The maximum number of messages that will appear when expanded. 10 by default.
  * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
+ * @param isInitiallyExpanded - Whether or not the list should be expanded by default.
  */
 data class LogListModule(
     override val title: CharSequence = "Logs",
-    val maxMessageCount: Int = 10,
-    val shouldShowTimestamp: Boolean = false
+    val maxItemCount: Int = 10,
+    val shouldShowTimestamp: Boolean = false,
+    override val isInitiallyExpanded: Boolean = false
 ) : ExpandableDebugMenuModule {
 
     override val id = ID
 
     init {
-        require(maxMessageCount > 0) { "DebugMenu: maxMessageCount must be larger than 0 for the LogListModule." }
+        require(maxItemCount > 0) { "DebugMenu: maxItemCount must be larger than 0 for the LogListModule." }
     }
 
     companion object {

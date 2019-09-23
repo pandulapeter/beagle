@@ -7,21 +7,23 @@ package com.pandulapeter.debugMenuCore.configuration.modules
  * @param title - The title of the module. "Network activity" by default.
  * @param baseUrl - When not empty, all URL-s will have the specified String filtered out. Empty by default.
  * @param shouldShowHeaders - Whether of not the detail dialog should also contain the request / response headers. False by default.
- * @param maxMessageCount - The maximum number of messages that will appear when expanded. 10 by default.
+ * @param maxItemCount - The maximum number of messages that will appear when expanded. 10 by default.
  * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
+ * @param isInitiallyExpanded - Whether or not the list should be expanded by default.
  */
 data class NetworkLogListModule(
     override val title: CharSequence = "Network activity",
     val baseUrl: String = "",
     val shouldShowHeaders: Boolean = false,
-    val maxMessageCount: Int = 10,
-    val shouldShowTimestamp: Boolean = false
+    val maxItemCount: Int = 10,
+    val shouldShowTimestamp: Boolean = false,
+    override val isInitiallyExpanded: Boolean = false
 ) : ExpandableDebugMenuModule {
 
     override val id = ID
 
     init {
-        require(maxMessageCount > 0) { "DebugMenu: maxMessageCount must be larger than 0 for the NetworkLogListModule." }
+        require(maxItemCount > 0) { "DebugMenu: maxItemCount must be larger than 0 for the NetworkLogListModule." }
     }
 
     companion object {

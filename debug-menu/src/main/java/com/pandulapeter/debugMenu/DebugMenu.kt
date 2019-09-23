@@ -106,20 +106,16 @@ object DebugMenu : DebugMenuContract {
      * @param payload - An optional String payload that can be opened in a dialog when the user clicks on a log message. Null by default.
      */
     override fun log(message: String, tag: String?, payload: String?) {
-        //TODO: Logs should be saved even if there is no loggingModule added.
-        loggingModule?.run {
-            logMessages = logMessages.toMutableList().apply { add(0, LogItem(message = message, tag = tag, payload = payload)) }.take(maxMessageCount)
-        }
+        logItems = logItems.toMutableList().apply { add(0, LogItem(message = message, tag = tag, payload = payload)) }.take(MAX_ITEM_COUNT)
     }
     //endregion
 
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
+    private const val MAX_ITEM_COUNT = 500
     private var uiConfiguration = UiConfiguration()
     internal var textColor = Color.WHITE
         private set
-    private val loggingModule get() = modules.filterIsInstance<LogListModule>().firstOrNull()
-    private val networkLogListModule get() = modules.filterIsInstance<NetworkLogListModule>().firstOrNull()
     private val keylineOverlayToggleModule get() = modules.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
     private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
@@ -135,12 +131,12 @@ object DebugMenu : DebugMenuContract {
                 }
             }
         }
-    private var logMessages = emptyList<LogItem>()
+    private var logItems = emptyList<LogItem>()
         set(value) {
             field = value
             updateItems()
         }
-    private var networkLogs = emptyList<NetworkLogItem>()
+    private var networkLogItems = emptyList<NetworkLogItem>()
         set(value) {
             field = value
             updateItems()
@@ -182,10 +178,7 @@ object DebugMenu : DebugMenuContract {
     }
 
     internal fun logNetworkEvent(networkLogItem: NetworkLogItem) {
-        //TODO: Network logs should be saved even if there is no networkLogListModule added.
-        networkLogListModule?.run {
-            networkLogs = networkLogs.toMutableList().apply { add(0, networkLogItem) }.take(maxMessageCount)
-        }
+        networkLogItems = networkLogItems.toMutableList().apply { add(0, networkLogItem) }.take(MAX_ITEM_COUNT)
     }
 
     //TODO: Make sure this doesn't break Activity shared element transitions.
@@ -229,13 +222,13 @@ object DebugMenu : DebugMenuContract {
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
-    private fun Activity.openNetworkEventBodyDialog(networkLogItem: NetworkLogItem) {
+    private fun Activity.openNetworkEventBodyDialog(networkLogItem: NetworkLogItem, shouldShowHeaders: Boolean) {
         (this as? AppCompatActivity?)?.run {
             NetworkEventBodyDialog.show(
                 fragmentManager = supportFragmentManager,
                 networkLogItem = networkLogItem,
                 uiConfiguration = uiConfiguration,
-                shouldShowHeaders = networkLogListModule?.shouldShowHeaders == true
+                shouldShowHeaders = shouldShowHeaders
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
@@ -253,15 +246,15 @@ object DebugMenu : DebugMenuContract {
                 ListHeaderViewModel(
                     id = module.id,
                     title = module.title,
-                    isExpanded = expandCollapseStates[module.id] == true,
+                    isExpanded = expandCollapseStates[module.id] ?: module.isInitiallyExpanded,
                     shouldShowIcon = shouldShowIcon,
                     onItemSelected = {
-                        expandCollapseStates[module.id] = !(expandCollapseStates[module.id] ?: false)
+                        expandCollapseStates[module.id] = !(expandCollapseStates[module.id] ?: module.isInitiallyExpanded)
                         updateItems()
                     }
                 )
             )
-            if (expandCollapseStates[module.id] == true) {
+            if (expandCollapseStates[module.id] ?: module.isInitiallyExpanded) {
                 items.addAll(addItems())
             }
         }
@@ -331,32 +324,36 @@ object DebugMenu : DebugMenuContract {
                             }
                         })
                 )
-                is NetworkLogListModule -> addListModule(
-                    module = module,
-                    shouldShowIcon = networkLogs.isNotEmpty(),
-                    addItems = {
-                        networkLogs.map { networkLogItem ->
-                            NetworkLogItemViewModel(
-                                networkLogListModule = module,
-                                networkLogItem = networkLogItem,
-                                onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem) }
-                            )
+                is NetworkLogListModule -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
+                    addListModule(
+                        module = module,
+                        shouldShowIcon = networkLogItems.isNotEmpty(),
+                        addItems = {
+                            networkLogItems.map { networkLogItem ->
+                                NetworkLogItemViewModel(
+                                    networkLogListModule = module,
+                                    networkLogItem = networkLogItem,
+                                    onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem, module.shouldShowHeaders) }
+                                )
+                            }
                         }
-                    }
-                )
-                is LogListModule -> addListModule(
-                    module = module,
-                    shouldShowIcon = logMessages.isNotEmpty(),
-                    addItems = {
-                        logMessages.map { logItem ->
-                            LogItemViewModel(
-                                logListModule = module,
-                                logItem = logItem,
-                                onItemSelected = { currentActivity?.openLogPayloadDialog(logItem) }
-                            )
+                    )
+                }
+                is LogListModule -> logItems.take(module.maxItemCount).let { logItems ->
+                    addListModule(
+                        module = module,
+                        shouldShowIcon = logItems.isNotEmpty(),
+                        addItems = {
+                            logItems.map { logItem ->
+                                LogItemViewModel(
+                                    logListModule = module,
+                                    logItem = logItem,
+                                    onItemSelected = { currentActivity?.openLogPayloadDialog(logItem) }
+                                )
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
         this.items = items

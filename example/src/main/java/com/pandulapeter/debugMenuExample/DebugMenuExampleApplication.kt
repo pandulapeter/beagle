@@ -50,6 +50,7 @@ class DebugMenuExampleApplication : Application() {
                 ListModule(
                     title = "Environment",
                     items = mockBackendEnvironments,
+                    isInitiallyExpanded = true,
                     onItemSelected = { backendEnvironment -> backendEnvironment.url.showToast() }
                 ),
                 TextModule(
