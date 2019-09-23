@@ -64,7 +64,7 @@ Unique modules can only be added once as they are specific to a single use case:
 * DeviceConfigurationKeyValue - TODO: Display information about the device and the OS.
 
 ### Customization
-* The UI of the drawer can be personalized by specifying a [UiConfiguration](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/UiConfiguration.kt) instance when initializing the library.
+* The UI of the drawer can be personalized by specifying a [UiCustomization](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/UiCustomization.kt) instance when initializing the library.
 * To properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/screens/MainActivity.kt).
 
 ### To do

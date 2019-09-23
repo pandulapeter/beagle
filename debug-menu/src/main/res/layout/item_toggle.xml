@@ -7,6 +7,6 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/large_content_padding"
     android:paddingStart="@dimen/large_content_padding"
-    android:paddingEnd="@dimen/large_content_padding"
+    android:paddingEnd="@dimen/content_padding"
     app:switchPadding="@dimen/large_content_padding"
     tools:text="Toggle" />

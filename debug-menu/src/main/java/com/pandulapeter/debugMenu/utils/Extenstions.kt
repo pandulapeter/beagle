@@ -12,7 +12,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
-import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 
 internal fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)
 
@@ -22,7 +22,7 @@ internal fun Context.dimension(@DimenRes dimensionResInt: Int) = resources.getDi
 
 internal fun Context.drawable(@DrawableRes drawableresId: Int) = AppCompatResources.getDrawable(this, drawableresId)
 
-internal fun Context.getTextColor(uiConfiguration: UiConfiguration) = uiConfiguration.textColor.let { configurationTextColor ->
+internal fun Context.getTextColor(uiCustomization: UiCustomization) = uiCustomization.textColor.let { configurationTextColor ->
     if (configurationTextColor == null) {
         val typedValue = TypedValue()
         theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
@@ -42,8 +42,8 @@ internal inline fun <T : Fragment> T.withArguments(bundleOperations: (Bundle) ->
 }
 
 //TODO: Doesn't seem to be working for dialogs.
-internal fun View.setBackground(uiConfiguration: UiConfiguration) {
-    val backgroundColor = uiConfiguration.backgroundColor
+internal fun View.setBackground(uiCustomization: UiCustomization) {
+    val backgroundColor = uiCustomization.backgroundColor
     if (backgroundColor == null) {
         val typedValue = TypedValue()
         context.theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)

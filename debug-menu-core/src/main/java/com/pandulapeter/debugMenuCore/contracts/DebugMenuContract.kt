@@ -2,7 +2,7 @@ package com.pandulapeter.debugMenuCore.contracts
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
 
 /**
@@ -12,7 +12,7 @@ interface DebugMenuContract {
 
     var modules: List<DebugMenuModule>
 
-    fun attachToUi(application: Application, uiConfiguration: UiConfiguration = UiConfiguration())
+    fun attachToUi(application: Application, uiCustomization: UiCustomization = UiCustomization())
 
     fun closeDrawer(activity: Activity): Boolean
 

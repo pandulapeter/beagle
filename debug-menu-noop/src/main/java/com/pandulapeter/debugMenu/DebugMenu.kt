@@ -2,7 +2,7 @@ package com.pandulapeter.debugMenu
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 
@@ -19,7 +19,7 @@ object DebugMenu : DebugMenuContract {
     /**
      * Does nothing.
      */
-    override fun attachToUi(application: Application, uiConfiguration: UiConfiguration) = Unit
+    override fun attachToUi(application: Application, uiCustomization: UiCustomization) = Unit
 
     /**
      * Does nothing and returns false.

@@ -19,7 +19,7 @@ import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.utils.withArguments
-import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 
 internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
 
@@ -38,7 +38,7 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
                             setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                         addView(ScrollView(context).apply {
-                            setPadding(0, padding, 0, padding)
+                            setPadding(0, padding / 4, 0, padding)
                             clipToPadding = false
                             addView(HorizontalScrollView(context).apply {
                                 setPadding(padding, 0, padding, 0)
@@ -67,13 +67,13 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle.networkEvent by BundleArgumentDelegate.Parcelable<NetworkLogItem>("networkLogItem")
-        private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiConfiguration>("uiConfiguration")
+        private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiCustomization>("uiConfiguration")
         private var Bundle.shouldShowHeaders by BundleArgumentDelegate.Boolean("shouldShowHeaders")
 
-        fun show(fragmentManager: FragmentManager, networkLogItem: NetworkLogItem, uiConfiguration: UiConfiguration, shouldShowHeaders: Boolean) =
+        fun show(fragmentManager: FragmentManager, networkLogItem: NetworkLogItem, uiCustomization: UiCustomization, shouldShowHeaders: Boolean) =
             NetworkEventBodyDialog().withArguments {
                 it.networkEvent = networkLogItem
-                it.uiConfiguration = uiConfiguration
+                it.uiConfiguration = uiCustomization
                 it.shouldShowHeaders = shouldShowHeaders
             }.run { show(fragmentManager, tag) }
     }

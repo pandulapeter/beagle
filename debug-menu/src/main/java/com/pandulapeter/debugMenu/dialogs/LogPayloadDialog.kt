@@ -18,7 +18,7 @@ import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.utils.withArguments
-import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 
 internal class LogPayloadDialog : AppCompatDialogFragment() {
 
@@ -39,7 +39,7 @@ internal class LogPayloadDialog : AppCompatDialogFragment() {
                         addView(ScrollView(context).apply {
                             isHorizontalScrollBarEnabled = false
                             overScrollMode = View.OVER_SCROLL_NEVER
-                            setPadding(0, padding, 0, padding)
+                            setPadding(0, padding / 4, 0, padding)
                             clipToPadding = false
                             addView(AppCompatTextView(context).apply {
                                 text = logMessage.payload
@@ -56,11 +56,11 @@ internal class LogPayloadDialog : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle.logMessage by BundleArgumentDelegate.Parcelable<LogItem>("logItem")
-        private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiConfiguration>("uiConfiguration")
+        private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiCustomization>("uiConfiguration")
 
-        fun show(fragmentManager: FragmentManager, logItem: LogItem, uiConfiguration: UiConfiguration) = LogPayloadDialog().withArguments {
+        fun show(fragmentManager: FragmentManager, logItem: LogItem, uiCustomization: UiCustomization) = LogPayloadDialog().withArguments {
             it.logMessage = logItem
-            it.uiConfiguration = uiConfiguration
+            it.uiConfiguration = uiCustomization
         }.run { show(fragmentManager, tag) }
     }
 }

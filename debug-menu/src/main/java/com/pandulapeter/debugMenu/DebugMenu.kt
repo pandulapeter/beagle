@@ -32,7 +32,7 @@ import com.pandulapeter.debugMenu.views.items.logItem.LogItemViewModel
 import com.pandulapeter.debugMenu.views.items.networkLogItem.NetworkLogItemViewModel
 import com.pandulapeter.debugMenu.views.items.text.TextViewModel
 import com.pandulapeter.debugMenu.views.items.toggle.ToggleViewModel
-import com.pandulapeter.debugMenuCore.configuration.UiConfiguration
+import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
@@ -67,10 +67,10 @@ object DebugMenu : DebugMenuContract {
      * in the Application's onCreate() method.
      *
      * @param application - The [Application] instance.
-     * @param uiConfiguration - The [UiConfiguration] that specifies the appearance the drawer.
+     * @param uiCustomization - The [UiCustomization] that specifies the appearance the drawer.
      */
-    override fun attachToUi(application: Application, uiConfiguration: UiConfiguration) {
-        this.uiConfiguration = uiConfiguration
+    override fun attachToUi(application: Application, uiCustomization: UiCustomization) {
+        this.uiConfiguration = uiCustomization
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
@@ -113,7 +113,7 @@ object DebugMenu : DebugMenuContract {
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private const val MAX_ITEM_COUNT = 500
-    private var uiConfiguration = UiConfiguration()
+    private var uiConfiguration = UiCustomization()
     internal var textColor = Color.WHITE
         private set
     private val keylineOverlayToggleModule get() = modules.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
@@ -227,7 +227,7 @@ object DebugMenu : DebugMenuContract {
             NetworkEventBodyDialog.show(
                 fragmentManager = supportFragmentManager,
                 networkLogItem = networkLogItem,
-                uiConfiguration = uiConfiguration,
+                uiCustomization = uiConfiguration,
                 shouldShowHeaders = shouldShowHeaders
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
