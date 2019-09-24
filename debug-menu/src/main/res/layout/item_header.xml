@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:paddingStart="@dimen/large_content_padding"
     android:paddingTop="@dimen/large_content_padding"
-    android:paddingEnd="@dimen/large_content_padding">
+    android:paddingEnd="@dimen/large_content_padding"
+    android:paddingBottom="@dimen/content_padding">
 
     <TextView
         android:id="@+id/title"

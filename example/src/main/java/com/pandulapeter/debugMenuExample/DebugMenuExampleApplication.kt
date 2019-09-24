@@ -26,7 +26,7 @@ class DebugMenuExampleApplication : Application() {
         if (BuildConfig.DEBUG) {
             DebugMenu.attachToApplication(
                 application = this,
-                uiCustomization = UiCustomization(themeResourceId = R.style.DebugDrawerTheme)
+                uiCustomization = UiCustomization(themeResourceId = R.style.DebugMenuTheme)
             )
             DebugMenu.setModules(
                 listOf(

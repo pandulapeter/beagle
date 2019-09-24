@@ -15,7 +15,6 @@ internal class LogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     fun bind(viewModel: LogItemViewModel) {
         val isClickable = viewModel.logItem.payload != null
-        itemView.isClickable = isClickable
         messageTextView.text = viewModel.message + if (viewModel.hasPayload) " *" else ""
         timestampTextView.text = viewModel.timestamp
         timestampTextView.visible = viewModel.timestamp != null
@@ -24,6 +23,7 @@ internal class LogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
         } else {
             itemView.setOnClickListener(null)
         }
+        itemView.isClickable = isClickable
     }
 
     companion object {

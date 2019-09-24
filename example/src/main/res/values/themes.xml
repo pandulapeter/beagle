@@ -4,6 +4,12 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="DebugDrawerTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="DebugMenuTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorButtonNormal">@color/button</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
 
 </resources>
