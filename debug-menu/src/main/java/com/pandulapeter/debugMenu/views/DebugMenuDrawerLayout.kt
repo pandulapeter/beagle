@@ -54,7 +54,7 @@ internal class DebugMenuDrawerLayout @JvmOverloads constructor(
                 image.compress(Bitmap.CompressFormat.PNG, 100, stream)
                 stream.flush()
                 stream.close()
-                uri = FileProvider.getUriForFile(context, "com.pandulapeter.fileprovider", file)
+                uri = FileProvider.getUriForFile(context, context.applicationContext.packageName + ".debugMenu.fileProvider", file)
                 context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
                     type = "image/png"
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

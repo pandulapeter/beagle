@@ -5,7 +5,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.pandulapeter.fileprovider"
+            android:authorities="${applicationId}.debugMenu.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
 
