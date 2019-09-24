@@ -321,6 +321,7 @@ object DebugMenu : DebugMenuContract {
         currentJob = GlobalScope.launch {
             val items = mutableListOf<DrawerItemViewModel>()
 
+            //TODO: DiffUtil seems to rebind the expanded list items even if they didn't change.
             fun addListModule(module: DebugMenuExpandableModule, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
                 items.add(
                     ListHeaderViewModel(

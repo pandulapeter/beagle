@@ -10,6 +10,7 @@ import java.util.UUID
  * @param text - The text that should be displayed on the button.
  * @param onButtonPressed - The callback that gets invoked when the user presses the button.
  */
+//TODO: The Buttons don't look great if the app uses Material theme.
 data class ButtonModule(
     override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence,

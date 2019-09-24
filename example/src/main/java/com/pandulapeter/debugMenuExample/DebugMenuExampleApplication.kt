@@ -60,7 +60,7 @@ class DebugMenuExampleApplication : Application() {
                         onItemSelectionChanged = { backendEnvironment -> backendEnvironment.url.showToast() }
                     ),
                     TextModule(
-                        text = "This is an example TextModule"
+                        text = "This is a TextModule used for displaying short hints"
                     ),
                     LongTextModule(
                         title = "Long text",
