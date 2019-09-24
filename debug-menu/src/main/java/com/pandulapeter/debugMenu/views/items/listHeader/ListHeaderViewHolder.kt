@@ -19,7 +19,6 @@ internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) 
     private var isExpanded: Boolean? = null
 
     fun bind(viewModel: ListHeaderViewModel) {
-        itemView.isClickable = viewModel.shouldShowIcon
         titleTextView.text = viewModel.title
         iconImageView.setImageDrawable((if (viewModel.isExpanded) drawableExpand else drawableCollapse)?.apply {
             setTintList(titleTextView.textColors)
@@ -34,6 +33,7 @@ internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) 
         } else {
             itemView.setOnClickListener(null)
         }
+        itemView.isClickable = viewModel.shouldShowIcon
     }
 
     companion object {

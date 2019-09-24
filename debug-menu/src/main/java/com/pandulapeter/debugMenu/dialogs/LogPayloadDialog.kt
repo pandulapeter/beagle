@@ -23,7 +23,7 @@ import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 internal class LogPayloadDialog : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        (arguments?.uiConfiguration?.themeResourceId?.let { ContextThemeWrapper(context, it) } ?: context)?.let { themedContext ->
+        (arguments?.uiCustomization?.themeResourceId?.let { ContextThemeWrapper(context, it) } ?: context)?.let { themedContext ->
             arguments?.logMessage?.let { logMessage ->
                 return AlertDialog.Builder(themedContext).apply {
                     setView(LinearLayout(themedContext).apply {
@@ -54,11 +54,11 @@ internal class LogPayloadDialog : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle.logMessage by BundleArgumentDelegate.Parcelable<LogItem>("logItem")
-        private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiCustomization>("uiConfiguration")
+        private var Bundle.uiCustomization by BundleArgumentDelegate.Parcelable<UiCustomization>("uiCustomization")
 
         fun show(fragmentManager: FragmentManager, logItem: LogItem, uiCustomization: UiCustomization) = LogPayloadDialog().withArguments {
             it.logMessage = logItem
-            it.uiConfiguration = uiCustomization
+            it.uiCustomization = uiCustomization
         }.run { show(fragmentManager, tag) }
     }
 }

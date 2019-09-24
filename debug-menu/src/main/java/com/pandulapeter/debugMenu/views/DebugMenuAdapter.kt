@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
+import com.pandulapeter.debugMenu.views.items.button.ButtonListItemViewHolder
 import com.pandulapeter.debugMenu.views.items.button.ButtonViewHolder
 import com.pandulapeter.debugMenu.views.items.button.ButtonViewModel
 import com.pandulapeter.debugMenu.views.items.header.HeaderViewHolder
@@ -38,11 +39,11 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
     override fun getChangePayload(oldItem: DrawerItemViewModel, newItem: DrawerItemViewModel): Any? = if (oldItem.shouldUsePayloads && newItem.shouldUsePayloads) "" else null
 }) {
 
-    override fun getItemViewType(position: Int) = when (getItem(position)) {
+    override fun getItemViewType(position: Int) = when (val item = getItem(position)) {
         is TextViewModel -> R.layout.item_text
         is LongTextViewModel -> R.layout.item_long_text
         is ToggleViewModel -> R.layout.item_toggle
-        is ButtonViewModel -> R.layout.item_button
+        is ButtonViewModel -> if (item.shouldUseListItem) R.layout.item_button_list_item else R.layout.item_button
         is ListHeaderViewModel -> R.layout.item_list_header
         is ListItemViewModel<*> -> R.layout.item_list_item
         is SingleSelectionListItemViewModel<*> -> R.layout.item_single_selection_list_item
@@ -57,6 +58,7 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
         R.layout.item_long_text -> LongTextViewHolder.create(parent)
         R.layout.item_toggle -> ToggleViewHolder.create(parent)
         R.layout.item_button -> ButtonViewHolder.create(parent)
+        R.layout.item_button_list_item -> ButtonListItemViewHolder.create(parent)
         R.layout.item_list_header -> ListHeaderViewHolder.create(parent)
         R.layout.item_list_item -> ListItemViewHolder.create(parent)
         R.layout.item_single_selection_list_item -> SingleSelectionListItemViewHolder.create(parent)
@@ -71,6 +73,7 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
         is LongTextViewHolder -> holder.bind(getItem(position) as LongTextViewModel)
         is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel)
         is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel)
+        is ButtonListItemViewHolder -> holder.bind(getItem(position) as ButtonViewModel)
         is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel)
         is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel<*>)
         is SingleSelectionListItemViewHolder -> holder.bind(getItem(position) as SingleSelectionListItemViewModel<*>)

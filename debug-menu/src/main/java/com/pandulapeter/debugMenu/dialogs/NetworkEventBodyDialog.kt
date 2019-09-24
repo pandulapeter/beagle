@@ -24,7 +24,7 @@ import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        (arguments?.uiConfiguration?.themeResourceId?.let { ContextThemeWrapper(context, it) } ?: context)?.let { themedContext ->
+        (arguments?.uiCustomization?.themeResourceId?.let { ContextThemeWrapper(context, it) } ?: context)?.let { themedContext ->
             arguments?.networkEvent?.let { networkEvent ->
                 return AlertDialog.Builder(themedContext).apply {
                     setView(LinearLayout(themedContext).apply {
@@ -65,13 +65,13 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle.networkEvent by BundleArgumentDelegate.Parcelable<NetworkLogItem>("networkLogItem")
-        private var Bundle.uiConfiguration by BundleArgumentDelegate.Parcelable<UiCustomization>("uiConfiguration")
+        private var Bundle.uiCustomization by BundleArgumentDelegate.Parcelable<UiCustomization>("uiCustomization")
         private var Bundle.shouldShowHeaders by BundleArgumentDelegate.Boolean("shouldShowHeaders")
 
         fun show(fragmentManager: FragmentManager, networkLogItem: NetworkLogItem, uiCustomization: UiCustomization, shouldShowHeaders: Boolean) =
             NetworkEventBodyDialog().withArguments {
                 it.networkEvent = networkLogItem
-                it.uiConfiguration = uiCustomization
+                it.uiCustomization = uiCustomization
                 it.shouldShowHeaders = shouldShowHeaders
             }.run { show(fragmentManager, tag) }
     }

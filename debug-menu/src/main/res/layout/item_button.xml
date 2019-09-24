@@ -9,4 +9,4 @@
     android:layout_marginEnd="@dimen/content_padding"
     android:paddingStart="@dimen/large_content_padding"
     android:paddingEnd="@dimen/large_content_padding"
-    tools:text="Open Settings" />
+    tools:text="Text" />

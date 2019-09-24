@@ -375,6 +375,7 @@ object DebugMenu : DebugMenuContract {
                     is ButtonModule -> items.add(
                         ButtonViewModel(
                             id = module.id,
+                            shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
                             text = module.text,
                             onButtonPressed = module.onButtonPressed
                         )
@@ -425,6 +426,7 @@ object DebugMenu : DebugMenuContract {
                     is AppInfoButtonModule -> items.add(
                         ButtonViewModel(
                             id = module.id,
+                            shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
                             text = module.text,
                             onButtonPressed = {
                                 currentActivity?.run {
@@ -438,6 +440,7 @@ object DebugMenu : DebugMenuContract {
                     is ScreenshotButtonModule -> items.add(
                         ButtonViewModel(
                             id = module.id,
+                            shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
                             text = module.text,
                             onButtonPressed = { (drawers[currentActivity]?.parent as? DebugMenuDrawerLayout?)?.takeAndShareScreenshot() }
                         )
