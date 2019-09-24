@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +18,7 @@ import com.pandulapeter.debugMenu.models.LogItem
 import com.pandulapeter.debugMenu.models.NetworkLogItem
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.SimpleActivityLifecycleCallbacks
-import com.pandulapeter.debugMenu.utils.getTextColor
 import com.pandulapeter.debugMenu.utils.hideKeyboard
-import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.views.DebugMenuDrawer
 import com.pandulapeter.debugMenu.views.DebugMenuDrawerLayout
 import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
@@ -81,7 +79,7 @@ object DebugMenu : DebugMenuContract {
      * @param uiCustomization - The [UiCustomization] that specifies the appearance the drawer.
      */
     override fun attachToApplication(application: Application, uiCustomization: UiCustomization) {
-        this.uiConfiguration = uiCustomization
+        this.uiCustomization = uiCustomization
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
@@ -184,9 +182,7 @@ object DebugMenu : DebugMenuContract {
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private const val MAX_ITEM_COUNT = 500
-    private var uiConfiguration = UiCustomization()
-    internal var textColor = Color.WHITE
-        private set
+    private var uiCustomization = UiCustomization()
     private var moduleList = emptyList<DebugMenuModule>()
         set(value) {
             field = value.distinctBy { it.id }.sortedBy { it !is HeaderModule }
@@ -223,7 +219,6 @@ object DebugMenu : DebugMenuContract {
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            textColor = activity.getTextColor(uiConfiguration)
             drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
         }
 
@@ -260,43 +255,45 @@ object DebugMenu : DebugMenuContract {
 
     //TODO: Make sure this doesn't break Activity shared element transitions.
     //TODO: Find a smart way to handle the case when the root view is already a DrawerLayout.
-    private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) = DebugMenuDrawer(activity).also { drawer ->
-        drawer.setBackground(uiConfiguration)
-        drawer.updateItems(items)
-        activity.findRootViewGroup().run {
-            post {
-                val oldViews = (0 until childCount).map { getChildAt(it) }
-                removeAllViews()
-                addView(
-                    DebugMenuDrawerLayout(
-                        context = activity,
-                        oldViews = oldViews,
-                        drawer = drawer,
-                        drawerWidth = uiConfiguration.drawerWidth
-                    ).apply {
-                        if (shouldOpenDrawer) {
-                            openDrawer(drawer)
-                        }
-                        if (isKeylineOverlayEnabled) {
-                            keylineOverlay = keylineOverlayToggleModule
-                        }
-                        addDrawerListener(object : DrawerLayout.DrawerListener {
+    private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) =
+        (uiCustomization.themeResourceId?.let { ContextThemeWrapper(activity, it) } ?: activity).let { themedContext ->
+            DebugMenuDrawer(themedContext).also { drawer ->
+                drawer.updateItems(items)
+                activity.findRootViewGroup().run {
+                    post {
+                        val oldViews = (0 until childCount).map { getChildAt(it) }
+                        removeAllViews()
+                        addView(
+                            DebugMenuDrawerLayout(
+                                context = themedContext,
+                                oldViews = oldViews,
+                                drawer = drawer,
+                                drawerWidth = uiCustomization.drawerWidth
+                            ).apply {
+                                if (shouldOpenDrawer) {
+                                    openDrawer(drawer)
+                                }
+                                if (isKeylineOverlayEnabled) {
+                                    keylineOverlay = keylineOverlayToggleModule
+                                }
+                                addDrawerListener(object : DrawerLayout.DrawerListener {
 
-                            override fun onDrawerStateChanged(newState: Int) = Unit
+                                    override fun onDrawerStateChanged(newState: Int) = Unit
 
-                            override fun onDrawerSlide(drawerView: View, slideOffset: Float) = activity.currentFocus?.hideKeyboard() ?: Unit
+                                    override fun onDrawerSlide(drawerView: View, slideOffset: Float) = activity.currentFocus?.hideKeyboard() ?: Unit
 
-                            override fun onDrawerClosed(drawerView: View) = Unit
+                                    override fun onDrawerClosed(drawerView: View) = Unit
 
-                            override fun onDrawerOpened(drawerView: View) = Unit
-                        })
-                    },
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
+                                    override fun onDrawerOpened(drawerView: View) = Unit
+                                })
+                            },
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
+                        )
+                    }
+                }
             }
         }
-    }
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
@@ -305,14 +302,14 @@ object DebugMenu : DebugMenuContract {
             NetworkEventBodyDialog.show(
                 fragmentManager = supportFragmentManager,
                 networkLogItem = networkLogItem,
-                uiCustomization = uiConfiguration,
+                uiCustomization = uiCustomization,
                 shouldShowHeaders = shouldShowHeaders
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
     private fun Activity.openLogPayloadDialog(logItem: LogItem) {
-        (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logItem, uiConfiguration) }
+        (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logItem, uiCustomization) }
             ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 

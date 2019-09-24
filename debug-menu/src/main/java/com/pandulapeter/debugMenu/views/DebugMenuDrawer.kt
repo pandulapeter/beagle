@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.dimension
+import com.pandulapeter.debugMenu.utils.setBackgroundFromWindowBackground
 import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 
 //TODO: Scroll position is not restored.
@@ -19,6 +20,7 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
     private val debugMenuAdapter = DebugMenuAdapter()
 
     init {
+        setBackgroundFromWindowBackground()
         clipToPadding = false
         layoutManager = LinearLayoutManager(context)
         adapter = debugMenuAdapter

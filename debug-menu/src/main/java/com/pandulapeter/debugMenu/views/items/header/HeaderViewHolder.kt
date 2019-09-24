@@ -14,16 +14,15 @@ internal class HeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     private val subtitleTextView = itemView.findViewById<TextView>(R.id.subtitle)
     private val textTextView = itemView.findViewById<TextView>(R.id.text)
 
-    fun bind(viewModel: HeaderViewModel, textColor: Int) {
-        titleTextView.setUpWithText(viewModel.title, textColor)
-        subtitleTextView.setUpWithText(viewModel.subtitle, textColor)
-        textTextView.setUpWithText(viewModel.text, textColor)
+    fun bind(viewModel: HeaderViewModel) {
+        titleTextView.setUpWithText(viewModel.title)
+        subtitleTextView.setUpWithText(viewModel.subtitle)
+        textTextView.setUpWithText(viewModel.text)
     }
 
-    private fun TextView.setUpWithText(content: CharSequence?, textColor: Int) {
+    private fun TextView.setUpWithText(content: CharSequence?) {
         visible = content != null
         text = content
-        setTextColor(textColor)
     }
 
     companion object {

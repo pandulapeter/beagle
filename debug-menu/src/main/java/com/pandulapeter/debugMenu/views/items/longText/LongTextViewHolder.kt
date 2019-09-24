@@ -11,9 +11,8 @@ internal class LongTextViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     private val textView = itemView.findViewById<TextView>(R.id.text)
 
-    fun bind(viewModel: LongTextViewModel, textColor: Int) {
+    fun bind(viewModel: LongTextViewModel) {
         textView.text = viewModel.text
-        textView.setTextColor(textColor)
     }
 
     companion object {

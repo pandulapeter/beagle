@@ -5,32 +5,17 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
-import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 
 internal fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)
-
-internal fun Context.color(@ColorRes colorResInt: Int) = ContextCompat.getColor(this, colorResInt)
 
 internal fun Context.dimension(@DimenRes dimensionResInt: Int) = resources.getDimensionPixelSize(dimensionResInt)
 
 internal fun Context.drawable(@DrawableRes drawableresId: Int) = AppCompatResources.getDrawable(this, drawableresId)
-
-internal fun Context.getTextColor(uiCustomization: UiCustomization) = uiCustomization.textColor.let { configurationTextColor ->
-    if (configurationTextColor == null) {
-        val typedValue = TypedValue()
-        theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
-        color(typedValue.run { if (resourceId != 0) resourceId else data })
-    } else {
-        configurationTextColor
-    }
-}
 
 internal fun View.hideKeyboard() {
     clearFocus()
@@ -41,19 +26,13 @@ internal inline fun <T : Fragment> T.withArguments(bundleOperations: (Bundle) ->
     arguments = Bundle().apply { bundleOperations(this) }
 }
 
-//TODO: Doesn't seem to be working for dialogs.
-internal fun View.setBackground(uiCustomization: UiCustomization) {
-    val backgroundColor = uiCustomization.backgroundColor
-    if (backgroundColor == null) {
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
-        if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
-            setBackgroundColor(typedValue.data)
-        } else {
-            background = context.drawable(typedValue.resourceId)
-        }
+internal fun View.setBackgroundFromWindowBackground() {
+    val typedValue = TypedValue()
+    context.theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
+    if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+        setBackgroundColor(typedValue.data)
     } else {
-        setBackgroundColor(backgroundColor)
+        background = context.drawable(typedValue.resourceId)
     }
 }
 

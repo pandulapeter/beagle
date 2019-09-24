@@ -11,9 +11,8 @@ internal class ButtonViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     private val button = itemView.findViewById<TextView>(R.id.button)
 
-    fun bind(viewModel: ButtonViewModel, textColor: Int) {
+    fun bind(viewModel: ButtonViewModel) {
         button.text = viewModel.text
-        button.setTextColor(textColor)
         button.setOnClickListener { viewModel.onButtonPressed() }
     }
 

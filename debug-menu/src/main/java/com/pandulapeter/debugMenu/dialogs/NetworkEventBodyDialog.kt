@@ -3,6 +3,7 @@ package com.pandulapeter.debugMenu.dialogs
 import android.app.Dialog
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.HorizontalScrollView
@@ -12,35 +13,31 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
-import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.models.NetworkLogItem
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.dimension
-import com.pandulapeter.debugMenu.utils.setBackground
 import com.pandulapeter.debugMenu.utils.withArguments
 import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 
 internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        context?.let {
+        (arguments?.uiConfiguration?.themeResourceId?.let { ContextThemeWrapper(context, it) } ?: context)?.let { themedContext ->
             arguments?.networkEvent?.let { networkEvent ->
-                return AlertDialog.Builder(it).apply {
-                    setView(LinearLayout(context).apply {
-                        arguments?.uiConfiguration?.let { setBackground(it) }
+                return AlertDialog.Builder(themedContext).apply {
+                    setView(LinearLayout(themedContext).apply {
                         orientation = LinearLayout.VERTICAL
                         val padding = context.dimension(R.dimen.large_content_padding)
-                        addView(AppCompatTextView(context).apply {
+                        addView(AppCompatTextView(themedContext).apply {
                             setTypeface(typeface, Typeface.BOLD)
                             setPadding(padding, padding, padding, 0)
                             text = "${networkEvent.url}${networkEvent.duration?.let { "\nDuration: $it ms" } ?: ""}"
-                            setTextColor(DebugMenu.textColor)
                         }, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                        addView(ScrollView(context).apply {
+                        addView(ScrollView(themedContext).apply {
                             setPadding(0, padding / 4, 0, padding)
                             clipToPadding = false
-                            addView(HorizontalScrollView(context).apply {
+                            addView(HorizontalScrollView(themedContext).apply {
                                 setPadding(padding, 0, padding, 0)
                                 clipToPadding = false
                                 val headers = if (arguments?.shouldShowHeaders == true) {
@@ -48,9 +45,8 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
                                             (if (networkEvent.headers.isEmpty()) "No headers" else networkEvent.headers.joinToString("\n")) +
                                             "\n\nPayload:\n"
                                 } else ""
-                                addView(AppCompatTextView(context).apply {
+                                addView(AppCompatTextView(themedContext).apply {
                                     text = headers + networkEvent.body.run { if (isEmpty()) "No payload" else this }
-                                    setTextColor(DebugMenu.textColor)
                                 }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                                 isHorizontalScrollBarEnabled = false
                                 overScrollMode = View.OVER_SCROLL_NEVER

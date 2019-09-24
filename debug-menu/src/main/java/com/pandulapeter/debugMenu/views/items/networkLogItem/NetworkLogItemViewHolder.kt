@@ -1,6 +1,5 @@
 package com.pandulapeter.debugMenu.views.items.networkLogItem
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +16,10 @@ internal class NetworkLogItemViewHolder(root: View) : RecyclerView.ViewHolder(ro
     private val urlTextView = itemView.findViewById<TextView>(R.id.url)
     private val timestampTextView = itemView.findViewById<TextView>(R.id.timestamp)
 
-    fun bind(viewModel: NetworkLogItemViewModel, textColor: Int) {
+    fun bind(viewModel: NetworkLogItemViewModel) {
         iconImageView.setImageResource(if (viewModel.isOutgoing) R.drawable.ic_outgoing else R.drawable.ic_incoming)
-        ImageViewCompat.setImageTintList(iconImageView, ColorStateList.valueOf(textColor))
+        ImageViewCompat.setImageTintList(iconImageView, urlTextView.textColors)
         urlTextView.text = viewModel.url
-        urlTextView.setTextColor(textColor)
-        timestampTextView.setTextColor(textColor)
         timestampTextView.text = viewModel.timestamp
         timestampTextView.visible = viewModel.timestamp != null
         itemView.setOnClickListener { viewModel.onItemSelected() }

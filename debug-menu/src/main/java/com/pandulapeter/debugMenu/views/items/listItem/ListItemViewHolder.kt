@@ -11,9 +11,8 @@ internal class ListItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     private val nameTextView = itemView.findViewById<TextView>(R.id.name)
 
-    fun bind(viewModel: ListItemViewModel<*>, textColor: Int) {
+    fun bind(viewModel: ListItemViewModel<*>) {
         nameTextView.text = viewModel.name
-        nameTextView.setTextColor(textColor)
         itemView.setOnClickListener { viewModel.invokeItemSelectedCallback() }
     }
 

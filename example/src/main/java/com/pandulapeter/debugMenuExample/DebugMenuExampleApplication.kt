@@ -3,6 +3,7 @@ package com.pandulapeter.debugMenuExample
 import android.app.Application
 import android.widget.Toast
 import com.pandulapeter.debugMenu.DebugMenu
+import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
@@ -23,7 +24,10 @@ class DebugMenuExampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
-            DebugMenu.attachToApplication(this)
+            DebugMenu.attachToApplication(
+                application = this,
+                uiCustomization = UiCustomization(themeResourceId = R.style.DebugDrawerTheme)
+            )
             DebugMenu.setModules(
                 listOf(
                     HeaderModule(

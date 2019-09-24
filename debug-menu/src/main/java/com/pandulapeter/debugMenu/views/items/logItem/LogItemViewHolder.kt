@@ -13,12 +13,10 @@ internal class LogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     private val messageTextView = itemView.findViewById<TextView>(R.id.message)
     private val timestampTextView = itemView.findViewById<TextView>(R.id.timestamp)
 
-    fun bind(viewModel: LogItemViewModel, textColor: Int) {
+    fun bind(viewModel: LogItemViewModel) {
         val isClickable = viewModel.logItem.payload != null
         itemView.isClickable = isClickable
         messageTextView.text = viewModel.message + if (viewModel.hasPayload) " *" else ""
-        messageTextView.setTextColor(textColor)
-        timestampTextView.setTextColor(textColor)
         timestampTextView.text = viewModel.timestamp
         timestampTextView.visible = viewModel.timestamp != null
         if (isClickable) {

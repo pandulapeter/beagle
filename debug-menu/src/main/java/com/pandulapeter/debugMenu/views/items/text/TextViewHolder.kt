@@ -12,10 +12,9 @@ internal class TextViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     private val textView = itemView.findViewById<TextView>(R.id.text)
 
-    fun bind(viewModel: TextViewModel, textColor: Int) {
+    fun bind(viewModel: TextViewModel) {
         textView.text = viewModel.text
         textView.setTypeface(textView.typeface, if (viewModel.isTitle) Typeface.BOLD else Typeface.NORMAL)
-        textView.setTextColor(textColor)
     }
 
     companion object {

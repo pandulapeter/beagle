@@ -11,9 +11,8 @@ internal class SingleSelectionListItemViewHolder(root: View) : RecyclerView.View
 
     private val radioButton = itemView.findViewById<RadioButton>(R.id.radio_button)
 
-    fun bind(viewModel: SingleSelectionListItemViewModel<*>, textColor: Int) {
+    fun bind(viewModel: SingleSelectionListItemViewModel<*>) {
         radioButton.text = viewModel.name
-        radioButton.setTextColor(textColor)
         radioButton.setOnCheckedChangeListener(null)
         radioButton.isChecked = viewModel.isSelected
         radioButton.setOnCheckedChangeListener { _, isSelected -> if (isSelected) viewModel.invokeItemSelectedCallback() }

@@ -1,6 +1,5 @@
 package com.pandulapeter.debugMenu.views.items.listHeader
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +16,14 @@ internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) 
     private val iconImageView = itemView.findViewById<ImageView>(R.id.icon)
     private val drawableExpand by lazy { itemView.context.animatedDrawable(R.drawable.avd_expand) }
     private val drawableCollapse by lazy { itemView.context.animatedDrawable(R.drawable.avd_collapse) }
-    private var isExpanded :Boolean? = null
+    private var isExpanded: Boolean? = null
 
-    fun bind(viewModel: ListHeaderViewModel, textColor: Int) {
+    fun bind(viewModel: ListHeaderViewModel) {
         itemView.isClickable = viewModel.shouldShowIcon
         titleTextView.text = viewModel.title
-        titleTextView.setTextColor(textColor)
         iconImageView.setImageDrawable((if (viewModel.isExpanded) drawableExpand else drawableCollapse)?.apply {
-            setTintList(ColorStateList.valueOf(textColor))
-            if (viewModel.isExpanded!=isExpanded) {
+            setTintList(titleTextView.textColors)
+            if (viewModel.isExpanded != isExpanded) {
                 isExpanded = viewModel.isExpanded
                 start()
             }

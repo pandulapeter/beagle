@@ -1,21 +1,19 @@
 package com.pandulapeter.debugMenuCore.configuration
 
 import android.os.Parcelable
-import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
+import androidx.annotation.StyleRes
 import kotlinx.android.parcel.Parcelize
 
 /**
  * Specifies the UI customization options for the debug drawer. All parameters are optional.
  *
- * @param backgroundColor - The resolved background color for the drawer. If null, the default window background will be used.
- * @param textColor - The resolved text color to be used for all texts. If null, textColorPrimary will be used.
- * @param drawerWidth - Custom width for the drawer. If null, 280dp will be used.
+ * @param themeResourceId - The theme resource ID the drawers should use. If null, each drawer will take their Activity's theme. Null by default.
+ * @param drawerWidth - Custom width for the drawer. If null, 280dp will be used. Null by default.
  */
 //TODO: Button color, button text color, ripple color.
 @Parcelize
 data class UiCustomization(
-    @ColorInt val backgroundColor: Int? = null,
-    @ColorInt val textColor: Int? = null,
+    @StyleRes val themeResourceId: Int? = null,
     @Dimension val drawerWidth: Int? = null
 ) : Parcelable

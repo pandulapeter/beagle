@@ -4,4 +4,6 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="DebugDrawerTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
 </resources>

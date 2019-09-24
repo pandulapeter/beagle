@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.views.items.DrawerItemViewModel
 import com.pandulapeter.debugMenu.views.items.button.ButtonViewHolder
@@ -68,16 +67,16 @@ internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
-        is TextViewHolder -> holder.bind(getItem(position) as TextViewModel, DebugMenu.textColor)
-        is LongTextViewHolder -> holder.bind(getItem(position) as LongTextViewModel, DebugMenu.textColor)
-        is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel, DebugMenu.textColor)
-        is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel, DebugMenu.textColor)
-        is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel, DebugMenu.textColor)
-        is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel<*>, DebugMenu.textColor)
-        is SingleSelectionListItemViewHolder -> holder.bind(getItem(position) as SingleSelectionListItemViewModel<*>, DebugMenu.textColor)
-        is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewModel, DebugMenu.textColor)
-        is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewModel, DebugMenu.textColor)
-        is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewModel, DebugMenu.textColor)
+        is TextViewHolder -> holder.bind(getItem(position) as TextViewModel)
+        is LongTextViewHolder -> holder.bind(getItem(position) as LongTextViewModel)
+        is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel)
+        is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel)
+        is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel)
+        is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel<*>)
+        is SingleSelectionListItemViewHolder -> holder.bind(getItem(position) as SingleSelectionListItemViewModel<*>)
+        is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewModel)
+        is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewModel)
+        is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewModel)
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 }
