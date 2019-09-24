@@ -16,4 +16,4 @@ data class LongTextModule(
     override val title: CharSequence,
     val text: CharSequence,
     override val isInitiallyExpanded: Boolean = false
-) : ExpandableDebugMenuModule
+) : DebugMenuExpandableModule

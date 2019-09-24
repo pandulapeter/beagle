@@ -37,7 +37,7 @@ import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuModule
-import com.pandulapeter.debugMenuCore.configuration.modules.ExpandableDebugMenuModule
+import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuExpandableModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
@@ -321,7 +321,7 @@ object DebugMenu : DebugMenuContract {
         currentJob = GlobalScope.launch {
             val items = mutableListOf<DrawerItemViewModel>()
 
-            fun addListModule(module: ExpandableDebugMenuModule, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
+            fun addListModule(module: DebugMenuExpandableModule, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
                 items.add(
                     ListHeaderViewModel(
                         id = module.id,

@@ -12,7 +12,6 @@ import kotlinx.android.parcel.Parcelize
  * @param drawerWidth - Custom width for the drawer. If null, 280dp will be used. Null by default.
  * @param shouldUseItemsInsteadOfButtons - When true, clickable list items will be used instead of buttons. False by default.
  */
-//TODO: Button color, button text color, ripple color.
 @Parcelize
 data class UiCustomization(
     @StyleRes val themeResourceId: Int? = null,

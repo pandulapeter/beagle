@@ -1,8 +1,8 @@
 package com.pandulapeter.debugMenuExample.utils
 
-import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.DebugMenuListItem
 
-data class Account(override val name: String, val password: String) : ListModule.Item
+data class Account(override val name: String, val password: String) : DebugMenuListItem
 
 val mockAccounts = listOf(
     Account("User 1", "password 1"),
@@ -16,7 +16,7 @@ val mockAccounts = listOf(
     Account("User 9", "password 9")
 )
 
-data class BackendEnvironment(override val name: String, val url: String) : ListModule.Item
+data class BackendEnvironment(override val name: String, val url: String) : DebugMenuListItem
 
 val mockBackendEnvironments = listOf(
     BackendEnvironment("Develop", "dev.yourapi.com"),

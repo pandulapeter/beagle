@@ -19,7 +19,7 @@ data class NetworkLogListModule(
     val maxItemCount: Int = 10,
     val shouldShowTimestamp: Boolean = false,
     override val isInitiallyExpanded: Boolean = false
-) : ExpandableDebugMenuModule {
+) : DebugMenuExpandableModule {
 
     override val id = ID
 

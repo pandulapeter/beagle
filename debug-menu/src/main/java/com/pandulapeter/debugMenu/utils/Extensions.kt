@@ -1,5 +1,6 @@
 package com.pandulapeter.debugMenu.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
@@ -16,12 +17,12 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 
 internal fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)
 
+@SuppressLint("ResourceAsColor")
 @ColorInt
 internal fun Context.colorResource(@AttrRes id: Int): Int {
     val resolvedAttr = TypedValue()
     theme.resolveAttribute(id, resolvedAttr, true)
-    val colorRes = resolvedAttr.run { if (resourceId != 0) resourceId else data }
-    return ContextCompat.getColor(this, colorRes)
+    return ContextCompat.getColor(this, resolvedAttr.run { if (resourceId != 0) resourceId else data })
 }
 
 internal fun Context.dimension(@DimenRes dimensionResInt: Int) = resources.getDimensionPixelSize(dimensionResInt)
