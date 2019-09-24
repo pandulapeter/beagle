@@ -22,7 +22,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def debugMenuVersion = "0.0.14"
+    def debugMenuVersion = "0.1.0"
     debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:$debugMenuVersion"
     releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:$debugMenuVersion"
 }
@@ -74,7 +74,7 @@ DebugMenu.removeModule(id)
 ```
 
 ### Customization
-* The UI of the drawer can be personalized by specifying a [UiCustomization](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/UiCustomization.kt) instance when initializing the library.
+* The appearance of the drawer can be personalized by specifying a [UiCustomization](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/UiCustomization.kt) instance when initializing the library.
 * To properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/screens/MainActivity.kt).
 * The drawers can be disabled / enabled at runtime by modifying the value of DebugMenu.isEnabled. This could be useful if you want to restrict access to the DebugMenu based on user type.
 
