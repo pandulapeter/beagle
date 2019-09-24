@@ -16,6 +16,7 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.models.LogItem
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.dimension
+import com.pandulapeter.debugMenu.utils.setBackgroundFromWindowBackground
 import com.pandulapeter.debugMenu.utils.withArguments
 import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 
@@ -26,6 +27,7 @@ internal class LogPayloadDialog : AppCompatDialogFragment() {
             arguments?.logMessage?.let { logMessage ->
                 return AlertDialog.Builder(themedContext).apply {
                     setView(LinearLayout(themedContext).apply {
+                        setBackgroundFromWindowBackground()
                         orientation = LinearLayout.VERTICAL
                         val padding = context.dimension(R.dimen.large_content_padding)
                         addView(AppCompatTextView(themedContext).apply {

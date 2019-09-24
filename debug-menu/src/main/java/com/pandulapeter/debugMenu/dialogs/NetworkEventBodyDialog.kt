@@ -17,6 +17,7 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.models.NetworkLogItem
 import com.pandulapeter.debugMenu.utils.BundleArgumentDelegate
 import com.pandulapeter.debugMenu.utils.dimension
+import com.pandulapeter.debugMenu.utils.setBackgroundFromWindowBackground
 import com.pandulapeter.debugMenu.utils.withArguments
 import com.pandulapeter.debugMenuCore.configuration.UiCustomization
 
@@ -27,6 +28,7 @@ internal class NetworkEventBodyDialog : AppCompatDialogFragment() {
             arguments?.networkEvent?.let { networkEvent ->
                 return AlertDialog.Builder(themedContext).apply {
                     setView(LinearLayout(themedContext).apply {
+                        setBackgroundFromWindowBackground()
                         orientation = LinearLayout.VERTICAL
                         val padding = context.dimension(R.dimen.large_content_padding)
                         addView(AppCompatTextView(themedContext).apply {
