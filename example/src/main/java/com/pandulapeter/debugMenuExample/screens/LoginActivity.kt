@@ -6,8 +6,8 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.pandulapeter.debugMenu.DebugMenu
 import com.pandulapeter.debugMenuCore.ModulePositioning
-import com.pandulapeter.debugMenuCore.configuration.modules.AppInfoButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ScreenshotButtonModule
 import com.pandulapeter.debugMenuExample.R
 import com.pandulapeter.debugMenuExample.utils.mockAccounts
 
@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                     DebugMenu.closeDrawer(this@LoginActivity)
                 }
             ),
-            positioning = ModulePositioning.Below(AppInfoButtonModule.ID)
+            positioning = ModulePositioning.Below(ScreenshotButtonModule.ID)
         )
     }
 

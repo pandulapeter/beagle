@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/radio_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_marginStart="@dimen/large_content_padding"
+    android:paddingStart="@dimen/content_padding"
     android:paddingTop="@dimen/content_padding"
-    android:paddingBottom="@dimen/content_padding">
-
-    <RadioButton
-        android:id="@+id/radio_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/large_content_padding"
-        android:paddingStart="@dimen/content_padding"
-        android:paddingEnd="@dimen/content_padding"
-        tools:text="Name" />
-
-</LinearLayout>
+    android:paddingEnd="@dimen/content_padding"
+    android:paddingBottom="@dimen/content_padding"
+    tools:text="Name" />

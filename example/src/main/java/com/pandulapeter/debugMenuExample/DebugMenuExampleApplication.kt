@@ -8,10 +8,11 @@ import com.pandulapeter.debugMenuCore.configuration.modules.ButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.HeaderModule
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
-import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
-import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LongTextModule
+import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ScreenshotButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.SingleSelectionListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuExample.networking.NetworkingManager
 import com.pandulapeter.debugMenuExample.utils.mockBackendEnvironments
@@ -31,6 +32,7 @@ class DebugMenuExampleApplication : Application() {
                         text = "Built on ${BuildConfig.BUILD_DATE}"
                     ),
                     AppInfoButtonModule(),
+                    ScreenshotButtonModule(),
                     TextModule(
                         text = "Random text 1"
                     ),

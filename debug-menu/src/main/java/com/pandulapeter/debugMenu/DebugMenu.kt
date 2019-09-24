@@ -46,6 +46,7 @@ import com.pandulapeter.debugMenuCore.configuration.modules.ListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LogListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.LongTextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.NetworkLogListModule
+import com.pandulapeter.debugMenuCore.configuration.modules.ScreenshotButtonModule
 import com.pandulapeter.debugMenuCore.configuration.modules.SingleSelectionListModule
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
@@ -429,6 +430,13 @@ object DebugMenu : DebugMenuContract {
                                 })
                             }
                         })
+                )
+                is ScreenshotButtonModule -> items.add(
+                    ButtonViewModel(
+                        id = module.id,
+                        text = module.text,
+                        onButtonPressed = { (drawers[currentActivity]?.parent as? DebugMenuDrawerLayout?)?.takeScreenshot() }
+                    )
                 )
                 is NetworkLogListModule -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
                     addListModule(

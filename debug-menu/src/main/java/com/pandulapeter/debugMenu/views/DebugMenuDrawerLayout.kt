@@ -1,13 +1,24 @@
 package com.pandulapeter.debugMenu.views
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import androidx.annotation.Dimension
+import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.dimension
+import com.pandulapeter.debugMenu.utils.drawable
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 internal class DebugMenuDrawerLayout @JvmOverloads constructor(
     context: Context,
@@ -24,6 +35,52 @@ internal class DebugMenuDrawerLayout @JvmOverloads constructor(
         set(value) {
             container.keylineOverlayToggle = value
         }
+
+    fun takeScreenshot() {
+        saveImage(getScreenshot())?.let { uri ->
+            context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+                type = "image/png"
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                putExtra(Intent.EXTRA_STREAM, uri)
+            }, "Share"))
+        }
+    }
+
+    @SuppressLint("WrongThread") //TODO: Move to background thread.
+    private fun saveImage(image: Bitmap): Uri? {
+        val imagesFolder = File(context.cacheDir, "images")
+        var uri: Uri? = null
+        try {
+            imagesFolder.mkdirs()
+            val file = File(imagesFolder, "screenshot_${System.currentTimeMillis()}.png")
+            val stream = FileOutputStream(file)
+            image.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            stream.flush()
+            stream.close()
+            uri = FileProvider.getUriForFile(context, "com.pandulapeter.fileprovider", file)
+        } catch (_: IOException) {
+        }
+        return uri
+    }
+
+    private fun getScreenshot(): Bitmap {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val bgDrawable = container.rootView.background
+        if (bgDrawable != null) {
+            bgDrawable.draw(canvas)
+        } else {
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
+            if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+                canvas.drawColor(typedValue.data)
+            } else {
+                context.drawable(typedValue.resourceId)?.draw(canvas)
+            }
+        }
+        container.draw(canvas)
+        return bitmap
+    }
 
     init {
         addView(container.apply { oldViews.forEach { view -> addView(view) } }, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
