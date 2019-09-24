@@ -37,9 +37,6 @@ class DebugMenuExampleApplication : Application() {
                     ),
                     AppInfoButtonModule(),
                     ScreenshotButtonModule(),
-                    TextModule(
-                        text = "Random text 1"
-                    ),
                     KeylineOverlayToggleModule(),
                     ToggleModule(
                         title = "Feature toggle 1",
@@ -63,7 +60,7 @@ class DebugMenuExampleApplication : Application() {
                         onItemSelectionChanged = { backendEnvironment -> backendEnvironment.url.showToast() }
                     ),
                     TextModule(
-                        text = "Random text 2"
+                        text = "This is an example TextModule"
                     ),
                     LongTextModule(
                         title = "Long text",
