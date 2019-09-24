@@ -16,10 +16,12 @@ import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenu.utils.drawable
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.coroutines.CoroutineContext
 
 internal class DebugMenuDrawerLayout @JvmOverloads constructor(
     context: Context,
@@ -36,11 +38,13 @@ internal class DebugMenuDrawerLayout @JvmOverloads constructor(
         set(value) {
             container.keylineOverlayToggle = value
         }
+    private var currentJob: CoroutineContext? = null
 
     fun takeAndShareScreenshot() = shareImage(getScreenshot())
 
     private fun shareImage(image: Bitmap) {
-        GlobalScope.launch {
+        currentJob?.cancel()
+        currentJob = GlobalScope.launch {
             val imagesFolder = File(context.cacheDir, "images")
             val uri: Uri?
             try {
@@ -58,6 +62,7 @@ internal class DebugMenuDrawerLayout @JvmOverloads constructor(
                 }, "Share"))
             } catch (_: IOException) {
             }
+            currentJob = null
         }
     }
 

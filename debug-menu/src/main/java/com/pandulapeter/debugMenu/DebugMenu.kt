@@ -50,7 +50,9 @@ import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 /**
  * The main singleton that handles the debug drawer's functionality.
@@ -183,6 +185,7 @@ object DebugMenu : DebugMenuContract {
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private const val MAX_ITEM_COUNT = 500
     private var uiCustomization = UiCustomization()
+    private var currentJob: CoroutineContext? = null
     private var moduleList = emptyList<DebugMenuModule>()
         set(value) {
             field = value.distinctBy { it.id }.sortedBy { it !is HeaderModule }
@@ -314,7 +317,8 @@ object DebugMenu : DebugMenuContract {
     }
 
     private fun updateItems() {
-        GlobalScope.launch {
+        currentJob?.cancel()
+        currentJob = GlobalScope.launch {
             val items = mutableListOf<DrawerItemViewModel>()
 
             fun addListModule(module: ExpandableDebugMenuModule, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
@@ -472,6 +476,7 @@ object DebugMenu : DebugMenuContract {
             }
             this@DebugMenu.items = items
             drawers.values.forEach { it.updateItems(items) }
+            currentJob = null
         }
     }
     //endregion
