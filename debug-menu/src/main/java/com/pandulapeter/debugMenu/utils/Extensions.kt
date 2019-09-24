@@ -5,13 +5,24 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 
 internal fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)
+
+@ColorInt
+internal fun Context.colorResource(@AttrRes id: Int): Int {
+    val resolvedAttr = TypedValue()
+    theme.resolveAttribute(id, resolvedAttr, true)
+    val colorRes = resolvedAttr.run { if (resourceId != 0) resourceId else data }
+    return ContextCompat.getColor(this, colorRes)
+}
 
 internal fun Context.dimension(@DimenRes dimensionResInt: Int) = resources.getDimensionPixelSize(dimensionResInt)
 

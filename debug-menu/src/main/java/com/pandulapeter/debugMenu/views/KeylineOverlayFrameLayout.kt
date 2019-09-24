@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.pandulapeter.debugMenu.R
+import com.pandulapeter.debugMenu.utils.colorResource
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenuCore.configuration.modules.KeylineOverlayToggleModule
 
@@ -20,9 +21,9 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
         set(value) {
             field = value
             if (value != null) {
-                gridPaint.color = value.gridColor ?: Color.BLACK//TODO DebugMenu.textColor
+                gridPaint.color = value.gridColor ?: context.colorResource(android.R.attr.textColorPrimary)
                 gridPaint.alpha = GRID_ALPHA
-                keylinePaint.color = value.gridColor ?: Color.BLACK//TODO DebugMenu.textColor
+                keylinePaint.color = value.gridColor ?: context.colorResource(android.R.attr.textColorPrimary)
                 keylinePaint.alpha = KEYLINE_ALPHA
                 keylineGrid = value.keylineGrid ?: context.dimension(R.dimen.keyline_grid)
                 keylinePrimary = (value.keylinePrimary ?: context.dimension(R.dimen.keyline_primary)).toFloat()
