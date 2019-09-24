@@ -51,6 +51,8 @@ import com.pandulapeter.debugMenuCore.configuration.modules.SingleSelectionListM
 import com.pandulapeter.debugMenuCore.configuration.modules.TextModule
 import com.pandulapeter.debugMenuCore.configuration.modules.ToggleModule
 import com.pandulapeter.debugMenuCore.contracts.DebugMenuContract
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * The main singleton that handles the debug drawer's functionality.
@@ -315,163 +317,165 @@ object DebugMenu : DebugMenuContract {
     }
 
     private fun updateItems() {
-        val items = mutableListOf<DrawerItemViewModel>()
+        GlobalScope.launch {
+            val items = mutableListOf<DrawerItemViewModel>()
 
-        fun addListModule(module: ExpandableDebugMenuModule, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
-            items.add(
-                ListHeaderViewModel(
-                    id = module.id,
-                    title = module.title,
-                    isExpanded = expandCollapseStates[module.id] ?: module.isInitiallyExpanded,
-                    shouldShowIcon = shouldShowIcon,
-                    onItemSelected = {
-                        expandCollapseStates[module.id] = !(expandCollapseStates[module.id] ?: module.isInitiallyExpanded)
-                        updateItems()
-                    }
-                )
-            )
-            if (expandCollapseStates[module.id] ?: module.isInitiallyExpanded) {
-                items.addAll(addItems().distinctBy { it.id })
-            }
-        }
-
-        moduleList.forEach { module ->
-            when (module) {
-                is TextModule -> items.add(
-                    TextViewModel(
+            fun addListModule(module: ExpandableDebugMenuModule, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
+                items.add(
+                    ListHeaderViewModel(
                         id = module.id,
-                        text = module.text,
-                        isTitle = module.isTitle
+                        title = module.title,
+                        isExpanded = expandCollapseStates[module.id] ?: module.isInitiallyExpanded,
+                        shouldShowIcon = shouldShowIcon,
+                        onItemSelected = {
+                            expandCollapseStates[module.id] = !(expandCollapseStates[module.id] ?: module.isInitiallyExpanded)
+                            updateItems()
+                        }
                     )
                 )
-                is LongTextModule -> addListModule(
-                    module = module,
-                    shouldShowIcon = true,
-                    addItems = {
-                        listOf(
-                            LongTextViewModel(
-                                id = "longText_${module.id}",
-                                text = module.text
+                if (expandCollapseStates[module.id] ?: module.isInitiallyExpanded) {
+                    items.addAll(addItems().distinctBy { it.id })
+                }
+            }
+
+            moduleList.forEach { module ->
+                when (module) {
+                    is TextModule -> items.add(
+                        TextViewModel(
+                            id = module.id,
+                            text = module.text,
+                            isTitle = module.isTitle
+                        )
+                    )
+                    is LongTextModule -> addListModule(
+                        module = module,
+                        shouldShowIcon = true,
+                        addItems = {
+                            listOf(
+                                LongTextViewModel(
+                                    id = "longText_${module.id}",
+                                    text = module.text
+                                )
                             )
+                        }
+                    )
+                    is ToggleModule -> items.add(
+                        ToggleViewModel(
+                            id = module.id,
+                            title = module.title,
+                            isEnabled = toggles[module.id] ?: module.initialValue,
+                            onToggleStateChanged = { newValue ->
+                                if (toggles[module.id] != newValue) {
+                                    module.onValueChanged(newValue)
+                                    toggles[module.id] = newValue
+                                }
+                            })
+                    )
+                    is ButtonModule -> items.add(
+                        ButtonViewModel(
+                            id = module.id,
+                            text = module.text,
+                            onButtonPressed = module.onButtonPressed
+                        )
+                    )
+                    is ListModule<*> -> addListModule(
+                        module = module,
+                        shouldShowIcon = module.items.isNotEmpty(),
+                        addItems = {
+                            module.items.map { item ->
+                                ListItemViewModel(
+                                    listModuleId = module.id,
+                                    item = item,
+                                    onItemSelected = { module.invokeItemSelectedCallback(item.id) }
+                                )
+                            }
+                        }
+                    )
+                    is SingleSelectionListModule<*> -> addListModule(
+                        module = module,
+                        shouldShowIcon = module.items.isNotEmpty(),
+                        addItems = {
+                            module.items.map { item ->
+                                SingleSelectionListItemViewModel(
+                                    listModuleId = module.id,
+                                    item = item,
+                                    isSelected = (singleSelectionListStates[module.id] ?: module.initialSelectionId) == item.id,
+                                    onItemSelected = { itemId ->
+                                        singleSelectionListStates[module.id] = itemId
+                                        updateItems()
+                                        module.invokeItemSelectedCallback(itemId)
+                                    }
+                                )
+                            }
+                        }
+                    )
+                    is HeaderModule -> items.add(
+                        HeaderViewModel(
+                            headerModule = module
+                        )
+                    )
+                    is KeylineOverlayToggleModule -> items.add(
+                        ToggleViewModel(
+                            id = module.id,
+                            title = module.title,
+                            isEnabled = isKeylineOverlayEnabled,
+                            onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
+                    )
+                    is AppInfoButtonModule -> items.add(
+                        ButtonViewModel(
+                            id = module.id,
+                            text = module.text,
+                            onButtonPressed = {
+                                currentActivity?.run {
+                                    startActivity(Intent().apply {
+                                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                        data = Uri.fromParts("package", packageName, null)
+                                    })
+                                }
+                            })
+                    )
+                    is ScreenshotButtonModule -> items.add(
+                        ButtonViewModel(
+                            id = module.id,
+                            text = module.text,
+                            onButtonPressed = { (drawers[currentActivity]?.parent as? DebugMenuDrawerLayout?)?.takeAndShareScreenshot() }
+                        )
+                    )
+                    is NetworkLogListModule -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
+                        addListModule(
+                            module = module,
+                            shouldShowIcon = networkLogItems.isNotEmpty(),
+                            addItems = {
+                                networkLogItems.map { networkLogItem ->
+                                    NetworkLogItemViewModel(
+                                        networkLogListModule = module,
+                                        networkLogItem = networkLogItem,
+                                        onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem, module.shouldShowHeaders) }
+                                    )
+                                }
+                            }
                         )
                     }
-                )
-                is ToggleModule -> items.add(
-                    ToggleViewModel(
-                        id = module.id,
-                        title = module.title,
-                        isEnabled = toggles[module.id] ?: module.initialValue,
-                        onToggleStateChanged = { newValue ->
-                            if (toggles[module.id] != newValue) {
-                                module.onValueChanged(newValue)
-                                toggles[module.id] = newValue
-                            }
-                        })
-                )
-                is ButtonModule -> items.add(
-                    ButtonViewModel(
-                        id = module.id,
-                        text = module.text,
-                        onButtonPressed = module.onButtonPressed
-                    )
-                )
-                is ListModule<*> -> addListModule(
-                    module = module,
-                    shouldShowIcon = module.items.isNotEmpty(),
-                    addItems = {
-                        module.items.map { item ->
-                            ListItemViewModel(
-                                listModuleId = module.id,
-                                item = item,
-                                onItemSelected = { module.invokeItemSelectedCallback(item.id) }
-                            )
-                        }
-                    }
-                )
-                is SingleSelectionListModule<*> -> addListModule(
-                    module = module,
-                    shouldShowIcon = module.items.isNotEmpty(),
-                    addItems = {
-                        module.items.map { item ->
-                            SingleSelectionListItemViewModel(
-                                listModuleId = module.id,
-                                item = item,
-                                isSelected = (singleSelectionListStates[module.id] ?: module.initialSelectionId) == item.id,
-                                onItemSelected = { itemId ->
-                                    singleSelectionListStates[module.id] = itemId
-                                    updateItems()
-                                    module.invokeItemSelectedCallback(itemId)
+                    is LogListModule -> logItems.take(module.maxItemCount).let { logItems ->
+                        addListModule(
+                            module = module,
+                            shouldShowIcon = logItems.isNotEmpty(),
+                            addItems = {
+                                logItems.map { logItem ->
+                                    LogItemViewModel(
+                                        logListModule = module,
+                                        logItem = logItem,
+                                        onItemSelected = { currentActivity?.openLogPayloadDialog(logItem) }
+                                    )
                                 }
-                            )
-                        }
+                            }
+                        )
                     }
-                )
-                is HeaderModule -> items.add(
-                    HeaderViewModel(
-                        headerModule = module
-                    )
-                )
-                is KeylineOverlayToggleModule -> items.add(
-                    ToggleViewModel(
-                        id = module.id,
-                        title = module.title,
-                        isEnabled = isKeylineOverlayEnabled,
-                        onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
-                )
-                is AppInfoButtonModule -> items.add(
-                    ButtonViewModel(
-                        id = module.id,
-                        text = module.text,
-                        onButtonPressed = {
-                            currentActivity?.run {
-                                startActivity(Intent().apply {
-                                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                                    data = Uri.fromParts("package", packageName, null)
-                                })
-                            }
-                        })
-                )
-                is ScreenshotButtonModule -> items.add(
-                    ButtonViewModel(
-                        id = module.id,
-                        text = module.text,
-                        onButtonPressed = { (drawers[currentActivity]?.parent as? DebugMenuDrawerLayout?)?.takeScreenshot() }
-                    )
-                )
-                is NetworkLogListModule -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
-                    addListModule(
-                        module = module,
-                        shouldShowIcon = networkLogItems.isNotEmpty(),
-                        addItems = {
-                            networkLogItems.map { networkLogItem ->
-                                NetworkLogItemViewModel(
-                                    networkLogListModule = module,
-                                    networkLogItem = networkLogItem,
-                                    onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem, module.shouldShowHeaders) }
-                                )
-                            }
-                        }
-                    )
-                }
-                is LogListModule -> logItems.take(module.maxItemCount).let { logItems ->
-                    addListModule(
-                        module = module,
-                        shouldShowIcon = logItems.isNotEmpty(),
-                        addItems = {
-                            logItems.map { logItem ->
-                                LogItemViewModel(
-                                    logListModule = module,
-                                    logItem = logItem,
-                                    onItemSelected = { currentActivity?.openLogPayloadDialog(logItem) }
-                                )
-                            }
-                        }
-                    )
                 }
             }
+            this@DebugMenu.items = items
+            drawers.values.forEach { it.updateItems(items) }
         }
-        this.items = items
-        drawers.values.forEach { it.updateItems(items) }
     }
     //endregion
 }

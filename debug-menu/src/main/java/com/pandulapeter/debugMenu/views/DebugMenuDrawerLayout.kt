@@ -1,6 +1,5 @@
 package com.pandulapeter.debugMenu.views
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -16,6 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.debugMenu.R
 import com.pandulapeter.debugMenu.utils.dimension
 import com.pandulapeter.debugMenu.utils.drawable
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -36,33 +37,31 @@ internal class DebugMenuDrawerLayout @JvmOverloads constructor(
             container.keylineOverlayToggle = value
         }
 
-    fun takeScreenshot() {
-        saveImage(getScreenshot())?.let { uri ->
-            context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
-                type = "image/png"
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                putExtra(Intent.EXTRA_STREAM, uri)
-            }, "Share"))
+    fun takeAndShareScreenshot() = shareImage(getScreenshot())
+
+    private fun shareImage(image: Bitmap) {
+        GlobalScope.launch {
+            val imagesFolder = File(context.cacheDir, "images")
+            val uri: Uri?
+            try {
+                imagesFolder.mkdirs()
+                val file = File(imagesFolder, "screenshot_${System.currentTimeMillis()}.png")
+                val stream = FileOutputStream(file)
+                image.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                stream.flush()
+                stream.close()
+                uri = FileProvider.getUriForFile(context, "com.pandulapeter.fileprovider", file)
+                context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+                    type = "image/png"
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                }, "Share"))
+            } catch (_: IOException) {
+            }
         }
     }
 
-    @SuppressLint("WrongThread") //TODO: Move to background thread.
-    private fun saveImage(image: Bitmap): Uri? {
-        val imagesFolder = File(context.cacheDir, "images")
-        var uri: Uri? = null
-        try {
-            imagesFolder.mkdirs()
-            val file = File(imagesFolder, "screenshot_${System.currentTimeMillis()}.png")
-            val stream = FileOutputStream(file)
-            image.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            stream.flush()
-            stream.close()
-            uri = FileProvider.getUriForFile(context, "com.pandulapeter.fileprovider", file)
-        } catch (_: IOException) {
-        }
-        return uri
-    }
-
+    //TODO: System bars should be included in the screenshot
     private fun getScreenshot(): Bitmap {
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
