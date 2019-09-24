@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/content_padding"
     android:background="?attr/selectableItemBackground"
+    android:minHeight="@dimen/cell_minimum_height"
     android:paddingStart="@dimen/large_content_padding"
     android:paddingTop="@dimen/content_padding"
     android:paddingEnd="@dimen/large_content_padding"

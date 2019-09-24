@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/content_padding"
     android:background="?attr/selectableItemBackground"
+    android:minHeight="@dimen/cell_minimum_height"
     android:paddingStart="@dimen/large_content_padding"
     android:paddingTop="@dimen/content_padding"
     android:paddingEnd="@dimen/large_content_padding"
@@ -30,9 +31,9 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/large_content_padding"
         android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title"
         tools:src="@drawable/avd_expand" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
