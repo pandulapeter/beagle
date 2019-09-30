@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Application
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.configuration.Module
 import com.pandulapeter.beagleCore.configuration.Trick
 
 /**
@@ -35,9 +34,9 @@ interface BeagleContract {
 
     fun initialize(application: Application, appearance: Appearance = Appearance()) = imprint(application, appearance)
 
-    fun setModules(modules: List<Module>) = learn(modules)
+    fun setModules(modules: List<Trick>) = learn(modules)
 
-    fun putModule(module: Module, positioning: Positioning = Positioning.Bottom) = learn(module, positioning)
+    fun putModule(module: Trick, positioning: Positioning = Positioning.Bottom) = learn(module, positioning)
 
     fun removeModule(id: String) = forget(id)
 
