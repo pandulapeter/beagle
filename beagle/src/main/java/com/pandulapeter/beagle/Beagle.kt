@@ -19,8 +19,8 @@ import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.utils.hideKeyboard
-import com.pandulapeter.beagle.views.DebugMenuDrawer
-import com.pandulapeter.beagle.views.DebugMenuDrawerLayout
+import com.pandulapeter.beagle.views.BeagleDrawer
+import com.pandulapeter.beagle.views.BeagleDrawerLayout
 import com.pandulapeter.beagle.views.items.DrawerItemViewModel
 import com.pandulapeter.beagle.views.items.button.ButtonViewModel
 import com.pandulapeter.beagle.views.items.header.HeaderViewModel
@@ -68,7 +68,7 @@ object Beagle : BeagleContract {
             if (field != value) {
                 field = value
                 drawers.values.forEach { drawer ->
-                    (drawer.parent as? DebugMenuDrawerLayout?)?.setDrawerLockMode(if (value) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    (drawer.parent as? BeagleDrawerLayout?)?.setDrawerLockMode(if (value) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 }
             }
         }
@@ -151,7 +151,7 @@ object Beagle : BeagleContract {
      */
     override fun dismiss(activity: Activity) {
         if (isEnabled) {
-            drawers[activity]?.run { (parent as? DebugMenuDrawerLayout?)?.openDrawer(this) }
+            drawers[activity]?.run { (parent as? BeagleDrawerLayout?)?.openDrawer(this) }
         }
     }
 
@@ -163,7 +163,7 @@ object Beagle : BeagleContract {
      */
     override fun fetch(activity: Activity): Boolean {
         val drawer = drawers[activity]
-        val drawerLayout = drawer?.parent as? DebugMenuDrawerLayout?
+        val drawerLayout = drawer?.parent as? BeagleDrawerLayout?
         return (drawerLayout?.isDrawerOpen(drawer) == true).also {
             drawerLayout?.closeDrawers()
         }
@@ -192,7 +192,7 @@ object Beagle : BeagleContract {
             updateItems()
         }
     private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
-    private val drawers = mutableMapOf<Activity, DebugMenuDrawer>()
+    private val drawers = mutableMapOf<Activity, BeagleDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private val toggles = mutableMapOf<String, Boolean>()
     private val singleSelectionListStates = mutableMapOf<String, String>()
@@ -203,7 +203,7 @@ object Beagle : BeagleContract {
                 field = value
                 updateItems()
                 (if (value) keylineOverlayToggleModule else null).let { keylineOverlayModule ->
-                    drawers.values.forEach { drawer -> (drawer.parent as? DebugMenuDrawerLayout?)?.keylineOverlay = keylineOverlayModule }
+                    drawers.values.forEach { drawer -> (drawer.parent as? BeagleDrawerLayout?)?.keylineOverlay = keylineOverlayModule }
                 }
             }
         }
@@ -231,7 +231,7 @@ object Beagle : BeagleContract {
         }
 
         override fun onActivitySaveInstanceState(activity: Activity, p1: Bundle) {
-            p1.isDrawerOpen = drawers[activity]?.let { drawer -> (drawer.parent as? DebugMenuDrawerLayout?)?.isDrawerOpen(drawer) } ?: false
+            p1.isDrawerOpen = drawers[activity]?.let { drawer -> (drawer.parent as? BeagleDrawerLayout?)?.isDrawerOpen(drawer) } ?: false
         }
 
         override fun onActivityDestroyed(activity: Activity) {
@@ -260,14 +260,14 @@ object Beagle : BeagleContract {
     //TODO: Find a smart way to handle the case when the root view is already a DrawerLayout.
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) =
         (uiCustomization.themeResourceId?.let { ContextThemeWrapper(activity, it) } ?: activity).let { themedContext ->
-            DebugMenuDrawer(themedContext).also { drawer ->
+            BeagleDrawer(themedContext).also { drawer ->
                 drawer.updateItems(items)
                 activity.findRootViewGroup().run {
                     post {
                         val oldViews = (0 until childCount).map { getChildAt(it) }
                         removeAllViews()
                         addView(
-                            DebugMenuDrawerLayout(
+                            BeagleDrawerLayout(
                                 context = themedContext,
                                 oldViews = oldViews,
                                 drawer = drawer,
@@ -443,7 +443,7 @@ object Beagle : BeagleContract {
                             id = module.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
                             text = module.text,
-                            onButtonPressed = { (drawers[currentActivity]?.parent as? DebugMenuDrawerLayout?)?.takeAndShareScreenshot() }
+                            onButtonPressed = { (drawers[currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot() }
                         )
                     )
                     is NetworkLogListModule -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->

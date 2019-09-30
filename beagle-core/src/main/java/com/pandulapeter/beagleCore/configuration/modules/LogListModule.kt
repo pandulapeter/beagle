@@ -4,7 +4,7 @@ import com.pandulapeter.beagleCore.contracts.BeagleExpandableModuleContract
 
 /**
  * Displays an expandable list of your custom logs. An example use case could be logging analytics events.
- * Use DebugMenu.log() to push a new message to the top of the list.
+ * Use Beagle.log() to push a new message to the top of the list.
  * This module can only be added once.
  *
  * @param title - The title of the module. "Logs" by default.
@@ -22,7 +22,7 @@ data class LogListModule(
     override val id = ID
 
     init {
-        require(maxItemCount > 0) { "DebugMenu: maxItemCount must be larger than 0 for the LogListModule." }
+        require(maxItemCount > 0) { "Beagle: maxItemCount must be larger than 0 for the LogListModule." }
     }
 
     companion object {

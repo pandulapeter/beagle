@@ -4,7 +4,7 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="DebugMenuTheme" parent="Theme.AppCompat">
+    <style name="BeagleTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/white</item>
         <item name="colorButtonNormal">@color/button</item>
         <item name="colorAccent">@color/white</item>

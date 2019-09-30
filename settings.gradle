@@ -2,4 +2,4 @@ include ':beagle-core'
 include ':beagle'
 include ':beagle-noop'
 include ":example"
-rootProject.name = "DebugMenu"
+rootProject.name = "Beagle"

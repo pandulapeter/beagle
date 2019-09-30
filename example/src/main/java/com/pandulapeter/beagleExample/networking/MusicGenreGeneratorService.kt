@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface MusicGenreGeneratorService {
 
-    @GET("/wp-json/genrenator/v1/genre")
+    @GET("/api/breeds/list/all")
     fun generateMusicGenre(): Call<String>
 }

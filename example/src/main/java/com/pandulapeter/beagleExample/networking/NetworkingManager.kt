@@ -8,7 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object NetworkingManager {
 
-    const val BASE_URL = "https://binaryjazz.us/"
+    const val BASE_URL = "https://dog.ceo/"
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(BeagleInterceptor)

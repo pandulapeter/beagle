@@ -26,7 +26,7 @@ data class NetworkLogListModule(
     override val id = ID
 
     init {
-        require(maxItemCount > 0) { "DebugMenu: maxItemCount must be larger than 0 for the NetworkLogListModule." }
+        require(maxItemCount > 0) { "Beagle: maxItemCount must be larger than 0 for the NetworkLogListModule." }
     }
 
     companion object {

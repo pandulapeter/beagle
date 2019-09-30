@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">DebugMenu Example (debug)</string>
-    <string name="open_debug_menu">Open Debug Menu</string>
+    <string name="app_name">Beagle Example (debug)</string>
+    <string name="open_debug_menu">Open debug drawer</string>
     <string name="generate_music_genre">Generate music genre</string>
     <string name="add_log_message">Add random log message</string>
     <string name="open_login_screen">Open login screen</string>

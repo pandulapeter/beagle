@@ -26,7 +26,7 @@ class BeagleExampleApplication : Application() {
         if (BuildConfig.DEBUG) {
             Beagle.imprint(
                 application = this,
-                appearance = Appearance(themeResourceId = R.style.DebugMenuTheme)
+                appearance = Appearance(themeResourceId = R.style.BeagleTheme)
             )
             Beagle.learn(
                 listOf(

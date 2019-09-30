@@ -29,7 +29,7 @@ import com.pandulapeter.beagle.views.items.text.TextViewModel
 import com.pandulapeter.beagle.views.items.toggle.ToggleViewHolder
 import com.pandulapeter.beagle.views.items.toggle.ToggleViewModel
 
-internal class DebugMenuAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItemViewModel>() {
+internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItemViewModel>() {
 
     override fun areItemsTheSame(oldItem: DrawerItemViewModel, newItem: DrawerItemViewModel) = oldItem.id == newItem.id
 

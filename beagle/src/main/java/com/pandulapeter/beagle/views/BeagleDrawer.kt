@@ -11,19 +11,19 @@ import com.pandulapeter.beagle.utils.setBackgroundFromWindowBackground
 import com.pandulapeter.beagle.views.items.DrawerItemViewModel
 
 //TODO: Scroll position is not restored.
-internal class DebugMenuDrawer @JvmOverloads constructor(
+internal class BeagleDrawer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
-    private val debugMenuAdapter = DebugMenuAdapter()
+    private val beagleAdapter = BeagleAdapter()
 
     init {
         setBackgroundFromWindowBackground()
         clipToPadding = false
         layoutManager = LinearLayoutManager(context)
-        adapter = debugMenuAdapter
+        adapter = beagleAdapter
     }
 
     override fun onAttachedToWindow() {
@@ -38,5 +38,5 @@ internal class DebugMenuDrawer @JvmOverloads constructor(
         }
     })
 
-    fun updateItems(items: List<DrawerItemViewModel>) = debugMenuAdapter.submitList(items)
+    fun updateItems(items: List<DrawerItemViewModel>) = beagleAdapter.submitList(items)
 }
