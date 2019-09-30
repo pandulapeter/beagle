@@ -55,6 +55,6 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
-    debugImplementation project(":debug-menu")
-    releaseImplementation project(":debug-menu-noop")
+    debugImplementation project(':beagle')
+    releaseImplementation project(':beagle-noop')
 }

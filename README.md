@@ -1,9 +1,7 @@
-# DebugMenu (Android)
+# Beagle (Android library)
 *A smart side drawer for debugging your Android apps.*
 
 <img src="screenshots/general01.png" width="30%" /> <img src="screenshots/general02.png" width="30%" />
-
-**This library is in very early stages of development. New features will be added and the API might change.**
 
 ### Usage
 Add the following to your top level Gradle file:
@@ -22,60 +20,63 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def debugMenuVersion = "0.1.1"
-    debugImplementation "com.github.pandulapeter.debug-menu:debug-menu:$debugMenuVersion"
-    releaseImplementation "com.github.pandulapeter.debug-menu:debug-menu-noop:$debugMenuVersion"
+    def beagleVersion = "0.1.1"
+    debugImplementation "com.github.pandulapeter.beagle:beagle:beagleVersion"
+    releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:beagleVersion"
 }
 ```
 
 The latest version is:
 
 
-[![](https://jitpack.io/v/pandulapeter/debug-menu.svg)](https://jitpack.io/#pandulapeter/debug-menu)
+[![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
-The library has to be initialized in the Application class by calling:
+The library has to be initialized with an Application instance (preferably in the Application's onCreate() method) by calling:
 
 ```kotlin
-DebugMenu.attachToApplication(this)
+Beagle.imprint(this)
 ```
 
-After this a list of modules needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/DebugMenuExampleApplication.kt) for a detailed example.
+After this a list of modules needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/BeagleExampleApplication.kt) for a detailed example.
 
 ### Modules
 Any number of generic modules can be added in any order as long as they have a unique ID:
-* [Text](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/TextModule.kt) [[Screenshot]](/screenshots/moduleText.png) - Displays simple text content.
-* [LongText](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/LongTextModule.kt) [[Screenshot]](/screenshots/moduleLongText.png) - Displays a longer piece of text that can be collapsed into a title.
+* [Text](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/TextModule.kt) [[Screenshot]](/screenshots/moduleText.png) - Displays simple text content.
+* [LongText](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/LongTextModule.kt) [[Screenshot]](/screenshots/moduleLongText.png) - Displays a longer piece of text that can be collapsed into a title.
+* TODO: Image - Displays a drawable.
 * TODO: TextInput - Allows the user to enter free text.
 * TODO: Slider - Allows the user to adjust a numeric value.
 * TODO: ColorPicker - Allows the user to pick a color.
-* [Toggle](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ToggleModule.kt) [[Screenshot]](/screenshots/moduleToggle.png) - Displays a switch with configurable title and behavior - ideal for feature toggles.
-* [Button](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ButtonModule.kt) [[Screenshot]](/screenshots/moduleButton.png) - Displays a button with configurable text and action.
+* [Toggle](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ToggleModule.kt) [[Screenshot]](/screenshots/moduleToggle.png) - Displays a switch with configurable title and behavior - ideal for feature toggles.
+* [Button](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ButtonModule.kt) [[Screenshot]](/screenshots/moduleButton.png) - Displays a button with configurable text and action.
 * TODO: KeyValue - Displays a list of key-value pairs that can be collapsed into a title.
-* [List](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ListModule.kt) [[Screenshot]](/screenshots/moduleList.png) - Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
-* [SingleSelectionList](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/SingleSelectionListModule.kt) [[Screenshot]](/screenshots/moduleSingleSelectionList.png) - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
+* [List](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ListModule.kt) [[Screenshot]](/screenshots/moduleList.png) - Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
+* [SingleSelectionList](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/SingleSelectionListModule.kt) [[Screenshot]](/screenshots/moduleSingleSelectionList.png) - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
 * TODO: MultipleSelectionList - Displays a lst of checkboxes.
 
 Unique modules can only be added once as they are specific to a single use case:
-* [Header](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/HeaderModule.kt) [[Screenshot]](/screenshots/moduleHeader.png) - Displays a header on top of the drawer with general information about the app / build.
-* [KeylineOverlayToggle](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/KeylineOverlayToggleModule.kt) [[Screenshot]](/screenshots/moduleKeylineOverlayToggle.png) - Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.
-* [AppInfoButton](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/AppInfoButtonModule.kt) [[Screenshot]](/screenshots/moduleAppInfoButton.png) - Displays a button that links to the Android App Info page for your app.
-* [ScreenshotButton](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ScreenshotButtonModule.kt) [[Screenshot]](/screenshots/moduleScreenshotButton.png) - Displays a button that takes a screenshot of the current layout and allows the user to share it.
+* [Header](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/HeaderModule.kt) [[Screenshot]](/screenshots/moduleHeader.png) - Displays a header on top of the drawer with general information about the app / build.
+* [KeylineOverlayToggle](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/KeylineOverlayToggleModule.kt) [[Screenshot]](/screenshots/moduleKeylineOverlayToggle.png) - Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.
+* TODO: ForceRtToggle - Forces RTL layout orientation (on/off).
+* [AppInfoButton](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/AppInfoButtonModule.kt) [[Screenshot]](/screenshots/moduleAppInfoButton.png) - Displays a button that links to the Android App Info page for your app.
+* [ScreenshotButton](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/ScreenshotButtonModule.kt) [[Screenshot]](/screenshots/moduleScreenshotButton.png) - Displays a button that takes a screenshot of the current layout and allows the user to share it.
 * TODO: StringGeneratorButton - Generates a strings and copies it to the clipboard based on the user's preferences.
-* [NetworkLogList](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/NetworkLogListModule.kt) [[Screenshot]](/screenshots/moduleNetworkLogList.png) - Displays an expandable list of historical network activity. Each item can be tapped for more information. To use this functionality, the custom DebugMenuNetworkInterceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/networking/NetworkingManager.kt).
-* [LogList](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/LogListModule.kt) [[Screenshot]](/screenshots/moduleLogList.png) - Displays an expandable list of your custom logs. An example use case could be logging analytics events. Each item can be tapped for more information if you specified a payload. To log an event, simply call DebugMenu.log().
+* TODO: StressReliefButton - Displays fireworks.
+* [NetworkLogList](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/NetworkLogListModule.kt) [[Screenshot]](/screenshots/moduleNetworkLogList.png) - Displays an expandable list of historical network activity. Each item can be tapped for more information. To use this functionality, the custom DebugMenuNetworkInterceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/networking/NetworkingManager.kt).
+* [LogList](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/modules/LogListModule.kt) [[Screenshot]](/screenshots/moduleLogList.png) - Displays an expandable list of your custom logs. An example use case could be logging analytics events. Each item can be tapped for more information if you specified a payload. To log an event, simply call DebugMenu.log().
 * TODO: DeviceConfigurationKeyValue - Displays information about the current device and the OS.
 
 The module list can be changed at any time (from any thread) using the following functions:
 
 ```kotlin
-DebugMenu.setModules(modules)
-DebugMenu.putModule(module, positioning)
-DebugMenu.removeModule(id)
+Beagle.learn(modules)
+Beagle.learn(module, positioning)
+Beagle.forget(id)
 ```
 
 ### Customization
-* The appearance of the drawer can be personalized by specifying a [UiCustomization](https://github.com/pandulapeter/debug-menu/blob/master/debug-menu-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/UiCustomization.kt) instance when initializing the library.
-* To properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/debug-menu/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/screens/MainActivity.kt).
+* The appearance of the drawer can be personalized by specifying a [UiCustomization](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/debugMenuCore/configuration/Appearance.kt) instance when initializing the library.
+* To properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/debugMenuExample/screens/MainActivity.kt).
 * The drawers can be disabled / enabled at runtime by modifying the value of DebugMenu.isEnabled. This could be useful if you want to restrict access to the DebugMenu based on user type.
 
 ### To do

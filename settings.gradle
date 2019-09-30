@@ -1,5 +1,5 @@
-include ":debug-menu-core"
-include ":debug-menu"
-include ":debug-menu-noop"
+include ':beagle-core'
+include ':beagle'
+include ':beagle-noop'
 include ":example"
 rootProject.name = "DebugMenu"
