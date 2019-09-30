@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def beagleVersion = "0.2.1"
+    def beagleVersion = "0.2.2"
     debugImplementation "com.github.pandulapeter.beagle:beagle:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:$beagleVersion"
 }
@@ -37,9 +37,9 @@ The library has to be initialized with an Application instance (preferably in th
 Beagle.imprint(this)
 ```
 
-After this a list of modules needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
+After this a list of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
 
-### Modules
+### Tricks
 See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Trick.kt) for documentation about every supported module.
 
 Any number of generic modules can be added in any order as long as they have a unique ID:
@@ -86,6 +86,11 @@ Beagle.forget(id)
 * Improve the example app
 * Add support for dividers
 * Expose the BeagleDrawer view
+* Add alternative ways for displaying the debug menu
+
+### Known issues
+* The NetworkLogList module's dialog (that displays the JSON payload and the headers) is not finalized.
+* If your app already has a DrawerLayout (especially with a drawer on GravityCompat.END) you will probably have some issues.
 
 ### License
 ```
