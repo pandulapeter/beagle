@@ -1,5 +1,5 @@
 # Beagle (Android library)
-*A smart side drawer for debugging your Android apps.*
+*A smart and reliable side drawer for debugging your Android apps.*
 
 <img src="screenshots/general01.png" width="30%" /> <img src="screenshots/general02.png" width="30%" />
 
@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def beagleVersion = "0.1.1"
+    def beagleVersion = "0.2.0"
     debugImplementation "com.github.pandulapeter.beagle:beagle:beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:beagleVersion"
 }
