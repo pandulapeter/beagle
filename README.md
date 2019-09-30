@@ -89,7 +89,6 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 * Add alternative ways for displaying the debug menu
 
 ### Known issues
-* The NetworkLogList module's dialog (that displays the JSON payload and the headers) is not finalized.
 * If your app already has a DrawerLayout (especially with a drawer on GravityCompat.END) you will probably have some issues.
 
 ### License

@@ -1,10 +1,10 @@
 package com.pandulapeter.beagle
 
-import com.pandulapeter.beagleCore.contracts.BeagleInterceptorContract
+import com.pandulapeter.beagleCore.contracts.BeagleNetworkInterceptorContract
 import okhttp3.Interceptor
 import okhttp3.Response
 
-object BeagleInterceptor : BeagleInterceptorContract {
+object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
 
     override fun intercept(chain: Interceptor.Chain): Response = chain.proceed(chain.request())
 }

@@ -214,7 +214,7 @@ sealed class Trick {
 
     /**
      * Displays an expandable list of historical network activity.
-     * Use BeagleInterceptorContract to push a new message to the top of the list.
+     * Use BeagleNetworkInterceptor to push a new message to the top of the list.
      * This module can only be added once.
      *
      * @param title - The title of the module. "Network activity" by default.

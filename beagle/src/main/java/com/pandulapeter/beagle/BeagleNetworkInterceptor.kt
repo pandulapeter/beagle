@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle
 
 import com.pandulapeter.beagle.models.NetworkLogItem
-import com.pandulapeter.beagleCore.contracts.BeagleInterceptorContract
+import com.pandulapeter.beagleCore.contracts.BeagleNetworkInterceptorContract
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -16,7 +16,10 @@ import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
 //TODO: Set maximum size for Strings to avoid crashes when parsing huge JSON-s.
-object BeagleInterceptor : BeagleInterceptorContract {
+/**
+ * Interceptor that should be set on the OkHttpClient's builder. Make sure it's the last applied interceptor, otherwise you might not see all relevant information.
+ */
+object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
 
     private val UTF8 = Charset.forName("UTF-8")
 
@@ -41,7 +44,6 @@ object BeagleInterceptor : BeagleInterceptorContract {
                 "[Binary ${requestBody.contentLength()} -byte body]"
             }
         }
-        //TODO: Request headers are not properly parsed
         Beagle.logNetworkEvent(
             NetworkLogItem(
                 isOutgoing = true,
