@@ -2,12 +2,12 @@ package com.pandulapeter.beagle.views.items.networkLogItem
 
 import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.views.items.DrawerItemViewModel
-import com.pandulapeter.beagleCore.configuration.tricks.NetworkLogListTrick
+import com.pandulapeter.beagleCore.configuration.Trick
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 internal data class NetworkLogItemViewModel(
-    private val networkLogListTrick: NetworkLogListTrick,
+    private val networkLogListTrick: Trick.NetworkLogList,
     val networkLogItem: NetworkLogItem,
     val onItemSelected: () -> Unit
 ) : DrawerItemViewModel {

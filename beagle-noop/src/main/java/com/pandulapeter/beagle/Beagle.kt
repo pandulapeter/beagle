@@ -2,9 +2,9 @@ package com.pandulapeter.beagle
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.beagleCore.Positioning
+import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.configuration.tricks.Trick
+import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 
 /**

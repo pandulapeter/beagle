@@ -5,9 +5,8 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.pandulapeter.beagle.Beagle
-import com.pandulapeter.beagleCore.Positioning
-import com.pandulapeter.beagleCore.configuration.tricks.ListTrick
-import com.pandulapeter.beagleCore.configuration.tricks.ScreenshotButtonTrick
+import com.pandulapeter.beagleCore.configuration.Positioning
+import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleExample.R
 import com.pandulapeter.beagleExample.utils.mockAccounts
 
@@ -22,7 +21,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
     override fun onStart() {
         super.onStart()
         Beagle.learn(
-            trick = ListTrick(
+            trick = Trick.SimpleList(
                 id = TEST_ACCOUNTS_MODULE_ID,
                 title = "Test accounts",
                 items = mockAccounts,
@@ -32,7 +31,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                     Beagle.dismiss(this@LoginActivity)
                 }
             ),
-            positioning = Positioning.Below(ScreenshotButtonTrick.ID)
+            positioning = Positioning.Below(Trick.ScreenshotButton.ID)
         )
     }
 

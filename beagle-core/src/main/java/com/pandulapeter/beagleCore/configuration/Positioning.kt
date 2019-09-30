@@ -1,4 +1,4 @@
-package com.pandulapeter.beagleCore
+package com.pandulapeter.beagleCore.configuration
 
 /**
  * Used for specifying the position of a newly added module.

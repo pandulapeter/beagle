@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.colorResource
 import com.pandulapeter.beagle.utils.dimension
-import com.pandulapeter.beagleCore.configuration.tricks.KeylineOverlayToggleTrick
+import com.pandulapeter.beagleCore.configuration.Trick
 
 internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
     context: Context,
@@ -16,7 +16,7 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    var keylineOverlayToggle: KeylineOverlayToggleTrick? = null
+    var keylineOverlayToggle: Trick.KeylineOverlayToggle? = null
         set(value) {
             field = value
             if (value != null) {

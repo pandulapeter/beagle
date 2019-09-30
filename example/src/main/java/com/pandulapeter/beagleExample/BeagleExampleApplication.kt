@@ -4,17 +4,7 @@ import android.app.Application
 import android.widget.Toast
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.configuration.tricks.AppInfoButtonTrick
-import com.pandulapeter.beagleCore.configuration.tricks.ButtonTrick
-import com.pandulapeter.beagleCore.configuration.tricks.HeaderTrick
-import com.pandulapeter.beagleCore.configuration.tricks.KeylineOverlayToggleTrick
-import com.pandulapeter.beagleCore.configuration.tricks.LogListTrick
-import com.pandulapeter.beagleCore.configuration.tricks.LongTextTrick
-import com.pandulapeter.beagleCore.configuration.tricks.NetworkLogListTrick
-import com.pandulapeter.beagleCore.configuration.tricks.ScreenshotButtonTrick
-import com.pandulapeter.beagleCore.configuration.tricks.SingleSelectionListTrick
-import com.pandulapeter.beagleCore.configuration.tricks.TextTrick
-import com.pandulapeter.beagleCore.configuration.tricks.ToggleTrick
+import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleExample.networking.NetworkingManager
 import com.pandulapeter.beagleExample.utils.mockBackendEnvironments
 
@@ -30,43 +20,43 @@ class BeagleExampleApplication : Application() {
             )
             Beagle.learn(
                 listOf(
-                    HeaderTrick(
+                    Trick.Header(
                         title = getString(R.string.app_name),
                         subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                         text = "Built on ${BuildConfig.BUILD_DATE}"
                     ),
-                    AppInfoButtonTrick(),
-                    ScreenshotButtonTrick(),
-                    KeylineOverlayToggleTrick(),
-                    ToggleTrick(
+                    Trick.AppInfoButton(),
+                    Trick.ScreenshotButton(),
+                    Trick.KeylineOverlayToggle(),
+                    Trick.Toggle(
                         title = "Feature toggle 1",
                         onValueChanged = { isOn -> "Feature 1 is ${if (isOn) "on" else "off"}".showToast() }
                     ),
-                    ToggleTrick(
+                    Trick.Toggle(
                         title = "Feature toggle 2",
                         onValueChanged = { isOn -> "Feature 2 is ${if (isOn) "on" else "off"}".showToast() }
                     ),
-                    NetworkLogListTrick(
+                    Trick.NetworkLogList(
                         baseUrl = NetworkingManager.BASE_URL,
                         shouldShowHeaders = true,
                         shouldShowTimestamp = true
                     ),
-                    LogListTrick(shouldShowTimestamp = true),
-                    SingleSelectionListTrick(
+                    Trick.LogList(shouldShowTimestamp = true),
+                    Trick.SingleSelectionList(
                         title = "Environment",
                         items = mockBackendEnvironments,
                         isInitiallyExpanded = true,
                         initialSelectionId = "Develop",
                         onItemSelectionChanged = { backendEnvironment -> backendEnvironment.url.showToast() }
                     ),
-                    TextTrick(
+                    Trick.Text(
                         text = "This is a TextTrick used for displaying short hints"
                     ),
-                    LongTextTrick(
+                    Trick.LongText(
                         title = "Long text",
                         text = "Here is a longer piece of text that occupies more space so it doesn't make sense to always have it fully displayed."
                     ),
-                    ButtonTrick(
+                    Trick.Button(
                         text = "Show a toast",
                         onButtonPressed = { "Here is a toast".showToast() }
                     )

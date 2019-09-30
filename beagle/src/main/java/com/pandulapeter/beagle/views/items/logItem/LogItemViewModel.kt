@@ -2,12 +2,12 @@ package com.pandulapeter.beagle.views.items.logItem
 
 import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.views.items.DrawerItemViewModel
-import com.pandulapeter.beagleCore.configuration.tricks.LogListTrick
+import com.pandulapeter.beagleCore.configuration.Trick
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 internal data class LogItemViewModel(
-    private val logListTrick: LogListTrick,
+    private val logListTrick: Trick.LogList,
     val logItem: LogItem,
     val onItemSelected: () -> Unit
 ) : DrawerItemViewModel {

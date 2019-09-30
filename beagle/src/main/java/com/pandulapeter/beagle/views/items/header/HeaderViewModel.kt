@@ -1,10 +1,10 @@
 package com.pandulapeter.beagle.views.items.header
 
 import com.pandulapeter.beagle.views.items.DrawerItemViewModel
-import com.pandulapeter.beagleCore.configuration.tricks.HeaderTrick
+import com.pandulapeter.beagleCore.configuration.Trick
 
 internal data class HeaderViewModel(
-    private val headerTrick: HeaderTrick
+    private val headerTrick: Trick.Header
 ) : DrawerItemViewModel {
 
     override val id = ID

@@ -2,10 +2,10 @@ package com.pandulapeter.beagleCore.contracts
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.beagleCore.Positioning
+import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.configuration.tricks.Module
-import com.pandulapeter.beagleCore.configuration.tricks.Trick
+import com.pandulapeter.beagleCore.configuration.Module
+import com.pandulapeter.beagleCore.configuration.Trick
 
 /**
  * This interface assures that the real implementation and the "noop" variant have the same public API. See one of those for the function documentations.

@@ -32,22 +32,9 @@ import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewMode
 import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.items.text.TextViewModel
 import com.pandulapeter.beagle.views.items.toggle.ToggleViewModel
-import com.pandulapeter.beagleCore.Positioning
+import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.configuration.tricks.AppInfoButtonTrick
-import com.pandulapeter.beagleCore.configuration.tricks.ButtonTrick
-import com.pandulapeter.beagleCore.configuration.tricks.Trick
-import com.pandulapeter.beagleCore.configuration.tricks.ExpandableTrick
-import com.pandulapeter.beagleCore.configuration.tricks.HeaderTrick
-import com.pandulapeter.beagleCore.configuration.tricks.KeylineOverlayToggleTrick
-import com.pandulapeter.beagleCore.configuration.tricks.ListTrick
-import com.pandulapeter.beagleCore.configuration.tricks.LogListTrick
-import com.pandulapeter.beagleCore.configuration.tricks.LongTextTrick
-import com.pandulapeter.beagleCore.configuration.tricks.NetworkLogListTrick
-import com.pandulapeter.beagleCore.configuration.tricks.ScreenshotButtonTrick
-import com.pandulapeter.beagleCore.configuration.tricks.SingleSelectionListTrick
-import com.pandulapeter.beagleCore.configuration.tricks.TextTrick
-import com.pandulapeter.beagleCore.configuration.tricks.ToggleTrick
+import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
@@ -170,7 +157,7 @@ object Beagle : BeagleContract {
     }
 
     /**
-     * Adds a log message item which will be displayed at the top of the list if the [LogListTrick] is enabled.
+     * Adds a log message item which will be displayed at the top of the list in the [Trick.LogList] module.
      *
      * @param message - The message that should be logged.
      * @param tag - An optional tag that can be later used for filtering. Null by default. //TODO: Implement filtering by tag.
@@ -188,10 +175,10 @@ object Beagle : BeagleContract {
     private var currentJob: CoroutineContext? = null
     private var moduleList = emptyList<Trick>()
         set(value) {
-            field = value.distinctBy { it.id }.sortedBy { it !is HeaderTrick }
+            field = value.distinctBy { it.id }.sortedBy { it !is Trick.Header }
             updateItems()
         }
-    private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<KeylineOverlayToggleTrick>().firstOrNull()
+    private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<Trick.KeylineOverlayToggle>().firstOrNull()
     private val drawers = mutableMapOf<Activity, BeagleDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private val toggles = mutableMapOf<String, Boolean>()
@@ -244,7 +231,7 @@ object Beagle : BeagleContract {
 
     init {
         moduleList = listOf(
-            HeaderTrick(
+            Trick.Header(
                 title = "Beagle",
                 subtitle = "Version ${BuildConfig.VERSION_NAME}",
                 text = "Configure the list of modules by setting the value of Beagle.modules."
@@ -322,7 +309,7 @@ object Beagle : BeagleContract {
             val items = mutableListOf<DrawerItemViewModel>()
 
             //TODO: DiffUtil seems to rebind the expanded list items even if they didn't change.
-            fun addListModule(trick: ExpandableTrick, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
+            fun addListModule(trick: Trick.Expandable, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
                 items.add(
                     ListHeaderViewModel(
                         id = trick.id,
@@ -342,14 +329,14 @@ object Beagle : BeagleContract {
 
             moduleList.forEach { module ->
                 when (module) {
-                    is TextTrick -> items.add(
+                    is Trick.Text -> items.add(
                         TextViewModel(
                             id = module.id,
                             text = module.text,
                             isTitle = module.isTitle
                         )
                     )
-                    is LongTextTrick -> addListModule(
+                    is Trick.LongText -> addListModule(
                         trick = module,
                         shouldShowIcon = true,
                         addItems = {
@@ -361,7 +348,7 @@ object Beagle : BeagleContract {
                             )
                         }
                     )
-                    is ToggleTrick -> items.add(
+                    is Trick.Toggle -> items.add(
                         ToggleViewModel(
                             id = module.id,
                             title = module.title,
@@ -373,7 +360,7 @@ object Beagle : BeagleContract {
                                 }
                             })
                     )
-                    is ButtonTrick -> items.add(
+                    is Trick.Button -> items.add(
                         ButtonViewModel(
                             id = module.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
@@ -381,7 +368,7 @@ object Beagle : BeagleContract {
                             onButtonPressed = module.onButtonPressed
                         )
                     )
-                    is ListTrick<*> -> addListModule(
+                    is Trick.SimpleList<*> -> addListModule(
                         trick = module,
                         shouldShowIcon = module.items.isNotEmpty(),
                         addItems = {
@@ -394,7 +381,7 @@ object Beagle : BeagleContract {
                             }
                         }
                     )
-                    is SingleSelectionListTrick<*> -> addListModule(
+                    is Trick.SingleSelectionList<*> -> addListModule(
                         trick = module,
                         shouldShowIcon = module.items.isNotEmpty(),
                         addItems = {
@@ -412,19 +399,19 @@ object Beagle : BeagleContract {
                             }
                         }
                     )
-                    is HeaderTrick -> items.add(
+                    is Trick.Header -> items.add(
                         HeaderViewModel(
                             headerTrick = module
                         )
                     )
-                    is KeylineOverlayToggleTrick -> items.add(
+                    is Trick.KeylineOverlayToggle -> items.add(
                         ToggleViewModel(
                             id = module.id,
                             title = module.title,
                             isEnabled = isKeylineOverlayEnabled,
                             onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
                     )
-                    is AppInfoButtonTrick -> items.add(
+                    is Trick.AppInfoButton -> items.add(
                         ButtonViewModel(
                             id = module.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
@@ -438,7 +425,7 @@ object Beagle : BeagleContract {
                                 }
                             })
                     )
-                    is ScreenshotButtonTrick -> items.add(
+                    is Trick.ScreenshotButton -> items.add(
                         ButtonViewModel(
                             id = module.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
@@ -446,7 +433,7 @@ object Beagle : BeagleContract {
                             onButtonPressed = { (drawers[currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot() }
                         )
                     )
-                    is NetworkLogListTrick -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
+                    is Trick.NetworkLogList -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
                         addListModule(
                             trick = module,
                             shouldShowIcon = networkLogItems.isNotEmpty(),
@@ -461,7 +448,7 @@ object Beagle : BeagleContract {
                             }
                         )
                     }
-                    is LogListTrick -> logItems.take(module.maxItemCount).let { logItems ->
+                    is Trick.LogList -> logItems.take(module.maxItemCount).let { logItems ->
                         addListModule(
                             trick = module,
                             shouldShowIcon = logItems.isNotEmpty(),
