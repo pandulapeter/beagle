@@ -5,9 +5,6 @@ import androidx.annotation.Dimension
 import com.pandulapeter.beagleCore.contracts.BeagleListItemContract
 import java.util.UUID
 
-@Suppress("unused")
-typealias Module = Trick
-
 /**
  * Contains all supported modules that can be added to the drawer.
  */
@@ -238,10 +235,6 @@ sealed class Trick {
 
         override val id = ID
 
-        init {
-            require(maxItemCount > 0) { "Beagle: maxItemCount must be larger than 0 for the NetworkLogListTrick." }
-        }
-
         companion object {
             const val ID = "networkLogging"
         }
@@ -265,10 +258,6 @@ sealed class Trick {
     ) : Trick(), Expandable {
 
         override val id = ID
-
-        init {
-            require(maxItemCount > 0) { "Beagle: maxItemCount must be larger than 0 for the LogListTrick." }
-        }
 
         companion object {
             const val ID = "logList"

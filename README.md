@@ -40,8 +40,6 @@ Beagle.imprint(this)
 After this a list of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
 
 ### Tricks
-See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Trick.kt) for documentation about every supported module.
-
 Any number of generic modules can be added in any order as long as they have a unique ID:
 * [Text](/screenshots/moduleText.png) - Displays simple text content.
 * [LongText](/screenshots/moduleLongText.png) - Displays a longer piece of text that can be collapsed into a title.
@@ -71,10 +69,12 @@ Unique modules can only be added once as they are specific to a single use case:
 The module list can be changed at any time (from any thread) using the following functions:
 
 ```kotlin
-Beagle.learn(modules)
-Beagle.learn(module, positioning)
+Beagle.learn(tricks)
+Beagle.learn(trick, positioning)
 Beagle.forget(id)
 ```
+
+See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Trick.kt) for documentation about every supported module.
 
 ### Customization
 * The UI of the drawer can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Appearance.kt) instance when initializing the library.
