@@ -21,8 +21,8 @@ allprojects {
 dependencies {
     …
     def beagleVersion = "0.2.0"
-    debugImplementation "com.github.pandulapeter.beagle:beagle:beagleVersion"
-    releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:beagleVersion"
+    debugImplementation "com.github.pandulapeter.beagle:beagle:$beagleVersion"
+    releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:$beagleVersion"
 }
 ```
 
