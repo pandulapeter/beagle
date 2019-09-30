@@ -1,6 +1,5 @@
-package com.pandulapeter.beagleCore.configuration.modules
+package com.pandulapeter.beagleCore.configuration.tricks
 
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
 import java.util.UUID
 
 /**
@@ -12,8 +11,11 @@ import java.util.UUID
  * @param onButtonPressed - The callback that gets invoked when the user presses the button.
  */
 //TODO: The Buttons don't look great if the app uses Material theme.
-data class ButtonModule(
+data class ButtonTrick(
     override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence,
     val onButtonPressed: () -> Unit
-) : BeagleModuleContract
+) : Trick
+
+@Suppress("unused")
+typealias ButtonModule = ButtonTrick

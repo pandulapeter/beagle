@@ -1,11 +1,10 @@
-package com.pandulapeter.beagleCore.configuration.modules
+package com.pandulapeter.beagleCore.configuration.tricks
 
-import com.pandulapeter.beagleCore.contracts.BeagleExpandableModuleContract
 import com.pandulapeter.beagleCore.contracts.BeagleListItemContract
 import java.util.UUID
 
 /**
- * Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
+ * Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
  * The class is generic to a representation of a list item which must implement the [BeagleListItemContract] interface.
  * This module can be added multiple times as long as the ID is unique.
  *
@@ -13,17 +12,18 @@ import java.util.UUID
  * @param title - The text that appears in the header of the module.
  * @param items - The hardcoded list of items implementing the [BeagleListItemContract] interface.
  * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
- * @param initialSelectionId - The ID of the item that is selected when the drawer is opened for the first time, or null if no selection should be made initially. Null by default.
- * @param onItemSelectionChanged - The callback that will get executed when the selected item is changed.
+ * @param onItemSelected - The callback that will get executed when an item is selected.
  */
-data class SingleSelectionListModule<T : BeagleListItemContract>(
+data class ListTrick<T : BeagleListItemContract>(
     override val id: String = UUID.randomUUID().toString(),
     override val title: CharSequence,
     override val isInitiallyExpanded: Boolean = false,
     val items: List<T>,
-    val initialSelectionId: String? = null,
-    val onItemSelectionChanged: (item: T) -> Unit
-) : BeagleExpandableModuleContract {
+    val onItemSelected: (item: T) -> Unit
+) : ExpandableTrick {
 
-    fun invokeItemSelectedCallback(id: String) = onItemSelectionChanged(items.first { it.id == id })
+    fun invokeItemSelectedCallback(id: String) = onItemSelected(items.first { it.id == id })
 }
+
+@Suppress("unused")
+typealias ListModule<T> = ListTrick<T>

@@ -2,9 +2,9 @@ package com.pandulapeter.beagle
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.beagleCore.ModulePositioning
+import com.pandulapeter.beagleCore.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
+import com.pandulapeter.beagleCore.configuration.tricks.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 
 /**
@@ -26,12 +26,12 @@ object Beagle : BeagleContract {
     /**
      * Does nothing.
      */
-    override fun learn(modules: List<BeagleModuleContract>) = Unit
+    override fun learn(tricks: List<Trick>) = Unit
 
     /**
      * Does nothing.
      */
-    override fun learn(module: BeagleModuleContract, positioning: ModulePositioning) = Unit
+    override fun learn(trick: Trick, positioning: Positioning) = Unit
 
     /**
      * Does nothing.
@@ -41,12 +41,12 @@ object Beagle : BeagleContract {
     /**
      * Does nothing and returns false.
      */
-    override fun fetch(activity: Activity) = false
+    override fun dismiss(activity: Activity) = false
 
     /**
      * Does nothing.
      */
-    override fun dismiss(activity: Activity) = Unit
+    override fun fetch(activity: Activity) = Unit
 
     /**
      * Does nothing.

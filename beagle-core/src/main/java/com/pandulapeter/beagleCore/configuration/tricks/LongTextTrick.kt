@@ -1,6 +1,5 @@
-package com.pandulapeter.beagleCore.configuration.modules
+package com.pandulapeter.beagleCore.configuration.tricks
 
-import com.pandulapeter.beagleCore.contracts.BeagleExpandableModuleContract
 import java.util.UUID
 
 /**
@@ -12,9 +11,12 @@ import java.util.UUID
  * @param text - The text that should be displayed.
  * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
-data class LongTextModule(
+data class LongTextTrick(
     override val id: String = UUID.randomUUID().toString(),
     override val title: CharSequence,
     val text: CharSequence,
     override val isInitiallyExpanded: Boolean = false
-) : BeagleExpandableModuleContract
+) : ExpandableTrick
+
+@Suppress("unused")
+typealias LongTextModule = LongTextTrick

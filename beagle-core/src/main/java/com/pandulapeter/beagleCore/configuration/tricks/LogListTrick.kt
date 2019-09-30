@@ -1,6 +1,4 @@
-package com.pandulapeter.beagleCore.configuration.modules
-
-import com.pandulapeter.beagleCore.contracts.BeagleExpandableModuleContract
+package com.pandulapeter.beagleCore.configuration.tricks
 
 /**
  * Displays an expandable list of your custom logs. An example use case could be logging analytics events.
@@ -12,20 +10,23 @@ import com.pandulapeter.beagleCore.contracts.BeagleExpandableModuleContract
  * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
  * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
-data class LogListModule(
+data class LogListTrick(
     override val title: CharSequence = "Logs",
     val maxItemCount: Int = 10,
     val shouldShowTimestamp: Boolean = false,
     override val isInitiallyExpanded: Boolean = false
-) : BeagleExpandableModuleContract {
+) : ExpandableTrick {
 
     override val id = ID
 
     init {
-        require(maxItemCount > 0) { "Beagle: maxItemCount must be larger than 0 for the LogListModule." }
+        require(maxItemCount > 0) { "Beagle: maxItemCount must be larger than 0 for the LogListTrick." }
     }
 
     companion object {
         const val ID = "logging"
     }
 }
+
+@Suppress("unused")
+typealias LogListModule = LogListTrick

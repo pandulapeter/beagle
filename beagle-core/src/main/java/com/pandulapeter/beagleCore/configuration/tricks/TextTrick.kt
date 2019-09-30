@@ -1,6 +1,5 @@
-package com.pandulapeter.beagleCore.configuration.modules
+package com.pandulapeter.beagleCore.configuration.tricks
 
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
 import java.util.UUID
 
 /**
@@ -11,8 +10,11 @@ import java.util.UUID
  * @param text - The text that should be displayed.
  * @param isTitle - Whether or not the text should appear in bold style. False by default.
  */
-data class TextModule(
+data class TextTrick(
     override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence,
     val isTitle: Boolean = false
-) : BeagleModuleContract
+) : Trick
+
+@Suppress("unused")
+typealias TextModule = TextTrick

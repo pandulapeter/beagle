@@ -1,8 +1,7 @@
-package com.pandulapeter.beagleCore.configuration.modules
+package com.pandulapeter.beagleCore.configuration.tricks
 
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
 
 /**
  * Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.
@@ -14,13 +13,13 @@ import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
  * @param keylinePrimary - The distance between the edge of the screen and the secondary keyline. 72dp by default (80dp on tablets).
  * @param gridColor - The color to be used when drawing the grid. By default it will be the debug menu's text color.
  */
-data class KeylineOverlayToggleModule(
+data class KeylineOverlayToggleTrick(
     val title: CharSequence = "Keyline overlay",
     @Dimension val keylineGrid: Int? = null,
     @Dimension val keylinePrimary: Int? = null,
     @Dimension val keylineSecondary: Int? = null,
     @ColorInt val gridColor: Int? = null
-) : BeagleModuleContract {
+) : Trick {
 
     override val id = ID
 
@@ -28,3 +27,6 @@ data class KeylineOverlayToggleModule(
         const val ID = "keylineOverlay"
     }
 }
+
+@Suppress("unused")
+typealias KeylineOverlayToggleModule = KeylineOverlayToggleTrick

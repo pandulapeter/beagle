@@ -1,6 +1,5 @@
-package com.pandulapeter.beagleCore.configuration.modules
+package com.pandulapeter.beagleCore.configuration.tricks
 
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
 import java.util.UUID
 
 /**
@@ -12,9 +11,12 @@ import java.util.UUID
  * @param initialValue - The initial value of the toggle. False by default.
  * @param onValueChanged - Callback that gets invoked when the user changes the value of the toggle.
  */
-data class ToggleModule(
+data class ToggleTrick(
     override val id: String = UUID.randomUUID().toString(),
     val title: CharSequence,
     val initialValue: Boolean = false,
     val onValueChanged: (newValue: Boolean) -> Unit
-) : BeagleModuleContract
+) : Trick
+
+@Suppress("unused")
+typealias ToggleModule = ToggleTrick

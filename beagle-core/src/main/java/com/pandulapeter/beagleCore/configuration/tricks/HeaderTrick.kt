@@ -1,6 +1,4 @@
-package com.pandulapeter.beagleCore.configuration.modules
-
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
+package com.pandulapeter.beagleCore.configuration.tricks
 
 /**
  * Displays a header on top of the drawer with general information about the app / build.
@@ -10,11 +8,11 @@ import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
  * @param subtitle - The subtitle of the the debug menu. Consider using the build version ("v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"). Null by default (hidden subtitle).
  * @param text - Additional text you want to display on the debug drawer. Null by default (hidden text).
  */
-data class HeaderModule(
+data class HeaderTrick(
     val title: CharSequence? = null,
     val subtitle: CharSequence? = null,
     val text: CharSequence? = null
-) : BeagleModuleContract {
+) : Trick {
 
     override val id = ID
 
@@ -22,3 +20,6 @@ data class HeaderModule(
         const val ID = "header"
     }
 }
+
+@Suppress("unused")
+typealias HeaderModule = HeaderTrick

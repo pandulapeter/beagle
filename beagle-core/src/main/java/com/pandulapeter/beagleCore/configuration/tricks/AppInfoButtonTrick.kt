@@ -1,6 +1,4 @@
-package com.pandulapeter.beagleCore.configuration.modules
-
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
+package com.pandulapeter.beagleCore.configuration.tricks
 
 /**
  * Displays a button that links to the Android App Info page for your app.
@@ -8,9 +6,9 @@ import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
  *
  * @param text - The text that should be displayed on the button. "Show app info" by default.
  */
-data class AppInfoButtonModule(
+data class AppInfoButtonTrick(
     val text: CharSequence = "Show app info"
-) : BeagleModuleContract {
+) : Trick {
 
     override val id = ID
 
@@ -18,3 +16,6 @@ data class AppInfoButtonModule(
         const val ID = "appInfoButton"
     }
 }
+
+@Suppress("unused")
+typealias AppInfoButtonModule = AppInfoButtonTrick

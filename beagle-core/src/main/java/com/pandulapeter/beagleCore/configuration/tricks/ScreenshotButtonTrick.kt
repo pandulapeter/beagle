@@ -1,6 +1,4 @@
-package com.pandulapeter.beagleCore.configuration.modules
-
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
+package com.pandulapeter.beagleCore.configuration.tricks
 
 /**
  * Displays a button that takes a screenshot of the current layout and allows the user to share it.
@@ -8,9 +6,9 @@ import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
  *
  * @param text - The text that should be displayed on the button. "Take a screenshot" by default.
  */
-data class ScreenshotButtonModule(
+data class ScreenshotButtonTrick(
     val text: CharSequence = "Take a screenshot"
-) : BeagleModuleContract {
+) : Trick {
 
     override val id = ID
 
@@ -18,3 +16,6 @@ data class ScreenshotButtonModule(
         const val ID = "screenshotButton"
     }
 }
+
+@Suppress("unused")
+typealias ScreenshotButtonModule = ScreenshotButtonTrick

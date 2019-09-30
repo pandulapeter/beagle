@@ -32,22 +32,22 @@ import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewMode
 import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.items.text.TextViewModel
 import com.pandulapeter.beagle.views.items.toggle.ToggleViewModel
-import com.pandulapeter.beagleCore.ModulePositioning
+import com.pandulapeter.beagleCore.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.configuration.modules.AppInfoButtonModule
-import com.pandulapeter.beagleCore.configuration.modules.ButtonModule
-import com.pandulapeter.beagleCore.contracts.BeagleModuleContract
-import com.pandulapeter.beagleCore.contracts.BeagleExpandableModuleContract
-import com.pandulapeter.beagleCore.configuration.modules.HeaderModule
-import com.pandulapeter.beagleCore.configuration.modules.KeylineOverlayToggleModule
-import com.pandulapeter.beagleCore.configuration.modules.ListModule
-import com.pandulapeter.beagleCore.configuration.modules.LogListModule
-import com.pandulapeter.beagleCore.configuration.modules.LongTextModule
-import com.pandulapeter.beagleCore.configuration.modules.NetworkLogListModule
-import com.pandulapeter.beagleCore.configuration.modules.ScreenshotButtonModule
-import com.pandulapeter.beagleCore.configuration.modules.SingleSelectionListModule
-import com.pandulapeter.beagleCore.configuration.modules.TextModule
-import com.pandulapeter.beagleCore.configuration.modules.ToggleModule
+import com.pandulapeter.beagleCore.configuration.tricks.AppInfoButtonTrick
+import com.pandulapeter.beagleCore.configuration.tricks.ButtonTrick
+import com.pandulapeter.beagleCore.configuration.tricks.Trick
+import com.pandulapeter.beagleCore.configuration.tricks.ExpandableTrick
+import com.pandulapeter.beagleCore.configuration.tricks.HeaderTrick
+import com.pandulapeter.beagleCore.configuration.tricks.KeylineOverlayToggleTrick
+import com.pandulapeter.beagleCore.configuration.tricks.ListTrick
+import com.pandulapeter.beagleCore.configuration.tricks.LogListTrick
+import com.pandulapeter.beagleCore.configuration.tricks.LongTextTrick
+import com.pandulapeter.beagleCore.configuration.tricks.NetworkLogListTrick
+import com.pandulapeter.beagleCore.configuration.tricks.ScreenshotButtonTrick
+import com.pandulapeter.beagleCore.configuration.tricks.SingleSelectionListTrick
+import com.pandulapeter.beagleCore.configuration.tricks.TextTrick
+import com.pandulapeter.beagleCore.configuration.tricks.ToggleTrick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
@@ -87,45 +87,45 @@ object Beagle : BeagleContract {
     }
 
     /**
-     * Use this function to clear the contents of the menu and set a new list of modules.
+     * Use this function to clear the contents of the menu and set a new list of tricks.
      *
-     * @param modules - The new list of modules.
+     * @param tricks - The new list of tricks.
      */
-    override fun learn(modules: List<BeagleModuleContract>) {
-        moduleList = modules
+    override fun learn(tricks: List<Trick>) {
+        moduleList = tricks
     }
 
     /**
-     * Use this function to add a new module to the list. If there already is a module with the same ID, it will be updated.
+     * Use this function to add a new trick to the list. If there already is a trick with the same ID, it will be updated.
      *
-     * @param module - The new module to be added.
-     * @param positioning - The positioning of the new module. [ModulePositioning.Bottom] by default.
+     * @param trick - The new trick to be added.
+     * @param positioning - The positioning of the new trick. [Positioning.Bottom] by default.
      */
-    override fun learn(module: BeagleModuleContract, positioning: ModulePositioning) {
+    override fun learn(trick: Trick, positioning: Positioning) {
         moduleList = moduleList.toMutableList().apply {
-            indexOfFirst { it.id == module.id }.also { currentIndex ->
+            indexOfFirst { it.id == trick.id }.also { currentIndex ->
                 if (currentIndex != -1) {
                     removeAt(currentIndex)
-                    add(currentIndex, module)
+                    add(currentIndex, trick)
                 } else {
                     when (positioning) {
-                        ModulePositioning.Bottom -> add(module)
-                        ModulePositioning.Top -> add(0, module)
-                        is ModulePositioning.Below -> {
+                        Positioning.Bottom -> add(trick)
+                        Positioning.Top -> add(0, trick)
+                        is Positioning.Below -> {
                             indexOfFirst { it.id == positioning.id }.also { referencePosition ->
                                 if (referencePosition == -1) {
-                                    add(module)
+                                    add(trick)
                                 } else {
-                                    add(referencePosition + 1, module)
+                                    add(referencePosition + 1, trick)
                                 }
                             }
                         }
-                        is ModulePositioning.Above -> {
+                        is Positioning.Above -> {
                             indexOfFirst { it.id == positioning.id }.also { referencePosition ->
                                 if (referencePosition == -1) {
-                                    add(0, module)
+                                    add(0, trick)
                                 } else {
-                                    add(referencePosition, module)
+                                    add(referencePosition, trick)
                                 }
                             }
                         }
@@ -149,7 +149,7 @@ object Beagle : BeagleContract {
      *
      * @param activity - The current [Activity] instance.
      */
-    override fun dismiss(activity: Activity) {
+    override fun fetch(activity: Activity) {
         if (isEnabled) {
             drawers[activity]?.run { (parent as? BeagleDrawerLayout?)?.openDrawer(this) }
         }
@@ -161,7 +161,7 @@ object Beagle : BeagleContract {
      * @param activity - The current [Activity] instance.
      * @return - True if the drawer was open, false otherwise
      */
-    override fun fetch(activity: Activity): Boolean {
+    override fun dismiss(activity: Activity): Boolean {
         val drawer = drawers[activity]
         val drawerLayout = drawer?.parent as? BeagleDrawerLayout?
         return (drawerLayout?.isDrawerOpen(drawer) == true).also {
@@ -170,7 +170,7 @@ object Beagle : BeagleContract {
     }
 
     /**
-     * Adds a log message item which will be displayed at the top of the list if the [LogListModule] is enabled.
+     * Adds a log message item which will be displayed at the top of the list if the [LogListTrick] is enabled.
      *
      * @param message - The message that should be logged.
      * @param tag - An optional tag that can be later used for filtering. Null by default. //TODO: Implement filtering by tag.
@@ -186,12 +186,12 @@ object Beagle : BeagleContract {
     private const val MAX_ITEM_COUNT = 500
     private var uiCustomization = Appearance()
     private var currentJob: CoroutineContext? = null
-    private var moduleList = emptyList<BeagleModuleContract>()
+    private var moduleList = emptyList<Trick>()
         set(value) {
-            field = value.distinctBy { it.id }.sortedBy { it !is HeaderModule }
+            field = value.distinctBy { it.id }.sortedBy { it !is HeaderTrick }
             updateItems()
         }
-    private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<KeylineOverlayToggleModule>().firstOrNull()
+    private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<KeylineOverlayToggleTrick>().firstOrNull()
     private val drawers = mutableMapOf<Activity, BeagleDrawer>()
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private val toggles = mutableMapOf<String, Boolean>()
@@ -244,7 +244,7 @@ object Beagle : BeagleContract {
 
     init {
         moduleList = listOf(
-            HeaderModule(
+            HeaderTrick(
                 title = "Beagle",
                 subtitle = "Version ${BuildConfig.VERSION_NAME}",
                 text = "Configure the list of modules by setting the value of Beagle.modules."
@@ -322,35 +322,35 @@ object Beagle : BeagleContract {
             val items = mutableListOf<DrawerItemViewModel>()
 
             //TODO: DiffUtil seems to rebind the expanded list items even if they didn't change.
-            fun addListModule(module: BeagleExpandableModuleContract, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
+            fun addListModule(trick: ExpandableTrick, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
                 items.add(
                     ListHeaderViewModel(
-                        id = module.id,
-                        title = module.title,
-                        isExpanded = expandCollapseStates[module.id] ?: module.isInitiallyExpanded,
+                        id = trick.id,
+                        title = trick.title,
+                        isExpanded = expandCollapseStates[trick.id] ?: trick.isInitiallyExpanded,
                         shouldShowIcon = shouldShowIcon,
                         onItemSelected = {
-                            expandCollapseStates[module.id] = !(expandCollapseStates[module.id] ?: module.isInitiallyExpanded)
+                            expandCollapseStates[trick.id] = !(expandCollapseStates[trick.id] ?: trick.isInitiallyExpanded)
                             updateItems()
                         }
                     )
                 )
-                if (expandCollapseStates[module.id] ?: module.isInitiallyExpanded) {
+                if (expandCollapseStates[trick.id] ?: trick.isInitiallyExpanded) {
                     items.addAll(addItems().distinctBy { it.id })
                 }
             }
 
             moduleList.forEach { module ->
                 when (module) {
-                    is TextModule -> items.add(
+                    is TextTrick -> items.add(
                         TextViewModel(
                             id = module.id,
                             text = module.text,
                             isTitle = module.isTitle
                         )
                     )
-                    is LongTextModule -> addListModule(
-                        module = module,
+                    is LongTextTrick -> addListModule(
+                        trick = module,
                         shouldShowIcon = true,
                         addItems = {
                             listOf(
@@ -361,7 +361,7 @@ object Beagle : BeagleContract {
                             )
                         }
                     )
-                    is ToggleModule -> items.add(
+                    is ToggleTrick -> items.add(
                         ToggleViewModel(
                             id = module.id,
                             title = module.title,
@@ -373,7 +373,7 @@ object Beagle : BeagleContract {
                                 }
                             })
                     )
-                    is ButtonModule -> items.add(
+                    is ButtonTrick -> items.add(
                         ButtonViewModel(
                             id = module.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
@@ -381,8 +381,8 @@ object Beagle : BeagleContract {
                             onButtonPressed = module.onButtonPressed
                         )
                     )
-                    is ListModule<*> -> addListModule(
-                        module = module,
+                    is ListTrick<*> -> addListModule(
+                        trick = module,
                         shouldShowIcon = module.items.isNotEmpty(),
                         addItems = {
                             module.items.map { item ->
@@ -394,8 +394,8 @@ object Beagle : BeagleContract {
                             }
                         }
                     )
-                    is SingleSelectionListModule<*> -> addListModule(
-                        module = module,
+                    is SingleSelectionListTrick<*> -> addListModule(
+                        trick = module,
                         shouldShowIcon = module.items.isNotEmpty(),
                         addItems = {
                             module.items.map { item ->
@@ -412,19 +412,19 @@ object Beagle : BeagleContract {
                             }
                         }
                     )
-                    is HeaderModule -> items.add(
+                    is HeaderTrick -> items.add(
                         HeaderViewModel(
-                            headerModule = module
+                            headerTrick = module
                         )
                     )
-                    is KeylineOverlayToggleModule -> items.add(
+                    is KeylineOverlayToggleTrick -> items.add(
                         ToggleViewModel(
                             id = module.id,
                             title = module.title,
                             isEnabled = isKeylineOverlayEnabled,
                             onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
                     )
-                    is AppInfoButtonModule -> items.add(
+                    is AppInfoButtonTrick -> items.add(
                         ButtonViewModel(
                             id = module.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
@@ -438,7 +438,7 @@ object Beagle : BeagleContract {
                                 }
                             })
                     )
-                    is ScreenshotButtonModule -> items.add(
+                    is ScreenshotButtonTrick -> items.add(
                         ButtonViewModel(
                             id = module.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
@@ -446,14 +446,14 @@ object Beagle : BeagleContract {
                             onButtonPressed = { (drawers[currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot() }
                         )
                     )
-                    is NetworkLogListModule -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
+                    is NetworkLogListTrick -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
                         addListModule(
-                            module = module,
+                            trick = module,
                             shouldShowIcon = networkLogItems.isNotEmpty(),
                             addItems = {
                                 networkLogItems.map { networkLogItem ->
                                     NetworkLogItemViewModel(
-                                        networkLogListModule = module,
+                                        networkLogListTrick = module,
                                         networkLogItem = networkLogItem,
                                         onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem, module.shouldShowHeaders) }
                                     )
@@ -461,14 +461,14 @@ object Beagle : BeagleContract {
                             }
                         )
                     }
-                    is LogListModule -> logItems.take(module.maxItemCount).let { logItems ->
+                    is LogListTrick -> logItems.take(module.maxItemCount).let { logItems ->
                         addListModule(
-                            module = module,
+                            trick = module,
                             shouldShowIcon = logItems.isNotEmpty(),
                             addItems = {
                                 logItems.map { logItem ->
                                     LogItemViewModel(
-                                        logListModule = module,
+                                        logListTrick = module,
                                         logItem = logItem,
                                         onItemSelected = { currentActivity?.openLogPayloadDialog(logItem) }
                                     )

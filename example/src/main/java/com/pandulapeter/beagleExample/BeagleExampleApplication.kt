@@ -4,17 +4,17 @@ import android.app.Application
 import android.widget.Toast
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.configuration.modules.AppInfoButtonModule
-import com.pandulapeter.beagleCore.configuration.modules.ButtonModule
-import com.pandulapeter.beagleCore.configuration.modules.HeaderModule
-import com.pandulapeter.beagleCore.configuration.modules.KeylineOverlayToggleModule
-import com.pandulapeter.beagleCore.configuration.modules.LogListModule
-import com.pandulapeter.beagleCore.configuration.modules.LongTextModule
-import com.pandulapeter.beagleCore.configuration.modules.NetworkLogListModule
-import com.pandulapeter.beagleCore.configuration.modules.ScreenshotButtonModule
-import com.pandulapeter.beagleCore.configuration.modules.SingleSelectionListModule
-import com.pandulapeter.beagleCore.configuration.modules.TextModule
-import com.pandulapeter.beagleCore.configuration.modules.ToggleModule
+import com.pandulapeter.beagleCore.configuration.tricks.AppInfoButtonTrick
+import com.pandulapeter.beagleCore.configuration.tricks.ButtonTrick
+import com.pandulapeter.beagleCore.configuration.tricks.HeaderTrick
+import com.pandulapeter.beagleCore.configuration.tricks.KeylineOverlayToggleTrick
+import com.pandulapeter.beagleCore.configuration.tricks.LogListTrick
+import com.pandulapeter.beagleCore.configuration.tricks.LongTextTrick
+import com.pandulapeter.beagleCore.configuration.tricks.NetworkLogListTrick
+import com.pandulapeter.beagleCore.configuration.tricks.ScreenshotButtonTrick
+import com.pandulapeter.beagleCore.configuration.tricks.SingleSelectionListTrick
+import com.pandulapeter.beagleCore.configuration.tricks.TextTrick
+import com.pandulapeter.beagleCore.configuration.tricks.ToggleTrick
 import com.pandulapeter.beagleExample.networking.NetworkingManager
 import com.pandulapeter.beagleExample.utils.mockBackendEnvironments
 
@@ -30,43 +30,43 @@ class BeagleExampleApplication : Application() {
             )
             Beagle.learn(
                 listOf(
-                    HeaderModule(
+                    HeaderTrick(
                         title = getString(R.string.app_name),
                         subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                         text = "Built on ${BuildConfig.BUILD_DATE}"
                     ),
-                    AppInfoButtonModule(),
-                    ScreenshotButtonModule(),
-                    KeylineOverlayToggleModule(),
-                    ToggleModule(
+                    AppInfoButtonTrick(),
+                    ScreenshotButtonTrick(),
+                    KeylineOverlayToggleTrick(),
+                    ToggleTrick(
                         title = "Feature toggle 1",
                         onValueChanged = { isOn -> "Feature 1 is ${if (isOn) "on" else "off"}".showToast() }
                     ),
-                    ToggleModule(
+                    ToggleTrick(
                         title = "Feature toggle 2",
                         onValueChanged = { isOn -> "Feature 2 is ${if (isOn) "on" else "off"}".showToast() }
                     ),
-                    NetworkLogListModule(
+                    NetworkLogListTrick(
                         baseUrl = NetworkingManager.BASE_URL,
                         shouldShowHeaders = true,
                         shouldShowTimestamp = true
                     ),
-                    LogListModule(shouldShowTimestamp = true),
-                    SingleSelectionListModule(
+                    LogListTrick(shouldShowTimestamp = true),
+                    SingleSelectionListTrick(
                         title = "Environment",
                         items = mockBackendEnvironments,
                         isInitiallyExpanded = true,
                         initialSelectionId = "Develop",
                         onItemSelectionChanged = { backendEnvironment -> backendEnvironment.url.showToast() }
                     ),
-                    TextModule(
-                        text = "This is a TextModule used for displaying short hints"
+                    TextTrick(
+                        text = "This is a TextTrick used for displaying short hints"
                     ),
-                    LongTextModule(
+                    LongTextTrick(
                         title = "Long text",
                         text = "Here is a longer piece of text that occupies more space so it doesn't make sense to always have it fully displayed."
                     ),
-                    ButtonModule(
+                    ButtonTrick(
                         text = "Show a toast",
                         onButtonPressed = { "Here is a toast".showToast() }
                     )
