@@ -73,7 +73,8 @@ class BeagleExampleApplication : Application() {
                             "Key2" to "Value2",
                             "Key3" to "Value3"
                         )
-                    )
+                    ),
+                    Trick.DeviceInformationKeyValue()
                 )
             )
         }

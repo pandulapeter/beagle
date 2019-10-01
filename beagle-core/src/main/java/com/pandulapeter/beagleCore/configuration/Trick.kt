@@ -379,5 +379,30 @@ sealed class Trick {
             const val ID = "logList"
         }
     }
+
+    /**
+     * Displays information about the current device and the OS..
+     * This module can only be added once.
+     *
+     * @param title - The title of the module. "Device information" by default.
+     * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
+     */
+    data class DeviceInformationKeyValue(
+        override val title: CharSequence = "Device information",
+        override val isInitiallyExpanded: Boolean = false
+    ) : Trick(), Expandable {
+
+        override val id = ID
+        override var isExpanded = isInitiallyExpanded
+            private set
+
+        override fun toggleExpandedState() {
+            isExpanded = !isExpanded
+        }
+
+        companion object {
+            const val ID = "deviceInformation"
+        }
+    }
     //endregion
 }

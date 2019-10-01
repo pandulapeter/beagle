@@ -1,12 +1,13 @@
 package com.pandulapeter.beagle
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.DisplayMetrics
 import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
@@ -43,10 +44,11 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
+
 /**
  * The main singleton that handles the debug drawer's functionality.
  */
-@SuppressLint("StaticFieldLeak")
+@Suppress("StaticFieldLeak")
 object Beagle : BeagleContract {
 
     /**
@@ -488,6 +490,32 @@ object Beagle : BeagleContract {
                             }
                         )
                     }
+                    is Trick.DeviceInformationKeyValue -> addListModule(
+                        trick = trick,
+                        shouldShowIcon = true,
+                        addItems = {
+                            val dm = DisplayMetrics()
+                            currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)
+                            listOf(
+                                KeyValueItemViewModel(
+                                    trickId = trick.id,
+                                    pair = "Manufacturer" to Build.MANUFACTURER
+                                ),
+                                KeyValueItemViewModel(
+                                    trickId = trick.id,
+                                    pair = "Model" to Build.MODEL
+                                ),
+                                KeyValueItemViewModel(
+                                    trickId = trick.id,
+                                    pair = "Screen" to "${dm.widthPixels} * ${dm.heightPixels} (${dm.densityDpi} dpi)"
+                                ),
+                                KeyValueItemViewModel(
+                                    trickId = trick.id,
+                                    pair = "Android SDK version" to "${Build.VERSION.SDK_INT}"
+                                )
+                            )
+                        }
+                    )
                 }
             }
             this@Beagle.items = items

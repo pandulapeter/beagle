@@ -64,7 +64,7 @@ Unique modules can only be added once as they are specific to a single use case:
 * TODO: StressReliefButton - Displays fireworks.
 * [NetworkLogList](/screenshots/moduleNetworkLogList.png) - Displays an expandable list of historical network activity. Each item can be tapped for more information. To use this functionality, the custom beagleNetworkInterceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/networking/NetworkingManager.kt).
 * [LogList](/screenshots/moduleLogList.png) - Displays an expandable list of your custom logs. An example use case could be logging analytics events. Each item can be tapped for more information if you specified a payload. To log an event, simply call beagle.log().
-* TODO: DeviceConfigurationKeyValue - Displays information about the current device and the OS.
+* [DeviceInformationKeyValue](/screenshots/moduleDeviceInformationKeyValue.png) - Displays information about the current device and the OS.
 
 The module list can be changed at any time (from any thread) using the following functions:
 
