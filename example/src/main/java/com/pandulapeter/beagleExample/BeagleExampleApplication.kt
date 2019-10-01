@@ -59,6 +59,14 @@ class BeagleExampleApplication : Application() {
                     Trick.Button(
                         text = "Show a toast",
                         onButtonPressed = { "Here is a toast".showToast() }
+                    ),
+                    Trick.KeyValue(
+                        title = "Key - Value",
+                        pairs = listOf(
+                            "Key1" to "Value1",
+                            "Key2" to "Value2",
+                            "Key3" to "Value3"
+                        )
                     )
                 )
             )

@@ -83,6 +83,21 @@ sealed class Trick {
         val onButtonPressed: () -> Unit
     ) : Trick()
 
+    /**
+     * Displays a list of key-value pairs that can be collapsed into a title.
+     * This module can be added multiple times as long as the ID is unique.
+     *
+     * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
+     * @param title - The text that appears in the header of the module.
+     * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
+     * @param pairs - The list of key-value pairs.
+     */
+    data class KeyValue(
+        override val id: String = UUID.randomUUID().toString(),
+        override val title: CharSequence,
+        override val isInitiallyExpanded: Boolean = false,
+        val pairs: List<Pair<CharSequence, CharSequence>>
+    ) : Trick(), Expandable
 
     /**
      * Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.

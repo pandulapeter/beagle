@@ -12,6 +12,8 @@ import com.pandulapeter.beagle.views.items.button.ButtonViewHolder
 import com.pandulapeter.beagle.views.items.button.ButtonViewModel
 import com.pandulapeter.beagle.views.items.header.HeaderViewHolder
 import com.pandulapeter.beagle.views.items.header.HeaderViewModel
+import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewHolder
+import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewModel
 import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewHolder
 import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewModel
 import com.pandulapeter.beagle.views.items.listItem.ListItemViewHolder
@@ -44,6 +46,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
         is LongTextViewModel -> R.layout.item_long_text
         is ToggleViewModel -> R.layout.item_toggle
         is ButtonViewModel -> if (item.shouldUseListItem) R.layout.item_button_list_item else R.layout.item_button
+        is KeyValueItemViewModel -> R.layout.item_key_value
         is ListHeaderViewModel -> R.layout.item_list_header
         is ListItemViewModel<*> -> R.layout.item_list_item
         is SingleSelectionListItemViewModel<*> -> R.layout.item_single_selection_list_item
@@ -59,6 +62,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
         R.layout.item_toggle -> ToggleViewHolder.create(parent)
         R.layout.item_button -> ButtonViewHolder.create(parent)
         R.layout.item_button_list_item -> ButtonListItemViewHolder.create(parent)
+        R.layout.item_key_value -> KeyValueItemViewHolder.create(parent)
         R.layout.item_list_header -> ListHeaderViewHolder.create(parent)
         R.layout.item_list_item -> ListItemViewHolder.create(parent)
         R.layout.item_single_selection_list_item -> SingleSelectionListItemViewHolder.create(parent)
@@ -74,6 +78,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
         is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel)
         is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel)
         is ButtonListItemViewHolder -> holder.bind(getItem(position) as ButtonViewModel)
+        is KeyValueItemViewHolder -> holder.bind(getItem(position) as KeyValueItemViewModel)
         is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel)
         is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel<*>)
         is SingleSelectionListItemViewHolder -> holder.bind(getItem(position) as SingleSelectionListItemViewModel<*>)

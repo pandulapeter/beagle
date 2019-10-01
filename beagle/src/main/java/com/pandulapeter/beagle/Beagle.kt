@@ -24,6 +24,7 @@ import com.pandulapeter.beagle.views.BeagleDrawerLayout
 import com.pandulapeter.beagle.views.items.DrawerItemViewModel
 import com.pandulapeter.beagle.views.items.button.ButtonViewModel
 import com.pandulapeter.beagle.views.items.header.HeaderViewModel
+import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewModel
 import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewModel
 import com.pandulapeter.beagle.views.items.listItem.ListItemViewModel
 import com.pandulapeter.beagle.views.items.logItem.LogItemViewModel
@@ -32,8 +33,8 @@ import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewMode
 import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.items.text.TextViewModel
 import com.pandulapeter.beagle.views.items.toggle.ToggleViewModel
-import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
+import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 import kotlinx.coroutines.GlobalScope
@@ -327,73 +328,84 @@ object Beagle : BeagleContract {
                 }
             }
 
-            moduleList.forEach { module ->
-                when (module) {
+            moduleList.forEach { trick ->
+                when (trick) {
                     is Trick.Text -> items.add(
                         TextViewModel(
-                            id = module.id,
-                            text = module.text,
-                            isTitle = module.isTitle
+                            id = trick.id,
+                            text = trick.text,
+                            isTitle = trick.isTitle
                         )
                     )
                     is Trick.LongText -> addListModule(
-                        trick = module,
+                        trick = trick,
                         shouldShowIcon = true,
                         addItems = {
                             listOf(
                                 LongTextViewModel(
-                                    id = "longText_${module.id}",
-                                    text = module.text
+                                    id = "longText_${trick.id}",
+                                    text = trick.text
                                 )
                             )
                         }
                     )
                     is Trick.Toggle -> items.add(
                         ToggleViewModel(
-                            id = module.id,
-                            title = module.title,
-                            isEnabled = toggles[module.id] ?: module.initialValue,
+                            id = trick.id,
+                            title = trick.title,
+                            isEnabled = toggles[trick.id] ?: trick.initialValue,
                             onToggleStateChanged = { newValue ->
-                                if (toggles[module.id] != newValue) {
-                                    module.onValueChanged(newValue)
-                                    toggles[module.id] = newValue
+                                if (toggles[trick.id] != newValue) {
+                                    trick.onValueChanged(newValue)
+                                    toggles[trick.id] = newValue
                                 }
                             })
                     )
                     is Trick.Button -> items.add(
                         ButtonViewModel(
-                            id = module.id,
+                            id = trick.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
-                            text = module.text,
-                            onButtonPressed = module.onButtonPressed
+                            text = trick.text,
+                            onButtonPressed = trick.onButtonPressed
                         )
                     )
-                    is Trick.SimpleList<*> -> addListModule(
-                        trick = module,
-                        shouldShowIcon = module.items.isNotEmpty(),
+                    is Trick.KeyValue -> addListModule(
+                        trick = trick,
+                        shouldShowIcon = trick.pairs.isNotEmpty(),
                         addItems = {
-                            module.items.map { item ->
+                            trick.pairs.map { pair ->
+                                KeyValueItemViewModel(
+                                    pair = pair
+                                )
+                            }
+                        }
+                    )
+                    is Trick.SimpleList<*> -> addListModule(
+                        trick = trick,
+                        shouldShowIcon = trick.items.isNotEmpty(),
+                        addItems = {
+                            trick.items.map { item ->
                                 ListItemViewModel(
-                                    listModuleId = module.id,
+                                    listModuleId = trick.id,
                                     item = item,
-                                    onItemSelected = { module.invokeItemSelectedCallback(item.id) }
+                                    onItemSelected = { trick.invokeItemSelectedCallback(item.id) }
                                 )
                             }
                         }
                     )
                     is Trick.SingleSelectionList<*> -> addListModule(
-                        trick = module,
-                        shouldShowIcon = module.items.isNotEmpty(),
+                        trick = trick,
+                        shouldShowIcon = trick.items.isNotEmpty(),
                         addItems = {
-                            module.items.map { item ->
+                            trick.items.map { item ->
                                 SingleSelectionListItemViewModel(
-                                    listModuleId = module.id,
+                                    listModuleId = trick.id,
                                     item = item,
-                                    isSelected = (singleSelectionListStates[module.id] ?: module.initialSelectionId) == item.id,
+                                    isSelected = (singleSelectionListStates[trick.id] ?: trick.initialSelectionId) == item.id,
                                     onItemSelected = { itemId ->
-                                        singleSelectionListStates[module.id] = itemId
+                                        singleSelectionListStates[trick.id] = itemId
                                         updateItems()
-                                        module.invokeItemSelectedCallback(itemId)
+                                        trick.invokeItemSelectedCallback(itemId)
                                     }
                                 )
                             }
@@ -401,21 +413,21 @@ object Beagle : BeagleContract {
                     )
                     is Trick.Header -> items.add(
                         HeaderViewModel(
-                            headerTrick = module
+                            headerTrick = trick
                         )
                     )
                     is Trick.KeylineOverlayToggle -> items.add(
                         ToggleViewModel(
-                            id = module.id,
-                            title = module.title,
+                            id = trick.id,
+                            title = trick.title,
                             isEnabled = isKeylineOverlayEnabled,
                             onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
                     )
                     is Trick.AppInfoButton -> items.add(
                         ButtonViewModel(
-                            id = module.id,
+                            id = trick.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
-                            text = module.text,
+                            text = trick.text,
                             onButtonPressed = {
                                 currentActivity?.run {
                                     startActivity(Intent().apply {
@@ -427,35 +439,35 @@ object Beagle : BeagleContract {
                     )
                     is Trick.ScreenshotButton -> items.add(
                         ButtonViewModel(
-                            id = module.id,
+                            id = trick.id,
                             shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
-                            text = module.text,
+                            text = trick.text,
                             onButtonPressed = { (drawers[currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot() }
                         )
                     )
-                    is Trick.NetworkLogList -> networkLogItems.take(module.maxItemCount).let { networkLogItems ->
+                    is Trick.NetworkLogList -> networkLogItems.take(trick.maxItemCount).let { networkLogItems ->
                         addListModule(
-                            trick = module,
+                            trick = trick,
                             shouldShowIcon = networkLogItems.isNotEmpty(),
                             addItems = {
                                 networkLogItems.map { networkLogItem ->
                                     NetworkLogItemViewModel(
-                                        networkLogListTrick = module,
+                                        networkLogListTrick = trick,
                                         networkLogItem = networkLogItem,
-                                        onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem, module.shouldShowHeaders) }
+                                        onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem, trick.shouldShowHeaders) }
                                     )
                                 }
                             }
                         )
                     }
-                    is Trick.LogList -> logItems.take(module.maxItemCount).let { logItems ->
+                    is Trick.LogList -> logItems.take(trick.maxItemCount).let { logItems ->
                         addListModule(
-                            trick = module,
+                            trick = trick,
                             shouldShowIcon = logItems.isNotEmpty(),
                             addItems = {
                                 logItems.map { logItem ->
                                     LogItemViewModel(
-                                        logListTrick = module,
+                                        logListTrick = trick,
                                         logItem = logItem,
                                         onItemSelected = { currentActivity?.openLogPayloadDialog(logItem) }
                                     )
