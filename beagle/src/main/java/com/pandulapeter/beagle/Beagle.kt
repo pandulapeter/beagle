@@ -2,12 +2,7 @@ package com.pandulapeter.beagle
 
 import android.app.Activity
 import android.app.Application
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.util.DisplayMetrics
 import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
@@ -20,21 +15,10 @@ import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.utils.hideKeyboard
+import com.pandulapeter.beagle.utils.mapToViewModels
 import com.pandulapeter.beagle.views.BeagleDrawer
 import com.pandulapeter.beagle.views.BeagleDrawerLayout
 import com.pandulapeter.beagle.views.items.DrawerItemViewModel
-import com.pandulapeter.beagle.views.items.button.ButtonViewModel
-import com.pandulapeter.beagle.views.items.header.HeaderViewModel
-import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewModel
-import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewModel
-import com.pandulapeter.beagle.views.items.listItem.ListItemViewModel
-import com.pandulapeter.beagle.views.items.logItem.LogItemViewModel
-import com.pandulapeter.beagle.views.items.longText.LongTextViewModel
-import com.pandulapeter.beagle.views.items.multipleSelectionListItem.MultipleSelectionListItemViewModel
-import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewModel
-import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
-import com.pandulapeter.beagle.views.items.text.TextViewModel
-import com.pandulapeter.beagle.views.items.toggle.ToggleViewModel
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
@@ -43,7 +27,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
-
 
 /**
  * The main singleton that handles the debug drawer's functionality.
@@ -183,9 +166,9 @@ object Beagle : BeagleContract {
             updateItems()
         }
     private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<Trick.KeylineOverlayToggle>().firstOrNull()
-    private val drawers = mutableMapOf<Activity, BeagleDrawer>()
+    internal val drawers = mutableMapOf<Activity, BeagleDrawer>()
     private var items = emptyList<DrawerItemViewModel>()
-    private var isKeylineOverlayEnabled = false
+    internal var isKeylineOverlayEnabled = false
         set(value) {
             if (field != value) {
                 field = value
@@ -206,7 +189,8 @@ object Beagle : BeagleContract {
             updateItems()
         }
     //TODO: Should not leak. Test it to make sure.
-    private var currentActivity: Activity? = null
+    internal var currentActivity: Activity? = null
+        private set
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -288,8 +272,8 @@ object Beagle : BeagleContract {
 
     private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
-    private fun Activity.openNetworkEventBodyDialog(networkLogItem: NetworkLogItem, shouldShowHeaders: Boolean) {
-        (this as? AppCompatActivity?)?.run {
+    internal fun openNetworkEventBodyDialog(networkLogItem: NetworkLogItem, shouldShowHeaders: Boolean) {
+        (currentActivity as? AppCompatActivity?)?.run {
             NetworkEventBodyDialog.show(
                 fragmentManager = supportFragmentManager,
                 networkLogItem = networkLogItem,
@@ -299,227 +283,21 @@ object Beagle : BeagleContract {
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
-    private fun Activity.openLogPayloadDialog(logItem: LogItem) {
-        (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logItem, appearance) }
+    internal fun openLogPayloadDialog(logItem: LogItem) {
+        (currentActivity as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logItem, appearance) }
             ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
-    private fun updateItems() {
+    internal fun updateItems() {
         currentJob?.cancel()
         currentJob = GlobalScope.launch {
-            val items = mutableListOf<DrawerItemViewModel>()
-
-            //TODO: DiffUtil seems to rebind the expanded list items even if they didn't change.
-            fun addListModule(trick: Trick.Expandable, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
-                items.add(
-                    ListHeaderViewModel(
-                        id = trick.id,
-                        title = trick.title,
-                        isExpanded = trick.isExpanded,
-                        shouldShowIcon = shouldShowIcon,
-                        onItemSelected = {
-                            trick.toggleExpandedState()
-                            updateItems()
-                        }
-                    )
-                )
-                if (trick.isExpanded) {
-                    items.addAll(addItems().distinctBy { it.id })
-                }
+            items = moduleList.mapToViewModels(
+                appearance = appearance,
+                networkLogItems = networkLogItems,
+                logItems = logItems
+            ).also { items ->
+                drawers.values.forEach { it.updateItems(items) }
             }
-
-            moduleList.forEach { trick ->
-                when (trick) {
-                    is Trick.Text -> items.add(
-                        TextViewModel(
-                            id = trick.id,
-                            text = trick.text,
-                            isTitle = trick.isTitle
-                        )
-                    )
-                    is Trick.LongText -> addListModule(
-                        trick = trick,
-                        shouldShowIcon = true,
-                        addItems = {
-                            listOf(
-                                LongTextViewModel(
-                                    id = "longText_${trick.id}",
-                                    text = trick.text
-                                )
-                            )
-                        }
-                    )
-                    is Trick.Toggle -> items.add(
-                        ToggleViewModel(
-                            id = trick.id,
-                            title = trick.title,
-                            isEnabled = trick.value,
-                            onToggleStateChanged = { newValue ->
-                                trick.value = newValue
-                                updateItems()
-                            }
-                        )
-                    )
-                    is Trick.Button -> items.add(
-                        ButtonViewModel(
-                            id = trick.id,
-                            shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
-                            text = trick.text,
-                            onButtonPressed = trick.onButtonPressed
-                        )
-                    )
-                    is Trick.KeyValue -> addListModule(
-                        trick = trick,
-                        shouldShowIcon = trick.pairs.isNotEmpty(),
-                        addItems = {
-                            trick.pairs.map { pair ->
-                                KeyValueItemViewModel(
-                                    trickId = trick.id,
-                                    pair = pair
-                                )
-                            }
-                        }
-                    )
-                    is Trick.SimpleList<*> -> addListModule(
-                        trick = trick,
-                        shouldShowIcon = trick.items.isNotEmpty(),
-                        addItems = {
-                            trick.items.map { item ->
-                                ListItemViewModel(
-                                    listModuleId = trick.id,
-                                    item = item,
-                                    onItemSelected = { trick.invokeItemSelectedCallback(item.id) }
-                                )
-                            }
-                        }
-                    )
-                    is Trick.SingleSelectionList<*> -> addListModule(
-                        trick = trick,
-                        shouldShowIcon = trick.items.isNotEmpty(),
-                        addItems = {
-                            trick.items.map { item ->
-                                SingleSelectionListItemViewModel(
-                                    listModuleId = trick.id,
-                                    item = item,
-                                    isSelected = trick.selectedItemId == item.id,
-                                    onItemSelected = { itemId ->
-                                        trick.invokeItemSelectedCallback(itemId)
-                                        updateItems()
-                                    }
-                                )
-                            }
-                        }
-                    )
-                    is Trick.MultipleSelectionList<*> -> addListModule(
-                        trick = trick,
-                        shouldShowIcon = trick.items.isNotEmpty(),
-                        addItems = {
-                            trick.items.map { item ->
-                                MultipleSelectionListItemViewModel(
-                                    listModuleId = trick.id,
-                                    item = item,
-                                    isSelected = trick.selectedItemIds.contains(item.id),
-                                    onItemSelected = { itemId -> trick.invokeItemSelectedCallback(itemId) }
-                                )
-                            }
-                        }
-                    )
-                    is Trick.Header -> items.add(
-                        HeaderViewModel(
-                            headerTrick = trick
-                        )
-                    )
-                    is Trick.KeylineOverlayToggle -> items.add(
-                        ToggleViewModel(
-                            id = trick.id,
-                            title = trick.title,
-                            isEnabled = isKeylineOverlayEnabled,
-                            onToggleStateChanged = { newValue ->
-                                isKeylineOverlayEnabled = newValue
-                            })
-                    )
-                    is Trick.AppInfoButton -> items.add(
-                        ButtonViewModel(
-                            id = trick.id,
-                            shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
-                            text = trick.text,
-                            onButtonPressed = {
-                                currentActivity?.run {
-                                    startActivity(Intent().apply {
-                                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                                        data = Uri.fromParts("package", packageName, null)
-                                    })
-                                }
-                            })
-                    )
-                    is Trick.ScreenshotButton -> items.add(
-                        ButtonViewModel(
-                            id = trick.id,
-                            shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
-                            text = trick.text,
-                            onButtonPressed = { (drawers[currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot() }
-                        )
-                    )
-                    is Trick.NetworkLogList -> networkLogItems.take(trick.maxItemCount).let { networkLogItems ->
-                        addListModule(
-                            trick = trick,
-                            shouldShowIcon = networkLogItems.isNotEmpty(),
-                            addItems = {
-                                networkLogItems.map { networkLogItem ->
-                                    NetworkLogItemViewModel(
-                                        networkLogListTrick = trick,
-                                        networkLogItem = networkLogItem,
-                                        onItemSelected = { currentActivity?.openNetworkEventBodyDialog(networkLogItem, trick.shouldShowHeaders) }
-                                    )
-                                }
-                            }
-                        )
-                    }
-                    is Trick.LogList -> logItems.take(trick.maxItemCount).let { logItems ->
-                        addListModule(
-                            trick = trick,
-                            shouldShowIcon = logItems.isNotEmpty(),
-                            addItems = {
-                                logItems.map { logItem ->
-                                    LogItemViewModel(
-                                        logListTrick = trick,
-                                        logItem = logItem,
-                                        onItemSelected = { currentActivity?.openLogPayloadDialog(logItem) }
-                                    )
-                                }
-                            }
-                        )
-                    }
-                    is Trick.DeviceInformationKeyValue -> addListModule(
-                        trick = trick,
-                        shouldShowIcon = true,
-                        addItems = {
-                            val dm = DisplayMetrics()
-                            currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)
-                            listOf(
-                                KeyValueItemViewModel(
-                                    trickId = trick.id,
-                                    pair = "Manufacturer" to Build.MANUFACTURER
-                                ),
-                                KeyValueItemViewModel(
-                                    trickId = trick.id,
-                                    pair = "Model" to Build.MODEL
-                                ),
-                                KeyValueItemViewModel(
-                                    trickId = trick.id,
-                                    pair = "Screen" to "${dm.widthPixels} * ${dm.heightPixels} (${dm.densityDpi} dpi)"
-                                ),
-                                KeyValueItemViewModel(
-                                    trickId = trick.id,
-                                    pair = "Android SDK version" to "${Build.VERSION.SDK_INT}"
-                                )
-                            )
-                        }
-                    )
-                }
-            }
-            this@Beagle.items = items
-            drawers.values.forEach { it.updateItems(items) }
             currentJob = null
         }
     }
