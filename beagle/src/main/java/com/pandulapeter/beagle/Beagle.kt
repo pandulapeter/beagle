@@ -70,7 +70,7 @@ object Beagle : BeagleContract {
      * @param appearance - The [Appearance] that specifies the appearance the drawer.
      */
     override fun imprint(application: Application, appearance: Appearance) {
-        this.uiCustomization = appearance
+        this.appearance = appearance
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
@@ -173,7 +173,7 @@ object Beagle : BeagleContract {
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private const val MAX_ITEM_COUNT = 500
-    private var uiCustomization = Appearance()
+    private var appearance = Appearance()
     private var currentJob: CoroutineContext? = null
     private var moduleList = emptyList<Trick>()
         set(value) {
@@ -182,9 +182,9 @@ object Beagle : BeagleContract {
         }
     private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<Trick.KeylineOverlayToggle>().firstOrNull()
     private val drawers = mutableMapOf<Activity, BeagleDrawer>()
+    //TODO: Properties related to module states can be kept within the modules to simplify this class.
     private val expandCollapseStates = mutableMapOf<String, Boolean>()
     private val toggles = mutableMapOf<String, Boolean>()
-    private val singleSelectionListStates = mutableMapOf<String, String>()
     private var items = emptyList<DrawerItemViewModel>()
     private var isKeylineOverlayEnabled = false
         set(value) {
@@ -248,7 +248,7 @@ object Beagle : BeagleContract {
     //TODO: Make sure this doesn't break Activity shared element transitions.
     //TODO: Find a smart way to handle the case when the root view is already a DrawerLayout.
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) =
-        (uiCustomization.themeResourceId?.let { ContextThemeWrapper(activity, it) } ?: activity).let { themedContext ->
+        (appearance.themeResourceId?.let { ContextThemeWrapper(activity, it) } ?: activity).let { themedContext ->
             BeagleDrawer(themedContext).also { drawer ->
                 drawer.updateItems(items)
                 activity.findRootViewGroup().run {
@@ -260,7 +260,7 @@ object Beagle : BeagleContract {
                                 context = themedContext,
                                 oldViews = oldViews,
                                 drawer = drawer,
-                                drawerWidth = uiCustomization.drawerWidth
+                                drawerWidth = appearance.drawerWidth
                             ).apply {
                                 if (shouldOpenDrawer) {
                                     openDrawer(drawer)
@@ -294,14 +294,14 @@ object Beagle : BeagleContract {
             NetworkEventBodyDialog.show(
                 fragmentManager = supportFragmentManager,
                 networkLogItem = networkLogItem,
-                appearance = uiCustomization,
+                appearance = appearance,
                 shouldShowHeaders = shouldShowHeaders
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
     private fun Activity.openLogPayloadDialog(logItem: LogItem) {
-        (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logItem, uiCustomization) }
+        (this as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logItem, appearance) }
             ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
@@ -365,7 +365,7 @@ object Beagle : BeagleContract {
                     is Trick.Button -> items.add(
                         ButtonViewModel(
                             id = trick.id,
-                            shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
+                            shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
                             text = trick.text,
                             onButtonPressed = trick.onButtonPressed
                         )
@@ -402,11 +402,10 @@ object Beagle : BeagleContract {
                                 SingleSelectionListItemViewModel(
                                     listModuleId = trick.id,
                                     item = item,
-                                    isSelected = (singleSelectionListStates[trick.id] ?: trick.initialSelectionId) == item.id,
+                                    isSelected = trick.selectedItemId == item.id,
                                     onItemSelected = { itemId ->
-                                        singleSelectionListStates[trick.id] = itemId
-                                        updateItems()
                                         trick.invokeItemSelectedCallback(itemId)
+                                        updateItems()
                                     }
                                 )
                             }
@@ -444,7 +443,7 @@ object Beagle : BeagleContract {
                     is Trick.AppInfoButton -> items.add(
                         ButtonViewModel(
                             id = trick.id,
-                            shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
+                            shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
                             text = trick.text,
                             onButtonPressed = {
                                 currentActivity?.run {
@@ -458,7 +457,7 @@ object Beagle : BeagleContract {
                     is Trick.ScreenshotButton -> items.add(
                         ButtonViewModel(
                             id = trick.id,
-                            shouldUseListItem = uiCustomization.shouldUseItemsInsteadOfButtons,
+                            shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
                             text = trick.text,
                             onButtonPressed = { (drawers[currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot() }
                         )

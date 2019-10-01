@@ -142,7 +142,13 @@ sealed class Trick {
         val onItemSelectionChanged: (selectedItem: T) -> Unit
     ) : Trick(), Expandable {
 
-        fun invokeItemSelectedCallback(id: String) = onItemSelectionChanged(items.first { it.id == id })
+        var selectedItemId = initialSelectionId
+            private set
+
+        fun invokeItemSelectedCallback(id: String) {
+            selectedItemId = id
+            onItemSelectionChanged(items.first { it.id == selectedItemId })
+        }
     }
 
     /**
