@@ -22,6 +22,8 @@ import com.pandulapeter.beagle.views.items.logItem.LogItemViewHolder
 import com.pandulapeter.beagle.views.items.logItem.LogItemViewModel
 import com.pandulapeter.beagle.views.items.longText.LongTextViewHolder
 import com.pandulapeter.beagle.views.items.longText.LongTextViewModel
+import com.pandulapeter.beagle.views.items.multipleSelectionListItem.MultipleSelectionListItemViewHolder
+import com.pandulapeter.beagle.views.items.multipleSelectionListItem.MultipleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewHolder
 import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewModel
 import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewHolder
@@ -50,6 +52,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
         is ListHeaderViewModel -> R.layout.item_list_header
         is ListItemViewModel<*> -> R.layout.item_list_item
         is SingleSelectionListItemViewModel<*> -> R.layout.item_single_selection_list_item
+        is MultipleSelectionListItemViewModel<*> -> R.layout.item_multiple_selection_list_item
         is HeaderViewModel -> R.layout.item_header
         is NetworkLogItemViewModel -> R.layout.item_network_log
         is LogItemViewModel -> R.layout.item_log
@@ -66,6 +69,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
         R.layout.item_list_header -> ListHeaderViewHolder.create(parent)
         R.layout.item_list_item -> ListItemViewHolder.create(parent)
         R.layout.item_single_selection_list_item -> SingleSelectionListItemViewHolder.create(parent)
+        R.layout.item_multiple_selection_list_item -> MultipleSelectionListItemViewHolder.create(parent)
         R.layout.item_header -> HeaderViewHolder.create(parent)
         R.layout.item_network_log -> NetworkLogItemViewHolder.create(parent)
         R.layout.item_log -> LogItemViewHolder.create(parent)
@@ -82,6 +86,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
         is ListHeaderViewHolder -> holder.bind(getItem(position) as ListHeaderViewModel)
         is ListItemViewHolder -> holder.bind(getItem(position) as ListItemViewModel<*>)
         is SingleSelectionListItemViewHolder -> holder.bind(getItem(position) as SingleSelectionListItemViewModel<*>)
+        is MultipleSelectionListItemViewHolder -> holder.bind(getItem(position) as MultipleSelectionListItemViewModel<*>)
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewModel)
         is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewModel)
         is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewModel)

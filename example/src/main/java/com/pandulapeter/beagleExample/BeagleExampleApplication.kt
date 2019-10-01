@@ -7,6 +7,7 @@ import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleExample.networking.NetworkingManager
 import com.pandulapeter.beagleExample.utils.mockBackendEnvironments
+import com.pandulapeter.beagleExample.utils.mockColors
 
 @Suppress("unused")
 class BeagleExampleApplication : Application() {
@@ -35,6 +36,11 @@ class BeagleExampleApplication : Application() {
                     Trick.Toggle(
                         title = "Feature toggle 2",
                         onValueChanged = { isOn -> "Feature 2 is ${if (isOn) "on" else "off"}".showToast() }
+                    ),
+                    Trick.MultipleSelectionList(
+                        title = "Multiple choice",
+                        items = mockColors,
+                        onItemSelectionChanged = { colors -> Beagle.log("Selected colors: ${colors.joinToString { it.name }}") }
                     ),
                     Trick.NetworkLogList(
                         baseUrl = NetworkingManager.BASE_URL,

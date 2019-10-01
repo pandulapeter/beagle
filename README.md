@@ -52,7 +52,7 @@ Any number of generic modules can be added in any order as long as they have a u
 * [KeyValue](/screenshots/moduleKeyValue.png) - Displays a list of key-value pairs that can be collapsed into a title.
 * [SimpleList](/screenshots/moduleSimpleList.png) - Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
 * [SingleSelectionList](/screenshots/moduleSingleSelectionList.png) - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
-* TODO: MultipleSelectionList - Displays a lst of checkboxes.
+* [MultipleSelectionList](/screenshots/moduleMultipleSelectionList.png) - Displays a lst of checkboxes.
 
 Unique modules can only be added once as they are specific to a single use case:
 * [Header](/screenshots/moduleHeader.png) - Displays a header on top of the drawer with general information about the app / build.

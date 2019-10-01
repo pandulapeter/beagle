@@ -24,6 +24,15 @@ val mockBackendEnvironments = listOf(
     BackendEnvironment("Production", "yourapi.com")
 )
 
+data class Color(override val name: String) : BeagleListItemContract
+
+val mockColors = listOf(
+    Color("Red"),
+    Color("Green"),
+    Color("Blue"),
+    Color("Yellow")
+)
+
 val logMessages = listOf(
     "Adding Hidden Agendas",
     "Adjusting Bell Curves",

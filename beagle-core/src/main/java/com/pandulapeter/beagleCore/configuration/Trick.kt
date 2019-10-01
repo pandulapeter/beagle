@@ -139,10 +139,46 @@ sealed class Trick {
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
         val initialSelectionId: String? = null,
-        val onItemSelectionChanged: (item: T) -> Unit
+        val onItemSelectionChanged: (selectedItem: T) -> Unit
     ) : Trick(), Expandable {
 
         fun invokeItemSelectedCallback(id: String) = onItemSelectionChanged(items.first { it.id == id })
+    }
+
+    /**
+     * Displays a list of checkboxes.
+     * The class is generic to a representation of a list item which must implement the [BeagleListItemContract] interface.
+     * This module can be added multiple times as long as the ID is unique.
+     *
+     * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the list, a suitable default value is auto-generated.
+     * @param title - The text that appears in the header of the module.
+     * @param items - The hardcoded list of items implementing the [BeagleListItemContract] interface.
+     * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
+     * @param initialSelectionIds - The ID-s of the items that are selected when the drawer is opened for the first time. Empty list by default.
+     * @param onItemSelectionChanged - The callback that will get executed when the list of selected items is changed.
+     */
+    data class MultipleSelectionList<T : BeagleListItemContract>(
+        override val id: String = UUID.randomUUID().toString(),
+        override val title: CharSequence,
+        override val isInitiallyExpanded: Boolean = false,
+        val items: List<T>,
+        val initialSelectionIds: List<String> = emptyList(),
+        val onItemSelectionChanged: (selectedItems: List<T>) -> Unit
+    ) : Trick(), Expandable {
+
+        var selectedItemIds = initialSelectionIds
+            private set
+
+        fun invokeItemSelectedCallback(id: String) {
+            selectedItemIds = selectedItemIds.toMutableList().apply {
+                if (contains(id)) {
+                    remove(id)
+                } else {
+                    add(id)
+                }
+            }
+            onItemSelectionChanged(items.filter { selectedItemIds.contains(it.id) })
+        }
     }
     //endregion
 

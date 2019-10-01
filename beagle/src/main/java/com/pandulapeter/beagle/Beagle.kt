@@ -29,6 +29,7 @@ import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewModel
 import com.pandulapeter.beagle.views.items.listItem.ListItemViewModel
 import com.pandulapeter.beagle.views.items.logItem.LogItemViewModel
 import com.pandulapeter.beagle.views.items.longText.LongTextViewModel
+import com.pandulapeter.beagle.views.items.multipleSelectionListItem.MultipleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewModel
 import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.items.text.TextViewModel
@@ -406,6 +407,23 @@ object Beagle : BeagleContract {
                                         singleSelectionListStates[trick.id] = itemId
                                         updateItems()
                                         trick.invokeItemSelectedCallback(itemId)
+                                    }
+                                )
+                            }
+                        }
+                    )
+                    is Trick.MultipleSelectionList<*> -> addListModule(
+                        trick = trick,
+                        shouldShowIcon = trick.items.isNotEmpty(),
+                        addItems = {
+                            trick.items.map { item ->
+                                MultipleSelectionListItemViewModel(
+                                    listModuleId = trick.id,
+                                    item = item,
+                                    isSelected = trick.selectedItemIds.contains(item.id),
+                                    onItemSelected = { itemId ->
+                                        trick.invokeItemSelectedCallback(itemId)
+                                        updateItems()
                                     }
                                 )
                             }
