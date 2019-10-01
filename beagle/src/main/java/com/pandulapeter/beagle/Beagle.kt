@@ -182,9 +182,6 @@ object Beagle : BeagleContract {
         }
     private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<Trick.KeylineOverlayToggle>().firstOrNull()
     private val drawers = mutableMapOf<Activity, BeagleDrawer>()
-    //TODO: Properties related to module states can be kept within the modules to simplify this class.
-    private val expandCollapseStates = mutableMapOf<String, Boolean>()
-    private val toggles = mutableMapOf<String, Boolean>()
     private var items = emptyList<DrawerItemViewModel>()
     private var isKeylineOverlayEnabled = false
         set(value) {
@@ -316,15 +313,15 @@ object Beagle : BeagleContract {
                     ListHeaderViewModel(
                         id = trick.id,
                         title = trick.title,
-                        isExpanded = expandCollapseStates[trick.id] ?: trick.isInitiallyExpanded,
+                        isExpanded = trick.isExpanded,
                         shouldShowIcon = shouldShowIcon,
                         onItemSelected = {
-                            expandCollapseStates[trick.id] = !(expandCollapseStates[trick.id] ?: trick.isInitiallyExpanded)
+                            trick.toggleExpandedState()
                             updateItems()
                         }
                     )
                 )
-                if (expandCollapseStates[trick.id] ?: trick.isInitiallyExpanded) {
+                if (trick.isExpanded) {
                     items.addAll(addItems().distinctBy { it.id })
                 }
             }
@@ -354,13 +351,12 @@ object Beagle : BeagleContract {
                         ToggleViewModel(
                             id = trick.id,
                             title = trick.title,
-                            isEnabled = toggles[trick.id] ?: trick.initialValue,
+                            isEnabled = trick.value,
                             onToggleStateChanged = { newValue ->
-                                if (toggles[trick.id] != newValue) {
-                                    trick.onValueChanged(newValue)
-                                    toggles[trick.id] = newValue
-                                }
-                            })
+                                trick.value = newValue
+                                updateItems()
+                            }
+                        )
                     )
                     is Trick.Button -> items.add(
                         ButtonViewModel(
@@ -376,6 +372,7 @@ object Beagle : BeagleContract {
                         addItems = {
                             trick.pairs.map { pair ->
                                 KeyValueItemViewModel(
+                                    trickId = trick.id,
                                     pair = pair
                                 )
                             }
@@ -420,10 +417,7 @@ object Beagle : BeagleContract {
                                     listModuleId = trick.id,
                                     item = item,
                                     isSelected = trick.selectedItemIds.contains(item.id),
-                                    onItemSelected = { itemId ->
-                                        trick.invokeItemSelectedCallback(itemId)
-                                        updateItems()
-                                    }
+                                    onItemSelected = { itemId -> trick.invokeItemSelectedCallback(itemId) }
                                 )
                             }
                         }
@@ -438,7 +432,9 @@ object Beagle : BeagleContract {
                             id = trick.id,
                             title = trick.title,
                             isEnabled = isKeylineOverlayEnabled,
-                            onToggleStateChanged = { newValue -> isKeylineOverlayEnabled = newValue })
+                            onToggleStateChanged = { newValue ->
+                                isKeylineOverlayEnabled = newValue
+                            })
                     )
                     is Trick.AppInfoButton -> items.add(
                         ButtonViewModel(

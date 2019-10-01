@@ -12,6 +12,7 @@ internal class ToggleViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     private val switch = itemView.findViewById<SwitchCompat>(R.id.toggle)
 
     fun bind(viewModel: ToggleViewModel) {
+        switch.setOnCheckedChangeListener(null)
         switch.text = viewModel.title
         switch.isChecked = viewModel.isEnabled
         switch.setOnCheckedChangeListener { _, isChecked -> viewModel.onToggleStateChanged(isChecked) }

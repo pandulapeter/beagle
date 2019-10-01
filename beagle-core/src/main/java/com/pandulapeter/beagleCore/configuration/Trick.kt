@@ -18,6 +18,9 @@ sealed class Trick {
         val id: String
         val title: CharSequence
         val isInitiallyExpanded: Boolean
+        val isExpanded: Boolean
+
+        fun toggleExpandedState()
     }
     //endregion
 
@@ -50,7 +53,15 @@ sealed class Trick {
         override val title: CharSequence,
         val text: CharSequence,
         override val isInitiallyExpanded: Boolean = false
-    ) : Trick(), Expandable
+    ) : Trick(), Expandable {
+
+        override var isExpanded = isInitiallyExpanded
+            private set
+
+        override fun toggleExpandedState() {
+            isExpanded = !isExpanded
+        }
+    }
 
     /**
      * Displays a switch with configurable title and behavior - ideal for feature toggles.
@@ -65,8 +76,17 @@ sealed class Trick {
         override val id: String = UUID.randomUUID().toString(),
         val title: CharSequence,
         val initialValue: Boolean = false,
-        val onValueChanged: (newValue: Boolean) -> Unit
-    ) : Trick()
+        private val onValueChanged: (newValue: Boolean) -> Unit
+    ) : Trick() {
+
+        var value = initialValue
+            set(value) {
+                if (field != value) {
+                    field = value
+                    onValueChanged(value)
+                }
+            }
+    }
 
     /**
      * Displays a button with configurable text and action.
@@ -97,7 +117,15 @@ sealed class Trick {
         override val title: CharSequence,
         override val isInitiallyExpanded: Boolean = false,
         val pairs: List<Pair<CharSequence, CharSequence>>
-    ) : Trick(), Expandable
+    ) : Trick(), Expandable {
+
+        override var isExpanded = isInitiallyExpanded
+            private set
+
+        override fun toggleExpandedState() {
+            isExpanded = !isExpanded
+        }
+    }
 
     /**
      * Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
@@ -115,8 +143,15 @@ sealed class Trick {
         override val title: CharSequence,
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
-        val onItemSelected: (item: T) -> Unit
+        private val onItemSelected: (item: T) -> Unit
     ) : Trick(), Expandable {
+
+        override var isExpanded = isInitiallyExpanded
+            private set
+
+        override fun toggleExpandedState() {
+            isExpanded = !isExpanded
+        }
 
         fun invokeItemSelectedCallback(id: String) = onItemSelected(items.first { it.id == id })
     }
@@ -138,12 +173,18 @@ sealed class Trick {
         override val title: CharSequence,
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
-        val initialSelectionId: String? = null,
-        val onItemSelectionChanged: (selectedItem: T) -> Unit
+        private val initialSelectionId: String? = null,
+        private val onItemSelectionChanged: (selectedItem: T) -> Unit
     ) : Trick(), Expandable {
 
+        override var isExpanded = isInitiallyExpanded
+            private set
         var selectedItemId = initialSelectionId
             private set
+
+        override fun toggleExpandedState() {
+            isExpanded = !isExpanded
+        }
 
         fun invokeItemSelectedCallback(id: String) {
             selectedItemId = id
@@ -168,12 +209,18 @@ sealed class Trick {
         override val title: CharSequence,
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
-        val initialSelectionIds: List<String> = emptyList(),
-        val onItemSelectionChanged: (selectedItems: List<T>) -> Unit
+        private val initialSelectionIds: List<String> = emptyList(),
+        private val onItemSelectionChanged: (selectedItems: List<T>) -> Unit
     ) : Trick(), Expandable {
 
+        override var isExpanded = isInitiallyExpanded
+            private set
         var selectedItemIds = initialSelectionIds
             private set
+
+        override fun toggleExpandedState() {
+            isExpanded = !isExpanded
+        }
 
         fun invokeItemSelectedCallback(id: String) {
             selectedItemIds = selectedItemIds.toMutableList().apply {
@@ -291,6 +338,12 @@ sealed class Trick {
     ) : Trick(), Expandable {
 
         override val id = ID
+        override var isExpanded = isInitiallyExpanded
+            private set
+
+        override fun toggleExpandedState() {
+            isExpanded = !isExpanded
+        }
 
         companion object {
             const val ID = "networkLogging"
@@ -315,6 +368,12 @@ sealed class Trick {
     ) : Trick(), Expandable {
 
         override val id = ID
+        override var isExpanded = isInitiallyExpanded
+            private set
+
+        override fun toggleExpandedState() {
+            isExpanded = !isExpanded
+        }
 
         companion object {
             const val ID = "logList"
