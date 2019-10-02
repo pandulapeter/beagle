@@ -9,4 +9,5 @@
     android:paddingTop="@dimen/content_padding"
     android:paddingEnd="@dimen/content_padding"
     android:paddingBottom="@dimen/content_padding"
+    android:textColor="?android:attr/textColor"
     tools:text="Name" />
