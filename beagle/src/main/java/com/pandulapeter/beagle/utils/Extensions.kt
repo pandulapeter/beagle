@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.utils
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.provider.Settings
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -34,6 +36,7 @@ import com.pandulapeter.beagle.views.items.longText.LongTextViewModel
 import com.pandulapeter.beagle.views.items.multipleSelectionListItem.MultipleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewModel
 import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
+import com.pandulapeter.beagle.views.items.slider.SliderViewModel
 import com.pandulapeter.beagle.views.items.text.TextViewModel
 import com.pandulapeter.beagle.views.items.toggle.ToggleViewModel
 import com.pandulapeter.beagleCore.configuration.Appearance
@@ -78,6 +81,8 @@ internal var View.visible
         visibility = if (value) View.VISIBLE else View.GONE
     }
 
+internal fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
+
 //TODO: DiffUtil seems to rebind the expanded list items even if they didn't change.
 private fun MutableList<DrawerItemViewModel>.addListModule(trick: Trick.Expandable, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
     add(
@@ -119,6 +124,9 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                         )
                     )
                 }
+            )
+            is Trick.Slider -> items.add(
+                SliderViewModel(trick = trick)
             )
             is Trick.Toggle -> items.add(
                 ToggleViewModel(

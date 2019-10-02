@@ -64,6 +64,35 @@ sealed class Trick {
     }
 
     /**
+     * Allows the user to adjust a numeric value..
+     * This module can be added multiple times as long as the ID is unique.
+     *
+     * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
+     * @param name - A lambda that returns the name that should appear above the slider in function of it's current value.
+     * @param minimumValue - The minimum value supported by the slider. 0 by default.
+     * @param maximumValue - The maximum value supported by the slider. 10 by default.
+     * @param initialValue - The initial value of the slider. By default it's the same as the slider's minimum value.
+     * @param onValueChanged - Callback that gets invoked when the user changes the value of the slider.
+     */
+    data class Slider(
+        override val id: String = UUID.randomUUID().toString(),
+        val name: (value: Int) -> CharSequence,
+        val minimumValue: Int = 0,
+        val maximumValue: Int = 10,
+        val initialValue: Int = minimumValue,
+        private val onValueChanged: (value: Int) -> Unit
+    ) : Trick() {
+
+        var value = initialValue
+            set(value) {
+                if (field != value) {
+                    field = value
+                    onValueChanged(value)
+                }
+            }
+    }
+
+    /**
      * Displays a switch with configurable title and behavior - ideal for feature toggles.
      * This module can be added multiple times as long as the ID is unique.
      *

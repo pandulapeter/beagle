@@ -14,6 +14,7 @@ import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.SimpleActivityLifecycleCallbacks
+import com.pandulapeter.beagle.utils.findRootViewGroup
 import com.pandulapeter.beagle.utils.hideKeyboard
 import com.pandulapeter.beagle.utils.mapToViewModels
 import com.pandulapeter.beagle.views.BeagleDrawer
@@ -156,8 +157,8 @@ object Beagle : BeagleContract {
     //endregion
 
     //region Implementation details
-    private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private const val MAX_ITEM_COUNT = 500
+    private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private var appearance = Appearance()
     private var currentJob: CoroutineContext? = null
     private var moduleList = emptyList<Trick>()
@@ -269,8 +270,6 @@ object Beagle : BeagleContract {
                 }
             }
         }
-
-    private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
     internal fun openNetworkEventBodyDialog(networkLogItem: NetworkLogItem, shouldShowHeaders: Boolean) {
         (currentActivity as? AppCompatActivity?)?.run {

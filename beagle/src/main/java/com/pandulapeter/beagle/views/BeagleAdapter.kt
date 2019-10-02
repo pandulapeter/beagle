@@ -28,6 +28,8 @@ import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewHold
 import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewModel
 import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewHolder
 import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
+import com.pandulapeter.beagle.views.items.slider.SliderViewHolder
+import com.pandulapeter.beagle.views.items.slider.SliderViewModel
 import com.pandulapeter.beagle.views.items.text.TextViewHolder
 import com.pandulapeter.beagle.views.items.text.TextViewModel
 import com.pandulapeter.beagle.views.items.toggle.ToggleViewHolder
@@ -37,6 +39,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
 
     override fun areItemsTheSame(oldItem: DrawerItemViewModel, newItem: DrawerItemViewModel) = oldItem.id == newItem.id
 
+    //TODO: Expanded list items are re-bound on every change for some reason.
     @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(oldItem: DrawerItemViewModel, newItem: DrawerItemViewModel) = oldItem == newItem
 
@@ -46,6 +49,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
     override fun getItemViewType(position: Int) = when (val item = getItem(position)) {
         is TextViewModel -> R.layout.item_text
         is LongTextViewModel -> R.layout.item_long_text
+        is SliderViewModel -> R.layout.item_slider
         is ToggleViewModel -> R.layout.item_toggle
         is ButtonViewModel -> if (item.shouldUseListItem) R.layout.item_button_list_item else R.layout.item_button
         is KeyValueItemViewModel -> R.layout.item_key_value
@@ -62,6 +66,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         R.layout.item_text -> TextViewHolder.create(parent)
         R.layout.item_long_text -> LongTextViewHolder.create(parent)
+        R.layout.item_slider -> SliderViewHolder.create(parent)
         R.layout.item_toggle -> ToggleViewHolder.create(parent)
         R.layout.item_button -> ButtonViewHolder.create(parent)
         R.layout.item_button_list_item -> ButtonListItemViewHolder.create(parent)
@@ -79,6 +84,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is TextViewHolder -> holder.bind(getItem(position) as TextViewModel)
         is LongTextViewHolder -> holder.bind(getItem(position) as LongTextViewModel)
+        is SliderViewHolder -> holder.bind(getItem(position) as SliderViewModel)
         is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel)
         is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel)
         is ButtonListItemViewHolder -> holder.bind(getItem(position) as ButtonViewModel)

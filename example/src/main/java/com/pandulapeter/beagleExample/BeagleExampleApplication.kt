@@ -61,6 +61,10 @@ class BeagleExampleApplication : Application() {
                     title = "Long text",
                     text = "Here is a longer piece of text that occupies more space so it doesn't make sense to always have it fully displayed."
                 ),
+                Trick.Slider(
+                    name = { value -> "Slider value: $value" },
+                    onValueChanged = {}
+                ),
                 Trick.Button(
                     text = "Show a toast",
                     onButtonPressed = { "Here is a toast".showToast() }

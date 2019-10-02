@@ -45,7 +45,7 @@ Any number of generic modules can be added in any order as long as they have a u
 * [LongText](/screenshots/moduleLongText.png) - Displays a longer piece of text that can be collapsed into a title.
 * TODO: Image - Displays a drawable.
 * TODO: TextInput - Allows the user to enter free text.
-* TODO: Slider - Allows the user to adjust a numeric value.
+* [Slider] - Allows the user to adjust a numeric value.
 * TODO: ColorPicker - Allows the user to pick a color.
 * [Toggle](/screenshots/moduleToggle.png) - Displays a switch with configurable title and behavior - ideal for feature toggles.
 * [Button](/screenshots/moduleButton.png) - Displays a button with configurable text and action.
@@ -84,6 +84,7 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 ### To do
 * Create a base class for dialogs with proper 2D scrolling
 * Improve the example app
+* Improve this readme file
 * Add support for dividers
 * Expose the BeagleDrawer view
 * Add alternative ways for displaying the debug menu
