@@ -68,7 +68,7 @@ class BeagleExampleApplication : Application() {
                 ),
                 Trick.Slider(
                     name = { value -> "Slider value: $value" },
-                    onValueChanged = {}
+                    onValueChanged = { value -> "Slider set to $value".showToast() }
                 ),
                 Trick.Button(
                     text = "Show a toast",

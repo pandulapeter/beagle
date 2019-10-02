@@ -48,7 +48,7 @@ object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
             NetworkLogItem(
                 isOutgoing = true,
                 body = requestJson.formatToJson() ?: "",
-                headers = request.headers.map { "[${it.first}]: ${it.second}" },
+                headers = request.headers.map { "[${it.first}] ${it.second}" },
                 url = "[${request.method}] ${request.url}"
             )
         )
@@ -74,7 +74,7 @@ object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
             NetworkLogItem(
                 isOutgoing = false,
                 body = responseJson?.formatToJson() ?: response.message,
-                headers = response.headers.map { "[${it.first}]: ${it.second}" },
+                headers = response.headers.map { "[${it.first}] ${it.second}" },
                 url = "${response.code} [${request.method}] ${request.url}",
                 duration = tookMs
             )

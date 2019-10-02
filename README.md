@@ -85,7 +85,6 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 * The drawers can be disabled / enabled at runtime by modifying the value of Beagle.isEnabled. This could be useful if you want to restrict access to the debug drawer features based on user type.
 
 ### To do
-* Create a base class for dialogs with proper 2D scrolling
 * Improve the example app
 * Update module screenshots
 

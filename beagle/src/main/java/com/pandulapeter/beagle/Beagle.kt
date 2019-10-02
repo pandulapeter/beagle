@@ -8,8 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import com.pandulapeter.beagle.dialogs.LogPayloadDialog
-import com.pandulapeter.beagle.dialogs.NetworkEventBodyDialog
+import com.pandulapeter.beagle.views.BeagleDialogFragment
 import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -273,18 +272,33 @@ object Beagle : BeagleContract {
 
     internal fun openNetworkEventBodyDialog(networkLogItem: NetworkLogItem, shouldShowHeaders: Boolean) {
         (currentActivity as? AppCompatActivity?)?.run {
-            NetworkEventBodyDialog.show(
+            val content = if (shouldShowHeaders) {
+                "Headers:\n" + (if (networkLogItem.headers.isEmpty()) "No headers" else networkLogItem.headers.joinToString("\n")) + "\n\nBody:\n" + networkLogItem.body.let {
+                    if (it.isEmpty() || it.isBlank()) "No data" else it
+                }
+            } else {
+                networkLogItem.body.let {
+                    if (it.isEmpty() || it.isBlank()) "No data" else it
+                }
+            }
+            BeagleDialogFragment.show(
                 fragmentManager = supportFragmentManager,
-                networkLogItem = networkLogItem,
-                appearance = appearance,
-                shouldShowHeaders = shouldShowHeaders
+                title = networkLogItem.url,
+                content = content,
+                appearance = appearance
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
     internal fun openLogPayloadDialog(logItem: LogItem) {
-        (currentActivity as? AppCompatActivity?)?.run { LogPayloadDialog.show(supportFragmentManager, logItem, appearance) }
-            ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
+        (currentActivity as? AppCompatActivity?)?.run {
+            BeagleDialogFragment.show(
+                fragmentManager = supportFragmentManager,
+                title = logItem.message,
+                content = logItem.payload ?: "",
+                appearance = appearance
+            )
+        } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
 
     internal fun updateItems() {
