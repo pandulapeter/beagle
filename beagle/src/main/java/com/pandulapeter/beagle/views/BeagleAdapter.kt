@@ -12,6 +12,8 @@ import com.pandulapeter.beagle.views.items.button.ButtonViewHolder
 import com.pandulapeter.beagle.views.items.button.ButtonViewModel
 import com.pandulapeter.beagle.views.items.header.HeaderViewHolder
 import com.pandulapeter.beagle.views.items.header.HeaderViewModel
+import com.pandulapeter.beagle.views.items.image.ImageViewHolder
+import com.pandulapeter.beagle.views.items.image.ImageViewModel
 import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewHolder
 import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewModel
 import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewHolder
@@ -49,6 +51,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
     override fun getItemViewType(position: Int) = when (val item = getItem(position)) {
         is TextViewModel -> R.layout.item_text
         is LongTextViewModel -> R.layout.item_long_text
+        is ImageViewModel -> R.layout.item_image
         is SliderViewModel -> R.layout.item_slider
         is ToggleViewModel -> R.layout.item_toggle
         is ButtonViewModel -> if (item.shouldUseListItem) R.layout.item_button_list_item else R.layout.item_button
@@ -66,6 +69,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         R.layout.item_text -> TextViewHolder.create(parent)
         R.layout.item_long_text -> LongTextViewHolder.create(parent)
+        R.layout.item_image -> ImageViewHolder.create(parent)
         R.layout.item_slider -> SliderViewHolder.create(parent)
         R.layout.item_toggle -> ToggleViewHolder.create(parent)
         R.layout.item_button -> ButtonViewHolder.create(parent)
@@ -84,6 +88,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is TextViewHolder -> holder.bind(getItem(position) as TextViewModel)
         is LongTextViewHolder -> holder.bind(getItem(position) as LongTextViewModel)
+        is ImageViewHolder -> holder.bind(getItem(position) as ImageViewModel)
         is SliderViewHolder -> holder.bind(getItem(position) as SliderViewModel)
         is ToggleViewHolder -> holder.bind(getItem(position) as ToggleViewModel)
         is ButtonViewHolder -> holder.bind(getItem(position) as ButtonViewModel)

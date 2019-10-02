@@ -220,7 +220,7 @@ object Beagle : BeagleContract {
             Trick.Header(
                 title = "Beagle",
                 subtitle = "Version ${BuildConfig.VERSION_NAME}",
-                text = "Configure the list of modules by setting the value of Beagle.modules."
+                text = "Configure the list of modules by calling Beagle.learn()."
             )
         )
     }

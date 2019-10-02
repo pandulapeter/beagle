@@ -43,7 +43,7 @@ After this a list of modules (tricks) needs to be provided, but this can be chan
 Any number of generic modules can be added in any order as long as they have a unique ID:
 * [Text](/screenshots/moduleText.png) - Displays simple text content.
 * [LongText](/screenshots/moduleLongText.png) - Displays a longer piece of text that can be collapsed into a title.
-* TODO: Image - Displays a drawable.
+* [Image](/screenshots/moduleImage) - Displays a drawable.
 * TODO: TextInput - Allows the user to enter free text.
 * [Slider](/screenshots/moduleSlider.png) - Allows the user to adjust a numeric value.
 * TODO: ColorPicker - Allows the user to pick a color.

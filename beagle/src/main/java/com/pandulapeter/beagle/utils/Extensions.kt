@@ -28,6 +28,7 @@ import com.pandulapeter.beagle.views.BeagleDrawerLayout
 import com.pandulapeter.beagle.views.items.DrawerItemViewModel
 import com.pandulapeter.beagle.views.items.button.ButtonViewModel
 import com.pandulapeter.beagle.views.items.header.HeaderViewModel
+import com.pandulapeter.beagle.views.items.image.ImageViewModel
 import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewModel
 import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewModel
 import com.pandulapeter.beagle.views.items.listItem.ListItemViewModel
@@ -123,6 +124,12 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                         )
                     )
                 }
+            )
+            is Trick.Image -> items.add(
+                ImageViewModel(
+                    id = trick.id,
+                    drawable = trick.drawable
+                )
             )
             is Trick.Slider -> items.add(
                 SliderViewModel(trick = trick)

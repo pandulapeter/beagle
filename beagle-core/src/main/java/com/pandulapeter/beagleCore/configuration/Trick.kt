@@ -1,5 +1,6 @@
 package com.pandulapeter.beagleCore.configuration
 
+import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import com.pandulapeter.beagleCore.contracts.BeagleListItemContract
@@ -62,6 +63,18 @@ sealed class Trick {
             isExpanded = !isExpanded
         }
     }
+
+    /**
+     * Displays a drawable.
+     * This module can be added multiple times as long as the ID is unique.
+     *
+     * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
+     * @param drawable - The drawable that should be displayed.
+     */
+    data class Image(
+        override val id: String = UUID.randomUUID().toString(),
+        val drawable: Drawable?
+    ) : Trick()
 
     /**
      * Allows the user to adjust a numeric value..

@@ -2,6 +2,7 @@ package com.pandulapeter.beagleExample
 
 import android.app.Application
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Trick
@@ -77,7 +78,8 @@ class BeagleExampleApplication : Application() {
                         "Key3" to "Value3"
                     )
                 ),
-                Trick.DeviceInformationKeyValue()
+                Trick.DeviceInformationKeyValue(),
+                Trick.Image(drawable = AppCompatResources.getDrawable(this, R.drawable.img_logo))
             )
         )
     }
