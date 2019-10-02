@@ -1,6 +1,7 @@
 package com.pandulapeter.beagleExample
 
 import android.app.Application
+import android.graphics.Color
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import com.pandulapeter.beagle.Beagle
@@ -28,7 +29,9 @@ class BeagleExampleApplication : Application() {
                 ),
                 Trick.AppInfoButton(),
                 Trick.ScreenshotButton(),
-                Trick.KeylineOverlayToggle(),
+                Trick.KeylineOverlayToggle(
+                    gridColor = Color.WHITE
+                ),
                 Trick.Toggle(
                     title = "Feature toggle 1",
                     onValueChanged = { isOn -> "Feature 1 is ${if (isOn) "on" else "off"}".showToast() }
