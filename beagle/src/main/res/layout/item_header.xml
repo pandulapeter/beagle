@@ -13,6 +13,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="@dimen/title_font"
         android:textStyle="bold"
         tools:text="Title" />
@@ -21,6 +22,7 @@
         android:id="@+id/subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
         tools:text="Subtitle" />
 
@@ -29,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_content_padding"
+        android:textColor="?android:attr/textColorPrimary"
         tools:text="Text" />
 
 </LinearLayout>

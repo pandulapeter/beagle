@@ -7,4 +7,5 @@
     android:layout_marginStart="@dimen/large_content_padding"
     android:layout_marginTop="@dimen/large_content_padding"
     android:layout_marginEnd="@dimen/large_content_padding"
+    android:textColor="?android:attr/textColorPrimary"
     tools:text="Text" />

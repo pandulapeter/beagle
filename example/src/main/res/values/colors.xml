@@ -2,7 +2,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="background">@color/beagle_background</color>
-    <color name="button">@color/beagle_foreground</color>
+    <color name="accent">@color/beagle_foreground</color>
     <color name="text">@color/beagle_foreground</color>
 
     <color name="beagle_background">#dbbe96</color>

@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/content_padding"
+        android:textColor="?android:attr/textColorPrimary"
         tools:text="Key" />
 
     <TextView
@@ -24,6 +25,7 @@
         android:layout_marginStart="@dimen/content_padding"
         android:layout_marginTop="@dimen/small_content_padding"
         android:alpha="0.5"
+        android:textColor="?android:attr/textColorPrimary"
         tools:text="Value" />
 
 </LinearLayout>

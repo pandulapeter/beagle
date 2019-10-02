@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/small_content_padding"
     android:paddingEnd="@dimen/content_padding"
     android:paddingBottom="@dimen/small_content_padding"
-    android:textColor="?android:attr/textColor"
+    android:textColor="?android:attr/textColorPrimary"
     android:textStyle="bold"
     app:switchPadding="@dimen/large_content_padding"
     tools:text="Toggle" />

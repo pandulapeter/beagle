@@ -10,4 +10,5 @@
     android:paddingTop="@dimen/small_content_padding"
     android:paddingEnd="@dimen/large_content_padding"
     android:paddingBottom="@dimen/small_content_padding"
+    android:textColor="?android:attr/textColorPrimary"
     tools:text="Long text" />

@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/large_content_padding"
+        android:textColor="?android:attr/textColorPrimary"
         tools:text="Name" />
 
 </LinearLayout>

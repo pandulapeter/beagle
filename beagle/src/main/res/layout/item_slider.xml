@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
+        android:textColor="?android:attr/textColorPrimary"
         tools:text="Name" />
 
     <SeekBar
@@ -21,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/content_padding"
-        android:layout_marginTop="@dimen/content_padding"
-        android:layout_marginEnd="@dimen/content_padding" />
+        android:layout_marginEnd="@dimen/content_padding"
+        android:paddingTop="@dimen/content_padding" />
 
 </LinearLayout>
