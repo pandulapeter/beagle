@@ -39,6 +39,9 @@ Beagle.imprint(this)
 
 After this a list of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
 
+### Screenshots
+<img src="screenshots/general01.png" width="30%" /> <img src="screenshots/general02.png" width="30%" />
+
 ### Tricks
 Any number of generic modules can be added in any order as long as they have a unique ID:
 * [Divider](/screenshots/moduleDivider.png) - Displays a horizontal line.
@@ -81,9 +84,6 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 * The UI of the drawer can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Appearance.kt) instance when initializing the library.
 * To properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/screens/MainActivity.kt).
 * The drawers can be disabled / enabled at runtime by modifying the value of Beagle.isEnabled. This could be useful if you want to restrict access to the debug drawer features based on user type.
-
-### Screenshots
-<img src="screenshots/general01.png" width="30%" /> <img src="screenshots/general02.png" width="30%" />
 
 ### To do
 * Create a base class for dialogs with proper 2D scrolling
