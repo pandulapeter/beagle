@@ -148,7 +148,7 @@ object Beagle : BeagleContract {
      * Adds a log message item which will be displayed at the top of the list in the [Trick.LogList] module.
      *
      * @param message - The message that should be logged.
-     * @param tag - An optional tag that can be later used for filtering. Null by default. //TODO: Implement filtering by tag.
+     * @param tag - An optional tag that can be later used for filtering. Null by default.
      * @param payload - An optional String payload that can be opened in a dialog when the user clicks on a log message. Null by default.
      */
     override fun log(message: String, tag: String?, payload: String?) {

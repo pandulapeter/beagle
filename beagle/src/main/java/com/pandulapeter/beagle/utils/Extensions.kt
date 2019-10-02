@@ -83,7 +83,6 @@ internal var View.visible
 
 internal fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
-//TODO: DiffUtil seems to rebind the expanded list items even if they didn't change.
 private fun MutableList<DrawerItemViewModel>.addListModule(trick: Trick.Expandable, shouldShowIcon: Boolean, addItems: () -> List<DrawerItemViewModel>) {
     add(
         ListHeaderViewModel(
@@ -203,6 +202,21 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                     }
                 }
             )
+            is Trick.LogList -> (if (trick.tag == null) logItems else logItems.filter { it.tag == trick.tag }).take(trick.maxItemCount).let { logItems ->
+                items.addListModule(
+                    trick = trick,
+                    shouldShowIcon = logItems.isNotEmpty(),
+                    addItems = {
+                        logItems.map { logItem ->
+                            LogItemViewModel(
+                                logListTrick = trick,
+                                logItem = logItem,
+                                onItemSelected = { Beagle.openLogPayloadDialog(logItem) }
+                            )
+                        }
+                    }
+                )
+            }
             is Trick.Header -> items.add(
                 HeaderViewModel(
                     headerTrick = trick
@@ -249,21 +263,6 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                                 networkLogListTrick = trick,
                                 networkLogItem = networkLogItem,
                                 onItemSelected = { Beagle.openNetworkEventBodyDialog(networkLogItem, trick.shouldShowHeaders) }
-                            )
-                        }
-                    }
-                )
-            }
-            is Trick.LogList -> logItems.take(trick.maxItemCount).let { logItems ->
-                items.addListModule(
-                    trick = trick,
-                    shouldShowIcon = logItems.isNotEmpty(),
-                    addItems = {
-                        logItems.map { logItem ->
-                            LogItemViewModel(
-                                logListTrick = trick,
-                                logItem = logItem,
-                                onItemSelected = { Beagle.openLogPayloadDialog(logItem) }
                             )
                         }
                     }

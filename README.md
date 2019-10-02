@@ -53,6 +53,7 @@ Any number of generic modules can be added in any order as long as they have a u
 * [SimpleList](/screenshots/moduleSimpleList.png) - Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
 * [SingleSelectionList](/screenshots/moduleSingleSelectionList.png) - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
 * [MultipleSelectionList](/screenshots/moduleMultipleSelectionList.png) - Displays a lst of checkboxes.
+* [LogList](/screenshots/moduleLogList.png) - Displays an expandable list of your custom logs. An example use case could be logging analytics events. Each item can be tapped for more information if you specified a payload. To log an event, simply call Beagle.log().
 
 Unique modules can only be added once as they are specific to a single use case:
 * [Header](/screenshots/moduleHeader.png) - Displays a header on top of the drawer with general information about the app / build.
@@ -63,7 +64,6 @@ Unique modules can only be added once as they are specific to a single use case:
 * TODO: StringGeneratorButton - Generates a strings and copies it to the clipboard based on the user's preferences.
 * TODO: StressReliefButton - Displays fireworks.
 * [NetworkLogList](/screenshots/moduleNetworkLogList.png) - Displays an expandable list of historical network activity. Each item can be tapped for more information. To use this functionality, the custom beagleNetworkInterceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/networking/NetworkingManager.kt).
-* [LogList](/screenshots/moduleLogList.png) - Displays an expandable list of your custom logs. An example use case could be logging analytics events. Each item can be tapped for more information if you specified a payload. To log an event, simply call beagle.log().
 * [DeviceInformationKeyValue](/screenshots/moduleDeviceInformationKeyValue.png) - Displays information about the current device and the OS.
 
 The module list can be changed at any time (from any thread) using the following functions:
