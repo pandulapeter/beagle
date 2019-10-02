@@ -19,7 +19,7 @@ import com.pandulapeter.beagle.utils.hideKeyboard
 import com.pandulapeter.beagle.utils.mapToViewModels
 import com.pandulapeter.beagle.views.BeagleDrawer
 import com.pandulapeter.beagle.views.BeagleDrawerLayout
-import com.pandulapeter.beagle.views.items.DrawerItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick

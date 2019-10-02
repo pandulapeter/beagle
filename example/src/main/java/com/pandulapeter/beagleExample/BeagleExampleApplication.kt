@@ -55,6 +55,7 @@ class BeagleExampleApplication : Application() {
                     initialSelectionId = "Develop",
                     onItemSelectionChanged = { backendEnvironment -> backendEnvironment.url.showToast() }
                 ),
+                Trick.Divider(),
                 Trick.Text(
                     text = "This is a TextTrick used for displaying short hints"
                 ),
@@ -70,6 +71,7 @@ class BeagleExampleApplication : Application() {
                     text = "Show a toast",
                     onButtonPressed = { "Here is a toast".showToast() }
                 ),
+                Trick.Divider(),
                 Trick.KeyValue(
                     title = "Key - Value",
                     pairs = listOf(

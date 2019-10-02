@@ -6,36 +6,38 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.views.items.DrawerItemViewModel
-import com.pandulapeter.beagle.views.items.button.ButtonListItemViewHolder
-import com.pandulapeter.beagle.views.items.button.ButtonViewHolder
-import com.pandulapeter.beagle.views.items.button.ButtonViewModel
-import com.pandulapeter.beagle.views.items.header.HeaderViewHolder
-import com.pandulapeter.beagle.views.items.header.HeaderViewModel
-import com.pandulapeter.beagle.views.items.image.ImageViewHolder
-import com.pandulapeter.beagle.views.items.image.ImageViewModel
-import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewHolder
-import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewModel
-import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewHolder
-import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewModel
-import com.pandulapeter.beagle.views.items.listItem.ListItemViewHolder
-import com.pandulapeter.beagle.views.items.listItem.ListItemViewModel
-import com.pandulapeter.beagle.views.items.logItem.LogItemViewHolder
-import com.pandulapeter.beagle.views.items.logItem.LogItemViewModel
-import com.pandulapeter.beagle.views.items.longText.LongTextViewHolder
-import com.pandulapeter.beagle.views.items.longText.LongTextViewModel
-import com.pandulapeter.beagle.views.items.multipleSelectionListItem.MultipleSelectionListItemViewHolder
-import com.pandulapeter.beagle.views.items.multipleSelectionListItem.MultipleSelectionListItemViewModel
-import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewHolder
-import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewModel
-import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewHolder
-import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
-import com.pandulapeter.beagle.views.items.slider.SliderViewHolder
-import com.pandulapeter.beagle.views.items.slider.SliderViewModel
-import com.pandulapeter.beagle.views.items.text.TextViewHolder
-import com.pandulapeter.beagle.views.items.text.TextViewModel
-import com.pandulapeter.beagle.views.items.toggle.ToggleViewHolder
-import com.pandulapeter.beagle.views.items.toggle.ToggleViewModel
+import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.button.ButtonListItemViewHolder
+import com.pandulapeter.beagle.views.drawerItems.button.ButtonViewHolder
+import com.pandulapeter.beagle.views.drawerItems.button.ButtonViewModel
+import com.pandulapeter.beagle.views.drawerItems.divider.DividerViewHolder
+import com.pandulapeter.beagle.views.drawerItems.divider.DividerViewModel
+import com.pandulapeter.beagle.views.drawerItems.header.HeaderViewHolder
+import com.pandulapeter.beagle.views.drawerItems.header.HeaderViewModel
+import com.pandulapeter.beagle.views.drawerItems.image.ImageViewHolder
+import com.pandulapeter.beagle.views.drawerItems.image.ImageViewModel
+import com.pandulapeter.beagle.views.drawerItems.keyValue.KeyValueItemViewHolder
+import com.pandulapeter.beagle.views.drawerItems.keyValue.KeyValueItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.listHeader.ListHeaderViewHolder
+import com.pandulapeter.beagle.views.drawerItems.listHeader.ListHeaderViewModel
+import com.pandulapeter.beagle.views.drawerItems.listItem.ListItemViewHolder
+import com.pandulapeter.beagle.views.drawerItems.listItem.ListItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.logItem.LogItemViewHolder
+import com.pandulapeter.beagle.views.drawerItems.logItem.LogItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.longText.LongTextViewHolder
+import com.pandulapeter.beagle.views.drawerItems.longText.LongTextViewModel
+import com.pandulapeter.beagle.views.drawerItems.multipleSelectionListItem.MultipleSelectionListItemViewHolder
+import com.pandulapeter.beagle.views.drawerItems.multipleSelectionListItem.MultipleSelectionListItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.networkLogItem.NetworkLogItemViewHolder
+import com.pandulapeter.beagle.views.drawerItems.networkLogItem.NetworkLogItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.singleSelectionListItem.SingleSelectionListItemViewHolder
+import com.pandulapeter.beagle.views.drawerItems.singleSelectionListItem.SingleSelectionListItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.slider.SliderViewHolder
+import com.pandulapeter.beagle.views.drawerItems.slider.SliderViewModel
+import com.pandulapeter.beagle.views.drawerItems.text.TextViewHolder
+import com.pandulapeter.beagle.views.drawerItems.text.TextViewModel
+import com.pandulapeter.beagle.views.drawerItems.toggle.ToggleViewHolder
+import com.pandulapeter.beagle.views.drawerItems.toggle.ToggleViewModel
 
 internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<DrawerItemViewModel>() {
 
@@ -49,6 +51,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
 }) {
 
     override fun getItemViewType(position: Int) = when (val item = getItem(position)) {
+        is DividerViewModel -> R.layout.item_divider
         is TextViewModel -> R.layout.item_text
         is LongTextViewModel -> R.layout.item_long_text
         is ImageViewModel -> R.layout.item_image
@@ -67,6 +70,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
+        R.layout.item_divider -> DividerViewHolder.create(parent)
         R.layout.item_text -> TextViewHolder.create(parent)
         R.layout.item_long_text -> LongTextViewHolder.create(parent)
         R.layout.item_image -> ImageViewHolder.create(parent)
@@ -86,6 +90,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
+        is DividerViewHolder -> Unit
         is TextViewHolder -> holder.bind(getItem(position) as TextViewModel)
         is LongTextViewHolder -> holder.bind(getItem(position) as LongTextViewModel)
         is ImageViewHolder -> holder.bind(getItem(position) as ImageViewModel)

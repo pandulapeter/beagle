@@ -41,7 +41,7 @@ After this a list of modules (tricks) needs to be provided, but this can be chan
 
 ### Tricks
 Any number of generic modules can be added in any order as long as they have a unique ID:
-* TODO: Divider - Displays a horizontal line.
+* [Divider](/screenshots/moduleDivider.png) - Displays a horizontal line.
 * [Text](/screenshots/moduleText.png) - Displays simple text content.
 * [LongText](/screenshots/moduleLongText.png) - Displays a longer piece of text that can be collapsed into a title.
 * [Image](/screenshots/moduleImage) - Displays a drawable.
@@ -88,7 +88,7 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 ### To do
 * Create a base class for dialogs with proper 2D scrolling
 * Improve the example app
-* Update screenshots in this readme file
+* Update module screenshots
 
 ### Known issues
 * If your app already has a DrawerLayout (especially with a drawer on GravityCompat.END) you will probably have some issues.

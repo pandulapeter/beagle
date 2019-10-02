@@ -25,21 +25,22 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.views.BeagleDrawerLayout
-import com.pandulapeter.beagle.views.items.DrawerItemViewModel
-import com.pandulapeter.beagle.views.items.button.ButtonViewModel
-import com.pandulapeter.beagle.views.items.header.HeaderViewModel
-import com.pandulapeter.beagle.views.items.image.ImageViewModel
-import com.pandulapeter.beagle.views.items.keyValue.KeyValueItemViewModel
-import com.pandulapeter.beagle.views.items.listHeader.ListHeaderViewModel
-import com.pandulapeter.beagle.views.items.listItem.ListItemViewModel
-import com.pandulapeter.beagle.views.items.logItem.LogItemViewModel
-import com.pandulapeter.beagle.views.items.longText.LongTextViewModel
-import com.pandulapeter.beagle.views.items.multipleSelectionListItem.MultipleSelectionListItemViewModel
-import com.pandulapeter.beagle.views.items.networkLogItem.NetworkLogItemViewModel
-import com.pandulapeter.beagle.views.items.singleSelectionListItem.SingleSelectionListItemViewModel
-import com.pandulapeter.beagle.views.items.slider.SliderViewModel
-import com.pandulapeter.beagle.views.items.text.TextViewModel
-import com.pandulapeter.beagle.views.items.toggle.ToggleViewModel
+import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.button.ButtonViewModel
+import com.pandulapeter.beagle.views.drawerItems.divider.DividerViewModel
+import com.pandulapeter.beagle.views.drawerItems.header.HeaderViewModel
+import com.pandulapeter.beagle.views.drawerItems.image.ImageViewModel
+import com.pandulapeter.beagle.views.drawerItems.keyValue.KeyValueItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.listHeader.ListHeaderViewModel
+import com.pandulapeter.beagle.views.drawerItems.listItem.ListItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.logItem.LogItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.longText.LongTextViewModel
+import com.pandulapeter.beagle.views.drawerItems.multipleSelectionListItem.MultipleSelectionListItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.networkLogItem.NetworkLogItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.singleSelectionListItem.SingleSelectionListItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.slider.SliderViewModel
+import com.pandulapeter.beagle.views.drawerItems.text.TextViewModel
+import com.pandulapeter.beagle.views.drawerItems.toggle.ToggleViewModel
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Trick
 
@@ -112,6 +113,11 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
     val items = mutableListOf<DrawerItemViewModel>()
     forEach { trick ->
         when (trick) {
+            is Trick.Divider -> items.add(
+                DividerViewModel(
+                    id = trick.id
+                )
+            )
             is Trick.Text -> items.add(
                 TextViewModel(
                     id = trick.id,

@@ -27,6 +27,16 @@ sealed class Trick {
 
     //region Generic modules
     /**
+     * Displays a horizontal line.
+     * This module can be added multiple times as long as the ID is unique.
+     *
+     * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
+     */
+    data class Divider(
+        override val id: String = UUID.randomUUID().toString()
+    ) : Trick()
+
+    /**
      * Displays simple text content.
      * This module can be added multiple times as long as the ID is unique.
      *

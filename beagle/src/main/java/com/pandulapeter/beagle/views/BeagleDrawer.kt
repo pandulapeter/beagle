@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.dimension
 import com.pandulapeter.beagle.utils.setBackgroundFromWindowBackground
-import com.pandulapeter.beagle.views.items.DrawerItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
 
 //TODO: Scroll position is not restored.
 internal class BeagleDrawer @JvmOverloads constructor(
