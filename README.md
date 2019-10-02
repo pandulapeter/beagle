@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def beagleVersion = "0.2.2"
+    def beagleVersion = "0.2.3"
     debugImplementation "com.github.pandulapeter.beagle:beagle:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:$beagleVersion"
 }
@@ -65,8 +65,7 @@ Unique modules can only be added once as they are specific to a single use case:
 * TODO: ForceRtToggle - Forces RTL layout orientation (on/off).
 * [AppInfoButton](/screenshots/moduleAppInfoButton.png) - Displays a button that links to the Android App Info page for your app.
 * [ScreenshotButton](/screenshots/moduleScreenshotButton.png) - Displays a button that takes a screenshot of the current layout and allows the user to share it.
-* TODO: StringGeneratorButton - Generates a strings and copies it to the clipboard based on the user's preferences.
-* TODO: StressReliefButton - Displays fireworks.
+* TODO: StringGeneratorButton - Generates a string based on the user's preferences and copies it to the clipboard.
 * [NetworkLogList](/screenshots/moduleNetworkLogList.png) - Displays an expandable list of historical network activity. Each item can be tapped for more information. To use this functionality, the custom beagleNetworkInterceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/networking/NetworkingManager.kt).
 * [DeviceInformationKeyValue](/screenshots/moduleDeviceInformationKeyValue.png) - Displays information about the current device and the OS.
 
