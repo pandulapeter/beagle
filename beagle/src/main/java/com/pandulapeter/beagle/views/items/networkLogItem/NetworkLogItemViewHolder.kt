@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.utils.visible
+import com.pandulapeter.beagle.utils.visibleOrGone
 
 internal class NetworkLogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
@@ -21,7 +21,7 @@ internal class NetworkLogItemViewHolder(root: View) : RecyclerView.ViewHolder(ro
         ImageViewCompat.setImageTintList(iconImageView, urlTextView.textColors)
         urlTextView.text = viewModel.url
         timestampTextView.text = viewModel.timestamp
-        timestampTextView.visible = viewModel.timestamp != null
+        timestampTextView.visibleOrGone = viewModel.timestamp != null
         itemView.setOnClickListener { viewModel.onItemSelected() }
     }
 

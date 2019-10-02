@@ -76,7 +76,13 @@ internal fun View.setBackgroundFromWindowBackground() {
     }
 }
 
-internal var View.visible
+internal var View.visibleOrInvisible
+    get() = visibility == View.VISIBLE
+    set(value) {
+        visibility = if (value) View.VISIBLE else View.INVISIBLE
+    }
+
+internal var View.visibleOrGone
     get() = visibility == View.VISIBLE
     set(value) {
         visibility = if (value) View.VISIBLE else View.GONE

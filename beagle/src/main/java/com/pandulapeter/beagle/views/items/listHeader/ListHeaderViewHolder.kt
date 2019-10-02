@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.animatedDrawable
-import com.pandulapeter.beagle.utils.visible
+import com.pandulapeter.beagle.utils.visibleOrInvisible
 
 internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
@@ -27,7 +27,7 @@ internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) 
                 start()
             }
         })
-        iconImageView.visible = viewModel.shouldShowIcon
+        iconImageView.visibleOrInvisible = viewModel.shouldShowIcon
         if (viewModel.shouldShowIcon) {
             itemView.setOnClickListener { if (adapterPosition != RecyclerView.NO_POSITION) viewModel.onItemSelected() }
         } else {

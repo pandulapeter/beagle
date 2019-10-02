@@ -9,4 +9,5 @@
     android:layout_marginEnd="@dimen/large_content_padding"
     android:adjustViewBounds="true"
     android:importantForAccessibility="no"
+    android:scaleType="centerCrop"
     tools:src="@tools:sample/avatars" />

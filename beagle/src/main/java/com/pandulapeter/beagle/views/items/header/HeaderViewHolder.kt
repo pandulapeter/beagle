@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.utils.visible
+import com.pandulapeter.beagle.utils.visibleOrGone
 
 internal class HeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
@@ -21,7 +21,7 @@ internal class HeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     }
 
     private fun TextView.setUpWithText(content: CharSequence?) {
-        visible = content != null
+        visibleOrGone = content != null
         text = content
     }
 

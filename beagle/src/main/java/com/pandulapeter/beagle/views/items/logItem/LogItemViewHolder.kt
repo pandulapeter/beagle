@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.utils.visible
+import com.pandulapeter.beagle.utils.visibleOrGone
 
 internal class LogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
@@ -17,7 +17,7 @@ internal class LogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
         val isClickable = viewModel.logItem.payload != null
         messageTextView.text = viewModel.message + if (viewModel.hasPayload) " *" else ""
         timestampTextView.text = viewModel.timestamp
-        timestampTextView.visible = viewModel.timestamp != null
+        timestampTextView.visibleOrGone = viewModel.timestamp != null
         if (isClickable) {
             itemView.setOnClickListener { viewModel.onItemSelected() }
         } else {
