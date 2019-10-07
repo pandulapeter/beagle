@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def beagleVersion = "0.2.3"
+    def beagleVersion = "0.2.4"
     debugImplementation "com.github.pandulapeter.beagle:beagle:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:$beagleVersion"
 }
