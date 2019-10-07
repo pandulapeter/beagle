@@ -17,6 +17,6 @@ internal class ImageViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     companion object {
         fun create(parent: ViewGroup) =
-            ImageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false))
+            ImageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_image, parent, false))
     }
 }

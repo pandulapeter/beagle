@@ -19,6 +19,6 @@ internal class KeyValueItemViewHolder(root: View) : RecyclerView.ViewHolder(root
 
     companion object {
         fun create(parent: ViewGroup) =
-            KeyValueItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_key_value, parent, false))
+            KeyValueItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_key_value, parent, false))
     }
 }

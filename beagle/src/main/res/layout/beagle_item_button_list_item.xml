@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/content_padding"
+    android:layout_marginTop="@dimen/beagle_content_padding"
     android:background="?attr/selectableItemBackground"
-    android:minHeight="@dimen/cell_minimum_height"
-    android:paddingStart="@dimen/large_content_padding"
-    android:paddingTop="@dimen/content_padding"
-    android:paddingEnd="@dimen/large_content_padding"
-    android:paddingBottom="@dimen/content_padding">
+    android:minHeight="@dimen/beagle_item_minimum_height"
+    android:paddingStart="@dimen/beagle_large_content_padding"
+    android:paddingTop="@dimen/beagle_content_padding"
+    android:paddingEnd="@dimen/beagle_large_content_padding"
+    android:paddingBottom="@dimen/beagle_content_padding">
 
     <TextView
         android:id="@+id/button"

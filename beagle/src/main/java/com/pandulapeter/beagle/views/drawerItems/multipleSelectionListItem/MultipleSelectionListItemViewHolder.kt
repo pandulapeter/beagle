@@ -20,6 +20,6 @@ internal class MultipleSelectionListItemViewHolder(root: View) : RecyclerView.Vi
 
     companion object {
         fun create(parent: ViewGroup) =
-            MultipleSelectionListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_multiple_selection_list_item, parent, false))
+            MultipleSelectionListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_multiple_selection_list_item, parent, false))
     }
 }

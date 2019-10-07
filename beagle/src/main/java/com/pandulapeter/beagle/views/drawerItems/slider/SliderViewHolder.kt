@@ -38,6 +38,6 @@ internal class SliderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     }
 
     companion object {
-        fun create(parent: ViewGroup) = SliderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_slider, parent, false))
+        fun create(parent: ViewGroup) = SliderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_slider, parent, false))
     }
 }

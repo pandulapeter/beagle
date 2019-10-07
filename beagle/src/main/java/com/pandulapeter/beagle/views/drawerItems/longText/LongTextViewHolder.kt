@@ -17,6 +17,6 @@ internal class LongTextViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     companion object {
         fun create(parent: ViewGroup) =
-            LongTextViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_long_text, parent, false))
+            LongTextViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_long_text, parent, false))
     }
 }

@@ -45,7 +45,7 @@ internal class BeagleDrawerLayout @JvmOverloads constructor(
     private fun shareImage(image: Bitmap) {
         currentJob?.cancel()
         currentJob = GlobalScope.launch {
-            val imagesFolder = File(context.cacheDir, "images")
+            val imagesFolder = File(context.cacheDir, "beagleScreenshots")
             val uri: Uri?
             try {
                 imagesFolder.mkdirs()
@@ -88,6 +88,6 @@ internal class BeagleDrawerLayout @JvmOverloads constructor(
 
     init {
         addView(container.apply { oldViews.forEach { view -> addView(view) } }, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
-        addView(drawer, LayoutParams(drawerWidth ?: context.dimension(R.dimen.drawer_width), LayoutParams.MATCH_PARENT, GravityCompat.END))
+        addView(drawer, LayoutParams(drawerWidth ?: context.dimension(R.dimen.beagle_default_drawer_width), LayoutParams.MATCH_PARENT, GravityCompat.END))
     }
 }

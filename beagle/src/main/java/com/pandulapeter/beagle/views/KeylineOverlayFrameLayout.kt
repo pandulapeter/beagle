@@ -24,9 +24,9 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
                 gridPaint.alpha = GRID_ALPHA
                 keylinePaint.color = value.gridColor ?: context.colorResource(android.R.attr.textColorPrimary)
                 keylinePaint.alpha = KEYLINE_ALPHA
-                keylineGrid = value.keylineGrid ?: context.dimension(R.dimen.keyline_grid)
-                keylinePrimary = (value.keylinePrimary ?: context.dimension(R.dimen.keyline_primary)).toFloat()
-                keylineSecondary = (value.keylineSecondary ?: context.dimension(R.dimen.keyline_secondary)).toFloat()
+                keylineGrid = value.keylineGrid ?: context.dimension(R.dimen.beagle_default_keyline_grid)
+                keylinePrimary = (value.keylinePrimary ?: context.dimension(R.dimen.beagle_default_keyline_primary)).toFloat()
+                keylineSecondary = (value.keylineSecondary ?: context.dimension(R.dimen.beagle_default_keyline_secondary)).toFloat()
             }
             invalidate()
         }

@@ -10,6 +10,6 @@ internal class DividerViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     companion object {
         fun create(parent: ViewGroup) =
-            DividerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_divider, parent, false))
+            DividerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_divider, parent, false))
     }
 }

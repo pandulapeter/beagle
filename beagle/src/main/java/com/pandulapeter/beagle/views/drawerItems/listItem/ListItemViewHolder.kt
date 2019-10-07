@@ -18,6 +18,6 @@ internal class ListItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     companion object {
         fun create(parent: ViewGroup) =
-            ListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_item, parent, false))
+            ListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_list_item, parent, false))
     }
 }

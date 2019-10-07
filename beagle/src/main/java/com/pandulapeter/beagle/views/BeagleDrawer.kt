@@ -33,7 +33,7 @@ internal class BeagleDrawer @JvmOverloads constructor(
 
     //TODO: This doesn't seem to be working in all cases.
     override fun dispatchApplyWindowInsets(insets: WindowInsets?): WindowInsets = super.dispatchApplyWindowInsets(insets?.also { windowsInsets ->
-        context.dimension(R.dimen.large_content_padding).also { padding ->
+        context.dimension(R.dimen.beagle_large_content_padding).also { padding ->
             setPadding(paddingLeft, windowsInsets.systemWindowInsetTop, paddingRight, padding + windowsInsets.systemWindowInsetBottom)
         }
     })

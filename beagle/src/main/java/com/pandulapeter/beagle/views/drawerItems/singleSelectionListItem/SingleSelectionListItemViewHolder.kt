@@ -20,6 +20,6 @@ internal class SingleSelectionListItemViewHolder(root: View) : RecyclerView.View
 
     companion object {
         fun create(parent: ViewGroup) =
-            SingleSelectionListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_single_selection_list_item, parent, false))
+            SingleSelectionListItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_single_selection_list_item, parent, false))
     }
 }

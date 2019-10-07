@@ -17,28 +17,28 @@
         android:id="@+id/open_debug_menu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_content_padding"
+        android:layout_marginTop="@dimen/beagle_large_content_padding"
         android:text="@string/open_debug_menu" />
 
     <Button
         android:id="@+id/generate_music_genre_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_content_padding"
+        android:layout_marginTop="@dimen/beagle_large_content_padding"
         android:text="@string/generate_music_genre" />
 
     <Button
         android:id="@+id/add_log_message_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_content_padding"
+        android:layout_marginTop="@dimen/beagle_large_content_padding"
         android:text="@string/add_log_message" />
 
     <Button
         android:id="@+id/open_login_screen_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_content_padding"
+        android:layout_marginTop="@dimen/beagle_large_content_padding"
         android:text="@string/open_login_screen" />
 
 </LinearLayout>

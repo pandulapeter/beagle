@@ -27,6 +27,6 @@ internal class NetworkLogItemViewHolder(root: View) : RecyclerView.ViewHolder(ro
 
     companion object {
         fun create(parent: ViewGroup) =
-            NetworkLogItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_network_log, parent, false))
+            NetworkLogItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log, parent, false))
     }
 }

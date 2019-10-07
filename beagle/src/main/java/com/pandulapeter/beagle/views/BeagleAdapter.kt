@@ -51,41 +51,41 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
 }) {
 
     override fun getItemViewType(position: Int) = when (val item = getItem(position)) {
-        is DividerViewModel -> R.layout.item_divider
-        is TextViewModel -> R.layout.item_text
-        is LongTextViewModel -> R.layout.item_long_text
-        is ImageViewModel -> R.layout.item_image
-        is SliderViewModel -> R.layout.item_slider
-        is ToggleViewModel -> R.layout.item_toggle
-        is ButtonViewModel -> if (item.shouldUseListItem) R.layout.item_button_list_item else R.layout.item_button
-        is KeyValueItemViewModel -> R.layout.item_key_value
-        is ListHeaderViewModel -> R.layout.item_list_header
-        is ListItemViewModel<*> -> R.layout.item_list_item
-        is SingleSelectionListItemViewModel<*> -> R.layout.item_single_selection_list_item
-        is MultipleSelectionListItemViewModel<*> -> R.layout.item_multiple_selection_list_item
-        is HeaderViewModel -> R.layout.item_header
-        is NetworkLogItemViewModel -> R.layout.item_network_log
-        is LogItemViewModel -> R.layout.item_log
+        is DividerViewModel -> R.layout.beagle_item_divider
+        is TextViewModel -> R.layout.beagle_item_text
+        is LongTextViewModel -> R.layout.beagle_item_long_text
+        is ImageViewModel -> R.layout.beagle_item_image
+        is SliderViewModel -> R.layout.beagle_item_slider
+        is ToggleViewModel -> R.layout.beagle_item_toggle
+        is ButtonViewModel -> if (item.shouldUseListItem) R.layout.beagle_item_button_list_item else R.layout.beagle_item_button
+        is KeyValueItemViewModel -> R.layout.beagle_item_key_value
+        is ListHeaderViewModel -> R.layout.beagle_item_list_header
+        is ListItemViewModel<*> -> R.layout.beagle_item_list_item
+        is SingleSelectionListItemViewModel<*> -> R.layout.beagle_item_single_selection_list_item
+        is MultipleSelectionListItemViewModel<*> -> R.layout.beagle_item_multiple_selection_list_item
+        is HeaderViewModel -> R.layout.beagle_item_header
+        is NetworkLogItemViewModel -> R.layout.beagle_item_network_log
+        is LogItemViewModel -> R.layout.beagle_item_log
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
-        R.layout.item_divider -> DividerViewHolder.create(parent)
-        R.layout.item_text -> TextViewHolder.create(parent)
-        R.layout.item_long_text -> LongTextViewHolder.create(parent)
-        R.layout.item_image -> ImageViewHolder.create(parent)
-        R.layout.item_slider -> SliderViewHolder.create(parent)
-        R.layout.item_toggle -> ToggleViewHolder.create(parent)
-        R.layout.item_button -> ButtonViewHolder.create(parent)
-        R.layout.item_button_list_item -> ButtonListItemViewHolder.create(parent)
-        R.layout.item_key_value -> KeyValueItemViewHolder.create(parent)
-        R.layout.item_list_header -> ListHeaderViewHolder.create(parent)
-        R.layout.item_list_item -> ListItemViewHolder.create(parent)
-        R.layout.item_single_selection_list_item -> SingleSelectionListItemViewHolder.create(parent)
-        R.layout.item_multiple_selection_list_item -> MultipleSelectionListItemViewHolder.create(parent)
-        R.layout.item_header -> HeaderViewHolder.create(parent)
-        R.layout.item_network_log -> NetworkLogItemViewHolder.create(parent)
-        R.layout.item_log -> LogItemViewHolder.create(parent)
+        R.layout.beagle_item_divider -> DividerViewHolder.create(parent)
+        R.layout.beagle_item_text -> TextViewHolder.create(parent)
+        R.layout.beagle_item_long_text -> LongTextViewHolder.create(parent)
+        R.layout.beagle_item_image -> ImageViewHolder.create(parent)
+        R.layout.beagle_item_slider -> SliderViewHolder.create(parent)
+        R.layout.beagle_item_toggle -> ToggleViewHolder.create(parent)
+        R.layout.beagle_item_button -> ButtonViewHolder.create(parent)
+        R.layout.beagle_item_button_list_item -> ButtonListItemViewHolder.create(parent)
+        R.layout.beagle_item_key_value -> KeyValueItemViewHolder.create(parent)
+        R.layout.beagle_item_list_header -> ListHeaderViewHolder.create(parent)
+        R.layout.beagle_item_list_item -> ListItemViewHolder.create(parent)
+        R.layout.beagle_item_single_selection_list_item -> SingleSelectionListItemViewHolder.create(parent)
+        R.layout.beagle_item_multiple_selection_list_item -> MultipleSelectionListItemViewHolder.create(parent)
+        R.layout.beagle_item_header -> HeaderViewHolder.create(parent)
+        R.layout.beagle_item_network_log -> NetworkLogItemViewHolder.create(parent)
+        R.layout.beagle_item_log -> LogItemViewHolder.create(parent)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 

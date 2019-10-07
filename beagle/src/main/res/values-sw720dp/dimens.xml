@@ -1,4 +1,4 @@
 <resources>
-    <dimen name="keyline_primary">24dp</dimen>
-    <dimen name="keyline_secondary">80dp</dimen>
+    <dimen name="beagle_default_keyline_primary">24dp</dimen>
+    <dimen name="beagle_default_keyline_secondary">80dp</dimen>
 </resources>

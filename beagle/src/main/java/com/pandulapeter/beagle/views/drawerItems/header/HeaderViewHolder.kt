@@ -26,6 +26,6 @@ internal class HeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     }
 
     companion object {
-        fun create(parent: ViewGroup) = HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_header, parent, false))
+        fun create(parent: ViewGroup) = HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_header, parent, false))
     }
 }

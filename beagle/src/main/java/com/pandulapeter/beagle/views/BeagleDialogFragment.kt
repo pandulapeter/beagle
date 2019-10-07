@@ -40,7 +40,7 @@ internal class BeagleDialogFragment : AppCompatDialogFragment() {
                                     text = SpannableString("$title\n\n$content").apply {
                                         setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
                                     }
-                                    context.dimension(R.dimen.large_content_padding).let { padding -> setPadding(padding, padding, padding, padding) }
+                                    context.dimension(R.dimen.beagle_large_content_padding).let { padding -> setPadding(padding, padding, padding, padding) }
                                 }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                             }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
                         })

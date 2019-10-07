@@ -19,6 +19,6 @@ internal class TextViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     companion object {
         fun create(parent: ViewGroup) =
-            TextViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_text, parent, false))
+            TextViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_text, parent, false))
     }
 }

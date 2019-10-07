@@ -19,6 +19,6 @@ internal class ToggleViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     }
 
     companion object {
-        fun create(parent: ViewGroup) = ToggleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_toggle, parent, false))
+        fun create(parent: ViewGroup) = ToggleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_toggle, parent, false))
     }
 }

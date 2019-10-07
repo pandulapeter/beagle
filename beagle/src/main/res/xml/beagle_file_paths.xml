@@ -4,8 +4,8 @@
     <paths>
 
         <cache-path
-            name="shared_images"
-            path="images/" />
+            name="beagle_screenshots"
+            path="beagleScreenshots/" />
 
     </paths>
 

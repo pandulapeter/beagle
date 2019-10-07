@@ -18,6 +18,6 @@ internal class ButtonViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
     companion object {
         fun create(parent: ViewGroup) =
-            ButtonViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_button, parent, false))
+            ButtonViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_button, parent, false))
     }
 }
