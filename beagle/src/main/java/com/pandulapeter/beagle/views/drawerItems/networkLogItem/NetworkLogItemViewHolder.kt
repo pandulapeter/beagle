@@ -17,7 +17,7 @@ internal class NetworkLogItemViewHolder(root: View) : RecyclerView.ViewHolder(ro
     private val timestampTextView = itemView.findViewById<TextView>(R.id.timestamp)
 
     fun bind(viewModel: NetworkLogItemViewModel) {
-        iconImageView.setImageResource(if (viewModel.isOutgoing) R.drawable.ic_outgoing else R.drawable.ic_incoming)
+        iconImageView.setImageResource(if (viewModel.isOutgoing) R.drawable.beagle_ic_outgoing else R.drawable.beagle_ic_incoming)
         ImageViewCompat.setImageTintList(iconImageView, urlTextView.textColors)
         urlTextView.text = viewModel.url
         timestampTextView.text = viewModel.timestamp

@@ -14,19 +14,17 @@ internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) 
 
     private val titleTextView = itemView.findViewById<TextView>(R.id.title)
     private val iconImageView = itemView.findViewById<ImageView>(R.id.icon)
-    private val drawableExpand by lazy { itemView.context.animatedDrawable(R.drawable.avd_expand) }
-    private val drawableCollapse by lazy { itemView.context.animatedDrawable(R.drawable.avd_collapse) }
     private var isExpanded: Boolean? = null
 
     fun bind(viewModel: ListHeaderViewModel) {
         titleTextView.text = viewModel.title
-        iconImageView.setImageDrawable((if (viewModel.isExpanded) drawableExpand else drawableCollapse)?.apply {
-            setTintList(titleTextView.textColors)
-            if (viewModel.isExpanded != isExpanded) {
-                isExpanded = viewModel.isExpanded
+        if (viewModel.isExpanded != isExpanded) {
+            isExpanded = viewModel.isExpanded
+            iconImageView.setImageDrawable((itemView.context.animatedDrawable(if (viewModel.isExpanded) R.drawable.beagle_avd_expand else R.drawable.beagle_avd_collapse))?.apply {
+                setTintList(titleTextView.textColors)
                 start()
-            }
-        })
+            })
+        }
         iconImageView.visibleOrInvisible = viewModel.shouldShowIcon
         if (viewModel.shouldShowIcon) {
             itemView.setOnClickListener { if (adapterPosition != RecyclerView.NO_POSITION) viewModel.onItemSelected() }

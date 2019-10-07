@@ -56,7 +56,7 @@ internal fun Context.colorResource(@AttrRes id: Int): Int {
 
 internal fun Context.dimension(@DimenRes dimensionResInt: Int) = resources.getDimensionPixelSize(dimensionResInt)
 
-internal fun Context.drawable(@DrawableRes drawableresId: Int) = AppCompatResources.getDrawable(this, drawableresId)
+internal fun Context.drawable(@DrawableRes drawableResId: Int) = AppCompatResources.getDrawable(this, drawableResId)
 
 internal fun View.hideKeyboard() {
     clearFocus()

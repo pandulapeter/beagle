@@ -31,7 +31,7 @@ internal class SliderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
         })
-        sliderSeekBar.setOnTouchListener { v, event ->
+        sliderSeekBar.setOnTouchListener { _, _ ->
             (itemView.parent?.parent as? ViewGroup?)?.requestDisallowInterceptTouchEvent(true)
             false
         }

@@ -20,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_incoming" />
+        tools:src="@drawable/beagle_ic_incoming" />
 
     <TextView
         android:id="@+id/url"
