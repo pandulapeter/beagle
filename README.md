@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def beagleVersion = "1.0.0"
+    def beagleVersion = "1.1.0"
     debugImplementation "com.github.pandulapeter.beagle:beagle:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:$beagleVersion"
 }
@@ -88,6 +88,7 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 ### Known issues
 * If your app already has a DrawerLayout (especially with a drawer on GravityCompat.END) you will probably have some issues.
 * The library depends on AndroidX. If your app uses the legacy support library, it will probably introduce some conflicts.
+* The library depends on OkHttp version 4. If your app uses an older version, you should update it.
 
 ### License
 ```
