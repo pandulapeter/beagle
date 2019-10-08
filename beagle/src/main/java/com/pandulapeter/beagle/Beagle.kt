@@ -285,7 +285,8 @@ object Beagle : BeagleContract {
                 fragmentManager = supportFragmentManager,
                 title = networkLogItem.url,
                 content = content,
-                appearance = appearance
+                appearance = appearance,
+                shouldWrapContent = false
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }
@@ -296,7 +297,8 @@ object Beagle : BeagleContract {
                 fragmentManager = supportFragmentManager,
                 title = logItem.message,
                 content = logItem.payload ?: "",
-                appearance = appearance
+                appearance = appearance,
+                shouldWrapContent = true
             )
         } ?: throw IllegalArgumentException("This feature only works with AppCompatActivity")
     }

@@ -1,5 +1,5 @@
 # Beagle (Android library)
-*A smart and reliable side drawer for debugging your Android apps.*
+*A smart and reliable companion library for debugging your Android apps*
 
 <img src="logo.png" width="30%" />
 
@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def beagleVersion = "0.2.4"
+    def beagleVersion = "1.0.0"
     debugImplementation "com.github.pandulapeter.beagle:beagle:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:$beagleVersion"
 }
@@ -83,10 +83,6 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 * The UI of the drawer can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Appearance.kt) instance when initializing the library.
 * To properly support back navigation, all activities must check if the drawer consumes the event. This is implemented [here](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/screens/MainActivity.kt).
 * The drawers can be disabled / enabled at runtime by modifying the value of Beagle.isEnabled. This could be useful if you want to restrict access to the debug drawer features based on user type.
-
-### To do
-* Improve the example app
-* Update module screenshots
 
 ### Known issues
 * If your app already has a DrawerLayout (especially with a drawer on GravityCompat.END) you will probably have some issues.

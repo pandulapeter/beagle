@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/beagle_large_content_padding"
-        android:text="@string/generate_music_genre" />
+        android:text="@string/perform_network_request" />
 
     <Button
         android:id="@+id/add_log_message_button"

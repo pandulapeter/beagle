@@ -22,6 +22,7 @@ import com.pandulapeter.beagleCore.configuration.Appearance
 
 internal class BeagleDialogFragment : AppCompatDialogFragment() {
 
+    //TODO: Add "Copy to clipboard" button
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         (arguments?.appearance?.themeResourceId?.let { ContextThemeWrapper(context, it) } ?: context)?.let { themedContext ->
             arguments?.title?.let { title ->
@@ -32,17 +33,26 @@ internal class BeagleDialogFragment : AppCompatDialogFragment() {
                             isVerticalScrollBarEnabled = false
                             overScrollMode = View.OVER_SCROLL_NEVER
                             clipToPadding = false
-                            addView(ChildHorizontalScrollView(themedContext).apply {
-                                isHorizontalScrollBarEnabled = false
-                                overScrollMode = View.OVER_SCROLL_NEVER
-                                clipToPadding = false
+                            if (arguments?.shouldWrapContent == true) {
                                 addView(AppCompatTextView(themedContext).apply {
                                     text = SpannableString("$title\n\n$content").apply {
                                         setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
                                     }
                                     context.dimension(R.dimen.beagle_large_content_padding).let { padding -> setPadding(padding, padding, padding, padding) }
-                                }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                            }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                                }, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                            } else {
+                                addView(ChildHorizontalScrollView(themedContext).apply {
+                                    isHorizontalScrollBarEnabled = false
+                                    overScrollMode = View.OVER_SCROLL_NEVER
+                                    clipToPadding = false
+                                    addView(AppCompatTextView(themedContext).apply {
+                                        text = SpannableString("$title\n\n$content").apply {
+                                            setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                                        }
+                                        context.dimension(R.dimen.beagle_large_content_padding).let { padding -> setPadding(padding, padding, padding, padding) }
+                                    }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                                }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                            }
                         })
                     }.create()
                 }
@@ -55,11 +65,13 @@ internal class BeagleDialogFragment : AppCompatDialogFragment() {
         private var Bundle.title by BundleArgumentDelegate.String("title")
         private var Bundle.content by BundleArgumentDelegate.String("content")
         private var Bundle.appearance by BundleArgumentDelegate.Parcelable<Appearance>("appearance")
+        private var Bundle.shouldWrapContent by BundleArgumentDelegate.Boolean("shouldWrapContent")
 
-        fun show(fragmentManager: FragmentManager, title: String, content: String, appearance: Appearance) = BeagleDialogFragment().withArguments {
+        fun show(fragmentManager: FragmentManager, title: String, content: String, appearance: Appearance, shouldWrapContent: Boolean) = BeagleDialogFragment().withArguments {
             it.title = title
             it.content = content
             it.appearance = appearance
+            it.shouldWrapContent = shouldWrapContent
         }.run { show(fragmentManager, tag) }
     }
 }
