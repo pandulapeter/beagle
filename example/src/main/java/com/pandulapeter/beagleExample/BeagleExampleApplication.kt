@@ -41,6 +41,7 @@ class BeagleExampleApplication : Application() {
                         title = "Feature toggle 2",
                         onValueChanged = { isOn -> "Feature 2 is ${if (isOn) "on" else "off"}".showToast() }
                     ),
+                    Trick.Padding(),
                     Trick.MultipleSelectionList(
                         title = "Multiple choice",
                         items = mockColors,

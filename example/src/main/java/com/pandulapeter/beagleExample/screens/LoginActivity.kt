@@ -8,7 +8,7 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleExample.R
-import com.pandulapeter.beagleExample.utils.mockAccounts
+import com.pandulapeter.beagleExample.utils.mockTestAccounts
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
@@ -24,7 +24,8 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             trick = Trick.SimpleList(
                 id = TEST_ACCOUNTS_MODULE_ID,
                 title = "Test accounts",
-                items = mockAccounts,
+                items = mockTestAccounts,
+                isInitiallyExpanded = true,
                 onItemSelected = { account ->
                     findViewById<EditText>(R.id.username_input).setText(account.name)
                     findViewById<EditText>(R.id.password_input).setText(account.password)

@@ -45,6 +45,7 @@ After this a list of modules (tricks) needs to be provided, but this can be chan
 ### Tricks
 Any number of generic modules can be added in any order as long as they have a unique ID:
 * [Divider](/screenshots/moduleDivider.png) - Displays a horizontal line.
+* [Padding](/screenshots/modulePadding.png) - Displays an empty space of specified size.
 * [Text](/screenshots/moduleText.png) - Displays simple text content.
 * [LongText](/screenshots/moduleLongText.png) - Displays a longer piece of text that can be collapsed into a title.
 * [Image](/screenshots/moduleImage.png) - Displays a drawable.

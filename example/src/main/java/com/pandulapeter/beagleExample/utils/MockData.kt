@@ -4,16 +4,10 @@ import com.pandulapeter.beagleCore.contracts.BeagleListItemContract
 
 data class Account(override val name: String, val password: String) : BeagleListItemContract
 
-val mockAccounts = listOf(
+val mockTestAccounts = listOf(
     Account("User 1", "password 1"),
-    Account("User 3", "password 3"),
     Account("User 2", "password 2"),
-    Account("User 4", "password 4"),
-    Account("User 5", "password 5"),
-    Account("User 6", "password 6"),
-    Account("User 7", "password 7"),
-    Account("User 8", "password 8"),
-    Account("User 9", "password 9")
+    Account("User 3", "password 3")
 )
 
 data class BackendEnvironment(override val name: String, val url: String) : BeagleListItemContract

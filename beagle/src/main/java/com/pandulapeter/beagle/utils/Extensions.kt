@@ -37,6 +37,7 @@ import com.pandulapeter.beagle.views.drawerItems.logItem.LogItemViewModel
 import com.pandulapeter.beagle.views.drawerItems.longText.LongTextViewModel
 import com.pandulapeter.beagle.views.drawerItems.multipleSelectionListItem.MultipleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.drawerItems.networkLogItem.NetworkLogItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.padding.PaddingViewModel
 import com.pandulapeter.beagle.views.drawerItems.singleSelectionListItem.SingleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.drawerItems.slider.SliderViewModel
 import com.pandulapeter.beagle.views.drawerItems.text.TextViewModel
@@ -116,6 +117,12 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
             is Trick.Divider -> items.add(
                 DividerViewModel(
                     id = trick.id
+                )
+            )
+            is Trick.Padding -> items.add(
+                PaddingViewModel(
+                    id = trick.id,
+                    size = trick.size
                 )
             )
             is Trick.Text -> items.add(

@@ -27,6 +27,18 @@ sealed class Trick {
 
     //region Generic modules
     /**
+     * Displays an empty space of specified size.
+     * This module can be added multiple times as long as the ID is unique.
+     *
+     * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
+     * @param size - The size of the space to be left empty, or null for the default padding of 8dp. Null by default.
+     */
+    data class Padding(
+        override val id: String = UUID.randomUUID().toString(),
+        @Dimension val size: Int? = null
+    ) : Trick()
+
+    /**
      * Displays a horizontal line.
      * This module can be added multiple times as long as the ID is unique.
      *

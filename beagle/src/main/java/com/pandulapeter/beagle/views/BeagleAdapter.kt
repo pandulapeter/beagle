@@ -30,6 +30,8 @@ import com.pandulapeter.beagle.views.drawerItems.multipleSelectionListItem.Multi
 import com.pandulapeter.beagle.views.drawerItems.multipleSelectionListItem.MultipleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.drawerItems.networkLogItem.NetworkLogItemViewHolder
 import com.pandulapeter.beagle.views.drawerItems.networkLogItem.NetworkLogItemViewModel
+import com.pandulapeter.beagle.views.drawerItems.padding.PaddingViewHolder
+import com.pandulapeter.beagle.views.drawerItems.padding.PaddingViewModel
 import com.pandulapeter.beagle.views.drawerItems.singleSelectionListItem.SingleSelectionListItemViewHolder
 import com.pandulapeter.beagle.views.drawerItems.singleSelectionListItem.SingleSelectionListItemViewModel
 import com.pandulapeter.beagle.views.drawerItems.slider.SliderViewHolder
@@ -52,6 +54,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
 
     override fun getItemViewType(position: Int) = when (val item = getItem(position)) {
         is DividerViewModel -> R.layout.beagle_item_divider
+        is PaddingViewModel -> R.layout.beagle_item_padding
         is TextViewModel -> R.layout.beagle_item_text
         is LongTextViewModel -> R.layout.beagle_item_long_text
         is ImageViewModel -> R.layout.beagle_item_image
@@ -71,6 +74,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         R.layout.beagle_item_divider -> DividerViewHolder.create(parent)
+        R.layout.beagle_item_padding -> PaddingViewHolder.create(parent)
         R.layout.beagle_item_text -> TextViewHolder.create(parent)
         R.layout.beagle_item_long_text -> LongTextViewHolder.create(parent)
         R.layout.beagle_item_image -> ImageViewHolder.create(parent)
@@ -91,6 +95,7 @@ internal class BeagleAdapter : ListAdapter<DrawerItemViewModel, RecyclerView.Vie
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is DividerViewHolder -> Unit
+        is PaddingViewHolder -> holder.bind(getItem(position) as PaddingViewModel)
         is TextViewHolder -> holder.bind(getItem(position) as TextViewModel)
         is LongTextViewHolder -> holder.bind(getItem(position) as LongTextViewModel)
         is ImageViewHolder -> holder.bind(getItem(position) as ImageViewModel)
