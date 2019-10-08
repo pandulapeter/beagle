@@ -47,7 +47,7 @@ Any number of generic modules can be added in any order as long as they have a u
 * [Divider](/screenshots/moduleDivider.png) - Displays a horizontal line.
 * [Text](/screenshots/moduleText.png) - Displays simple text content.
 * [LongText](/screenshots/moduleLongText.png) - Displays a longer piece of text that can be collapsed into a title.
-* [Image](/screenshots/moduleImage) - Displays a drawable.
+* [Image](/screenshots/moduleImage.png) - Displays a drawable.
 * TODO: TextInput - Allows the user to enter free text.
 * [Slider](/screenshots/moduleSlider.png) - Allows the user to adjust a numeric value.
 * TODO: ColorPicker - Allows the user to pick a color.
