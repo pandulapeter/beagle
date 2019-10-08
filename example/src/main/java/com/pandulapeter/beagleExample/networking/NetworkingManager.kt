@@ -18,7 +18,7 @@ object NetworkingManager {
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
         .build()
-    val musicGeneratorService: MusicGenreGeneratorService = retrofit.create(
-        MusicGenreGeneratorService::class.java
+    val networkingService: NetworkingService = retrofit.create(
+        NetworkingService::class.java
     )
 }
