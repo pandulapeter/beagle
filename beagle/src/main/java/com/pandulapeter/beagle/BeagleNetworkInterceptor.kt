@@ -15,13 +15,13 @@ import java.io.EOFException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
-//TODO: Set maximum size for Strings to avoid crashes when parsing huge JSON-s.
 /**
  * Interceptor that should be set on the OkHttpClient's builder. Make sure it's the last applied interceptor, otherwise you might not see all relevant information.
  */
 object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
 
     private val UTF8 = Charset.forName("UTF-8")
+    private const val MAX_STRING_LENGTH = 512 * 1024 //TODO: Come up with a less random value
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -30,6 +30,8 @@ object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
             ""
         } else if (bodyHasUnknownEncoding(request.headers)) {
             "[encoded]"
+        } else if (requestBody.contentLength() > MAX_STRING_LENGTH) {
+            "[payload too large]"
         } else {
             val buffer = Buffer()
             requestBody.writeTo(buffer)
