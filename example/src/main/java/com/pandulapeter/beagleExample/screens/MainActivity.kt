@@ -14,6 +14,7 @@ import com.pandulapeter.beagleExample.utils.logMessages
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         findViewById<View>(R.id.open_debug_menu_button).setOnClickListener { Beagle.fetch(this) }
         findViewById<View>(R.id.perform_network_request_button).setOnClickListener { performNetworkRequest() }
