@@ -279,6 +279,14 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                     onButtonPressed = { (Beagle.drawers[Beagle.currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot() }
                 )
             )
+            is Trick.ForceCrashButton -> items.add(
+                ButtonViewModel(
+                    id = trick.id,
+                    shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
+                    text = trick.text,
+                    onButtonPressed = { throw RuntimeException(trick.message) }
+                )
+            )
             is Trick.NetworkLogList -> networkLogItems.take(trick.maxItemCount).let { networkLogItems ->
                 items.addListModule(
                     trick = trick,

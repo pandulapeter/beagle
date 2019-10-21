@@ -409,6 +409,25 @@ sealed class Trick {
     }
 
     /**
+     * Displays a button that throws an exception when pressed - useful for testing crash reporting.
+     * This module can only be added once.
+     *
+     * @param text - The text that should be displayed on the button. "Force crash" by default.
+     * @param message - The detail message of the exception. "Test crash: Beagle was a bad boy." by default.
+     */
+    data class ForceCrashButton(
+        val text: CharSequence = "Force crash",
+        val message: String = "Test crash: Beagle was a bad boy."
+    ) : Trick() {
+
+        override val id = ID
+
+        companion object {
+            const val ID = "forceCrashButton"
+        }
+    }
+
+    /**
      * Displays an expandable list of historical network activity.
      * Use BeagleNetworkInterceptor to push a new message to the top of the list.
      * This module can only be added once.

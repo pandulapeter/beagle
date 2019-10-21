@@ -30,6 +30,7 @@ class BeagleExampleApplication : Application() {
                     ),
                     Trick.AppInfoButton(),
                     Trick.ScreenshotButton(),
+                    Trick.ForceCrashButton(),
                     Trick.KeylineOverlayToggle(
                         gridColor = Color.WHITE
                     ),

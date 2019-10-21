@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                     Beagle.dismiss(this@LoginActivity)
                 }
             ),
-            positioning = Positioning.Below(Trick.ScreenshotButton.ID)
+            positioning = Positioning.Below(Trick.ForceCrashButton.ID)
         )
     }
 
