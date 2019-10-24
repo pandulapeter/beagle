@@ -248,6 +248,7 @@ object Beagle : BeagleContract {
                                 if (shouldOpenDrawer) {
                                     openDrawer(drawer)
                                 }
+                                setDrawerLockMode(if (isEnabled) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                                 if (isKeylineOverlayEnabled) {
                                     keylineOverlay = keylineOverlayToggleModule
                                 }
