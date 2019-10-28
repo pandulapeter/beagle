@@ -38,6 +38,11 @@ internal class BeagleDrawerLayout @JvmOverloads constructor(
         set(value) {
             container.keylineOverlayToggle = value
         }
+    var viewBoundsOverlay
+        get() = container.viewBoundsOverlayToggle
+        set(value) {
+            container.viewBoundsOverlayToggle = value
+        }
     private var currentJob: CoroutineContext? = null
 
     fun takeAndShareScreenshot() = shareImage(getScreenshot())

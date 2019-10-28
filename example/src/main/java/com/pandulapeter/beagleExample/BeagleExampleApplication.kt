@@ -34,6 +34,9 @@ class BeagleExampleApplication : Application() {
                     Trick.KeylineOverlayToggle(
                         gridColor = Color.WHITE
                     ),
+                    Trick.ViewBoundsOverlayToggle(
+                        color = Color.CYAN
+                    ),
                     Trick.Toggle(
                         title = "Feature toggle 1",
                         onValueChanged = { isOn -> "Feature 1 is ${if (isOn) "on" else "off"}".showToast() }

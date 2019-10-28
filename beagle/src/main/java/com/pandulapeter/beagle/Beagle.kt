@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import com.pandulapeter.beagle.views.BeagleDialogFragment
 import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -16,6 +15,7 @@ import com.pandulapeter.beagle.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.utils.findRootViewGroup
 import com.pandulapeter.beagle.utils.hideKeyboard
 import com.pandulapeter.beagle.utils.mapToViewModels
+import com.pandulapeter.beagle.views.BeagleDialogFragment
 import com.pandulapeter.beagle.views.BeagleDrawer
 import com.pandulapeter.beagle.views.BeagleDrawerLayout
 import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
@@ -166,6 +166,7 @@ object Beagle : BeagleContract {
             updateItems()
         }
     private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<Trick.KeylineOverlayToggle>().firstOrNull()
+    private val viewBoundsOverlayToggleModule get() = moduleList.filterIsInstance<Trick.ViewBoundsOverlayToggle>().firstOrNull()
     internal val drawers = mutableMapOf<Activity, BeagleDrawer>()
     private var items = emptyList<DrawerItemViewModel>()
     internal var isKeylineOverlayEnabled = false
@@ -175,6 +176,16 @@ object Beagle : BeagleContract {
                 updateItems()
                 (if (value) keylineOverlayToggleModule else null).let { keylineOverlayModule ->
                     drawers.values.forEach { drawer -> (drawer.parent as? BeagleDrawerLayout?)?.keylineOverlay = keylineOverlayModule }
+                }
+            }
+        }
+    internal var isViewBoundsOverlayEnabled = false
+        set(value) {
+            if (field != value) {
+                field = value
+                updateItems()
+                (if (value) viewBoundsOverlayToggleModule else null).let { viewBoundsOverlayToggleModule ->
+                    drawers.values.forEach { drawer -> (drawer.parent as? BeagleDrawerLayout?)?.viewBoundsOverlay = viewBoundsOverlayToggleModule }
                 }
             }
         }
@@ -251,6 +262,9 @@ object Beagle : BeagleContract {
                                 setDrawerLockMode(if (isEnabled) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                                 if (isKeylineOverlayEnabled) {
                                     keylineOverlay = keylineOverlayToggleModule
+                                }
+                                if (isViewBoundsOverlayEnabled) {
+                                    viewBoundsOverlay = viewBoundsOverlayToggleModule
                                 }
                                 addDrawerListener(object : DrawerLayout.DrawerListener {
 

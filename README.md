@@ -54,7 +54,7 @@ Any number of generic modules can be added in any order as long as they have a u
 * TODO: ColorPicker - Allows the user to pick a color.
 * [Toggle](/screenshots/moduleToggle.png) - Displays a switch with configurable title and behavior - ideal for feature toggles.
 * [Button](/screenshots/moduleButton.png) - Displays a button with configurable text and action.
-* [KeyValue](/screenshots/moduleKeyValue.png) - Displays a list of key-value pairs that can be collapsed into a title.
+* [lValue](/screenshots/moduleKeyValue.png) - Displays a list of key-value pairs that can be collapsed into a title.
 * [SimpleList](/screenshots/moduleSimpleList.png) - Displays an expandable list of custom items and exposes a callback when the user makes a selection. A possible use case could be providing a list of test accounts to make the authentication flow faster.
 * [SingleSelectionList](/screenshots/moduleSingleSelectionList.png) - Displays a list of radio buttons. A possible use case could be changing the base URL of the application to simplify testing on different backend environments.
 * [MultipleSelectionList](/screenshots/moduleMultipleSelectionList.png) - Displays a lst of checkboxes.
@@ -63,6 +63,7 @@ Any number of generic modules can be added in any order as long as they have a u
 Unique modules can only be added once as they are specific to a single use case:
 * [Header](/screenshots/moduleHeader.png) - Displays a header on top of the drawer with general information about the app / build.
 * [KeylineOverlayToggle](/screenshots/moduleKeylineOverlayToggle.png) - Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.
+* [ViewBoundsOverlayToggle](/screenshots/moduleViewBoundsOverlayToggle.png) - Displays a switch that, when enabled, draws rectangles matching the bounds for every View in your hierarchy so that you can verify sizes and paddings.
 * TODO: ForceRtToggle - Forces RTL layout orientation (on/off).
 * [AppInfoButton](/screenshots/moduleAppInfoButton.png) - Displays a button that links to the Android App Info page for your app.
 * [ScreenshotButton](/screenshots/moduleScreenshotButton.png) - Displays a button that takes a screenshot of the current layout and allows the user to share it.

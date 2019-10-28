@@ -375,6 +375,25 @@ sealed class Trick {
     }
 
     /**
+     * Displays a switch that, when enabled, draws rectangles matching the bounds for every View in your hierarchy so that you can verify sizes and paddings.
+     * This module can only be added once.
+     *
+     * @param title - The text that appears near the switch. "Keyline overlay" by default.
+     * @param color - The color to be used when drawing the overlay. By default it will be the debug menu's text color.
+     */
+    data class ViewBoundsOverlayToggle(
+        val title: CharSequence = "View bounds",
+        @ColorInt val color: Int? = null
+    ) : Trick() {
+
+        override val id = ID
+
+        companion object {
+            const val ID = "viewBoundsOverlayToggle"
+        }
+    }
+
+    /**
      * Displays a button that links to the Android App Info page for your app.
      * This module can only be added once.
      *

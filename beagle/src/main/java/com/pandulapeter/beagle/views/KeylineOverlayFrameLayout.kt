@@ -3,7 +3,10 @@ package com.pandulapeter.beagle.views
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import android.util.AttributeSet
+import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.colorResource
@@ -30,11 +33,29 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
             }
             invalidate()
         }
+
+    var viewBoundsOverlayToggle: Trick.ViewBoundsOverlayToggle? = null
+        set(value) {
+            field = value
+            if (value != null) {
+                boundsPaint.color = value.color ?: context.colorResource(android.R.attr.textColorPrimary)
+                paddingPaint.color = value.color ?: context.colorResource(android.R.attr.textColorPrimary)
+                paddingPaint.alpha = FILL_ALPHA
+            }
+            invalidate()
+        }
     private val gridPaint = Paint()
     private val keylinePaint = Paint()
     private var keylineGrid = 0
     private var keylinePrimary = 0f
     private var keylineSecondary = 0f
+    private val boundsPaint = Paint().apply {
+        style = Paint.Style.STROKE
+    }
+    private val paddingPaint = Paint().apply {
+        style = Paint.Style.FILL
+        alpha = FILL_ALPHA
+    }
 
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
@@ -50,11 +71,38 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
                 drawLine(keylineSecondary, 0f, keylineSecondary, height.toFloat(), keylinePaint)
                 drawLine(width - keylinePrimary, 0f, width - keylinePrimary, height.toFloat(), keylinePaint)
             }
+            if (viewBoundsOverlayToggle != null) {
+                drawBoundsIfNeeded(this)
+            }
         }
+    }
+
+    private fun View.drawBoundsIfNeeded(canvas: Canvas) {
+        if (this is ViewGroup) {
+            (0 until childCount).forEach {
+                getChildAt(it).drawBoundsIfNeeded(canvas)
+            }
+        } else {
+            drawBounds(canvas)
+        }
+    }
+
+    private fun View.drawBounds(canvas: Canvas) {
+        val bounds = Rect()
+        getDrawingRect(bounds)
+        val location = IntArray(2)
+        getLocationOnScreen(location)
+        bounds.offset(location[0], location[1])
+        canvas.drawRect(bounds, boundsPaint)
+        bounds.offset(paddingStart, paddingTop)
+        bounds.bottom -= paddingBottom + paddingTop
+        bounds.right -= paddingEnd + paddingStart
+        canvas.drawRect(bounds, paddingPaint)
     }
 
     companion object {
         private const val GRID_ALPHA = 64
         private const val KEYLINE_ALPHA = 192
+        private const val FILL_ALPHA = 127
     }
 }
