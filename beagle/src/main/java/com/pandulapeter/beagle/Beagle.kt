@@ -23,10 +23,6 @@ import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 /**
  * The main singleton that handles the debug drawer's functionality.
@@ -159,7 +155,6 @@ object Beagle : BeagleContract {
     private const val MAX_ITEM_COUNT = 500
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private var appearance = Appearance()
-    private var currentJob: CoroutineContext? = null
     private var moduleList = emptyList<Trick>()
         set(value) {
             field = value.distinctBy { it.id }.sortedBy { it !is Trick.Header }
@@ -319,16 +314,12 @@ object Beagle : BeagleContract {
     }
 
     internal fun updateItems() {
-        currentJob?.cancel()
-        currentJob = GlobalScope.launch {
-            items = moduleList.mapToViewModels(
-                appearance = appearance,
-                networkLogItems = networkLogItems,
-                logItems = logItems
-            ).also { items ->
-                drawers.values.forEach { it.updateItems(items) }
-            }
-            currentJob = null
+        items = moduleList.mapToViewModels(
+            appearance = appearance,
+            networkLogItems = networkLogItems,
+            logItems = logItems
+        ).also { items ->
+            drawers.values.forEach { it.updateItems(items) }
         }
     }
     //endregion
