@@ -32,7 +32,7 @@ internal class BeagleDrawerLayout @JvmOverloads constructor(
     @Dimension drawerWidth: Int? = null
 ) : DrawerLayout(context, attrs, defStyleAttr) {
 
-    private val container = KeylineOverlayFrameLayout(context)
+    private val container = OverlayFrameLayout(context)
     var keylineOverlay
         get() = container.keylineOverlayToggle
         set(value) {

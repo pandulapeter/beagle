@@ -12,8 +12,13 @@ import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.colorResource
 import com.pandulapeter.beagle.utils.dimension
 import com.pandulapeter.beagleCore.configuration.Trick
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
+internal class OverlayFrameLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -43,6 +48,7 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
                 paddingPaint.alpha = FILL_ALPHA
             }
             invalidate()
+            startAutomaticRefresh()
         }
     private val gridPaint = Paint()
     private val keylinePaint = Paint()
@@ -55,6 +61,34 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
     private val paddingPaint = Paint().apply {
         style = Paint.Style.FILL
         alpha = FILL_ALPHA
+    }
+    private var coroutineContext: CoroutineContext? = null
+
+    private fun startAutomaticRefresh() {
+        stopAutomaticRefresh()
+        coroutineContext = GlobalScope.launch {
+            while (true) {
+                invalidate()
+                delay(AUTOMATIC_REFRESH_DELAY)
+            }
+        }
+    }
+
+    private fun stopAutomaticRefresh() {
+        coroutineContext?.cancel()
+        coroutineContext = null
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (viewBoundsOverlayToggle != null) {
+            startAutomaticRefresh()
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        stopAutomaticRefresh()
+        super.onDetachedFromWindow()
     }
 
     override fun dispatchDraw(canvas: Canvas?) {
@@ -83,7 +117,9 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
                 getChildAt(it).drawBoundsIfNeeded(canvas)
             }
         } else {
-            drawBounds(canvas)
+            if (visibility != View.GONE) {
+                drawBounds(canvas)
+            }
         }
     }
 
@@ -104,5 +140,6 @@ internal class KeylineOverlayFrameLayout @JvmOverloads constructor(
         private const val GRID_ALPHA = 64
         private const val KEYLINE_ALPHA = 192
         private const val FILL_ALPHA = 127
+        private const val AUTOMATIC_REFRESH_DELAY = 16L
     }
 }
