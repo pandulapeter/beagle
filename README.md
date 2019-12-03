@@ -69,6 +69,7 @@ Unique modules can only be added once as they are specific to a single use case:
 * [ScreenshotButton](/screenshots/moduleScreenshotButton.png) - Displays a button that takes a screenshot of the current layout and allows the user to share it.
 * [ForceCrashButton](/screenshots/moduleForceCrashButton.png) - Displays a button that throws an exception when pressed - useful for testing crash reporting.
 * TODO: StringGeneratorButton - Generates a string based on the user's preferences and copies it to the clipboard.
+* TODO: SendBugReportButton - Sends a pre-formatted message with logs to a specified email address.
 * [NetworkLogList](/screenshots/moduleNetworkLogList.png) - Displays an expandable list of historical network activity. Each item can be tapped for more information. To use this functionality, the custom beagleNetworkInterceptor needs to be added to the OkHTTP Client's builder, as implemented [here](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/networking/NetworkingManager.kt).
 * [DeviceInformationKeyValue](/screenshots/moduleDeviceInformationKeyValue.png) - Displays information about the current device and the OS.
 

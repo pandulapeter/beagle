@@ -17,6 +17,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.roundToInt
 
 internal class OverlayFrameLayout @JvmOverloads constructor(
     context: Context,
@@ -129,6 +130,7 @@ internal class OverlayFrameLayout @JvmOverloads constructor(
         val location = IntArray(2)
         getLocationOnScreen(location)
         bounds.offset(location[0], location[1])
+        bounds.offset(translationX.roundToInt(), translationY.roundToInt())
         canvas.drawRect(bounds, boundsPaint)
         bounds.offset(paddingStart, paddingTop)
         bounds.bottom -= paddingBottom + paddingTop
