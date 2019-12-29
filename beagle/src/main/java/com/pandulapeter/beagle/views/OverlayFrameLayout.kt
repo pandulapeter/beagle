@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.colorResource
 import com.pandulapeter.beagle.utils.dimension
 import com.pandulapeter.beagleCore.configuration.Trick
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -67,9 +68,9 @@ internal class OverlayFrameLayout @JvmOverloads constructor(
 
     private fun startAutomaticRefresh() {
         stopAutomaticRefresh()
-        coroutineContext = GlobalScope.launch {
+        coroutineContext = GlobalScope.launch(Dispatchers.Default) {
             while (true) {
-                invalidate()
+                GlobalScope.launch(Dispatchers.Main) { invalidate() }
                 delay(AUTOMATIC_REFRESH_DELAY)
             }
         }
