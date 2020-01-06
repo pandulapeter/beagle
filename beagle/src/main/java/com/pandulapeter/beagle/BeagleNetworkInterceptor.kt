@@ -71,7 +71,7 @@ object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
         }
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
         val responseBody = response.body
-        val responseJson = response.body?.string()
+        val responseJson = if (responseBody?.source()?.buffer?.isProbablyUtf8() == true) response.body?.string() else "Content cannot be displayed"
         Beagle.logNetworkEvent(
             NetworkLogItem(
                 isOutgoing = false,
@@ -115,5 +115,25 @@ object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
         (contentEncoding != null
                 && !contentEncoding.equals("identity", ignoreCase = true)
                 && !contentEncoding.equals("gzip", ignoreCase = true))
+    }
+
+    private fun Buffer.isProbablyUtf8(): Boolean {
+        try {
+            val prefix = Buffer()
+            val byteCount = size.coerceAtMost(64)
+            copyTo(prefix, 0, byteCount)
+            for (i in 0 until 16) {
+                if (prefix.exhausted()) {
+                    break
+                }
+                val codePoint = prefix.readUtf8CodePoint()
+                if (Character.isISOControl(codePoint) && !Character.isWhitespace(codePoint)) {
+                    return false
+                }
+            }
+            return true
+        } catch (_: EOFException) {
+            return false // Truncated UTF-8 sequence.
+        }
     }
 }
