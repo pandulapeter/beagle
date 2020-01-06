@@ -71,7 +71,8 @@ object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
         }
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
         val responseBody = response.body
-        val responseJson = if (responseBody?.source()?.buffer?.isProbablyUtf8() == true) response.body?.string() else "Content cannot be displayed"
+        val contentType = responseBody?.contentType()
+        val responseJson = if (contentType?.subtype == "json" && responseBody.source().buffer.isProbablyUtf8()) response.body?.string() else "Content cannot be displayed"
         Beagle.logNetworkEvent(
             NetworkLogItem(
                 isOutgoing = false,
