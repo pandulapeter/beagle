@@ -122,6 +122,7 @@ object Beagle : BeagleContract {
     override fun fetch(activity: Activity) {
         if (isEnabled) {
             drawers[activity]?.run { (parent as? BeagleDrawerLayout?)?.openDrawer(this) }
+            updateItems()
         }
     }
 

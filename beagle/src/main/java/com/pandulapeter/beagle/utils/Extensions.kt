@@ -128,7 +128,7 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
             is Trick.Text -> items.add(
                 TextViewModel(
                     id = trick.id,
-                    text = trick.text,
+                    text = trick.dynamicText?.invoke() ?: trick.text,
                     isTitle = trick.isTitle
                 )
             )
@@ -139,7 +139,7 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                     listOf(
                         LongTextViewModel(
                             id = "longText_${trick.id}",
-                            text = trick.text
+                            text = trick.dynamicText?.invoke() ?: trick.text
                         )
                     )
                 }

@@ -54,11 +54,13 @@ sealed class Trick {
      *
      * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
      * @param text - The text that should be displayed.
+     * @param dynamicText - A lambda that provides the text to display. If provided, it will override [text].
      * @param isTitle - Whether or not the text should appear in bold style. False by default.
      */
     data class Text(
         override val id: String = UUID.randomUUID().toString(),
-        val text: CharSequence,
+        val text: CharSequence = "",
+        val dynamicText: (() -> String)? = null,
         val isTitle: Boolean = false
     ) : Trick()
 
@@ -69,12 +71,14 @@ sealed class Trick {
      * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
      * @param title - The title of the module.
      * @param text - The text that should be displayed.
+     * @param dynamicText - A lambda that provides the text to display. If provided, it will override [text].
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      */
     data class LongText(
         override val id: String = UUID.randomUUID().toString(),
         override val title: CharSequence,
-        val text: CharSequence,
+        val text: CharSequence = "",
+        val dynamicText: (() -> String)? = null,
         override val isInitiallyExpanded: Boolean = false
     ) : Trick(), Expandable {
 
