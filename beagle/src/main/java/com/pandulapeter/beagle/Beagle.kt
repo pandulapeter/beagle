@@ -23,6 +23,7 @@ import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
+import com.pandulapeter.beagleCore.contracts.BeagleListener
 
 /**
  * The main singleton that handles the debug drawer's functionality.
@@ -150,6 +151,27 @@ object Beagle : BeagleContract {
     override fun log(message: String, tag: String?, payload: String?) {
         logItems = logItems.toMutableList().apply { add(0, LogItem(message = message, tag = tag, payload = payload)) }
     }
+
+    /**
+     * Registers a [BeagleListener] implementation.
+     */
+    override fun addListener(listener: BeagleListener) {
+        listeners.add(listener)
+    }
+
+    /**
+     * Removes the specified [BeagleListener] implementation.
+     */
+    override fun removeListener(listener: BeagleListener) {
+        listeners.remove(listener)
+    }
+
+    /**
+     * Removes all [BeagleListener] implementations.
+     */
+    override fun clearListeners() {
+        listeners.clear()
+    }
     //endregion
 
     //region Implementation details
@@ -219,6 +241,7 @@ object Beagle : BeagleContract {
             }
         }
     }
+    private val listeners = mutableListOf<BeagleListener>()
 
     init {
         moduleList = listOf(

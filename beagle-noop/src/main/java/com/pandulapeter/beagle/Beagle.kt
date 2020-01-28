@@ -6,6 +6,7 @@ import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
+import com.pandulapeter.beagleCore.contracts.BeagleListener
 
 /**
  * Fake implementation to be used in release builds.
@@ -52,4 +53,19 @@ object Beagle : BeagleContract {
      * Does nothing.
      */
     override fun log(message: String, tag: String?, payload: String?) = Unit
+
+    /**
+     * Does nothing.
+     */
+    override fun addListener(listener: BeagleListener) = Unit
+
+    /**
+     * Does nothing.
+     */
+    override fun removeListener(listener: BeagleListener) = Unit
+
+    /**
+     * Does nothing.
+     */
+    override fun clearListeners() = Unit
 }

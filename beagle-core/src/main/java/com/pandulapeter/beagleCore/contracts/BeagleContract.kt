@@ -32,6 +32,12 @@ interface BeagleContract {
 
     fun log(message: String, tag: String? = null, payload: String? = null)
 
+    fun addListener(listener: BeagleListener)
+
+    fun removeListener(listener: BeagleListener)
+
+    fun clearListeners()
+
     /**
      * API for serious people.
      */
