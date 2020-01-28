@@ -62,8 +62,8 @@ object Beagle : BeagleContract {
      *
      * @param tricks - The new list of tricks.
      */
-    override fun learn(tricks: List<Trick>) {
-        moduleList = tricks
+    override fun learn(vararg tricks: Trick) {
+        moduleList = tricks.toList()
     }
 
     /**

@@ -2,8 +2,8 @@ package com.pandulapeter.beagle
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
+import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 
@@ -26,7 +26,7 @@ object Beagle : BeagleContract {
     /**
      * Does nothing.
      */
-    override fun learn(tricks: List<Trick>) = Unit
+    override fun learn(vararg tricks: Trick) = Unit
 
     /**
      * Does nothing.

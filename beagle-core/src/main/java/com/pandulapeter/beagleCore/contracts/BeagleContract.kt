@@ -2,8 +2,8 @@ package com.pandulapeter.beagleCore.contracts
 
 import android.app.Activity
 import android.app.Application
-import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Appearance
+import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 
 /**
@@ -16,7 +16,11 @@ interface BeagleContract {
 
     fun imprint(application: Application, appearance: Appearance = Appearance())
 
-    fun learn(tricks: List<Trick>)
+    fun learn(vararg tricks: Trick)
+
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("Use Beagle.learn(vararg modules) function instead.")
+    fun learn(tricks: List<Trick>) = learn(*Array(tricks.size) { tricks[it] })
 
     fun learn(trick: Trick, positioning: Positioning = Positioning.Bottom)
 
@@ -34,7 +38,11 @@ interface BeagleContract {
 
     fun initialize(application: Application, appearance: Appearance = Appearance()) = imprint(application, appearance)
 
-    fun setModules(modules: List<Trick>) = learn(modules)
+    fun setModules(vararg modules: Trick) = learn(*modules)
+
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("Use Beagle.setModules(vararg modules) function instead.")
+    fun setModules(modules: List<Trick>) = learn(*Array(modules.size) { modules[it] })
 
     fun putModule(module: Trick, positioning: Positioning = Positioning.Bottom) = learn(module, positioning)
 

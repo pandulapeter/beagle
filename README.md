@@ -37,7 +37,7 @@ The library has to be initialized with an Application instance (preferably in th
 Beagle.imprint(this)
 ```
 
-After this a list of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
+After this a number of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
 
 ### Screenshots
 <img src="screenshots/general01.png" width="30%" /> <img src="screenshots/general02.png" width="30%" />
@@ -76,9 +76,9 @@ Unique modules can only be added once as they are specific to a single use case:
 The module list can be changed at any time (from any thread) using the following functions:
 
 ```kotlin
-Beagle.learn(tricks)
-Beagle.learn(trick, positioning)
-Beagle.forget(id)
+Beagle.learn(trick1, trick2, trick3...) // Remove all modules and add a new set
+Beagle.learn(trick, positioning) // Add a single module or update it if it already is added
+Beagle.forget(id) // Remove the specified module
 ```
 
 See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Trick.kt) for documentation about every supported module.
@@ -95,7 +95,7 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 
 ### License
 ```
-Copyright 2019 Pandula Péter
+Copyright 2020 Pandula Péter
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
