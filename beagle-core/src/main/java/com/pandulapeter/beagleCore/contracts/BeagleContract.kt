@@ -41,7 +41,6 @@ interface BeagleContract {
     /**
      * API for serious people.
      */
-
     fun initialize(application: Application, appearance: Appearance = Appearance()) = imprint(application, appearance)
 
     fun setModules(vararg modules: Trick) = learn(*modules)
