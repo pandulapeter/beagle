@@ -12,9 +12,11 @@ import androidx.annotation.Dimension
 import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.dimension
 import com.pandulapeter.beagle.utils.drawable
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -44,12 +46,36 @@ internal class BeagleDrawerLayout @JvmOverloads constructor(
             container.viewBoundsOverlayToggle = value
         }
     private var currentJob: CoroutineContext? = null
+    private val listener = object : DrawerListener {
+
+        override fun onDrawerOpened(drawerView: View) = Beagle.notifyListenersOnOpened()
+
+        override fun onDrawerClosed(drawerView: View) = Beagle.notifyListenersOnClosed()
+
+        override fun onDrawerStateChanged(newState: Int) {
+            if (newState == STATE_DRAGGING && drawer?.let { isDrawerOpen(it) } != true) {
+                Beagle.notifyListenersOnDragStarted()
+            }
+        }
+
+        override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
+    }
 
     fun takeAndShareScreenshot() = shareImage(getScreenshot())
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        addDrawerListener(listener)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        removeDrawerListener(listener)
+    }
+
     private fun shareImage(image: Bitmap) {
         currentJob?.cancel()
-        currentJob = GlobalScope.launch {
+        currentJob = GlobalScope.launch(Dispatchers.Default) {
             val imagesFolder = File(context.cacheDir, "beagleScreenshots")
             val uri: Uri?
             try {

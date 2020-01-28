@@ -67,5 +67,5 @@ object Beagle : BeagleContract {
     /**
      * Does nothing.
      */
-    override fun clearListeners() = Unit
+    override fun removeAllListeners() = Unit
 }

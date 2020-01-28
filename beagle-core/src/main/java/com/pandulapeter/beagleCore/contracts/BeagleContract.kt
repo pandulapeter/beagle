@@ -36,7 +36,7 @@ interface BeagleContract {
 
     fun removeListener(listener: BeagleListener)
 
-    fun clearListeners()
+    fun removeAllListeners()
 
     /**
      * API for serious people.

@@ -3,14 +3,25 @@ package com.pandulapeter.beagleExample.screens
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
+import com.pandulapeter.beagleCore.contracts.BeagleListener
 import com.pandulapeter.beagleExample.R
 import com.pandulapeter.beagleExample.utils.mockTestAccounts
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
+
+    private val beagleListener = object : BeagleListener {
+
+        override fun onDrawerOpened() = Toast.makeText(this@LoginActivity, "Opened", Toast.LENGTH_SHORT).show()
+
+        override fun onDrawerClosed() = Toast.makeText(this@LoginActivity, "Closed", Toast.LENGTH_SHORT).show()
+
+        override fun onDrawerDragStarted() = Toast.makeText(this@LoginActivity, "Drag started", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -35,11 +46,13 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             ),
             positioning = Positioning.Below(Trick.ForceCrashButton.ID)
         )
+        Beagle.addListener(beagleListener)
     }
 
     override fun onStop() {
         super.onStop()
         Beagle.forget(TEST_ACCOUNTS_MODULE_ID)
+        Beagle.removeListener(beagleListener)
     }
 
     override fun onBackPressed() {

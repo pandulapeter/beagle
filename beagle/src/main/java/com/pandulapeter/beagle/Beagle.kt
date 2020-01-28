@@ -169,9 +169,7 @@ object Beagle : BeagleContract {
     /**
      * Removes all [BeagleListener] implementations.
      */
-    override fun clearListeners() {
-        listeners.clear()
-    }
+    override fun removeAllListeners() = listeners.clear()
     //endregion
 
     //region Implementation details
@@ -345,5 +343,11 @@ object Beagle : BeagleContract {
             drawers.values.forEach { it.updateItems(items) }
         }
     }
+
+    internal fun notifyListenersOnDragStarted() = listeners.forEach { it.onDrawerDragStarted() }
+
+    internal fun notifyListenersOnOpened() = listeners.forEach { it.onDrawerOpened() }
+
+    internal fun notifyListenersOnClosed() = listeners.forEach { it.onDrawerClosed() }
     //endregion
 }
