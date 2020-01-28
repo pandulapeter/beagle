@@ -123,6 +123,7 @@ object Beagle : BeagleContract {
      */
     override fun fetch(activity: Activity) {
         if (isEnabled) {
+            notifyListenersOnDragStarted()
             drawers[activity]?.run { (parent as? BeagleDrawerLayout?)?.openDrawer(this) }
         }
     }
