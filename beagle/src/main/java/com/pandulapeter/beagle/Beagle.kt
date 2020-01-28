@@ -30,6 +30,7 @@ import com.pandulapeter.beagleCore.contracts.BeagleContract
 @Suppress("StaticFieldLeak")
 object Beagle : BeagleContract {
 
+    //region Public API
     /**
      * Use this flag to disable the debug drawer at runtime.
      */
@@ -147,12 +148,11 @@ object Beagle : BeagleContract {
      * @param payload - An optional String payload that can be opened in a dialog when the user clicks on a log message. Null by default.
      */
     override fun log(message: String, tag: String?, payload: String?) {
-        logItems = logItems.toMutableList().apply { add(0, LogItem(message = message, tag = tag, payload = payload)) }.take(MAX_ITEM_COUNT)
+        logItems = logItems.toMutableList().apply { add(0, LogItem(message = message, tag = tag, payload = payload)) }
     }
     //endregion
 
     //region Implementation details
-    private const val MAX_ITEM_COUNT = 500
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
     private var appearance = Appearance()
     private var moduleList = emptyList<Trick>()
@@ -231,7 +231,7 @@ object Beagle : BeagleContract {
     }
 
     internal fun logNetworkEvent(networkLogItem: NetworkLogItem) {
-        networkLogItems = networkLogItems.toMutableList().apply { add(0, networkLogItem) }.take(MAX_ITEM_COUNT)
+        networkLogItems = networkLogItems.toMutableList().apply { add(0, networkLogItem) }
     }
 
     //TODO: Make sure this doesn't break Activity shared element transitions.
