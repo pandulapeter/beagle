@@ -65,6 +65,7 @@ internal class BeagleDrawerLayout @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        setDrawerLockMode(if (Beagle.isEnabled) LOCK_MODE_UNDEFINED else LOCK_MODE_LOCKED_CLOSED)
         addDrawerListener(listener)
     }
 
