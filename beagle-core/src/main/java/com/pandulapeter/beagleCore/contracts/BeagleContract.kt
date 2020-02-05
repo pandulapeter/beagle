@@ -14,6 +14,8 @@ interface BeagleContract {
 
     var isEnabled: Boolean
 
+    val currentActivity: Activity?
+
     fun imprint(application: Application, appearance: Appearance = Appearance())
 
     fun learn(vararg tricks: Trick)

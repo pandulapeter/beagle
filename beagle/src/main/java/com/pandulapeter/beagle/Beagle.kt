@@ -46,6 +46,12 @@ object Beagle : BeagleContract {
         }
 
     /**
+     * Can be used to access the Activity instance that's currently on top.
+     */
+    override var currentActivity: Activity? = null
+        private set
+
+    /**
      * Hooks up the library to the Application's lifecycle. After this is called, a debug drawer will be inserted into every activity. This should be called
      * in the Application's onCreate() method.
      *
@@ -215,9 +221,6 @@ object Beagle : BeagleContract {
             field = value
             updateItems()
         }
-    //TODO: Should not leak. Test it to make sure.
-    internal var currentActivity: Activity? = null
-        private set
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

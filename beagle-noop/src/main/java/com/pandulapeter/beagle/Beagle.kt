@@ -14,10 +14,14 @@ import com.pandulapeter.beagleCore.contracts.BeagleListener
 object Beagle : BeagleContract {
 
     /**
-     * Does nothing.
+     * Does nothing (Beagle is always disabled in the noop variant).
      */
     override var isEnabled = false
-        set(_) = Unit
+
+    /**
+     * Returns null (Beagle does not work at all in the noop variant).
+     */
+    override val currentActivity: Activity? = null
 
     /**
      * Does nothing.
