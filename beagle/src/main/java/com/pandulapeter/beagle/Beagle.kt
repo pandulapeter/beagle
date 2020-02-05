@@ -46,7 +46,7 @@ object Beagle : BeagleContract {
         }
 
     /**
-     * Can be used to access the Activity instance that's currently on top.
+     * Can be used to access the most recently resumed Activity instance.
      */
     override var currentActivity: Activity? = null
         private set
