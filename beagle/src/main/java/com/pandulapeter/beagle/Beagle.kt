@@ -224,7 +224,9 @@ object Beagle : BeagleContract {
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
+            if (activity.componentName.className.startsWith(activity.componentName.packageName)) {
+                drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
+            }
         }
 
         override fun onActivityResumed(activity: Activity) {
