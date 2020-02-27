@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.models.LogItem
@@ -234,6 +235,7 @@ object Beagle : BeagleContract {
             // causes crashes. We only take into consideration the first two parts of the package name to avoid false-positives caused by adding an application ID suffix.
             if (activity.componentName.className.startsWith(activity.componentName.packageName.split(".").take(2).joinToString("."))) {
                 drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
+                (activity as? AppCompatActivity?)?.onBackPressedDispatcher?.addCallback(activity, onBackPressedCallback)
             }
         }
 
@@ -360,8 +362,14 @@ object Beagle : BeagleContract {
 
     internal fun notifyListenersOnDragStarted() = listeners.forEach { it.onDrawerDragStarted() }
 
-    internal fun notifyListenersOnOpened() = listeners.forEach { it.onDrawerOpened() }
+    internal fun notifyListenersOnOpened() {
+        onBackPressedCallback.isEnabled = true
+        listeners.forEach { it.onDrawerOpened() }
+    }
 
-    internal fun notifyListenersOnClosed() = listeners.forEach { it.onDrawerClosed() }
+    internal fun notifyListenersOnClosed() {
+        onBackPressedCallback.isEnabled = false
+        listeners.forEach { it.onDrawerClosed() }
+    }
     //endregion
 }

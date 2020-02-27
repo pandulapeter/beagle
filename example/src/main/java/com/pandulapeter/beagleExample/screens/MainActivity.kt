@@ -22,12 +22,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         findViewById<View>(R.id.open_login_screen_button).setOnClickListener { startActivity(Intent(this, LoginActivity::class.java)) }
     }
 
-    override fun onBackPressed() {
-        if (!Beagle.dismiss(this)) {
-            super.onBackPressed()
-        }
-    }
-
     private fun performNetworkRequest() = NetworkingManager.networkingService.performNetworkRequest().executeRequest(
         onSuccess = { musicGenre -> Toast.makeText(this, musicGenre, Toast.LENGTH_SHORT).show() },
         onError = { Toast.makeText(this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show() }

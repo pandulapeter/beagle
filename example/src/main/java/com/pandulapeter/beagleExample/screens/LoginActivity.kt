@@ -55,12 +55,6 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         Beagle.removeListener(beagleListener)
     }
 
-    override fun onBackPressed() {
-        if (!Beagle.dismiss(this)) {
-            super.onBackPressed()
-        }
-    }
-
     companion object {
         private const val TEST_ACCOUNTS_MODULE_ID = "testAccounts"
     }
