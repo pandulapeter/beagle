@@ -2,6 +2,11 @@ package com.pandulapeter.beagle
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.View
@@ -23,15 +28,18 @@ import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
+import com.pandulapeter.beagleCore.configuration.TriggerMode
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 import com.pandulapeter.beagleCore.contracts.BeagleListener
+import kotlin.math.abs
 import kotlin.math.max
+
 
 /**
  * The main singleton that handles the debug drawer's functionality.
  */
 @Suppress("StaticFieldLeak")
-object Beagle : BeagleContract {
+object Beagle : BeagleContract, SensorEventListener {
 
     //region Public API
     /**
@@ -42,7 +50,7 @@ object Beagle : BeagleContract {
             if (field != value) {
                 field = value
                 drawers.values.forEach { drawer ->
-                    (drawer.parent as? BeagleDrawerLayout?)?.setDrawerLockMode(if (value) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    (drawer.parent as? BeagleDrawerLayout?)?.setDrawerLockMode(if (isEnabled && (triggerMode == TriggerMode.SWIPE_ONLY || triggerMode == TriggerMode.SWIPE_AND_SHAKE)) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 }
             }
         }
@@ -59,13 +67,20 @@ object Beagle : BeagleContract {
      *
      * @param application - The [Application] instance.
      * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
-     * @param appearance - The [Appearance] that specifies the appearance the drawer.
+     * @param triggerMode - Specifies the way the drawer can be opened. [TriggerMode.SWIPE_AND_SHAKE] by default.
+     * @param appearance - The [Appearance] that specifies the appearance the drawer. Optional.
      */
-    override fun imprint(application: Application, packageName: String?, appearance: Appearance) {
+    override fun imprint(application: Application, packageName: String?, triggerMode: TriggerMode, appearance: Appearance) {
         this.appearance = appearance
-        this.applicationId = packageName ?: application.packageName.split(".").run { take(max(size - 1, 1)).joinToString(".") }
+        this.triggerMode = triggerMode
+        this.packageName = packageName ?: application.packageName.split(".").run { take(max(size - 1, 1)).joinToString(".") }
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
+        if (triggerMode == TriggerMode.SWIPE_AND_SHAKE || triggerMode == TriggerMode.SHAKE_ONLY) {
+            (application.getSystemService(Context.SENSOR_SERVICE) as? SensorManager?)?.run {
+                registerListener(this@Beagle, getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
+            }
+        }
     }
 
     /**
@@ -194,7 +209,7 @@ object Beagle : BeagleContract {
     private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<Trick.KeylineOverlayToggle>().firstOrNull()
     private val viewBoundsOverlayToggleModule get() = moduleList.filterIsInstance<Trick.ViewBoundsOverlayToggle>().firstOrNull()
     internal val drawers = mutableMapOf<Activity, BeagleDrawer>()
-    private var applicationId = ""
+    private var packageName = ""
     private var items = emptyList<DrawerItemViewModel>()
     internal var isKeylineOverlayEnabled = false
         set(value) {
@@ -230,13 +245,15 @@ object Beagle : BeagleContract {
         override fun handleOnBackPressed() {
             currentActivity?.run { dismiss(this) }
         }
-
     }
+    private var triggerMode = TriggerMode.SWIPE_AND_SHAKE
+    private var lastSensorUpdate = 0L
+    private var lastSensorValues = Triple(0f, 0f, 0f)
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             // The check is added to make sure Beagle is not injected into activities that come from other libraries (LeakCanary, Google sign-in / In app purchase) where it causes crashes.
-            if (activity.componentName.className.startsWith(applicationId)) {
+            if (activity.componentName.className.startsWith(packageName)) {
                 drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
                 (activity as? AppCompatActivity?)?.onBackPressedDispatcher?.addCallback(activity, onBackPressedCallback)
             }
@@ -270,6 +287,27 @@ object Beagle : BeagleContract {
         )
     }
 
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (triggerMode == TriggerMode.SWIPE_AND_SHAKE || triggerMode == TriggerMode.SHAKE_ONLY) {
+            if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastSensorUpdate > 100) {
+                    val diffTime = currentTime - lastSensorUpdate
+                    lastSensorUpdate = currentTime
+                    val newSensorValues = Triple(event.values[0], event.values[1], event.values[2])
+                    val speed =
+                        abs(newSensorValues.first + newSensorValues.second + newSensorValues.third - lastSensorValues.first - lastSensorValues.second - lastSensorValues.third) / diffTime * 10000
+                    if (speed > SHAKE_THRESHOLD) {
+                        currentActivity?.also { fetch(it) }
+                    }
+                    lastSensorValues = newSensorValues
+                }
+            }
+        }
+    }
+
     internal fun logNetworkEvent(networkLogItem: NetworkLogItem) {
         networkLogItems = networkLogItems.toMutableList().apply { add(0, networkLogItem) }
     }
@@ -294,7 +332,7 @@ object Beagle : BeagleContract {
                                 if (shouldOpenDrawer) {
                                     openDrawer(drawer)
                                 }
-                                setDrawerLockMode(if (isEnabled) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                                setDrawerLockMode(if (isEnabled && (triggerMode == TriggerMode.SWIPE_ONLY || triggerMode == TriggerMode.SWIPE_AND_SHAKE)) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                                 if (isKeylineOverlayEnabled) {
                                     keylineOverlay = keylineOverlayToggleModule
                                 }
@@ -374,5 +412,7 @@ object Beagle : BeagleContract {
         onBackPressedCallback.isEnabled = false
         listeners.forEach { it.onDrawerClosed() }
     }
+
+    private const val SHAKE_THRESHOLD = 1200
     //endregion
 }
