@@ -25,6 +25,7 @@ import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 import com.pandulapeter.beagleCore.contracts.BeagleListener
+import kotlin.math.max
 
 /**
  * The main singleton that handles the debug drawer's functionality.
@@ -62,7 +63,7 @@ object Beagle : BeagleContract {
      */
     override fun imprint(application: Application, packageName: String?, appearance: Appearance) {
         this.appearance = appearance
-        this.applicationId = applicationId ?: application.packageName.split(".").take(2).joinToString(".")
+        this.applicationId = packageName ?: application.packageName.split(".").run { take(max(size - 1, 1)).joinToString(".") }
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
