@@ -1,9 +1,9 @@
 package com.pandulapeter.beagleCore.configuration
 
 /**
- * Used for specifying the way the drawer is opened.
+ * Used for specifying the way the drawer can be opened.
  */
-enum class TriggerMode {
+enum class TriggerGesture {
 
     /**
      * The drawer can be opened by swiping horizontally from the right (end) edge of the screen.
@@ -23,5 +23,5 @@ enum class TriggerMode {
     /**
      * The drawer can only be opened by calling Beagle.fetch().
      */
-    MANUAL_ONLY
+    NONE
 }

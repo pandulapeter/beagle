@@ -5,7 +5,7 @@ import android.app.Application
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
-import com.pandulapeter.beagleCore.configuration.TriggerMode
+import com.pandulapeter.beagleCore.configuration.TriggerGesture
 import com.pandulapeter.beagleCore.contracts.BeagleContract
 import com.pandulapeter.beagleCore.contracts.BeagleListener
 
@@ -27,7 +27,7 @@ object Beagle : BeagleContract {
     /**
      * Does nothing.
      */
-    override fun imprint(application: Application, packageName: String?, triggerMode: TriggerMode, appearance: Appearance) = Unit
+    override fun imprint(application: Application, packageName: String?, triggerGesture: TriggerGesture, appearance: Appearance) = Unit
 
     /**
      * Does nothing.

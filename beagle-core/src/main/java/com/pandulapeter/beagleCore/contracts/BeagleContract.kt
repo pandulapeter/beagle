@@ -5,7 +5,7 @@ import android.app.Application
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
-import com.pandulapeter.beagleCore.configuration.TriggerMode
+import com.pandulapeter.beagleCore.configuration.TriggerGesture
 
 /**
  * This interface assures that the real implementation and the "noop" variant have the same public API. See one of those for the function documentations.
@@ -17,7 +17,7 @@ interface BeagleContract {
 
     val currentActivity: Activity?
 
-    fun imprint(application: Application, packageName: String? = null, triggerMode: TriggerMode = TriggerMode.SWIPE_AND_SHAKE, appearance: Appearance = Appearance())
+    fun imprint(application: Application, packageName: String? = null, triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE, appearance: Appearance = Appearance())
 
     fun learn(vararg tricks: Trick)
 
@@ -44,8 +44,8 @@ interface BeagleContract {
     /**
      * API for serious people.
      */
-    fun initialize(application: Application, packageName: String? = null, triggerMode: TriggerMode = TriggerMode.SWIPE_AND_SHAKE, appearance: Appearance = Appearance()) =
-        imprint(application, packageName, triggerMode, appearance)
+    fun initialize(application: Application, packageName: String? = null, triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE, appearance: Appearance = Appearance()) =
+        imprint(application, packageName, triggerGesture, appearance)
 
     fun setModules(vararg modules: Trick) = learn(*modules)
 

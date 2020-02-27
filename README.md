@@ -40,7 +40,7 @@ If the base package name of your project does not start with the application ID 
 
 After this a number of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
 
-You can fetch beagle by swiping horizontally from the right edge of the screen or by shaking the device.
+By default you can fetch Beagle by swiping horizontally from the right edge of the screen or by shaking the device.
 
 ### Screenshots
 <img src="screenshots/general01.png" width="30%" /> <img src="screenshots/general02.png" width="30%" />
@@ -88,7 +88,7 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 
 ### Tips and tricks
 * The UI of the drawer can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Appearance.kt) instance when initializing the library.
-* The way the drawer can be opened is set by providing a [TriggerMode](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/TriggerMode.kt) when initializing the library.
+* The way the drawer can be opened is set by providing a [TriggerGesture](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/TriggerGesture.kt) when initializing the library.
 * The drawers can be disabled / enabled at runtime by modifying the value of Beagle.isEnabled. This could be useful if you want to restrict access to the debug drawer features based on user type.
 * The library exposes the [BeagleListener](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/contracts/BeagleListener.kt) interface that can be used to observe state changes. Make sure to always remove implementations that should be garbage collected.
 * The library exposes the current Activity instance through the nullable, read-only Beagle.currentActivity property, which can be used to perform navigation actions in response to click events for example.
