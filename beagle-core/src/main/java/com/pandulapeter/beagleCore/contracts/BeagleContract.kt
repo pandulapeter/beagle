@@ -16,7 +16,7 @@ interface BeagleContract {
 
     val currentActivity: Activity?
 
-    fun imprint(application: Application, applicationId: String? = null, appearance: Appearance = Appearance())
+    fun imprint(application: Application, packageName: String? = null, appearance: Appearance = Appearance())
 
     fun learn(vararg tricks: Trick)
 
@@ -43,7 +43,7 @@ interface BeagleContract {
     /**
      * API for serious people.
      */
-    fun initialize(application: Application, applicationId: String? = null, appearance: Appearance = Appearance()) = imprint(application, applicationId, appearance)
+    fun initialize(application: Application, packageName: String? = null, appearance: Appearance = Appearance()) = imprint(application, packageName, appearance)
 
     fun setModules(vararg modules: Trick) = learn(*modules)
 

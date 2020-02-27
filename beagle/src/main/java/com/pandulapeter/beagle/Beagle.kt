@@ -57,10 +57,10 @@ object Beagle : BeagleContract {
      * in the Application's onCreate() method.
      *
      * @param application - The [Application] instance.
-     * @param applicationId - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
+     * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
      * @param appearance - The [Appearance] that specifies the appearance the drawer.
      */
-    override fun imprint(application: Application, applicationId: String?, appearance: Appearance) {
+    override fun imprint(application: Application, packageName: String?, appearance: Appearance) {
         this.appearance = appearance
         this.applicationId = applicationId ?: application.packageName.split(".").take(2).joinToString(".")
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)

@@ -36,7 +36,7 @@ The library has to be initialized with an Application instance (preferably in th
 ```kotlin
 Beagle.imprint(this)
 ```
-If the base package name of your project does not start with the application ID (for example if you're using product flavors) you should also specify the *applicationId* parameter of the imprint() function.
+If the base package name of your project does not start with the application ID (for example if you're using product flavors) you should also specify the *packageName* parameter of the imprint() function. The debug drawer will only be injected into Activities that are located in that package (or subpackages of it).
 
 After this a number of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
 

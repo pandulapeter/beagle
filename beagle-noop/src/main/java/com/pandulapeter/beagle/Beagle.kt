@@ -26,7 +26,7 @@ object Beagle : BeagleContract {
     /**
      * Does nothing.
      */
-    override fun imprint(application: Application, applicationId: String?, appearance: Appearance) = Unit
+    override fun imprint(application: Application, packageName: String?, appearance: Appearance) = Unit
 
     /**
      * Does nothing.
