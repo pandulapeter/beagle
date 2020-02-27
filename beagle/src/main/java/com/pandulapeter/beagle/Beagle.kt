@@ -57,10 +57,12 @@ object Beagle : BeagleContract {
      * in the Application's onCreate() method.
      *
      * @param application - The [Application] instance.
+     * @param applicationId - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
      * @param appearance - The [Appearance] that specifies the appearance the drawer.
      */
-    override fun imprint(application: Application, appearance: Appearance) {
+    override fun imprint(application: Application, applicationId: String?, appearance: Appearance) {
         this.appearance = appearance
+        this.applicationId = applicationId ?: application.packageName.split(".").take(2).joinToString(".")
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
@@ -191,6 +193,7 @@ object Beagle : BeagleContract {
     private val keylineOverlayToggleModule get() = moduleList.filterIsInstance<Trick.KeylineOverlayToggle>().firstOrNull()
     private val viewBoundsOverlayToggleModule get() = moduleList.filterIsInstance<Trick.ViewBoundsOverlayToggle>().firstOrNull()
     internal val drawers = mutableMapOf<Activity, BeagleDrawer>()
+    private var applicationId = ""
     private var items = emptyList<DrawerItemViewModel>()
     internal var isKeylineOverlayEnabled = false
         set(value) {
@@ -231,9 +234,8 @@ object Beagle : BeagleContract {
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            // The check is added to make sure Beagle is not injected into activities that come from other libraries (LeakCanary, Google sign-in / In app purchase) where it
-            // causes crashes. We only take into consideration the first two parts of the package name to avoid false-positives caused by adding an application ID suffix.
-            if (activity.componentName.className.startsWith(activity.componentName.packageName.split(".").take(2).joinToString("."))) {
+            // The check is added to make sure Beagle is not injected into activities that come from other libraries (LeakCanary, Google sign-in / In app purchase) where it causes crashes.
+            if (activity.componentName.className.startsWith(applicationId)) {
                 drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
                 (activity as? AppCompatActivity?)?.onBackPressedDispatcher?.addCallback(activity, onBackPressedCallback)
             }
