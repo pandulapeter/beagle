@@ -221,10 +221,18 @@ object Beagle : BeagleContract {
             field = value
             updateItems()
         }
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            currentActivity?.run { dismiss(this) }
+        }
+
+    }
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            if (activity.componentName.className.startsWith(activity.componentName.packageName)) {
+            // The check is added to make sure Beagle is not injected into activities that come from other libraries (LeakCanary, Google sign-in / In app purchase) where it
+            // causes crashes. We only take into consideration the first two parts of the package name to avoid false-positives caused by adding an application ID suffix.
+            if (activity.componentName.className.startsWith(activity.componentName.packageName.split(".").take(2).joinToString("."))) {
                 drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
             }
         }
