@@ -239,7 +239,7 @@ object Beagle : BeagleContract, SensorEventListener {
             field = value
             updateItems()
         }
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+    private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
             currentActivity?.run { dismiss(this) }
         }
