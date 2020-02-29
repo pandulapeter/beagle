@@ -89,12 +89,12 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 ### Tips and tricks
 * The UI of the drawer can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Appearance.kt) instance when initializing the library.
 * The way the drawer can be opened is set by providing a [TriggerGesture](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/TriggerGesture.kt) when initializing the library.
-* The drawers can be disabled / enabled at runtime by modifying the value of Beagle.isEnabled. This could be useful if you want to restrict access to the debug drawer features based on user type.
+* The drawers can be enabled / disabled at runtime by modifying the value of Beagle.isEnabled. This could be useful if you want to restrict access to the debug drawer features based on user type.
 * The library exposes the [BeagleListener](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/contracts/BeagleListener.kt) interface that can be used to observe state changes. Make sure to always remove implementations that should be garbage collected.
 * The library exposes the current Activity instance through the nullable, read-only Beagle.currentActivity property, which can be used to perform navigation actions in response to click events for example.
 
 ### Known issues
-* Check the [Issues](https://github.com/pandulapeter/beagle/issues) page for further bugs.
+* Check out the [Issues](https://github.com/pandulapeter/beagle/issues) page for the list of know problems.
 
 ### License
 ```
