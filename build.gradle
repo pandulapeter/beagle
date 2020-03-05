@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = "1.3.61"
+        kotlinVersion = "1.3.70"
         libraryVersion = "1.6.0"
         okHttpVersion = "4.0.1"
         versionCode = 1
