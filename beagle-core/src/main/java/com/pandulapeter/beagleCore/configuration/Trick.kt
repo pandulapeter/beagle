@@ -3,6 +3,7 @@ package com.pandulapeter.beagleCore.configuration
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
+import androidx.annotation.IdRes
 import com.pandulapeter.beagleCore.contracts.BeagleListItemContract
 import java.util.UUID
 
@@ -443,6 +444,31 @@ sealed class Trick {
 
         companion object {
             const val ID = "forceCrashButton"
+        }
+    }
+
+    /**
+     * Displays a button that generates a random string and sets it as the text for a specified EditText widget, copies it to the clipboard or exposes it through a custom callback.
+     * This module can only be added once.
+     *
+     * @param text - The text that should be displayed on the button. "Generate Lorem Ipsum" by default.
+     * @param editTextId - The ID of the EditText widget where the generated text should go. If both this and onStringReady are null, the text will be copied to the clipboard. Null by default.
+     * @param minimumWordCount - The minimum number of words to be generated (must be larger then 1 and smaller than maximumWordCount). 10 by default.
+     * @param maximumWordCount - The maximum number of words to be generated (must be larger or equal to minimumWordCount). 40 by default.
+     * @param onStringReady - A callback that can be implemented for custom handling of the generated string. It will only be called if editTextId is null. If both this and editTextId are null, the text will be copied to the clipboard. Null by default.
+     */
+    data class LoremIpsumButton(
+        val text: CharSequence = "Generate Lorem Ipsum",
+        @IdRes val editTextId: Int? = null,
+        val minimumWordCount: Int = 10,
+        val maximumWordCount: Int = 40,
+        val onStringReady: ((loremIpsum: String) -> Unit)? = null
+    ) : Trick() {
+
+        override val id = ID
+
+        companion object {
+            const val ID = "loremIpsumButton"
         }
     }
 

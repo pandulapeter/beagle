@@ -63,7 +63,9 @@ interface BeagleContract {
 
     fun removeModule(id: String) = forget(id)
 
-    fun openDrawer(activity: Activity) = fetch(activity)
+    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.openDrawer()"))
+    fun openDrawer(activity: Activity) = fetch()
 
-    fun closeDrawer(activity: Activity) = dismiss(activity)
+    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.closeDrawer()"))
+    fun closeDrawer(activity: Activity) = dismiss()
 }

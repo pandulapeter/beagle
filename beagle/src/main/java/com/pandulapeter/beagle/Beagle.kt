@@ -255,7 +255,7 @@ object Beagle : BeagleContract, SensorEventListener {
         }
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
-            currentActivity?.run { dismiss(this) }
+            dismiss()
         }
     }
     private var triggerGesture = TriggerGesture.SWIPE_AND_SHAKE
@@ -312,7 +312,7 @@ object Beagle : BeagleContract, SensorEventListener {
                     val speed =
                         abs(newSensorValues.first + newSensorValues.second + newSensorValues.third - lastSensorValues.first - lastSensorValues.second - lastSensorValues.third) / diffTime * 10000
                     if (speed > SHAKE_THRESHOLD) {
-                        currentActivity?.also { fetch(it) }
+                        fetch()
                     }
                     lastSensorValues = newSensorValues
                 }

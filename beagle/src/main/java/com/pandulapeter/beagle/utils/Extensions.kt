@@ -2,6 +2,8 @@ package com.pandulapeter.beagle.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -13,6 +15,8 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DimenRes
@@ -272,6 +276,7 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                     shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
                     text = trick.text,
                     onButtonPressed = {
+                        Beagle.dismiss()
                         Beagle.currentActivity?.run {
                             startActivity(Intent().apply {
                                 action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
@@ -285,7 +290,10 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                     id = trick.id,
                     shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
                     text = trick.text,
-                    onButtonPressed = { (Beagle.drawers[Beagle.currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot() }
+                    onButtonPressed = {
+                        (Beagle.drawers[Beagle.currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot()
+                        Beagle.dismiss()
+                    }
                 )
             )
             is Trick.ForceCrashButton -> items.add(
@@ -294,6 +302,33 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                     shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
                     text = trick.text,
                     onButtonPressed = { throw RuntimeException(trick.message) }
+                )
+            )
+            is Trick.LoremIpsumButton -> items.add(
+                ButtonViewModel(
+                    id = trick.id,
+                    shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
+                    text = trick.text,
+                    onButtonPressed = {
+                        val generatedText = LoremIpsumGenerator.generateSentence(trick.minimumWordCount, trick.maximumWordCount)
+                        trick.editTextId.also { editTextId ->
+                            if (editTextId == null) {
+                                trick.onStringReady.let { onStringReady ->
+                                    if (onStringReady == null) {
+                                        (Beagle.currentActivity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?)?.setPrimaryClip(
+                                            ClipData.newPlainText(generatedText, generatedText)
+                                        )
+                                        Toast.makeText(Beagle.currentActivity, "Text copied to clipboard.", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        onStringReady(generatedText)
+                                    }
+                                }
+                            } else {
+                                Beagle.currentActivity?.findViewById<EditText>(editTextId)?.setText(generatedText)
+                            }
+                        }
+                        Beagle.dismiss()
+                    }
                 )
             )
             is Trick.NetworkLogList -> networkLogItems.take(trick.maxItemCount).let { networkLogItems ->

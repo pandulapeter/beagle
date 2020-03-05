@@ -33,6 +33,12 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
     override fun onStart() {
         super.onStart()
         Beagle.learn(
+            trick = Trick.LoremIpsumButton(
+                editTextId = R.id.message
+            ),
+            positioning = Positioning.Below(Trick.ForceCrashButton.ID)
+        )
+        Beagle.learn(
             trick = Trick.SimpleList(
                 id = TEST_ACCOUNTS_MODULE_ID,
                 title = "Test accounts",
@@ -41,16 +47,17 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                 onItemSelected = { account ->
                     findViewById<EditText>(R.id.username_input).setText(account.name)
                     findViewById<EditText>(R.id.password_input).setText(account.password)
-                    Beagle.dismiss(this@LoginActivity)
+                    Beagle.dismiss()
                 }
             ),
-            positioning = Positioning.Below(Trick.ForceCrashButton.ID)
+            positioning = Positioning.Below(Trick.LoremIpsumButton.ID)
         )
         Beagle.addListener(beagleListener)
     }
 
     override fun onStop() {
         super.onStop()
+        Beagle.forget(Trick.LoremIpsumButton.ID)
         Beagle.forget(TEST_ACCOUNTS_MODULE_ID)
         Beagle.removeListener(beagleListener)
     }

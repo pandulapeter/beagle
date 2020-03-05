@@ -7,6 +7,7 @@
     <string name="open_login_screen">Open login screen</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="message">Message</string>
     <string name="back">Back</string>
     <string name="something_went_wrong">Something went wrong</string>
 
