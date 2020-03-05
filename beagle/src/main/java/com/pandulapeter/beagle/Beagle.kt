@@ -144,10 +144,16 @@ object Beagle : BeagleContract, SensorEventListener {
      *
      * @param activity - The current [Activity] instance.
      */
-    override fun fetch(activity: Activity) {
+    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.fetch()"))
+    override fun fetch(activity: Activity) = fetch()
+
+    /**
+     * Tries to open the current Activity's debug drawer.
+     */
+    override fun fetch() {
         if (isEnabled) {
             notifyListenersOnDragStarted()
-            drawers[activity]?.run { (parent as? BeagleDrawerLayout?)?.openDrawer(this) }
+            drawers[currentActivity]?.run { (parent as? BeagleDrawerLayout?)?.openDrawer(this) }
         }
     }
 
@@ -157,8 +163,16 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param activity - The current [Activity] instance.
      * @return - True if the drawer was open, false otherwise
      */
-    override fun dismiss(activity: Activity): Boolean {
-        val drawer = drawers[activity]
+    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.dismiss()"))
+    override fun dismiss(activity: Activity): Boolean = dismiss()
+
+    /**
+     * Tries to close the current Activity's debug drawer. For proper UX this should be used in onBackPressed() to block any other logic if it returns true.
+     *
+     * @return - True if the drawer was open, false otherwise
+     */
+    override fun dismiss(): Boolean {
+        val drawer = drawers[currentActivity]
         val drawerLayout = drawer?.parent as? BeagleDrawerLayout?
         return (drawerLayout?.isDrawerOpen(drawer) == true).also {
             drawerLayout?.closeDrawers()

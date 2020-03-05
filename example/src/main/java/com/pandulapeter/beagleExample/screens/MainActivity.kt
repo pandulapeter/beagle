@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        findViewById<View>(R.id.open_debug_menu_button).setOnClickListener { Beagle.fetch(this) }
+        findViewById<View>(R.id.open_debug_menu_button).setOnClickListener { Beagle.fetch() }
         findViewById<View>(R.id.perform_network_request_button).setOnClickListener { performNetworkRequest() }
         findViewById<View>(R.id.add_log_message_button).setOnClickListener { Beagle.log(message = logMessages.random(), payload = listOf("Random payload", null).random()) }
         findViewById<View>(R.id.open_login_screen_button).setOnClickListener { startActivity(Intent(this, LoginActivity::class.java)) }

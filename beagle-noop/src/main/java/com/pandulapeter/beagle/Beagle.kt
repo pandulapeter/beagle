@@ -50,9 +50,19 @@ object Beagle : BeagleContract {
     override fun dismiss(activity: Activity) = false
 
     /**
+     * Does nothing and returns false.
+     */
+    override fun dismiss() = false
+
+    /**
      * Does nothing.
      */
     override fun fetch(activity: Activity) = Unit
+
+    /**
+     * Does nothing.
+     */
+    override fun fetch() = Unit
 
     /**
      * Does nothing.

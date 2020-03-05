@@ -29,9 +29,15 @@ interface BeagleContract {
 
     fun forget(id: String)
 
+    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.fetch()"))
     fun fetch(activity: Activity)
 
+    fun fetch()
+
+    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.dismiss()"))
     fun dismiss(activity: Activity): Boolean
+
+    fun dismiss(): Boolean
 
     fun log(message: String, tag: String? = null, payload: String? = null)
 

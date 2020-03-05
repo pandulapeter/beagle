@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        findViewById<View>(R.id.open_debug_menu_button).setOnClickListener { Beagle.fetch(this) }
+        findViewById<View>(R.id.open_debug_menu_button).setOnClickListener { Beagle.fetch() }
         findViewById<View>(R.id.back_button).setOnClickListener { supportFinishAfterTransition() }
     }
 
