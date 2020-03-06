@@ -177,13 +177,28 @@ object Beagle : BeagleContract, SensorEventListener {
 
     /**
      * Registers a [BeagleListener] implementation.
+     *
+     * @param lifecycleOwner - By providing a [LifecycleOwner] Beagle will automatically remove the listener once the lifecycle is over. Null by default.
+     * @param listener - The [BeagleListener] to add.
      */
-    override fun addListener(listener: BeagleListener) {
-        listeners.add(listener)
+    override fun addListener(lifecycleOwner: LifecycleOwner?, listener: BeagleListener) {
+        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+            fun onCreate() = listeners.add(listener)
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            fun onDestroy() {
+                removeListener(listener)
+                lifecycleOwner.lifecycle.removeObserver(this)
+            }
+        }) ?: listeners.add(listener)
     }
 
     /**
      * Removes the specified [BeagleListener] implementation.
+     *
+     * @param listener - The [BeagleListener] to remove.
      */
     override fun removeListener(listener: BeagleListener) {
         listeners.remove(listener)

@@ -10,7 +10,6 @@ interface BeagleListener {
      */
     fun onDrawerDragStarted() = Unit
 
-
     /**
      * Called when the drawer gets opened.
      */

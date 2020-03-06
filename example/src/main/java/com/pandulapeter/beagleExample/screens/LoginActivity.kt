@@ -14,24 +14,11 @@ import com.pandulapeter.beagleExample.utils.mockTestAccounts
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
-    private val beagleListener = object : BeagleListener {
-
-        override fun onDrawerOpened() = Toast.makeText(this@LoginActivity, "Opened", Toast.LENGTH_SHORT).show()
-
-        override fun onDrawerClosed() = Toast.makeText(this@LoginActivity, "Closed", Toast.LENGTH_SHORT).show()
-
-        override fun onDrawerDragStarted() = Toast.makeText(this@LoginActivity, "Drag started", Toast.LENGTH_SHORT).show()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         findViewById<View>(R.id.open_debug_menu_button).setOnClickListener { Beagle.fetch() }
         findViewById<View>(R.id.back_button).setOnClickListener { supportFinishAfterTransition() }
-    }
-
-    override fun onStart() {
-        super.onStart()
         Beagle.learn(
             trick = Trick.LoremIpsumButton(
                 editTextId = R.id.message
@@ -53,11 +40,13 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             positioning = Positioning.Below(Trick.LoremIpsumButton.ID),
             lifecycleOwner = this
         )
-        Beagle.addListener(beagleListener)
-    }
+        Beagle.addListener(this, object : BeagleListener {
 
-    override fun onStop() {
-        super.onStop()
-        Beagle.removeListener(beagleListener)
+            override fun onDrawerOpened() = Toast.makeText(this@LoginActivity, "Opened", Toast.LENGTH_SHORT).show()
+
+            override fun onDrawerClosed() = Toast.makeText(this@LoginActivity, "Closed", Toast.LENGTH_SHORT).show()
+
+            override fun onDrawerDragStarted() = Toast.makeText(this@LoginActivity, "Drag started", Toast.LENGTH_SHORT).show()
+        })
     }
 }

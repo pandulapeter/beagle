@@ -73,7 +73,7 @@ object Beagle : BeagleContract {
     /**
      * Does nothing.
      */
-    override fun addListener(listener: BeagleListener) = Unit
+    override fun addListener(lifecycleOwner: LifecycleOwner?, listener: BeagleListener) = Unit
 
     /**
      * Does nothing.

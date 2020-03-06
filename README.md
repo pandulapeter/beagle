@@ -45,8 +45,8 @@ By default you can fetch Beagle by swiping horizontally from the right edge of t
 ### Screenshots
 <img src="screenshots/general01.png" width="30%" /> <img src="screenshots/general02.png" width="30%" />
 
-### Tricks
-Any number of generic modules can be added in any order as long as they have a unique ID:
+### Modules
+Any number of generic tricks can be taught in any order as long as they have a unique ID:
 * [Divider](/screenshots/moduleDivider.png) - Displays a horizontal line.
 * [Padding](/screenshots/modulePadding.png) - Displays an empty space of specified size.
 * [Text](/screenshots/moduleText.png) - Displays simple text content.
@@ -80,9 +80,9 @@ Unique modules can only be added once as they are specific to a single use case:
 The module list can be changed at any time (from any thread) using the following functions:
 
 ```kotlin
-Beagle.learn(trick1, trick2, trick3...) // Remove all modules and add a new set
-Beagle.learn(trick, positioning) // Add a single module or update it if it already is added
-Beagle.forget(id) // Remove the specified module
+Beagle.learn(trick1, trick2, trick3...) // Remove all modules and add the newly specified set.
+Beagle.learn(trick, positioning?, lifecycleOwner?) // Add a single module or update it if it already is added. By providing a lifecycleOwner, Beagle will only display the new module for the duration of the specified lifecycle.
+Beagle.forget(id) // Remove the specified module.
 ```
 
 See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Trick.kt) for documentation about every supported module.

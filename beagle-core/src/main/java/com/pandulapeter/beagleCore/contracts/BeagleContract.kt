@@ -33,7 +33,7 @@ interface BeagleContract {
 
     fun log(message: String, tag: String? = null, payload: String? = null)
 
-    fun addListener(listener: BeagleListener)
+    fun addListener(lifecycleOwner: LifecycleOwner? = null, listener: BeagleListener)
 
     fun removeListener(listener: BeagleListener)
 
