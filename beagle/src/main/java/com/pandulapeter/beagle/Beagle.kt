@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -95,8 +96,9 @@ object Beagle : BeagleContract, SensorEventListener {
      *
      * @param trick - The new trick to be added.
      * @param positioning - The positioning of the new trick. [Positioning.Bottom] by default.
+     * @param lifecycleOwner - The [LifecycleOwner] which should dictate for how long the module should be added. Null if the module should not be removed automatically. Null by default.
      */
-    override fun learn(trick: Trick, positioning: Positioning) {
+    override fun learn(trick: Trick, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
         moduleList = moduleList.toMutableList().apply {
             indexOfFirst { it.id == trick.id }.also { currentIndex ->
                 if (currentIndex != -1) {
@@ -131,9 +133,9 @@ object Beagle : BeagleContract, SensorEventListener {
     }
 
     /**
-     * Removes the module with the specified ID from the list of modules. The ID-s of unique modules can be accessed through their companion objects.
+     * Removes the trick with the specified ID from the list of modules. The ID-s of unique modules can be accessed through their companion objects.
      *
-     * @param id - The ID of the module to be removed.
+     * @param id - The ID of the trick to be removed.
      */
     override fun forget(id: String) {
         moduleList = moduleList.filterNot { it.id == id }

@@ -2,6 +2,7 @@ package com.pandulapeter.beagle
 
 import android.app.Activity
 import android.app.Application
+import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
@@ -37,7 +38,7 @@ object Beagle : BeagleContract {
     /**
      * Does nothing.
      */
-    override fun learn(trick: Trick, positioning: Positioning) = Unit
+    override fun learn(trick: Trick, positioning: Positioning, lifecycleOwner: LifecycleOwner?) = Unit
 
     /**
      * Does nothing.
