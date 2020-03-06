@@ -14,7 +14,10 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -39,7 +42,7 @@ import kotlin.math.max
 /**
  * The main singleton that handles the debug drawer's functionality.
  */
-@Suppress("StaticFieldLeak")
+@Suppress("StaticFieldLeak", "unused")
 object Beagle : BeagleContract, SensorEventListener {
 
     //region Public API
@@ -99,37 +102,17 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param lifecycleOwner - The [LifecycleOwner] which should dictate for how long the module should be added. Null if the module should not be removed automatically. Null by default.
      */
     override fun learn(trick: Trick, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
-        moduleList = moduleList.toMutableList().apply {
-            indexOfFirst { it.id == trick.id }.also { currentIndex ->
-                if (currentIndex != -1) {
-                    removeAt(currentIndex)
-                    add(currentIndex, trick)
-                } else {
-                    when (positioning) {
-                        Positioning.Bottom -> add(trick)
-                        Positioning.Top -> add(0, trick)
-                        is Positioning.Below -> {
-                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
-                                if (referencePosition == -1) {
-                                    add(trick)
-                                } else {
-                                    add(referencePosition + 1, trick)
-                                }
-                            }
-                        }
-                        is Positioning.Above -> {
-                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
-                                if (referencePosition == -1) {
-                                    add(0, trick)
-                                } else {
-                                    add(referencePosition, trick)
-                                }
-                            }
-                        }
-                    }
-                }
+        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+            fun onCreate() = addTrick(trick, positioning)
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            fun onDestroy() {
+                forget(trick.id)
+                lifecycleOwner.lifecycle.removeObserver(this)
             }
-        }
+        }) ?: addTrick(trick, positioning)
     }
 
     /**
@@ -432,6 +415,40 @@ object Beagle : BeagleContract, SensorEventListener {
 
     private fun updateDrawerLockMode() = drawers.values.forEach { drawer ->
         (drawer.parent as? BeagleDrawerLayout?)?.setDrawerLockMode(if (isEnabled && (triggerGesture == TriggerGesture.SWIPE_ONLY || triggerGesture == TriggerGesture.SWIPE_AND_SHAKE)) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+    private fun addTrick(trick: Trick, positioning: Positioning) {
+        moduleList = moduleList.toMutableList().apply {
+            indexOfFirst { it.id == trick.id }.also { currentIndex ->
+                if (currentIndex != -1) {
+                    removeAt(currentIndex)
+                    add(currentIndex, trick)
+                } else {
+                    when (positioning) {
+                        Positioning.Bottom -> add(trick)
+                        Positioning.Top -> add(0, trick)
+                        is Positioning.Below -> {
+                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                if (referencePosition == -1) {
+                                    add(trick)
+                                } else {
+                                    add(referencePosition + 1, trick)
+                                }
+                            }
+                        }
+                        is Positioning.Above -> {
+                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                if (referencePosition == -1) {
+                                    add(0, trick)
+                                } else {
+                                    add(referencePosition, trick)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private const val SHAKE_THRESHOLD = 1200

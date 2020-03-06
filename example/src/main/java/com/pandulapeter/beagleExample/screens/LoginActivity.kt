@@ -36,11 +36,11 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             trick = Trick.LoremIpsumButton(
                 editTextId = R.id.message
             ),
-            positioning = Positioning.Below(Trick.ForceCrashButton.ID)
+            positioning = Positioning.Below(Trick.ForceCrashButton.ID),
+            lifecycleOwner = this
         )
         Beagle.learn(
             trick = Trick.SimpleList(
-                id = TEST_ACCOUNTS_MODULE_ID,
                 title = "Test accounts",
                 items = mockTestAccounts,
                 isInitiallyExpanded = true,
@@ -50,19 +50,14 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                     Beagle.dismiss()
                 }
             ),
-            positioning = Positioning.Below(Trick.LoremIpsumButton.ID)
+            positioning = Positioning.Below(Trick.LoremIpsumButton.ID),
+            lifecycleOwner = this
         )
         Beagle.addListener(beagleListener)
     }
 
     override fun onStop() {
         super.onStop()
-        Beagle.forget(Trick.LoremIpsumButton.ID)
-        Beagle.forget(TEST_ACCOUNTS_MODULE_ID)
         Beagle.removeListener(beagleListener)
-    }
-
-    companion object {
-        private const val TEST_ACCOUNTS_MODULE_ID = "testAccounts"
     }
 }
