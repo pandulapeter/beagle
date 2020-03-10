@@ -270,6 +270,15 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                         Beagle.isViewBoundsOverlayEnabled = newValue
                     })
             )
+            is Trick.AnimatorDurationToggle -> items.add(
+                ToggleViewModel(
+                    id = trick.id,
+                    title = trick.title,
+                    isEnabled = Beagle.animationDurationMultiplier != 1f,
+                    onToggleStateChanged = { newValue ->
+                        Beagle.animationDurationMultiplier = if (newValue) trick.multiplier else 1f
+                    })
+            )
             is Trick.AppInfoButton -> items.add(
                 ButtonViewModel(
                     id = trick.id,

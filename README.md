@@ -67,6 +67,7 @@ Unique modules can only be added once as they are specific to a single use case:
 * [Header](/screenshots/moduleHeader.png) - Displays a header on top of the drawer with general information about the app / build.
 * [KeylineOverlayToggle](/screenshots/moduleKeylineOverlayToggle.png) - Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.
 * [ViewBoundsOverlayToggle](/screenshots/moduleViewBoundsOverlayToggle.png) - Displays a switch that, when enabled, draws rectangles matching the bounds for every View in your hierarchy so that you can verify sizes and paddings.
+* [AnimatorDurationToggle](/screenshots/moduleAnimatorDurationToggle.png) - Displays a switch that, when enabled, increases the duration of animations.
 * TODO: ForceRtToggle - Forces RTL layout orientation (on/off).
 * [AppInfoButton](/screenshots/moduleAppInfoButton.png) - Displays a button that links to the Android App Info page for your app.
 * [ScreenshotButton](/screenshots/moduleScreenshotButton.png) - Displays a button that takes a screenshot of the current layout and allows the user to share it.

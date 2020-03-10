@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.Application
 import android.content.Context
@@ -223,6 +224,17 @@ object Beagle : BeagleContract, SensorEventListener {
                 updateItems()
                 (if (value) viewBoundsOverlayToggleModule else null).let { viewBoundsOverlayToggleModule ->
                     drawers.values.forEach { drawer -> (drawer.parent as? BeagleDrawerLayout?)?.viewBoundsOverlay = viewBoundsOverlayToggleModule }
+                }
+            }
+        }
+    internal var animationDurationMultiplier = 1f
+        set(value) {
+            if (field != value) {
+                field = value
+                updateItems()
+                try {
+                    ValueAnimator::class.java.methods.firstOrNull { it.name == "setDurationScale" }?.invoke(null, value)
+                } catch (_: Throwable) {
                 }
             }
         }

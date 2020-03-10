@@ -38,6 +38,7 @@ class BeagleExampleApplication : Application() {
                 Trick.ViewBoundsOverlayToggle(
                     color = Color.CYAN
                 ),
+                Trick.AnimatorDurationToggle(),
                 Trick.Toggle(
                     title = "Feature toggle 1",
                     onValueChanged = { isOn -> "Feature 1 is ${if (isOn) "on" else "off"}".showToast() }

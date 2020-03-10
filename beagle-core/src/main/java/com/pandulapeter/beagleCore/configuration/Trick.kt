@@ -395,6 +395,25 @@ sealed class Trick {
     }
 
     /**
+     * Displays a switch that, when enabled, increases the duration of animations.
+     * This module can only be added once.
+     *
+     * @param title - The text that appears near the switch. "Slow down animations" by default.
+     * @param multiplier - The multiplier that should be applied for all animation durations. 4f by default.
+     */
+    data class AnimatorDurationToggle(
+        val title: CharSequence = "Slow down animations",
+        val multiplier: Float = 4f
+    ) : Trick() {
+
+        override val id = ID
+
+        companion object {
+            const val ID = "animatorDurationToggle"
+        }
+    }
+
+    /**
      * Displays a button that links to the Android App Info page for your app.
      * This module can only be added once.
      *
