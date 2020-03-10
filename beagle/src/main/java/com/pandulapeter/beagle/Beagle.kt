@@ -259,6 +259,12 @@ object Beagle : BeagleContract, SensorEventListener {
             currentActivity = activity
         }
 
+        override fun onActivityPaused(activity: Activity) {
+            if (!activity.isFinishing) {
+                dismiss()
+            }
+        }
+
         override fun onActivitySaveInstanceState(activity: Activity, p1: Bundle) {
             p1.isDrawerOpen = drawers[activity]?.let { drawer -> (drawer.parent as? BeagleDrawerLayout?)?.isDrawerOpen(drawer) } ?: false
         }
