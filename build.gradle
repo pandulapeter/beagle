@@ -2,7 +2,7 @@ buildscript {
     ext {
         libraryVersion = "1.7.0"
         kotlinVersion = "1.3.70"
-        okHttpVersion = "4.0.1"
+        okHttpVersion = "4.4.0"
         appCompatVersion = "1.1.0"
         versionCode = 1
     }

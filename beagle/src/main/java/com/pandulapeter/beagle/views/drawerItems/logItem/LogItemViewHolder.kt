@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.views.drawerItems.logItem
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ internal class LogItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     private val messageTextView = itemView.findViewById<TextView>(R.id.message)
     private val timestampTextView = itemView.findViewById<TextView>(R.id.timestamp)
 
+    @SuppressLint("SetTextI18n")
     fun bind(viewModel: LogItemViewModel) {
         val isClickable = viewModel.logItem.payload != null
         messageTextView.text = viewModel.message + if (viewModel.hasPayload) " *" else ""

@@ -6,6 +6,7 @@ import com.pandulapeter.beagleCore.contracts.BeagleContract
 /**
  * Fake implementation to be used in release builds.
  */
+@Suppress("unused")
 object Beagle : BeagleContract {
 
     /**
