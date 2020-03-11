@@ -270,12 +270,9 @@ object Beagle : BeagleContract, SensorEventListener {
 
         override fun onActivityResumed(activity: Activity) {
             super.onActivityResumed(activity)
-            currentActivity = activity
-        }
-
-        override fun onActivityPaused(activity: Activity) {
-            if (!activity.isFinishing) {
+            if (currentActivity != activity) {
                 dismiss()
+                currentActivity = activity
             }
         }
 
