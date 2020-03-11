@@ -95,6 +95,9 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 * The library exposes the [BeagleListener](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/contracts/BeagleListener.kt) interface that can be used to observe state changes. Make sure to always remove implementations that should be garbage collected.
 * The library exposes the current Activity instance through the nullable, read-only Beagle.currentActivity property, which can be used to perform navigation actions in response to click events for example.
 
+### Changelog
+* Check out the [Releases](https://github.com/pandulapeter/beagle/releases) page for the changes in every version. The library uses [semantic versioning](https://semver.org): MAJOR.MINOR.PATCH where PATCH changes only contains bug fixes, MINOR changes add new features and MAJOR changes introduce breaking modifications to the API.
+
 ### Known issues
 * Check out the [Issues](https://github.com/pandulapeter/beagle/issues) page for the list of know problems.
 
