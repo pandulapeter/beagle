@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
 import android.widget.FrameLayout
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.colorResource
@@ -65,6 +66,10 @@ internal class OverlayFrameLayout @JvmOverloads constructor(
         alpha = FILL_ALPHA
     }
     private var coroutineContext: CoroutineContext? = null
+    private var insetX = 0
+    private var insetY = 0
+    private var offsetX = 0
+    private var offsetY = 0
 
     private fun startAutomaticRefresh() {
         stopAutomaticRefresh()
@@ -86,6 +91,15 @@ internal class OverlayFrameLayout @JvmOverloads constructor(
         if (viewBoundsOverlayToggle != null) {
             startAutomaticRefresh()
         }
+        updateStatusBarHeight()
+    }
+
+    override fun onApplyWindowInsets(insets: WindowInsets?): WindowInsets {
+        //TODO: Not working correctly when windowLayoutInDisplayCutoutMode="shortEdges"
+        insetX = insets?.systemWindowInsetLeft ?: 0
+        insetY = insets?.systemWindowInsetTop ?: 0
+        updateStatusBarHeight()
+        return super.onApplyWindowInsets(insets)
     }
 
     override fun onDetachedFromWindow() {
@@ -130,13 +144,20 @@ internal class OverlayFrameLayout @JvmOverloads constructor(
         getDrawingRect(bounds)
         val location = IntArray(2)
         getLocationOnScreen(location)
-        bounds.offset(location[0], location[1])
+        bounds.offset(location[0] + insetX - offsetX, location[1] + insetY - offsetY)
         bounds.offset(translationX.roundToInt(), translationY.roundToInt())
         canvas.drawRect(bounds, boundsPaint)
         bounds.offset(paddingStart, paddingTop)
         bounds.bottom -= paddingBottom + paddingTop
         bounds.right -= paddingEnd + paddingStart
         canvas.drawRect(bounds, paddingPaint)
+    }
+
+    private fun updateStatusBarHeight() {
+        val rectangle = Rect()
+        getWindowVisibleDisplayFrame(rectangle)
+        offsetX = rectangle.left
+        offsetY = rectangle.top
     }
 
     companion object {
