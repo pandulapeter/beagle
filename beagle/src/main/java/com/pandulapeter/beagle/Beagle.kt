@@ -26,6 +26,7 @@ import com.pandulapeter.beagle.utils.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.utils.findRootViewGroup
 import com.pandulapeter.beagle.utils.hideKeyboard
 import com.pandulapeter.beagle.utils.mapToViewModels
+import com.pandulapeter.beagle.utils.takeAndShareScreenshot
 import com.pandulapeter.beagle.views.BeagleDialogFragment
 import com.pandulapeter.beagle.views.BeagleDrawer
 import com.pandulapeter.beagle.views.BeagleDrawerLayout
@@ -238,6 +239,7 @@ object Beagle : BeagleContract, SensorEventListener {
                 }
             }
         }
+    internal var shouldTakeScreenshot = false
     private var logItems = emptyList<LogItem>()
         set(value) {
             field = value
@@ -426,6 +428,10 @@ object Beagle : BeagleContract, SensorEventListener {
     internal fun notifyListenersOnClosed() {
         onBackPressedCallback.isEnabled = false
         updateDrawerLockMode()
+        if (shouldTakeScreenshot) {
+            currentActivity?.takeAndShareScreenshot()
+            shouldTakeScreenshot = false
+        }
         listeners.forEach { it.onDrawerClosed() }
     }
 

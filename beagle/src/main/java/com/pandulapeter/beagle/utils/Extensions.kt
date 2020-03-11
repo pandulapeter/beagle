@@ -28,7 +28,6 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.models.NetworkLogItem
-import com.pandulapeter.beagle.views.BeagleDrawerLayout
 import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
 import com.pandulapeter.beagle.views.drawerItems.button.ButtonViewModel
 import com.pandulapeter.beagle.views.drawerItems.divider.DividerViewModel
@@ -300,7 +299,7 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                     shouldUseListItem = appearance.shouldUseItemsInsteadOfButtons,
                     text = trick.text,
                     onButtonPressed = {
-                        (Beagle.drawers[Beagle.currentActivity]?.parent as? BeagleDrawerLayout?)?.takeAndShareScreenshot()
+                        Beagle.shouldTakeScreenshot = true
                         Beagle.dismiss()
                     }
                 )
