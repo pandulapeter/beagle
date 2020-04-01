@@ -11,6 +11,7 @@ import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.contracts.BeagleListener
 import com.pandulapeter.beagleExample.R
 import com.pandulapeter.beagleExample.utils.mockTestAccounts
+import com.pandulapeter.beagleExample.utils.showKeyboard
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
@@ -48,5 +49,10 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
             override fun onDrawerDragStarted() = Toast.makeText(this@LoginActivity, "Drag started", Toast.LENGTH_SHORT).show()
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        findViewById<View>(R.id.username_input).run { postDelayed({ showKeyboard() }, 300 ) }
     }
 }
