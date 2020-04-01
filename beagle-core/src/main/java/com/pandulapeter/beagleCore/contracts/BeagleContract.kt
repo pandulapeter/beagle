@@ -21,9 +21,10 @@ interface BeagleContract {
 
     fun imprint(
         application: Application,
-        packageName: String? = null,
+        appearance: Appearance = Appearance(),
         triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
-        appearance: Appearance = Appearance()
+        packageName: String? = null,
+        excludedActivities: List<Class<out Activity>> = emptyList()
     ) = Unit
 
     fun learn(vararg tricks: Trick) = Unit
@@ -64,16 +65,18 @@ interface BeagleContract {
      * in the Application's onCreate() method.
      *
      * @param application - The [Application] instance.
-     * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
-     * @param triggerGesture - Specifies the way the drawer can be opened. [TriggerGesture.SWIPE_AND_SHAKE] by default.
      * @param appearance - The [Appearance] that specifies the appearance the drawer. Optional.
+     * @param triggerGesture - Specifies the way the drawer can be opened. [TriggerGesture.SWIPE_AND_SHAKE] by default.
+     * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
+     * @param excludedActivities - The list of Activity classes where you specifically don't want to use Beagle. Empty by default.
      */
     fun initialize(
         application: Application,
-        packageName: String? = null,
+        appearance: Appearance = Appearance(),
         triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
-        appearance: Appearance = Appearance()
-    ) = imprint(application, packageName, triggerGesture, appearance)
+        packageName: String? = null,
+        excludedActivities: List<Class<out Activity>> = emptyList()
+    ) = imprint(application, appearance, triggerGesture, packageName, excludedActivities)
 
     /**
      * Use this function to clear the contents of the menu and set a new list of tricks.

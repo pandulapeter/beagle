@@ -70,14 +70,22 @@ object Beagle : BeagleContract, SensorEventListener {
      * in the Application's onCreate() method.
      *
      * @param application - The [Application] instance.
-     * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
-     * @param triggerGesture - Specifies the way the drawer can be opened. [TriggerGesture.SWIPE_AND_SHAKE] by default.
      * @param appearance - The [Appearance] that specifies the appearance the drawer. Optional.
+     * @param triggerGesture - Specifies the way the drawer can be opened. [TriggerGesture.SWIPE_AND_SHAKE] by default.
+     * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
+     * @param excludedActivities - The list of Activity classes where you specifically don't want to use Beagle. Empty by default.
      */
-    override fun imprint(application: Application, packageName: String?, triggerGesture: TriggerGesture, appearance: Appearance) {
+    override fun imprint(
+        application: Application,
+        appearance: Appearance,
+        triggerGesture: TriggerGesture,
+        packageName: String?,
+        excludedActivities: List<Class<out Activity>>
+    ) {
         this.appearance = appearance
         this.triggerGesture = triggerGesture
         this.packageName = packageName ?: application.packageName.split(".").run { take(max(size - 1, 1)).joinToString(".") }
+        this.excludedActivities = excludedActivities
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
         if (triggerGesture == TriggerGesture.SWIPE_AND_SHAKE || triggerGesture == TriggerGesture.SHAKE_ONLY) {
@@ -130,7 +138,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * Tries to open the current Activity's debug drawer.
      */
     override fun fetch() {
-        if (isEnabled) {
+        if (isEnabled && drawers.containsKey(currentActivity)) {
             notifyListenersOnDragStarted()
             drawers[currentActivity]?.run { (parent as? BeagleDrawerLayout?)?.openDrawer(this) }
         }
@@ -207,6 +215,7 @@ object Beagle : BeagleContract, SensorEventListener {
     private val viewBoundsOverlayToggleModule get() = moduleList.filterIsInstance<Trick.ViewBoundsOverlayToggle>().firstOrNull()
     internal val drawers = mutableMapOf<Activity, BeagleDrawer>()
     private var packageName = ""
+    private var excludedActivities = emptyList<Class<out Activity>>()
     private var items = emptyList<DrawerItemViewModel>()
     internal var isKeylineOverlayEnabled = false
         set(value) {
@@ -262,7 +271,7 @@ object Beagle : BeagleContract, SensorEventListener {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             // The check is added to make sure Beagle is not injected into activities that come from other libraries (LeakCanary, Google sign-in / In app purchase) where it causes crashes.
-            if (activity.componentName.className.startsWith(packageName)) {
+            if (activity.componentName.className.startsWith(packageName) && !excludedActivities.contains(activity::class.java)) {
                 drawers[activity] = createAndAddDrawerLayout(activity, savedInstanceState?.isDrawerOpen == true)
                 (activity as? AppCompatActivity?)?.onBackPressedDispatcher?.addCallback(activity, onBackPressedCallback)
             }
