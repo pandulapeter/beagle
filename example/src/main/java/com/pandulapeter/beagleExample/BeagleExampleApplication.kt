@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagleCore.configuration.Appearance
+import com.pandulapeter.beagleCore.configuration.Behavior
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleExample.networking.NetworkingManager
 import com.pandulapeter.beagleExample.utils.mockBackendEnvironments
@@ -21,6 +22,9 @@ class BeagleExampleApplication : Application() {
                 application = this,
                 appearance = Appearance(
                     themeResourceId = R.style.BeagleTheme
+                ),
+                behavior = Behavior(
+                    shouldResetPendingChangesOnClose = true
                 )
             )
             Beagle.learn(

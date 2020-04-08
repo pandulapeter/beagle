@@ -50,9 +50,9 @@ internal class BeagleDrawer @JvmOverloads constructor(
         gravity = Gravity.CENTER
         addView(applyButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             marginStart = largePadding
-            marginEnd = if (Beagle.behavior.shouldShowResetButton) padding else largePadding
+            marginEnd = if (Beagle.behavior.shouldShowResetPendingChangesButton) padding else largePadding
         })
-        if (Beagle.behavior.shouldShowResetButton) {
+        if (Beagle.behavior.shouldShowResetPendingChangesButton) {
             addView(resetButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
                 marginStart = padding
                 marginEnd = largePadding

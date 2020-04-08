@@ -137,7 +137,7 @@ interface BeagleContract {
         appearance,
         Behavior(
             triggerGesture = triggerGesture,
-            shouldShowResetButton = shouldShowResetButton,
+            shouldShowResetPendingChangesButton = shouldShowResetButton,
             packageName = packageName,
             excludedActivities = excludedActivities
         )
@@ -157,7 +157,7 @@ interface BeagleContract {
         appearance,
         Behavior(
             triggerGesture = triggerGesture,
-            shouldShowResetButton = shouldShowResetButton,
+            shouldShowResetPendingChangesButton = shouldShowResetButton,
             packageName = packageName,
             excludedActivities = excludedActivities
         )
