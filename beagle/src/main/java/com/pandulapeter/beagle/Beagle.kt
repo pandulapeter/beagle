@@ -9,6 +9,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import com.pandulapeter.beagle.models.ChangeEvent
 import com.pandulapeter.beagle.models.LogItem
 import com.pandulapeter.beagle.models.NetworkLogItem
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -64,6 +66,11 @@ object Beagle : BeagleContract, SensorEventListener {
      */
     override var currentActivity: Activity? = null
         private set
+
+    /**
+     * Can be used to verify if any of the tricks have pending changes (returns whether or not the "Apply" button is visible).
+     */
+    override val hasPendingChanges get() = pendingChanges.isNotEmpty()
 
     /**
      * Hooks up the library to the Application's lifecycle. After this is called, a debug drawer will be inserted into every activity. This should be called
@@ -205,7 +212,8 @@ object Beagle : BeagleContract, SensorEventListener {
 
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
-    private var appearance = Appearance()
+    internal var appearance = Appearance()
+        private set
     private var moduleList = emptyList<Trick>()
         set(value) {
             field = value.distinctBy { it.id }.sortedBy { it !is Trick.Header }
@@ -297,6 +305,11 @@ object Beagle : BeagleContract, SensorEventListener {
         }
     }
     private val listeners = mutableListOf<BeagleListener>()
+    private var pendingChanges = emptyList<ChangeEvent>()
+        set(value) {
+            field = value.distinctBy { it.trickId }
+            Log.d("DEBUGG", "ShouldShowApplyButton: ${value.isNotEmpty()}")
+        }
 
     init {
         moduleList = listOf(
@@ -439,6 +452,20 @@ object Beagle : BeagleContract, SensorEventListener {
             shouldTakeScreenshot = false
         }
         listeners.forEach { it.onDrawerClosed() }
+    }
+
+    internal fun addChangeEvent(changeEvent: ChangeEvent) {
+        pendingChanges = pendingChanges + changeEvent
+    }
+
+    internal fun removeChangeEvent(trickId: String) {
+        pendingChanges = pendingChanges.filterNot { it.trickId == trickId }
+    }
+
+    internal fun applyPendingChanges() {
+        pendingChanges.forEach {
+            //TODO + Add isLastChange flag
+        }
     }
 
     private fun updateDrawerLockMode() = drawers.values.forEach { drawer ->

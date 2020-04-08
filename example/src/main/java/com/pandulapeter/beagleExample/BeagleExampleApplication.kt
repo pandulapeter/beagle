@@ -21,7 +21,10 @@ class BeagleExampleApplication : Application() {
             Beagle.imprint(
                 application = this,
                 triggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
-                appearance = Appearance(themeResourceId = R.style.BeagleTheme)
+                appearance = Appearance(
+                    themeResourceId = R.style.BeagleTheme,
+                    applyButtonText = "Apply changes"
+                )
             )
             Beagle.learn(
                 Trick.Header(
@@ -64,6 +67,7 @@ class BeagleExampleApplication : Application() {
                     items = mockBackendEnvironments,
                     isInitiallyExpanded = true,
                     initialSelectionId = "Develop",
+                    needsConfirmation = true,
                     onItemSelectionChanged = { backendEnvironment -> backendEnvironment.url.showToast() }
                 ),
                 Trick.Divider(),

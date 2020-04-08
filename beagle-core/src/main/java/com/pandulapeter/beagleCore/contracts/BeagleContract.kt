@@ -16,8 +16,8 @@ interface BeagleContract {
 
     //region Public API
     var isEnabled: Boolean
-
     val currentActivity: Activity?
+    val hasPendingChanges: Boolean
 
     fun imprint(
         application: Application,

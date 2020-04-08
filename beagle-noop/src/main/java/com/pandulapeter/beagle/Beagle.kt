@@ -18,4 +18,9 @@ object Beagle : BeagleContract {
      * Returns null (Beagle does not work at all in the noop variant).
      */
     override val currentActivity: Activity? = null
+
+    /**
+     * Returns false (Beagle does not work at all in the noop variant).
+     */
+    override val hasPendingChanges: Boolean = false
 }

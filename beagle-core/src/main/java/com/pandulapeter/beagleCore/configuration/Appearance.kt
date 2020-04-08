@@ -10,11 +10,13 @@ import kotlinx.android.parcel.Parcelize
  *
  * @param themeResourceId - The theme resource ID the drawers should use. If null, each drawer will take their Activity's theme. Null by default.
  * @param drawerWidth - Custom width for the drawer. If null, 280dp will be used. Null by default.
+ * @param applyButtonText - The text on the button that appears when the user makes changes that are not handled in real-time (see the "needsConfirmation" parameter of some Tricks). "Apply" by default.
  * @param shouldUseItemsInsteadOfButtons - When true, clickable list items will be used instead of buttons. False by default.
  */
 @Parcelize
 data class Appearance(
     @StyleRes val themeResourceId: Int? = null,
     @Dimension val drawerWidth: Int? = null,
+    val applyButtonText: String = "Apply",
     val shouldUseItemsInsteadOfButtons: Boolean = false
 ) : Parcelable
