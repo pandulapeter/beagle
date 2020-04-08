@@ -103,16 +103,16 @@ sealed class Trick {
         val name: (value: Int) -> CharSequence,
         val minimumValue: Int = 0,
         val maximumValue: Int = 10,
-        val initialValue: Int = minimumValue,
+        override val initialValue: Int = minimumValue,
         override val needsConfirmation: Boolean = false,
-        private val onValueChanged: (value: Int) -> Unit
+        override val onValueChanged: (value: Int) -> Unit
     ) : Trick(), Confirmable<Int> {
 
         override var currentValue = initialValue
             set(value) {
                 if (field != value) {
                     field = value
-                    onValueChanged(value)
+                    onCurrentValueChanged(value)
                 }
             }
         override var savedValue = initialValue
@@ -132,29 +132,16 @@ sealed class Trick {
     data class Toggle(
         override val id: String = UUID.randomUUID().toString(),
         val title: CharSequence,
-        val initialValue: Boolean = false,
+        override val initialValue: Boolean = false,
         override val needsConfirmation: Boolean = false,
-        private val onValueChanged: (newValue: Boolean) -> Unit
+        override val onValueChanged: (newValue: Boolean) -> Unit
     ) : Trick(), Confirmable<Boolean> {
-
-        private fun callback(value: Boolean) {
-            onValueChanged(value)
-            savedValue = value
-        }
 
         override var currentValue = initialValue
             set(value) {
                 if (field != value) {
                     field = value
-                    if (needsConfirmation) {
-                        if (currentValue == savedValue) {
-                            removeChangeEvent(id)
-                        } else {
-                            addChangeEvent(ChangeEvent(id) { callback(value) })
-                        }
-                    } else {
-                        callback(value)
-                    }
+                    onCurrentValueChanged(value)
                 }
             }
         override var savedValue = initialValue
@@ -250,9 +237,17 @@ sealed class Trick {
         private val onItemSelectionChanged: (selectedItem: T) -> Unit
     ) : Trick(), Expandable, Confirmable<String?> {
 
+        override val initialValue: String? = initialSelectionId
+        override val onValueChanged: (String?) -> Unit = { id -> onItemSelectionChanged(items.first { it.id == id }) }
         override var isExpanded = isInitiallyExpanded
             private set
         override var currentValue = initialSelectionId
+            set(value) {
+                if (field != value) {
+                    field = value
+                    onCurrentValueChanged(value)
+                }
+            }
         override var savedValue = initialSelectionId
 
         override fun toggleExpandedState() {
@@ -261,7 +256,6 @@ sealed class Trick {
 
         fun invokeItemSelectedCallback(id: String) {
             currentValue = id
-            onItemSelectionChanged(items.first { it.id == currentValue })
         }
     }
 
@@ -288,9 +282,17 @@ sealed class Trick {
         private val onItemSelectionChanged: (selectedItems: List<T>) -> Unit
     ) : Trick(), Expandable, Confirmable<List<String>> {
 
+        override val initialValue = initialSelectionIds
+        override val onValueChanged: (List<String>) -> Unit = { ids -> onItemSelectionChanged(items.filter { ids.contains(it.id) }) }
         override var isExpanded = isInitiallyExpanded
             private set
         override var currentValue = initialSelectionIds
+            set(value) {
+                if (field != value) {
+                    field = value
+                    onCurrentValueChanged(value)
+                }
+            }
         override var savedValue = initialSelectionIds
 
         override fun toggleExpandedState() {
@@ -305,7 +307,6 @@ sealed class Trick {
                     add(id)
                 }
             }
-            onItemSelectionChanged(items.filter { currentValue.contains(it.id) })
         }
     }
 
@@ -575,9 +576,29 @@ sealed class Trick {
     }
 
     interface Confirmable<T> {
+        val id: String
         val needsConfirmation: Boolean
+        val initialValue: T
         var currentValue: T
         var savedValue: T
+        val onValueChanged: (T) -> Unit
+
+        fun updateSavedValueAndNotifyUser(value: T) {
+            onValueChanged(value)
+            savedValue = value
+        }
+
+        fun onCurrentValueChanged(newValue: T) {
+            if (needsConfirmation) {
+                if (currentValue == savedValue) {
+                    removeChangeEvent(id)
+                } else {
+                    addChangeEvent(ChangeEvent(id) { updateSavedValueAndNotifyUser(newValue) })
+                }
+            } else {
+                updateSavedValueAndNotifyUser(newValue)
+            }
+        }
     }
 
     //TODO: Should be encapsulated + should not be part of the noop variant. Needs refactoring.
