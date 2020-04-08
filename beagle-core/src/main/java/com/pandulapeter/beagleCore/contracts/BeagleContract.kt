@@ -18,6 +18,7 @@ interface BeagleContract {
     var isEnabled: Boolean
     val currentActivity: Activity?
     val hasPendingChanges: Boolean
+    var onAllChangesApplied: (() -> Unit)?
 
     fun imprint(
         application: Application,

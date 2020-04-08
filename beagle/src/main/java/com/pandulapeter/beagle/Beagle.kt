@@ -71,6 +71,15 @@ object Beagle : BeagleContract, SensorEventListener {
     override val hasPendingChanges get() = Trick.hasPendingChanges
 
     /**
+     * Will be called after the user presses the "Apply" button and the callbacks for all pending changes have been invoked.
+     */
+    override var onAllChangesApplied: (() -> Unit)?
+        get() = Trick.onAllChangesApplied
+        set(value) {
+            Trick.onAllChangesApplied = value
+        }
+
+    /**
      * Hooks up the library to the Application's lifecycle. After this is called, a debug drawer will be inserted into every activity. This should be called
      * in the Application's onCreate() method.
      *
@@ -89,7 +98,7 @@ object Beagle : BeagleContract, SensorEventListener {
         packageName: String?,
         excludedActivities: List<Class<out Activity>>
     ) {
-        Trick.clearChangeEvents()
+        Trick.clearPendingChanges()
         this.appearance = appearance
         this.triggerGesture = triggerGesture
         this.shouldShowResetButton = shouldShowResetButton
@@ -110,7 +119,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param tricks - The new list of tricks.
      */
     override fun learn(vararg tricks: Trick) {
-        Trick.clearChangeEvents()
+        Trick.clearPendingChanges()
         moduleList = tricks.toList()
     }
 
@@ -141,7 +150,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param id - The ID of the trick to be removed.
      */
     override fun forget(id: String) {
-        Trick.removeChangeEvent(id)
+        Trick.removePendingChange(id)
         moduleList = moduleList.filterNot { it.id == id }
     }
 
@@ -319,7 +328,7 @@ object Beagle : BeagleContract, SensorEventListener {
                 text = "Configure the list of modules by calling Beagle.learn()."
             )
         )
-        Trick.changeListener = ::updateItems
+        Trick.pendingChangeListener = ::updateItems
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit

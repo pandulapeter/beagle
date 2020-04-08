@@ -5,7 +5,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.annotation.IdRes
 import com.pandulapeter.beagleCore.contracts.BeagleListItemContract
-import com.pandulapeter.beagleCore.implementation.ChangeEvent
+import com.pandulapeter.beagleCore.implementation.PendingChangeEvent
 import java.util.UUID
 
 /**
@@ -433,7 +433,7 @@ sealed class Trick {
      */
     data class AppInfoButton(
         val text: CharSequence = "Show app info",
-        val shouldOpenInNewTask : Boolean = false
+        val shouldOpenInNewTask: Boolean = false
     ) : Trick() {
 
         override val id = ID
@@ -593,9 +593,9 @@ sealed class Trick {
         fun onCurrentValueChanged(newValue: T) {
             if (needsConfirmation) {
                 if (currentValue == savedValue) {
-                    removeChangeEvent(id)
+                    removePendingChange(id)
                 } else {
-                    addChangeEvent(ChangeEvent(
+                    addPendingChange(PendingChangeEvent(
                         trickId = id,
                         apply = { updateSavedValueAndNotifyUser(newValue) },
                         reset = { currentValue = savedValue }
@@ -609,35 +609,39 @@ sealed class Trick {
 
     //TODO: Should be encapsulated + should not be part of the noop variant. Needs refactoring.
     companion object {
-        var changeListener: (() -> Unit)? = null
-        private var pendingChanges = emptyList<ChangeEvent>()
+        var pendingChangeListener: (() -> Unit)? = null
+        var onAllChangesApplied: (() -> Unit)? = null
+        private var pendingChanges = emptyList<PendingChangeEvent>()
         val hasPendingChanges get() = pendingChanges.isNotEmpty()
 
-        fun addChangeEvent(changeEvent: ChangeEvent) {
-            pendingChanges = (listOf(changeEvent) + pendingChanges).distinctBy { it.trickId }
-            changeListener?.invoke()
+        fun addPendingChange(pendingChange: PendingChangeEvent) {
+            pendingChanges = (listOf(pendingChange) + pendingChanges).distinctBy { it.trickId }
+            pendingChangeListener?.invoke()
         }
 
-        fun removeChangeEvent(trickId: String) {
+        fun removePendingChange(trickId: String) {
             pendingChanges = pendingChanges.filterNot { it.trickId == trickId }
-            changeListener?.invoke()
+            pendingChangeListener?.invoke()
         }
 
         fun applyPendingChanges() {
-            pendingChanges.asReversed().toList().forEach { changeEvent ->
-                pendingChanges = pendingChanges.filterNot { it.trickId == changeEvent.trickId }
-                changeEvent.apply()
+            if (pendingChanges.isNotEmpty()) {
+                pendingChanges.asReversed().toList().forEach { changeEvent ->
+                    pendingChanges = pendingChanges.filterNot { it.trickId == changeEvent.trickId }
+                    changeEvent.apply()
+                }
+                pendingChangeListener?.invoke()
+                onAllChangesApplied?.invoke()
             }
-            changeListener?.invoke()
         }
 
         fun resetPendingChanges() {
             pendingChanges.forEach { changeEvent -> changeEvent.reset() }
         }
 
-        fun clearChangeEvents() {
+        fun clearPendingChanges() {
             pendingChanges = emptyList()
-            changeListener?.invoke()
+            pendingChangeListener?.invoke()
         }
     }
     //endregion

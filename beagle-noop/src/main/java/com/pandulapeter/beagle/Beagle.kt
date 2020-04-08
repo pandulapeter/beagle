@@ -23,4 +23,9 @@ object Beagle : BeagleContract {
      * Returns false (Beagle does not work at all in the noop variant).
      */
     override val hasPendingChanges: Boolean = false
+
+    /**
+     * Does nothing (Beagle does not work at all in the noop variant).
+     */
+    override var onAllChangesApplied: (() -> Unit)? = null
 }
