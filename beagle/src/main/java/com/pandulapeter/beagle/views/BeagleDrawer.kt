@@ -98,10 +98,12 @@ internal class BeagleDrawer @JvmOverloads constructor(
     fun updateItems(items: List<DrawerItemViewModel>) {
         beagleAdapter.submitList(items)
         buttonContainer.run {
-            animate()
-                .translationY(if (Beagle.hasPendingChanges) 0f else height.toFloat())
-                .alpha(if (Beagle.hasPendingChanges) 1f else 0f)
-                .start()
+            post {
+                animate()
+                    .translationY(if (Beagle.hasPendingChanges) 0f else height.toFloat())
+                    .alpha(if (Beagle.hasPendingChanges) 1f else 0f)
+                    .start()
+            }
         }
     }
 }
