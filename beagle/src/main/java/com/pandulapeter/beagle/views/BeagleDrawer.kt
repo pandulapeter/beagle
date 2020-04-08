@@ -2,6 +2,8 @@ package com.pandulapeter.beagle.views
 
 import android.animation.LayoutTransition
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.R
+import com.pandulapeter.beagle.utils.colorResource
 import com.pandulapeter.beagle.utils.dimension
 import com.pandulapeter.beagle.utils.setBackgroundFromWindowBackground
 import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
@@ -54,14 +57,15 @@ internal class BeagleDrawer @JvmOverloads constructor(
             marginStart = padding
             marginEnd = largePadding
         })
+        background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, context.colorResource(android.R.attr.textColorPrimary)))
     }
 
     init {
         layoutTransition = LayoutTransition()
         setBackgroundFromWindowBackground()
         addView(recyclerView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        addView(buttonContainer, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
-            gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+        addView(buttonContainer, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+            gravity = Gravity.BOTTOM
         })
     }
 
