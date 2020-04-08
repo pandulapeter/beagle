@@ -108,6 +108,7 @@ sealed class Trick {
      * @param minimumValue - The minimum value supported by the slider. 0 by default.
      * @param maximumValue - The maximum value supported by the slider. 10 by default.
      * @param initialValue - The initial value of the slider. By default it's the same as the slider's minimum value.
+     * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onValueChanged lambda will only get called after the user presses that button. False by default.
      * @param onValueChanged - Callback that gets invoked when the user changes the value of the slider.
      */
     data class Slider(
@@ -116,6 +117,7 @@ sealed class Trick {
         val minimumValue: Int = 0,
         val maximumValue: Int = 10,
         val initialValue: Int = minimumValue,
+        val needsConfirmation: Boolean = false,
         private val onValueChanged: (value: Int) -> Unit
     ) : Trick() {
 
@@ -135,12 +137,14 @@ sealed class Trick {
      * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
      * @param title - The text that appears near the switch. "Keyline overlay" by default.
      * @param initialValue - The initial value of the toggle. False by default.
+     * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onValueChanged lambda will only get called after the user presses that button. False by default.
      * @param onValueChanged - Callback that gets invoked when the user changes the value of the toggle.
      */
     data class Toggle(
         override val id: String = UUID.randomUUID().toString(),
         val title: CharSequence,
         val initialValue: Boolean = false,
+        val needsConfirmation: Boolean = false,
         private val onValueChanged: (newValue: Boolean) -> Unit
     ) : Trick() {
 
@@ -161,7 +165,6 @@ sealed class Trick {
      * @param text - The text that should be displayed on the button.
      * @param onButtonPressed - The callback that gets invoked when the user presses the button.
      */
-    //TODO: The Buttons don't look great if the app uses Material theme.
     data class Button(
         override val id: String = UUID.randomUUID().toString(),
         val text: CharSequence,
@@ -231,6 +234,7 @@ sealed class Trick {
      * @param items - The hardcoded list of items implementing the [BeagleListItemContract] interface.
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      * @param initialSelectionId - The ID of the item that is selected when the drawer is opened for the first time, or null if no selection should be made initially. Null by default.
+     * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onItemSelectionChanged lambda will only get called after the user presses that button. False by default.
      * @param onItemSelectionChanged - The callback that will get executed when the selected item is changed.
      */
     data class SingleSelectionList<T : BeagleListItemContract>(
@@ -239,6 +243,7 @@ sealed class Trick {
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
         private val initialSelectionId: String? = null,
+        val needsConfirmation: Boolean = false,
         private val onItemSelectionChanged: (selectedItem: T) -> Unit
     ) : Trick(), Expandable {
 
@@ -267,6 +272,7 @@ sealed class Trick {
      * @param items - The hardcoded list of items implementing the [BeagleListItemContract] interface.
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      * @param initialSelectionIds - The ID-s of the items that are selected when the drawer is opened for the first time. Empty list by default.
+     * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onItemSelectionChanged lambda will only get called after the user presses that button. False by default.
      * @param onItemSelectionChanged - The callback that will get executed when the list of selected items is changed.
      */
     data class MultipleSelectionList<T : BeagleListItemContract>(
@@ -275,6 +281,7 @@ sealed class Trick {
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
         private val initialSelectionIds: List<String> = emptyList(),
+        val needsConfirmation: Boolean = false,
         private val onItemSelectionChanged: (selectedItems: List<T>) -> Unit
     ) : Trick(), Expandable {
 
