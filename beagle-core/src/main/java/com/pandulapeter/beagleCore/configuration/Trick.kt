@@ -429,9 +429,11 @@ sealed class Trick {
      * This module can only be added once.
      *
      * @param text - The text that should be displayed on the button. "Show app info" by default.
+     * @param shouldOpenInNewTask - Whether or not the App Info page will be opened with the Intent.FLAG_ACTIVITY_NEW_TASK flag. False by default.
      */
     data class AppInfoButton(
-        val text: CharSequence = "Show app info"
+        val text: CharSequence = "Show app info",
+        val shouldOpenInNewTask : Boolean = false
     ) : Trick() {
 
         override val id = ID

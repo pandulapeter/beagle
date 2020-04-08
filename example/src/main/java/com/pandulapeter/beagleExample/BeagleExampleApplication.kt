@@ -79,6 +79,7 @@ class BeagleExampleApplication : Application() {
                     text = "Here is a longer piece of text that occupies more space so it doesn't make sense to always have it fully displayed."
                 ),
                 Trick.Slider(
+                    needsConfirmation = true,
                     name = { value -> "Slider value: $value" },
                     onValueChanged = { value -> "Slider set to $value".showToast() }
                 ),

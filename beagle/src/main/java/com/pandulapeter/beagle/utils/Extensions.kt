@@ -289,6 +289,9 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                             startActivity(Intent().apply {
                                 action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                                 data = Uri.fromParts("package", packageName, null)
+                                if (trick.shouldOpenInNewTask) {
+                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                }
                             })
                         }
                     })
