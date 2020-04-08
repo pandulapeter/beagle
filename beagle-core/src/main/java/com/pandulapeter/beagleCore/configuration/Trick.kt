@@ -286,14 +286,14 @@ sealed class Trick {
         override val onValueChanged: (List<String>) -> Unit = { ids -> onItemSelectionChanged(items.filter { ids.contains(it.id) }) }
         override var isExpanded = isInitiallyExpanded
             private set
-        override var currentValue = initialSelectionIds
+        override var currentValue = initialValue.sorted()
             set(value) {
                 if (field != value) {
                     field = value
                     onCurrentValueChanged(value)
                 }
             }
-        override var savedValue = initialSelectionIds
+        override var savedValue = initialValue.sorted()
 
         override fun toggleExpandedState() {
             isExpanded = !isExpanded
@@ -306,7 +306,7 @@ sealed class Trick {
                 } else {
                     add(id)
                 }
-            }
+            }.sorted()
         }
     }
 
@@ -608,7 +608,7 @@ sealed class Trick {
         val hasPendingChanges get() = pendingChanges.isNotEmpty()
 
         fun addChangeEvent(changeEvent: ChangeEvent) {
-            pendingChanges = (pendingChanges + changeEvent).distinctBy { it.trickId }
+            pendingChanges = (listOf(changeEvent) + pendingChanges).distinctBy { it.trickId }
             changeListener?.invoke()
         }
 
