@@ -5,26 +5,13 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.annotation.IdRes
 import com.pandulapeter.beagleCore.contracts.BeagleListItemContract
+import com.pandulapeter.beagleCore.implementation.ChangeEvent
 import java.util.UUID
 
 /**
  * Contains all supported modules that can be added to the drawer.
  */
 sealed class Trick {
-
-    //region Implementation details
-    abstract val id: String
-
-    interface Expandable {
-
-        val id: String
-        val title: CharSequence
-        val isInitiallyExpanded: Boolean
-        val isExpanded: Boolean
-
-        fun toggleExpandedState()
-    }
-    //endregion
 
     //region Generic modules
     /**
@@ -108,6 +95,7 @@ sealed class Trick {
      * @param minimumValue - The minimum value supported by the slider. 0 by default.
      * @param maximumValue - The maximum value supported by the slider. 10 by default.
      * @param initialValue - The initial value of the slider. By default it's the same as the slider's minimum value.
+     * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onValueChanged lambda will only get called after the user presses that button. False by default.
      * @param onValueChanged - Callback that gets invoked when the user changes the value of the slider.
      */
     data class Slider(
@@ -115,17 +103,20 @@ sealed class Trick {
         val name: (value: Int) -> CharSequence,
         val minimumValue: Int = 0,
         val maximumValue: Int = 10,
-        val initialValue: Int = minimumValue,
-        private val onValueChanged: (value: Int) -> Unit
-    ) : Trick() {
+        override val initialValue: Int = minimumValue,
+        override val needsConfirmation: Boolean = false,
+        override val onValueChanged: (value: Int) -> Unit
+    ) : Trick(), Confirmable<Int> {
 
-        var value = initialValue
+        override var currentValue = initialValue
             set(value) {
                 if (field != value) {
                     field = value
-                    onValueChanged(value)
+                    onCurrentValueChanged(value)
                 }
             }
+        override var savedValue = initialValue
+
     }
 
     /**
@@ -135,22 +126,25 @@ sealed class Trick {
      * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
      * @param title - The text that appears near the switch. "Keyline overlay" by default.
      * @param initialValue - The initial value of the toggle. False by default.
+     * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onValueChanged lambda will only get called after the user presses that button. False by default.
      * @param onValueChanged - Callback that gets invoked when the user changes the value of the toggle.
      */
     data class Toggle(
         override val id: String = UUID.randomUUID().toString(),
         val title: CharSequence,
-        val initialValue: Boolean = false,
-        private val onValueChanged: (newValue: Boolean) -> Unit
-    ) : Trick() {
+        override val initialValue: Boolean = false,
+        override val needsConfirmation: Boolean = false,
+        override val onValueChanged: (newValue: Boolean) -> Unit
+    ) : Trick(), Confirmable<Boolean> {
 
-        var value = initialValue
+        override var currentValue = initialValue
             set(value) {
                 if (field != value) {
                     field = value
-                    onValueChanged(value)
+                    onCurrentValueChanged(value)
                 }
             }
+        override var savedValue = initialValue
     }
 
     /**
@@ -161,7 +155,6 @@ sealed class Trick {
      * @param text - The text that should be displayed on the button.
      * @param onButtonPressed - The callback that gets invoked when the user presses the button.
      */
-    //TODO: The Buttons don't look great if the app uses Material theme.
     data class Button(
         override val id: String = UUID.randomUUID().toString(),
         val text: CharSequence,
@@ -231,6 +224,7 @@ sealed class Trick {
      * @param items - The hardcoded list of items implementing the [BeagleListItemContract] interface.
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      * @param initialSelectionId - The ID of the item that is selected when the drawer is opened for the first time, or null if no selection should be made initially. Null by default.
+     * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onItemSelectionChanged lambda will only get called after the user presses that button. False by default.
      * @param onItemSelectionChanged - The callback that will get executed when the selected item is changed.
      */
     data class SingleSelectionList<T : BeagleListItemContract>(
@@ -239,21 +233,29 @@ sealed class Trick {
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
         private val initialSelectionId: String? = null,
+        override val needsConfirmation: Boolean = false,
         private val onItemSelectionChanged: (selectedItem: T) -> Unit
-    ) : Trick(), Expandable {
+    ) : Trick(), Expandable, Confirmable<String?> {
 
+        override val initialValue: String? = initialSelectionId
+        override val onValueChanged: (String?) -> Unit = { id -> onItemSelectionChanged(items.first { it.id == id }) }
         override var isExpanded = isInitiallyExpanded
             private set
-        var selectedItemId = initialSelectionId
-            private set
+        override var currentValue = initialSelectionId
+            set(value) {
+                if (field != value) {
+                    field = value
+                    onCurrentValueChanged(value)
+                }
+            }
+        override var savedValue = initialSelectionId
 
         override fun toggleExpandedState() {
             isExpanded = !isExpanded
         }
 
         fun invokeItemSelectedCallback(id: String) {
-            selectedItemId = id
-            onItemSelectionChanged(items.first { it.id == selectedItemId })
+            currentValue = id
         }
     }
 
@@ -267,6 +269,7 @@ sealed class Trick {
      * @param items - The hardcoded list of items implementing the [BeagleListItemContract] interface.
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      * @param initialSelectionIds - The ID-s of the items that are selected when the drawer is opened for the first time. Empty list by default.
+     * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onItemSelectionChanged lambda will only get called after the user presses that button. False by default.
      * @param onItemSelectionChanged - The callback that will get executed when the list of selected items is changed.
      */
     data class MultipleSelectionList<T : BeagleListItemContract>(
@@ -275,27 +278,35 @@ sealed class Trick {
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
         private val initialSelectionIds: List<String> = emptyList(),
+        override val needsConfirmation: Boolean = false,
         private val onItemSelectionChanged: (selectedItems: List<T>) -> Unit
-    ) : Trick(), Expandable {
+    ) : Trick(), Expandable, Confirmable<List<String>> {
 
+        override val initialValue = initialSelectionIds
+        override val onValueChanged: (List<String>) -> Unit = { ids -> onItemSelectionChanged(items.filter { ids.contains(it.id) }) }
         override var isExpanded = isInitiallyExpanded
             private set
-        var selectedItemIds = initialSelectionIds
-            private set
+        override var currentValue = initialValue.sorted()
+            set(value) {
+                if (field != value) {
+                    field = value
+                    onCurrentValueChanged(value)
+                }
+            }
+        override var savedValue = initialValue.sorted()
 
         override fun toggleExpandedState() {
             isExpanded = !isExpanded
         }
 
         fun invokeItemSelectedCallback(id: String) {
-            selectedItemIds = selectedItemIds.toMutableList().apply {
+            currentValue = currentValue.toMutableList().apply {
                 if (contains(id)) {
                     remove(id)
                 } else {
                     add(id)
                 }
-            }
-            onItemSelectionChanged(items.filter { selectedItemIds.contains(it.id) })
+            }.sorted()
         }
     }
 
@@ -547,6 +558,84 @@ sealed class Trick {
 
         companion object {
             const val ID = "deviceInformation"
+        }
+    }
+    //endregion
+
+    //region Implementation details
+    abstract val id: String
+
+    interface Expandable {
+
+        val id: String
+        val title: CharSequence
+        val isInitiallyExpanded: Boolean
+        val isExpanded: Boolean
+
+        fun toggleExpandedState()
+    }
+
+    interface Confirmable<T> {
+        val id: String
+        val needsConfirmation: Boolean
+        val initialValue: T
+        var currentValue: T
+        var savedValue: T
+        val onValueChanged: (T) -> Unit
+
+        fun updateSavedValueAndNotifyUser(value: T) {
+            onValueChanged(value)
+            savedValue = value
+        }
+
+        fun onCurrentValueChanged(newValue: T) {
+            if (needsConfirmation) {
+                if (currentValue == savedValue) {
+                    removeChangeEvent(id)
+                } else {
+                    addChangeEvent(ChangeEvent(
+                        trickId = id,
+                        apply = { updateSavedValueAndNotifyUser(newValue) },
+                        reset = { currentValue = savedValue }
+                    ))
+                }
+            } else {
+                updateSavedValueAndNotifyUser(newValue)
+            }
+        }
+    }
+
+    //TODO: Should be encapsulated + should not be part of the noop variant. Needs refactoring.
+    companion object {
+        var changeListener: (() -> Unit)? = null
+        private var pendingChanges = emptyList<ChangeEvent>()
+        val hasPendingChanges get() = pendingChanges.isNotEmpty()
+
+        fun addChangeEvent(changeEvent: ChangeEvent) {
+            pendingChanges = (listOf(changeEvent) + pendingChanges).distinctBy { it.trickId }
+            changeListener?.invoke()
+        }
+
+        fun removeChangeEvent(trickId: String) {
+            pendingChanges = pendingChanges.filterNot { it.trickId == trickId }
+            changeListener?.invoke()
+        }
+
+        fun applyPendingChanges() {
+            pendingChanges.asReversed().toList().forEach { changeEvent ->
+                pendingChanges = pendingChanges.filterNot { it.trickId == changeEvent.trickId }
+                changeEvent.apply()
+            }
+            changeListener?.invoke()
+        }
+
+        fun resetPendingChanges() {
+            pendingChanges.forEach { changeEvent -> changeEvent.reset() }
+        }
+
+        fun clearChangeEvents() {
+            pendingChanges = emptyList()
+            changeListener?.invoke()
         }
     }
     //endregion

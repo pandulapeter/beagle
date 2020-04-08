@@ -66,12 +66,18 @@ object Beagle : BeagleContract, SensorEventListener {
         private set
 
     /**
+     * Can be used to verify if any of the tricks have pending changes (returns whether or not the "Apply" button is visible).
+     */
+    override val hasPendingChanges get() = Trick.hasPendingChanges
+
+    /**
      * Hooks up the library to the Application's lifecycle. After this is called, a debug drawer will be inserted into every activity. This should be called
      * in the Application's onCreate() method.
      *
      * @param application - The [Application] instance.
      * @param appearance - The [Appearance] that specifies the appearance the drawer. Optional.
      * @param triggerGesture - Specifies the way the drawer can be opened. [TriggerGesture.SWIPE_AND_SHAKE] by default.
+     * @param shouldShowResetButton - Whether or not to display a Reset button besides the Apply button that appears when the user makes changes that are not handled in real-time (see the "needsConfirmation" parameter of some Tricks). True by default.
      * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
      * @param excludedActivities - The list of Activity classes where you specifically don't want to use Beagle. Empty by default.
      */
@@ -79,11 +85,14 @@ object Beagle : BeagleContract, SensorEventListener {
         application: Application,
         appearance: Appearance,
         triggerGesture: TriggerGesture,
+        shouldShowResetButton: Boolean,
         packageName: String?,
         excludedActivities: List<Class<out Activity>>
     ) {
+        Trick.clearChangeEvents()
         this.appearance = appearance
         this.triggerGesture = triggerGesture
+        this.shouldShowResetButton = shouldShowResetButton
         this.packageName = packageName ?: application.packageName.split(".").run { take(max(size - 1, 1)).joinToString(".") }
         this.excludedActivities = excludedActivities
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
@@ -101,6 +110,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param tricks - The new list of tricks.
      */
     override fun learn(vararg tricks: Trick) {
+        Trick.clearChangeEvents()
         moduleList = tricks.toList()
     }
 
@@ -131,6 +141,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param id - The ID of the trick to be removed.
      */
     override fun forget(id: String) {
+        Trick.removeChangeEvent(id)
         moduleList = moduleList.filterNot { it.id == id }
     }
 
@@ -205,7 +216,8 @@ object Beagle : BeagleContract, SensorEventListener {
 
     //region Implementation details
     private var Bundle.isDrawerOpen by BundleArgumentDelegate.Boolean("isDrawerOpen")
-    private var appearance = Appearance()
+    internal var appearance = Appearance()
+        private set
     private var moduleList = emptyList<Trick>()
         set(value) {
             field = value.distinctBy { it.id }.sortedBy { it !is Trick.Header }
@@ -265,6 +277,7 @@ object Beagle : BeagleContract, SensorEventListener {
         }
     }
     private var triggerGesture = TriggerGesture.SWIPE_AND_SHAKE
+    internal var shouldShowResetButton = true
     private var lastSensorUpdate = 0L
     private var lastSensorValues = Triple(0f, 0f, 0f)
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
@@ -306,6 +319,7 @@ object Beagle : BeagleContract, SensorEventListener {
                 text = "Configure the list of modules by calling Beagle.learn()."
             )
         )
+        Trick.changeListener = ::updateItems
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit

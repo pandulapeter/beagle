@@ -11,7 +11,6 @@ internal data class MultipleSelectionListItemViewModel<T : BeagleListItemContrac
 ) : DrawerItemViewModel {
 
     override val id = "${listModuleId}_${item.id}"
-    override val shouldUsePayloads = true
     val name = item.name
 
     fun invokeItemSelectedCallback() = onItemSelected(item.id)

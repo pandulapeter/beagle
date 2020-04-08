@@ -21,7 +21,9 @@ class BeagleExampleApplication : Application() {
             Beagle.imprint(
                 application = this,
                 triggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
-                appearance = Appearance(themeResourceId = R.style.BeagleTheme)
+                appearance = Appearance(
+                    themeResourceId = R.style.BeagleTheme
+                )
             )
             Beagle.learn(
                 Trick.Header(
@@ -44,7 +46,8 @@ class BeagleExampleApplication : Application() {
                     onValueChanged = { isOn -> "Feature 1 is ${if (isOn) "on" else "off"}".showToast() }
                 ),
                 Trick.Toggle(
-                    title = "Feature toggle 2",
+                    title = "Feature toggle 2 (needs confirmation)",
+                    needsConfirmation = true,
                     onValueChanged = { isOn -> "Feature 2 is ${if (isOn) "on" else "off"}".showToast() }
                 ),
                 Trick.Padding(),
@@ -64,6 +67,7 @@ class BeagleExampleApplication : Application() {
                     items = mockBackendEnvironments,
                     isInitiallyExpanded = true,
                     initialSelectionId = "Develop",
+                    needsConfirmation = true,
                     onItemSelectionChanged = { backendEnvironment -> backendEnvironment.url.showToast() }
                 ),
                 Trick.Divider(),

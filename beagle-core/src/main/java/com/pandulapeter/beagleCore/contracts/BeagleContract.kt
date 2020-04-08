@@ -16,13 +16,14 @@ interface BeagleContract {
 
     //region Public API
     var isEnabled: Boolean
-
     val currentActivity: Activity?
+    val hasPendingChanges: Boolean
 
     fun imprint(
         application: Application,
         appearance: Appearance = Appearance(),
         triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
+        shouldShowResetButton: Boolean = true,
         packageName: String? = null,
         excludedActivities: List<Class<out Activity>> = emptyList()
     ) = Unit
@@ -67,6 +68,7 @@ interface BeagleContract {
      * @param application - The [Application] instance.
      * @param appearance - The [Appearance] that specifies the appearance the drawer. Optional.
      * @param triggerGesture - Specifies the way the drawer can be opened. [TriggerGesture.SWIPE_AND_SHAKE] by default.
+     * @param shouldShowResetButton - Whether or not to display a Reset button besides the Apply button that appears when the user makes changes that are not handled in real-time (see the "needsConfirmation" parameter of some Tricks). True by default.
      * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
      * @param excludedActivities - The list of Activity classes where you specifically don't want to use Beagle. Empty by default.
      */
@@ -74,9 +76,10 @@ interface BeagleContract {
         application: Application,
         appearance: Appearance = Appearance(),
         triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
+        shouldShowResetButton: Boolean,
         packageName: String? = null,
         excludedActivities: List<Class<out Activity>> = emptyList()
-    ) = imprint(application, appearance, triggerGesture, packageName, excludedActivities)
+    ) = imprint(application, appearance, triggerGesture, shouldShowResetButton, packageName, excludedActivities)
 
     /**
      * Use this function to clear the contents of the menu and set a new list of tricks.

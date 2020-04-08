@@ -7,7 +7,4 @@ internal data class ToggleViewModel(
     val title: CharSequence,
     val isEnabled: Boolean,
     val onToggleStateChanged: (newValue: Boolean) -> Unit
-) : DrawerItemViewModel {
-
-    override val shouldUsePayloads = true
-}
+) : DrawerItemViewModel

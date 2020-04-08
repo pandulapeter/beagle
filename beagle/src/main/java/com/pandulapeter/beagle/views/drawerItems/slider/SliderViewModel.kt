@@ -8,5 +8,4 @@ internal data class SliderViewModel(
 ) : DrawerItemViewModel {
 
     override val id = trick.id
-    override val shouldUsePayloads = true
 }
