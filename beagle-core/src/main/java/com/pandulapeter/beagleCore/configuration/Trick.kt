@@ -593,7 +593,11 @@ sealed class Trick {
                 if (currentValue == savedValue) {
                     removeChangeEvent(id)
                 } else {
-                    addChangeEvent(ChangeEvent(id) { updateSavedValueAndNotifyUser(newValue) })
+                    addChangeEvent(ChangeEvent(
+                        trickId = id,
+                        apply = { updateSavedValueAndNotifyUser(newValue) },
+                        reset = { currentValue = savedValue }
+                    ))
                 }
             } else {
                 updateSavedValueAndNotifyUser(newValue)
@@ -620,9 +624,13 @@ sealed class Trick {
         fun applyPendingChanges() {
             pendingChanges.asReversed().toList().forEach { changeEvent ->
                 pendingChanges = pendingChanges.filterNot { it.trickId == changeEvent.trickId }
-                changeEvent.event()
+                changeEvent.apply()
             }
             changeListener?.invoke()
+        }
+
+        fun resetPendingChanges() {
+            pendingChanges.forEach { changeEvent -> changeEvent.reset() }
         }
 
         fun clearChangeEvents() {

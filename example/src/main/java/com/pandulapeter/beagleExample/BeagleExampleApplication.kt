@@ -22,8 +22,7 @@ class BeagleExampleApplication : Application() {
                 application = this,
                 triggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
                 appearance = Appearance(
-                    themeResourceId = R.style.BeagleTheme,
-                    applyButtonText = "Apply changes"
+                    themeResourceId = R.style.BeagleTheme
                 )
             )
             Beagle.learn(

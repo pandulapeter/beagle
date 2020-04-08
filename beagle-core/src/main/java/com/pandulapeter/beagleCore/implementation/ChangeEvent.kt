@@ -2,5 +2,6 @@ package com.pandulapeter.beagleCore.implementation
 
 data class ChangeEvent(
     val trickId: String,
-    val event: () -> Unit
+    val apply: () -> Unit,
+    val reset: () -> Unit
 )
