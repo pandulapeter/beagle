@@ -20,7 +20,7 @@ allprojects {
 ```groovy
 dependencies {
     …
-    def beagleVersion = "1.10.0"
+    def beagleVersion = "1.10.1"
     debugImplementation "com.github.pandulapeter.beagle:beagle:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:$beagleVersion"
 }
@@ -90,11 +90,11 @@ See [this file](https://github.com/pandulapeter/beagle/blob/master/beagle-core/s
 
 ### Tips and tricks
 * The UI of the drawer can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Appearance.kt) instance when initializing the library.
+* The behavior of the drawer can be personalized by specifying an [Behavior](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Behavior.kt) instance when initializing the library.
 * The way the drawer can be opened is set by providing a [TriggerGesture](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/TriggerGesture.kt) when initializing the library.
 * The drawers can be enabled / disabled at runtime by modifying the value of Beagle.isEnabled. This could be useful if you want to restrict access to the debug drawer features based on user type.
 * The library exposes the [BeagleListener](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/contracts/BeagleListener.kt) interface that can be used to observe state changes. Make sure to always remove implementations that should be garbage collected.
 * The library exposes the current Activity instance through the nullable, read-only Beagle.currentActivity property, which can be used to perform navigation actions in response to click events for example.
-* If you don't want Beagle to be included in some of your activities, you can use the `imprint()` function's optional `excludedActivities` parameter.
 * If some of your app settings can be toggled from Beagle but applying them after every change is wasteful, the Slider, Toggle, SingleSelectionList and MultipleSelectionList tricks support the "needsConfirmation" parameter which will enable a dynamic "Apply" button after changes.
 
 ### Changelog

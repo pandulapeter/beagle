@@ -1,7 +1,7 @@
 buildscript {
     ext {
         libraryGroup = "com.github.pandulapeter.beagle"
-        libraryVersion = "1.10.0"
+        libraryVersion = "1.10.1"
         kotlinVersion = "1.3.71"
         okHttpVersion = "4.4.0"
         appCompatVersion = "1.1.0"
