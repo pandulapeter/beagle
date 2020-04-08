@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagleCore.configuration.Appearance
+import com.pandulapeter.beagleCore.configuration.Behavior
 import com.pandulapeter.beagleCore.configuration.Positioning
 import com.pandulapeter.beagleCore.configuration.Trick
 import com.pandulapeter.beagleCore.configuration.TriggerGesture
@@ -23,10 +24,7 @@ interface BeagleContract {
     fun imprint(
         application: Application,
         appearance: Appearance = Appearance(),
-        triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
-        shouldShowResetButton: Boolean = true,
-        packageName: String? = null,
-        excludedActivities: List<Class<out Activity>> = emptyList()
+        behavior: Behavior = Behavior()
     ) = Unit
 
     fun learn(vararg tricks: Trick) = Unit
@@ -67,20 +65,14 @@ interface BeagleContract {
      * in the Application's onCreate() method.
      *
      * @param application - The [Application] instance.
-     * @param appearance - The [Appearance] that specifies the appearance the drawer. Optional.
-     * @param triggerGesture - Specifies the way the drawer can be opened. [TriggerGesture.SWIPE_AND_SHAKE] by default.
-     * @param shouldShowResetButton - Whether or not to display a Reset button besides the Apply button that appears when the user makes changes that are not handled in real-time (see the "needsConfirmation" parameter of some Tricks). True by default.
-     * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
-     * @param excludedActivities - The list of Activity classes where you specifically don't want to use Beagle. Empty by default.
+     * @param appearance - The [Appearance] that specifies the appearance of the drawer. Optional.
+     * @param behavior - The [Behavior] that specifies the behavior of the drawer. Optional.
      */
     fun initialize(
         application: Application,
         appearance: Appearance = Appearance(),
-        triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
-        shouldShowResetButton: Boolean,
-        packageName: String? = null,
-        excludedActivities: List<Class<out Activity>> = emptyList()
-    ) = imprint(application, appearance, triggerGesture, shouldShowResetButton, packageName, excludedActivities)
+        behavior: Behavior = Behavior()
+    ) = imprint(application, appearance, behavior)
 
     /**
      * Use this function to clear the contents of the menu and set a new list of tricks.
@@ -130,5 +122,45 @@ interface BeagleContract {
 
     @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.closeDrawer()"))
     fun closeDrawer(activity: Activity) = dismiss()
+
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("Use Beagle.imprint(application, appearance, behavior) instead.")
+    fun imprint(
+        application: Application,
+        appearance: Appearance = Appearance(),
+        triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
+        shouldShowResetButton: Boolean = true,
+        packageName: String? = null,
+        excludedActivities: List<Class<out Activity>> = emptyList()
+    ) = imprint(
+        application,
+        appearance,
+        Behavior(
+            triggerGesture = triggerGesture,
+            shouldShowResetButton = shouldShowResetButton,
+            packageName = packageName,
+            excludedActivities = excludedActivities
+        )
+    )
+
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("Use Beagle.initialize(application, appearance, behavior) instead.")
+    fun initialize(
+        application: Application,
+        appearance: Appearance = Appearance(),
+        triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
+        shouldShowResetButton: Boolean,
+        packageName: String? = null,
+        excludedActivities: List<Class<out Activity>> = emptyList()
+    ) = imprint(
+        application,
+        appearance,
+        Behavior(
+            triggerGesture = triggerGesture,
+            shouldShowResetButton = shouldShowResetButton,
+            packageName = packageName,
+            excludedActivities = excludedActivities
+        )
+    )
     //endregion
 }

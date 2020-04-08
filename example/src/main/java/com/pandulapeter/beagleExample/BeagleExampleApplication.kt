@@ -7,7 +7,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Trick
-import com.pandulapeter.beagleCore.configuration.TriggerGesture
 import com.pandulapeter.beagleExample.networking.NetworkingManager
 import com.pandulapeter.beagleExample.utils.mockBackendEnvironments
 import com.pandulapeter.beagleExample.utils.mockColors
@@ -20,7 +19,6 @@ class BeagleExampleApplication : Application() {
         if (BuildConfig.DEBUG) {
             Beagle.imprint(
                 application = this,
-                triggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
                 appearance = Appearance(
                     themeResourceId = R.style.BeagleTheme
                 )
