@@ -137,11 +137,24 @@ sealed class Trick {
         private val onValueChanged: (newValue: Boolean) -> Unit
     ) : Trick(), Confirmable<Boolean> {
 
+        private fun callback(value: Boolean) {
+            onValueChanged(value)
+            savedValue = value
+        }
+
         override var currentValue = initialValue
             set(value) {
                 if (field != value) {
                     field = value
-                    onValueChanged(value)
+                    if (needsConfirmation) {
+                        if (currentValue == savedValue) {
+                            removeChangeEvent(id)
+                        } else {
+                            addChangeEvent(ChangeEvent(id) { callback(value) })
+                        }
+                    } else {
+                        callback(value)
+                    }
                 }
             }
         override var savedValue = initialValue
