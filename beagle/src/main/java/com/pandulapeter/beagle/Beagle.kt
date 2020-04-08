@@ -453,6 +453,7 @@ object Beagle : BeagleContract, SensorEventListener {
             currentActivity?.takeAndShareScreenshot()
             shouldTakeScreenshot = false
         }
+        Trick.resetPendingChanges()
         listeners.forEach { it.onDrawerClosed() }
     }
 
