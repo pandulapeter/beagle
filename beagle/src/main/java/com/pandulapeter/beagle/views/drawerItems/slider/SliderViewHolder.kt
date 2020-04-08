@@ -23,8 +23,9 @@ internal class SliderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
         sliderSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                nameTextView.text = viewModel.trick.name(progress - viewModel.trick.minimumValue)
-                viewModel.trick.currentValue = progress - viewModel.trick.minimumValue
+                if (progress != viewModel.trick.currentValue + viewModel.trick.minimumValue) {
+                    viewModel.onSliderValueChanged(progress - viewModel.trick.minimumValue)
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit

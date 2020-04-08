@@ -154,7 +154,13 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                 )
             )
             is Trick.Slider -> items.add(
-                SliderViewModel(trick = trick)
+                SliderViewModel(
+                    trick = trick,
+                    onSliderValueChanged = { newValue ->
+                        trick.currentValue = newValue
+                        Beagle.updateItems()
+                    }
+                )
             )
             is Trick.Toggle -> items.add(
                 ToggleViewModel(
@@ -226,7 +232,10 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                             listModuleId = trick.id,
                             item = item,
                             isSelected = trick.currentValue.contains(item.id),
-                            onItemSelected = { itemId -> trick.invokeItemSelectedCallback(itemId) }
+                            onItemSelected = { itemId ->
+                                trick.invokeItemSelectedCallback(itemId)
+                                Beagle.updateItems()
+                            }
                         )
                     }
                 }
