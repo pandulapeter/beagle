@@ -160,9 +160,9 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                 ToggleViewModel(
                     id = trick.id,
                     title = trick.title,
-                    isEnabled = trick.value,
+                    isEnabled = trick.currentValue,
                     onToggleStateChanged = { newValue ->
-                        trick.value = newValue
+                        trick.currentValue = newValue
                         Beagle.updateItems()
                     }
                 )
@@ -208,7 +208,7 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                         SingleSelectionListItemViewModel(
                             listModuleId = trick.id,
                             item = item,
-                            isSelected = trick.selectedItemId == item.id,
+                            isSelected = trick.currentValue == item.id,
                             onItemSelected = { itemId ->
                                 trick.invokeItemSelectedCallback(itemId)
                                 Beagle.updateItems()
@@ -225,7 +225,7 @@ internal fun List<Trick>.mapToViewModels(appearance: Appearance, networkLogItems
                         MultipleSelectionListItemViewModel(
                             listModuleId = trick.id,
                             item = item,
-                            isSelected = trick.selectedItemIds.contains(item.id),
+                            isSelected = trick.currentValue.contains(item.id),
                             onItemSelected = { itemId -> trick.invokeItemSelectedCallback(itemId) }
                         )
                     }

@@ -15,6 +15,7 @@ import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.utils.dimension
 import com.pandulapeter.beagle.utils.setBackgroundFromWindowBackground
 import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
+import com.pandulapeter.beagleCore.configuration.Trick
 
 //TODO: Scroll position is not restored.
 internal class BeagleDrawer @JvmOverloads constructor(
@@ -32,7 +33,7 @@ internal class BeagleDrawer @JvmOverloads constructor(
     private val applyButton = ExtendedFloatingActionButton(context, attrs, defStyleAttr).apply {
         text = Beagle.appearance.applyButtonText
         context.dimension(R.dimen.beagle_large_content_padding).let { setPadding(it, it, it, it) }
-        setOnClickListener { Beagle.applyPendingChanges() }
+        setOnClickListener { Trick.applyPendingChanges() }
     }
 
     init {

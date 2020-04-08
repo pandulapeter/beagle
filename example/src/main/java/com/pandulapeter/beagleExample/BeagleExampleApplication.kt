@@ -47,7 +47,8 @@ class BeagleExampleApplication : Application() {
                     onValueChanged = { isOn -> "Feature 1 is ${if (isOn) "on" else "off"}".showToast() }
                 ),
                 Trick.Toggle(
-                    title = "Feature toggle 2",
+                    title = "Feature toggle 2 (needs confirmation)",
+                    needsConfirmation = true,
                     onValueChanged = { isOn -> "Feature 2 is ${if (isOn) "on" else "off"}".showToast() }
                 ),
                 Trick.Padding(),

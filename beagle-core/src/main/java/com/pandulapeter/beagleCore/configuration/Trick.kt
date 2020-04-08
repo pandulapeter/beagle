@@ -5,26 +5,13 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.annotation.IdRes
 import com.pandulapeter.beagleCore.contracts.BeagleListItemContract
+import com.pandulapeter.beagleCore.implementation.ChangeEvent
 import java.util.UUID
 
 /**
  * Contains all supported modules that can be added to the drawer.
  */
 sealed class Trick {
-
-    //region Implementation details
-    abstract val id: String
-
-    interface Expandable {
-
-        val id: String
-        val title: CharSequence
-        val isInitiallyExpanded: Boolean
-        val isExpanded: Boolean
-
-        fun toggleExpandedState()
-    }
-    //endregion
 
     //region Generic modules
     /**
@@ -117,17 +104,19 @@ sealed class Trick {
         val minimumValue: Int = 0,
         val maximumValue: Int = 10,
         val initialValue: Int = minimumValue,
-        val needsConfirmation: Boolean = false,
+        override val needsConfirmation: Boolean = false,
         private val onValueChanged: (value: Int) -> Unit
-    ) : Trick() {
+    ) : Trick(), Confirmable<Int> {
 
-        var value = initialValue
+        override var currentValue = initialValue
             set(value) {
                 if (field != value) {
                     field = value
                     onValueChanged(value)
                 }
             }
+        override var savedValue = initialValue
+
     }
 
     /**
@@ -144,17 +133,18 @@ sealed class Trick {
         override val id: String = UUID.randomUUID().toString(),
         val title: CharSequence,
         val initialValue: Boolean = false,
-        val needsConfirmation: Boolean = false,
+        override val needsConfirmation: Boolean = false,
         private val onValueChanged: (newValue: Boolean) -> Unit
-    ) : Trick() {
+    ) : Trick(), Confirmable<Boolean> {
 
-        var value = initialValue
+        override var currentValue = initialValue
             set(value) {
                 if (field != value) {
                     field = value
                     onValueChanged(value)
                 }
             }
+        override var savedValue = initialValue
     }
 
     /**
@@ -243,22 +233,22 @@ sealed class Trick {
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
         private val initialSelectionId: String? = null,
-        val needsConfirmation: Boolean = false,
+        override val needsConfirmation: Boolean = false,
         private val onItemSelectionChanged: (selectedItem: T) -> Unit
-    ) : Trick(), Expandable {
+    ) : Trick(), Expandable, Confirmable<String?> {
 
         override var isExpanded = isInitiallyExpanded
             private set
-        var selectedItemId = initialSelectionId
-            private set
+        override var currentValue = initialSelectionId
+        override var savedValue = initialSelectionId
 
         override fun toggleExpandedState() {
             isExpanded = !isExpanded
         }
 
         fun invokeItemSelectedCallback(id: String) {
-            selectedItemId = id
-            onItemSelectionChanged(items.first { it.id == selectedItemId })
+            currentValue = id
+            onItemSelectionChanged(items.first { it.id == currentValue })
         }
     }
 
@@ -281,28 +271,28 @@ sealed class Trick {
         override val isInitiallyExpanded: Boolean = false,
         val items: List<T>,
         private val initialSelectionIds: List<String> = emptyList(),
-        val needsConfirmation: Boolean = false,
+        override val needsConfirmation: Boolean = false,
         private val onItemSelectionChanged: (selectedItems: List<T>) -> Unit
-    ) : Trick(), Expandable {
+    ) : Trick(), Expandable, Confirmable<List<String>> {
 
         override var isExpanded = isInitiallyExpanded
             private set
-        var selectedItemIds = initialSelectionIds
-            private set
+        override var currentValue = initialSelectionIds
+        override var savedValue = initialSelectionIds
 
         override fun toggleExpandedState() {
             isExpanded = !isExpanded
         }
 
         fun invokeItemSelectedCallback(id: String) {
-            selectedItemIds = selectedItemIds.toMutableList().apply {
+            currentValue = currentValue.toMutableList().apply {
                 if (contains(id)) {
                     remove(id)
                 } else {
                     add(id)
                 }
             }
-            onItemSelectionChanged(items.filter { selectedItemIds.contains(it.id) })
+            onItemSelectionChanged(items.filter { currentValue.contains(it.id) })
         }
     }
 
@@ -554,6 +544,56 @@ sealed class Trick {
 
         companion object {
             const val ID = "deviceInformation"
+        }
+    }
+    //endregion
+
+    //region Implementation details
+    abstract val id: String
+
+    interface Expandable {
+
+        val id: String
+        val title: CharSequence
+        val isInitiallyExpanded: Boolean
+        val isExpanded: Boolean
+
+        fun toggleExpandedState()
+    }
+
+    interface Confirmable<T> {
+        val needsConfirmation: Boolean
+        var currentValue: T
+        var savedValue: T
+    }
+
+    //TODO: Should be encapsulated + should not be part of the noop variant. Needs refactoring.
+    companion object {
+        var changeListener: (() -> Unit)? = null
+        private var pendingChanges = emptyList<ChangeEvent>()
+        val hasPendingChanges get() = pendingChanges.isNotEmpty()
+
+        fun addChangeEvent(changeEvent: ChangeEvent) {
+            pendingChanges = (pendingChanges + changeEvent).distinctBy { it.trickId }
+            changeListener?.invoke()
+        }
+
+        fun removeChangeEvent(trickId: String) {
+            pendingChanges = pendingChanges.filterNot { it.trickId == trickId }
+            changeListener?.invoke()
+        }
+
+        fun applyPendingChanges() {
+            pendingChanges.asReversed().toList().forEach { changeEvent ->
+                pendingChanges = pendingChanges.filterNot { it.trickId == changeEvent.trickId }
+                changeEvent.event()
+            }
+            changeListener?.invoke()
+        }
+
+        fun clearChangeEvents() {
+            pendingChanges = emptyList()
+            changeListener?.invoke()
         }
     }
     //endregion
