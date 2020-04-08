@@ -77,6 +77,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param application - The [Application] instance.
      * @param appearance - The [Appearance] that specifies the appearance the drawer. Optional.
      * @param triggerGesture - Specifies the way the drawer can be opened. [TriggerGesture.SWIPE_AND_SHAKE] by default.
+     * @param shouldShowResetButton - Whether or not to display a Reset button besides the Apply button that appears when the user makes changes that are not handled in real-time (see the "needsConfirmation" parameter of some Tricks). True by default.
      * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
      * @param excludedActivities - The list of Activity classes where you specifically don't want to use Beagle. Empty by default.
      */
@@ -84,12 +85,14 @@ object Beagle : BeagleContract, SensorEventListener {
         application: Application,
         appearance: Appearance,
         triggerGesture: TriggerGesture,
+        shouldShowResetButton: Boolean,
         packageName: String?,
         excludedActivities: List<Class<out Activity>>
     ) {
         Trick.clearChangeEvents()
         this.appearance = appearance
         this.triggerGesture = triggerGesture
+        this.shouldShowResetButton = shouldShowResetButton
         this.packageName = packageName ?: application.packageName.split(".").run { take(max(size - 1, 1)).joinToString(".") }
         this.excludedActivities = excludedActivities
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
@@ -274,6 +277,7 @@ object Beagle : BeagleContract, SensorEventListener {
         }
     }
     private var triggerGesture = TriggerGesture.SWIPE_AND_SHAKE
+    internal var shouldShowResetButton = true
     private var lastSensorUpdate = 0L
     private var lastSensorValues = Triple(0f, 0f, 0f)
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {

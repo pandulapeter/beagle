@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.View
 import android.view.WindowInsets
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -51,12 +50,14 @@ internal class BeagleDrawer @JvmOverloads constructor(
         gravity = Gravity.CENTER
         addView(applyButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             marginStart = largePadding
-            marginEnd = padding
+            marginEnd = if (Beagle.shouldShowResetButton) padding else largePadding
         })
-        addView(resetButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
-            marginStart = padding
-            marginEnd = largePadding
-        })
+        if (Beagle.shouldShowResetButton) {
+            addView(resetButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
+                marginStart = padding
+                marginEnd = largePadding
+            })
+        }
         background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, context.colorResource(android.R.attr.textColorPrimary)))
     }
 
@@ -96,6 +97,11 @@ internal class BeagleDrawer @JvmOverloads constructor(
 
     fun updateItems(items: List<DrawerItemViewModel>) {
         beagleAdapter.submitList(items)
-        buttonContainer.visibility = if (Beagle.hasPendingChanges) View.VISIBLE else View.GONE
+        buttonContainer.run {
+            animate()
+                .translationY(if (Beagle.hasPendingChanges) 0f else height.toFloat())
+                .alpha(if (Beagle.hasPendingChanges) 1f else 0f)
+                .start()
+        }
     }
 }

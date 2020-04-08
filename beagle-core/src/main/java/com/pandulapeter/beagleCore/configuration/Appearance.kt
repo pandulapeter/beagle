@@ -20,5 +20,6 @@ data class Appearance(
     @Dimension val drawerWidth: Int? = null,
     val applyButtonText: String = "Apply",
     val resetButtonText: String = "Reset",
+    val shouldShowResetButton: Boolean = true,
     val shouldUseItemsInsteadOfButtons: Boolean = false
 ) : Parcelable
