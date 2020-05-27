@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.pandulapeter.beagle.appExample.BeagleExampleApplication"
+        android:name=".BeagleExampleApplication"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +16,7 @@
         android:windowSoftInputMode="adjustResize"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="com.pandulapeter.beagle.appExample.screens.MainActivity">
+        <activity android:name=".screens.MainActivity">
 
             <intent-filter>
 
@@ -28,7 +28,7 @@
 
         </activity>
 
-        <activity android:name="com.pandulapeter.beagle.appExample.screens.LoginActivity" />
+        <activity android:name=".screens.LoginActivity" />
 
     </application>
 

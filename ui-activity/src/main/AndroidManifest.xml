@@ -1,1 +1,10 @@
-<manifest package="com.pandulapeter.beagle" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pandulapeter.beagle">
+
+    <application>
+
+        <activity android:name=".implementation.BeagleActivity" />
+
+    </application>
+
+</manifest>
