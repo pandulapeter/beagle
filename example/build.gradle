@@ -45,17 +45,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "com.google.android.material:material:1.1.0"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
 
-    def retrofitVersion = "2.6.0"
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-
-    def moshiVersion = "1.8.0"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
-
-    debugImplementation project(':beagle')
-    releaseImplementation project(':beagle-noop')
+    debugImplementation project(":beagle")
+    releaseImplementation project(":beagle-noop")
 }

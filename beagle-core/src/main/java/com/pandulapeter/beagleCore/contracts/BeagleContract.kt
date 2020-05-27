@@ -1,166 +1,45 @@
 package com.pandulapeter.beagleCore.contracts
 
-import android.app.Activity
 import android.app.Application
-import androidx.lifecycle.LifecycleOwner
+import androidx.annotation.RestrictTo
 import com.pandulapeter.beagleCore.configuration.Appearance
 import com.pandulapeter.beagleCore.configuration.Behavior
-import com.pandulapeter.beagleCore.configuration.Positioning
-import com.pandulapeter.beagleCore.configuration.Trick
-import com.pandulapeter.beagleCore.configuration.TriggerGesture
 
 /**
- * This interface ensures that the real implementation and the "noop" variant have the same public API.
+ * This interface ensures that the real implementation and the noop variant have the same public API.
  */
-@Suppress("unused")
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 interface BeagleContract {
 
-    //region Public API
-    var isEnabled: Boolean
-    val currentActivity: Activity?
-    val hasPendingChanges: Boolean
-    var onAllChangesApplied: (() -> Unit)?
-
-    fun imprint(
-        application: Application,
-        appearance: Appearance = Appearance(),
-        behavior: Behavior = Behavior()
-    ) = Unit
-
-    fun learn(vararg tricks: Trick) = Unit
-
-    fun learn(
-        trick: Trick,
-        positioning: Positioning = Positioning.Bottom,
-        lifecycleOwner: LifecycleOwner? = null
-    ) = Unit
-
-    fun forget(id: String) = Unit
-
-    fun fetch() = Unit
-
-    fun dismiss() = false
-
-    fun log(
-        message: String,
-        tag: String? = null,
-        payload: String? = null
-    ) = Unit
-
-    fun addListener(listener: BeagleListener) = addListener(null, listener)
-
-    fun addListener(
-        lifecycleOwner: LifecycleOwner? = null,
-        listener: BeagleListener
-    ) = Unit
-
-    fun removeListener(listener: BeagleListener) = Unit
-
-    fun removeAllListeners() = Unit
-    //endregion
-
-    //region Alternative API
     /**
-     * Hooks up the library to the Application's lifecycle. After this is called, a debug drawer will be inserted into every activity. This should be called
-     * in the Application's onCreate() method.
+     * Initializes the library. No UI-related functionality will work before calling this function.
      *
-     * @param application - The [Application] instance.
-     * @param appearance - The [Appearance] that specifies the appearance of the drawer. Optional.
-     * @param behavior - The [Behavior] that specifies the behavior of the drawer. Optional.
+     * @param application - Needed for hooking into the lifecycle.
+     * @param appearance - Optional [Appearance] instance for customizing the appearance of the debug menu.
+     * @param behavior - Optional [Behavior] instance for customizing the behavior of the debug menu.
+     *
+     * @return Whether or not the initialization was successful. Possible causes of failure:
+     *      - The behavior specified the shake to open trigger gesture and the device does not have an accelerometer sensor.
+     *      - The application depends the noop variant.
      */
-    fun initialize(
-        application: Application,
-        appearance: Appearance = Appearance(),
-        behavior: Behavior = Behavior()
-    ) = imprint(application, appearance, behavior)
+    fun initialize(application: Application, appearance: Appearance = Appearance(), behavior: Behavior = Behavior()): Boolean = false
 
     /**
-     * Use this function to clear the contents of the menu and set a new list of tricks.
+     * Call this to show the debug menu.
      *
-     * @param modules - The new list of modules.
+     * @return Whether or not the operation was successful. Possible causes of failure:
+     *      - The application does not have any created activities.
+     *      - The currently visible Activity is not a subclass of [androidx.fragment.app.FragmentActivity].
+     *      - The application depends the noop variant.
      */
-    fun setModules(vararg modules: Trick) = learn(*modules)
+    fun show(): Boolean = false
 
     /**
-     * Use this function to add a new trick to the list. If there already is a trick with the same ID, it will be updated.
+     * Call this to hide the debug menu.
      *
-     * @param module - The new module to be added.
-     * @param positioning - The positioning of the new trick. [Positioning.Bottom] by default.
-     * @param lifecycleOwner - The [LifecycleOwner] which should dictate for how long the module should be added. Null if the module should not be removed automatically. Null by default.
+     * @return Whether or not the operation was successful. Possible causes of failure:
+     *      - The debug menu is not currently visible.
+     *      - The application depends the noop variant.
      */
-    fun putModule(
-        module: Trick,
-        positioning: Positioning = Positioning.Bottom,
-        lifecycleOwner: LifecycleOwner? = null
-    ) = learn(module, positioning, lifecycleOwner)
-
-    /**
-     * Removes the module with the specified ID from the list of modules. The ID-s of unique modules can be accessed through their companion objects.
-     *
-     * @param id - The ID of the module to be removed.
-     */
-    fun removeModule(id: String) = forget(id)
-    //endregion
-
-    //region Deprecated
-    @Suppress("DeprecatedCallableAddReplaceWith")
-    @Deprecated("Use Beagle.learn(vararg modules) function instead.")
-    fun learn(tricks: List<Trick>) = learn(*Array(tricks.size) { tricks[it] })
-
-    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.fetch()"))
-    fun fetch(activity: Activity) = fetch()
-
-    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.dismiss()"))
-    fun dismiss(activity: Activity) = dismiss()
-
-    @Suppress("DeprecatedCallableAddReplaceWith")
-    @Deprecated("Use Beagle.setModules(vararg modules) function instead.")
-    fun setModules(modules: List<Trick>) = learn(*Array(modules.size) { modules[it] })
-
-    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.openDrawer()"))
-    fun openDrawer(activity: Activity) = fetch()
-
-    @Deprecated("There is no longer a need for the Activity parameter", replaceWith = ReplaceWith("Beagle.closeDrawer()"))
-    fun closeDrawer(activity: Activity) = dismiss()
-
-    @Suppress("DeprecatedCallableAddReplaceWith")
-    @Deprecated("Use Beagle.imprint(application, appearance, behavior) instead.")
-    fun imprint(
-        application: Application,
-        appearance: Appearance = Appearance(),
-        triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
-        shouldShowResetButton: Boolean = true,
-        packageName: String? = null,
-        excludedActivities: List<Class<out Activity>> = emptyList()
-    ) = imprint(
-        application,
-        appearance,
-        Behavior(
-            triggerGesture = triggerGesture,
-            shouldShowResetPendingChangesButton = shouldShowResetButton,
-            packageName = packageName,
-            excludedActivities = excludedActivities
-        )
-    )
-
-    @Suppress("DeprecatedCallableAddReplaceWith")
-    @Deprecated("Use Beagle.initialize(application, appearance, behavior) instead.")
-    fun initialize(
-        application: Application,
-        appearance: Appearance = Appearance(),
-        triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
-        shouldShowResetButton: Boolean,
-        packageName: String? = null,
-        excludedActivities: List<Class<out Activity>> = emptyList()
-    ) = imprint(
-        application,
-        appearance,
-        Behavior(
-            triggerGesture = triggerGesture,
-            shouldShowResetPendingChangesButton = shouldShowResetButton,
-            packageName = packageName,
-            excludedActivities = excludedActivities
-        )
-    )
-    //endregion
+    fun hide(): Boolean = false
 }
