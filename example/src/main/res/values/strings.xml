@@ -1,6 +1,5 @@
 <resources>
 
-    <string name="app_name">Beagle (debug)</string>
     <string name="open_debug_menu">Open debug menu</string>
     <string name="open_login_screen">Open login screen</string>
     <string name="username">Username</string>

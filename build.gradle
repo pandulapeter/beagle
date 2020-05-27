@@ -2,7 +2,6 @@ buildscript {
     ext {
         libraryGroup = "com.github.pandulapeter.beagle"
         libraryVersion = "2.0.0-alpha01"
-
         kotlinVersion = "1.3.72"
         coroutinesVersion = "1.3.6"
         annotationsVersion = "1.1.0"
@@ -25,7 +24,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-
     }
 }
 

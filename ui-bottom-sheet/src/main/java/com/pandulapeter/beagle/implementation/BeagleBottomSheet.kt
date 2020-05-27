@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.implementation
 
-import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,12 +18,10 @@ internal class BeagleBottomSheet : BottomSheetDialogFragment() {
         setBackgroundColor(Color.RED)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState).also { dialog ->
-            dialog.window?.let { window ->
-                window.setBackgroundDrawableResource(android.R.color.transparent);
-                window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-            }
+    override fun onCreateDialog(savedInstanceState: Bundle?) = super.onCreateDialog(savedInstanceState).also { dialog ->
+        dialog.window?.let { window ->
+            window.setBackgroundDrawableResource(android.R.color.transparent);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         }
     }
 
