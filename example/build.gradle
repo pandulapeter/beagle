@@ -48,6 +48,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
 
-    debugImplementation project(":beagle")
-    releaseImplementation project(":beagle-noop")
+    debugImplementation project(":ui-bottom-sheet")
+    releaseImplementation project(":noop")
 }

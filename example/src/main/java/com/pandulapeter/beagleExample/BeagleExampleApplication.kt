@@ -2,7 +2,7 @@ package com.pandulapeter.beagleExample
 
 import android.app.Application
 import com.pandulapeter.beagle.Beagle
-import com.pandulapeter.beagleCore.configuration.Appearance
+import com.pandulapeter.shared.configuration.Appearance
 
 @Suppress("unused")
 class BeagleExampleApplication : Application() {

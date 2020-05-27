@@ -1,5 +1,7 @@
-include ':beagle-core'
-include ':beagle'
-include ':beagle-noop'
+include ":shared"
+include ":core"
+include ":ui-bottom-sheet"
+include ":ui-dialog"
+include ":noop"
 include ":example"
 rootProject.name = "Beagle"

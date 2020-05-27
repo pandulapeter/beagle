@@ -7,6 +7,7 @@
 The library is undergoing a complete rewrite with version 2.0.0. Proceed with caution.
 
 ### Usage
+#### Step 1: Add the dependencies
 Add the following to your top level Gradle file:
 
 ```groovy
@@ -18,15 +19,14 @@ allprojects {
 }
 ```
 
-...and this to the module-level build script (check the widget below the code snippet for the latest version):
+...and something like this to the module-level build script (check the widget below the code snippet for the latest version):
 
 ```groovy
 dependencies {
     …
-    def beagleVersion = "1.10.2"
-    //def beagleVersion = "2.0.0-alpha01"
-    debugImplementation "com.github.pandulapeter.beagle:beagle:$beagleVersion"
-    releaseImplementation "com.github.pandulapeter.beagle:beagle-noop:$beagleVersion"
+    def beagleVersion = "2.0.0-alpha01"
+    debugImplementation "com.github.pandulapeter.beagle:bottom-sheet:$beagleVersion"
+    releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
 ```
 
@@ -35,18 +35,28 @@ The latest version is:
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
-The library has to be initialized with an Application instance (preferably in the Application's onCreate() method) by calling:
+As you can see, the library provides a "noop" variant that can be shipped for production builds. It contains the same public API but none of the implementation details so it does nothing.
+
+#### Step 2: Pick a UI and initialize it
+The way Beagle appears in your app is up to you. The simplest option is a bottom sheet or a normal dialog, but if this is not suitable for your usecase, a View is also exposed.
+
+##### Option 1: Bottom sheet (recommended) or dialog
+This option requires the least amount of work: just one line of code, preferably in the Application's onCreate() method:
 
 ```kotlin
 Beagle.initialize(this)
 ```
+
+##### Option 2: Bottom sheet (recommended)
+
+#### Step 3: Add modules
 After this a number of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated.
 
 By default you can fetch Beagle by shaking the device.
 
 ### Tips and tricks
-* The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Appearance.kt) instance when initializing the library.
-* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/beagle-core/src/main/java/com/pandulapeter/beagleCore/configuration/Behavior.kt) instance when initializing the library.
+* The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagleCommon/configuration/Appearance.kt) instance when initializing the library.
+* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagleCommon/configuration/Behavior.kt) instance when initializing the library.
 
 ### Changelog
 * Check out the [Releases](https://github.com/pandulapeter/beagle/releases) page for the changes in every version. The library uses [semantic versioning](https://semver.org): *MAJOR.MINOR.PATCH* where *PATCH* changes only contain bug fixes, *MINOR* changes add new features and *MAJOR* changes introduce breaking modifications to the API.
