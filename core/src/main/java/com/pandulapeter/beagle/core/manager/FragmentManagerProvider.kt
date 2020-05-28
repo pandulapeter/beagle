@@ -1,9 +1,9 @@
-package com.pandulapeter.beagle.core.implementation.manager
+package com.pandulapeter.beagle.core.manager
 
 import android.app.Activity
 import android.app.Application
 import androidx.fragment.app.FragmentActivity
-import com.pandulapeter.beagle.core.implementation.util.SimpleActivityLifecycleCallbacks
+import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
 
 internal class FragmentManagerProvider {
 

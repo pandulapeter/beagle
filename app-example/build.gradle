@@ -26,8 +26,6 @@ android {
             debuggable true
             minifyEnabled false
             shrinkResources false
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
             signingConfig signingConfigs.internal
         }
         release {
@@ -54,6 +52,14 @@ android {
             applicationIdSuffix ".dialog"
             versionNameSuffix "-dialog"
         }
+        drawer {
+            applicationIdSuffix ".drawer"
+            versionNameSuffix "-drawer"
+        }
+        view {
+            applicationIdSuffix ".view"
+            versionNameSuffix "-view"
+        }
     }
 }
 
@@ -61,6 +67,8 @@ configurations {
     activityDebugImplementation
     bottomSheetDebugImplementation
     dialogDebugImplementation
+    drawerDebugImplementation
+    viewDebugImplementation
 }
 
 dependencies {
@@ -71,5 +79,7 @@ dependencies {
     activityDebugImplementation project(":ui-activity")
     bottomSheetDebugImplementation project(":ui-bottom-sheet")
     dialogDebugImplementation project(":ui-dialog")
+    drawerDebugImplementation project(":ui-drawer")
+    viewDebugImplementation project(":ui-view")
     releaseImplementation project(":noop")
 }

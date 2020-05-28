@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.implementation.util
+package com.pandulapeter.beagle.core.util
 
 import android.app.Activity
 import android.app.Application

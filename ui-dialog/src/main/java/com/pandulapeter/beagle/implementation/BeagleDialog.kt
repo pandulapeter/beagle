@@ -1,20 +1,23 @@
 package com.pandulapeter.beagle.implementation
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.Beagle
+import com.pandulapeter.beagle.BeagleView
 
 
-internal class BeagleDialog : DialogFragment() {
+internal class BeagleDialog : AppCompatDialogFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = View(context).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = BeagleView(requireContext()).apply {
         setOnClickListener { Beagle.hide() }
-        setBackgroundColor(Color.RED)
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?) = super.onCreateDialog(savedInstanceState).also { dialog ->
+        dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
     }
 
     companion object {

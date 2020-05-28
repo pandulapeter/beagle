@@ -20,7 +20,7 @@ interface BeagleContract {
      *
      * @return Whether or not the initialization was successful. Possible causes of failure:
      *      - The behavior specified the shake to open trigger gesture and the device does not have an accelerometer sensor.
-     *      - The application depends the noop variant.
+     *      - The application depends on the noop variant.
      */
     fun initialize(application: Application, appearance: Appearance = Appearance(), behavior: Behavior = Behavior()): Boolean = false
 
@@ -28,10 +28,12 @@ interface BeagleContract {
      * Call this to show the debug menu.
      *
      * @return Whether or not the operation was successful. Possible causes of failure:
+     *      - The library has not been initialized yet.
      *      - The debug menu is already visible.
      *      - The application does not have any created activities.
      *      - The currently visible Activity is not a subclass of [androidx.fragment.app.FragmentActivity].
-     *      - The application depends the noop variant.
+     *      - The application depends on the ui-view variant (in this case its your responsibility to show / hide the ).
+     *      - The application depends on the noop variant.
      */
     fun show(): Boolean = false
 
@@ -39,8 +41,9 @@ interface BeagleContract {
      * Call this to hide the debug menu.
      *
      * @return Whether or not the operation was successful. Possible causes of failure:
+     *      - The library has not been initialized yet.
      *      - The debug menu is not currently visible.
-     *      - The application depends the noop variant.
+     *      - The application depends on the noop variant.
      */
     fun hide(): Boolean = false
 }

@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.implementation.util.extension
+package com.pandulapeter.beagle.core.util.extension
 
 import android.content.Context
 import android.hardware.Sensor

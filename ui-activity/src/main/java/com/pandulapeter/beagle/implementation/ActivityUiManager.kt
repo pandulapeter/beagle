@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.implementation
 
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
-import com.pandulapeter.beagle.core.implementation.manager.UiManagerContract
+import com.pandulapeter.beagle.core.manager.UiManagerContract
 
 internal class ActivityUiManager : UiManagerContract {
 

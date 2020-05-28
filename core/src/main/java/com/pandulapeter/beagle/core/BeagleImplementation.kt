@@ -1,14 +1,14 @@
-package com.pandulapeter.beagle.core.implementation
+package com.pandulapeter.beagle.core
 
 import android.app.Application
 import androidx.annotation.RestrictTo
+import com.pandulapeter.beagle.core.manager.FragmentManagerProvider
+import com.pandulapeter.beagle.core.manager.ShakeDetector
+import com.pandulapeter.beagle.core.manager.UiManagerContract
+import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
 import com.pandulapeter.beagle.shared.configuration.Appearance
 import com.pandulapeter.beagle.shared.configuration.Behavior
 import com.pandulapeter.beagle.shared.contracts.BeagleContract
-import com.pandulapeter.beagle.core.implementation.manager.FragmentManagerProvider
-import com.pandulapeter.beagle.core.implementation.manager.ShakeDetector
-import com.pandulapeter.beagle.core.implementation.manager.UiManagerContract
-import com.pandulapeter.beagle.core.implementation.util.extension.registerSensorEventListener
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {

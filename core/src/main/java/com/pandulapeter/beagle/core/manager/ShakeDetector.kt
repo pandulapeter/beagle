@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.implementation.manager
+package com.pandulapeter.beagle.core.manager
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent
