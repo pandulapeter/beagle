@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
 
-internal class BeagleActivity : AppCompatActivity(R.layout.activity_beagle) {
+internal class BeagleActivity : AppCompatActivity(R.layout.view_beagle) {
 
     override fun onStart() {
         super.onStart()

@@ -10,7 +10,7 @@ import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
 import com.pandulapeter.beagle.core.util.extension.themedContext
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
-internal class CurrentActivityProvider(private val uiManager: UiManagerContract) {
+internal class DebugMenuInjector(private val uiManager: UiManagerContract) {
 
     var currentActivity: FragmentActivity? = null
         private set

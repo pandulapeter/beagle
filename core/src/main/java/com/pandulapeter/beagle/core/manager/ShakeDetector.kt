@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.manager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
+import androidx.lifecycle.Lifecycle
 import com.pandulapeter.beagle.BeagleCore
 import kotlin.math.abs
 
@@ -16,17 +17,19 @@ internal class ShakeDetector(
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
 
     override fun onSensorChanged(event: SensorEvent?) {
-        BeagleCore.implementation.behavior.shakeThreshold?.let { threshold ->
-            if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-                val currentTime = System.currentTimeMillis()
-                if (currentTime - lastSensorUpdate > SHAKE_DETECTION_DELAY) {
-                    if (abs(event.x + event.y + event.z - previousEvent.x - previousEvent.y - previousEvent.z) / (currentTime - lastSensorUpdate) * 100 > threshold) {
-                        onShakeDetected()
+        if (BeagleCore.implementation.currentActivity?.lifecycle?.currentState?.isAtLeast(Lifecycle.State.STARTED) == true) {
+            BeagleCore.implementation.behavior.shakeThreshold?.let { threshold ->
+                if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastSensorUpdate > SHAKE_DETECTION_DELAY) {
+                        if (abs(event.x + event.y + event.z - previousEvent.x - previousEvent.y - previousEvent.z) / (currentTime - lastSensorUpdate) * 100 > threshold) {
+                            onShakeDetected()
+                        }
+                        previousEvent.x = event.x
+                        previousEvent.y = event.y
+                        previousEvent.z = event.z
+                        lastSensorUpdate = currentTime
                     }
-                    previousEvent.x = event.x
-                    previousEvent.y = event.y
-                    previousEvent.z = event.z
-                    lastSensorUpdate = currentTime
                 }
             }
         }

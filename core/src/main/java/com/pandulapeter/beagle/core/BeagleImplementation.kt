@@ -2,42 +2,47 @@ package com.pandulapeter.beagle.core
 
 import android.app.Application
 import androidx.annotation.RestrictTo
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.VisibilityListener
-import com.pandulapeter.beagle.core.manager.CurrentActivityProvider
+import com.pandulapeter.beagle.core.manager.DebugMenuInjector
+import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
+import kotlin.properties.Delegates
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {
 
-    override var isUiEnabled = true
-        set(value) {
-            if (!value) {
-                hide()
-            }
-            field = value
+    override var isUiEnabled by Delegates.observable(true) { _, _, newValue ->
+        if (!newValue) {
+            hide()
         }
-    override val currentActivity get() = currentActivityProvider.currentActivity
+        listManager.refreshList()
+    }
+    override val currentActivity get() = debugMenuInjector.currentActivity
     var appearance = Appearance()
         private set
     var behavior = Behavior()
         private set
-    private val shakeDetector by lazy { ShakeDetector({ show() }) }
-    private val currentActivityProvider by lazy { CurrentActivityProvider(uiManager) }
-    private val visibilityListenerManager by lazy { VisibilityListenerManager() }
+    private val shakeDetector by lazy { ShakeDetector { show() } }
+    private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
+    private val listenerManager by lazy { VisibilityListenerManager() }
+    private val listManager by lazy { ListManager() }
 
     init {
         BeagleCore.implementation = this
     }
 
+    //TODO: SensorEventListener should be unregistered when the app is in background.
     override fun initialize(
         application: Application,
         appearance: Appearance,
@@ -45,22 +50,24 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     ) = (behavior.shakeThreshold == null || application.registerSensorEventListener(shakeDetector)).also {
         this.appearance = appearance
         this.behavior = behavior
-        currentActivityProvider.register(application)
+        debugMenuInjector.register(application)
     }
 
-    override fun show() = (currentActivity?.let { uiManager.show(it) } ?: false)
+    override fun show() = (currentActivity?.let { if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) uiManager.show(it) else false } ?: false)
 
     override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
 
-    override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) = visibilityListenerManager.addVisibilityListener(listener, lifecycleOwner)
+    override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) = listenerManager.addVisibilityListener(listener, lifecycleOwner)
 
-    override fun removeVisibilityListener(listener: VisibilityListener) = visibilityListenerManager.removeVisibilityListener(listener)
+    override fun removeVisibilityListener(listener: VisibilityListener) = listenerManager.removeVisibilityListener(listener)
 
-    override fun clearVisibilityListeners() = visibilityListenerManager.clearVisibilityListeners()
+    override fun clearVisibilityListeners() = listenerManager.clearVisibilityListeners()
 
-    fun notifyVisibilityListenersOnShow() = visibilityListenerManager.notifyVisibilityListenersOnShow()
+    fun notifyVisibilityListenersOnShow() = listenerManager.notifyVisibilityListenersOnShow()
 
-    fun notifyVisibilityListenersOnHide() = visibilityListenerManager.notifyVisibilityListenersOnHide()
+    fun notifyVisibilityListenersOnHide() = listenerManager.notifyVisibilityListenersOnHide()
 
     fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
+
+    fun setupRecyclerView(recyclerView: RecyclerView) = listManager.setupRecyclerView(recyclerView)
 }

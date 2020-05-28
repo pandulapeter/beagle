@@ -12,10 +12,12 @@ interface UiManagerContract {
     //TODO: Make sure this doesn't break the focus handling
     fun injectOverlayFrameLayout(activity: FragmentActivity, oldRootViewGroup: ViewGroup, overlayFrameLayout: OverlayFrameLayout) {
         oldRootViewGroup.run {
-            val oldViews = (0 until childCount).map { getChildAt(it) }
-            removeAllViews()
-            oldViews.forEach { overlayFrameLayout.addView(it) }
-            addView(overlayFrameLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            post {
+                val oldViews = (0 until childCount).map { getChildAt(it) }
+                removeAllViews()
+                oldViews.forEach { overlayFrameLayout.addView(it) }
+                addView(overlayFrameLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            }
         }
     }
 

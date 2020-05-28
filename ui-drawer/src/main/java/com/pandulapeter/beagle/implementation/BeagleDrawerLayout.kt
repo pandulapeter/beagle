@@ -32,8 +32,8 @@ internal class BeagleDrawerLayout(
     }
 
     init {
-        addView(content, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
-        addView(drawer, LayoutParams(600, LayoutParams.MATCH_PARENT, GravityCompat.END))
+        addView(content, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        addView(drawer, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, GravityCompat.END))
     }
 
     override fun onAttachedToWindow() {

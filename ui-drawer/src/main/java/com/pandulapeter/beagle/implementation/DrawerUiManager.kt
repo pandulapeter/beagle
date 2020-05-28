@@ -7,12 +7,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.BeagleView
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 internal class DrawerUiManager : UiManagerContract {
 
-    private val drawers = mutableMapOf<FragmentActivity, BeagleDrawer>()
+    private val drawers = mutableMapOf<FragmentActivity, BeagleView>()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -49,7 +50,7 @@ internal class DrawerUiManager : UiManagerContract {
         (drawer.parent as? BeagleDrawerLayout?)?.setDrawerLockMode(if (Beagle.isUiEnabled) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-    private fun injectDrawerLayout(rootViewGroup: ViewGroup, overlayFrameLayout: OverlayFrameLayout) = BeagleDrawer(overlayFrameLayout.context).also { drawer ->
+    private fun injectDrawerLayout(rootViewGroup: ViewGroup, overlayFrameLayout: OverlayFrameLayout) = BeagleView(overlayFrameLayout.context).also { drawer ->
         rootViewGroup.run {
             post {
                 val oldViews = (0 until childCount).map { getChildAt(it) }

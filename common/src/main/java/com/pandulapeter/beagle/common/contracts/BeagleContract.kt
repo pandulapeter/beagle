@@ -47,7 +47,7 @@ interface BeagleContract {
      *  - The library has not been initialized yet.
      *  - The library UI has explicitly been disabled by setting [isUiEnabled] to false.
      *  - The debug menu is already visible.
-     *  - The application does not have any created activities.
+     *  - The application does not have any visible activities at the moment (the lifecycle must be at least in STARTED state).
      *  - The currently visible Activity is not a subclass of [FragmentActivity].
      *  - The currently visible Activity should not support a debug menu (social login overlay, in-app-purchase overlay, etc).
      *  - The currently visible Activity is part of a package that has manually been excluded in the [Behavior] class.
