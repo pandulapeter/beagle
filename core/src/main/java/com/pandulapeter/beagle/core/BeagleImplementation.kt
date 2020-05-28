@@ -2,14 +2,12 @@ package com.pandulapeter.beagle.core
 
 import android.app.Application
 import androidx.annotation.RestrictTo
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.CurrentActivityProvider
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
+import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
 import com.pandulapeter.beagle.shared.configuration.Appearance
@@ -32,13 +30,9 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         private set
     var behavior = Behavior()
         private set
-    private val shakeDetector by lazy {
-        ShakeDetector(
-            getShakeThreshold = { this.behavior.shakeThreshold },
-            onShakeDetected = { show() })
-    }
+    private val shakeDetector by lazy { ShakeDetector(getShakeThreshold = { this.behavior.shakeThreshold }, onShakeDetected = { show() }) }
     private val currentActivityProvider by lazy { CurrentActivityProvider(uiManager) }
-    private val visibilityListeners = mutableListOf<VisibilityListener>()
+    private val visibilityListenerManager by lazy { VisibilityListenerManager() }
 
     init {
         BeagleCore.implementation = this
@@ -48,7 +42,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         application: Application,
         appearance: Appearance,
         behavior: Behavior
-    ): Boolean = (behavior.shakeThreshold == null || application.registerSensorEventListener(shakeDetector)).also {
+    ) = (behavior.shakeThreshold == null || application.registerSensorEventListener(shakeDetector)).also {
         this.appearance = appearance
         this.behavior = behavior
         currentActivityProvider.register(application)
@@ -58,36 +52,15 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
 
-    override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) {
+    override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) = visibilityListenerManager.addVisibilityListener(listener, lifecycleOwner)
 
-        fun addVisibilityListener(listener: VisibilityListener) {
-            if (!visibilityListeners.contains(listener)) {
-                visibilityListeners.add(listener)
-            }
-        }
+    override fun removeVisibilityListener(listener: VisibilityListener) = visibilityListenerManager.removeVisibilityListener(listener)
 
-        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_START)
-            fun onCreate() = addVisibilityListener(listener)
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-            fun onDestroy() {
-                removeVisibilityListener(listener)
-                lifecycleOwner.lifecycle.removeObserver(this)
-            }
-        }) ?: addVisibilityListener(listener)
-    }
-
-    override fun removeVisibilityListener(listener: VisibilityListener) {
-        visibilityListeners.remove(listener)
-    }
-
-    override fun clearVisibilityListeners() = visibilityListeners.clear()
+    override fun clearVisibilityListeners() = visibilityListenerManager.clearVisibilityListeners()
 
     fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
 
-    fun notifyVisibilityListenersOnShow() = visibilityListeners.forEach { it.onShown() }
+    fun notifyVisibilityListenersOnShow() = visibilityListenerManager.notifyVisibilityListenersOnShow()
 
-    fun notifyVisibilityListenersOnHide() = visibilityListeners.forEach { it.onHidden() }
+    fun notifyVisibilityListenersOnHide() = visibilityListenerManager.notifyVisibilityListenersOnHide()
 }
