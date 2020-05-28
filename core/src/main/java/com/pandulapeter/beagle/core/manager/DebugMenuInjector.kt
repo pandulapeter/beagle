@@ -10,11 +10,13 @@ import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
 import com.pandulapeter.beagle.core.util.extension.themedContext
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
-internal class DebugMenuInjector(private val uiManager: UiManagerContract) {
+internal class DebugMenuInjector(
+    private val uiManager: UiManagerContract
+) {
 
     var currentActivity: FragmentActivity? = null
         private set
-    private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
+    private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             if (activity.supportsDebugMenu) {
@@ -40,8 +42,8 @@ internal class DebugMenuInjector(private val uiManager: UiManagerContract) {
         }
     }
 
-    internal fun register(application: Application) {
-        application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
-        application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
+    internal fun register(application: Application) = application.run {
+        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks)
+        registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
     }
 }

@@ -1,18 +1,41 @@
 package com.pandulapeter.beagle.core.manager
 
+import android.app.Application
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
+import com.pandulapeter.beagle.core.util.extension.unregisterSensorEventListener
 import kotlin.math.abs
 
 internal class ShakeDetector(
     private val onShakeDetected: () -> Unit
-) : SensorEventListener {
+) : SensorEventListener, LifecycleObserver {
 
     private var lastSensorUpdate = 0L
     private val previousEvent = SensorValues()
+    private var application: Application? = null
+
+    fun initialize(application: Application): Boolean {
+        application.unregisterSensorEventListener(this)
+        return application.registerSensorEventListener(this).also {
+            if (it) {
+                this.application = application
+                ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+            }
+        }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun registerSensor() = application?.registerSensorEventListener(this)
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun unregisterSensor() = application?.unregisterSensorEventListener(this)
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
 

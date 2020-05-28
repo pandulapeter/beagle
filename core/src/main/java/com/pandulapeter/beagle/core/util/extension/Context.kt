@@ -11,4 +11,8 @@ internal fun Context.registerSensorEventListener(sensorEventListener: SensorEven
     registerListener(sensorEventListener, getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
 } ?: false
 
+internal fun Context.unregisterSensorEventListener(sensorEventListener: SensorEventListener) {
+    (getSystemService(Context.SENSOR_SERVICE) as? SensorManager?)?.unregisterListener(sensorEventListener)
+}
+
 internal val Context.themedContext get() = (BeagleCore.implementation.appearance.themeResourceId?.let { ContextThemeWrapper(this, it) } ?: this)

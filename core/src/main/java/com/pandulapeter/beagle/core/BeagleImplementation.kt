@@ -16,7 +16,6 @@ import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
-import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
 import kotlin.properties.Delegates
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
@@ -42,12 +41,11 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         BeagleCore.implementation = this
     }
 
-    //TODO: SensorEventListener should be unregistered when the app is in background.
     override fun initialize(
         application: Application,
         appearance: Appearance,
         behavior: Behavior
-    ) = (behavior.shakeThreshold == null || application.registerSensorEventListener(shakeDetector)).also {
+    ) = (behavior.shakeThreshold == null || shakeDetector.initialize(application)).also {
         this.appearance = appearance
         this.behavior = behavior
         debugMenuInjector.register(application)

@@ -7,6 +7,7 @@ buildscript {
         annotationsVersion = "1.1.0"
         appCompatVersion = "1.1.0"
         recyclerViewVersion = "1.1.0"
+        lifecycleVersion = "2.2.0"
         materialVersion = "1.1.0"
         versionCode = 1
     }
