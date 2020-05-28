@@ -19,10 +19,10 @@ internal class VisibilityListenerManager {
     fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) {
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
 
-            @OnLifecycleEvent(Lifecycle.Event.ON_START)
+            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
             fun onCreate() = addVisibilityListener(listener)
 
-            @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun onDestroy() {
                 removeVisibilityListener(listener)
                 lifecycleOwner.lifecycle.removeObserver(this)

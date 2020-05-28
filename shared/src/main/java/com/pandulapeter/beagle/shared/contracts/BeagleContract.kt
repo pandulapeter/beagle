@@ -20,7 +20,7 @@ interface BeagleContract {
      * Note: to completely disable the library UI as well as its functionality at compile-time, use the noop variant instead.
      *
      * @return Whether or not the library is currently enabled. Possible reasons for returning false:
-     *  - The library has explicitly been disabled.
+     *  - The library UI has explicitly been disabled.
      *  - The application depends on the noop variant.
      */
     var isUiEnabled: Boolean
@@ -45,11 +45,12 @@ interface BeagleContract {
      *
      * @return Whether or not the operation was successful. Possible causes of failure:
      *  - The library has not been initialized yet.
-     *  - The library has explicitly been disabled.
+     *  - The library UI has explicitly been disabled by setting [isUiEnabled] to false.
      *  - The debug menu is already visible.
      *  - The application does not have any created activities.
      *  - The currently visible Activity is not a subclass of [FragmentActivity].
      *  - The currently visible Activity should not support a debug menu (social login overlay, in-app-purchase overlay, etc).
+     *  - The currently visible Activity is part of a package that has manually been excluded in the [Behavior] class.
      *  - The application depends on the ui-view variant (in this case its your responsibility to show / hide the UI).
      *  - The application depends on the noop variant.
      */
@@ -69,7 +70,7 @@ interface BeagleContract {
     //region Listeners
     /**
      * Adds a new [VisibilityListener] implementation to listen to the debug menu visibility changes.
-     * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is started / stopped.
+     * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is created / destroyed.
      *
      * @param listener - The [VisibilityListener] implementation to add.
      * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.

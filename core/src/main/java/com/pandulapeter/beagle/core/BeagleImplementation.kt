@@ -58,9 +58,9 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun clearVisibilityListeners() = visibilityListenerManager.clearVisibilityListeners()
 
-    fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
-
     fun notifyVisibilityListenersOnShow() = visibilityListenerManager.notifyVisibilityListenersOnShow()
 
     fun notifyVisibilityListenersOnHide() = visibilityListenerManager.notifyVisibilityListenersOnHide()
+
+    fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
 }
