@@ -17,7 +17,7 @@ interface BeagleContract {
     //region Core functionality
     /**
      * Can be used to enable or disable the library UI (but not its functionality) at runtime. Setting this to false has the side effect of calling the [hide] function.
-     * Note: to completely disable the library UI as well as its functionality at compile-time, use the noop variant.
+     * Note: to completely disable the library UI as well as its functionality at compile-time, use the noop variant instead.
      *
      * @return Whether or not the library is currently enabled. Possible reasons for returning false:
      *  - The library has explicitly been disabled.
