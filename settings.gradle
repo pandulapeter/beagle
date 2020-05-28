@@ -6,5 +6,5 @@ include ":ui-dialog"
 include ":ui-drawer"
 include ":ui-view"
 include ':noop'
-include ":app-example"
+include ':app'
 rootProject.name = "Beagle"
