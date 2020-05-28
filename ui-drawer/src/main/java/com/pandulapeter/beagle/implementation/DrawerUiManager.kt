@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.UiManagerContract
+import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 internal class DrawerUiManager : UiManagerContract {
 
@@ -20,8 +21,8 @@ internal class DrawerUiManager : UiManagerContract {
         }
     }
 
-    override fun onActivityCreated(activity: FragmentActivity) {
-        drawers[activity] = createAndAddDrawerLayout(activity, false)
+    override fun injectOverlayFrameLayout(activity: FragmentActivity, oldRootViewGroup: ViewGroup, overlayFrameLayout: OverlayFrameLayout) {
+        drawers[activity] = injectDrawerLayout(activity, oldRootViewGroup, overlayFrameLayout)
         activity.onBackPressedDispatcher.addCallback(activity, onBackPressedCallback)
     }
 
@@ -49,30 +50,27 @@ internal class DrawerUiManager : UiManagerContract {
     }
 
     //TODO: Make sure this doesn't break Activity shared element transitions.
-    //TODO: Find a smart way to handle the case when the root view is already a DrawerLayout.
-    private fun createAndAddDrawerLayout(activity: FragmentActivity, shouldOpenDrawer: Boolean) =
+    private fun injectDrawerLayout(activity: FragmentActivity, rootViewGroup: ViewGroup, overlayFrameLayout: OverlayFrameLayout) =
         (BeagleCore.implementation.appearance.themeResourceId?.let { ContextThemeWrapper(activity, it) } ?: activity).let { themedContext ->
             BeagleDrawer(themedContext).also { drawer ->
-                activity.findRootViewGroup().run {
+                rootViewGroup.run {
                     post {
                         val oldViews = (0 until childCount).map { getChildAt(it) }
                         removeAllViews()
+                        oldViews.forEach { overlayFrameLayout.addView(it) }
                         addView(
                             BeagleDrawerLayout(
                                 context = themedContext,
-                                oldViews = oldViews,
-                                drawer = drawer
+                                drawer = drawer,
+                                content = overlayFrameLayout
                             ).apply {
-                                if (shouldOpenDrawer) {
-                                    openDrawer(drawer)
-                                }
                                 updateDrawerLockMode()
                                 post { updateDrawerLockMode() }
                                 addDrawerListener(object : DrawerLayout.DrawerListener {
 
                                     override fun onDrawerStateChanged(newState: Int) = Unit
 
-                                    override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit  //TODOactivity.currentFocus?.hideKeyboard() ?: Unit
+                                    override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit  //TODO activity.currentFocus?.hideKeyboard() ?: Unit
 
                                     override fun onDrawerClosed(drawerView: View) {
                                         onBackPressedCallback.isEnabled = false
@@ -90,7 +88,4 @@ internal class DrawerUiManager : UiManagerContract {
                 }
             }
         }
-
-    private fun FragmentActivity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
-
 }

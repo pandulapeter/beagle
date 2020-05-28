@@ -5,7 +5,10 @@ import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
+import com.pandulapeter.beagle.core.util.extension.findRootViewGroup
 import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
+import com.pandulapeter.beagle.core.util.extension.themedContext
+import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 internal class CurrentActivityProvider(private val uiManager: UiManagerContract) {
 
@@ -15,7 +18,7 @@ internal class CurrentActivityProvider(private val uiManager: UiManagerContract)
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             if (activity.supportsDebugMenu) {
-                uiManager.onActivityCreated(activity as FragmentActivity)
+                uiManager.injectOverlayFrameLayout(activity as FragmentActivity, activity.findRootViewGroup(), OverlayFrameLayout(activity.themedContext))
             }
         }
 
@@ -36,7 +39,7 @@ internal class CurrentActivityProvider(private val uiManager: UiManagerContract)
         }
     }
 
-    fun register(application: Application) {
+    internal fun register(application: Application) {
         application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks)
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks)
     }
