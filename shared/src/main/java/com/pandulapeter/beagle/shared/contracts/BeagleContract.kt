@@ -19,7 +19,7 @@ interface BeagleContract {
      * @param behavior - Optional [Behavior] instance for customizing the behavior of the debug menu.
      *
      * @return Whether or not the initialization was successful. Possible causes of failure:
-     *      - The behavior specified the shake to open trigger gesture and the device does not have an accelerometer sensor.
+     *      - The behavior specified the shake to open trigger gesture but the device does not have an accelerometer sensor.
      *      - The application depends on the noop variant.
      */
     fun initialize(application: Application, appearance: Appearance = Appearance(), behavior: Behavior = Behavior()): Boolean = false

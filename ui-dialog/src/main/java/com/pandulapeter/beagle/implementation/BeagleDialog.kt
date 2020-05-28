@@ -17,11 +17,11 @@ internal class BeagleDialog : AppCompatDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = super.onCreateDialog(savedInstanceState).also { dialog ->
-        dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
     }
 
     companion object {
-        const val TAG = "BeagleDebugMenu"
+        const val TAG = "BeagleDialog"
 
         fun show(fragmentManager: FragmentManager) = BeagleDialog().show(fragmentManager, TAG)
     }

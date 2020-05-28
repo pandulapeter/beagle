@@ -15,14 +15,18 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     private var appearance = Appearance()
     private var behavior = Behavior()
-    private val shakeDetector by lazy { ShakeDetector { show() } }
+    private val shakeDetector by lazy {
+        ShakeDetector(
+            getShakeThreshold = { behavior.shakeThreshold },
+            onShakeDetected = { show() })
+    }
     private val lifecycleInjector by lazy { FragmentManagerProvider() }
 
     override fun initialize(
         application: Application,
         appearance: Appearance,
         behavior: Behavior
-    ): Boolean = (!behavior.isShakeToOpenEnabled || application.registerSensorEventListener(shakeDetector)).also {
+    ): Boolean = (behavior.shakeThreshold == null || application.registerSensorEventListener(shakeDetector)).also {
         this.appearance = appearance
         this.behavior = behavior
         lifecycleInjector.register(application)

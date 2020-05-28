@@ -5,24 +5,29 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import kotlin.math.abs
 
-internal class ShakeDetector(private val onShakeDetected: () -> Unit) : SensorEventListener {
+internal class ShakeDetector(
+    private val getShakeThreshold: () -> Int?,
+    private val onShakeDetected: () -> Unit
+) : SensorEventListener {
 
     private var lastSensorUpdate = 0L
-    private val lastSensorValues = SensorValues()
+    private val previousEvent = SensorValues()
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
 
     override fun onSensorChanged(event: SensorEvent?) {
-        if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-            val currentTime = System.currentTimeMillis()
-            if (currentTime - lastSensorUpdate > SHAKE_DETECTION_DELAY) {
-                if (abs(event.x + event.y + event.z - lastSensorValues.x - lastSensorValues.y - lastSensorValues.z) / ((currentTime - lastSensorUpdate) * 10000) > SHAKE_THRESHOLD) {
-                    onShakeDetected()
+        getShakeThreshold()?.let { threshold ->
+            if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastSensorUpdate > SHAKE_DETECTION_DELAY) {
+                    if (abs(event.x + event.y + event.z - previousEvent.x - previousEvent.y - previousEvent.z) / ((currentTime - lastSensorUpdate) * 10000) > threshold) {
+                        onShakeDetected()
+                    }
+                    previousEvent.x = event.x
+                    previousEvent.y = event.y
+                    previousEvent.z = event.z
+                    lastSensorUpdate = currentTime
                 }
-                lastSensorValues.x = event.x
-                lastSensorValues.y = event.y
-                lastSensorValues.z = event.z
-                lastSensorUpdate = currentTime
             }
         }
     }
@@ -39,6 +44,5 @@ internal class ShakeDetector(private val onShakeDetected: () -> Unit) : SensorEv
 
     companion object {
         private const val SHAKE_DETECTION_DELAY = 100L
-        private const val SHAKE_THRESHOLD = 1200
     }
 }

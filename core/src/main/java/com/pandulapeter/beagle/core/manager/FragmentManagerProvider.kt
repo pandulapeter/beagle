@@ -14,6 +14,7 @@ internal class FragmentManagerProvider {
         override fun onActivityResumed(activity: Activity) {
             super.onActivityResumed(activity)
             if (currentActivity != activity) {
+                //TODO: Verify that the current activity belongs to the app (do not inject to LeakCanary, Google Play IAP overlay, social log in overlay, etc)
                 currentActivity = activity as? FragmentActivity?
             }
         }
