@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.annotation.RestrictTo
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.shared.configuration.Appearance
 import com.pandulapeter.beagle.shared.configuration.Behavior
 
@@ -69,12 +69,12 @@ interface BeagleContract {
     //region Listeners
     /**
      * Adds a new [VisibilityListener] implementation to listen to the debug menu visibility changes.
-     * The optional [Lifecycle] can be used to to automatically add / remove the listener when the lifecycle is started / stopped.
+     * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is started / stopped.
      *
      * @param listener - The [VisibilityListener] implementation to add.
-     * @param lifecycle - The [Lifecycle] to use for automatically adding or removing the listener. Null by default.
+     * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
      */
-    fun addVisibilityListener(listener: VisibilityListener, lifecycle: Lifecycle? = null) = Unit
+    fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner? = null) = Unit
 
     /**
      * Removes the [VisibilityListener] implementation, if it was added to the list of listeners.

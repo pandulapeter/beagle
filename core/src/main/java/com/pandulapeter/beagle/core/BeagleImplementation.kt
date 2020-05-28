@@ -3,10 +3,14 @@ package com.pandulapeter.beagle.core
 import android.app.Application
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.CurrentActivityProvider
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
+import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
 import com.pandulapeter.beagle.shared.configuration.Appearance
 import com.pandulapeter.beagle.shared.configuration.Behavior
@@ -54,11 +58,25 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
 
-    override fun addVisibilityListener(listener: VisibilityListener, lifecycle: Lifecycle?) {
-        //TODO: Handle auto-remove with lifecycle.
-        if (!visibilityListeners.contains(listener)) {
-            visibilityListeners.add(listener)
+    override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) {
+
+        fun addVisibilityListener(listener: VisibilityListener) {
+            if (!visibilityListeners.contains(listener)) {
+                visibilityListeners.add(listener)
+            }
         }
+
+        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_START)
+            fun onCreate() = addVisibilityListener(listener)
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+            fun onDestroy() {
+                removeVisibilityListener(listener)
+                lifecycleOwner.lifecycle.removeObserver(this)
+            }
+        }) ?: addVisibilityListener(listener)
     }
 
     override fun removeVisibilityListener(listener: VisibilityListener) {
@@ -66,6 +84,8 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     }
 
     override fun clearVisibilityListeners() = visibilityListeners.clear()
+
+    fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
 
     fun notifyVisibilityListenersOnShow() = visibilityListeners.forEach { it.onShown() }
 

@@ -8,14 +8,14 @@ import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 interface UiManagerContract {
 
+    //TODO: Make sure this doesn't break Activity shared element transitions.
+    //TODO: Make sure this doesn't break the focus handling
     fun injectOverlayFrameLayout(activity: FragmentActivity, oldRootViewGroup: ViewGroup, overlayFrameLayout: OverlayFrameLayout) {
         oldRootViewGroup.run {
-            post {
-                val oldViews = (0 until childCount).map { getChildAt(it) }
-                removeAllViews()
-                oldViews.forEach { overlayFrameLayout.addView(it) }
-                addView(overlayFrameLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            }
+            val oldViews = (0 until childCount).map { getChildAt(it) }
+            removeAllViews()
+            oldViews.forEach { overlayFrameLayout.addView(it) }
+            addView(overlayFrameLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
     }
 
