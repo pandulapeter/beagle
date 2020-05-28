@@ -13,14 +13,17 @@ import com.pandulapeter.beagle.shared.contracts.BeagleContract
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {
 
-    private var appearance = Appearance()
-    private var behavior = Behavior()
+    var appearance = Appearance()
+        private set
+    var behavior = Behavior()
+        private set
     private val shakeDetector by lazy {
         ShakeDetector(
             getShakeThreshold = { behavior.shakeThreshold },
             onShakeDetected = { show() })
     }
     private val lifecycleInjector by lazy { FragmentManagerProvider() }
+    override val currentActivity get() = lifecycleInjector.currentActivity
 
     override fun initialize(
         application: Application,
@@ -32,7 +35,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         lifecycleInjector.register(application)
     }
 
-    override fun show() = lifecycleInjector.currentActivity?.let { uiManager.show(it) } ?: false
+    override fun show() = currentActivity?.let { uiManager.show(it) } ?: false
 
-    override fun hide() = lifecycleInjector.currentActivity?.let { uiManager.hide(it) } ?: false
+    override fun hide() = currentActivity?.let { uiManager.hide(it) } ?: false
 }
