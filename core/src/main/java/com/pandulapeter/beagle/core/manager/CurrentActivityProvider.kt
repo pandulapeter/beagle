@@ -2,26 +2,36 @@ package com.pandulapeter.beagle.core.manager
 
 import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
+import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
 
-internal class FragmentManagerProvider {
+internal class CurrentActivityProvider(private val uiManager: UiManagerContract) {
 
     var currentActivity: FragmentActivity? = null
         private set
     private val lifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            if (activity.supportsDebugMenu) {
+                uiManager.onActivityCreated(activity as FragmentActivity)
+            }
+        }
+
         override fun onActivityResumed(activity: Activity) {
             super.onActivityResumed(activity)
             if (currentActivity != activity) {
-                //TODO: Verify that the current activity belongs to the app (do not inject to LeakCanary, Google Play IAP overlay, social log in overlay, etc)
-                currentActivity = activity as? FragmentActivity?
+                currentActivity = if (activity.supportsDebugMenu) activity as FragmentActivity else null
             }
         }
 
         override fun onActivityDestroyed(activity: Activity) {
-            if (activity == currentActivity) {
-                currentActivity = null
+            if (activity.supportsDebugMenu) {
+                uiManager.onActivityDestroyed(activity as FragmentActivity)
+                if (activity == currentActivity) {
+                    currentActivity = null
+                }
             }
         }
     }
