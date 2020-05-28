@@ -4,11 +4,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.pandulapeter.beagle.shared.contracts.VisibilityListener
+import com.pandulapeter.beagle.common.contracts.VisibilityListener
 
 internal class VisibilityListenerManager {
 
     private val visibilityListeners = mutableListOf<VisibilityListener>()
+    //TODO: The way visibility listeners are notified is buggy during configuration changes
+    private var isDebugMenuVisible = false
 
     private fun addVisibilityListener(listener: VisibilityListener) {
         if (!visibilityListeners.contains(listener)) {
@@ -36,7 +38,17 @@ internal class VisibilityListenerManager {
 
     fun clearVisibilityListeners() = visibilityListeners.clear()
 
-    fun notifyVisibilityListenersOnShow() = visibilityListeners.forEach { it.onShown() }
+    fun notifyVisibilityListenersOnShow() {
+        if (!isDebugMenuVisible) {
+            visibilityListeners.forEach { it.onShown() }
+            isDebugMenuVisible = true
+        }
+    }
 
-    fun notifyVisibilityListenersOnHide() = visibilityListeners.forEach { it.onHidden() }
+    fun notifyVisibilityListenersOnHide() {
+        if (isDebugMenuVisible) {
+            visibilityListeners.forEach { it.onHidden() }
+            isDebugMenuVisible = false
+        }
+    }
 }

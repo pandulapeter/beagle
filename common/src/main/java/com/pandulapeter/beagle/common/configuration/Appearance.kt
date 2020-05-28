@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.shared.configuration
+package com.pandulapeter.beagle.common.configuration
 
 import androidx.annotation.StyleRes
 

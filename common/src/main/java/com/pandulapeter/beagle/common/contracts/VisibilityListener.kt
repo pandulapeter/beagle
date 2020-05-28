@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.shared.contracts
+package com.pandulapeter.beagle.common.contracts
 
 /**
  * Implement this interface to get notified about when the debug menu gets shown or hidden.

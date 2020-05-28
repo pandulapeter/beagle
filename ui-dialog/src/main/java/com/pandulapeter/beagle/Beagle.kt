@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle
 
 import com.pandulapeter.beagle.implementation.DialogUiManager
-import com.pandulapeter.beagle.shared.contracts.BeagleContract
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.core.BeagleImplementation
 
 /**

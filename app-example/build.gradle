@@ -81,5 +81,5 @@ dependencies {
     dialogDebugImplementation project(":ui-dialog")
     drawerDebugImplementation project(":ui-drawer")
     viewDebugImplementation project(":ui-view")
-    releaseImplementation project(":noop")
+    releaseImplementation project(':noop')
 }

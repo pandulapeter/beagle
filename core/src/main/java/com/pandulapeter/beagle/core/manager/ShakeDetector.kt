@@ -3,10 +3,10 @@ package com.pandulapeter.beagle.core.manager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
+import com.pandulapeter.beagle.BeagleCore
 import kotlin.math.abs
 
 internal class ShakeDetector(
-    private val getShakeThreshold: () -> Int?,
     private val onShakeDetected: () -> Unit
 ) : SensorEventListener {
 
@@ -16,11 +16,11 @@ internal class ShakeDetector(
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
 
     override fun onSensorChanged(event: SensorEvent?) {
-        getShakeThreshold()?.let { threshold ->
+        BeagleCore.implementation.behavior.shakeThreshold?.let { threshold ->
             if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
                 val currentTime = System.currentTimeMillis()
                 if (currentTime - lastSensorUpdate > SHAKE_DETECTION_DELAY) {
-                    if (abs(event.x + event.y + event.z - previousEvent.x - previousEvent.y - previousEvent.z) / ((currentTime - lastSensorUpdate) * 10000) > threshold) {
+                    if (abs(event.x + event.y + event.z - previousEvent.x - previousEvent.y - previousEvent.z) / (currentTime - lastSensorUpdate) * 100 > threshold) {
                         onShakeDetected()
                     }
                     previousEvent.x = event.x

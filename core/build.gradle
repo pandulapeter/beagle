@@ -22,5 +22,5 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    api project(":shared")
+    api project(':common')
 }

@@ -18,6 +18,7 @@ internal class CurrentActivityProvider(private val uiManager: UiManagerContract)
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             if (activity.supportsDebugMenu) {
+                //TODO: BUG: The themedContext should only be used for the debug menu
                 uiManager.injectOverlayFrameLayout(activity as FragmentActivity, activity.findRootViewGroup(), OverlayFrameLayout(activity.themedContext))
             }
         }

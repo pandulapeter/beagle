@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appExample.R
 import com.pandulapeter.beagle.appExample.utils.showKeyboard
-import com.pandulapeter.beagle.shared.contracts.VisibilityListener
+import com.pandulapeter.beagle.common.contracts.VisibilityListener
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 

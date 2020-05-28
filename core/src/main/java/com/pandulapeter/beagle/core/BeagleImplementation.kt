@@ -4,16 +4,16 @@ import android.app.Application
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.common.contracts.BeagleContract
+import com.pandulapeter.beagle.common.contracts.VisibilityListener
 import com.pandulapeter.beagle.core.manager.CurrentActivityProvider
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
-import com.pandulapeter.beagle.shared.configuration.Appearance
-import com.pandulapeter.beagle.shared.configuration.Behavior
-import com.pandulapeter.beagle.shared.contracts.BeagleContract
-import com.pandulapeter.beagle.shared.contracts.VisibilityListener
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {
@@ -30,7 +30,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         private set
     var behavior = Behavior()
         private set
-    private val shakeDetector by lazy { ShakeDetector(getShakeThreshold = { this.behavior.shakeThreshold }, onShakeDetected = { show() }) }
+    private val shakeDetector by lazy { ShakeDetector({ show() }) }
     private val currentActivityProvider by lazy { CurrentActivityProvider(uiManager) }
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
 

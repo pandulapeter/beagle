@@ -1,12 +1,12 @@
-package com.pandulapeter.beagle.shared.contracts
+package com.pandulapeter.beagle.common.contracts
 
 import android.app.Application
 import android.content.Context
 import androidx.annotation.RestrictTo
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
-import com.pandulapeter.beagle.shared.configuration.Appearance
-import com.pandulapeter.beagle.shared.configuration.Behavior
+import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.configuration.Behavior
 
 /**
  * This interface ensures that the real implementation and the noop variant have the same public API.

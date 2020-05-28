@@ -1,10 +1,10 @@
-include ":shared"
-include ":core"
+include ':common'
+include ':core'
 include ":ui-activity"
 include ":ui-bottom-sheet"
 include ":ui-dialog"
 include ":ui-drawer"
 include ":ui-view"
-include ":noop"
+include ':noop'
 include ":app-example"
 rootProject.name = "Beagle"

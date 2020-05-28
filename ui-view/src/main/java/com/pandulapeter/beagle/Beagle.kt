@@ -2,7 +2,7 @@ package com.pandulapeter.beagle
 
 import com.pandulapeter.beagle.core.BeagleImplementation
 import com.pandulapeter.beagle.core.manager.UiManagerContract
-import com.pandulapeter.beagle.shared.contracts.BeagleContract
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 
 /**
  * View UI implementation to be used in internal builds. See [BeagleContract] for function documentation.
