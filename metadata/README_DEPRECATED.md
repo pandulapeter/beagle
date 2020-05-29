@@ -1,14 +1,11 @@
 # Beagle (Android library)
 *A smart and reliable companion library for debugging your Android apps*
 
-<img src="logo.png" width="30%" />
+<img src="logo.png" width="20%" />
 
-### WARNING
-The library is undergoing a complete rewrite with version 2.0.0.
+**The library is undergoing a complete rewrite with version 2.0.0.**
 
-While there are no migration steps, upgrading to the new API as if you were implementing it for the first time should not take long.
-
-[Click here](https://github.com/pandulapeter/beagle/blob/master/README.md) to see the updated readme file.
+**[Click here](https://github.com/pandulapeter/beagle/blob/master/README.md) to see the updated readme file.**
 
 ### Usage
 Add the following to your top level Gradle file:
@@ -45,7 +42,7 @@ After this a number of modules (tricks) needs to be provided, but this can be ch
 By default you can fetch Beagle by swiping horizontally from the right edge of the screen or by shaking the device.
 
 ### Screenshots
-<img src="screenshot01.png" width="30%" /> <img src="screenshot02.png" width="30%" />
+<img src="screenshotOld01.png" width="30%" /> <img src="screenshotOld02.png" width="30%" />
 
 ### Modules
 Any number of generic tricks can be taught in any order as long as they have a unique ID:

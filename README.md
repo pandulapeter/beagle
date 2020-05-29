@@ -1,17 +1,16 @@
 # Beagle (Android library)
-*A smart and reliable debug menu for Android apps*
+*A smart, reliable, and highly customizable debug menu for Android apps*
 
-<img src="metadata/logo.png" width="30%" />
+<img src="metadata/logo.png" width="20%" />
 
-## WARNING
-The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use.
-[Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version.
+**The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use.**
 
-## Screenshots
-TODO: Coming soon...
+**[Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version.**
 
 ## See it in action
-Clone this repository, pick a build variant and run the **app** configuration.
+Clone this repository, pick a build variant and run the **app** configuration. It will look like this:
+
+<img src="metadata/screenshotOld01.png" width="25%" /> <img src="metadata/screenshotOld02.png" width="25%" /> <img src="metadata/screenshotOld01.png" width="25%" />
 
 ## Use it in your project
 ### Step 1: Add the Jitpack repository
@@ -52,7 +51,7 @@ The latest version is:
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
-If your project contains multiple modules, you might want to use Beagle in all of them so that you can access its logging capabilities from everywhere. In this case specifying the dependencies in your core module and exposing them through the **api** keyword instead of **implementation** might be a reasonable idea.
+Note: If your project contains multiple modules, you might want to use Beagle in all of them so that you can access its logging capabilities from everywhere. In this case specifying the dependencies in your core module and exposing them through the **api** keyword instead of **implementation** might be a reasonable idea.
 
 ### Step 3: Initialize the library
 Just one line of code, preferably in the Application's onCreate() method:
@@ -73,16 +72,19 @@ TODO: Coming soon...
 * The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance when initializing the library.
 
 ## Documentation
-All public functions are documented with Kdoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities.
+All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities.
 
 If you're interested in what's under the hood, [this document](https://github.com/pandulapeter/beagle/blob/master/metadata/DOCUMENTATION.md) can be helpful while navigating the source code. 
 
 ## Changelog
-* Check out the [Releases](https://github.com/pandulapeter/beagle/releases) page for the changes in every version. The library uses [semantic versioning](https://semver.org): *MAJOR.MINOR.PATCH* where *PATCH* changes only contain bug fixes, *MINOR* changes add new features and *MAJOR* changes introduce breaking modifications to the API.
+Check out the [Releases](https://github.com/pandulapeter/beagle/releases) page for the changes in every version.
+
+The library uses [semantic versioning](https://semver.org): **MAJOR.MINOR.PATCH** where **PATCH** changes only contain bug fixes, **MINOR** changes add new features and **MAJOR** changes introduce breaking modifications to the API.
 
 ## Known issues
-* Check out the [Issues](https://github.com/pandulapeter/beagle/issues) page for the list of know problems.
-* Don't hesitate to open a new issue if you find a bug or if you have any questions / feature requests!
+Check out the [Issues](https://github.com/pandulapeter/beagle/issues) page for the list of know problems.
+
+Don't hesitate to open a new issue if you find a bug or if you have any questions / feature requests!
 
 ## License
 ```
