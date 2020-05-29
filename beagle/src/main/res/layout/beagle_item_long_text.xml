@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:layout_marginStart="@dimen/beagle_large_content_padding"
+    android:paddingStart="@dimen/beagle_large_content_padding"
+    android:paddingTop="@dimen/beagle_small_content_padding"
+    android:paddingEnd="@dimen/beagle_large_content_padding"
+    android:paddingBottom="@dimen/beagle_small_content_padding"
+    android:textColor="?android:attr/textColorPrimary"
+    tools:text="Long text" />

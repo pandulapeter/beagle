@@ -9,6 +9,7 @@ buildscript {
         recyclerViewVersion = "1.1.0"
         lifecycleVersion = "2.2.0"
         materialVersion = "1.1.0"
+        okHttpVersion = "4.4.0"
         versionCode = 1
     }
     repositories {

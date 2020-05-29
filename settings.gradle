@@ -1,10 +1,15 @@
-include ':common'
-include ':core'
+include ":app"
+include ":common"
+include ":core"
+include ":noop"
 include ":ui-activity"
 include ":ui-bottom-sheet"
 include ":ui-dialog"
 include ":ui-drawer"
 include ":ui-view"
-include ':noop'
-include ':app'
+//TODO: Remove legacy implementation
+include ":beagle"
+include ":beagle-core"
+include ":beagle-example"
+include ":beagle-noop"
 rootProject.name = "Beagle"

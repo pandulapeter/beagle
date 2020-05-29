@@ -1,0 +1,44 @@
+package com.pandulapeter.beagle.views.drawerItems.slider
+
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.SeekBar
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.beagle.R
+
+internal class SliderViewHolder(root: View) : RecyclerView.ViewHolder(root) {
+
+    private val nameTextView = itemView.findViewById<TextView>(R.id.name)
+    private val sliderSeekBar = itemView.findViewById<SeekBar>(R.id.slider)
+
+    @SuppressLint("ClickableViewAccessibility")
+    fun bind(viewModel: SliderViewModel) {
+        sliderSeekBar.setOnSeekBarChangeListener(null)
+        sliderSeekBar.max = viewModel.trick.maximumValue - viewModel.trick.minimumValue
+        sliderSeekBar.progress = viewModel.trick.currentValue - viewModel.trick.minimumValue
+        nameTextView.text = viewModel.trick.name(viewModel.trick.currentValue - viewModel.trick.minimumValue)
+        sliderSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (progress != viewModel.trick.currentValue + viewModel.trick.minimumValue) {
+                    viewModel.onSliderValueChanged(progress - viewModel.trick.minimumValue)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+        })
+        sliderSeekBar.setOnTouchListener { _, _ ->
+            (itemView.parent?.parent as? ViewGroup?)?.requestDisallowInterceptTouchEvent(true)
+            false
+        }
+    }
+
+    companion object {
+        fun create(parent: ViewGroup) = SliderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_slider, parent, false))
+    }
+}

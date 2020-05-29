@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">Beagle Example (debug)</string>
+    <string name="open_debug_menu">Open debug drawer</string>
+    <string name="perform_network_request">Perform a network request</string>
+    <string name="add_log_message">Add random log message</string>
+    <string name="open_login_screen">Open login screen</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="message">Message</string>
+    <string name="back">Back</string>
+    <string name="something_went_wrong">Something went wrong</string>
+
+</resources>

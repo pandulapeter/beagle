@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/beagle_content_padding"
+    android:paddingBottom="@dimen/beagle_content_padding">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/beagle_large_content_padding"
+        android:layout_marginEnd="@dimen/beagle_large_content_padding"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:text="Name" />
+
+    <SeekBar
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/beagle_content_padding"
+        android:layout_marginEnd="@dimen/beagle_content_padding"
+        android:paddingTop="@dimen/beagle_content_padding" />
+
+</LinearLayout>

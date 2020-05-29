@@ -1,0 +1,13 @@
+<resources>
+    <dimen name="beagle_default_drawer_width">280dp</dimen>
+    <dimen name="beagle_small_content_padding">2dp</dimen>
+    <dimen name="beagle_content_padding">8dp</dimen>
+    <dimen name="beagle_apply_button_margin">88dp</dimen>
+    <dimen name="beagle_large_content_padding">16dp</dimen>
+    <dimen name="beagle_title_text">20sp</dimen>
+    <dimen name="beagle_default_keyline_grid">8dp</dimen>
+    <dimen name="beagle_default_keyline_primary">16dp</dimen>
+    <dimen name="beagle_default_keyline_secondary">72dp</dimen>
+    <dimen name="beagle_item_minimum_height">36dp</dimen>
+    <dimen name="beagle_divider">1dp</dimen>
+</resources>

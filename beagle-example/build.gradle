@@ -1,0 +1,61 @@
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.pandulapeter.beagleExample"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "0.0.1"
+        buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
+    }
+    signingConfigs {
+        internal {
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+            storeFile file("internal.keystore")
+            storePassword "android"
+        }
+    }
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.internal
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            applicationIdSuffix ".release"
+            versionNameSuffix "-release"
+            signingConfig signingConfigs.internal
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "com.google.android.material:material:1.1.0"
+
+    def retrofitVersion = "2.6.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+
+    def moshiVersion = "1.8.0"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+
+    debugImplementation project(':beagle')
+    releaseImplementation project(':beagle-noop')
+}
