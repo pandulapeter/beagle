@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.core.util.extension.findRootViewGroup
 import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
-import com.pandulapeter.beagle.core.util.extension.themedContext
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 internal class DebugMenuInjector(
@@ -20,8 +19,8 @@ internal class DebugMenuInjector(
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             if (activity.supportsDebugMenu) {
-                //TODO: BUG: The themedContext should only be used for the debug menu
-                uiManager.injectOverlayFrameLayout(activity as FragmentActivity, activity.findRootViewGroup(), OverlayFrameLayout(activity.themedContext))
+                //TODO: Catch exception, display it as log
+                uiManager.injectOverlayFrameLayout(activity as FragmentActivity, activity.findRootViewGroup(), OverlayFrameLayout(activity))
             }
         }
 

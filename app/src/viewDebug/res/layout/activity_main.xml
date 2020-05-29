@@ -27,9 +27,8 @@
         android:layout_marginTop="@dimen/large_content_padding"
         android:text="@string/open_login_screen" />
 
-    <include
-        layout="@layout/view_beagle"
-        android:layout_width="match_parent"
+    <com.pandulapeter.beagle.DebugMenuView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large_content_padding" />
 

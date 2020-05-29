@@ -10,7 +10,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 @SuppressLint("ViewConstructor")
-internal class BeagleDrawerLayout(
+internal class DebugMenuDrawerLayout(
     context: Context,
     content: OverlayFrameLayout,
     drawer: View
@@ -33,7 +33,7 @@ internal class BeagleDrawerLayout(
 
     init {
         addView(content, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        addView(drawer, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, GravityCompat.END))
+        addView(drawer, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, GravityCompat.END))
     }
 
     override fun onAttachedToWindow() {

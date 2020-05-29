@@ -2,17 +2,17 @@ package com.pandulapeter.beagle.implementation
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.R
+import com.pandulapeter.beagle.DebugMenuViewView
 
+internal class DebugMenuDialog : AppCompatDialogFragment() {
 
-internal class BeagleDialog : AppCompatDialogFragment() {
+    override fun getContext() = super.getContext()?.let { BeagleCore.implementation.getThemedContext(it) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = inflater.inflate(R.layout.view_beagle, container)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuViewView(context!!)
 
     override fun onStart() {
         super.onStart()
@@ -25,8 +25,8 @@ internal class BeagleDialog : AppCompatDialogFragment() {
     }
 
     companion object {
-        const val TAG = "BeagleDialog"
+        const val TAG = "DebugMenuDialog"
 
-        fun show(fragmentManager: FragmentManager) = BeagleDialog().show(fragmentManager, TAG)
+        fun show(fragmentManager: FragmentManager) = DebugMenuDialog().show(fragmentManager, TAG)
     }
 }

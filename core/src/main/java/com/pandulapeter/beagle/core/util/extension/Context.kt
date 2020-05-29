@@ -4,8 +4,13 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.view.ContextThemeWrapper
-import com.pandulapeter.beagle.BeagleCore
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
+
+internal fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensionPixelSize(dimensionResourceId)
+
+internal fun Context.drawable(@DrawableRes drawableResourceId: Int) = AppCompatResources.getDrawable(this, drawableResourceId)
 
 internal fun Context.registerSensorEventListener(sensorEventListener: SensorEventListener) = (getSystemService(Context.SENSOR_SERVICE) as? SensorManager?)?.run {
     registerListener(sensorEventListener, getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
@@ -14,5 +19,3 @@ internal fun Context.registerSensorEventListener(sensorEventListener: SensorEven
 internal fun Context.unregisterSensorEventListener(sensorEventListener: SensorEventListener) {
     (getSystemService(Context.SENSOR_SERVICE) as? SensorManager?)?.unregisterListener(sensorEventListener)
 }
-
-internal val Context.themedContext get() = (BeagleCore.implementation.appearance.themeResourceId?.let { ContextThemeWrapper(this, it) } ?: this)

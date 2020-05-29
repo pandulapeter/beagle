@@ -2,17 +2,18 @@ package com.pandulapeter.beagle.implementation
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.R
+import com.pandulapeter.beagle.DebugMenuViewView
 
 
-internal class BeagleBottomSheet : BottomSheetDialogFragment() {
+internal class DebugMenuBottomSheet : BottomSheetDialogFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = inflater.inflate(R.layout.view_beagle, container)
+    override fun getContext() = super.getContext()?.let { BeagleCore.implementation.getThemedContext(it) }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuViewView(context!!)
 
     override fun onStart() {
         super.onStart()
@@ -25,8 +26,8 @@ internal class BeagleBottomSheet : BottomSheetDialogFragment() {
     }
 
     companion object {
-        const val TAG = "BeagleBottomSheet"
+        const val TAG = "DebugMenuBottomSheet"
 
-        fun show(fragmentManager: FragmentManager) = BeagleBottomSheet().show(fragmentManager, TAG)
+        fun show(fragmentManager: FragmentManager) = DebugMenuBottomSheet().show(fragmentManager, TAG)
     }
 }

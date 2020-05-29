@@ -1,6 +1,8 @@
 package com.pandulapeter.beagle.core
 
 import android.app.Application
+import android.content.Context
+import android.view.ContextThemeWrapper
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -68,4 +70,6 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
 
     fun setupRecyclerView(recyclerView: RecyclerView) = listManager.setupRecyclerView(recyclerView)
+
+    fun getThemedContext(context: Context) = appearance.themeResourceId?.let { ContextThemeWrapper(context, it) } ?: context
 }

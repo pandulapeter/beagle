@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.BeagleCore
 
 //TODO: Handle LeakCanary, Google Play IAP overlay, social log in overlays.
 private val excludedPackageNames = listOf(
-    "com.pandulapeter.beagle.implementation.BeagleActivity"
+    "com.pandulapeter.beagle.implementation.DebugMenuActivity"
 )
 
 internal val Activity.supportsDebugMenu
