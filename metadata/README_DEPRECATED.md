@@ -7,7 +7,12 @@
 
 **[Click here](https://github.com/pandulapeter/beagle/blob/master/README.md) to see the updated readme file.**
 
-### Usage
+## See it in action
+Clone this repository and run the **beagle-example** configuration. It should look something like this:
+
+<img src="screenshotOld01.png" width="30%" /> <img src="screenshotOld02.png" width="30%" />
+
+### Use it in your project
 Add the following to your top level Gradle file:
 
 ```groovy
@@ -40,9 +45,6 @@ If the base package name of your project does not start with the application ID 
 After this a number of modules (tricks) needs to be provided, but this can be changed at any time and the UI will be automatically updated. See [this implementation](https://github.com/pandulapeter/beagle/blob/master/example/src/main/java/com/pandulapeter/beagleExample/BeagleExampleApplication.kt) for a detailed example.
 
 By default you can fetch Beagle by swiping horizontally from the right edge of the screen or by shaking the device.
-
-### Screenshots
-<img src="screenshotOld01.png" width="30%" /> <img src="screenshotOld02.png" width="30%" />
 
 ### Modules
 Any number of generic tricks can be taught in any order as long as they have a unique ID:

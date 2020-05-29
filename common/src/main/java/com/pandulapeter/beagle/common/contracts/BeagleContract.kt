@@ -30,7 +30,7 @@ interface BeagleContract {
     /**
      * Initializes the library. No UI-related functionality will work before calling this function.
      *
-     * @param application - Needed for hooking into the lifecycle.
+     * @param application - Needed for hooking into the application lifecycle.
      * @param appearance - Optional [Appearance] instance for customizing the appearance of the debug menu.
      * @param behavior - Optional [Behavior] instance for customizing the behavior of the debug menu.
      *
@@ -49,7 +49,7 @@ interface BeagleContract {
      *  - The debug menu is already visible.
      *  - The application does not have any visible activities at the moment (the lifecycle must be at least in STARTED state).
      *  - The currently visible Activity is not a subclass of [FragmentActivity].
-     *  - The currently visible Activity should not support a debug menu (social login overlay, in-app-purchase overlay, etc).
+     *  - The currently visible Activity does not support a debug menu (social login overlay, in-app-purchase overlay, manually excluded package specified by the [Behavior], etc).
      *  - The currently visible Activity is part of a package that has manually been excluded in the [Behavior] class.
      *  - The application depends on the ui-view variant (in this case its your responsibility to show / hide the UI).
      *  - The application depends on the noop variant.
@@ -62,6 +62,7 @@ interface BeagleContract {
      * @return Whether or not the operation was successful. Possible causes of failure:
      *  - The library has not been initialized yet.
      *  - The debug menu is not currently visible.
+     *  - The application depends on the ui-view variant (in this case its your responsibility to show / hide the UI).
      *  - The application depends on the noop variant.
      */
     fun hide(): Boolean = false
@@ -94,11 +95,11 @@ interface BeagleContract {
     /**
      * Convenience getter when a module callback implementation needs to perform UI-related operations or simply needs a [Context] instance.
      *
-     * @return The nullable [FragmentActivity] instance on top of the back stack. Possible reasons for returning null:
+     * @return The nullable [FragmentActivity] instance which is currently on top of the back stack. Possible reasons for returning null:
      *  - The library has not been initialized yet.
      *  - The application does not have any created activities.
      *  - The currently visible Activity is not a subclass of [FragmentActivity].
-     *  - The currently visible Activity should not support a debug menu (social login overlay, in-app-purchase overlay, etc).
+     *  - The currently visible Activity does not support a debug menu (social login overlay, in-app-purchase overlay, manually excluded package specified by the [Behavior], etc).
      *  - The application depends on the noop variant.
      */
     val currentActivity: FragmentActivity? get() = null

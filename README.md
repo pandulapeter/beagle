@@ -8,9 +8,9 @@
 **[Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version.**
 
 ## See it in action
-Clone this repository, pick a build variant and run the **app** configuration. It will look like this:
+Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:
 
-<img src="metadata/screenshotOld01.png" width="25%" /> <img src="metadata/screenshotOld02.png" width="25%" /> <img src="metadata/screenshotOld01.png" width="25%" />
+<img src="metadata/screenshotOld01.png" width="25%" /><img src="metadata/screenshotOld02.png" width="25%" /><img src="metadata/screenshotOld01.png" width="25%" /><img src="metadata/screenshotOld02.png" width="25%" />
 
 ## Use it in your project
 ### Step 1: Add the Jitpack repository
