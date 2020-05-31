@@ -4,7 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.pandulapeter.beagle.common.contracts.VisibilityListener
+import com.pandulapeter.beagle.common.listeners.VisibilityListener
 
 internal class VisibilityListenerManager {
 

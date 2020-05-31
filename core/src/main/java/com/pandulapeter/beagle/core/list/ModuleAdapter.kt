@@ -3,37 +3,33 @@ package com.pandulapeter.beagle.core.list
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.pandulapeter.beagle.common.contracts.Cell
-import com.pandulapeter.beagle.common.contracts.CellHandler
-import com.pandulapeter.beagle.common.modules.text.TextCell
+import com.pandulapeter.beagle.common.contracts.ModuleCell
+import com.pandulapeter.beagle.common.contracts.ViewHolderDelegate
 
-internal class ModuleAdapter : ListAdapter<Cell, CellHandler.ViewHolder<out Cell>>(object : DiffUtil.ItemCallback<Cell>() {
+internal class ModuleAdapter : ListAdapter<ModuleCell, ViewHolderDelegate.ViewHolder<out ModuleCell>>(object : DiffUtil.ItemCallback<ModuleCell>() {
 
-    override fun areItemsTheSame(oldItem: Cell, newItem: Cell) = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: ModuleCell, newItem: ModuleCell) = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Cell, newItem: Cell) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: ModuleCell, newItem: ModuleCell) = oldItem == newItem
 
-    override fun getChangePayload(oldItem: Cell, newItem: Cell) = ""
+    override fun getChangePayload(oldItem: ModuleCell, newItem: ModuleCell) = ""
 }) {
-    private val cellHandlers = mutableListOf<CellHandler<*>>()
-
-    init {
-        registerCellHandler(TextCell.TextCellHandler())
-    }
-
-    private fun registerCellHandler(cellHandler: CellHandler<out Cell>) {
-        cellHandlers.add(cellHandler)
-    }
+    private val cellHandlers = mutableListOf<ViewHolderDelegate<*>>()
 
     override fun getItemViewType(position: Int): Int {
-        val type = getItem(position)::class
-        return cellHandlers.indexOfFirst { type == it.cell }
+        val cell = getItem(position)
+        val type = cell::class
+        return cellHandlers.indexOfFirst { type == it.cellType }.let { index ->
+            if (index == -1) {
+                cellHandlers.add(cell.createViewHolderDelegate())
+                cellHandlers.lastIndex
+            } else index
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = cellHandlers[viewType].createViewHolder(parent)
+    @Suppress("UNCHECKED_CAST")
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = cellHandlers[viewType].createViewHolder(parent) as ViewHolderDelegate.ViewHolder<ModuleCell>
 
-    override fun onBindViewHolder(holder: CellHandler.ViewHolder<out Cell>, position: Int) {
-        @Suppress("UNCHECKED_CAST")
-        (holder as CellHandler.ViewHolder<in Cell>).bind(getItem(position))
-    }
+    @Suppress("UNCHECKED_CAST")
+    override fun onBindViewHolder(holder: ViewHolderDelegate.ViewHolder<out ModuleCell>, position: Int) = (holder as ViewHolderDelegate.ViewHolder<ModuleCell>).bind(getItem(position))
 }

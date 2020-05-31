@@ -11,7 +11,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.BeagleContract
-import com.pandulapeter.beagle.common.contracts.VisibilityListener
+import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.common.modules.text.TextModule
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.ListManager
@@ -41,7 +41,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     init {
         BeagleCore.implementation = this
-        listManager.addModule(TextModule(text = "This is a TextModule")) //TODO: Remove this.
+        (0..50).map { index -> listManager.addModule(TextModule(text = "This is TextModule $index")) } //TODO: Remove this.
     }
 
     override fun initialize(

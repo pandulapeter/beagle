@@ -5,11 +5,13 @@ package com.pandulapeter.beagle.common.contracts
  */
 interface Module {
 
+    /**
+     * Every module must have a unique ID. If a module can be instantiated multiple times, each instance must have a different ID.
+     */
     val id: String
 
-    fun createCells(): List<Cell>
-
-    override fun equals(other: Any?): Boolean
-
-    override fun hashCode(): Int
+    /**
+     * A module's UI is represented by one or more instances of [ModuleCell].
+     */
+    fun createCells(): List<ModuleCell>
 }
