@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.common.modules.text
+package com.pandulapeter.beagle.core.list.moduleCells
 
 import android.view.ViewGroup
 import android.widget.TextView
@@ -6,9 +6,9 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.pandulapeter.beagle.common.contracts.ModuleCell
 import com.pandulapeter.beagle.common.contracts.ViewHolderDelegate
 
-data class TextModuleCell(
+internal data class TextModuleCell(
     override val id: String,
-    val text: String
+    val text: CharSequence
 ) : ModuleCell {
 
     override fun createViewHolderDelegate() = object : ViewHolderDelegate<TextModuleCell> {
