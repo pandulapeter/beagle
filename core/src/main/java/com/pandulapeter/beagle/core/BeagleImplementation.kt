@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.VisibilityListener
+import com.pandulapeter.beagle.common.modules.text.TextModule
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
@@ -27,7 +28,6 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         if (!newValue) {
             hide()
         }
-        listManager.refreshList()
     }
     override val currentActivity get() = debugMenuInjector.currentActivity
     var appearance = Appearance()
@@ -41,6 +41,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     init {
         BeagleCore.implementation = this
+        listManager.addModule(TextModule(text = "This is a TextModule")) //TODO: Remove this.
     }
 
     override fun initialize(

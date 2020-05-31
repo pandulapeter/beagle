@@ -2,13 +2,13 @@ package com.pandulapeter.beagle.core.manager
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.list.BeagleModuleAdapter
-import com.pandulapeter.beagle.core.list.item.BeagleDisabledItem
+import com.pandulapeter.beagle.common.contracts.Module
+import com.pandulapeter.beagle.core.list.ModuleAdapter
 
 internal class ListManager {
 
-    private val moduleAdapter = BeagleModuleAdapter()
+    private val moduleAdapter = ModuleAdapter()
+    private val modules = mutableListOf<Module>()
 
     fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
         adapter = moduleAdapter
@@ -17,9 +17,10 @@ internal class ListManager {
         refreshList()
     }
 
-    fun refreshList() {
-        moduleAdapter.submitList(
-            if (BeagleCore.implementation.isUiEnabled) emptyList() else listOf(BeagleDisabledItem())
-        )
+    fun addModule(module: Module) {
+        modules.add(module)
+        refreshList()
     }
+
+    private fun refreshList() = moduleAdapter.submitList(modules.flatMap { it.createCells() })
 }
