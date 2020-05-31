@@ -20,5 +20,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    api project(':beagle-core')
+    api project(":beagle-core")
 }

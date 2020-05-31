@@ -1,12 +1,10 @@
 <resources>
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@color/beagle_foreground</item>
         <item name="colorPrimary">@color/beagle_background</item>
         <item name="materialButtonStyle">@style/Button</item>
@@ -18,7 +16,7 @@
         <item name="android:textColor">@color/beagle_foreground</item>
     </style>
 
-    <style name="BeagleTheme" parent="Theme.MaterialComponents.Light">
+    <style name="BeagleTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/accent</item>
         <item name="colorButtonNormal">@color/accent</item>
         <item name="colorAccent">@color/accent</item>

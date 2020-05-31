@@ -6,11 +6,11 @@ group = libraryGroup
 version = libraryVersion
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion libraryCompileSdkVersion
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode versionCode
+        minSdkVersion libraryMinimumSdkVersion
+        targetSdkVersion libraryTargetSdkVersion
+        versionCode libraryVersionCode
         versionName libraryVersion
         consumerProguardFiles "consumer-rules.pro"
     }

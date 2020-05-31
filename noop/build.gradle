@@ -6,11 +6,11 @@ group = libraryGroup
 version = libraryVersion
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion libraryCompileSdkVersion
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode versionCode
+        minSdkVersion libraryMinimumSdkVersion
+        targetSdkVersion libraryTargetSdkVersion
+        versionCode libraryVersionCode
         versionName libraryVersion
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -20,5 +20,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    api project(':common')
+    api project(":common")
 }

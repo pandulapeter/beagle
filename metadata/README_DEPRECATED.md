@@ -10,7 +10,7 @@
 ## See it in action
 Clone this repository and run the **beagle-example** configuration. It should look something like this:
 
-<img src="screenshotOld01.png" width="30%" /> <img src="screenshotOld02.png" width="30%" />
+<img src="screenshotOld01.png" width="25%" /> <img src="screenshotOld02.png" width="25%" />
 
 ### Use it in your project
 Add the following to your top level Gradle file:

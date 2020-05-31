@@ -4,12 +4,12 @@ apply plugin: "kotlin-android-extensions"
 apply plugin: "kotlin-kapt"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion libraryCompileSdkVersion
     defaultConfig {
         applicationId "com.pandulapeter.beagleExample"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
+        minSdkVersion libraryMinimumSdkVersion
+        targetSdkVersion libraryTargetSdkVersion
+        versionCode libraryVersionCode
         versionName "0.0.1"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
     }
@@ -35,7 +35,7 @@ android {
             applicationIdSuffix ".release"
             versionNameSuffix "-release"
             signingConfig signingConfigs.internal
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
     flavorDimensions "beagle-ui"
