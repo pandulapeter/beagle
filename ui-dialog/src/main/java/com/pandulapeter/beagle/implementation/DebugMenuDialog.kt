@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.DebugMenuViewView
+import com.pandulapeter.beagle.DebugMenuView
 
 internal class DebugMenuDialog : AppCompatDialogFragment() {
 
     override fun getContext() = super.getContext()?.let { BeagleCore.implementation.getThemedContext(it) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuViewView(context!!)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuView(context!!)
 
     override fun onStart() {
         super.onStart()

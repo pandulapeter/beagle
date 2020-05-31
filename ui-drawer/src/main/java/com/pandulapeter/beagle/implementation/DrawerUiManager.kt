@@ -7,13 +7,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.DebugMenuViewView
+import com.pandulapeter.beagle.DebugMenuView
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 internal class DrawerUiManager : UiManagerContract {
 
-    private val drawers = mutableMapOf<FragmentActivity, DebugMenuViewView>()
+    private val drawers = mutableMapOf<FragmentActivity, DebugMenuView>()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -51,7 +51,7 @@ internal class DrawerUiManager : UiManagerContract {
     }
 
     private fun injectDrawerLayout(rootViewGroup: ViewGroup, overlayFrameLayout: OverlayFrameLayout) =
-        DebugMenuViewView(BeagleCore.implementation.getThemedContext(overlayFrameLayout.context)).also { drawer ->
+        DebugMenuView(BeagleCore.implementation.getThemedContext(overlayFrameLayout.context)).also { drawer ->
             rootViewGroup.run {
                 post {
                     val oldViews = (0 until childCount).map { getChildAt(it) }
