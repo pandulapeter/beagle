@@ -3,6 +3,8 @@ package com.pandulapeter.beagle.core.manager
 import android.view.ViewGroup
 import androidx.annotation.RestrictTo
 import androidx.fragment.app.FragmentActivity
+import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.core.util.extension.findRootViewGroup
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
@@ -22,6 +24,10 @@ interface UiManagerContract {
     }
 
     fun onActivityDestroyed(activity: FragmentActivity) = Unit
+
+    fun invalidateOverlay() {
+        BeagleCore.implementation.currentActivity?.findRootViewGroup()?.postInvalidate()
+    }
 
     fun show(activity: FragmentActivity): Boolean = false
 

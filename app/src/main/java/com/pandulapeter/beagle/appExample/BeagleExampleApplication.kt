@@ -1,9 +1,12 @@
 package com.pandulapeter.beagle.appExample
 
 import android.app.Application
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.listeners.OverdrawListener
 import com.pandulapeter.beagle.modules.TextModule
 
 @Suppress("unused")
@@ -35,6 +38,15 @@ class BeagleExampleApplication : Application() {
                     text = "This text uses the default color"
                 )
             )
+            Beagle.addOverdrawListener(object : OverdrawListener {
+
+                private val paint = Paint().apply {
+                    style = Paint.Style.FILL
+                    color = Color.CYAN
+                }
+
+                override fun drawOver(canvas: Canvas) = canvas.drawCircle(100f, 100f, 50f, paint)
+            })
         }
     }
 }
