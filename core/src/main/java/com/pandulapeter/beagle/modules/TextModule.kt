@@ -16,10 +16,5 @@ data class TextModule(
     override val text: CharSequence
 ) : TextModuleContract {
 
-    override fun createCells() = listOf<ModuleCell<*>>(
-        TextModuleCell(
-            id = id,
-            text = text
-        )
-    )
+    override fun createCells() = listOf<ModuleCell<*>>(TextModuleCell(id, text))
 }

@@ -12,8 +12,6 @@ interface ViewHolderDelegate<T : ModuleCell<T>> {
 
     /**
      * The type of the [ModuleCell] implementation that this delegate is handling (T::class).
-     *
-     * TODO: Find a way so that subclasses don't have to implement this.
      */
     val cellType: KClass<T>
 
@@ -36,8 +34,6 @@ interface ViewHolderDelegate<T : ModuleCell<T>> {
 
         /**
          * For internal use only.
-         *
-         * TODO: Move this function to ModuleAdapter.
          */
         @Suppress("UNCHECKED_CAST")
         fun forceBind(model: ModuleCell<*>) = bind(model as T)

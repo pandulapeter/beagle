@@ -67,6 +67,12 @@ interface BeagleContract {
      *  - The application depends on the noop variant.
      */
     fun hide(): Boolean = false
+
+    /**
+     * Call this function to trigger recreating every cell model for every module.
+     * Due to the underlying RecyclerView implementation this will only result in UI update events where differences are found.
+     */
+    fun updateCells() = Unit
     //endregion
 
     //region Listeners

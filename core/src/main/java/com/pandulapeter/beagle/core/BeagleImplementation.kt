@@ -58,6 +58,8 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
 
+    override fun updateCells()  = listManager.refreshList()
+
     override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) = listenerManager.addVisibilityListener(listener, lifecycleOwner)
 
     override fun removeVisibilityListener(listener: VisibilityListener) = listenerManager.removeVisibilityListener(listener)

@@ -22,5 +22,5 @@ internal class ListManager {
         refreshList()
     }
 
-    private fun refreshList() = moduleAdapter.submitList(modules.flatMap { it.createCells() })
+    fun refreshList() = moduleAdapter.submitList(modules.flatMap { it.createCells() })
 }
