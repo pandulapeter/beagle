@@ -13,7 +13,7 @@ interface ModuleCell<T : ModuleCell<T>> {
     /**
      * This method is called only once to register a [ViewHolderDelegate] implementation specific to the [ModuleCell].
      */
-    fun createViewHolderDelegate(): ViewHolderDelegate<out T>
+    fun createViewHolderDelegate(): ViewHolderDelegate<T>
 
     /**
      * To simplify diff calculation, derived classes are encouraged to be data classes.

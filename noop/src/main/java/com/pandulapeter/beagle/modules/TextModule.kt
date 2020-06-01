@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.ColorInt
 import com.pandulapeter.beagle.common.contracts.ModuleCell
 import com.pandulapeter.beagle.common.contracts.modules.TextModuleContract
 
@@ -8,8 +9,9 @@ import com.pandulapeter.beagle.common.contracts.modules.TextModuleContract
  */
 data class TextModule(
     override val id: String = "",
-    override val text: CharSequence = ""
+    override val text: CharSequence = "",
+    @ColorInt override val color: Int? = null
 ) : TextModuleContract {
 
-    override fun createCells() = emptyList<ModuleCell>()
+    override fun createCells() = emptyList<ModuleCell<*>>()
 }

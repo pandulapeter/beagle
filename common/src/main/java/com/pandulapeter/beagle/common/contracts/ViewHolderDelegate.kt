@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.reflect.KClass
 
 /**
- * Connects the conceptual [ModuleCell] representation of a UI element to the actual View group.
+ * Connects the conceptual [ModuleCell] representation of a UI element to the actual View responsible for displaying it.
  */
 interface ViewHolderDelegate<T : ModuleCell<T>> {
 

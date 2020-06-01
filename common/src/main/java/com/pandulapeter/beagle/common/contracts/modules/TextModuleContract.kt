@@ -8,4 +8,5 @@ import com.pandulapeter.beagle.common.contracts.Module
 interface TextModuleContract : Module {
 
     val text: CharSequence
+    val color: Int?
 }
