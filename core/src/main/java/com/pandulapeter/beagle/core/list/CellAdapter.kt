@@ -3,16 +3,16 @@ package com.pandulapeter.beagle.core.list
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.pandulapeter.beagle.common.contracts.ModuleCell
+import com.pandulapeter.beagle.common.contracts.Cell
 import com.pandulapeter.beagle.common.contracts.ViewHolderDelegate
 
-internal class ModuleAdapter : ListAdapter<ModuleCell<out ModuleCell<*>>, ViewHolderDelegate.ViewHolder<out ModuleCell<*>>>(object : DiffUtil.ItemCallback<ModuleCell<*>>() {
+internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolderDelegate.ViewHolder<out Cell<*>>>(object : DiffUtil.ItemCallback<Cell<*>>() {
 
-    override fun areItemsTheSame(oldItem: ModuleCell<out ModuleCell<*>>, newItem: ModuleCell<out ModuleCell<*>>) = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: Cell<out Cell<*>>, newItem: Cell<out Cell<*>>) = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: ModuleCell<out ModuleCell<*>>, newItem: ModuleCell<out ModuleCell<*>>) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: Cell<out Cell<*>>, newItem: Cell<out Cell<*>>) = oldItem == newItem
 
-    override fun getChangePayload(oldItem: ModuleCell<out ModuleCell<*>>, newItem: ModuleCell<out ModuleCell<*>>) = ""
+    override fun getChangePayload(oldItem: Cell<out Cell<*>>, newItem: Cell<out Cell<*>>) = ""
 }) {
     private val delegates = mutableListOf<ViewHolderDelegate<*>>()
 
@@ -30,5 +30,5 @@ internal class ModuleAdapter : ListAdapter<ModuleCell<out ModuleCell<*>>, ViewHo
     @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = delegates[viewType].createViewHolder(parent)
 
-    override fun onBindViewHolder(holder: ViewHolderDelegate.ViewHolder<out ModuleCell<*>>, position: Int) = holder.forceBind(getItem(position))
+    override fun onBindViewHolder(holder: ViewHolderDelegate.ViewHolder<out Cell<*>>, position: Int) = holder.forceBind(getItem(position))
 }

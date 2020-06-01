@@ -6,7 +6,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
-import com.pandulapeter.beagle.common.listeners.OverdrawListener
+import com.pandulapeter.beagle.common.listeners.OverlayListener
+import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 
 @Suppress("unused")
@@ -15,6 +16,7 @@ class BeagleExampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
+            var shouldDrawCircle = false
             Beagle.initialize(
                 application = this,
                 appearance = Appearance(
@@ -36,16 +38,27 @@ class BeagleExampleApplication : Application() {
                 ),
                 TextModule(
                     text = "This text uses the default color"
+                ),
+                SwitchModule(
+                    text = "Should draw circle",
+                    onValueChanged = {
+                        shouldDrawCircle = it
+                        Beagle.invalidateOverlay()
+                    }
                 )
             )
-            Beagle.addOverdrawListener(object : OverdrawListener {
+            Beagle.addOverlayListener(object : OverlayListener {
 
                 private val paint = Paint().apply {
                     style = Paint.Style.FILL
                     color = Color.CYAN
                 }
 
-                override fun drawOver(canvas: Canvas) = canvas.drawCircle(100f, 100f, 50f, paint)
+                override fun onDrawOver(canvas: Canvas) {
+                    if (shouldDrawCircle) {
+                        canvas.drawCircle(100f, 100f, 50f, paint)
+                    }
+                }
             })
         }
     }

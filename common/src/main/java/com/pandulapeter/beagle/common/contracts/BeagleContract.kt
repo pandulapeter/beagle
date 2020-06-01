@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
-import com.pandulapeter.beagle.common.listeners.OverdrawListener
+import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 
 /**
@@ -85,7 +85,7 @@ interface BeagleContract {
     fun updateCells() = Unit
 
     /**
-     * Call this function to trigger invalidating the overlay layout. This will result in calling all registered [OverdrawListener] implementations.
+     * Call this function to trigger invalidating the overlay layout. This will result in calling all registered [OverlayListener] implementations.
      */
     fun invalidateOverlay() = Unit
     //endregion
@@ -113,25 +113,25 @@ interface BeagleContract {
     fun clearVisibilityListeners() = Unit
 
     /**
-     * Adds a new [OverdrawListener] implementation which can be used to draw over the application layout.
+     * Adds a new [OverlayListener] implementation which can be used to draw over the application layout.
      * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is created / destroyed.
      *
-     * @param listener - The [OverdrawListener] implementation to add.
+     * @param listener - The [OverlayListener] implementation to add.
      * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
      */
-    fun addOverdrawListener(listener: OverdrawListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun addOverlayListener(listener: OverlayListener, lifecycleOwner: LifecycleOwner? = null) = Unit
 
     /**
-     * Removes the [OverdrawListener] implementation, if it was added to the list of listeners.
+     * Removes the [OverlayListener] implementation, if it was added to the list of listeners.
      *
-     * @param listener - The [OverdrawListener] implementation to remove.
+     * @param listener - The [OverlayListener] implementation to remove.
      */
-    fun removeOverdrawListener(listener: OverdrawListener) = Unit
+    fun removeOverlayListener(listener: OverlayListener) = Unit
 
     /**
-     * Removes all [OverdrawListener] implementations, from the list of listeners.
+     * Removes all [OverlayListener] implementations, from the list of listeners.
      */
-    fun clearOverdrawListeners() = Unit
+    fun clearOverlayListeners() = Unit
     //endregion
 
     //region Helpers

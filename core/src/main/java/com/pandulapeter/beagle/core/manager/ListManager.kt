@@ -3,15 +3,15 @@ package com.pandulapeter.beagle.core.manager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.contracts.Module
-import com.pandulapeter.beagle.core.list.ModuleAdapter
+import com.pandulapeter.beagle.core.list.CellAdapter
 
 internal class ListManager {
 
-    private val moduleAdapter = ModuleAdapter()
+    private val cellAdapter = CellAdapter()
     private val modules = mutableListOf<Module>()
 
     fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
-        adapter = moduleAdapter
+        adapter = cellAdapter
         setHasFixedSize(true)
         layoutManager = LinearLayoutManager(recyclerView.context)
         refreshList()
@@ -23,5 +23,5 @@ internal class ListManager {
         refreshList()
     }
 
-    fun refreshList() = moduleAdapter.submitList(modules.flatMap { it.createCells() })
+    fun refreshList() = cellAdapter.submitList(modules.flatMap { it.createCells() })
 }

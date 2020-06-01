@@ -13,11 +13,11 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.Module
-import com.pandulapeter.beagle.common.listeners.OverdrawListener
+import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.ListManager
-import com.pandulapeter.beagle.core.manager.OverdrawListenerManager
+import com.pandulapeter.beagle.core.manager.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
@@ -40,7 +40,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     private val shakeDetector by lazy { ShakeDetector { show() } }
     private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
-    private val overdrawListenerManager by lazy { OverdrawListenerManager() }
+    private val overlayListenerManager by lazy { OverlayListenerManager() }
     private val listManager by lazy { ListManager() }
 
     init {
@@ -70,17 +70,17 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun clearVisibilityListeners() = visibilityListenerManager.clearListeners()
 
-    override fun addOverdrawListener(listener: OverdrawListener, lifecycleOwner: LifecycleOwner?) = overdrawListenerManager.addListener(listener, lifecycleOwner)
+    override fun addOverlayListener(listener: OverlayListener, lifecycleOwner: LifecycleOwner?) = overlayListenerManager.addListener(listener, lifecycleOwner)
 
-    override fun removeOverdrawListener(listener: OverdrawListener) = overdrawListenerManager.removeListener(listener)
+    override fun removeOverlayListener(listener: OverlayListener) = overlayListenerManager.removeListener(listener)
 
-    override fun clearOverdrawListeners() = overdrawListenerManager.clearListeners()
+    override fun clearOverlayListeners() = overlayListenerManager.clearListeners()
 
     fun notifyVisibilityListenersOnShow() = visibilityListenerManager.notifyVisibilityListenersOnShow()
 
     fun notifyVisibilityListenersOnHide() = visibilityListenerManager.notifyVisibilityListenersOnHide()
 
-    fun notifyOverdrawListenersDrawOver(canvas: Canvas) = overdrawListenerManager.notifyOverdrawListenersDrawOver(canvas)
+    fun notifyOverlayListenersOnDrawOver(canvas: Canvas) = overlayListenerManager.notifyOverlayListenersOnDrawOver(canvas)
 
     fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
 

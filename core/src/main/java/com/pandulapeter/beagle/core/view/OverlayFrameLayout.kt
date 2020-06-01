@@ -16,6 +16,6 @@ class OverlayFrameLayout @JvmOverloads constructor(
 
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
-        canvas?.let { BeagleCore.implementation.notifyOverdrawListenersDrawOver(canvas) }
+        canvas?.let { BeagleCore.implementation.notifyOverlayListenersOnDrawOver(canvas) }
     }
 }

@@ -1,9 +1,9 @@
 package com.pandulapeter.beagle.modules
 
 import androidx.annotation.ColorInt
-import com.pandulapeter.beagle.common.contracts.ModuleCell
+import com.pandulapeter.beagle.common.contracts.Cell
 import com.pandulapeter.beagle.common.contracts.modules.TextModuleContract
-import com.pandulapeter.beagle.core.list.moduleCells.TextModuleCell
+import com.pandulapeter.beagle.core.list.cells.TextCell
 import java.util.UUID
 
 /**
@@ -19,5 +19,5 @@ class TextModule(
     @ColorInt override val color: Int? = null
 ) : TextModuleContract {
 
-    override fun createCells() = listOf<ModuleCell<*>>(TextModuleCell(id, text, color))
+    override fun createCells() = listOf<Cell<*>>(TextCell(id, text, color))
 }
