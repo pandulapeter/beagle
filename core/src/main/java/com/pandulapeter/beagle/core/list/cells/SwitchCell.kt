@@ -12,7 +12,7 @@ internal data class SwitchCell(
     override val id: String,
     private val text: CharSequence,
     @ColorInt private val color: Int?,
-    private val initialValue: Boolean,
+    private val isChecked: Boolean,
     private val onValueChanged: (Boolean) -> Unit
 ) : Cell<SwitchCell> {
 
@@ -33,12 +33,9 @@ internal data class SwitchCell(
                     (itemView as SwitchCompat).run {
                         text = model.text
                         model.color?.let { setTextColor(it) }
-                        isChecked = model.initialValue
-                        setOnCheckedChangeListener { _, isChecked ->
-                            if (isChecked != this.isChecked) {
-                                model.onValueChanged(isChecked)
-                            }
-                        }
+                        setOnCheckedChangeListener(null)
+                        isChecked = model.isChecked
+                        setOnCheckedChangeListener { _, isChecked -> model.onValueChanged(isChecked) }
                     }
                 }
             }

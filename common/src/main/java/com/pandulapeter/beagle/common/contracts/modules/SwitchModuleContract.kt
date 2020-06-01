@@ -5,6 +5,6 @@ package com.pandulapeter.beagle.common.contracts.modules
  */
 interface SwitchModuleContract : TextModuleContract {
 
-    val initialValue: Boolean
+    val getCurrentValue: () -> Boolean
     val onValueChanged: (Boolean) -> Unit
 }

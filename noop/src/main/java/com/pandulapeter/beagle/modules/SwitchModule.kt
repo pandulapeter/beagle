@@ -12,7 +12,7 @@ data class SwitchModule(
     override val id: String = "",
     override val text: CharSequence = "",
     @ColorInt override val color: Int? = null,
-    override val initialValue: Boolean = false,
+    override val getCurrentValue: () -> Boolean = { false },
     override val onValueChanged: (Boolean) -> Unit = {}
 ) : SwitchModuleContract {
 

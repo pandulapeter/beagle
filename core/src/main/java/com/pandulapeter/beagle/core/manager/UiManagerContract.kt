@@ -26,7 +26,7 @@ interface UiManagerContract {
     fun onActivityDestroyed(activity: FragmentActivity) = Unit
 
     fun invalidateOverlay() {
-        BeagleCore.implementation.currentActivity?.findRootViewGroup()?.postInvalidate()
+        BeagleCore.implementation.currentActivity?.findRootViewGroup()?.getChildAt(0)?.postInvalidate()
     }
 
     fun show(activity: FragmentActivity): Boolean = false

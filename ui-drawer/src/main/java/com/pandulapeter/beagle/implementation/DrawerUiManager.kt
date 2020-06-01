@@ -31,6 +31,10 @@ internal class DrawerUiManager : UiManagerContract {
         drawers.remove(activity)
     }
 
+    override fun invalidateOverlay() {
+        (drawers[BeagleCore.implementation.currentActivity]?.parent as? DebugMenuDrawerLayout?)?.getChildAt(0)?.postInvalidate()
+    }
+
     override fun show(activity: FragmentActivity) = (Beagle.isUiEnabled && drawers.containsKey(activity)).also {
         drawers[activity]!!.run {
             BeagleCore.implementation.notifyVisibilityListenersOnShow()
