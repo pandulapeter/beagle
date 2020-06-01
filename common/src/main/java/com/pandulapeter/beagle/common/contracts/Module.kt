@@ -12,6 +12,7 @@ interface Module {
 
     /**
      * A module's UI is represented by one or more instances of [ModuleCell].
+     * This function is called every time when... TODO
      */
     fun createCells(): List<ModuleCell>
 }
