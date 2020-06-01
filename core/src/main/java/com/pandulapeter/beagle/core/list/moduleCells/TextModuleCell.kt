@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.common.contracts.ViewHolderDelegate
 internal data class TextModuleCell(
     override val id: String,
     val text: CharSequence
-) : ModuleCell {
+) : ModuleCell<TextModuleCell> {
 
     override fun createViewHolderDelegate() = object : ViewHolderDelegate<TextModuleCell> {
 

@@ -8,10 +8,12 @@ import kotlin.reflect.KClass
 /**
  * Connects the conceptual [ModuleCell] representation of a UI element to the actual View group.
  */
-interface ViewHolderDelegate<T : ModuleCell> {
+interface ViewHolderDelegate<T : ModuleCell<T>> {
 
     /**
      * The type of the [ModuleCell] implementation that this delegate is handling (T::class).
+     *
+     * TODO: Find a way so that subclasses don't have to implement this.
      */
     val cellType: KClass<T>
 
@@ -23,7 +25,7 @@ interface ViewHolderDelegate<T : ModuleCell> {
     /**
      * Enforces a bind method for the standard [RecyclerView.ViewHolder].
      */
-    abstract class ViewHolder<T : ModuleCell>(view: View) : RecyclerView.ViewHolder(view) {
+    abstract class ViewHolder<T : ModuleCell<T>>(view: View) : RecyclerView.ViewHolder(view) {
 
         /**
          * Called when the UI needs to be updated with new data represented by a [ModuleCell] instance.
@@ -31,5 +33,13 @@ interface ViewHolderDelegate<T : ModuleCell> {
          * @param model - The [ModuleCell] implementation to bind.
          */
         abstract fun bind(model: T)
+
+        /**
+         * For internal use only.
+         *
+         * TODO: Move this function to ModuleAdapter.
+         */
+        @Suppress("UNCHECKED_CAST")
+        fun forceBind(model: ModuleCell<*>) = bind(model as T)
     }
 }

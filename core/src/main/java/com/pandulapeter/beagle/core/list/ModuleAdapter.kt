@@ -6,30 +6,29 @@ import androidx.recyclerview.widget.ListAdapter
 import com.pandulapeter.beagle.common.contracts.ModuleCell
 import com.pandulapeter.beagle.common.contracts.ViewHolderDelegate
 
-internal class ModuleAdapter : ListAdapter<ModuleCell, ViewHolderDelegate.ViewHolder<out ModuleCell>>(object : DiffUtil.ItemCallback<ModuleCell>() {
+internal class ModuleAdapter : ListAdapter<ModuleCell<out ModuleCell<*>>, ViewHolderDelegate.ViewHolder<out ModuleCell<*>>>(object : DiffUtil.ItemCallback<ModuleCell<*>>() {
 
-    override fun areItemsTheSame(oldItem: ModuleCell, newItem: ModuleCell) = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: ModuleCell<out ModuleCell<*>>, newItem: ModuleCell<out ModuleCell<*>>) = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: ModuleCell, newItem: ModuleCell) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: ModuleCell<out ModuleCell<*>>, newItem: ModuleCell<out ModuleCell<*>>) = oldItem == newItem
 
-    override fun getChangePayload(oldItem: ModuleCell, newItem: ModuleCell) = ""
+    override fun getChangePayload(oldItem: ModuleCell<out ModuleCell<*>>, newItem: ModuleCell<out ModuleCell<*>>) = ""
 }) {
-    private val cellHandlers = mutableListOf<ViewHolderDelegate<*>>()
+    private val delegates = mutableListOf<ViewHolderDelegate<*>>()
 
     override fun getItemViewType(position: Int): Int {
         val cell = getItem(position)
         val type = cell::class
-        return cellHandlers.indexOfFirst { type == it.cellType }.let { index ->
+        return delegates.indexOfFirst { type == it.cellType }.let { index ->
             if (index == -1) {
-                cellHandlers.add(cell.createViewHolderDelegate())
-                cellHandlers.lastIndex
+                delegates.add(cell.createViewHolderDelegate())
+                delegates.lastIndex
             } else index
         }
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = cellHandlers[viewType].createViewHolder(parent) as ViewHolderDelegate.ViewHolder<ModuleCell>
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = delegates[viewType].createViewHolder(parent)
 
-    @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: ViewHolderDelegate.ViewHolder<out ModuleCell>, position: Int) = (holder as ViewHolderDelegate.ViewHolder<ModuleCell>).bind(getItem(position))
+    override fun onBindViewHolder(holder: ViewHolderDelegate.ViewHolder<out ModuleCell<*>>, position: Int) = holder.forceBind(getItem(position))
 }
