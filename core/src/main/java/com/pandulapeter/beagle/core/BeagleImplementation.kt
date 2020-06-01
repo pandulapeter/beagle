@@ -2,7 +2,6 @@ package com.pandulapeter.beagle.core
 
 import android.app.Application
 import android.content.Context
-import android.graphics.Color
 import android.view.ContextThemeWrapper
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.Lifecycle
@@ -12,6 +11,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.BeagleContract
+import com.pandulapeter.beagle.common.contracts.Module
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.ListManager
@@ -19,7 +19,6 @@ import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
-import com.pandulapeter.beagle.modules.TextModule
 import kotlin.properties.Delegates
 
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
@@ -42,16 +41,6 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     init {
         BeagleCore.implementation = this
-        //TODO: Remove this.
-        val colors = listOf(Color.CYAN, Color.GREEN, Color.MAGENTA, null)
-        (0..50).map { index ->
-            listManager.addModule(
-                TextModule(
-                    text = "This is TextModule $index",
-                    color = colors.random()
-                )
-            )
-        }
     }
 
     override fun initialize(
@@ -67,6 +56,8 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun show() = (currentActivity?.let { if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) uiManager.show(it) else false } ?: false)
 
     override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
+
+    override fun setModules(vararg modules: Module) = listManager.setModules(modules.toList())
 
     override fun updateCells() = listManager.refreshList()
 

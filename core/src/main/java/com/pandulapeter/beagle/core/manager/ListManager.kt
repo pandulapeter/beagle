@@ -17,8 +17,9 @@ internal class ListManager {
         refreshList()
     }
 
-    fun addModule(module: Module) {
-        modules.add(module)
+    fun setModules(newModules: List<Module>) {
+        modules.clear()
+        modules.addAll(newModules)
         refreshList()
     }
 

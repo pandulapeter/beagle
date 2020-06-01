@@ -69,8 +69,17 @@ interface BeagleContract {
     fun hide(): Boolean = false
 
     /**
+     * Replaces the list of modules.
+     *
+     * @param modules - The new [Module] implementations to use.
+     */
+    fun setModules(vararg modules: Module) = Unit
+
+    /**
      * Call this function to trigger recreating every cell model for every module.
      * Due to the underlying RecyclerView implementation this will only result in UI update events where differences are found.
+     *
+     * Manually updating the cells is only needed when writing custom modules, the build-in features already handle calling this function when needed.
      */
     fun updateCells() = Unit
     //endregion
