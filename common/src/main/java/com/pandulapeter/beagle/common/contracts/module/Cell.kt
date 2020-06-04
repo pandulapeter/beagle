@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.common.contracts
+package com.pandulapeter.beagle.common.contracts.module
 
 /**
  * Lightweight models representing a single cell to be displayed in the debug menu should implement this interface.

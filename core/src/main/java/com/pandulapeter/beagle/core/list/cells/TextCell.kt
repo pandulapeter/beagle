@@ -4,8 +4,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
-import com.pandulapeter.beagle.common.contracts.Cell
-import com.pandulapeter.beagle.common.contracts.ViewHolderDelegate
+import com.pandulapeter.beagle.common.contracts.module.Cell
+import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.dimension
 

@@ -3,8 +3,8 @@ package com.pandulapeter.beagle.core.list
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.pandulapeter.beagle.common.contracts.Cell
-import com.pandulapeter.beagle.common.contracts.ViewHolderDelegate
+import com.pandulapeter.beagle.common.contracts.module.Cell
+import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 
 internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolderDelegate.ViewHolder<out Cell<*>>>(object : DiffUtil.ItemCallback<Cell<*>>() {
 

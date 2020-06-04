@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.core.manager
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.common.contracts.Module
+import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.CellAdapter
 
 internal class ListManager {

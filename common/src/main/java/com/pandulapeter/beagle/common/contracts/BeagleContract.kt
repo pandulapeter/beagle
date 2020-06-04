@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 

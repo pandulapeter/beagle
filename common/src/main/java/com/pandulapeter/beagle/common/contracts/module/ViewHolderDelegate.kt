@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.common.contracts
+package com.pandulapeter.beagle.common.contracts.module
 
 import android.view.View
 import android.view.ViewGroup

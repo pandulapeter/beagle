@@ -1,8 +1,8 @@
 package com.pandulapeter.beagle.modules
 
 import androidx.annotation.ColorInt
-import com.pandulapeter.beagle.common.contracts.Cell
-import com.pandulapeter.beagle.common.contracts.modules.TextModuleContract
+import com.pandulapeter.beagle.common.contracts.module.Cell
+import com.pandulapeter.beagle.common.contracts.module.builtIn.TextModuleContract
 
 /**
  * Empty implementation.

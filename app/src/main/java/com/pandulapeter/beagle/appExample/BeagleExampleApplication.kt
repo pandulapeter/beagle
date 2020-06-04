@@ -41,7 +41,6 @@ class BeagleExampleApplication : Application() {
                 ),
                 SwitchModule(
                     text = "Should draw circle",
-                    getCurrentValue = { shouldDrawCircle },
                     onValueChanged = {
                         shouldDrawCircle = it
                         Beagle.invalidateOverlay()

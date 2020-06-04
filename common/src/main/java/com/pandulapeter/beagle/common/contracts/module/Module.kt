@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.common.contracts
+package com.pandulapeter.beagle.common.contracts.module
 
 /**
  * All Beagle modules must implement this interface.

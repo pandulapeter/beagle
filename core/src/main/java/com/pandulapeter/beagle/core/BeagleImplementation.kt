@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.BeagleContract
-import com.pandulapeter.beagle.common.contracts.Module
+import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector

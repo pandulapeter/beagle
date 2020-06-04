@@ -3,8 +3,8 @@ package com.pandulapeter.beagle.core.list.cells
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.SwitchCompat
-import com.pandulapeter.beagle.common.contracts.Cell
-import com.pandulapeter.beagle.common.contracts.ViewHolderDelegate
+import com.pandulapeter.beagle.common.contracts.module.Cell
+import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.dimension
 

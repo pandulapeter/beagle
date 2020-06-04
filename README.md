@@ -51,7 +51,7 @@ The latest version is:
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
-Note: If your project contains multiple modules, you might want to use Beagle in all of them so that you can access its logging capabilities from everywhere. In this case specifying the dependencies in your core module and exposing them through the **api** keyword instead of **implementation** might be a reasonable idea.
+Note: If your project contains multiple modules, you might want to use Beagle in all of them so that you can access its logging capabilities from everywhere. In this case specifying the dependencies in your core Android module and exposing them through the **api** keyword instead of **implementation** might be a reasonable idea.
 
 ### Step 3: Initialize the library
 Just one line of code, preferably in the Application's onCreate() method:
@@ -60,16 +60,19 @@ Just one line of code, preferably in the Application's onCreate() method:
 Beagle.initialize(this)
 ```
 
+Optionally you can add the following parameters to this function:
+* The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance.
+* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance.
+
 By default you can fetch Beagle by shaking the device.
 
-### Step 4: Customize by adding modules
+### Step 4: Finish the setup by adding modules
 After this a number of modules needs to be provided, but this can be changed at any time and the UI will be automatically updated.
 
+```kotlin
+Beagle.setModules(module1, module2, ...)
+```
 TODO: Coming soon...
-
-## Tips and tricks
-* The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance when initializing the library.
-* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance when initializing the library.
 
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities.
