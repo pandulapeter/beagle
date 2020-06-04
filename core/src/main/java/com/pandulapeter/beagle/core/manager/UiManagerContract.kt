@@ -15,11 +15,11 @@ interface UiManagerContract {
     fun addOverlayFragment(activity: FragmentActivity) {
         activity.supportFragmentManager
             .beginTransaction()
-            .replace(android.R.id.content, OverlayFragment.newInstance(), OverlayFragment.TAG)
+            .replace(android.R.id.content, findOverlayFragment(activity) ?: OverlayFragment.newInstance(), OverlayFragment.TAG)
             .commit()
     }
 
-    fun createOverlayLayout(context: Context): View = OverlayFrameLayout(context)
+    fun createOverlayLayout(activity: FragmentActivity): View = OverlayFrameLayout(activity)
 
     fun findOverlayFragment(activity: FragmentActivity?): Fragment? = activity?.supportFragmentManager?.findFragmentByTag(OverlayFragment.TAG)
 

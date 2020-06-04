@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.view.ContextThemeWrapper
 import androidx.annotation.RestrictTo
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -85,7 +86,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun clearOverlayListeners() = overlayListenerManager.clearListeners()
 
-    fun createOverlayLayout(context: Context) = uiManager.createOverlayLayout(context)
+    fun createOverlayLayout(activity: FragmentActivity) = uiManager.createOverlayLayout(activity)
 
     fun notifyVisibilityListenersOnShow() = visibilityListenerManager.notifyVisibilityListenersOnShow()
 

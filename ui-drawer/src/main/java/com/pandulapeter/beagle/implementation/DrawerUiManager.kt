@@ -18,17 +18,16 @@ internal class DrawerUiManager : UiManagerContract {
         }
     }
 
-    override fun addOverlayFragment(activity: FragmentActivity) {
-        super.addOverlayFragment(activity)
+    override fun createOverlayLayout(activity: FragmentActivity) = DebugMenuView(BeagleCore.implementation.getThemedContext(activity)).let { drawer ->
         activity.onBackPressedDispatcher.addCallback(activity, onBackPressedCallback)
-    }
-
-    override fun createOverlayLayout(context: Context) = DebugMenuView(BeagleCore.implementation.getThemedContext(context)).let { drawer ->
         DebugMenuDrawerLayout(
-            context = context,
+            context = activity,
             drawer = drawer
         ).apply {
             updateDrawerLockMode()
+            if (onBackPressedCallback.isEnabled) {
+                openDrawer(drawer, false)
+            }
             addDrawerListener(object : DrawerLayout.DrawerListener {
 
                 override fun onDrawerStateChanged(newState: Int) = Unit
