@@ -6,12 +6,13 @@ import com.pandulapeter.beagle.common.contracts.module.builtIn.AnimationDuration
 /**
  * Empty implementation.
  */
-@Suppress("unused")
+@Suppress("unused", "UNUSED_PARAMETER")
 class AnimationDurationSwitchModule(
     override val text: CharSequence = "",
     @ColorInt override val color: Int? = null,
     override val shouldBePersisted: Boolean = false,
-    override val multiplier: Float = 0f
+    override val multiplier: Float = 0f,
+    onValueChanged: (Boolean) -> Unit = {}
 ) : AnimationDurationSwitchModuleContract {
 
     override val id: String = ""

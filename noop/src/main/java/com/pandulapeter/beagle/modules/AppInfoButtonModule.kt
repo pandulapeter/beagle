@@ -10,9 +10,9 @@ import com.pandulapeter.beagle.common.contracts.module.builtIn.AppInfoButtonModu
 class AppInfoButtonModule(
     override val text: CharSequence = "",
     @ColorInt override val color: Int? = null,
-    override val shouldOpenInNewTask: Boolean = false
+    override val shouldOpenInNewTask: Boolean = false,
+    override val onButtonPressed: () -> Unit = {}
 ) : AppInfoButtonModuleContract {
 
     override val id: String = ""
-    override val onButtonPressed: () -> Unit = {}
 }

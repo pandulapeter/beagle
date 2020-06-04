@@ -14,17 +14,18 @@ import com.pandulapeter.beagle.common.contracts.module.builtIn.AppInfoButtonModu
  * @param text - The text that should be displayed on the button. Optional, "Show app info" by default.
  * @param color - The resolved color for the text. Optional, color from theme is used by default.
  * @param shouldOpenInNewTask - Whether or not the App Info page will be opened with the Intent.FLAG_ACTIVITY_NEW_TASK flag. False by default.
+ * @param onButtonPressed - Callback called when the user presses the button. Optional, empty implementation by default.
  */
 class AppInfoButtonModule(
-    override val text: CharSequence = "Show app info",
-    @ColorInt override val color: Int? = null,
-    override val shouldOpenInNewTask: Boolean = false
+    text: CharSequence = "Show app info",
+    @ColorInt color: Int? = null,
+    override val shouldOpenInNewTask: Boolean = false,
+    onButtonPressed: () -> Unit = {}
 ) : AppInfoButtonModuleContract, ButtonModule(
     id = AppInfoButtonModuleContract.ID,
     text = text,
     color = color,
     onButtonPressed = {
-        BeagleCore.implementation.hide()
         BeagleCore.implementation.currentActivity?.run {
             startActivity(Intent().apply {
                 action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
@@ -34,5 +35,6 @@ class AppInfoButtonModule(
                 }
             })
         }
+        onButtonPressed()
     }
 )

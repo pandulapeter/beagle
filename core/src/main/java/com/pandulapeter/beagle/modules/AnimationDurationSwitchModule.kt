@@ -12,14 +12,17 @@ import com.pandulapeter.beagle.common.contracts.module.builtIn.AnimationDuration
  * @param color - The resolved color for the text. Optional, color from theme is used by default.
  * @param shouldBePersisted - Can be used to enable or disable persisting the value on the local storage. Optional, false by default.
  * @param multiplier - The multiplier that should be applied for all animation durations. Optional, 4f by default.
+ * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
  */
 class AnimationDurationSwitchModule(
-    override val text: CharSequence = "Slow down animations",
-    @ColorInt override val color: Int? = null,
+    text: CharSequence = "Slow down animations",
+    @ColorInt color: Int? = null,
     shouldBePersisted: Boolean = false,
-    override val multiplier: Float = 4f
+    override val multiplier: Float = 4f,
+    onValueChanged: (Boolean) -> Unit = {}
 ) : AnimationDurationSwitchModuleContract, SwitchModule(
     id = AnimationDurationSwitchModuleContract.ID,
+    color = color,
     text = text,
     shouldBePersisted = shouldBePersisted,
     onValueChanged = { newValue ->
@@ -27,5 +30,6 @@ class AnimationDurationSwitchModule(
             ValueAnimator::class.java.methods.firstOrNull { it.name == "setDurationScale" }?.invoke(null, if (newValue) multiplier else 1f)
         } catch (_: Throwable) {
         }
+        onValueChanged(newValue)
     }
 )
