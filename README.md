@@ -3,7 +3,7 @@
 
 <img src="metadata/logo.png" width="20%" />
 
-**The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use. Even this document contains references to unimplemented features.**
+**WARNING! The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use. Even this document contains references to unimplemented features.**
 
 **[Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version.**
 
