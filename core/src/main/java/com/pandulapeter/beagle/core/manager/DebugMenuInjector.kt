@@ -5,9 +5,7 @@ import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
-import com.pandulapeter.beagle.core.util.extension.findRootViewGroup
 import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
-import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 internal class DebugMenuInjector(
     private val uiManager: UiManagerContract
@@ -18,9 +16,8 @@ internal class DebugMenuInjector(
     private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            if (activity.supportsDebugMenu) {
-                //TODO: Catch exception, display it as log
-                uiManager.injectOverlayFrameLayout(activity as FragmentActivity, activity.findRootViewGroup(), OverlayFrameLayout(activity))
+            if (activity.supportsDebugMenu && savedInstanceState == null) {
+                uiManager.addOverlayFragment(activity as FragmentActivity)
             }
         }
 
@@ -33,12 +30,15 @@ internal class DebugMenuInjector(
 
         override fun onActivityDestroyed(activity: Activity) {
             if (activity.supportsDebugMenu) {
-                uiManager.onActivityDestroyed(activity as FragmentActivity)
                 if (activity == currentActivity) {
                     currentActivity = null
                 }
             }
         }
+    }
+
+    internal fun invalidateOverlay() {
+        uiManager.findOverlayView(currentActivity)?.postInvalidate()
     }
 
     internal fun register(application: Application) = application.run {

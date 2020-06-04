@@ -13,5 +13,4 @@ Modules prefixed with **beagle** are deprecated.
 ## TODO
 Concepts to describe:
  - RecyclerView adapter implementation with dynamically updated delegates
- - OverlayView
- - Changing the root view
+ - OverlayFragment

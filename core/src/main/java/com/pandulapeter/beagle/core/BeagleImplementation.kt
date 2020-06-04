@@ -71,7 +71,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun updateCells() = listManager.refreshList()
 
-    override fun invalidateOverlay() = uiManager.invalidateOverlay()
+    override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
     override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) = visibilityListenerManager.addListener(listener, lifecycleOwner)
 
@@ -84,6 +84,8 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun removeOverlayListener(listener: OverlayListener) = overlayListenerManager.removeListener(listener)
 
     override fun clearOverlayListeners() = overlayListenerManager.clearListeners()
+
+    fun createOverlayLayout(context: Context) = uiManager.createOverlayLayout(context)
 
     fun notifyVisibilityListenersOnShow() = visibilityListenerManager.notifyVisibilityListenersOnShow()
 

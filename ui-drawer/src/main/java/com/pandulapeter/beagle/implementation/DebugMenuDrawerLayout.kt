@@ -2,18 +2,20 @@ package com.pandulapeter.beagle.implementation
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
+
 @SuppressLint("ViewConstructor")
 internal class DebugMenuDrawerLayout(
     context: Context,
-    content: OverlayFrameLayout,
-    drawer: View
+    val drawer: View
 ) : DrawerLayout(context) {
 
     private val listener = object : DrawerListener {
@@ -32,9 +34,18 @@ internal class DebugMenuDrawerLayout(
     }
 
     init {
-        addView(content, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        addView(OverlayFrameLayout(context), LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT))
         addView(drawer, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, GravityCompat.END))
     }
+
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(ev: MotionEvent) = if (ev.action == MotionEvent.ACTION_DOWN) {
+        if (isDrawerOpen(drawer)) {
+            Beagle.hide() //TODO: Needs to be improved, doesn't feel very natural now.
+            true
+        } else (((width - 2 * ViewConfiguration.get(context).scaledTouchSlop) <= ev.x) && super.onTouchEvent(ev))
+    } else super.onTouchEvent(ev)
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
