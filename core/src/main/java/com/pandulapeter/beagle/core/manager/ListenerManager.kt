@@ -9,6 +9,7 @@ internal abstract class ListenerManager<T> {
 
     private val listeners = mutableListOf<T>()
 
+    @Suppress("unused")
     fun addListener(listener: T, lifecycleOwner: LifecycleOwner?) {
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
 

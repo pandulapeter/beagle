@@ -13,6 +13,7 @@ import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
 import com.pandulapeter.beagle.core.util.extension.unregisterSensorEventListener
 import kotlin.math.abs
 
+@Suppress("unused")
 internal class ShakeDetector(
     private val onShakeDetected: () -> Unit
 ) : SensorEventListener, LifecycleObserver {
@@ -31,6 +32,7 @@ internal class ShakeDetector(
         }
     }
 
+    //TODO: User DefaultLifecycleObserver
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun registerSensor() = application?.registerSensorEventListener(this)
 

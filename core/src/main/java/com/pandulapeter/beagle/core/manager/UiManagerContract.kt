@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.core.manager
 
-import android.content.Context
 import android.view.View
 import androidx.annotation.RestrictTo
 import androidx.fragment.app.Fragment

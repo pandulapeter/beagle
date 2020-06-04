@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
-import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
@@ -89,7 +88,7 @@ interface BeagleContract {
      *  - The module with the specified ID is not currently added to the debug menu.
      *  - The type casting failed.
      */
-    fun <T: Module> findModuleById(id: String) : T? = null
+    fun <T : Module> findModuleById(id: String): T? = null
 
     /**
      * Call this function to trigger recreating every cell model for every module.

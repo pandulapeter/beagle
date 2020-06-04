@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.implementation
 
-import android.content.Context
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.drawerlayout.widget.DrawerLayout

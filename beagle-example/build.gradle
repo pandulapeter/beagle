@@ -48,7 +48,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "com.google.android.material:material:1.1.0"
 
-    def retrofitVersion = "2.6.0"
+    def retrofitVersion = "2.8.1"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
