@@ -25,6 +25,9 @@ import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import kotlin.properties.Delegates
 
+/**
+ * Never reference this class in your app. It's not present in the noop variant so it will prevent your release builds from compiling.
+ */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {
 
