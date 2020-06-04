@@ -3,7 +3,7 @@
 
 <img src="metadata/logo.png" width="20%" />
 
-**The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use.**
+**The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use. Even this document contains references to unimplemented features.**
 
 **[Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version.**
 
@@ -67,13 +67,13 @@ Optionally you can add the following parameters to this function:
 By default you can fetch Beagle by shaking the device.
 
 ### Step 4: Finish the setup by adding modules
-After this a number of modules should be provided, but this configuration can be changed at any time (from any thread) and the UI will automatically be updated.
+After this a number of modules should be provided, but this configuration can be changed at any time (from any thread) and the UI will automatically be updated. The simplest way of doing this is by calling:
 
 ```kotlin
 Beagle.setModules(module1, module2, ...)
 ```
 At this point you should be aware of two options:
-* The list of [built-in modules](https://github.com/pandulapeter/beagle/blob/master/core/src/main/java/com/pandulapeter/beagle/modules/). Every file in this package is documented. These modules should cover most use cases and have the advantage of a fake, **noop** implementation which means that no part of their logic is compiled into your release builds.
+* The list of [built-in modules](https://github.com/pandulapeter/beagle/blob/master/core/src/main/java/com/pandulapeter/beagle/modules/). Every file in this package is documented. These modules should cover most use cases and have the advantage of also providing a fake, **noop** implementation which means that no part of their logic is compiled into your release builds.
 * The ability to write custom modules. For this a good starting point is looking at the built-in implementations from above, but [this document](https://github.com/pandulapeter/beagle/blob/master/metadata/CUSTOM_MODULES.md) also provides some guidance.
 
 ## Documentation
@@ -83,6 +83,8 @@ If you're interested in what's under the hood, [this document](https://github.co
 
 ## Changelog
 Check out the [Releases](https://github.com/pandulapeter/beagle/releases) page for the changes in every version.
+
+If you're updating from a version older than 2.x.x, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).
 
 The library uses [semantic versioning](https://semver.org): **MAJOR.MINOR.PATCH** where **PATCH** changes only contain bug fixes, **MINOR** changes add new features and **MAJOR** changes introduce breaking modifications to the API.
 
