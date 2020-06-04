@@ -4,9 +4,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.pandulapeter.beagle.common.contracts.module.Cell
+import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 
-internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolderDelegate.ViewHolder<out Cell<*>>>(object : DiffUtil.ItemCallback<Cell<*>>() {
+internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolder<out Cell<*>>>(object : DiffUtil.ItemCallback<Cell<*>>() {
 
     override fun areItemsTheSame(oldItem: Cell<out Cell<*>>, newItem: Cell<out Cell<*>>) = oldItem.id == newItem.id
 
@@ -30,5 +31,5 @@ internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolderDelegate.V
     @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = delegates[viewType].createViewHolder(parent)
 
-    override fun onBindViewHolder(holder: ViewHolderDelegate.ViewHolder<out Cell<*>>, position: Int) = holder.forceBind(getItem(position))
+    override fun onBindViewHolder(holder: ViewHolder<out Cell<*>>, position: Int) = holder.forceBind(getItem(position))
 }

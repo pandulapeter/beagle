@@ -13,7 +13,7 @@ interface PersistableModule<T> : Module {
     val initialValue: T
 
     /**
-     * The current value. Can be queried any time.
+     * The current value. Can be queried at any time.
      */
     val currentValue: T
 

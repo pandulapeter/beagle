@@ -1,10 +1,12 @@
 package com.pandulapeter.beagle.core.list.cells
 
+import android.content.Context
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import com.pandulapeter.beagle.common.contracts.module.Cell
+import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.dimension
@@ -19,21 +21,22 @@ internal data class TextCell(
 
         override val cellType = TextCell::class
 
-        override fun createViewHolder(parent: ViewGroup) =
-            object : ViewHolderDelegate.ViewHolder<TextCell>(AppCompatTextView(parent.context)) {
+        override fun createViewHolder(parent: ViewGroup) = TextViewHolder(parent.context)
+    }
 
-                init {
-                    itemView.context.dimension(R.dimen.beagle_content_padding).let { padding ->
-                        itemView.setPadding(padding, padding, padding, padding)
-                    }
-                }
+    private class TextViewHolder(context: Context) : ViewHolder<TextCell>(AppCompatTextView(context)) {
 
-                override fun bind(model: TextCell) {
-                    (itemView as TextView).run {
-                        text = model.text
-                        model.color?.let { setTextColor(it) }
-                    }
-                }
+        init {
+            itemView.context.dimension(R.dimen.beagle_content_padding).let { padding ->
+                itemView.setPadding(padding, padding, padding, padding)
             }
+        }
+
+        override fun bind(model: TextCell) {
+            (itemView as TextView).run {
+                text = model.text
+                model.color?.let { setTextColor(it) }
+            }
+        }
     }
 }

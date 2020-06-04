@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.modules
 
 import androidx.annotation.ColorInt
-import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.builtIn.SwitchModuleContract
 
 /**
@@ -18,6 +17,4 @@ data class SwitchModule(
 ) : SwitchModuleContract {
 
     override val currentValue: Boolean = false
-
-    override fun createCells() = emptyList<Cell<*>>()
 }

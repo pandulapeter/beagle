@@ -4,9 +4,11 @@ import android.app.Application
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.widget.Toast
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.listeners.OverlayListener
+import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 
@@ -43,6 +45,15 @@ class BeagleExampleApplication : Application() {
                     text = "Should draw circle",
                     shouldBePersisted = true,
                     onValueChanged = { Beagle.invalidateOverlay() }
+                ),
+                ButtonModule(
+                    text = "Button 1",
+                    onButtonPressed = { Toast.makeText(this, "Button 1 pressed", Toast.LENGTH_SHORT).show() }
+                ),
+                ButtonModule(
+                    text = "Button 2",
+                    color = Color.YELLOW,
+                    onButtonPressed = { Toast.makeText(this, "Button 2 pressed", Toast.LENGTH_SHORT).show() }
                 )
             )
             Beagle.addOverlayListener(object : OverlayListener {
