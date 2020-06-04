@@ -7,7 +7,7 @@ import android.widget.FrameLayout
 import androidx.annotation.RestrictTo
 import com.pandulapeter.beagle.BeagleCore
 
-@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 class OverlayFrameLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

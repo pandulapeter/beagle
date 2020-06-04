@@ -25,7 +25,7 @@ import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import kotlin.properties.Delegates
 
-@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {
 
     override var isUiEnabled by Delegates.observable(true) { _, _, newValue ->

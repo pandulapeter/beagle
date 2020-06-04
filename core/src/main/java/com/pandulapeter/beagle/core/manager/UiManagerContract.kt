@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.findRootViewGroup
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
-@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 interface UiManagerContract {
 
     //TODO: Make sure this doesn't break Activity shared element transitions.
