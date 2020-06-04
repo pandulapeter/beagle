@@ -60,6 +60,8 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun setModules(vararg modules: Module) = listManager.setModules(modules.toList())
 
+    override fun <T : Module> findModuleById(id: String) = listManager.findModuleById<T>(id)
+
     override fun updateCells() = listManager.refreshList()
 
     override fun invalidateOverlay() = uiManager.invalidateOverlay()

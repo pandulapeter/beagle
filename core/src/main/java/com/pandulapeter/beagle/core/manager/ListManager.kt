@@ -23,5 +23,8 @@ internal class ListManager {
         refreshList()
     }
 
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Module> findModuleById(id: String): T? = modules.firstOrNull { it.id == id } as? T?
+
     fun refreshList() = cellAdapter.submitList(modules.flatMap { it.createCells() })
 }

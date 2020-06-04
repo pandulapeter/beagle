@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
@@ -76,6 +77,18 @@ interface BeagleContract {
      * @param modules - The new [Module] implementations to use.
      */
     fun setModules(vararg modules: Module) = Unit
+
+    /**
+     * Can be used to get the reference to a [Module].
+     * Useful if Beagle is used as the single source of truth for persisted debug data which can be queried from individual modules.
+     *
+     * @param id - The String identifier of the module specified in its constructor.
+     *
+     * @return The properly casted instance or null. Reasons for returning null:
+     *  - The module with the specified ID is not currently added to the debug menu.
+     *  - The type casting failed.
+     */
+    fun <T: Module> findModuleById(id: String) : T? = null
 
     /**
      * Call this function to trigger recreating every cell model for every module.

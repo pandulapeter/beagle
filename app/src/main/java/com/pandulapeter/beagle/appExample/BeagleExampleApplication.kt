@@ -16,7 +16,6 @@ class BeagleExampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
-            var shouldDrawCircle = false
             Beagle.initialize(
                 application = this,
                 appearance = Appearance(
@@ -40,11 +39,9 @@ class BeagleExampleApplication : Application() {
                     text = "This text uses the default color"
                 ),
                 SwitchModule(
+                    id = SWITCH_ID,
                     text = "Should draw circle",
-                    onValueChanged = {
-                        shouldDrawCircle = it
-                        Beagle.invalidateOverlay()
-                    }
+                    onValueChanged = { Beagle.invalidateOverlay() }
                 )
             )
             Beagle.addOverlayListener(object : OverlayListener {
@@ -55,11 +52,15 @@ class BeagleExampleApplication : Application() {
                 }
 
                 override fun onDrawOver(canvas: Canvas) {
-                    if (shouldDrawCircle) {
+                    if (Beagle.findModuleById<SwitchModule>(SWITCH_ID)?.currentValue == true) {
                         canvas.drawCircle(100f, 100f, 50f, paint)
                     }
                 }
             })
         }
+    }
+
+    companion object {
+        private const val SWITCH_ID = "circle_switch"
     }
 }
