@@ -19,7 +19,7 @@ internal class ListManager {
 
     fun setModules(newModules: List<Module>) {
         modules.clear()
-        modules.addAll(newModules)
+        modules.addAll(newModules.distinctBy { it.id })
         refreshList()
     }
 

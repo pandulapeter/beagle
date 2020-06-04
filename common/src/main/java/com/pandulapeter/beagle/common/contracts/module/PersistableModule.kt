@@ -20,6 +20,7 @@ interface PersistableModule<T> : Module {
     /**
      * Can be used to enable or disable persisting the value on the local storage.
      */
+    //TODO: Create a Lint warning to enforce overriding the module ID if this property is true.
     val shouldBePersisted: Boolean
 
     /**
