@@ -7,9 +7,12 @@ import com.pandulapeter.beagle.common.contracts.module.builtIn.AppInfoButtonModu
  * Empty implementation.
  */
 @Suppress("unused")
-data class AppInfoButtonModule(
-    override val id: String = "",
+class AppInfoButtonModule(
     override val text: CharSequence = "",
     @ColorInt override val color: Int? = null,
     override val shouldOpenInNewTask: Boolean = false
-) : AppInfoButtonModuleContract
+) : AppInfoButtonModuleContract {
+
+    override val id: String = ""
+    override val onButtonPressed: () -> Unit = {}
+}

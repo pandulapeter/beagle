@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.common.contracts.module.builtIn.TextModuleContrac
  * Empty implementation.
  */
 @Suppress("unused")
-data class TextModule(
+open class TextModule(
     override val id: String = "",
     override val text: CharSequence = "",
     @ColorInt override val color: Int? = null

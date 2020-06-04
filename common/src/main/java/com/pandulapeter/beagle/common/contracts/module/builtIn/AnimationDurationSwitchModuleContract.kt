@@ -6,11 +6,11 @@ import androidx.annotation.RestrictTo
  * This interface ensures that the real implementation and the noop variant have the same public API.
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-interface AppInfoButtonModuleContract : ButtonModuleContract {
+interface AnimationDurationSwitchModuleContract : SwitchModuleContract {
 
-    val shouldOpenInNewTask: Boolean
+    val multiplier: Float
 
     companion object {
-        const val ID = "appInfoButton"
+        const val ID = "animationDurationSwitch"
     }
 }

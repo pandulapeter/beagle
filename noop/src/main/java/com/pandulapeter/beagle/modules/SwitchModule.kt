@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.common.contracts.module.builtIn.SwitchModuleContr
  * Empty implementation.
  */
 @Suppress("unused")
-data class SwitchModule(
+open class SwitchModule(
     override val id: String = "",
     override val text: CharSequence = "",
     @ColorInt override val color: Int? = null,

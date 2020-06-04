@@ -27,7 +27,7 @@ You're right! Here are the big changes you should be aware of if you were famili
         * *Beagle.imprint()* has become **Beagle.initialize()**
         * *Trick*s were renamed to **Module**s
         * The *fetch()* and *dismiss()* functions are now simply **show()** and **hide()**. 
-    * Trick (now Module) is no longer a sealed class. Having all of the implementations in the same file was great because you could see all the built-in options using code completion suggestions, but it didn't offer a way for you to write your own modules and was not very scalable. The new way to see all the built-in modules is by going to [this link](https://github.com/pandulapeter/beagle/blob/master/core/src/main/java/com/pandulapeter/beagle/modules/).
+    * Trick (now Module) is no longer a sealed class. Having all of the implementations in the same file was great because you could see all the built-in options using code completion suggestions, but it didn't offer a way for you to write your own modules and was not very scalable. The new way to see all the built-in modules is by going to [this link](https://github.com/pandulapeter/beagle/blob/master/core/src/main/java/com/pandulapeter/beagle/modules/). Most of them are renamed.
     * When configuring the Behavior of the library:
         * There is no more *TriggerGesture* as it no longer makes sense for all UI-s. On the other hand a configurable **shakeThreshold** which can be set to null to disable the shake-to-show feature.
         * There is no need to specify your application's package name anymore. However, with **excludedPackageNames** you can specify a list of Activities for which you don't want to support a debug menu. 
