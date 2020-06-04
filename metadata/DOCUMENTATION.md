@@ -1,5 +1,5 @@
 # How does it work?
-TODO: Coming soon...
+This document provides some high-level insights into the inner workings of the library to make navigating the source code easier.
 
 ## Modules
 The repository contains the following modules:
