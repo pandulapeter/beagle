@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
 
@@ -25,6 +26,7 @@ internal class DebugMenuInjector(
             super.onActivityResumed(activity)
             if (currentActivity != activity) {
                 currentActivity = if (activity.supportsDebugMenu) activity as FragmentActivity else null
+                BeagleCore.implementation.updateCells()
             }
         }
 

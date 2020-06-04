@@ -14,7 +14,6 @@ internal class ListManager {
         adapter = cellAdapter
         setHasFixedSize(true)
         layoutManager = LinearLayoutManager(recyclerView.context)
-        refreshList()
     }
 
     fun setModules(newModules: List<Module>) {
@@ -26,5 +25,6 @@ internal class ListManager {
     @Suppress("UNCHECKED_CAST")
     fun <T : Module> findModuleById(id: String): T? = modules.firstOrNull { it.id == id } as? T?
 
+    //TODO: Move to coroutine
     fun refreshList() = cellAdapter.submitList(modules.flatMap { it.createCells() })
 }
