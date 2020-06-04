@@ -41,6 +41,7 @@ class BeagleExampleApplication : Application() {
                 SwitchModule(
                     id = SWITCH_ID,
                     text = "Should draw circle",
+                    shouldBePersisted = true,
                     onValueChanged = { Beagle.invalidateOverlay() }
                 )
             )

@@ -5,11 +5,12 @@ import android.content.SharedPreferences
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-class SharedPreferencesManager(context: Context) {
+internal class SharedPreferencesManager(context: Context) {
 
     private val preferences = context.applicationContext.getSharedPreferences("beagle", Context.MODE_PRIVATE)
+    val switchModules by PersistedProperty.Boolean("switch_")
 
-    private sealed class PersistedProperty<T>(private val mainKey: kotlin.String) : ReadOnlyProperty<SharedPreferencesManager, SharedPreferencesMap<T?>> {
+    sealed class PersistedProperty<T>(private val mainKey: kotlin.String) : ReadOnlyProperty<SharedPreferencesManager, SharedPreferencesMap<T?>> {
 
         private var map: SharedPreferencesMap<T?>? = null
 
@@ -28,7 +29,7 @@ class SharedPreferencesManager(context: Context) {
         }
     }
 
-    private sealed class SharedPreferencesMap<T>(protected val preferences: SharedPreferences, private val mainKey: kotlin.String) {
+    sealed class SharedPreferencesMap<T>(protected val preferences: SharedPreferences, private val mainKey: kotlin.String) {
 
         operator fun get(key: kotlin.String) = getFinal(mainKey + key)
 

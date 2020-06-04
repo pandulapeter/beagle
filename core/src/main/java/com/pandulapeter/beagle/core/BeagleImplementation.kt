@@ -19,6 +19,7 @@ import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
+import com.pandulapeter.beagle.core.manager.SharedPreferencesManager
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
@@ -37,6 +38,8 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         private set
     var behavior = Behavior()
         private set
+    internal lateinit var sharedPreferencesManager: SharedPreferencesManager
+        private set
     private val shakeDetector by lazy { ShakeDetector { show() } }
     private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
@@ -51,6 +54,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         (behavior.shakeThreshold == null || shakeDetector.initialize(application)).also {
             this.appearance = appearance
             this.behavior = behavior
+            this.sharedPreferencesManager = SharedPreferencesManager(application)
             debugMenuInjector.register(application)
         }
 

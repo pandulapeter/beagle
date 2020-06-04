@@ -33,6 +33,7 @@ interface BeagleContract {
 
     /**
      * Initializes the library. No UI-related functionality will work before calling this function.
+     * Note: If any of your modules uses persisted data, you must call this function before any other Beagle-related calls to avoid crashes.
      *
      * @param application - Needed for hooking into the application lifecycle.
      * @param appearance - Optional [Appearance] instance for customizing the appearance of the debug menu.
