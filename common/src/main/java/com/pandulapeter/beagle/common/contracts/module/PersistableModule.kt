@@ -23,7 +23,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
     fun getCurrentValue(moduleDelegate: ModuleDelegate<M>?): T? = (moduleDelegate as? PersistableModuleDelegate<T, M>?)?.getCurrentValue(this as M)
 
     /**
-     * Can be used to update the current value at any time. Changes should also be reflected on the UI of the debug menu.
+     * Can be used to update the current value at any time. TODO: Changes should also be reflected on the UI of the debug menu.
      *
      * @param moduleDelegate - This parameter should be resolved by Beagle.findModuleDelegate(TheSpecificModule::class).
      * @param newValue - The new value.

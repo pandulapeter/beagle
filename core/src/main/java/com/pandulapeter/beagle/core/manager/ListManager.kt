@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.ModuleDelegate
 import com.pandulapeter.beagle.core.list.CellAdapter
+import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonModuleDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchModuleDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.TextModuleDelegate
+import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlin.reflect.KClass
@@ -17,7 +19,8 @@ internal class ListManager {
     private val modules = mutableListOf<Module<*>>()
     private val moduleDelegates = mutableMapOf(
         TextModule::class to TextModuleDelegate(),
-        SwitchModule::class to SwitchModuleDelegate()
+        SwitchModule::class to SwitchModuleDelegate(),
+        ButtonModule::class to ButtonModuleDelegate()
     )
 
     fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
