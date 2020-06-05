@@ -1,9 +1,9 @@
 package com.pandulapeter.beagle.common.contracts.module
 
 /**
- * All Beagle modules must implement this interface.
+ * All Beagle modules must implement this interface. Modules are lightweight classes containing the parameters needed from the consumer.
  */
-interface Module {
+interface Module<M : Module<M>> {
 
     /**
      * Every module must have a unique ID. If a module can be instantiated multiple times, each instance must have a different ID.
@@ -11,8 +11,17 @@ interface Module {
     val id: String
 
     /**
-     * A module's UI is represented by one or more instances of [Cell]. These can also be different subtypes.
-     * This function is called every time the UI should be refreshed. You can manually trigger such refresh by calling [Beagle.updateCells()]
+     * If you write a custom module, its custom [ModuleDelegate] needs to be registered. Built-in modules use a different mechanism to achieve an empty implementation in the noop variant.
      */
-    fun createCells(): List<Cell<*>> = emptyList()
+    fun createModuleDelegate(): ModuleDelegate<M>
+
+    /**
+     * Derived classes are encouraged to be data classes.
+     */
+    override fun equals(other: Any?): Boolean
+
+    /**
+     * Derived classes are encouraged to be data classes.
+     */
+    override fun hashCode(): Int
 }

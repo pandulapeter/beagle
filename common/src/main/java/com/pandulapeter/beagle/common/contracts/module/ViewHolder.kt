@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.common.contracts.module
 
 import android.view.View
+import androidx.annotation.RestrictTo
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -19,6 +20,7 @@ abstract class ViewHolder<T : Cell<T>>(view: View) : RecyclerView.ViewHolder(vie
     /**
      * For internal use only.
      */
+    @RestrictTo(RestrictTo.Scope.LIBRARY)
     @Suppress("UNCHECKED_CAST")
     fun forceBind(model: Cell<*>) = bind(model as T)
 }

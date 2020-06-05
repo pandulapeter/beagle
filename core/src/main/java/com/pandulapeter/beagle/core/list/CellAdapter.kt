@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
+import kotlin.reflect.KClass
 
 internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolder<out Cell<*>>>(object : DiffUtil.ItemCallback<Cell<*>>() {
 
@@ -15,21 +16,21 @@ internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolder<out Cell<
 
     override fun getChangePayload(oldItem: Cell<out Cell<*>>, newItem: Cell<out Cell<*>>) = ""
 }) {
-    private val delegates = mutableListOf<ViewHolderDelegate<*>>()
+    private val delegates = mutableMapOf<KClass<*>, ViewHolderDelegate<*>>()
 
     override fun getItemViewType(position: Int): Int {
         val cell = getItem(position)
-        val type = cell::class
-        return delegates.indexOfFirst { type == it.cellType }.let { index ->
+        return delegates.keys.indexOf(cell::class).let { index ->
             if (index == -1) {
-                delegates.add(cell.createViewHolderDelegate())
-                delegates.lastIndex
+                delegates[cell::class] = cell.createViewHolderDelegate()
+                delegates.size - 1
             } else index
         }
     }
 
+    //TODO: Optimize
     @Suppress("UNCHECKED_CAST")
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = delegates[viewType].createViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<*> = delegates.values.toList()[viewType].createViewHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder<out Cell<*>>, position: Int) = holder.forceBind(getItem(position))
 }

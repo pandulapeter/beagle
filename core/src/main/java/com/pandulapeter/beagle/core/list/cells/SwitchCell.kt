@@ -20,8 +20,6 @@ internal data class SwitchCell(
 
     override fun createViewHolderDelegate() = object : ViewHolderDelegate<SwitchCell> {
 
-        override val cellType = SwitchCell::class
-
         override fun createViewHolder(parent: ViewGroup) = SwitchViewHolder(parent.context)
     }
 

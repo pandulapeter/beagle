@@ -21,8 +21,6 @@ internal data class ButtonCell(
 
     override fun createViewHolderDelegate() = object : ViewHolderDelegate<ButtonCell> {
 
-        override val cellType = ButtonCell::class
-
         override fun createViewHolder(parent: ViewGroup) = ButtonViewHolder(parent.context)
     }
 

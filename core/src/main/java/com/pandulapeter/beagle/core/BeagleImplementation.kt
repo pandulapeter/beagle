@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Canvas
 import android.view.ContextThemeWrapper
-import androidx.annotation.RestrictTo
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -26,10 +25,6 @@ import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import kotlin.properties.Delegates
 
-/**
- * Never reference this class in your app. It's not present in the noop variant so it will prevent your release builds from compiling.
- */
-@RestrictTo(RestrictTo.Scope.LIBRARY)
 class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {
 
     override var isUiEnabled by Delegates.observable(true) { _, _, newValue ->
@@ -66,9 +61,9 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
 
-    override fun setModules(vararg modules: Module) = listManager.setModules(modules.toList())
+    override fun setModules(vararg modules: Module<*>) = listManager.setModules(modules.toList())
 
-    override fun <T : Module> findModuleById(id: String) = listManager.findModuleById<T>(id)
+    override fun <T : Module<T>> findModuleById(id: String) = listManager.findModuleById<T>(id)
 
     override fun updateCells() = listManager.refreshList()
 

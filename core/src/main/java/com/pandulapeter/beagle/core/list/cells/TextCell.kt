@@ -19,8 +19,6 @@ internal data class TextCell(
 
     override fun createViewHolderDelegate() = object : ViewHolderDelegate<TextCell> {
 
-        override val cellType = TextCell::class
-
         override fun createViewHolder(parent: ViewGroup) = TextViewHolder(parent.context)
     }
 

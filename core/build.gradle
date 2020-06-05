@@ -23,5 +23,5 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    api project(":common")
+    implementation project(":common")
 }

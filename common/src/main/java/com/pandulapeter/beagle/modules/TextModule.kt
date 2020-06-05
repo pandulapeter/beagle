@@ -1,9 +1,7 @@
 package com.pandulapeter.beagle.modules
 
 import androidx.annotation.ColorInt
-import com.pandulapeter.beagle.common.contracts.module.Cell
-import com.pandulapeter.beagle.common.contracts.module.builtIn.TextModuleContract
-import com.pandulapeter.beagle.core.list.cells.TextCell
+import com.pandulapeter.beagle.common.contracts.module.Module
 import java.util.UUID
 
 /**
@@ -13,11 +11,11 @@ import java.util.UUID
  * @param text - The text to display.
  * @param color - The resolved color for the text. Optional, color from theme is used by default.
  */
-open class TextModule(
+data class TextModule(
     override val id: String = "text_${UUID.randomUUID()}",
-    override val text: CharSequence,
-    @ColorInt override val color: Int? = null
-) : TextModuleContract {
+    val text: CharSequence,
+    @ColorInt val color: Int? = null
+) : Module<TextModule> {
 
-    final override fun createCells() = listOf<Cell<*>>(TextCell(id, text, color))
+    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own ModuleHandlers.")
 }

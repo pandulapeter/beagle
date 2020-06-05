@@ -1,13 +1,11 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.view.View
-import androidx.annotation.RestrictTo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.core.OverlayFragment
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
-@RestrictTo(RestrictTo.Scope.LIBRARY)
 interface UiManagerContract {
 
     //TODO: Make sure this doesn't break the focus handling

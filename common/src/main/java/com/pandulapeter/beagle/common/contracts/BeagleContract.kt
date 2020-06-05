@@ -2,7 +2,6 @@ package com.pandulapeter.beagle.common.contracts
 
 import android.app.Application
 import android.content.Context
-import androidx.annotation.RestrictTo
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
@@ -14,7 +13,6 @@ import com.pandulapeter.beagle.common.listeners.VisibilityListener
 /**
  * This interface ensures that the real implementation and the noop variant have the same public API.
  */
-@RestrictTo(RestrictTo.Scope.LIBRARY)
 interface BeagleContract {
 
     //region Core functionality
@@ -76,7 +74,7 @@ interface BeagleContract {
      *
      * @param modules - The new [Module] implementations to use.
      */
-    fun setModules(vararg modules: Module) = Unit
+    fun setModules(vararg modules: Module<*>) = Unit
 
     /**
      * Can be used to get the reference to a [Module].
@@ -88,7 +86,7 @@ interface BeagleContract {
      *  - The module with the specified ID is not currently added to the debug menu.
      *  - The type casting failed.
      */
-    fun <T : Module> findModuleById(id: String): T? = null
+    fun <T : Module<T>> findModuleById(id: String): T? = null
 
     /**
      * Call this function to trigger recreating every cell model for every module.
