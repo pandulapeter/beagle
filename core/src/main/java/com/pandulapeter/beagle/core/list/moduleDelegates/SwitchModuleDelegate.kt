@@ -7,15 +7,22 @@ import com.pandulapeter.beagle.core.list.cells.SwitchCell
 import com.pandulapeter.beagle.modules.SwitchModule
 
 internal class SwitchModuleDelegate : PersistableModuleDelegate<Boolean, SwitchModule> {
-    
+
     override fun getCurrentValue(module: SwitchModule): Boolean = if (module.shouldBePersisted) {
-        BeagleCore.implementation.sharedPreferencesManager.switchModules[module.id] ?: module.initialValue
-    } else module.initialValue
+        BeagleCore.implementation.localStorageManager.switchModules[module.id] ?: module.initialValue
+    } else {
+        BeagleCore.implementation.memoryStorageManager.switchModules[module.id] ?: module.initialValue
+    }
 
     override fun setCurrentValue(module: SwitchModule, newValue: Boolean) {
-        module.onValueChanged(newValue)
-        if (module.shouldBePersisted) {
-            BeagleCore.implementation.sharedPreferencesManager.switchModules[module.id] = newValue
+        if (newValue != getCurrentValue(module)) {
+            if (module.shouldBePersisted) {
+                BeagleCore.implementation.localStorageManager.switchModules[module.id] = newValue
+            } else {
+                BeagleCore.implementation.memoryStorageManager.switchModules[module.id] = newValue
+            }
+            BeagleCore.implementation.updateCells()
+            module.onValueChanged(newValue)
         }
     }
 

@@ -5,16 +5,16 @@ import android.content.SharedPreferences
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-internal class SharedPreferencesManager(context: Context) {
+internal class LocalStorageManager(context: Context) {
 
     private val preferences = context.applicationContext.getSharedPreferences("beagle", Context.MODE_PRIVATE)
     val switchModules by PersistedProperty.Boolean("switch_")
 
-    sealed class PersistedProperty<T>(private val mainKey: kotlin.String) : ReadOnlyProperty<SharedPreferencesManager, SharedPreferencesMap<T?>> {
+    sealed class PersistedProperty<T>(private val mainKey: kotlin.String) : ReadOnlyProperty<LocalStorageManager, SharedPreferencesMap<T?>> {
 
         private var map: SharedPreferencesMap<T?>? = null
 
-        override fun getValue(thisRef: SharedPreferencesManager, property: KProperty<*>) = map ?: createSharedPreferencesMap(thisRef.preferences, mainKey).also { map = it }
+        override fun getValue(thisRef: LocalStorageManager, property: KProperty<*>) = map ?: createSharedPreferencesMap(thisRef.preferences, mainKey).also { map = it }
 
         abstract fun createSharedPreferencesMap(preferences: SharedPreferences, mainKey: kotlin.String): SharedPreferencesMap<T?>
 

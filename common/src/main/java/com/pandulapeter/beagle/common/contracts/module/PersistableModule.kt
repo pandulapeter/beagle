@@ -13,6 +13,27 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
     val initialValue: T
 
     /**
+     * Can be used to query the current value at any time.
+     *
+     * @param moduleDelegate - This parameter should be resolved by Beagle.findModuleDelegate(TheSpecificModule::class).
+     *
+     * @return - The current value or null if the module delegate was not found (this will be the case in the noop variant).
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun getCurrentValue(moduleDelegate: ModuleDelegate<M>?): T? = (moduleDelegate as? PersistableModuleDelegate<T, M>?)?.getCurrentValue(this as M)
+
+    /**
+     * Can be used to update the current value at any time. Changes should also be reflected on the UI of the debug menu.
+     *
+     * @param moduleDelegate - This parameter should be resolved by Beagle.findModuleDelegate(TheSpecificModule::class).
+     * @param newValue - The new value.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun setCurrentValue(moduleDelegate: ModuleDelegate<M>?, newValue: T) {
+        (moduleDelegate as? PersistableModuleDelegate<T, M>?)?.setCurrentValue(this as M, newValue)
+    }
+
+    /**
      * Can be used to enable or disable persisting the value on the local storage.
      */
     //TODO: Create a Lint warning to enforce overriding the module ID if this property is true.

@@ -17,13 +17,15 @@ import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.ListManager
+import com.pandulapeter.beagle.core.manager.LocalStorageManager
+import com.pandulapeter.beagle.core.manager.MemoryStorageManager
 import com.pandulapeter.beagle.core.manager.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
-import com.pandulapeter.beagle.core.manager.SharedPreferencesManager
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import kotlin.properties.Delegates
+import kotlin.reflect.KClass
 
 class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {
 
@@ -37,7 +39,8 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         private set
     var behavior = Behavior()
         private set
-    internal lateinit var sharedPreferencesManager: SharedPreferencesManager
+    internal val memoryStorageManager by lazy { MemoryStorageManager() }
+    internal lateinit var localStorageManager: LocalStorageManager
         private set
     private val shakeDetector by lazy { ShakeDetector { show() } }
     private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
@@ -53,7 +56,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         (behavior.shakeThreshold == null || shakeDetector.initialize(application)).also {
             this.appearance = appearance
             this.behavior = behavior
-            this.sharedPreferencesManager = SharedPreferencesManager(application)
+            this.localStorageManager = LocalStorageManager(application)
             debugMenuInjector.register(application)
         }
 
@@ -63,7 +66,9 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun setModules(vararg modules: Module<*>) = listManager.setModules(modules.toList())
 
-    override fun <T : Module<T>> findModuleById(id: String) = listManager.findModuleById<T>(id)
+    override fun <M : Module<M>> findModule(id: String) = listManager.findModule<M>(id)
+
+    override fun <M : Module<M>> findModuleDelegate(type: KClass<M>) = listManager.findModuleDelegate<M>(type)
 
     override fun updateCells() = listManager.refreshList()
 
