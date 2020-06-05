@@ -51,7 +51,9 @@ The latest version is:
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
-Note: If your project contains multiple modules, you might want to use Beagle in all of them so that you can access its logging capabilities from everywhere. In this case specifying the dependencies in your core Android module and exposing them through the **api** keyword instead of **implementation** might be a reasonable idea.
+**Note 1**: In case of the drawer UI, if you have overwritten the Activity's onBackPressed() method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity's onBackPressed() you should check that Beagle.hide() returns false before doing any other checks or calling the super implementation.
+
+**Note 2**: If your project contains multiple modules, you might want to use Beagle in all of them so that you can access its logging capabilities from everywhere. In this case specifying the dependencies in your core Android module and exposing them through the **api** keyword instead of **implementation** might be a reasonable idea.
 
 ### Step 3: Initialize the library
 Just one line of code, preferably in the Application's onCreate() method:
