@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.core.manager
 
+import androidx.annotation.CallSuper
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -32,7 +33,8 @@ internal abstract class ListenerManager<T> {
 
     protected fun notifyListeners(notification: (T) -> Unit) = listeners.forEach(notification)
 
-    private fun addListener(listener: T) {
+    @CallSuper
+    protected open fun addListener(listener: T) {
         if (!listeners.contains(listener)) {
             listeners.add(listener)
         }

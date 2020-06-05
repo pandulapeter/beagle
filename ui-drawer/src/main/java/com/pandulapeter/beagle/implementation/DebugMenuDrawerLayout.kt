@@ -42,8 +42,7 @@ internal class DebugMenuDrawerLayout(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent) = if (ev.action == MotionEvent.ACTION_DOWN) {
         if (isDrawerOpen(drawer)) {
-            Beagle.hide() //TODO: Needs to be improved, doesn't feel very natural now.
-            true
+            super.onTouchEvent(ev)
         } else (((width - 2 * ViewConfiguration.get(context).scaledTouchSlop) <= ev.x) && super.onTouchEvent(ev))
     } else super.onTouchEvent(ev)
 

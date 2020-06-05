@@ -27,6 +27,7 @@ internal class DrawerUiManager : UiManagerContract {
             if (onBackPressedCallback.isEnabled) {
                 openDrawer(drawer, false)
             }
+            //TODO: This might be a memory leak. Use lifecycle-aware listeners
             addDrawerListener(object : DrawerLayout.DrawerListener {
 
                 override fun onDrawerStateChanged(newState: Int) = Unit
