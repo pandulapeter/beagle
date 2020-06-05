@@ -47,8 +47,12 @@ class BeagleExampleApplication : Application() {
                     onValueChanged = { Beagle.invalidateOverlay() }
                 ),
                 ButtonModule(
-                    text = "Button 1",
-                    onButtonPressed = { Toast.makeText(this, "Button 1 pressed", Toast.LENGTH_SHORT).show() }
+                    text = "Toggle the switch above",
+                    onButtonPressed = {
+                        Beagle.findModule<SwitchModule>(SHOULD_DRAW_CIRCLE_SWITCH_ID)?.let { module ->
+                            module.setCurrentValue(Beagle, module.getCurrentValue(Beagle) != true)
+                        }
+                    }
                 ),
                 ButtonModule(
                     text = "Button 2",
@@ -64,10 +68,7 @@ class BeagleExampleApplication : Application() {
                 }
 
                 override fun onDrawOver(canvas: Canvas) {
-                    //TODO: This is cumbersome. Find another way, maybe with extension functions.
-                    if (
-                        Beagle.findModule<SwitchModule>(SHOULD_DRAW_CIRCLE_SWITCH_ID)?.getCurrentValue(Beagle.findModuleDelegate(SwitchModule::class)) == true
-                    ) {
+                    if (Beagle.findModule<SwitchModule>(SHOULD_DRAW_CIRCLE_SWITCH_ID)?.getCurrentValue(Beagle) == true) {
                         canvas.drawCircle(100f, 100f, 50f, paint)
                     }
                 }

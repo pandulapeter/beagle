@@ -96,7 +96,7 @@ interface BeagleContract {
      *  - No module delegate is registered for the specified type.
      *  - The type casting failed.
      */
-    fun <M : Module<M>> findModuleDelegate(type: KClass<M>): Module.Delegate<M>? = null
+    fun <M : Module<M>> findModuleDelegate(type: KClass<out M>): Module.Delegate<M>? = null
 
     /**
      * Call this function to trigger recreating every cell model for every module.

@@ -38,7 +38,7 @@ internal class ListManager {
     fun <M : Module<*>> findModule(id: String): M? = modules.firstOrNull { it.id == id } as? M?
 
     @Suppress("UNCHECKED_CAST")
-    fun <M : Module<M>> findModuleDelegate(type: KClass<M>) = moduleDelegates[type] as Module.Delegate<M>
+    fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = moduleDelegates[type] as Module.Delegate<M>
 
     //TODO: Move to coroutine
     //TODO: Throw exception if no handler is found

@@ -13,7 +13,7 @@ interface Module<M : Module<M>> {
     val id: String
 
     /**
-     * If you write a custom module, its custom [Delegate] needs to be registered. Built-in modules use a different mechanism to achieve an empty implementation in the noop variant.
+     * For every custom module a custom [Delegate] needs to be registered. Built-in modules use a different mechanism to achieve an empty implementation in the noop variant.
      */
     fun createModuleDelegate(): Delegate<M>
 

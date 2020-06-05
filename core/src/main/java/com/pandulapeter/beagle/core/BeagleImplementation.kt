@@ -68,7 +68,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun <M : Module<M>> findModule(id: String) = listManager.findModule<M>(id)
 
-    override fun <M : Module<M>> findModuleDelegate(type: KClass<M>) = listManager.findModuleDelegate<M>(type)
+    override fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = listManager.findModuleDelegate<M>(type)
 
     override fun updateCells() = listManager.refreshList()
 
