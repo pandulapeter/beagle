@@ -7,7 +7,6 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
-import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.dimension
 
@@ -17,7 +16,7 @@ internal data class TextCell(
     @ColorInt private val color: Int?
 ) : Cell<TextCell> {
 
-    override fun createViewHolderDelegate() = object : ViewHolderDelegate<TextCell> {
+    override fun createViewHolderDelegate() = object : ViewHolder.Delegate<TextCell>() {
 
         override fun createViewHolder(parent: ViewGroup) = TextViewHolder(parent.context)
     }

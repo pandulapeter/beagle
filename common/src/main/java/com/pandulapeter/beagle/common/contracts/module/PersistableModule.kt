@@ -20,7 +20,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      * @return - The current value or null if the module delegate was not found (this will be the case in the noop variant).
      */
     @Suppress("UNCHECKED_CAST")
-    fun getCurrentValue(moduleDelegate: ModuleDelegate<M>?): T? = (moduleDelegate as? PersistableModuleDelegate<T, M>?)?.getCurrentValue(this as M)
+    fun getCurrentValue(moduleDelegate: Module.Delegate<M>?): T? = (moduleDelegate as? Delegate<T, M>?)?.getCurrentValue(this as M)
 
     /**
      * Can be used to update the current value at any time. TODO: Changes should also be reflected on the UI of the debug menu.
@@ -29,8 +29,8 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      * @param newValue - The new value.
      */
     @Suppress("UNCHECKED_CAST")
-    fun setCurrentValue(moduleDelegate: ModuleDelegate<M>?, newValue: T) {
-        (moduleDelegate as? PersistableModuleDelegate<T, M>?)?.setCurrentValue(this as M, newValue)
+    fun setCurrentValue(moduleDelegate: Module.Delegate<M>?, newValue: T) {
+        (moduleDelegate as? Delegate<T, M>?)?.setCurrentValue(this as M, newValue)
     }
 
     /**
@@ -44,5 +44,21 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      */
     val onValueChanged: (newValue: T) -> Unit
 
-    override fun createModuleDelegate(): PersistableModuleDelegate<T, M>
+    override fun createModuleDelegate(): Delegate<T, M>
+
+    /**
+     * All [PersistableModule] implementations must have their corresponding delegate that contains the implementation details.
+     */
+    abstract class Delegate<T, M : Module<M>> : Module.Delegate<M>() {
+
+        /**
+         * Returns the current value.
+         */
+        abstract fun getCurrentValue(module: M): T
+
+        /**
+         * Updates the current value.
+         */
+        abstract fun setCurrentValue(module: M, newValue: T)
+    }
 }

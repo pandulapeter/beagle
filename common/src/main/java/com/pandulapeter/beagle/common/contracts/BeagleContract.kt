@@ -7,7 +7,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.common.contracts.module.ModuleDelegate
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import kotlin.reflect.KClass
@@ -91,13 +90,13 @@ interface BeagleContract {
     fun <M : Module<M>> findModule(id: String): M? = null
 
     /**
-     * Can be used to get the reference to a [ModuleDelegate] by the type of the module it's supposed to handle.
+     * Can be used to get the reference to a [Module.Delegate] by the type of the module it's supposed to handle.
      *
-     * @return The [ModuleDelegate] implementation or null. Reasons for returning null:
+     * @return The [Module.Delegate] implementation or null. Reasons for returning null:
      *  - No module delegate is registered for the specified type.
      *  - The type casting failed.
      */
-    fun <M : Module<M>> findModuleDelegate(type: KClass<M>): ModuleDelegate<M>? = null
+    fun <M : Module<M>> findModuleDelegate(type: KClass<M>): Module.Delegate<M>? = null
 
     /**
      * Call this function to trigger recreating every cell model for every module.

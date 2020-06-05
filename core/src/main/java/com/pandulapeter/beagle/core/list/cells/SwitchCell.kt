@@ -6,7 +6,6 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.widget.SwitchCompat
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
-import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.dimension
 
@@ -18,7 +17,7 @@ internal data class SwitchCell(
     private val onValueChanged: (Boolean) -> Unit
 ) : Cell<SwitchCell> {
 
-    override fun createViewHolderDelegate() = object : ViewHolderDelegate<SwitchCell> {
+    override fun createViewHolderDelegate() = object : ViewHolder.Delegate<SwitchCell>() {
 
         override fun createViewHolder(parent: ViewGroup) = SwitchViewHolder(parent.context)
     }

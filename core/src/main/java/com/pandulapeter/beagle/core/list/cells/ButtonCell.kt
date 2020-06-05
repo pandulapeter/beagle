@@ -8,7 +8,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
-import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.dimension
 
@@ -19,7 +18,7 @@ internal data class ButtonCell(
     private val onButtonPressed: () -> Unit
 ) : Cell<ButtonCell> {
 
-    override fun createViewHolderDelegate() = object : ViewHolderDelegate<ButtonCell> {
+    override fun createViewHolderDelegate() = object : ViewHolder.Delegate<ButtonCell>() {
 
         override fun createViewHolder(parent: ViewGroup) = ButtonViewHolder(parent.context)
     }

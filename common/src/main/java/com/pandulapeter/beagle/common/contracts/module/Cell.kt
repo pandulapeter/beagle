@@ -11,9 +11,9 @@ interface Cell<T : Cell<T>> {
     val id: String
 
     /**
-     * This method is called only once to register a [ViewHolderDelegate] implementation specific to the [Cell].
+     * This method is called only once to register a [ViewHolder.Delegate] implementation specific to the [Cell].
      */
-    fun createViewHolderDelegate(): ViewHolderDelegate<T>
+    fun createViewHolderDelegate(): ViewHolder.Delegate<T>
 
     /**
      * To simplify diff calculation, derived classes are encouraged to be data classes.

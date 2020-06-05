@@ -2,11 +2,11 @@ package com.pandulapeter.beagle.core.list.moduleDelegates
 
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
-import com.pandulapeter.beagle.common.contracts.module.PersistableModuleDelegate
+import com.pandulapeter.beagle.common.contracts.module.PersistableModule
 import com.pandulapeter.beagle.core.list.cells.SwitchCell
 import com.pandulapeter.beagle.modules.SwitchModule
 
-internal class SwitchModuleDelegate : PersistableModuleDelegate<Boolean, SwitchModule> {
+internal class SwitchModuleDelegate : PersistableModule.Delegate<Boolean, SwitchModule>() {
 
     override fun getCurrentValue(module: SwitchModule): Boolean = if (module.shouldBePersisted) {
         BeagleCore.implementation.localStorageManager.switchModules[module.id] ?: module.initialValue

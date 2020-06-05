@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
-import com.pandulapeter.beagle.common.contracts.module.ViewHolderDelegate
 import kotlin.reflect.KClass
 
 internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolder<out Cell<*>>>(object : DiffUtil.ItemCallback<Cell<*>>() {
@@ -16,7 +15,7 @@ internal class CellAdapter : ListAdapter<Cell<out Cell<*>>, ViewHolder<out Cell<
 
     override fun getChangePayload(oldItem: Cell<out Cell<*>>, newItem: Cell<out Cell<*>>) = ""
 }) {
-    private val delegates = mutableMapOf<KClass<*>, ViewHolderDelegate<*>>()
+    private val delegates = mutableMapOf<KClass<*>, ViewHolder.Delegate<*>>()
 
     override fun getItemViewType(position: Int): Int {
         val cell = getItem(position)
