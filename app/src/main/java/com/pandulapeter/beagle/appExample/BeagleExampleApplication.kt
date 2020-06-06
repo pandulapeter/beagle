@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckboxModule
+import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 
@@ -26,6 +27,7 @@ class BeagleExampleApplication : Application() {
                 )
             )
             Beagle.setModules(
+                LabelModule(text = "Static"),
                 TextModule(
                     text = "This is a green text",
                     color = Color.GREEN
@@ -42,9 +44,14 @@ class BeagleExampleApplication : Application() {
                 TextModule(
                     text = "This text uses the default color"
                 ),
+                LabelModule(text = "Interactive"),
+                SwitchModule(
+                    text = "Just a switch",
+                    onValueChanged = { "Switch ${if (it) "ON" else "OFF"}".toast() }
+                ),
                 SwitchModule(
                     id = SHOULD_DRAW_CIRCLE_SWITCH_ID,
-                    text = "Should draw circle",
+                    text = "Should draw circle (persisted)",
                     shouldBePersisted = true,
                     onValueChanged = { Beagle.invalidateOverlay() }
                 ),

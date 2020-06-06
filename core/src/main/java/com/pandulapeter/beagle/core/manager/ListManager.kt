@@ -6,10 +6,12 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.CellAdapter
 import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.CheckboxDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckboxModule
+import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlin.reflect.KClass
@@ -19,10 +21,11 @@ internal class ListManager {
     private val cellAdapter = CellAdapter()
     private val modules = mutableListOf<Module<*>>()
     private val moduleDelegates = mutableMapOf(
-        TextModule::class to TextDelegate(),
-        SwitchModule::class to SwitchDelegate(),
+        ButtonModule::class to ButtonDelegate(),
         CheckboxModule::class to CheckboxDelegate(),
-        ButtonModule::class to ButtonDelegate()
+        LabelModule::class to LabelDelegate(),
+        SwitchModule::class to SwitchDelegate(),
+        TextModule::class to TextDelegate()
     )
 
     fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
