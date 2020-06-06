@@ -104,7 +104,7 @@ interface BeagleContract {
      *
      * Manually updating the cells is only needed when writing custom modules, the build-in features already handle calling this function when needed.
      */
-    fun updateCells() = Unit
+    fun refreshCells() = Unit
 
     /**
      * Call this function to trigger invalidating the overlay layout. This will result in calling all registered [OverlayListener] implementations.

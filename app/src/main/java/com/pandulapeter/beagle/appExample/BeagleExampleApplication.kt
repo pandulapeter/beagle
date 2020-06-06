@@ -7,12 +7,14 @@ import android.graphics.Paint
 import android.widget.Toast
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckboxModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 
@@ -82,6 +84,16 @@ class BeagleExampleApplication : Application() {
                 CheckboxModule(
                     text = "Checkbox 2",
                     onValueChanged = { "Checkbox 2 ${if (it) "ON" else "OFF"}".toast() }
+                ),
+                ItemListModule(
+                    title = "Expandable list",
+                    items = (0..5).map { index ->
+                        object : BeagleListItemContract {
+                            override val id = "item_$index"
+                            override val text = "Item $index"
+                        }
+                    },
+                    onItemSelected = { itemId -> "$itemId selected".toast() }
                 )
             )
             Beagle.addOverlayListener(object : OverlayListener {

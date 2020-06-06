@@ -29,7 +29,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
                 } else {
                     BeagleCore.implementation.memoryStorageManager.booleans[module.id] = newValue
                 }
-                BeagleCore.implementation.updateCells()
+                BeagleCore.implementation.refreshCells()
                 callOnValueChanged(module, newValue)
             }
         }

@@ -26,7 +26,7 @@ internal class DebugMenuInjector(
             super.onActivityResumed(activity)
             if (currentActivity != activity) {
                 currentActivity = if (activity.supportsDebugMenu) activity as FragmentActivity else null
-                BeagleCore.implementation.updateCells()
+                BeagleCore.implementation.refreshCells()
             }
         }
 
