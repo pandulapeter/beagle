@@ -5,7 +5,7 @@ import com.pandulapeter.beagle.core.list.cells.TextCell
 import com.pandulapeter.beagle.core.list.moduleDelegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.modules.ItemListModule
 
-internal class ItemListDelegate : ExpandableModuleDelegate<ItemListModule>() {
+internal class ItemListDelegate : ExpandableModuleDelegate<ItemListModule> {
 
     override fun MutableList<Cell<*>>.addItems(module: ItemListModule) {
         addAll(module.items.map { item ->

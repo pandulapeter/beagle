@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.CheckboxDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.SingleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
@@ -18,6 +19,7 @@ import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckboxModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlin.reflect.KClass
@@ -33,6 +35,7 @@ internal class ListManager {
         CheckboxModule::class to CheckboxDelegate(),
         ItemListModule::class to ItemListDelegate(),
         LabelModule::class to LabelDelegate(),
+        SingleSelectionListModule::class to SingleSelectionListDelegate(),
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )

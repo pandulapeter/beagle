@@ -6,7 +6,7 @@ package com.pandulapeter.beagle.common.contracts
 interface BeagleListItemContract {
 
     /**
-     * A unique identifier for the list item.
+     * A unique identifier for the list item that is used in callbacks.
      */
     val id: String
 

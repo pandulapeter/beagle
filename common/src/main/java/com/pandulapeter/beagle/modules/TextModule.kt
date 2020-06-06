@@ -13,7 +13,7 @@ import java.util.UUID
  * @param onItemSelected - Callback called when the user clicks on the text. Optional, null by default.
  */
 data class TextModule(
-    override val id: String = "text_${UUID.randomUUID()}",
+    override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence,
     @ColorInt val color: Int? = null,
     val onItemSelected: (() -> Unit)? = null

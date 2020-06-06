@@ -16,7 +16,7 @@ import java.util.UUID
  * @param onItemSelected - Callback called when the user selects one of the items. The parameter is the ID of the selected item. Optional, null by default.
  */
 data class ItemListModule(
-    override val id: String = "text_${UUID.randomUUID()}",
+    override val id: String = UUID.randomUUID().toString(),
     override val title: CharSequence,
     @ColorInt override val color: Int? = null,
     override val isExpandedInitially: Boolean = false,

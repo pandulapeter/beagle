@@ -9,6 +9,7 @@ internal class LocalStorageManager(context: Context) {
 
     private val preferences = context.applicationContext.getSharedPreferences("beagle", Context.MODE_PRIVATE)
     val booelans by PersistedProperty.Boolean("boolean_")
+    val strings by PersistedProperty.String("string_")
 
     sealed class PersistedProperty<T>(private val mainKey: kotlin.String) : ReadOnlyProperty<LocalStorageManager, SharedPreferencesMap<T?>> {
 

@@ -15,7 +15,7 @@ import java.util.UUID
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added.
  */
 data class CheckboxModule(
-    override val id: String = "checkbox_${UUID.randomUUID()}",
+    override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence,
     @ColorInt val color: Int? = null,
     override val initialValue: Boolean = false,

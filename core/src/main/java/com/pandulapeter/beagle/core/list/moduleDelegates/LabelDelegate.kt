@@ -5,7 +5,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.cells.LabelCell
 import com.pandulapeter.beagle.modules.LabelModule
 
-internal class LabelDelegate : Module.Delegate<LabelModule>() {
+internal class LabelDelegate : Module.Delegate<LabelModule> {
 
     override fun createCells(module: LabelModule): List<Cell<*>> = listOf(
         LabelCell(

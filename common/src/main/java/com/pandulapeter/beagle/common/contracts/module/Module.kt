@@ -34,13 +34,13 @@ interface Module<M : Module<M>> {
      *
      * @param M - The type of the module.
      */
-    abstract class Delegate<M : Module<M>> {
+    interface Delegate<M : Module<M>> {
 
         /**
          * A module's UI is represented by one or more instances of [Cell]. These can also be different subtypes.
          * This function is called every time the UI should be refreshed. You can manually trigger such refresh by calling [Beagle.updateCells()]
          */
-        abstract fun createCells(module: M): List<Cell<*>>
+        fun createCells(module: M): List<Cell<*>>
 
         /**
          * For internal use only.

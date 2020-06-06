@@ -58,16 +58,16 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      * @param T - The type of data to persist.
      * @param M - The type of the module.
      */
-    abstract class Delegate<T, M : Module<M>> : Module.Delegate<M>() {
+    interface Delegate<T, M : Module<M>> : Module.Delegate<M> {
 
         /**
          * Returns the current value.
          */
-        abstract fun getCurrentValue(module: M): T
+        fun getCurrentValue(module: M): T
 
         /**
          * Updates the current value.
          */
-        abstract fun setCurrentValue(module: M, newValue: T)
+        fun setCurrentValue(module: M, newValue: T)
     }
 }

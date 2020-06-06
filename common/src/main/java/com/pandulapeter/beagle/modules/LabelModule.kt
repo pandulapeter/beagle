@@ -12,7 +12,7 @@ import java.util.UUID
  * @param color - The resolved color for the text. Optional, color from theme is used by default.
  */
 data class LabelModule(
-    override val id: String = "label_${UUID.randomUUID()}",
+    override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence,
     @ColorInt val color: Int? = null
 ) : Module<LabelModule> {

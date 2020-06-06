@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.cells.ButtonCell
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 
-internal class AppInfoButtonDelegate : Module.Delegate<AppInfoButtonModule>() {
+internal class AppInfoButtonDelegate : Module.Delegate<AppInfoButtonModule> {
 
     override fun createCells(module: AppInfoButtonModule): List<Cell<*>> = listOf<Cell<*>>(
         ButtonCell(

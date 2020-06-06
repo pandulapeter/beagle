@@ -6,7 +6,7 @@ import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.cells.ExpandableHeaderCell
 
-internal abstract class ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.Delegate<M>() {
+internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.Delegate<M> {
 
     override fun createCells(module: M): List<Cell<*>> = mutableListOf<Cell<*>>().apply {
         addHeader(module)
@@ -28,7 +28,7 @@ internal abstract class ExpandableModuleDelegate<M : ExpandableModule<M>> : Modu
         )
     )
 
-    protected abstract fun MutableList<Cell<*>>.addItems(module: M)
+    fun MutableList<Cell<*>>.addItems(module: M)
 
     private var ExpandableModule<M>.isExpanded: Boolean
         get() = BeagleCore.implementation.memoryStorageManager.booleans[id] ?: isExpandedInitially

@@ -14,7 +14,7 @@ import java.util.UUID
  * @param onButtonPressed - Callback called when the user presses the button.
  */
 data class ButtonModule(
-    override val id: String = "text_${UUID.randomUUID()}",
+    override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence,
     @ColorInt val color: Int? = null,
     val onButtonPressed: () -> Unit
