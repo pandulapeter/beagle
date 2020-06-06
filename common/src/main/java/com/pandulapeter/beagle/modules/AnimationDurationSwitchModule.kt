@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
  * @param color - The resolved color for the text. Optional, color from theme is used by default.
  * @param shouldBePersisted - Can be used to enable or disable persisting the value on the local storage. Optional, false by default.
  * @param multiplier - The multiplier that should be applied for all animation durations. Optional, 4f by default.
- * @param onValueChanged - Callback triggered when the user toggles the switch. TODO: In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
+ * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
  */
 data class AnimationDurationSwitchModule(
     val text: CharSequence = "Slow down animations",

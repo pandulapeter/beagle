@@ -48,7 +48,10 @@ class BeagleExampleApplication : Application() {
                     text = "This text uses the default color"
                 ),
                 LabelModule(text = "Interactive"),
-                AnimationDurationSwitchModule(),
+                AnimationDurationSwitchModule(
+                    shouldBePersisted = true,
+                    onValueChanged = { "Slow down animations ${if (it) "ON" else "OFF"}".toast() }
+                ),
                 SwitchModule(
                     text = "Just a switch",
                     onValueChanged = { "Switch ${if (it) "ON" else "OFF"}".toast() }

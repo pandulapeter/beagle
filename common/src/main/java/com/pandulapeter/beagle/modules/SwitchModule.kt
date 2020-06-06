@@ -12,7 +12,7 @@ import java.util.UUID
  * @param color - The resolved color for the text. Optional, color from theme is used by default.
  * @param initialValue - Whether or not the switch is checked initially. Optional, false by default. If [shouldBePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
  * @param shouldBePersisted - Can be used to enable or disable persisting the value on the local storage. This will only work if the module has a unique, constant ID. Optional, false by default.
- * @param onValueChanged - Callback triggered when the user toggles the switch. TODO: In case of persisted values, this will also get called the first time the module is added.
+ * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added.
  */
 data class SwitchModule(
     override val id: String = "switch_${UUID.randomUUID()}",

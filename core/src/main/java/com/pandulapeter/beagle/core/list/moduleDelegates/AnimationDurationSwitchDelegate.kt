@@ -14,12 +14,14 @@ internal class AnimationDurationSwitchDelegate : PersistableModuleDelegate.Boole
             text = module.text,
             color = module.color,
             isChecked = getCurrentValue(module),
-            onValueChanged = { newValue ->
-                try {
-                    ValueAnimator::class.java.methods.firstOrNull { it.name == "setDurationScale" }?.invoke(null, if (newValue) module.multiplier else 1f)
-                } catch (_: Throwable) {
-                }
-                setCurrentValue(module, newValue)
-            })
+            onValueChanged = { newValue -> setCurrentValue(module, newValue) })
     )
+
+    override fun callOnValueChanged(module: AnimationDurationSwitchModule, newValue: kotlin.Boolean) {
+        try {
+            ValueAnimator::class.java.methods.firstOrNull { it.name == "setDurationScale" }?.invoke(null, if (newValue) module.multiplier else 1f)
+        } catch (_: Throwable) {
+        }
+        module.onValueChanged(newValue)
+    }
 }
