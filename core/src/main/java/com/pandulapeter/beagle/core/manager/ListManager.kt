@@ -4,11 +4,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.CellAdapter
+import com.pandulapeter.beagle.core.list.moduleDelegates.AnimationDurationSwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.CheckboxDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
+import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckboxModule
 import com.pandulapeter.beagle.modules.LabelModule
@@ -21,6 +23,7 @@ internal class ListManager {
     private val cellAdapter = CellAdapter()
     private val modules = mutableListOf<Module<*>>()
     private val moduleDelegates = mutableMapOf(
+        AnimationDurationSwitchModule::class to AnimationDurationSwitchDelegate(),
         ButtonModule::class to ButtonDelegate(),
         CheckboxModule::class to CheckboxDelegate(),
         LabelModule::class to LabelDelegate(),

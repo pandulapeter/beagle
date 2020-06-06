@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.listeners.OverlayListener
+import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckboxModule
 import com.pandulapeter.beagle.modules.LabelModule
@@ -45,6 +46,7 @@ class BeagleExampleApplication : Application() {
                     text = "This text uses the default color"
                 ),
                 LabelModule(text = "Interactive"),
+                AnimationDurationSwitchModule(),
                 SwitchModule(
                     text = "Just a switch",
                     onValueChanged = { "Switch ${if (it) "ON" else "OFF"}".toast() }
