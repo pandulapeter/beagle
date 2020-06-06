@@ -13,6 +13,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckboxModule
+import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -85,8 +86,18 @@ class BeagleExampleApplication : Application() {
                     text = "Checkbox 2",
                     onValueChanged = { "Checkbox 2 ${if (it) "ON" else "OFF"}".toast() }
                 ),
-                SingleSelectionListModule(
+                ItemListModule(
                     title = "Expandable list",
+                    items = (0..5).map { index ->
+                        object : BeagleListItemContract {
+                            override val id = "item_$index"
+                            override val text = "Item $index"
+                        }
+                    },
+                    onItemSelected = { itemId -> "$itemId selected".toast() }
+                ),
+                SingleSelectionListModule(
+                    title = "Single selection list",
                     items = (0..5).map { index ->
                         object : BeagleListItemContract {
                             override val id = "item_$index"
