@@ -13,7 +13,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
 
         final override fun getCurrentValue(module: M) = if (module.shouldBePersisted) {
             (BeagleCore.implementation.localStorageManager.booelans[module.id] ?: module.initialValue).also { value ->
-                if (!hasCalledListenerForTheFirstTime) {
+                if (!hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {
                     callOnValueChanged(module, value)
                     hasCalledListenerForTheFirstTime = true
                 }
