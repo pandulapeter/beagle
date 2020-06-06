@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
+import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckboxModule
 import com.pandulapeter.beagle.modules.LabelModule
@@ -29,6 +30,7 @@ class BeagleExampleApplication : Application() {
             )
             Beagle.setModules(
                 LabelModule(text = "Static"),
+                AppInfoButtonModule(),
                 TextModule(
                     text = "This is a green text",
                     color = Color.GREEN

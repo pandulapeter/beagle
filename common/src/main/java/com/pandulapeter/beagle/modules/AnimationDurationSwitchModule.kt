@@ -19,7 +19,7 @@ data class AnimationDurationSwitchModule(
     @ColorInt val color: Int? = null,
     override val shouldBePersisted: Boolean = false,
     val multiplier: Float = 4f,
-    override val onValueChanged: ((Boolean) -> Unit) = {}
+    override val onValueChanged: (Boolean) -> Unit = {}
 ) : PersistableModule<Boolean, AnimationDurationSwitchModule> {
 
     override val id: String = ID
