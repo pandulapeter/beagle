@@ -5,6 +5,9 @@ import com.pandulapeter.beagle.common.contracts.BeagleContract
 /**
  * Modules that wrap primitives that can be persisted in SharedPreferences must implement this interface.
  * The save-load functionality is optional and will only work if the ID of the module is constant across app sessions.
+ *
+ * @param T - The type of data to persist.
+ * @param M - The type of the module.
  */
 interface PersistableModule<T, M : Module<M>> : Module<M> {
 
@@ -51,6 +54,9 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
 
     /**
      * All [PersistableModule] implementations must have their corresponding delegate that contains the implementation details.
+     *
+     * @param T - The type of data to persist.
+     * @param M - The type of the module.
      */
     abstract class Delegate<T, M : Module<M>> : Module.Delegate<M>() {
 

@@ -35,8 +35,9 @@ class BeagleExampleApplication : Application() {
                     color = Color.RED
                 ),
                 TextModule(
-                    text = "This is a blue text",
-                    color = Color.BLUE
+                    text = "This is a blue text. It's also clickable!",
+                    color = Color.BLUE,
+                    onItemSelected = { "Blue text clicked!".toast() }
                 ),
                 TextModule(
                     text = "This text uses the default color"
@@ -58,15 +59,15 @@ class BeagleExampleApplication : Application() {
                 ButtonModule(
                     text = "Button 1",
                     color = Color.YELLOW,
-                    onButtonPressed = { Toast.makeText(this, "Button 1 pressed", Toast.LENGTH_SHORT).show() }
+                    onButtonPressed = { "Button 1 pressed".toast() }
                 ),
                 CheckboxModule(
                     text = "Checkbox 1",
-                    onValueChanged = { Toast.makeText(this, "Checkbox 1 ${if (it) "ON" else "OFF"}", Toast.LENGTH_SHORT).show() }
+                    onValueChanged = { "Checkbox 1 ${if (it) "ON" else "OFF"}".toast() }
                 ),
                 CheckboxModule(
                     text = "Checkbox 2",
-                    onValueChanged = { Toast.makeText(this, "Checkbox 2 ${if (it) "ON" else "OFF"}", Toast.LENGTH_SHORT).show() }
+                    onValueChanged = { "Checkbox 2 ${if (it) "ON" else "OFF"}".toast() }
                 )
             )
             Beagle.addOverlayListener(object : OverlayListener {
@@ -84,6 +85,8 @@ class BeagleExampleApplication : Application() {
             })
         }
     }
+
+    private fun String.toast() = Toast.makeText(this@BeagleExampleApplication, this, Toast.LENGTH_SHORT).show()
 
     companion object {
         private const val SHOULD_DRAW_CIRCLE_SWITCH_ID = "shouldDrawCircle"

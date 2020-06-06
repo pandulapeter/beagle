@@ -11,7 +11,8 @@ internal class TextDelegate : Module.Delegate<TextModule>() {
         TextCell(
             id = module.id,
             text = module.text,
-            color = module.color
+            color = module.color,
+            onItemSelected = module.onItemSelected
         )
     )
 }

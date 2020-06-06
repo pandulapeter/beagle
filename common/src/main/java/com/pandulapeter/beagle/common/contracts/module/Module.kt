@@ -4,6 +4,8 @@ import androidx.annotation.RestrictTo
 
 /**
  * All Beagle modules must implement this interface. Modules are lightweight classes containing the parameters needed from the consumer.
+ *
+ * @param M - The type of the module.
  */
 interface Module<M : Module<M>> {
 
@@ -29,6 +31,8 @@ interface Module<M : Module<M>> {
 
     /**
      * All [Module] implementations must have their corresponding delegate that contains the implementation details.
+     *
+     * @param M - The type of the module.
      */
     abstract class Delegate<M : Module<M>> {
 
