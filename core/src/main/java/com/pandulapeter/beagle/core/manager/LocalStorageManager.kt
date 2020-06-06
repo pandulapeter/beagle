@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 internal class LocalStorageManager(context: Context) {
 
     private val preferences = context.applicationContext.getSharedPreferences("beagle", Context.MODE_PRIVATE)
-    val switchModules by PersistedProperty.Boolean("switch_")
+    val booelans by PersistedProperty.Boolean("boolean_")
 
     sealed class PersistedProperty<T>(private val mainKey: kotlin.String) : ReadOnlyProperty<LocalStorageManager, SharedPreferencesMap<T?>> {
 

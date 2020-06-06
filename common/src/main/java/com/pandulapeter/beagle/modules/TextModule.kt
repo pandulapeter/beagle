@@ -17,5 +17,5 @@ data class TextModule(
     @ColorInt val color: Int? = null
 ) : Module<TextModule> {
 
-    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own ModuleHandlers.")
+    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

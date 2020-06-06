@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.modules.ButtonModule
+import com.pandulapeter.beagle.modules.CheckboxModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 
@@ -55,9 +56,17 @@ class BeagleExampleApplication : Application() {
                     }
                 ),
                 ButtonModule(
-                    text = "Button 2",
+                    text = "Button 1",
                     color = Color.YELLOW,
-                    onButtonPressed = { Toast.makeText(this, "Button 2 pressed", Toast.LENGTH_SHORT).show() }
+                    onButtonPressed = { Toast.makeText(this, "Button 1 pressed", Toast.LENGTH_SHORT).show() }
+                ),
+                CheckboxModule(
+                    text = "Checkbox 1",
+                    onValueChanged = { Toast.makeText(this, "Checkbox 1 ${if (it) "ON" else "OFF"}", Toast.LENGTH_SHORT).show() }
+                ),
+                CheckboxModule(
+                    text = "Checkbox 2",
+                    onValueChanged = { Toast.makeText(this, "Checkbox 2 ${if (it) "ON" else "OFF"}", Toast.LENGTH_SHORT).show() }
                 )
             )
             Beagle.addOverlayListener(object : OverlayListener {

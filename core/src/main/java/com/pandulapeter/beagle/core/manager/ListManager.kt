@@ -4,10 +4,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.CellAdapter
-import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonModuleDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchModuleDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.TextModuleDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.CheckboxDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
 import com.pandulapeter.beagle.modules.ButtonModule
+import com.pandulapeter.beagle.modules.CheckboxModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlin.reflect.KClass
@@ -17,9 +19,10 @@ internal class ListManager {
     private val cellAdapter = CellAdapter()
     private val modules = mutableListOf<Module<*>>()
     private val moduleDelegates = mutableMapOf(
-        TextModule::class to TextModuleDelegate(),
-        SwitchModule::class to SwitchModuleDelegate(),
-        ButtonModule::class to ButtonModuleDelegate()
+        TextModule::class to TextDelegate(),
+        SwitchModule::class to SwitchDelegate(),
+        CheckboxModule::class to CheckboxDelegate(),
+        ButtonModule::class to ButtonDelegate()
     )
 
     fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
@@ -40,7 +43,7 @@ internal class ListManager {
     @Suppress("UNCHECKED_CAST")
     fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = moduleDelegates[type] as Module.Delegate<M>
 
-    //TODO: Move to coroutine
+    //TODO: Move to a coroutine (watch out for threading issues)
     //TODO: Throw exception if no handler is found
     fun refreshList() = cellAdapter.submitList(modules.flatMap { module ->
         (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
