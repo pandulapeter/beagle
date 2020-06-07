@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.core.R
 
 internal data class LabelCell(
     override val id: String,
-    private val text: CharSequence
+    private val title: CharSequence
 ) : Cell<LabelCell> {
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<LabelCell>() {
@@ -22,7 +22,7 @@ internal data class LabelCell(
         private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
 
         override fun bind(model: LabelCell) = textView.run {
-            text = model.text
+            text = model.title
         }
     }
 }

@@ -13,5 +13,5 @@ interface BeagleListItemContract {
     /**
      * The text that should appear on the UI.
      */
-    val text: String
+    val name: String
 }

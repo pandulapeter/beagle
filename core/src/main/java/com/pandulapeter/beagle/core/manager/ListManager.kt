@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.core.manager
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.CellAdapter
 import com.pandulapeter.beagle.core.list.moduleDelegates.AnimationDurationSwitchDelegate
@@ -35,10 +36,10 @@ internal class ListManager {
         AppInfoButtonModule::class to AppInfoButtonDelegate(),
         ButtonModule::class to ButtonDelegate(),
         CheckBoxModule::class to CheckBoxDelegate(),
-        ItemListModule::class to ItemListDelegate(),
         LabelModule::class to LabelDelegate(),
-        SingleSelectionListModule::class to SingleSelectionListDelegate(),
-        MultipleSelectionListModule::class to MultipleSelectionListDelegate(),
+        ItemListModule::class to ItemListDelegate<BeagleListItemContract>(),
+        SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
+        MultipleSelectionListModule::class to MultipleSelectionListDelegate<BeagleListItemContract>(),
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )

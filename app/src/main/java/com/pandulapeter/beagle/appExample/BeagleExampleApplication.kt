@@ -19,6 +19,7 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
+import java.util.UUID
 
 @Suppress("unused")
 class BeagleExampleApplication : Application() {
@@ -33,7 +34,7 @@ class BeagleExampleApplication : Application() {
                 )
             )
             Beagle.setModules(
-                LabelModule(text = "Static"),
+                LabelModule(title = "Static"),
                 AppInfoButtonModule(),
                 TextModule(text = "Text 1"),
                 TextModule(text = "Text 2"),
@@ -42,7 +43,7 @@ class BeagleExampleApplication : Application() {
                     onItemSelected = { "Text 3 clicked!".toast() }
                 ),
                 TextModule(text = "Text 4"),
-                LabelModule(text = "Interactive"),
+                LabelModule(title = "Interactive"),
                 AnimationDurationSwitchModule(
                     shouldBePersisted = true,
                     onValueChanged = { "Slow down animations ${if (it) "ON" else "OFF"}".toast() }
@@ -79,37 +80,25 @@ class BeagleExampleApplication : Application() {
                 ),
                 ItemListModule(
                     title = "Expandable list",
-                    items = (0..5).map { index ->
-                        object : BeagleListItemContract {
-                            override val id = "item_$index"
-                            override val text = "Item $index"
-                        }
-                    },
-                    onItemSelected = { itemId -> "$itemId selected".toast() }
+                    items = (0..5).map { index -> SelectableItem(name = "Item $index") },
+                    onItemSelected = { item -> item.toastMe().toast() }
                 ),
                 SingleSelectionListModule(
                     title = "Single selection list",
                     items = (0..5).map { index ->
                         object : BeagleListItemContract {
                             override val id = "item_$index"
-                            override val text = "Item $index"
+                            override val name = "Item $index"
                         }
                     },
-                    initialValue = "item_2",
-                    onValueChanged = { itemId -> "$itemId selected".toast() }
+                    initiallySelectedItemId = null,
+                    onSelectionChanged = { selectedItem -> "${selectedItem?.name ?: "No item is"} selected".toast() }
                 ),
                 MultipleSelectionListModule(
-                    id = "jewrewr",
                     title = "Multiple selection list",
-                    items = (0..6).map { index ->
-                        object : BeagleListItemContract {
-                            override val id = "item_$index"
-                            override val text = "Item $index"
-                        }
-                    },
-                    shouldBePersisted = true,
-                    initialValue = emptySet(),
-                    onValueChanged = { itemIds -> "${itemIds.size} items selected".toast() }
+                    items = (0..6).map { index -> SelectableItem(name = "Item $index") },
+                    initiallySelectedItemIds = emptySet(),
+                    onSelectionChanged = { selectedItems -> "${selectedItems.size} items selected".toast() }
                 )
             )
             Beagle.addOverlayListener(object : OverlayListener {
@@ -126,6 +115,14 @@ class BeagleExampleApplication : Application() {
                 }
             })
         }
+    }
+
+    private data class SelectableItem(
+        override val id: String = UUID.randomUUID().toString(),
+        override val name: String
+    ) : BeagleListItemContract {
+
+        fun toastMe() = "$name selected!"
     }
 
     private fun String.toast() = Toast.makeText(this@BeagleExampleApplication, this, Toast.LENGTH_SHORT).show()
