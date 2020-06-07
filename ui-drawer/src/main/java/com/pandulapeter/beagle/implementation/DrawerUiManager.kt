@@ -17,7 +17,7 @@ internal class DrawerUiManager : UiManagerContract {
         }
     }
 
-    override fun createOverlayLayout(activity: FragmentActivity) = DebugMenuView(BeagleCore.implementation.getThemedContext(activity)).let { drawer ->
+    override fun createOverlayLayout(activity: FragmentActivity) = DebugMenuView(activity).let { drawer ->
         activity.onBackPressedDispatcher.addCallback(activity, onBackPressedCallback)
         DebugMenuDrawerLayout(
             context = activity,

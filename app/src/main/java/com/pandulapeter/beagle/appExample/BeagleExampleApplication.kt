@@ -34,13 +34,13 @@ class BeagleExampleApplication : Application() {
             Beagle.setModules(
                 LabelModule(text = "Static"),
                 AppInfoButtonModule(),
-                TextModule(text = "This is a green text"),
-                TextModule(text = "This is a red text"),
+                TextModule(text = "Text 1"),
+                TextModule(text = "Text 2"),
                 TextModule(
-                    text = "This is a blue text. It's also clickable!",
-                    onItemSelected = { "Blue text clicked!".toast() }
+                    text = "This is a text 3. It's also clickable!",
+                    onItemSelected = { "Text 3 clicked!".toast() }
                 ),
-                TextModule(text = "This text uses the default color"),
+                TextModule(text = "Text 4"),
                 LabelModule(text = "Interactive"),
                 AnimationDurationSwitchModule(
                     shouldBePersisted = true,

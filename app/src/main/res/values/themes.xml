@@ -17,6 +17,7 @@
     </style>
 
     <style name="BeagleTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:textColor">@color/accent</item>
         <item name="colorPrimary">@color/accent</item>
         <item name="colorButtonNormal">@color/accent</item>
         <item name="colorAccent">@color/accent</item>
