@@ -19,7 +19,6 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
         ExpandableHeaderCell(
             id = module.id,
             text = module.title,
-            color = module.color,
             isExpanded = module.isExpanded,
             onItemSelected = {
                 module.isExpanded = !module.isExpanded

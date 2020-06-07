@@ -11,7 +11,6 @@ internal class ItemListDelegate : ExpandableModuleDelegate<ItemListModule> {
         addAll(module.items.map { item ->
             TextCell(
                 id = "${module.id}_${item.id}",
-                color = module.color,
                 text = item.text,
                 onItemSelected = module.onItemSelected?.let { onItemSelected -> { onItemSelected(item.id) } }
             )

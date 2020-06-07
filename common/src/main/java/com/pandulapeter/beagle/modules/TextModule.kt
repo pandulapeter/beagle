@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.modules
 
-import androidx.annotation.ColorInt
 import com.pandulapeter.beagle.common.contracts.module.Module
 import java.util.UUID
 
@@ -9,13 +8,11 @@ import java.util.UUID
  *
  * @param id - A unique identifier for the module. Optional, random string by default.
  * @param text - The text to display.
- * @param color - The resolved color for the text. Optional, color from theme is used by default.
  * @param onItemSelected - Callback called when the user clicks on the text. Optional, null by default.
  */
 data class TextModule(
     override val id: String = UUID.randomUUID().toString(),
     val text: CharSequence,
-    @ColorInt val color: Int? = null,
     val onItemSelected: (() -> Unit)? = null
 ) : Module<TextModule> {
 

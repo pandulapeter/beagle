@@ -11,7 +11,6 @@ internal class ButtonDelegate : Module.Delegate<ButtonModule> {
         ButtonCell(
             id = module.id,
             text = module.text,
-            color = module.color,
             onButtonPressed = module.onButtonPressed
         )
     )

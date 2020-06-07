@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.modules
 
-import androidx.annotation.ColorInt
 import com.pandulapeter.beagle.common.contracts.module.PersistableModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 
@@ -9,7 +8,6 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text to display on the switch. Optional, "Slow down animations" by default.
- * @param color - The resolved color for the text. Optional, color from theme is used by default.
  * @param initialValue - Whether or not the switch is checked initially. Optional, false by default. If [shouldBePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
  * @param shouldBePersisted - Can be used to enable or disable persisting the value on the local storage. Optional, false by default.
  * @param multiplier - The multiplier that should be applied for all animation durations. Optional, 4f by default.
@@ -17,7 +15,6 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
  */
 data class AnimationDurationSwitchModule(
     val text: CharSequence = "Slow down animations",
-    @ColorInt val color: Int? = null,
     override val initialValue: Boolean = false,
     override val shouldBePersisted: Boolean = false,
     val multiplier: Float = 4f,

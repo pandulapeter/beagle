@@ -1,43 +1,33 @@
 package com.pandulapeter.beagle.core.list.cells
 
-import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
-import androidx.appcompat.widget.AppCompatRadioButton
+import android.widget.RadioButton
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.extension.dimension
 
 internal data class RadioButtonCell(
     override val id: String,
     private val text: CharSequence,
-    @ColorInt private val color: Int?,
     private val isChecked: Boolean,
     private val onValueChanged: (Boolean) -> Unit
 ) : Cell<RadioButtonCell> {
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<RadioButtonCell>() {
 
-        override fun createViewHolder(parent: ViewGroup) = SwitchViewHolder(parent.context)
+        override fun createViewHolder(parent: ViewGroup) = SwitchViewHolder(parent)
     }
 
-    private class SwitchViewHolder(context: Context) : ViewHolder<RadioButtonCell>(AppCompatRadioButton(context)) {
+    private class SwitchViewHolder(parent: ViewGroup) : ViewHolder<RadioButtonCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_radio_button, parent, false)) {
 
-        init {
-            itemView.context.dimension(R.dimen.beagle_content_padding).let { padding ->
-                itemView.setPadding(padding, padding, padding, padding)
-            }
-        }
+        private val radioButton = itemView.findViewById<RadioButton>(R.id.beagle_radio_button)
 
-        override fun bind(model: RadioButtonCell) {
-            (itemView as AppCompatRadioButton).run {
-                text = model.text
-                model.color?.let { setTextColor(it) }
-                setOnCheckedChangeListener(null)
-                isChecked = model.isChecked
-                setOnCheckedChangeListener { _, isChecked -> model.onValueChanged(isChecked) }
-            }
+        override fun bind(model: RadioButtonCell) = radioButton.run {
+            text = model.text
+            setOnCheckedChangeListener(null)
+            isChecked = model.isChecked
+            setOnCheckedChangeListener { _, isChecked -> model.onValueChanged(isChecked) }
         }
     }
 }

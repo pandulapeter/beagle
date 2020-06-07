@@ -13,11 +13,6 @@ interface ExpandableModule<M : Module<M>> : Module<M> {
     val title: CharSequence
 
     /**
-     * The resolved color for the title and the elements.
-     */
-    val color: Int?
-
-    /**
      *  Whether or not the list is expanded the first time the module becomes visible.
      */
     val isExpandedInitially: Boolean

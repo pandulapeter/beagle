@@ -2,7 +2,6 @@ package com.pandulapeter.beagle.core.list.cells
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
 import androidx.appcompat.widget.SwitchCompat
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
@@ -11,7 +10,6 @@ import com.pandulapeter.beagle.core.R
 internal data class SwitchCell(
     override val id: String,
     private val text: CharSequence,
-    @ColorInt private val color: Int?,
     private val isChecked: Boolean,
     private val onValueChanged: (Boolean) -> Unit
 ) : Cell<SwitchCell> {
@@ -25,14 +23,11 @@ internal data class SwitchCell(
 
         private val switch = itemView.findViewById<SwitchCompat>(R.id.beagle_switch)
 
-        override fun bind(model: SwitchCell) {
-            switch.run {
-                text = model.text
-                model.color?.let { setTextColor(it) }
-                setOnCheckedChangeListener(null)
-                isChecked = model.isChecked
-                setOnCheckedChangeListener { _, isChecked -> model.onValueChanged(isChecked) }
-            }
+        override fun bind(model: SwitchCell) = switch.run {
+            text = model.text
+            setOnCheckedChangeListener(null)
+            isChecked = model.isChecked
+            setOnCheckedChangeListener { _, isChecked -> model.onValueChanged(isChecked) }
         }
     }
 }

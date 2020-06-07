@@ -12,7 +12,6 @@ internal class AnimationDurationSwitchDelegate : PersistableModuleDelegate.Boole
         SwitchCell(
             id = module.id,
             text = module.text,
-            color = module.color,
             isChecked = getCurrentValue(module),
             onValueChanged = { newValue -> setCurrentValue(module, newValue) })
     )

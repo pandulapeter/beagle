@@ -6,6 +6,6 @@
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/beagle_item_horizontal_margin"
     android:paddingLeft="@dimen/beagle_item_horizontal_margin"
-    android:paddingEnd="@dimen/beagle_item_horizontal_margin"
-    android:paddingRight="@dimen/beagle_item_horizontal_margin"
+    android:paddingEnd="@dimen/beagle_content_padding"
+    android:paddingRight="@dimen/beagle_content_padding"
     app:switchPadding="@dimen/beagle_content_padding" />

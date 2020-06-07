@@ -11,7 +11,6 @@ internal class SwitchDelegate : PersistableModuleDelegate.Boolean<SwitchModule>(
         SwitchCell(
             id = module.id,
             text = module.text,
-            color = module.color,
             isChecked = getCurrentValue(module),
             onValueChanged = { newValue -> setCurrentValue(module, newValue) })
     )

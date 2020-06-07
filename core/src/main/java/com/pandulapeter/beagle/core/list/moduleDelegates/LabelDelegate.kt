@@ -10,8 +10,7 @@ internal class LabelDelegate : Module.Delegate<LabelModule> {
     override fun createCells(module: LabelModule): List<Cell<*>> = listOf(
         LabelCell(
             id = module.id,
-            text = module.text,
-            color = module.color
+            text = module.text
         )
     )
 }

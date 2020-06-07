@@ -15,7 +15,6 @@ internal class AppInfoButtonDelegate : Module.Delegate<AppInfoButtonModule> {
         ButtonCell(
             id = module.id,
             text = module.text,
-            color = module.color,
             onButtonPressed = {
                 BeagleCore.implementation.currentActivity?.run {
                     startActivity(Intent().apply {

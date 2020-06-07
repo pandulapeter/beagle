@@ -12,7 +12,6 @@ internal class SingleSelectionListDelegate : ExpandableModuleDelegate<SingleSele
         addAll(module.items.map { item ->
             RadioButtonCell(
                 id = "${module.id}_${item.id}",
-                color = module.color,
                 text = item.text,
                 isChecked = item.id == getCurrentValue(module),
                 onValueChanged = { setCurrentValue(module, item.id) }

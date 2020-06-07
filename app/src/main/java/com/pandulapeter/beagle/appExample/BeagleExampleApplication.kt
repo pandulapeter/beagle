@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
-import com.pandulapeter.beagle.modules.CheckBoxModuleRenameMe
+import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
@@ -34,22 +34,13 @@ class BeagleExampleApplication : Application() {
             Beagle.setModules(
                 LabelModule(text = "Static"),
                 AppInfoButtonModule(),
-                TextModule(
-                    text = "This is a green text",
-                    color = Color.GREEN
-                ),
-                TextModule(
-                    text = "This is a red text",
-                    color = Color.RED
-                ),
+                TextModule(text = "This is a green text"),
+                TextModule(text = "This is a red text"),
                 TextModule(
                     text = "This is a blue text. It's also clickable!",
-                    color = Color.BLUE,
                     onItemSelected = { "Blue text clicked!".toast() }
                 ),
-                TextModule(
-                    text = "This text uses the default color"
-                ),
+                TextModule(text = "This text uses the default color"),
                 LabelModule(text = "Interactive"),
                 AnimationDurationSwitchModule(
                     shouldBePersisted = true,
@@ -75,14 +66,13 @@ class BeagleExampleApplication : Application() {
                 ),
                 ButtonModule(
                     text = "Button 1",
-                    color = Color.YELLOW,
                     onButtonPressed = { "Button 1 pressed".toast() }
                 ),
-                CheckBoxModuleRenameMe(
+                CheckBoxModule(
                     text = "Checkbox 1",
                     onValueChanged = { "Checkbox 1 ${if (it) "ON" else "OFF"}".toast() }
                 ),
-                CheckBoxModuleRenameMe(
+                CheckBoxModule(
                     text = "Checkbox 2",
                     onValueChanged = { "Checkbox 2 ${if (it) "ON" else "OFF"}".toast() }
                 ),
