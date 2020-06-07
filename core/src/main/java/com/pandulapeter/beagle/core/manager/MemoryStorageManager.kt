@@ -4,4 +4,5 @@ internal class MemoryStorageManager {
 
     val booleans = mutableMapOf<String, Boolean>()
     val strings = mutableMapOf<String, String>()
+    val stringSets = mutableMapOf<String, Set<String>>()
 }

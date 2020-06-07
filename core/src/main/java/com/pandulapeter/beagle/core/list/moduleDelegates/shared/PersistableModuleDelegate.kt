@@ -60,4 +60,30 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
             }
         }
     }
+
+    abstract class StringSet<M : PersistableModule<Set<kotlin.String>, M>> : PersistableModuleDelegate<Set<kotlin.String>, M>() {
+
+        final override fun getCurrentValue(module: M) = if (module.shouldBePersisted) {
+            (BeagleCore.implementation.localStorageManager.stringSets[module.id] ?: module.initialValue).also { value ->
+                if (!hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {
+                    callOnValueChanged(module, value)
+                    hasCalledListenerForTheFirstTime = true
+                }
+            }
+        } else {
+            BeagleCore.implementation.memoryStorageManager.stringSets[module.id] ?: module.initialValue
+        }
+
+        final override fun setCurrentValue(module: M, newValue: Set<kotlin.String>) {
+            if (newValue != getCurrentValue(module)) {
+                if (module.shouldBePersisted) {
+                    BeagleCore.implementation.localStorageManager.stringSets[module.id] = newValue
+                } else {
+                    BeagleCore.implementation.memoryStorageManager.stringSets[module.id] = newValue
+                }
+                BeagleCore.implementation.refreshCells()
+                callOnValueChanged(module, newValue)
+            }
+        }
+    }
 }

@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.CheckBoxDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.MultipleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SingleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
@@ -19,6 +20,7 @@ import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
@@ -36,6 +38,7 @@ internal class ListManager {
         ItemListModule::class to ItemListDelegate(),
         LabelModule::class to LabelDelegate(),
         SingleSelectionListModule::class to SingleSelectionListDelegate(),
+        MultipleSelectionListModule::class to MultipleSelectionListDelegate(),
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )

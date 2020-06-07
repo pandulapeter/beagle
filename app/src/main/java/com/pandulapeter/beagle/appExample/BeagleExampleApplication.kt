@@ -15,6 +15,7 @@ import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
@@ -96,6 +97,19 @@ class BeagleExampleApplication : Application() {
                     },
                     initialValue = "item_2",
                     onValueChanged = { itemId -> "$itemId selected".toast() }
+                ),
+                MultipleSelectionListModule(
+                    id = "jewrewr",
+                    title = "Multiple selection list",
+                    items = (0..6).map { index ->
+                        object : BeagleListItemContract {
+                            override val id = "item_$index"
+                            override val text = "Item $index"
+                        }
+                    },
+                    shouldBePersisted = true,
+                    initialValue = emptySet(),
+                    onValueChanged = { itemIds -> "${itemIds.size} items selected".toast() }
                 )
             )
             Beagle.addOverlayListener(object : OverlayListener {

@@ -10,6 +10,7 @@ internal class LocalStorageManager(context: Context) {
     private val preferences = context.applicationContext.getSharedPreferences("beagle", Context.MODE_PRIVATE)
     val booelans by PersistedProperty.Boolean("boolean_")
     val strings by PersistedProperty.String("string_")
+    val stringSets by PersistedProperty.StringSet("stringSet_")
 
     sealed class PersistedProperty<T>(private val mainKey: kotlin.String) : ReadOnlyProperty<LocalStorageManager, SharedPreferencesMap<T?>> {
 
@@ -27,6 +28,11 @@ internal class LocalStorageManager(context: Context) {
         class String(mainKey: kotlin.String) : PersistedProperty<kotlin.String>(mainKey) {
 
             override fun createSharedPreferencesMap(preferences: SharedPreferences, mainKey: kotlin.String) = SharedPreferencesMap.String(preferences, mainKey)
+        }
+
+        class StringSet(mainKey: kotlin.String) : PersistedProperty<Set<kotlin.String>>(mainKey) {
+
+            override fun createSharedPreferencesMap(preferences: SharedPreferences, mainKey: kotlin.String) = SharedPreferencesMap.StringSet(preferences, mainKey)
         }
     }
 
@@ -58,6 +64,13 @@ internal class LocalStorageManager(context: Context) {
             override fun getFinal(key: kotlin.String) = preferences.getString(key, null)
 
             override fun setFinal(key: kotlin.String, value: kotlin.String?) = preferences.edit().putString(key, value).apply()
+        }
+
+        class StringSet(preferences: SharedPreferences, mainKey: kotlin.String) : SharedPreferencesMap<Set<kotlin.String>?>(preferences, mainKey) {
+
+            override fun getFinal(key: kotlin.String) = preferences.getStringSet(key, null).orEmpty()
+
+            override fun setFinal(key: kotlin.String, value: Set<kotlin.String>?) = preferences.edit().putStringSet(key, value).apply()
         }
     }
 }
