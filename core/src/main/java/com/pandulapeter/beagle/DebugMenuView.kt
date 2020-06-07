@@ -7,11 +7,11 @@ import android.util.TypedValue
 import android.view.WindowInsets
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.drawable
 
-class DebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    RecyclerView(BeagleCore.implementation.getThemedContext(context), attrs, defStyleAttr) {
+class DebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RecyclerView(context.applyTheme(), attrs, defStyleAttr) {
 
     private val verticalMargin = context.dimension(R.dimen.beagle_item_vertical_margin)
 
