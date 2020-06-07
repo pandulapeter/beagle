@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.core.list.CellAdapter
 import com.pandulapeter.beagle.core.list.moduleDelegates.AnimationDurationSwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.AppInfoButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.CheckboxDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.CheckBoxDelegateRenameMe
 import com.pandulapeter.beagle.core.list.moduleDelegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SingleSelectionListDelegate
@@ -16,7 +16,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
-import com.pandulapeter.beagle.modules.CheckboxModule
+import com.pandulapeter.beagle.modules.CheckBoxModuleRenameMe
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
@@ -32,7 +32,7 @@ internal class ListManager {
         AnimationDurationSwitchModule::class to AnimationDurationSwitchDelegate(),
         AppInfoButtonModule::class to AppInfoButtonDelegate(),
         ButtonModule::class to ButtonDelegate(),
-        CheckboxModule::class to CheckboxDelegate(),
+        CheckBoxModuleRenameMe::class to CheckBoxDelegateRenameMe(),
         ItemListModule::class to ItemListDelegate(),
         LabelModule::class to LabelDelegate(),
         SingleSelectionListModule::class to SingleSelectionListDelegate(),

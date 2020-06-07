@@ -1,15 +1,13 @@
 package com.pandulapeter.beagle.core.list.cells
 
-import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.extension.dimension
 
 internal data class TextCell(
     override val id: String,
@@ -20,19 +18,15 @@ internal data class TextCell(
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<TextCell>() {
 
-        override fun createViewHolder(parent: ViewGroup) = TextViewHolder(parent.context)
+        override fun createViewHolder(parent: ViewGroup) = TextViewHolder(parent)
     }
 
-    private class TextViewHolder(context: Context) : ViewHolder<TextCell>(AppCompatTextView(context)) {
+    private class TextViewHolder(parent: ViewGroup) : ViewHolder<TextCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_text, parent, false)) {
 
-        init {
-            itemView.context.dimension(R.dimen.beagle_content_padding).let { padding ->
-                itemView.setPadding(padding, padding, padding, padding)
-            }
-        }
+        private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
 
         override fun bind(model: TextCell) {
-            (itemView as TextView).run {
+            textView.run {
                 text = model.text
                 model.color?.let { setTextColor(it) }
                 model.onItemSelected.let { onItemSelected ->

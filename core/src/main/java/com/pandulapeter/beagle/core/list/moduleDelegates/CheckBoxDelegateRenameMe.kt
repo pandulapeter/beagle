@@ -1,14 +1,14 @@
 package com.pandulapeter.beagle.core.list.moduleDelegates
 
 import com.pandulapeter.beagle.common.contracts.module.Cell
-import com.pandulapeter.beagle.core.list.cells.CheckboxCell
+import com.pandulapeter.beagle.core.list.cells.CheckBoxCellRenameMe
 import com.pandulapeter.beagle.core.list.moduleDelegates.shared.PersistableModuleDelegate
-import com.pandulapeter.beagle.modules.CheckboxModule
+import com.pandulapeter.beagle.modules.CheckBoxModuleRenameMe
 
-internal class CheckboxDelegate : PersistableModuleDelegate.Boolean<CheckboxModule>() {
+internal class CheckBoxDelegateRenameMe : PersistableModuleDelegate.Boolean<CheckBoxModuleRenameMe>() {
 
-    override fun createCells(module: CheckboxModule): List<Cell<*>> = listOf(
-        CheckboxCell(
+    override fun createCells(module: CheckBoxModuleRenameMe): List<Cell<*>> = listOf(
+        CheckBoxCellRenameMe(
             id = module.id,
             text = module.text,
             color = module.color,

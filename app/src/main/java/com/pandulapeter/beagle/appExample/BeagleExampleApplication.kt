@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
-import com.pandulapeter.beagle.modules.CheckboxModule
+import com.pandulapeter.beagle.modules.CheckBoxModuleRenameMe
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
@@ -78,11 +78,11 @@ class BeagleExampleApplication : Application() {
                     color = Color.YELLOW,
                     onButtonPressed = { "Button 1 pressed".toast() }
                 ),
-                CheckboxModule(
+                CheckBoxModuleRenameMe(
                     text = "Checkbox 1",
                     onValueChanged = { "Checkbox 1 ${if (it) "ON" else "OFF"}".toast() }
                 ),
-                CheckboxModule(
+                CheckBoxModuleRenameMe(
                     text = "Checkbox 2",
                     onValueChanged = { "Checkbox 2 ${if (it) "ON" else "OFF"}".toast() }
                 ),

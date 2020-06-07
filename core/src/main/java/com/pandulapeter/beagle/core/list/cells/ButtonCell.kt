@@ -1,15 +1,13 @@
 package com.pandulapeter.beagle.core.list.cells
 
-import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Button
 import androidx.annotation.ColorInt
-import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.extension.dimension
 
 internal data class ButtonCell(
     override val id: String,
@@ -20,19 +18,15 @@ internal data class ButtonCell(
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<ButtonCell>() {
 
-        override fun createViewHolder(parent: ViewGroup) = ButtonViewHolder(parent.context)
+        override fun createViewHolder(parent: ViewGroup) = ButtonViewHolder(parent)
     }
 
-    private class ButtonViewHolder(context: Context) : ViewHolder<ButtonCell>(AppCompatButton(context)) {
+    private class ButtonViewHolder(parent: ViewGroup) : ViewHolder<ButtonCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_button, parent, false)) {
 
-        init {
-            context.dimension(R.dimen.beagle_content_padding).let { padding ->
-                itemView.setPadding(padding, padding, padding, padding)
-            }
-        }
+        private val button = itemView.findViewById<Button>(R.id.beagle_button)
 
         override fun bind(model: ButtonCell) {
-            (itemView as TextView).run {
+            button.run {
                 text = model.text
                 model.color?.let { setTextColor(it) }
                 itemView.setOnClickListener {

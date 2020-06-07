@@ -13,23 +13,27 @@ import com.pandulapeter.beagle.core.util.extension.drawable
 class DebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     RecyclerView(BeagleCore.implementation.getThemedContext(context), attrs, defStyleAttr) {
 
+    private val smallContentPadding = context.dimension(R.dimen.beagle_small_content_padding)
+
     //TODO: in the ui-view module call notify the listeners on attach / detach
     init {
         BeagleCore.implementation.setupRecyclerView(this)
         setBackgroundFromWindowBackground()
         minimumWidth = context.dimension(R.dimen.beagle_minimum_size)
         minimumHeight = context.dimension(R.dimen.beagle_minimum_size)
+        clipToPadding = false
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets) }
             requestApplyInsets()
         }
+        setPadding(0, smallContentPadding, 0, smallContentPadding)
     }
 
-    //TODO: Does not work!
+    //TODO: Does not always work
     override fun onApplyWindowInsets(insets: WindowInsets?): WindowInsets {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             insets?.let {
-                setPadding(it.systemWindowInsetLeft, it.systemWindowInsetTop, it.systemWindowInsetRight, it.systemWindowInsetBottom)
+                setPadding(it.systemWindowInsetLeft, it.systemWindowInsetTop + smallContentPadding, it.systemWindowInsetRight, it.systemWindowInsetBottom + smallContentPadding)
             }
         }
         return super.onApplyWindowInsets(insets)
