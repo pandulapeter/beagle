@@ -5,7 +5,14 @@ import com.pandulapeter.beagle.common.contracts.module.PersistableModule
 
 internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>> : PersistableModule.Delegate<T, M> {
 
-    protected var hasCalledListenerForTheFirstTime = false
+    private var hasCalledListenerForTheFirstTime = false
+
+    protected fun callListenerForTheFirstTimeIfNeeded(module: M, value: T) {
+        if (!hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {
+            callOnValueChanged(module, value)
+            hasCalledListenerForTheFirstTime = true
+        }
+    }
 
     protected open fun callOnValueChanged(module: M, newValue: T) = module.onValueChanged(newValue)
 
@@ -13,10 +20,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
 
         final override fun getCurrentValue(module: M) = if (module.shouldBePersisted) {
             (BeagleCore.implementation.localStorageManager.booelans[module.id] ?: module.initialValue).also { value ->
-                if (!hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {
-                    callOnValueChanged(module, value)
-                    hasCalledListenerForTheFirstTime = true
-                }
+                callListenerForTheFirstTimeIfNeeded(module, value)
             }
         } else {
             BeagleCore.implementation.memoryStorageManager.booleans[module.id] ?: module.initialValue
@@ -39,10 +43,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
 
         final override fun getCurrentValue(module: M) = if (module.shouldBePersisted) {
             (BeagleCore.implementation.localStorageManager.strings[module.id] ?: module.initialValue).also { value ->
-                if (!hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {
-                    callOnValueChanged(module, value)
-                    hasCalledListenerForTheFirstTime = true
-                }
+                callListenerForTheFirstTimeIfNeeded(module, value)
             }
         } else {
             BeagleCore.implementation.memoryStorageManager.strings[module.id] ?: module.initialValue
@@ -65,10 +66,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
 
         final override fun getCurrentValue(module: M) = if (module.shouldBePersisted) {
             (BeagleCore.implementation.localStorageManager.stringSets[module.id] ?: module.initialValue).also { value ->
-                if (!hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {
-                    callOnValueChanged(module, value)
-                    hasCalledListenerForTheFirstTime = true
-                }
+                callListenerForTheFirstTimeIfNeeded(module, value)
             }
         } else {
             BeagleCore.implementation.memoryStorageManager.stringSets[module.id] ?: module.initialValue

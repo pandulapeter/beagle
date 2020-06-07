@@ -4,6 +4,7 @@ import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.RadioButtonCell
 import com.pandulapeter.beagle.core.list.moduleDelegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.shared.PersistableModuleDelegate
+import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 
 internal class SingleSelectionListDelegate : ExpandableModuleDelegate<SingleSelectionListModule>, PersistableModuleDelegate.String<SingleSelectionListModule>() {
@@ -17,5 +18,9 @@ internal class SingleSelectionListDelegate : ExpandableModuleDelegate<SingleSele
                 onValueChanged = { setCurrentValue(module, item.id) }
             )
         })
+    }
+
+    override fun createCells(module: SingleSelectionListModule) = super.createCells(module).also {
+        callListenerForTheFirstTimeIfNeeded(module, getCurrentValue(module))
     }
 }

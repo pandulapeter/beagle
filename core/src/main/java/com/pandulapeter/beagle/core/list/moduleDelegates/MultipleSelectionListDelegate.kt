@@ -24,4 +24,8 @@ internal class MultipleSelectionListDelegate : ExpandableModuleDelegate<Multiple
             )
         })
     }
+
+    override fun createCells(module: MultipleSelectionListModule) = super.createCells(module).also {
+        callListenerForTheFirstTimeIfNeeded(module, getCurrentValue(module))
+    }
 }
