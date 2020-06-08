@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="com.pandulapeter.beagle.appDemo.feature.main.home.list.HintViewHolder.UiModel" />
+
+    </data>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/large_content_padding"
+        android:text="HINT" />
+
+</layout>

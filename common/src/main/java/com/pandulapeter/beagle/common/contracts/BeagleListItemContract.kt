@@ -14,4 +14,14 @@ interface BeagleListItemContract {
      * The text that should appear on the UI.
      */
     val name: String
+
+    /**
+     * To simplify diff calculation, derived classes are encouraged to be data classes.
+     */
+    override fun equals(other: Any?): Boolean
+
+    /**
+     * To simplify diff calculation, derived classes are encouraged to be data classes.
+     */
+    override fun hashCode(): Int
 }
