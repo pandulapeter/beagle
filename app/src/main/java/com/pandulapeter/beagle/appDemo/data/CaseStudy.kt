@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.data.model
+package com.pandulapeter.beagle.appDemo.data
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.appDemo.R

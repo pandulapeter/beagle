@@ -4,9 +4,14 @@
     <!-- General -->
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 
     <!-- Brand -->
     <color name="brand_light">#dbbe96</color>
     <color name="brand_dark">#4f3d2f</color>
+
+    <!-- Dynamic -->
+    <color name="toolbar_background">@color/brand_dark</color>
+    <color name="toolbar_text">@color/white</color>
 
 </resources>

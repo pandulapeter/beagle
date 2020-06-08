@@ -9,7 +9,8 @@
     <string name="inspiration_beagle_text_1"><b>This is the debug menu configured by you</b>\n\n
 It should contain useful information, like the version number of the app, the build date, or information about the device it\'s running on.\n\n
 You can use it to display network requests, track analytics events, see custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing of your app.\n\n
-It can also contain various dynamic features, like switches, radio groups, buttons, sliders, etc. that you can use to set up a "God mode" during development. For example:</string>
+It can also contain various dynamic features, like switches, radio groups, buttons, sliders, etc. that you can use to set up a \"God mode\" during development.</string>
+    <string name="inspiration_beagle_label">For example:</string>
     <string name="inspiration_beagle_switch">Here is a switch. It does nothing.</string>
     <string name="inspiration_beagle_switch_toast_on">The switch is on. Nothing happened.</string>
     <string name="inspiration_beagle_switch_toast_off">The switch is off. Still nothing.</string>
@@ -24,17 +25,22 @@ It can also contain various dynamic features, like switches, radio groups, butto
     <string name="inspiration_beagle_radio_group_option_3">Zilch</string>
     <string name="inspiration_beagle_text_2">Best of all: none of this will be present in your release builds, as the <b>noop</b> implementation that should be used in those situations has the same public API (so it won\'t break your code) but none of the underlying logic.\n\n
 The module configuration can be changed at any time. For example in the case of this application you will see very different Beagle setups as you explore the various case studies.\n\n
-The library was written in Kotlin and supports API levels 16 and above.</string>
+The library was written in Kotlin and supports API levels 16 and above.\n\n
+<b><i>If you feel like you\'ve read enough, here is a switch that acutally does something:</i></b></string>
+    <string name="inspiration_beagle_tutorial_switch">Show detailed tutorial</string>
     <string name="inspiration_welcome_hint_1"><b>Welcome!</b>\n\n
-Beagle is a free, open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.\n\n
-After choosing a UI dependency that determines the way the menu is displayed (Activity, Bottom Sheet, Dialog, Drawer or View), the library can be initialized with a single line of code in the onCreate() method of a custom Application class:</string>
+Beagle is a free, open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.\n</string>
+    <string name="inspiration_welcome_hint_2">After choosing a UI dependency that determines the way the menu is displayed (<i>activity</i>, <i>bottom sheet</i>, <i>dialog</i>, <i>drawer</i> or <i>view</i>), the library can be initialized with a single line of code in the <b>onCreate()</b> method of your custom <b>Application</b> class:</string>
     <string name="inspiration_welcome_snippet_1">Beagle.initialize(this)</string>
-    <string name="inspiration_welcome_hint_2">In this demo you can trigger the debug menu at any time by shaking the device or by tapping on the Beagle logo in the bottom-right corner.\n\n
-Check out how Beagle can be useful in the following situations:</string>
+    <string name="inspiration_welcome_hint_3"><b><i>In this demo you can trigger the debug menu at any time by shaking the device or by tapping on the Beagle logo in the bottom-right corner.</i></b></string>
+    <string name="inspiration_welcome_hint_4">\nThe next step after initialization is configuring a list of modules. The simplest way to do that is to call:</string>
+    <string name="inspiration_welcome_snippet_2">Beagle.setModules(module1, module2, …)</string>
+    <string name="inspiration_welcome_hint_5">The module configuration very much depends on your application\'s specific needs, but the following example demonstrates some features that most developers will find useful:</string>
+    <string name="inspiration_welcome_hint_6">The true power of the library lies in modules that require a tiny bit of customization. Check out how Beagle can be useful in the following situations:</string>
 
     <!-- Case studies / Basic setup -->
     <string name="case_study_basic_setup_title">Basic setup</string>
-    <string name="case_study_basic_setup_description">Built-in modules that can be added with almost no configuration and are useful on most projects.</string>
+    <string name="case_study_basic_setup_description">Built-in modules that can be added with almost no configuration and are useful for most projects.</string>
 
     <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>

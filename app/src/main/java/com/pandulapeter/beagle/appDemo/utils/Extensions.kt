@@ -8,6 +8,7 @@ import androidx.annotation.DimenRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
@@ -44,6 +45,7 @@ inline fun <T> LiveData<T>.observe(owner: LifecycleOwner, crossinline onChanged:
     observe(owner, it)
 }
 
+@set:BindingAdapter("android:visibility")
 var View.visible
     get() = visibility == View.VISIBLE
     set(value) {

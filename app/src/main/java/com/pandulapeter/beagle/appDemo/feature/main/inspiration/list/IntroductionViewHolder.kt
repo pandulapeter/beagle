@@ -12,7 +12,8 @@ class IntroductionViewHolder private constructor(
 ) : ViewHolder<ItemInspirationIntroductionBinding, IntroductionViewHolder.UiModel>(binding) {
 
     data class UiModel(
-        override val id: String = "hint"
+        override val id: String = "introduction",
+        val shouldShowTutorial: Boolean
     ) : HomeListItem
 
     companion object {

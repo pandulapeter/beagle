@@ -9,8 +9,8 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
 
     protected fun callListenerForTheFirstTimeIfNeeded(module: M, value: T) {
         if (module.shouldBePersisted && !hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {
-            callOnValueChanged(module, value)
             hasCalledListenerForTheFirstTime = true
+            callOnValueChanged(module, value)
         }
     }
 

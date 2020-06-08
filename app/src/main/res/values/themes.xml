@@ -1,6 +1,8 @@
 <resources>
 
-    <style name="SplashTheme" parent="AppTheme">
+    <style name="SplashTheme" parent="SplashThemeBase" />
+
+    <style name="SplashThemeBase" parent="AppTheme">
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 

@@ -6,12 +6,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- TODO: Add AppBarLayout with liftOnScroll behavior. -->
+
         <LinearLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:background="@color/brand_dark"
+            android:background="@color/toolbar_background"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:theme="@style/DarkTheme"
@@ -28,14 +30,15 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/back"
                 android:padding="@dimen/small_content_padding"
-                app:srcCompat="@drawable/ic_back" />
+                app:srcCompat="@drawable/ic_back"
+                app:tint="@color/toolbar_text" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/app_name"
-                app:titleTextColor="@color/white" />
+                app:titleTextColor="@color/toolbar_text" />
 
         </LinearLayout>
 
@@ -58,7 +61,6 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/open_debug_menu"
             android:src="@drawable/img_logo"
-            android:theme="@style/DarkTheme"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.about
 import android.os.Bundle
 import android.view.View
 import com.pandulapeter.beagle.Beagle
+import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentAboutBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseViewModelFragment
@@ -18,7 +19,7 @@ class AboutFragment : BaseViewModelFragment<FragmentAboutBinding, AboutViewModel
         setupBeagle()
     }
 
-    private fun setupBeagle() = Beagle.setModules(TextModule(text = "Work in progress"))
+    private fun setupBeagle() = Beagle.setModules(TextModule(text = "Work in progress\nv${BuildConfig.VERSION_NAME}"))
 
     companion object {
         fun newInstance() = AboutFragment()
