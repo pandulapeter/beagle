@@ -1,13 +1,14 @@
 package com.pandulapeter.beagle.appDemo.data
 
+import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
 
 class CaseStudyRepository {
 
-    val dataSet = (0..9).map { index ->
+    val dataSet = listOf(
         CaseStudy(
-            title = "Case Study ${index + 1}",
-            description = "Description for case study ${index + 1}"
+            title = R.string.case_study_authentication_title,
+            description = R.string.case_study_authentication_description
         )
-    }
+    )
 }

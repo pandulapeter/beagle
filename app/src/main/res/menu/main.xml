@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/inspiration"
         android:icon="@drawable/ic_inspiration"
-        android:title="@string/home_title" />
+        android:title="@string/inspiration_title" />
 
     <item
         android:id="@+id/playground"

@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.home.HomeViewModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationViewModel" />
 
     </data>
 

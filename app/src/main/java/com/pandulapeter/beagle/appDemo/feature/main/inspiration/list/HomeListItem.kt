@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.feature.main.home.list
+package com.pandulapeter.beagle.appDemo.feature.main.inspiration.list
 
 import com.pandulapeter.beagle.appDemo.utils.ListItem
 

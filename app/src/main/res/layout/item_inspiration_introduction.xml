@@ -5,7 +5,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.home.list.HintViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.IntroductionViewHolder.UiModel" />
 
     </data>
 
@@ -22,19 +22,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/home_welcome_hint_1" />
+            android:text="@string/inspiration_welcome_hint_1" />
 
         <com.pandulapeter.beagle.appDemo.feature.shared.CodeTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_content_padding"
-            android:text="@string/home_welcome_snippet" />
+            android:text="@string/inspiration_welcome_snippet_1" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_content_padding"
-            android:text="@string/home_welcome_hint_2" />
+            android:text="@string/inspiration_welcome_hint_2" />
 
     </LinearLayout>
 

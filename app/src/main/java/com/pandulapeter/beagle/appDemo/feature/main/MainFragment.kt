@@ -5,7 +5,7 @@ import android.view.View
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentMainBinding
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutFragment
-import com.pandulapeter.beagle.appDemo.feature.main.home.HomeFragment
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationFragment
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
 import com.pandulapeter.beagle.appDemo.utils.consume
@@ -18,7 +18,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             consume {
                 when (item.itemId) {
-                    R.id.home -> childFragmentManager.handleReplace(newInstance = HomeFragment.Companion::newInstance)
+                    R.id.inspiration -> childFragmentManager.handleReplace(newInstance = InspirationFragment.Companion::newInstance)
                     R.id.playground -> childFragmentManager.handleReplace(newInstance = PlaygroundFragment.Companion::newInstance)
                     R.id.about -> childFragmentManager.handleReplace(newInstance = AboutFragment.Companion::newInstance)
                     else -> throw  IllegalArgumentException("Unsupported bottom navigation item.")
@@ -26,7 +26,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
             }
         }
         if (savedInstanceState == null) {
-            binding.bottomNavigationView.selectedItemId = R.id.home
+            binding.bottomNavigationView.selectedItemId = R.id.inspiration
         }
     }
 
