@@ -7,13 +7,19 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemInspirationIntroductionBinding
 import com.pandulapeter.beagle.appDemo.utils.ViewHolder
 
-class IntroductionViewHolder private constructor(binding: ItemInspirationIntroductionBinding) : ViewHolder<ItemInspirationIntroductionBinding, IntroductionViewHolder.UiModel>(binding) {
+class IntroductionViewHolder private constructor(
+    binding: ItemInspirationIntroductionBinding
+) : ViewHolder<ItemInspirationIntroductionBinding, IntroductionViewHolder.UiModel>(binding) {
 
     data class UiModel(
         override val id: String = "hint"
     ) : HomeListItem
 
     companion object {
-        fun create(parent: ViewGroup) = IntroductionViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_inspiration_introduction, parent, false))
+        fun create(
+            parent: ViewGroup
+        ) = IntroductionViewHolder(
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_inspiration_introduction, parent, false)
+        )
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,12 +20,27 @@
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/large_content_padding"
-            android:text="@{uiModel.caseStudy.title}" />
+            android:orientation="vertical"
+            android:padding="@dimen/large_content_padding">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{uiModel.caseStudy.title}"
+                android:textStyle="bold"
+                tools:text="Title" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_content_padding"
+                android:text="@{uiModel.caseStudy.description}"
+                tools:text="Description" />
+
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

@@ -3,12 +3,26 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.ItemInspirationCaseStudyBinding
 import com.pandulapeter.beagle.appDemo.utils.ViewHolder
 
-class CaseStudyViewHolder private constructor(binding: ItemInspirationCaseStudyBinding) : ViewHolder<ItemInspirationCaseStudyBinding, CaseStudyViewHolder.UiModel>(binding) {
+class CaseStudyViewHolder private constructor(
+    binding: ItemInspirationCaseStudyBinding,
+    onItemSelected: (position: Int) -> Unit
+) : ViewHolder<ItemInspirationCaseStudyBinding, CaseStudyViewHolder.UiModel>(binding) {
+
+    init {
+        binding.root.setOnClickListener {
+            adapterPosition.let { adapterPosition ->
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onItemSelected(adapterPosition)
+                }
+            }
+        }
+    }
 
     data class UiModel(
         val caseStudy: CaseStudy
@@ -18,6 +32,12 @@ class CaseStudyViewHolder private constructor(binding: ItemInspirationCaseStudyB
     }
 
     companion object {
-        fun create(parent: ViewGroup) = CaseStudyViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_inspiration_case_study, parent, false))
+        fun create(
+            parent: ViewGroup,
+            onItemSelected: (position: Int) -> Unit
+        ) = CaseStudyViewHolder(
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_inspiration_case_study, parent, false),
+            onItemSelected = onItemSelected
+        )
     }
 }

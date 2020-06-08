@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/about_title" />
+        android:padding="@dimen/large_content_padding"
+        android:text="@string/about_description" />
 
 </layout>

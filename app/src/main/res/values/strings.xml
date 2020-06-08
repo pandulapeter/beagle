@@ -11,8 +11,13 @@ It should contain useful information, like the version number of the app, the bu
 You can use it to display network requests, track analytics events, see custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing of your app.\n\n
 It can also contain various dynamic features, like switches, radio groups, buttons, sliders, etc. that you can use to set up a "God mode" during development. For example:</string>
     <string name="inspiration_beagle_switch">Here is a switch. It does nothing.</string>
+    <string name="inspiration_beagle_switch_toast_on">The switch is on. Nothing happened.</string>
+    <string name="inspiration_beagle_switch_toast_off">The switch is off. Still nothing.</string>
     <string name="inspiration_beagle_button">This button also does nothing</string>
+    <string name="inspiration_beagle_button_toast">Nothing, as promised</string>
     <string name="inspiration_beagle_check_box">This check box does nothing</string>
+    <string name="inspiration_beagle_check_box_toast_on">Check box checked</string>
+    <string name="inspiration_beagle_check_box_toast_off">Check box unchecked</string>
     <string name="inspiration_beagle_radio_group">This radio group does…</string>
     <string name="inspiration_beagle_radio_group_option_1">Nothing</string>
     <string name="inspiration_beagle_radio_group_option_2">Nada</string>
@@ -21,20 +26,26 @@ It can also contain various dynamic features, like switches, radio groups, butto
 The module configuration can be changed at any time. For example in the case of this application you will see very different Beagle setups as you explore the various case studies.\n\n
 The library was written in Kotlin and supports API levels 16 and above.</string>
     <string name="inspiration_welcome_hint_1"><b>Welcome!</b>\n\n
-Beagle is a free, open-source library that adds a smart and customizable debug menu to the internal builds of your Android apps.\n\n
+Beagle is a free, open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.\n\n
 After choosing a UI dependency that determines the way the menu is displayed (Activity, Bottom Sheet, Dialog, Drawer or View), the library can be initialized with a single line of code in the onCreate() method of a custom Application class:</string>
     <string name="inspiration_welcome_snippet_1">Beagle.initialize(this)</string>
     <string name="inspiration_welcome_hint_2">In this demo you can trigger the debug menu at any time by shaking the device or by tapping on the Beagle logo in the bottom-right corner.\n\n
 Check out how Beagle can be useful in the following situations:</string>
 
-    <!-- Case studies -->
+    <!-- Case studies / Basic setup -->
+    <string name="case_study_basic_setup_title">Basic setup</string>
+    <string name="case_study_basic_setup_description">Built-in modules that can be added with almost no configuration and are useful on most projects.</string>
+
+    <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>
     <string name="case_study_authentication_description">Simplify the QA process by presenting a list of test accounts and automatically filling in the necessary login information.</string>
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
+    <string name="playground_description">This page will contain a drag-and-drop editor that can be used to easily configure and preview Beagle modules. It will also generate the code for the configuration.</string>
 
     <!-- About -->
     <string name="about_title">About</string>
+    <string name="about_description">This page will contain the link to the GitHub repository, the list of open-source licenses and maybe a Donate button.</string>
 
 </resources>

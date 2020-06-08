@@ -5,6 +5,7 @@
         <item name="strokeWidth">@dimen/divider</item>
         <item name="cardCornerRadius">@dimen/nothing</item>
         <item name="cardElevation">@dimen/nothing</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
 </resources>
