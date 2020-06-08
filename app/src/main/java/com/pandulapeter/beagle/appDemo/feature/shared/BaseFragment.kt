@@ -20,7 +20,8 @@ abstract class BaseFragment<B : ViewDataBinding>(
     @StringRes private val titleResourceId: Int? = null
 ) : Fragment() {
 
-    private var binding by AutoClearedValue<B>()
+    protected var binding by AutoClearedValue<B>()
+        private set
     private val currentFragment get() = childFragmentManager.findFragmentById(R.id.fragment_container) as? BaseFragment<*>?
 
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
