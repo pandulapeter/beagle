@@ -81,6 +81,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "org.koin:koin-androidx-viewmodel:2.1.5"
     activityDebugImplementation project(":ui-activity")
     bottomSheetDebugImplementation project(":ui-bottom-sheet")
     dialogDebugImplementation project(":ui-dialog")

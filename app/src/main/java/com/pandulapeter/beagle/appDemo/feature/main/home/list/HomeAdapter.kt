@@ -1,10 +1,8 @@
-package com.pandulapeter.beagle.appDemo.feature.main.home
+package com.pandulapeter.beagle.appDemo.feature.main.home.list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.feature.main.home.list.HintViewHolder
-import com.pandulapeter.beagle.appDemo.feature.main.home.list.HomeListItem
 import com.pandulapeter.beagle.appDemo.utils.ListItem
 import com.pandulapeter.beagle.appDemo.utils.ViewHolder
 

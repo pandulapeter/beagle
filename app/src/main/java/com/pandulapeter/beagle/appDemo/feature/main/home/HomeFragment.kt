@@ -5,9 +5,13 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentHomeBinding
-import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
+import com.pandulapeter.beagle.appDemo.feature.main.home.list.HomeAdapter
+import com.pandulapeter.beagle.appDemo.feature.shared.BaseViewModelFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home, true, R.string.home_title) {
+class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home, true, R.string.home_title) {
+
+    override val viewModel by viewModel<HomeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -17,6 +21,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home, t
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
         }
+        viewModel.items.observeForever(homeAdapter::submitList)
     }
 
     companion object {
