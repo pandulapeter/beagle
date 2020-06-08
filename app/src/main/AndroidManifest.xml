@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pandulapeter.beagle.appExample">
+    package="com.pandulapeter.beagle.appDemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".BeagleExampleApplication"
+        android:name="com.pandulapeter.beagle.appDemo.BeagleDemoApplication"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +16,7 @@
         android:windowSoftInputMode="adjustResize"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".screens.MainActivity">
+        <activity android:name="com.pandulapeter.beagle.appDemo.feature.BeagleDemoActivity">
 
             <intent-filter>
 
@@ -27,8 +27,6 @@
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".screens.LoginActivity" />
 
     </application>
 

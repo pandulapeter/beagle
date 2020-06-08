@@ -12,6 +12,7 @@ android {
         versionCode libraryVersionCode
         versionName "0.0.1"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
+        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
         internal {
@@ -20,6 +21,9 @@ android {
             storeFile file("internal.keystore")
             storePassword "android"
         }
+    }
+    buildFeatures {
+        dataBinding = true
     }
     buildTypes {
         debug {
@@ -76,6 +80,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     activityDebugImplementation project(":ui-activity")
     bottomSheetDebugImplementation project(":ui-bottom-sheet")
     dialogDebugImplementation project(":ui-dialog")

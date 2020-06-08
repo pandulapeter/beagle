@@ -1,10 +1,16 @@
 <resources>
 
+    <!-- Main -->
     <string name="open_debug_menu">Open debug menu</string>
-    <string name="open_login_screen">Open login screen</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="message">Message</string>
     <string name="back">Back</string>
+
+    <!-- Home -->
+    <string name="home_title">Home</string>
+
+    <!-- Playground -->
+    <string name="playground_title">Playground</string>
+
+    <!-- About -->
+    <string name="about_title">About</string>
 
 </resources>

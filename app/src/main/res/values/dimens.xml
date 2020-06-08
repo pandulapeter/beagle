@@ -1,6 +1,13 @@
 <resources>
 
+    <!-- General -->
+    <dimen name="nothing">0dp</dimen>
+    <dimen name="small_content_padding">4dp</dimen>
     <dimen name="content_padding">8dp</dimen>
     <dimen name="large_content_padding">16dp</dimen>
+
+    <!-- Main -->
+    <dimen name="floating_action_button_size">56dp</dimen>
+    <dimen name="bottom_navigation_view_padding">88dp</dimen>
 
 </resources>

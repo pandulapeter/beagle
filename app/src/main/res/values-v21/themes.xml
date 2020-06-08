@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="AppTheme" parent="AppThemeBase">
+        <item name="android:statusBarColor">@color/beagle_foreground</item>
+        <item name="android:navigationBarColor">@color/beagle_foreground</item>
+    </style>
+
+</resources>

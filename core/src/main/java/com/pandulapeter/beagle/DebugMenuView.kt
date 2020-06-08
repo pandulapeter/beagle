@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.View
 import android.view.WindowInsets
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
@@ -22,6 +23,7 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         minimumWidth = context.dimension(R.dimen.beagle_minimum_size)
         minimumHeight = context.dimension(R.dimen.beagle_minimum_size)
         clipToPadding = false
+        overScrollMode = View.OVER_SCROLL_NEVER
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets) }
             requestApplyInsets()
