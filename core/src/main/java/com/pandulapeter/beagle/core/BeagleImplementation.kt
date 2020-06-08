@@ -11,16 +11,18 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.LocalStorageManager
 import com.pandulapeter.beagle.core.manager.MemoryStorageManager
-import com.pandulapeter.beagle.core.manager.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
-import com.pandulapeter.beagle.core.manager.VisibilityListenerManager
+import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
+import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
+import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
@@ -42,8 +44,9 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         private set
     private val shakeDetector by lazy { ShakeDetector { show() } }
     private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
-    private val visibilityListenerManager by lazy { VisibilityListenerManager() }
+    private val logListenerManager by lazy { LogListenerManager() }
     private val overlayListenerManager by lazy { OverlayListenerManager() }
+    private val visibilityListenerManager by lazy { VisibilityListenerManager() }
     private val listManager by lazy { ListManager() }
 
     init {
@@ -66,11 +69,19 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun <M : Module<M>> findModule(id: String) = listManager.findModule<M>(id)
 
-    override fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = listManager.findModuleDelegate<M>(type)
+    override fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = listManager.findModuleDelegate(type)
 
-    override fun refreshCells() = listManager.refreshList()
+    override fun addLogListener(listener: LogListener, lifecycleOwner: LifecycleOwner?) = logListenerManager.addListener(listener, lifecycleOwner)
 
-    override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
+    override fun removeLogListener(listener: LogListener) = logListenerManager.removeListener(listener)
+
+    override fun clearLogListeners() = logListenerManager.clearListeners()
+
+    override fun addOverlayListener(listener: OverlayListener, lifecycleOwner: LifecycleOwner?) = overlayListenerManager.addListener(listener, lifecycleOwner)
+
+    override fun removeOverlayListener(listener: OverlayListener) = overlayListenerManager.removeListener(listener)
+
+    override fun clearOverlayListeners() = overlayListenerManager.clearListeners()
 
     override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) = visibilityListenerManager.addListener(listener, lifecycleOwner)
 
@@ -78,11 +89,15 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun clearVisibilityListeners() = visibilityListenerManager.clearListeners()
 
-    override fun addOverlayListener(listener: OverlayListener, lifecycleOwner: LifecycleOwner?) = overlayListenerManager.addListener(listener, lifecycleOwner)
+    override fun log(tag: String?, message: String, payload: String?) {
+        logListenerManager.notifyOverlayListenersOnLogEntry(tag, message, payload)
+        //TODO: Save, update UI.
+        refreshCells()
+    }
 
-    override fun removeOverlayListener(listener: OverlayListener) = overlayListenerManager.removeListener(listener)
+    override fun refreshCells() = listManager.refreshCells()
 
-    override fun clearOverlayListeners() = overlayListenerManager.clearListeners()
+    override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
     fun createOverlayLayout(activity: FragmentActivity) = uiManager.createOverlayLayout(activity)
 

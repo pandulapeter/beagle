@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import kotlin.reflect.KClass
@@ -69,7 +70,9 @@ interface BeagleContract {
      *  - The application depends on the noop variant.
      */
     fun hide(): Boolean = false
+    //endregion
 
+    //region Module management
     /**
      * Replaces the list of modules.
      *
@@ -97,42 +100,29 @@ interface BeagleContract {
      *  - The type casting failed.
      */
     fun <M : Module<M>> findModuleDelegate(type: KClass<out M>): Module.Delegate<M>? = null
-
-    /**
-     * Call this function to trigger recreating every cell model for every module.
-     * Due to the underlying RecyclerView implementation this will only result in UI update events where differences are found.
-     *
-     * Manually updating the cells is only needed when writing custom modules, the build-in features already handle calling this function when needed.
-     */
-    fun refreshCells() = Unit
-
-    /**
-     * Call this function to trigger invalidating the overlay layout. This will result in calling all registered [OverlayListener] implementations.
-     */
-    fun invalidateOverlay() = Unit
     //endregion
 
     //region Listeners
     /**
-     * Adds a new [VisibilityListener] implementation to listen to the debug menu visibility changes.
+     * Adds a new [LogListener] implementation which can be used to get notified when a new log message is added using Beagle.log().
      * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is created / destroyed.
      *
-     * @param listener - The [VisibilityListener] implementation to add.
+     * @param listener - The [LogListener] implementation to add.
      * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
      */
-    fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun addLogListener(listener: LogListener, lifecycleOwner: LifecycleOwner? = null) = Unit
 
     /**
-     * Removes the [VisibilityListener] implementation, if it was added to the list of listeners.
+     * Removes the [LogListener] implementation, if it was added to the list of listeners.
      *
-     * @param listener - The [VisibilityListener] implementation to remove.
+     * @param listener - The [LogListener] implementation to remove.
      */
-    fun removeVisibilityListener(listener: VisibilityListener) = Unit
+    fun removeLogListener(listener: LogListener) = Unit
 
     /**
-     * Removes all [VisibilityListener] implementations, from the list of listeners.
+     * Removes all [LogListener] implementations, from the list of listeners.
      */
-    fun clearVisibilityListeners() = Unit
+    fun clearLogListeners() = Unit
 
     /**
      * Adds a new [OverlayListener] implementation which can be used to draw over the application layout.
@@ -154,6 +144,27 @@ interface BeagleContract {
      * Removes all [OverlayListener] implementations, from the list of listeners.
      */
     fun clearOverlayListeners() = Unit
+
+    /**
+     * Adds a new [VisibilityListener] implementation to listen to the debug menu visibility changes.
+     * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is created / destroyed.
+     *
+     * @param listener - The [VisibilityListener] implementation to add.
+     * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
+     */
+    fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+
+    /**
+     * Removes the [VisibilityListener] implementation, if it was added to the list of listeners.
+     *
+     * @param listener - The [VisibilityListener] implementation to remove.
+     */
+    fun removeVisibilityListener(listener: VisibilityListener) = Unit
+
+    /**
+     * Removes all [VisibilityListener] implementations, from the list of listeners.
+     */
+    fun clearVisibilityListeners() = Unit
     //endregion
 
     //region Helpers
@@ -168,5 +179,27 @@ interface BeagleContract {
      *  - The application depends on the noop variant.
      */
     val currentActivity: FragmentActivity? get() = null
+
+    /**
+     * Adds a new log entry to the LogListModule and notifies the registered LogListeners.
+     *
+     * @param tag - Optional tag that can be used to create filtered LogListModule instances, null by default.
+     * @param message - The message that will be displayed.
+     * @param payload - Extra message that will only be displayed when the user selects the log entry. Optional, null by default.
+     */
+    fun log(tag: String? = null, message: String, payload: String? = null) = Unit
+
+    /**
+     * Call this function to trigger recreating every cell model for every module.
+     * Due to the underlying RecyclerView implementation this will only result in UI update events where differences are found.
+     *
+     * Manually updating the cells is only needed when writing custom modules, the build-in features already handle calling this function when needed.
+     */
+    fun refreshCells() = Unit
+
+    /**
+     * Call this function to trigger invalidating the overlay layout. This will result in calling all registered [OverlayListener] implementations.
+     */
+    fun invalidateOverlay() = Unit
     //endregion
 }

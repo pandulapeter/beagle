@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.manager
+package com.pandulapeter.beagle.core.manager.listener
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.Lifecycle
@@ -6,7 +6,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 
-internal abstract class ListenerManager<T> {
+internal abstract class BaseListenerManager<T> {
 
     private val listeners = mutableListOf<T>()
 

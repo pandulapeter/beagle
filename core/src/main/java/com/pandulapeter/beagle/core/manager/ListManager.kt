@@ -53,7 +53,7 @@ internal class ListManager {
     fun setModules(newModules: List<Module<*>>) {
         modules.clear()
         modules.addAll(newModules.distinctBy { it.id })
-        refreshList()
+        refreshCells()
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -64,7 +64,7 @@ internal class ListManager {
 
     //TODO: Move to a coroutine (watch out for threading issues)
     //TODO: Throw exception if no handler is found
-    fun refreshList() = cellAdapter.submitList(modules.flatMap { module ->
+    fun refreshCells() = cellAdapter.submitList(modules.flatMap { module ->
         (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
             moduleDelegates[module::class] = it
         })).forceCreateCells(module)
