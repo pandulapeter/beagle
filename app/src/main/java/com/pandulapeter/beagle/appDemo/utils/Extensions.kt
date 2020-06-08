@@ -1,13 +1,21 @@
 package com.pandulapeter.beagle.appDemo.utils
 
+import android.content.Context
 import android.view.View
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
 import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.pandulapeter.beagle.appDemo.R
+
+fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
+
+fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensionPixelSize(dimensionResourceId)
 
 inline fun <reified T : Fragment> FragmentManager.handleReplace(
     tag: String = T::class.java.name,

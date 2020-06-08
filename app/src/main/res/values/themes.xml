@@ -7,22 +7,23 @@
     <style name="AppTheme" parent="AppThemeBase" />
 
     <style name="AppThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@color/beagle_background</item>
-        <item name="colorPrimary">@color/beagle_foreground</item>
+        <item name="colorPrimary">@color/brand_dark</item>
+        <item name="colorAccent">@color/brand_dark</item>
     </style>
 
-    <style name="AppBarTheme" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="DarkTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/white</item>
+        <item name="colorAccent">@color/white</item>
     </style>
 
     <style name="BeagleTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:textColor">@color/white</item>
-        <item name="colorPrimary">@color/beagle_background</item>
-        <item name="colorButtonNormal">@color/beagle_background</item>
-        <item name="colorAccent">@color/beagle_background</item>
-        <item name="colorSwitchThumbNormal">@color/beagle_background</item>
+        <item name="colorPrimary">@color/brand_light</item>
+        <item name="colorButtonNormal">@color/brand_light</item>
+        <item name="colorAccent">@color/brand_light</item>
+        <item name="colorSwitchThumbNormal">@color/brand_light</item>
         <item name="materialButtonStyle">@style/BeagleButton</item>
-        <item name="android:windowBackground">@color/beagle_foreground</item>
+        <item name="android:windowBackground">@color/brand_dark</item>
     </style>
 
     <style name="BeagleButton" parent="Widget.MaterialComponents.Button">

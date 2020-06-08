@@ -20,7 +20,7 @@
                 android:animateLayoutChanges="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:theme="@style/AppBarTheme">
+                android:theme="@style/DarkTheme">
 
                 <ImageView
                     android:id="@+id/back_button"
@@ -59,11 +59,11 @@
             android:layout_height="@dimen/floating_action_button_size"
             android:layout_marginEnd="@dimen/large_content_padding"
             android:layout_marginRight="@dimen/large_content_padding"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/beagle_button_margin"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/open_debug_menu"
             android:src="@drawable/img_logo"
-            android:theme="@style/AppBarTheme"
+            android:theme="@style/DarkTheme"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

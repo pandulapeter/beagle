@@ -1,10 +1,8 @@
 <resources>
 
+    <color name="brand_light">#dbbe96</color>
+    <color name="brand_dark">#4f3d2f</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="background">@color/beagle_background</color>
-    <color name="accent">@color/beagle_foreground</color>
-
-    <color name="beagle_background">#dbbe96</color>
-    <color name="beagle_foreground">#4f3d2f</color>
 
 </resources>

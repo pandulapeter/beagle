@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="Card">
+        <item name="strokeColor">@color/brand_dark</item>
+        <item name="strokeWidth">@dimen/divider</item>
+        <item name="cardCornerRadius">@dimen/nothing</item>
+        <item name="cardElevation">@dimen/nothing</item>
+    </style>
+
+</resources>

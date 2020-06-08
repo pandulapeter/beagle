@@ -5,7 +5,13 @@
     <string name="back">Back</string>
 
     <!-- Home -->
-    <string name="home_title">Home</string>
+    <string name="home_title">Inspiration</string>
+    <string name="home_welcome_hint_1"><b>Welcome!</b>\n\n
+Beagle is a free, open-source library that adds a smart and customizable debug menu to the internal builds of your Android apps.\n\n
+After choosing a UI dependency that determines the way the menu is displayed (Activity, BottomSheet, Dialog, Drawer or View), the library can be initialized with a single line of code in the onCreate() method of a custom Application class:</string>
+    <string name="home_welcome_snippet">Beagle.initialize(this)</string>
+    <string name="home_welcome_hint_2">In this demo you can trigger the debug menu at any time by shaking the device or by tapping on the Beagle logo in the bottom-right corner.\n\n
+Check out how the following case studies take advantage of Beagle!</string>
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
