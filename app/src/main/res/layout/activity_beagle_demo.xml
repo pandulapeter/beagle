@@ -2,68 +2,69 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Add AppBarLayout with liftOnScroll behavior. -->
+        <!-- TODO: Theme should be dynamic, selectabeItemBackground is not tinted correctly on all API levels. -->
 
-        <LinearLayout
-            android:id="@+id/app_bar_layout"
-            android:layout_width="0dp"
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:background="@color/toolbar_background"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:theme="@style/DarkTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="?android:attr/windowBackground"
+            app:liftOnScroll="true">
 
-            <ImageView
-                android:id="@+id/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/content_padding"
-                android:layout_marginLeft="@dimen/content_padding"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/back"
-                android:padding="@dimen/small_content_padding"
-                app:srcCompat="@drawable/ic_back"
-                app:tint="@color/toolbar_text" />
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
+            <LinearLayout
+                android:id="@+id/app_bar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@string/app_name"
-                app:titleTextColor="@color/toolbar_text" />
+                android:animateLayoutChanges="true"
+                android:background="@color/toolbar_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:theme="@style/DarkTheme">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/content_padding"
+                    android:layout_marginLeft="@dimen/content_padding"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/back"
+                    android:padding="@dimen/small_content_padding"
+                    app:srcCompat="@drawable/ic_back"
+                    app:tint="@color/toolbar_text" />
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/app_name"
+                    app:titleTextColor="@color/toolbar_text" />
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/fragment_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar_layout" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
         <ImageView
             android:id="@+id/beagle_button"
             android:layout_width="@dimen/floating_action_button_size"
             android:layout_height="@dimen/floating_action_button_size"
+            android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/large_content_padding"
             android:layout_marginRight="@dimen/large_content_padding"
             android:layout_marginBottom="@dimen/beagle_button_margin"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/open_debug_menu"
-            android:src="@drawable/img_logo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:src="@drawable/img_logo" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

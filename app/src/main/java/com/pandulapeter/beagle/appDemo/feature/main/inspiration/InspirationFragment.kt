@@ -23,12 +23,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, InspirationViewModel>(R.layout.fragment_inspiration, true, R.string.inspiration_title) {
 
     override val viewModel by viewModel<InspirationViewModel>()
-    private val shouldShowTutorial get() = Beagle.findModule<SwitchModule>(TUTORIAL_SWITCH_ID)?.getCurrentValue(Beagle) == true
+    private val tutorialSwitch by lazy {
+        SwitchModule(
+            id = TUTORIAL_SWITCH_ID, // Persisting modules only works if we have a constant ID.
+            initialValue = true,
+            shouldBePersisted = true,
+            text = getString(R.string.inspiration_beagle_tutorial_switch),
+            onValueChanged = ::onShouldShowTutorialToggled // Persisted modules invoke their callback when the Activity starts so we can rely on this to initialize the list.
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        setupBeagle(shouldShowTutorial)
+        setupBeagle(tutorialSwitch.getCurrentValue(Beagle) == true)
     }
 
     private fun setupRecyclerView() {
@@ -80,15 +88,7 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
                     })
                     add(TextModule(text = getText(R.string.inspiration_beagle_text_2)))
                 }
-                add(
-                    SwitchModule(
-                        id = TUTORIAL_SWITCH_ID, // Persisting modules only works if we have a constant ID.
-                        initialValue = true,
-                        shouldBePersisted = true,
-                        text = getString(R.string.inspiration_beagle_tutorial_switch),
-                        onValueChanged = ::onShouldShowTutorialToggled // Persisted modules invoke their callback when the Activity starts so we can rely on this to initialize the list.
-                    )
-                )
+                add(tutorialSwitch)
             }.toTypedArray())
         )
     }
