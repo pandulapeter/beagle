@@ -46,6 +46,30 @@ Beagle is a free, open-source library that adds a smart and easily customizable 
     <string name="case_study_authentication_title">Authentication</string>
     <string name="case_study_authentication_description">Simplify the QA process by presenting a list of test accounts and automatically filling in the necessary login information.</string>
 
+    <!-- Case studies / Feature toggles -->
+    <string name="case_study_feature_toggles_title">Feature toggles</string>
+    <string name="case_study_feature_toggles_description">Test different implementations without creating new builds.</string>
+
+    <!-- Case studies / Analytics -->
+    <string name="case_study_analytics_title">Logging analytics events</string>
+    <string name="case_study_analytics_description">Making sure that every required event is tracked from an admin panel can be cumbersome. Why not display the events right in the app, in real time?</string>
+
+    <!-- Case studies / Network request interceptor -->
+    <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>
+    <string name="case_study_network_request_interceptor_description">See the incoming and outgoing REST API calls and their formatted JSON payload to quickly debug potential issues.</string>
+
+    <!-- Case studies / Environment switcher -->
+    <string name="case_study_environment_switcher_title">Environment switcher</string>
+    <string name="case_study_environment_switcher_description">Change the application\'s base URL at runtime.</string>
+
+    <!-- Case studies / Mock data generator -->
+    <string name="case_study_mock_data_generator_title">Mock data generator</string>
+    <string name="case_study_mock_data_generator_description">Filling your development database with random content like \"d23fMIMnow81\" makes your app look bad. Why not add a simple Lorem Ipsum generator instead?</string>
+
+    <!-- Case studies / Bug reporting tool -->
+    <string name="case_study_bug_reporting_tool_title">Bug reporting tool</string>
+    <string name="case_study_bug_reporting_tool_description">Fetch Beagle, take a screenshot, draw on it, provide additional details and send them together with configurable build and device information to an email address or create a Jira ticket directly.</string>
+
     <!-- Playground -->
     <string name="playground_title">Playground</string>
     <string name="playground_description">This page will contain a drag-and-drop editor that can be used to easily configure and preview Beagle modules. It will also generate the code for the configuration.</string>

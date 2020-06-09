@@ -17,11 +17,12 @@ class InspirationViewModel : ViewModel() {
     fun refreshItems(shouldShowTutorial: Boolean) {
         _items.value = mutableListOf<HomeListItem>().apply {
             add(IntroductionViewHolder.UiModel(shouldShowTutorial = shouldShowTutorial))
-            add(CaseStudyViewHolder.UiModel(CaseStudy.BASIC_SETUP))
-            if (shouldShowTutorial) {
-                add(SectionViewHolder.UiModel())
+            CaseStudy.values().forEachIndexed { index, caseStudy ->
+                add(CaseStudyViewHolder.UiModel(caseStudy))
+                if (index == 0 && shouldShowTutorial) {
+                    add(SectionViewHolder.UiModel())
+                }
             }
-            add(CaseStudyViewHolder.UiModel(CaseStudy.AUTHENTICATION))
         }
     }
 }
