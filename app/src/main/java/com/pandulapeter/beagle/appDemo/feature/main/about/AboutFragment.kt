@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.about
 
 import android.os.Bundle
 import android.view.View
+import com.google.android.material.transition.MaterialFadeThrough
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
@@ -13,6 +14,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AboutFragment : BaseViewModelFragment<FragmentAboutBinding, AboutViewModel>(R.layout.fragment_about, true, R.string.about_title) {
 
     override val viewModel by viewModel<AboutViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFadeThrough()
+        returnTransition = MaterialFadeThrough()
+        reenterTransition = MaterialFadeThrough()
+        exitTransition = MaterialFadeThrough()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

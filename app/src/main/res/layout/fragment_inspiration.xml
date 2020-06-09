@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/list_bottom_padding"
+        android:transitionGroup="true"
         tools:listitem="@layout/item_inspiration_introduction" />
 
 </layout>

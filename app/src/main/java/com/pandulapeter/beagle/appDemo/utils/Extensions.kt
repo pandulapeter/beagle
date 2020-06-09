@@ -33,7 +33,6 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
     crossinline newInstance: () -> T
 ) {
     beginTransaction().apply {
-        setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
         replace(containerId, findFragmentByTag(tag) ?: newInstance(), tag)
         if (addToBackStack) {
             addToBackStack(null)
