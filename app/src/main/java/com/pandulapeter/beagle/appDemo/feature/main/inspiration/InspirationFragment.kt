@@ -29,14 +29,14 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
             initialValue = true,
             shouldBePersisted = true,
             text = getString(R.string.inspiration_beagle_tutorial_switch),
-            onValueChanged = ::onShouldShowTutorialToggled // Persisted modules invoke their callback when the Activity starts so we can rely on this to initialize the list.
+            onValueChanged = ::onShouldShowTutorialToggled
         )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        setupBeagle(tutorialSwitch.getCurrentValue(Beagle) == true)
+        onShouldShowTutorialToggled(tutorialSwitch.getCurrentValue(Beagle) == true)
     }
 
     private fun setupRecyclerView() {
@@ -51,10 +51,10 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
 
     private fun onShouldShowTutorialToggled(shouldShowTutorial: Boolean) {
         viewModel.refreshItems(shouldShowTutorial)
-        setupBeagle(shouldShowTutorial)
+        refreshBeagleModules(shouldShowTutorial)
     }
 
-    private fun setupBeagle(shouldShowTutorial: Boolean) {
+    private fun refreshBeagleModules(shouldShowTutorial: Boolean) {
         Beagle.setModules(
             *(mutableListOf<Module<*>>().apply {
                 add(
