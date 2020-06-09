@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ActivityBeagleDemoBinding
 import com.pandulapeter.beagle.appDemo.feature.main.MainFragment
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
+import com.pandulapeter.beagle.appDemo.utils.updateSystemBars
 import com.pandulapeter.beagle.appDemo.utils.visible
 
 class BeagleDemoActivity : AppCompatActivity() {
@@ -23,6 +25,16 @@ class BeagleDemoActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.handleReplace(newInstance = MainFragment.Companion::newInstance)
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            binding.root.setOnApplyWindowInsetsListener { _, insets ->
+                insets.also { binding.appBarLayout.run { setPadding(paddingLeft, insets.systemWindowInsetTop, paddingRight, paddingBottom) } }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateSystemBars()
     }
 
     fun updateToolbar(shouldShowBackButton: Boolean, title: String) {
