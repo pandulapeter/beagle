@@ -93,7 +93,7 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
         )
     }
 
-    private fun onCaseStudySelected(caseStudy: CaseStudy) = showToast(caseStudy.title)
+    private fun onCaseStudySelected(caseStudy: CaseStudy) = showToast("TODO: Open ${getString(caseStudy.title)} example")
 
     private data class RadioGroupOption(
         override val name: String,
