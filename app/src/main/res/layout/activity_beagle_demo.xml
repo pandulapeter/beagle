@@ -6,8 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Theme should be dynamic, selectabeItemBackground is not tinted correctly on all API levels. -->
-
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +20,7 @@
                 android:background="@color/toolbar_background"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:theme="@style/DarkTheme">
+                android:theme="@style/AppBarTheme">
 
                 <ImageView
                     android:id="@+id/back_button"

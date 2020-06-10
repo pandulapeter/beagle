@@ -14,6 +14,8 @@
         <item name="materialButtonStyle">@style/Button</item>
     </style>
 
+    <style name="AppBarTheme" parent="DarkTheme" />
+
     <style name="DarkTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/white</item>
         <item name="colorAccent">@color/white</item>
