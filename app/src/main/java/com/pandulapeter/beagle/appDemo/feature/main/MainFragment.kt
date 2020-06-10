@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.appDemo.feature.main
 
 import android.os.Bundle
 import android.view.View
+import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentMainBinding
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutFragment
@@ -12,6 +13,14 @@ import com.pandulapeter.beagle.appDemo.utils.consume
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 
 class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

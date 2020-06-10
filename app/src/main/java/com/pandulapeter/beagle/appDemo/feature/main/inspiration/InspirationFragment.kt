@@ -8,8 +8,10 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.FragmentInspirationBinding
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.BasicSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseViewModelFragment
+import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.showToast
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
@@ -110,7 +112,15 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
         }.toTypedArray())
     )
 
-    private fun onCaseStudySelected(caseStudy: CaseStudy) = showToast("TODO: Open ${getString(caseStudy.title)} example")
+    private fun onCaseStudySelected(caseStudy: CaseStudy) {
+        when (caseStudy) {
+            CaseStudy.BASIC_SETUP -> activityFragmentManager?.handleReplace(
+                addToBackStack = true,
+                newInstance = BasicSetupFragment.Companion::newInstance
+            )
+            else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
+        }
+    }
 
     private data class RadioGroupOption(
         override val name: String,

@@ -23,6 +23,7 @@ abstract class BaseFragment<B : ViewDataBinding>(
     protected var binding by AutoClearedValue<B>()
         private set
     private val currentFragment get() = childFragmentManager.findFragmentById(R.id.fragment_container) as? BaseFragment<*>?
+    protected val activityFragmentManager get() = activity?.supportFragmentManager
 
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         DataBindingUtil.inflate<B>(inflater, layoutResourceId, container, false).also {
