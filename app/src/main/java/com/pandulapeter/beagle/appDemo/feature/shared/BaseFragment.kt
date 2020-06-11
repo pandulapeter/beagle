@@ -16,8 +16,8 @@ import com.pandulapeter.beagle.appDemo.utils.AutoClearedValue
 
 abstract class BaseFragment<B : ViewDataBinding>(
     @LayoutRes private val layoutResourceId: Int,
-    private val isRoot: Boolean = true,
-    @StringRes private val titleResourceId: Int? = null
+    @StringRes private val titleResourceId: Int?,
+    private val isRoot: Boolean
 ) : Fragment() {
 
     protected var binding by AutoClearedValue<B>()

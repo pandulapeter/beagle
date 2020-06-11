@@ -3,14 +3,13 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.transition.MaterialFadeThrough
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.FragmentInspirationBinding
+import com.pandulapeter.beagle.appDemo.feature.main.MainChildFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.BasicSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
-import com.pandulapeter.beagle.appDemo.feature.shared.BaseViewModelFragment
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.showToast
 import com.pandulapeter.beagle.appDemo.utils.waitForLayout
@@ -24,7 +23,7 @@ import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, InspirationViewModel>(R.layout.fragment_inspiration, true, R.string.inspiration_title) {
+class InspirationFragment : MainChildFragment<FragmentInspirationBinding, InspirationViewModel>(R.layout.fragment_inspiration, R.string.inspiration_title) {
 
     override val viewModel by viewModel<InspirationViewModel>()
     private val textModule1 by lazy { TextModule(text = getText(R.string.inspiration_beagle_text_1)) }
@@ -69,19 +68,24 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough()
-        returnTransition = MaterialFadeThrough()
-        reenterTransition = MaterialFadeThrough()
-        exitTransition = MaterialFadeThrough()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
         setupRecyclerView()
         onShouldShowTutorialToggled(tutorialSwitchModule.getCurrentValue(Beagle) == true)
+    }
+
+    override fun getBeagleModules(): List<Module<*>> = mutableListOf<Module<*>>().apply {
+        add(textModule1)
+        if (tutorialSwitchModule.getCurrentValue(Beagle) == true) {
+            add(labelModule)
+            add(switchModule)
+            add(buttonModule)
+            add(checkBoxModule)
+            add(radioGroupModule)
+            add(textModule2)
+        }
+        add(tutorialSwitchModule)
     }
 
     private fun setupRecyclerView() {
@@ -100,23 +104,8 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
 
     private fun onShouldShowTutorialToggled(shouldShowTutorial: Boolean) {
         viewModel.refreshItems(shouldShowTutorial)
-        refreshBeagleModules(shouldShowTutorial)
+        refreshBeagle()
     }
-
-    private fun refreshBeagleModules(shouldShowTutorial: Boolean) = Beagle.setModules(
-        *(mutableListOf<Module<*>>().apply {
-            add(textModule1)
-            if (shouldShowTutorial) {
-                add(labelModule)
-                add(switchModule)
-                add(buttonModule)
-                add(checkBoxModule)
-                add(radioGroupModule)
-                add(textModule2)
-            }
-            add(tutorialSwitchModule)
-        }.toTypedArray())
-    )
 
     private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) {
         when (caseStudy) {
