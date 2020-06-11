@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.appDemo.feature.main
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.transition.MaterialSharedAxis
+import com.google.android.material.transition.Hold
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentMainBinding
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutFragment
@@ -16,14 +16,12 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        exitTransition = Hold()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             consume {
                 when (item.itemId) {

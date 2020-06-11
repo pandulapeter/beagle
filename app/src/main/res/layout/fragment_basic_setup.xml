@@ -10,13 +10,18 @@
 
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/detail_bottom_padding"
-        android:transitionGroup="true"
-        tools:listitem="@layout/item_text" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/detail_bottom_padding"
+            tools:listitem="@layout/item_text" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.main.inspiration.list
 
+import android.view.View
 import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
@@ -7,7 +8,7 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class InspirationAdapter(
-    private val onCaseStudyClicked: (CaseStudy) -> Unit
+    private val onCaseStudyClicked: (CaseStudy, View) -> Unit
 ) : BaseAdapter<InspirationListItem>() {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
@@ -16,8 +17,8 @@ class InspirationAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
-        R.layout.item_inspiration_case_study -> CaseStudyViewHolder.create(parent) { position ->
-            onCaseStudyClicked((getItem(position) as CaseStudyViewHolder.UiModel).caseStudy)
+        R.layout.item_inspiration_case_study -> CaseStudyViewHolder.create(parent) { position, view ->
+            onCaseStudyClicked((getItem(position) as CaseStudyViewHolder.UiModel).caseStudy, view)
         }
         else -> super.onCreateViewHolder(parent, viewType)
     }

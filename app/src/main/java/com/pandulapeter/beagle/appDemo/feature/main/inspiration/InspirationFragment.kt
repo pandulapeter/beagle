@@ -13,6 +13,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.Inspiration
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseViewModelFragment
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.showToast
+import com.pandulapeter.beagle.appDemo.utils.waitForLayout
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.ButtonModule
@@ -78,6 +79,7 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
         setupRecyclerView()
         onShouldShowTutorialToggled(tutorialSwitchModule.getCurrentValue(Beagle) == true)
     }
@@ -88,6 +90,10 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
             adapter = inspirationAdapter
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
+            waitForLayout {
+                startPostponedEnterTransition()
+                parentFragment?.startPostponedEnterTransition()
+            }
         }
         viewModel.items.observeForever(inspirationAdapter::submitList)
     }
@@ -112,10 +118,11 @@ class InspirationFragment : BaseViewModelFragment<FragmentInspirationBinding, In
         }.toTypedArray())
     )
 
-    private fun onCaseStudySelected(caseStudy: CaseStudy) {
+    private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) {
         when (caseStudy) {
             CaseStudy.BASIC_SETUP -> activityFragmentManager?.handleReplace(
                 addToBackStack = true,
+                sharedElements = listOf(view),
                 newInstance = BasicSetupFragment.Companion::newInstance
             )
             else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
