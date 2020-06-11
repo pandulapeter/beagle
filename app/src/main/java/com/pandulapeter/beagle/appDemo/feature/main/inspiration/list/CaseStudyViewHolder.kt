@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.ItemInspirationCaseStudyBinding
-import com.pandulapeter.beagle.appDemo.utils.ViewHolder
+import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class CaseStudyViewHolder private constructor(
     binding: ItemInspirationCaseStudyBinding,
     onItemSelected: (position: Int) -> Unit
-) : ViewHolder<ItemInspirationCaseStudyBinding, CaseStudyViewHolder.UiModel>(binding) {
+) : BaseViewHolder<ItemInspirationCaseStudyBinding, CaseStudyViewHolder.UiModel>(binding) {
 
     init {
         binding.root.setOnClickListener {
@@ -26,7 +26,7 @@ class CaseStudyViewHolder private constructor(
 
     data class UiModel(
         val caseStudy: CaseStudy
-    ) : HomeListItem {
+    ) : InspirationListItem {
 
         override val id = caseStudy.id
     }

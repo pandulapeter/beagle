@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder.UiModel" />
+
+    </data>
+
+    <com.pandulapeter.beagle.appDemo.feature.shared.CodeSnippetView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_content_padding"
+        android:layout_marginLeft="@dimen/large_content_padding"
+        android:layout_marginTop="@dimen/large_content_padding"
+        android:layout_marginEnd="@dimen/large_content_padding"
+        android:layout_marginRight="@dimen/large_content_padding"
+        android:text="@{uiModel.textResourceId}"
+        tools:text="Text" />
+
+</layout>

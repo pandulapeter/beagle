@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.utils
+package com.pandulapeter.beagle.appDemo.feature.shared.list
 
 import androidx.recyclerview.widget.DiffUtil
 

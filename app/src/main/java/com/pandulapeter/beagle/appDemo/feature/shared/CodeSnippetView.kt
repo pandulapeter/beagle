@@ -8,7 +8,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.utils.color
 import com.pandulapeter.beagle.appDemo.utils.dimension
 
-class CodeTextView @JvmOverloads constructor(
+class CodeSnippetView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
