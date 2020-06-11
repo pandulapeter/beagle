@@ -26,6 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class InspirationFragment : MainChildFragment<FragmentInspirationBinding, InspirationViewModel>(R.layout.fragment_inspiration, R.string.inspiration_title) {
 
     override val viewModel by viewModel<InspirationViewModel>()
+    override val appBar get() = binding.appBar
     private val textModule1 by lazy { TextModule(text = getText(R.string.inspiration_beagle_text_1)) }
     private val labelModule by lazy { LabelModule(title = getString(R.string.inspiration_beagle_label)) }
     private val switchModule by lazy {
@@ -110,6 +111,7 @@ class InspirationFragment : MainChildFragment<FragmentInspirationBinding, Inspir
     private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) {
         when (caseStudy) {
             CaseStudy.BASIC_SETUP -> activityFragmentManager?.handleReplace(
+                containerId = R.id.main_fragment_container,
                 addToBackStack = true,
                 sharedElements = listOf(view),
                 newInstance = BasicSetupFragment.Companion::newInstance

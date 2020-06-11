@@ -13,11 +13,15 @@ import com.pandulapeter.beagle.appDemo.databinding.FragmentInspirationDetailBind
 import com.pandulapeter.beagle.appDemo.feature.shared.ViewModelFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
+import com.pandulapeter.beagle.appDemo.utils.color
 import com.pandulapeter.beagle.appDemo.utils.waitForLayout
 
 abstract class InspirationDetailFragment<VM : InspirationDetailViewModel<LI>, LI : ListItem>(
-    @StringRes private val titleResourceId: Int
+    @StringRes titleResourceId: Int
 ) : ViewModelFragment<FragmentInspirationDetailBinding, VM>(R.layout.fragment_inspiration_detail, titleResourceId, false) {
+
+    override val appBar get() = binding.appBar
+    override val backgroundColor get() = requireContext().color(R.color.white)
 
     abstract fun createAdapter(): BaseAdapter<LI>
 
@@ -26,7 +30,7 @@ abstract class InspirationDetailFragment<VM : InspirationDetailViewModel<LI>, LI
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             scrimColor = Color.TRANSPARENT
             fadeMode = MaterialContainerTransform.FADE_MODE_OUT
-            drawingViewId = R.id.fragment_container
+            drawingViewId = R.id.main_fragment_container
         }
     }
 

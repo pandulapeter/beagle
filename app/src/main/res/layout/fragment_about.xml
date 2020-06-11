@@ -9,11 +9,22 @@
 
     </data>
 
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="@dimen/large_content_padding"
-        android:text="@string/about_description" />
+        android:layout_height="match_parent">
+
+        <com.pandulapeter.beagle.appDemo.feature.shared.AppBarView
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/large_content_padding"
+            android:text="@string/about_description" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

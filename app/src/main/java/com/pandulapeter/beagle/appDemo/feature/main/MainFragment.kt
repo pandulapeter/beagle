@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
 import com.pandulapeter.beagle.appDemo.utils.consume
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 
-class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main, null, true) {
+class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -36,11 +36,7 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
     crossinline newInstance: () -> T
 ) {
     beginTransaction().apply {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            sharedElements?.forEach { sharedElement ->
-                addSharedElement(sharedElement, sharedElement.transitionName)
-            }
-        }
+        sharedElements?.forEach { sharedElement -> ViewCompat.getTransitionName(sharedElement)?.let { addSharedElement(sharedElement, it) } }
         replace(containerId, findFragmentByTag(tag) ?: newInstance(), tag)
         if (addToBackStack) {
             addToBackStack(null)
