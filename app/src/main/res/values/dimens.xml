@@ -12,5 +12,6 @@
     <dimen name="bottom_navigation_view_padding">88dp</dimen>
     <dimen name="beagle_button_margin">24dp</dimen>
     <dimen name="list_bottom_padding">32dp</dimen>
+    <dimen name="detail_bottom_padding">94dp</dimen>
 
 </resources>
