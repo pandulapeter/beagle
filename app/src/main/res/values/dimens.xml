@@ -13,5 +13,6 @@
     <dimen name="beagle_button_margin">24dp</dimen>
     <dimen name="list_bottom_padding">32dp</dimen>
     <dimen name="detail_bottom_padding">94dp</dimen>
+    <dimen name="code_snippet">12sp</dimen>
 
 </resources>

@@ -13,7 +13,7 @@ internal class SingleSelectionListDelegate<T : BeagleListItemContract> : Expanda
         addAll(module.items.map { item ->
             RadioButtonCell(
                 id = "${module.id}_${item.id}",
-                text = item.name,
+                text = item.title,
                 isChecked = item.id == getCurrentValue(module),
                 onValueChanged = { setCurrentValue(module, item.id) }
             )

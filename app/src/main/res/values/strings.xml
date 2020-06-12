@@ -31,20 +31,34 @@ The library was written in Kotlin and supports API levels 16 and above.\n\n
     <string name="inspiration_welcome_hint_1"><b>Welcome!</b>\n\n
 Beagle is a free, open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.</string>
     <string name="inspiration_welcome_hint_2">After choosing a UI dependency that determines the way the menu is displayed (<i>activity</i>, <i>bottom sheet</i>, <i>dialog</i>, <i>drawer</i> or <i>view</i>), the library can be initialized with a single line of code in the <b>onCreate()</b> method of your custom <b>Application</b> class:</string>
-    <string name="inspiration_welcome_snippet_1">Beagle.initialize(this)</string>
     <string name="inspiration_welcome_hint_3"><b><i>In this demo you can trigger the debug menu at any time by shaking the device or by tapping on the Beagle logo in the bottom-right corner.</i></b></string>
     <string name="inspiration_welcome_hint_4">The next step after initialization is configuring a list of modules. The simplest way to do that is to call:</string>
-    <string name="inspiration_welcome_snippet_2">Beagle.setModules(module1, module2, …)</string>
     <string name="inspiration_welcome_hint_5">The module configuration very much depends on your application\'s specific needs, but the following example demonstrates some features that most developers will find useful:</string>
     <string name="inspiration_welcome_hint_6">The true power of the library lies in modules that require a tiny bit of customization. Check out how Beagle can be useful in the following situations:</string>
 
     <!-- Case studies / Basic setup -->
     <string name="case_study_basic_setup_title">Basic setup</string>
     <string name="case_study_basic_setup_description">Built-in modules that can be added with almost no configuration and are useful for most projects.</string>
+    <string name="case_study_basic_setup_text_1">The current module configuration is initialized using the following code snippet:</string>
+    <string name="case_study_basic_setup_text_2"><b>AppInfoButton</b>\n\n
+A simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
+    <string name="case_study_basic_setup_text_3"><b>AnimationDurationSwitch</b>\n\n
+A frequent use case for this toggle is debugging animation / transition glitches. <b><i>TODO: Add something here that animates.</i></b></string>
 
     <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>
     <string name="case_study_authentication_description">Simplify the QA process by presenting a list of test accounts and automatically filling in the necessary login information.</string>
+    <string name="case_study_authentication_text_1">Manually typing in the same credentials multiple times a day can be a huge waste of time.</string>
+    <string name="case_study_authentication_email">Email address</string>
+    <string name="case_study_authentication_password">Password</string>
+    <string name="case_study_authentication_text_2">To define a module that helps in this situation, first we need to create a representation of a test account:</string>
+    <string name="case_study_authentication_text_3">Extending <b>BeagleListItemContract</b> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\n
+The next step is creating the module:</string>
+    <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\n
+Another idea to save time is to automatically display the debug menu when the screen is opened, simply by calling</string>
+    <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Trigger automatically\" switch and re-opening this screen.</string>
+    <string name="case_study_authentication_trigger_automatically_switch">Trigger automatically</string>
+    <string name="case_study_authentication_test_accounts">Test accounts</string>
 
     <!-- Case studies / Feature toggles -->
     <string name="case_study_feature_toggles_title">Feature toggles</string>

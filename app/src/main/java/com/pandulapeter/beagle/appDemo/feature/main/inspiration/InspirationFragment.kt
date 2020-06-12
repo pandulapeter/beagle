@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.FragmentInspirationBinding
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.AuthenticationFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.BasicSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
@@ -55,7 +56,7 @@ class InspirationFragment : DestinationFragment<FragmentInspirationBinding, Insp
                 title = getString(R.string.inspiration_beagle_radio_group),
                 items = radioGroupOptions,
                 initiallySelectedItemId = radioGroupOptions.first().id,
-                onSelectionChanged = { showToast(it?.name.orEmpty()) }
+                onSelectionChanged = { showToast(it?.title.orEmpty()) }
             )
         }
     }
@@ -113,12 +114,18 @@ class InspirationFragment : DestinationFragment<FragmentInspirationBinding, Insp
             transitionType = TransitionType.MODAL,
             newInstance = BasicSetupFragment.Companion::newInstance
         )
+        CaseStudy.AUTHENTICATION -> parentFragmentManager.handleReplace(
+            addToBackStack = true,
+            sharedElements = listOf(view),
+            transitionType = TransitionType.MODAL,
+            newInstance = AuthenticationFragment.Companion::newInstance
+        )
         else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
     }
 
     private data class RadioGroupOption(
-        override val name: String,
-        override val id: String = name
+        override val title: String,
+        override val id: String = title
     ) : BeagleListItemContract
 
     companion object {

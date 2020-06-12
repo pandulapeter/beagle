@@ -20,12 +20,12 @@ class InspirationViewModel : ViewModel() {
             add(TextViewHolder.UiModel(R.string.inspiration_welcome_hint_1))
             if (shouldShowTutorial) {
                 add(TextViewHolder.UiModel(R.string.inspiration_welcome_hint_2))
-                add(CodeSnippetViewHolder.UiModel(R.string.inspiration_welcome_snippet_1))
+                add(CodeSnippetViewHolder.UiModel("Beagle.initialize(this)"))
             }
             add(TextViewHolder.UiModel(R.string.inspiration_welcome_hint_3))
             if (shouldShowTutorial) {
                 add(TextViewHolder.UiModel(R.string.inspiration_welcome_hint_4))
-                add(CodeSnippetViewHolder.UiModel(R.string.inspiration_welcome_snippet_2))
+                add(CodeSnippetViewHolder.UiModel("Beagle.setModules(module1, module2, …)"))
                 add(TextViewHolder.UiModel(R.string.inspiration_welcome_hint_5))
             }
             CaseStudy.values().forEachIndexed { index, caseStudy ->

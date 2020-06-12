@@ -28,6 +28,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         if (savedInstanceState == null && currentFragment == null) {
             binding.bottomNavigationView.selectedItemId = R.id.inspiration
         }
+        binding.bottomNavigationView.setOnNavigationItemReselectedListener { onBackPressed() }
     }
 
     override fun onBackPressed() = if (currentFragment?.childFragmentManager?.backStackEntryCount ?: 0 <= 1) false else super.onBackPressed()

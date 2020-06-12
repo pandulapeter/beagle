@@ -6,7 +6,7 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
-import com.pandulapeter.beagle.modules.TextModule
+import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import org.koin.android.ext.android.inject
 
 class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, ListItem>(R.string.case_study_basic_setup_title) {
@@ -16,7 +16,7 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, ListIt
     override fun createAdapter() = object : BaseAdapter<ListItem>() {}
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
-        TextModule(text = "Work in progress"),
+        AppInfoButtonModule(),
         AnimationDurationSwitchModule()
     )
 

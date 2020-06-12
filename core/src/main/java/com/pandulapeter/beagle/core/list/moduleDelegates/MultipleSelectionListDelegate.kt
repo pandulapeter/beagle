@@ -14,7 +14,7 @@ internal class MultipleSelectionListDelegate<T : BeagleListItemContract> : Expan
         addAll(module.items.map { item ->
             CheckBoxCell(
                 id = "${module.id}_${item.id}",
-                text = item.name,
+                text = item.title,
                 isChecked = getCurrentValue(module).contains(item.id),
                 onValueChanged = { isChecked ->
                     if (isChecked) {

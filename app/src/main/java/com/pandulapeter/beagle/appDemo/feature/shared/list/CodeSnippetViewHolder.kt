@@ -2,10 +2,10 @@ package com.pandulapeter.beagle.appDemo.feature.shared.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemCodeSnippetBinding
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 
 class CodeSnippetViewHolder private constructor(
@@ -13,9 +13,9 @@ class CodeSnippetViewHolder private constructor(
 ) : BaseViewHolder<ItemCodeSnippetBinding, CodeSnippetViewHolder.UiModel>(binding) {
 
     data class UiModel(
-        @StringRes val textResourceId: Int,
-        override val id: String = "codeSnippet_$textResourceId"
-    ) : ListItem, InspirationListItem
+        val codeSnippet: String,
+        override val id: String = "codeSnippet_$codeSnippet"
+    ) : ListItem, InspirationListItem, AuthenticationListItem
 
     companion object {
         fun create(

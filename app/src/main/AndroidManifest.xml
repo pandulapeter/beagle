@@ -13,10 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
-        android:windowSoftInputMode="adjustResize"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="com.pandulapeter.beagle.appDemo.feature.BeagleDemoActivity">
+        <activity
+            android:name="com.pandulapeter.beagle.appDemo.feature.BeagleDemoActivity"
+            android:windowSoftInputMode="adjustNothing">
 
             <intent-filter>
 

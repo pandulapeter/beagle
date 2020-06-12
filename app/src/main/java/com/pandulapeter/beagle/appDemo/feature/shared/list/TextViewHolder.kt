@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemTextBinding
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 
 class TextViewHolder private constructor(
@@ -15,7 +16,7 @@ class TextViewHolder private constructor(
     data class UiModel(
         @StringRes val textResourceId: Int,
         override val id: String = "text_$textResourceId"
-    ) : ListItem, InspirationListItem
+    ) : ListItem, InspirationListItem, AuthenticationListItem
 
     companion object {
         fun create(

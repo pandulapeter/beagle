@@ -19,7 +19,6 @@
             android:layout_marginEnd="@dimen/large_content_padding"
             android:layout_marginRight="@dimen/large_content_padding"
             android:layout_marginBottom="@dimen/beagle_button_margin"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/open_debug_menu"
             android:src="@drawable/img_logo" />
 

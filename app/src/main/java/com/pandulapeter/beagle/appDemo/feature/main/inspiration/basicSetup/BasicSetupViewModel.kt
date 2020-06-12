@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailViewModel
+import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 
@@ -14,11 +15,15 @@ class BasicSetupViewModel : InspirationDetailViewModel<ListItem>() {
 
     init {
         _items.value = listOf(
-            TextViewHolder.UiModel(R.string.inspiration_beagle_text_1),
-            TextViewHolder.UiModel(R.string.inspiration_beagle_text_1),
-            TextViewHolder.UiModel(R.string.inspiration_beagle_text_1),
-            TextViewHolder.UiModel(R.string.inspiration_beagle_text_1),
-            TextViewHolder.UiModel(R.string.inspiration_beagle_text_1)
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_1),
+            CodeSnippetViewHolder.UiModel(
+                "Beagle.setModules(\n" +
+                        "    AppInfoButtonModule(),\n" +
+                        "    AnimationDurationSwitchModule()\n" +
+                        ")"
+            ),
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_2),
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_3)
         )
     }
 }

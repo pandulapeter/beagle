@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding"
-        android:text="@{uiModel.textResourceId}"
+        android:text="@{uiModel.codeSnippet}"
         tools:text="Text" />
 
 </layout>
