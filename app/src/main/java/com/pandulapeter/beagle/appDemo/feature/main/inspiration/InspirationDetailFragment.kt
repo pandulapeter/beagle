@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentInspirationDetailBinding
-import com.pandulapeter.beagle.appDemo.feature.shared.ViewModelFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.appDemo.utils.shouldUseContainerTransform
@@ -18,7 +18,7 @@ import com.pandulapeter.beagle.appDemo.utils.waitForLayout
 
 abstract class InspirationDetailFragment<VM : InspirationDetailViewModel<LI>, LI : ListItem>(
     @StringRes titleResourceId: Int
-) : ViewModelFragment<FragmentInspirationDetailBinding, VM>(R.layout.fragment_inspiration_detail, titleResourceId, R.color.window_background) {
+) : DestinationFragment<FragmentInspirationDetailBinding, VM>(R.layout.fragment_inspiration_detail, titleResourceId, R.color.window_background) {
 
     override val appBar get() = binding.appBar
 

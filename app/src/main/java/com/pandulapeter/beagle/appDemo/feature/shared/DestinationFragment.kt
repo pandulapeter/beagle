@@ -14,7 +14,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.utils.color
 import com.pandulapeter.beagle.common.contracts.module.Module
 
-abstract class ViewModelFragment<B : ViewDataBinding, VM : ViewModel>(
+abstract class DestinationFragment<B : ViewDataBinding, VM : ViewModel>(
     @LayoutRes layoutResourceId: Int,
     @StringRes protected val titleResourceId: Int,
     @ColorRes private val backgroundColorResourceId: Int = R.color.transparent
@@ -30,7 +30,7 @@ abstract class ViewModelFragment<B : ViewDataBinding, VM : ViewModel>(
         super.onViewCreated(view, savedInstanceState)
         binding.setVariable(BR.viewModel, viewModel)
         binding.root.setBackgroundColor(requireContext().color(backgroundColorResourceId))
-        appBar.setup(titleResourceId, parentFragmentManager.backStackEntryCount == 0, requireActivity())
+        appBar.setup(titleResourceId, parentFragmentManager.backStackEntryCount <= 1, requireActivity())
         refreshBeagle()
     }
 

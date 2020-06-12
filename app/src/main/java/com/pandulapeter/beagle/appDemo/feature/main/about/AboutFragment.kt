@@ -3,12 +3,12 @@ package com.pandulapeter.beagle.appDemo.feature.main.about
 import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentAboutBinding
-import com.pandulapeter.beagle.appDemo.feature.shared.ViewModelFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AboutFragment : ViewModelFragment<FragmentAboutBinding, AboutViewModel>(R.layout.fragment_about, R.string.about_title) {
+class AboutFragment : DestinationFragment<FragmentAboutBinding, AboutViewModel>(R.layout.fragment_about, R.string.about_title) {
 
     override val viewModel by viewModel<AboutViewModel>()
     override val appBar get() = binding.appBar

@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.FragmentInspirationBinding
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.BasicSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
-import com.pandulapeter.beagle.appDemo.feature.shared.ViewModelFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.showToast
@@ -24,7 +24,7 @@ import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class InspirationFragment : ViewModelFragment<FragmentInspirationBinding, InspirationViewModel>(R.layout.fragment_inspiration, R.string.inspiration_title) {
+class InspirationFragment : DestinationFragment<FragmentInspirationBinding, InspirationViewModel>(R.layout.fragment_inspiration, R.string.inspiration_title) {
 
     override val viewModel by viewModel<InspirationViewModel>()
     override val appBar get() = binding.appBar
@@ -96,10 +96,7 @@ class InspirationFragment : ViewModelFragment<FragmentInspirationBinding, Inspir
             adapter = inspirationAdapter
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            waitForLayout {
-                startPostponedEnterTransition()
-                parentFragment?.startPostponedEnterTransition()
-            }
+            waitForLayout { startPostponedEnterTransition() }
         }
         viewModel.items.observeForever(inspirationAdapter::submitList)
     }
