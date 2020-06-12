@@ -41,9 +41,10 @@ Beagle is a free, open-source library that adds a smart and easily customizable 
     <string name="case_study_basic_setup_title">Basic setup</string>
     <string name="case_study_basic_setup_description">Built-in modules that can be added with almost no configuration and are useful for most projects.</string>
     <string name="case_study_basic_setup_text_1">The current module configuration is initialized using the following code snippet:</string>
-    <string name="case_study_basic_setup_text_2"><b>AppInfoButton</b>\n\n
+    <string name="case_study_basic_setup_text_2">Let\'s see what each individual module does.</string>
+    <string name="case_study_basic_setup_text_3"><b>AppInfoButton</b>\n\n
 A simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
-    <string name="case_study_basic_setup_text_3"><b>AnimationDurationSwitch</b>\n\n
+    <string name="case_study_basic_setup_text_4"><b>AnimationDurationSwitch</b>\n\n
 A frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
 
     <!-- Case studies / Authentication -->
@@ -52,7 +53,9 @@ A frequent use case for this toggle is debugging animation / transition glitches
     <string name="case_study_authentication_text_1">Manually typing in the same credentials multiple times a day can be a huge waste of time.</string>
     <string name="case_study_authentication_email">Email address</string>
     <string name="case_study_authentication_password">Password</string>
-    <string name="case_study_authentication_text_2"><b>TODO: Add a \"Sign in\" button</b>\n\nTo define a module that helps in this situation, first we need to create a representation of a test account:</string>
+    <string name="case_study_authentication_sign_in_button">Sign in</string>
+    <string name="case_study_authentication_signing_in">Signing in!</string>
+    <string name="case_study_authentication_text_2">To define a module that helps in this situation, first we need to create a representation of a test account:</string>
     <string name="case_study_authentication_text_3">Extending <b>BeagleListItemContract</b> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\n
 The next step is creating the module:</string>
     <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\n

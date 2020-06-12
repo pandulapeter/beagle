@@ -29,6 +29,7 @@ class BasicSetupViewModel : InspirationDetailViewModel<BasicSetupListItem>() {
             ),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_2),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_3),
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_4),
             LoadingIndicatorViewHolder.UiModel()
         )
     }

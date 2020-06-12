@@ -23,7 +23,10 @@ abstract class ViewHolder<T : Cell<T>>(view: View) : RecyclerView.ViewHolder(vie
      */
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     @Suppress("UNCHECKED_CAST")
-    fun forceBind(model: Cell<*>) = bind(model as T)
+    fun forceBind(model: Cell<*>) = try {
+        bind(model as T)
+    } catch (_: ClassCastException) {
+    }
 
     /**
      * Connects the conceptual [Cell] representation of a UI element to the actual View responsible for displaying it.

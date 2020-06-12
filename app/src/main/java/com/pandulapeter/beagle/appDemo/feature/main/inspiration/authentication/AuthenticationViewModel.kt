@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.ButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.EmailInputViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.PasswordInputViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
@@ -16,6 +17,7 @@ class AuthenticationViewModel : InspirationDetailViewModel<AuthenticationListIte
     override val items: LiveData<List<AuthenticationListItem>> = _items
     private val text1 = TextViewHolder.UiModel(R.string.case_study_authentication_text_1)
     private val text2 = TextViewHolder.UiModel(R.string.case_study_authentication_text_2)
+    private val button = ButtonViewHolder.UiModel()
     private val snippet1 = CodeSnippetViewHolder.UiModel(
         "data class TestAccount(\n" +
                 "    val email: String,\n" +
@@ -57,6 +59,7 @@ class AuthenticationViewModel : InspirationDetailViewModel<AuthenticationListIte
             text1,
             EmailInputViewHolder.UiModel(email),
             PasswordInputViewHolder.UiModel(password),
+            button,
             text2,
             snippet1,
             text3,

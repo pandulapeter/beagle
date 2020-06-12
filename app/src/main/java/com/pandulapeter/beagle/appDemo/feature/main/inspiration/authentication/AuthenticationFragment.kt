@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication
 
 import android.os.Bundle
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
@@ -37,7 +38,7 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
         super.onPause()
     }
 
-    override fun createAdapter() = AuthenticationAdapter()
+    override fun createAdapter() = AuthenticationAdapter(::signIn)
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         ItemListModule(
@@ -56,10 +57,16 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
             onItemSelected = { testAccount ->
                 viewModel.updateItems(testAccount.email, testAccount.password)
                 Beagle.hide()
+                signIn()
             }
         ),
         showAutomaticallySwitch
     )
+
+    private fun signIn() {
+        Snackbar.make(binding.recyclerView, R.string.case_study_authentication_signing_in, Snackbar.LENGTH_SHORT).show()
+        activity?.currentFocus?.hideKeyboard()
+    }
 
     companion object {
         const val SHOW_AUTOMATICALLY_SWITCH_ID = "showAutomatically"
