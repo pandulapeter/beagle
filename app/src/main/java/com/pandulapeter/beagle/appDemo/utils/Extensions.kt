@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.view.View
 import android.view.ViewTreeObserver
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
@@ -30,6 +31,11 @@ fun Fragment.showToast(@StringRes messageResourceId: Int) = showToast(getString(
 fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
 
 fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensionPixelSize(dimensionResourceId)
+
+fun View.hideKeyboard() {
+    clearFocus()
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
+}
 
 inline fun <reified T : Fragment> FragmentManager.handleReplace(
     tag: String = T::class.java.name,

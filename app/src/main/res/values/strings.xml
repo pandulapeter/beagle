@@ -3,6 +3,7 @@
     <!-- Main -->
     <string name="open_debug_menu">Open debug menu</string>
     <string name="back">Back</string>
+    <string name="coming_soon">Coming soon…</string>
 
     <!-- Inspiration -->
     <string name="inspiration_title">Inspiration</string>
@@ -51,13 +52,13 @@ A frequent use case for this toggle is debugging animation / transition glitches
     <string name="case_study_authentication_text_1">Manually typing in the same credentials multiple times a day can be a huge waste of time.</string>
     <string name="case_study_authentication_email">Email address</string>
     <string name="case_study_authentication_password">Password</string>
-    <string name="case_study_authentication_text_2">To define a module that helps in this situation, first we need to create a representation of a test account:</string>
+    <string name="case_study_authentication_text_2"><b>TODO: Add a \"Sign in\" button</b>\n\nTo define a module that helps in this situation, first we need to create a representation of a test account:</string>
     <string name="case_study_authentication_text_3">Extending <b>BeagleListItemContract</b> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\n
 The next step is creating the module:</string>
     <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\n
-Another idea to save time is to automatically display the debug menu when the screen is opened, simply by calling</string>
-    <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Trigger automatically\" switch and re-opening this screen.</string>
-    <string name="case_study_authentication_trigger_automatically_switch">Trigger automatically</string>
+Another idea to save time is to automatically display the debug menu when the screen is opened, simply by calling:</string>
+    <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
+    <string name="case_study_authentication_show_automatically_switch">Show automatically</string>
     <string name="case_study_authentication_test_accounts">Test accounts</string>
 
     <!-- Case studies / Feature toggles -->

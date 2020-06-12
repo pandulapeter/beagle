@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
+import com.pandulapeter.beagle.appDemo.utils.hideKeyboard
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -15,10 +16,10 @@ import org.koin.android.ext.android.inject
 class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel, AuthenticationListItem>(R.string.case_study_authentication_title) {
 
     override val viewModel by inject<AuthenticationViewModel>()
-    private val triggerAutomaticallySwitch by lazy {
+    private val showAutomaticallySwitch by lazy {
         SwitchModule(
-            id = TRIGGER_AUTOMATICALLY_SWITCH_ID,
-            text = getString(R.string.case_study_authentication_trigger_automatically_switch),
+            id = SHOW_AUTOMATICALLY_SWITCH_ID,
+            text = getString(R.string.case_study_authentication_show_automatically_switch),
             shouldBePersisted = true,
             onValueChanged = {}
         )
@@ -26,15 +27,19 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (triggerAutomaticallySwitch.getCurrentValue(Beagle) == true) {
+        if (showAutomaticallySwitch.getCurrentValue(Beagle) == true) {
             binding.root.postDelayed({ Beagle.show() }, 500)
         }
+    }
+
+    override fun onPause() {
+        activity?.currentFocus?.hideKeyboard()
+        super.onPause()
     }
 
     override fun createAdapter() = AuthenticationAdapter()
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
-        triggerAutomaticallySwitch,
         ItemListModule(
             title = getString(R.string.case_study_authentication_test_accounts),
             isExpandedInitially = true,
@@ -52,11 +57,12 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
                 viewModel.updateItems(testAccount.email, testAccount.password)
                 Beagle.hide()
             }
-        )
+        ),
+        showAutomaticallySwitch
     )
 
     companion object {
-        const val TRIGGER_AUTOMATICALLY_SWITCH_ID = "triggerAutomatically"
+        const val SHOW_AUTOMATICALLY_SWITCH_ID = "showAutomatically"
 
         fun newInstance() = AuthenticationFragment()
     }

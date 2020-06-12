@@ -20,11 +20,13 @@
         android:layout_marginTop="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding"
+        android:clickable="@{uiModel.caseStudy.isReady}"
         app:transitionName="@{uiModel.caseStudy.title}">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="@{uiModel.caseStudy.isReady ? 1f : 0.5f}"
             android:orientation="vertical"
             android:padding="@dimen/large_content_padding">
 
@@ -41,6 +43,14 @@
                 android:layout_marginTop="@dimen/small_content_padding"
                 android:text="@{uiModel.caseStudy.description}"
                 tools:text="Description" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_content_padding"
+                android:text="@string/coming_soon"
+                android:textStyle="italic"
+                android:visibility="@{!uiModel.caseStudy.isReady}" />
 
         </LinearLayout>
 

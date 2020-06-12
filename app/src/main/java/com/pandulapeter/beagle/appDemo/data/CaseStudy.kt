@@ -7,7 +7,8 @@ import java.util.UUID
 enum class CaseStudy(
     val id: String = UUID.randomUUID().toString(),
     @StringRes val title: Int,
-    @StringRes val description: Int
+    @StringRes val description: Int,
+    val isReady: Boolean = true
 ) {
     BASIC_SETUP(
         title = R.string.case_study_basic_setup_title,
@@ -19,26 +20,32 @@ enum class CaseStudy(
     ),
     FEATURE_TOGGLES(
         title = R.string.case_study_feature_toggles_title,
-        description = R.string.case_study_feature_toggles_description
+        description = R.string.case_study_feature_toggles_description,
+        isReady = false
     ),
     ANALYTICS(
         title = R.string.case_study_analytics_title,
-        description = R.string.case_study_analytics_description
+        description = R.string.case_study_analytics_description,
+        isReady = false
     ),
     NETWORK_REQUEST_INTERCEPTOR(
         title = R.string.case_study_network_request_interceptor_title,
-        description = R.string.case_study_network_request_interceptor_description
+        description = R.string.case_study_network_request_interceptor_description,
+        isReady = false
     ),
     ENVIRONMENT_SWITCHER(
         title = R.string.case_study_environment_switcher_title,
-        description = R.string.case_study_environment_switcher_description
+        description = R.string.case_study_environment_switcher_description,
+        isReady = false
     ),
     MOCK_DATA_GENERATOR(
         title = R.string.case_study_mock_data_generator_title,
-        description = R.string.case_study_mock_data_generator_description
+        description = R.string.case_study_mock_data_generator_description,
+        isReady = false
     ),
     BUG_REPORTER(
         title = R.string.case_study_bug_reporting_tool_title,
-        description = R.string.case_study_bug_reporting_tool_description
+        description = R.string.case_study_bug_reporting_tool_description,
+        isReady = false
     )
 }
