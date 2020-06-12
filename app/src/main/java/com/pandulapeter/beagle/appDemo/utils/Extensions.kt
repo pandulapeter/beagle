@@ -18,6 +18,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
 
 fun Fragment.showToast(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -32,12 +35,37 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
     tag: String = T::class.java.name,
     addToBackStack: Boolean = false,
     sharedElements: List<View>? = null,
+    transitionType: TransitionType? = TransitionType.SIBLING,
     @IdRes containerId: Int = R.id.fragment_container,
     crossinline newInstance: () -> T
 ) {
     beginTransaction().apply {
+        val currentFragment = findFragmentById(containerId)
+        val newFragment = findFragmentByTag(tag) ?: newInstance()
+        when (transitionType) {
+            TransitionType.SIBLING -> {
+                currentFragment?.let {
+                    currentFragment.exitTransition = MaterialFadeThrough()
+                    currentFragment.reenterTransition = MaterialFadeThrough()
+                    newFragment.enterTransition = MaterialFadeThrough()
+                    newFragment.returnTransition = MaterialFadeThrough()
+                }
+            }
+            TransitionType.MODAL -> {
+                if (sharedElements.isNullOrEmpty() || !shouldUseContainerTransform) {
+                    currentFragment?.exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+                    currentFragment?.reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+                    newFragment.enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+                    newFragment.returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+                } else {
+                    currentFragment?.exitTransition = Hold()
+                    currentFragment?.reenterTransition = Hold()
+                }
+            }
+            null -> Unit
+        }
         sharedElements?.forEach { sharedElement -> ViewCompat.getTransitionName(sharedElement)?.let { addSharedElement(sharedElement, it) } }
-        replace(containerId, findFragmentByTag(tag) ?: newInstance(), tag)
+        replace(containerId, newFragment, tag)
         if (addToBackStack) {
             addToBackStack(null)
         }
@@ -45,6 +73,8 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
         commitAllowingStateLoss()
     }
 }
+
+val shouldUseContainerTransform = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
 @BindingAdapter("transitionName")
 fun View.setTransitionName(@StringRes stringResourceId: Int) = setTransitionNameCompat(context.getString(stringResourceId))

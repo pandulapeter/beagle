@@ -7,9 +7,10 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.FragmentInspirationBinding
-import com.pandulapeter.beagle.appDemo.feature.main.MainChildFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.BasicSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
+import com.pandulapeter.beagle.appDemo.feature.shared.ViewModelFragment
+import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.showToast
 import com.pandulapeter.beagle.appDemo.utils.waitForLayout
@@ -23,7 +24,7 @@ import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class InspirationFragment : MainChildFragment<FragmentInspirationBinding, InspirationViewModel>(R.layout.fragment_inspiration, R.string.inspiration_title) {
+class InspirationFragment : ViewModelFragment<FragmentInspirationBinding, InspirationViewModel>(R.layout.fragment_inspiration, R.string.inspiration_title) {
 
     override val viewModel by viewModel<InspirationViewModel>()
     override val appBar get() = binding.appBar
@@ -108,16 +109,14 @@ class InspirationFragment : MainChildFragment<FragmentInspirationBinding, Inspir
         refreshBeagle()
     }
 
-    private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) {
-        when (caseStudy) {
-            CaseStudy.BASIC_SETUP -> activityFragmentManager?.handleReplace(
-                containerId = R.id.main_fragment_container,
-                addToBackStack = true,
-                sharedElements = listOf(view),
-                newInstance = BasicSetupFragment.Companion::newInstance
-            )
-            else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
-        }
+    private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) = when (caseStudy) {
+        CaseStudy.BASIC_SETUP -> parentFragmentManager.handleReplace(
+            addToBackStack = true,
+            sharedElements = listOf(view),
+            transitionType = TransitionType.MODAL,
+            newInstance = BasicSetupFragment.Companion::newInstance
+        )
+        else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
     }
 
     private data class RadioGroupOption(

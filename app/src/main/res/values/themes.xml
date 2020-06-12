@@ -12,6 +12,7 @@
         <item name="colorPrimary">@color/brand_dark</item>
         <item name="colorAccent">@color/brand_dark</item>
         <item name="materialButtonStyle">@style/Button</item>
+        <item name="android:windowBackground">@color/window_background</item>
     </style>
 
     <style name="AppBarTheme" parent="DarkTheme" />

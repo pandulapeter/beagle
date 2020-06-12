@@ -7,8 +7,9 @@
     <color name="transparent">#00000000</color>
 
     <!-- Brand -->
-    <color name="brand_light">#dbbe96</color>
-    <color name="brand_dark">#4f3d2f</color>
+    <color name="brand_light">#DBBE96</color>
+    <color name="brand_dark">#4F3D2F</color>
+    <color name="window_background">#FAFAFA</color>
 
     <!-- Dynamic -->
     <color name="toolbar_background">@color/brand_dark</color>

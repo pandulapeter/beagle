@@ -7,12 +7,15 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ActivityBeagleDemoBinding
 import com.pandulapeter.beagle.appDemo.feature.main.MainFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
+import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.updateSystemBars
 
 class BeagleDemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBeagleDemoBinding
+    private val currentFragment get() = supportFragmentManager.findFragmentById(R.id.fragment_container) as? BaseFragment<*>?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -20,7 +23,7 @@ class BeagleDemoActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_beagle_demo)
         binding.beagleButton.setOnClickListener { Beagle.show() }
         if (savedInstanceState == null) {
-            supportFragmentManager.handleReplace(containerId = R.id.main_fragment_container, newInstance = MainFragment.Companion::newInstance)
+            supportFragmentManager.handleReplace(transitionType = null, newInstance = MainFragment.Companion::newInstance)
         }
     }
 
@@ -30,7 +33,7 @@ class BeagleDemoActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (!Beagle.hide()) {
+        if (!Beagle.hide() && currentFragment?.onBackPressed() != true) {
             super.onBackPressed()
         }
     }
