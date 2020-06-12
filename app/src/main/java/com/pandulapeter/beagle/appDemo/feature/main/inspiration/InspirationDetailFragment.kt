@@ -29,7 +29,11 @@ abstract class InspirationDetailFragment<VM : InspirationDetailViewModel<LI>, LI
         if (shouldUseContainerTransform) {
             sharedElementEnterTransition = MaterialContainerTransform().apply {
                 scrimColor = Color.TRANSPARENT
-                fadeMode = MaterialContainerTransform.FADE_MODE_OUT
+                fadeProgressThresholds = MaterialContainerTransform.ProgressThresholds(0f, 0.5f)
+                scaleProgressThresholds = MaterialContainerTransform.ProgressThresholds(0f, 1f)
+                scaleMaskProgressThresholds = MaterialContainerTransform.ProgressThresholds(0f, 1f)
+                shapeMaskProgressThresholds = MaterialContainerTransform.ProgressThresholds(0f, 1f)
+                fadeMode = MaterialContainerTransform.FADE_MODE_IN
                 drawingViewId = R.id.fragment_container
             }
         }
