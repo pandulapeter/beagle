@@ -44,7 +44,7 @@ Beagle is a free, open-source library that adds a smart and easily customizable 
     <string name="case_study_basic_setup_text_2"><b>AppInfoButton</b>\n\n
 A simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
     <string name="case_study_basic_setup_text_3"><b>AnimationDurationSwitch</b>\n\n
-A frequent use case for this toggle is debugging animation / transition glitches. <b><i>TODO: Add something here that animates.</i></b></string>
+A frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
 
     <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>
