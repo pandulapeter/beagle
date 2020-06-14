@@ -20,8 +20,7 @@ enum class CaseStudy(
     ),
     FEATURE_TOGGLES(
         title = R.string.case_study_feature_toggles_title,
-        description = R.string.case_study_feature_toggles_description,
-        isReady = false
+        description = R.string.case_study_feature_toggles_description
     ),
     ANALYTICS(
         title = R.string.case_study_analytics_title,

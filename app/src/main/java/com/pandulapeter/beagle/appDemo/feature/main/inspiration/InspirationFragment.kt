@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.FragmentInspirationBinding
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.AuthenticationFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.BasicSetupFragment
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.FeatureTogglesFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
@@ -119,6 +120,12 @@ class InspirationFragment : DestinationFragment<FragmentInspirationBinding, Insp
             sharedElements = listOf(view),
             transitionType = TransitionType.MODAL,
             newInstance = AuthenticationFragment.Companion::newInstance
+        )
+        CaseStudy.FEATURE_TOGGLES -> parentFragmentManager.handleReplace(
+            addToBackStack = true,
+            sharedElements = listOf(view),
+            transitionType = TransitionType.MODAL,
+            newInstance = FeatureTogglesFragment.Companion::newInstance
         )
         else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
     }
