@@ -8,3 +8,9 @@ internal fun View.hideKeyboard() {
     clearFocus()
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
 }
+
+internal var View.visible
+    get() = visibility == View.VISIBLE
+    set(value) {
+        visibility = if (value) View.VISIBLE else View.GONE
+    }

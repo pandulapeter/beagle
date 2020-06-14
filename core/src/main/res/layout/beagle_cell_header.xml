@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/beagle_item_horizontal_margin"
+    android:paddingLeft="@dimen/beagle_item_horizontal_margin"
+    android:paddingTop="@dimen/beagle_item_vertical_margin"
+    android:paddingEnd="@dimen/beagle_item_horizontal_margin"
+    android:paddingRight="@dimen/beagle_item_horizontal_margin"
+    android:paddingBottom="@dimen/beagle_item_vertical_margin">
+
+    <TextView
+        android:id="@+id/beagle_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/beagle_header_title"
+        android:textStyle="bold"
+        tools:text="Title" />
+
+    <TextView
+        android:id="@+id/beagle_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        tools:text="Subtitle" />
+
+    <TextView
+        android:id="@+id/beagle_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Text" />
+
+</LinearLayout>

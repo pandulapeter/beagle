@@ -92,7 +92,7 @@ Another idea to save time is to automatically display the debug menu when the sc
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
-    <string name="playground_description">This page will contain a drag-and-drop editor that can be used to easily configure and preview Beagle modules. It will also generate the code for the configuration.\n\nThe default </string>
+    <string name="playground_description">This page will contain a drag-and-drop editor that can be used to easily configure and preview Beagle modules. It will also generate the code for the configuration.\n\nThe default list of modules should also be an example that is usable for most apps.</string>
 
     <!-- About -->
     <string name="about_title">About</string>
