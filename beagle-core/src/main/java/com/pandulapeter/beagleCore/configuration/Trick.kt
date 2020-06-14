@@ -539,7 +539,7 @@ sealed class Trick {
     }
 
     /**
-     * Displays information about the current device and the OS..
+     * Displays information about the current device and the OS.
      * This module can only be added once.
      *
      * @param title - The title of the module. "Device information" by default.

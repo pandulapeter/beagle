@@ -30,6 +30,7 @@ class BasicSetupViewModel : InspirationDetailViewModel<BasicSetupListItem>() {
                         "    ),\n" +
                         "    AppInfoButtonModule(),\n" +
                         "    AnimationDurationSwitchModule()\n" +
+                        "    DeviceInformationModule()\n" +
                         ")"
             ),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_2),
@@ -51,7 +52,8 @@ class BasicSetupViewModel : InspirationDetailViewModel<BasicSetupListItem>() {
             ),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_5),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_6),
-            LoadingIndicatorViewHolder.UiModel()
+            LoadingIndicatorViewHolder.UiModel(),
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_7)
         )
     }
 }
