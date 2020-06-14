@@ -48,7 +48,7 @@ Beagle is a free, open-source library that adds a smart and easily customizable 
 A simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
     <string name="case_study_basic_setup_text_6"><b>AnimationDurationSwitch</b>\n\n
 A frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
-    <string name="case_study_basic_setup_text_7"><b>DeviceInformation</b>\n\n
+    <string name="case_study_basic_setup_text_7"><b>DeviceInfo</b>\n\n
 Displays important information about the device such as the Android SDK version or the screen resolution that can be helpful in identifying potential device-specific issues.</string>
 
     <!-- Case studies / Authentication -->

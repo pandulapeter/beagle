@@ -6,12 +6,12 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.TextCell
 import com.pandulapeter.beagle.core.list.moduleDelegates.shared.ExpandableModuleDelegate
-import com.pandulapeter.beagle.modules.DeviceInformationModule
+import com.pandulapeter.beagle.modules.DeviceInfoModule
 
-internal class DeviceInformationDelegate : ExpandableModuleDelegate<DeviceInformationModule> {
+internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
 
     //TODO: Create a special cell / module type for key-value pairs.
-    override fun MutableList<Cell<*>>.addItems(module: DeviceInformationModule) {
+    override fun MutableList<Cell<*>>.addItems(module: DeviceInfoModule) {
         add(
             TextCell(
                 id = "${module.id}_manufacturer",

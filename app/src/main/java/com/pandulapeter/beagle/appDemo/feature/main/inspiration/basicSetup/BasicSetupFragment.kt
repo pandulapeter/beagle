@@ -8,7 +8,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
-import com.pandulapeter.beagle.modules.DeviceInformationModule
+import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import org.koin.android.ext.android.inject
 
@@ -26,7 +26,7 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
         ),
         AppInfoButtonModule(),
         AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }),
-        DeviceInformationModule()
+        DeviceInfoModule()
     )
 
     companion object {
