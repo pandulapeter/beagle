@@ -4,6 +4,7 @@
     android:id="@+id/beagle_radio_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:textColor="?android:attr/textColorPrimary"
     android:layout_marginStart="@dimen/beagle_content_padding"
     android:layout_marginLeft="@dimen/beagle_content_padding"
     android:layout_marginEnd="0dp"

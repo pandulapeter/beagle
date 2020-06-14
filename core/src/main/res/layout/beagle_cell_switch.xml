@@ -9,5 +9,6 @@
     android:paddingLeft="@dimen/beagle_item_horizontal_margin"
     android:paddingEnd="@dimen/beagle_content_padding"
     android:paddingRight="@dimen/beagle_content_padding"
+    android:textColor="?android:attr/textColorPrimary"
     app:switchPadding="@dimen/beagle_content_padding"
     tools:text="Text" />

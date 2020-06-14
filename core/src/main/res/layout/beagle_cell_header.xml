@@ -15,6 +15,7 @@
         android:id="@+id/beagle_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="@dimen/beagle_header_title"
         android:textStyle="bold"
         tools:text="Title" />
@@ -23,6 +24,7 @@
         android:id="@+id/beagle_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
         tools:text="Subtitle" />
 
@@ -30,6 +32,7 @@
         android:id="@+id/beagle_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorPrimary"
         tools:text="Text" />
 
 </LinearLayout>

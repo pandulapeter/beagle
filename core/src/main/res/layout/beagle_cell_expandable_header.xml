@@ -12,5 +12,5 @@
     android:paddingEnd="@dimen/beagle_item_horizontal_margin"
     android:paddingRight="@dimen/beagle_item_horizontal_margin"
     android:paddingBottom="@dimen/beagle_item_vertical_margin"
-    android:textStyle="bold"
+    android:textColor="?android:attr/textColorPrimary"
     tools:text="Title" />
