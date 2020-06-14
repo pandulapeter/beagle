@@ -5,7 +5,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentAboutBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.modules.TextModule
+import com.pandulapeter.beagle.modules.HeaderModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutFragment : DestinationFragment<FragmentAboutBinding, AboutViewModel>(R.layout.fragment_about, R.string.about_title) {
@@ -14,7 +14,11 @@ class AboutFragment : DestinationFragment<FragmentAboutBinding, AboutViewModel>(
     override val appBar get() = binding.appBar
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
-        TextModule(text = "Work in progress\nv${BuildConfig.VERSION_NAME}")
+        HeaderModule(
+            title = getString(R.string.app_name),
+            subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+            text = "Built on ${BuildConfig.BUILD_DATE}"
+        )
     )
 
     companion object {

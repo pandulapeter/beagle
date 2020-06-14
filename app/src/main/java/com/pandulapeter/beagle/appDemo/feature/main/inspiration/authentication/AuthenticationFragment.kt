@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
@@ -31,6 +32,13 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
         if (showAutomaticallySwitch.getCurrentValue(Beagle) == true) {
             binding.root.postDelayed({ Beagle.show() }, 500)
         }
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy < 0) {
+                    activity?.currentFocus?.hideKeyboard()
+                }
+            }
+        })
     }
 
     override fun onPause() {

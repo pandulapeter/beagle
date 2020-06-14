@@ -23,13 +23,34 @@ class BasicSetupViewModel : InspirationDetailViewModel<BasicSetupListItem>() {
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_1),
             CodeSnippetViewHolder.UiModel(
                 "Beagle.setModules(\n" +
+                        "    HeaderModule(\n" +
+                        "        title = headerTitle,\n" +
+                        "        subtitle = subtitle,\n" +
+                        "        text = headerText\n" +
+                        "    ),\n" +
                         "    AppInfoButtonModule(),\n" +
                         "    AnimationDurationSwitchModule()\n" +
                         ")"
             ),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_2),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_3),
+            CodeSnippetViewHolder.UiModel(
+                "val headerTitle = getString(R.string.app_name)\n" +
+                        "val headerSubitle = \"v\${BuildConfig.VERSION_NAME} (\${BuildConfig.VERSION_CODE})\"\n" +
+                        "val headerText = \"Built on \${BuildConfig.BUILD_DATE}\""
+            ),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_4),
+            CodeSnippetViewHolder.UiModel(
+                "android {\n" +
+                        "    …\n" +
+                        "    defaultConfig {\n" +
+                        "        …\n" +
+                        "        buildConfigField(\"String\", \"BUILD_DATE\", \"\\\"\${new Date ().format(\"yyyy.MM.dd\")}\\\"\")\n" +
+                        "    }\n" +
+                        "}"
+            ),
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_5),
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_6),
             LoadingIndicatorViewHolder.UiModel()
         )
     }

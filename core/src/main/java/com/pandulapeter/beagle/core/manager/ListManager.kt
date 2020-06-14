@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.AnimationDurationSwitch
 import com.pandulapeter.beagle.core.list.moduleDelegates.AppInfoButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.CheckBoxDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.HeaderDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.MultipleSelectionListDelegate
@@ -19,6 +20,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
+import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
@@ -36,6 +38,7 @@ internal class ListManager {
         AppInfoButtonModule::class to AppInfoButtonDelegate(),
         ButtonModule::class to ButtonDelegate(),
         CheckBoxModule::class to CheckBoxDelegate(),
+        HeaderModule::class to HeaderDelegate(),
         LabelModule::class to LabelDelegate(),
         ItemListModule::class to ItemListDelegate<BeagleListItemContract>(),
         SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),

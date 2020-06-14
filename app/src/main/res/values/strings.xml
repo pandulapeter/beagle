@@ -27,7 +27,7 @@ It can also contain various dynamic features, like switches, radio groups, butto
     <string name="inspiration_beagle_text_2">Best of all: none of this will be present in your release builds, as the <b>noop</b> implementation that should be used in those situations has the same public API (so it won\'t break your code) but none of the underlying logic.\n\n
 The module configuration can be changed at any time. For example in the case of this application you will see very different Beagle setups as you explore the various case studies.\n\n
 The library was written in Kotlin and supports API levels 16 and above.\n\n
-<b><i>If you feel like you\'ve read enough, here is a switch that acutally does something:</i></b></string>
+<b><i>If you feel like you\'ve read enough, here is a switch that actually does something:</i></b></string>
     <string name="inspiration_beagle_tutorial_switch">Show detailed tutorial</string>
     <string name="inspiration_welcome_hint_1"><b>Welcome!</b>\n\n
 Beagle is a free, open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.</string>
@@ -42,9 +42,11 @@ Beagle is a free, open-source library that adds a smart and easily customizable 
     <string name="case_study_basic_setup_description">Built-in modules that can be added with almost no configuration and are useful for most projects.</string>
     <string name="case_study_basic_setup_text_1">The current module configuration is initialized using the following code snippet:</string>
     <string name="case_study_basic_setup_text_2">Let\'s see what each individual module does.</string>
-    <string name="case_study_basic_setup_text_3"><b>AppInfoButton</b>\n\n
+    <string name="case_study_basic_setup_text_3"><b>Header</b>\n\nAll this module does is apply a specific formatting to three pieces of text. The variables for this configuration are defined the following way:</string>
+    <string name="case_study_basic_setup_text_4">The last line uses a custom build config field:</string>
+    <string name="case_study_basic_setup_text_5"><b>AppInfoButton</b>\n\n
 A simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
-    <string name="case_study_basic_setup_text_4"><b>AnimationDurationSwitch</b>\n\n
+    <string name="case_study_basic_setup_text_6"><b>AnimationDurationSwitch</b>\n\n
 A frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
 
     <!-- Case studies / Authentication -->
@@ -66,7 +68,7 @@ Another idea to save time is to automatically display the debug menu when the sc
 
     <!-- Case studies / Feature toggles -->
     <string name="case_study_feature_toggles_title">Feature toggles</string>
-    <string name="case_study_feature_toggles_description">Test different implementations without creating new builds.</string>
+    <string name="case_study_feature_toggles_description">Test different implementations without creating new builds. Persist these feature flags across app launches with a single extra line of code!</string>
 
     <!-- Case studies / Analytics -->
     <string name="case_study_analytics_title">Logging analytics events</string>
@@ -90,7 +92,7 @@ Another idea to save time is to automatically display the debug menu when the sc
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
-    <string name="playground_description">This page will contain a drag-and-drop editor that can be used to easily configure and preview Beagle modules. It will also generate the code for the configuration.</string>
+    <string name="playground_description">This page will contain a drag-and-drop editor that can be used to easily configure and preview Beagle modules. It will also generate the code for the configuration.\n\nThe default </string>
 
     <!-- About -->
     <string name="about_title">About</string>
