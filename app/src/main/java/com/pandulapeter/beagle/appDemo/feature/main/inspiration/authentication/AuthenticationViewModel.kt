@@ -3,7 +3,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailViewModel
+import com.pandulapeter.beagle.appDemo.feature.shared.list.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.ButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.EmailInputViewHolder
@@ -11,7 +11,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.l
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 
-class AuthenticationViewModel : InspirationDetailViewModel<AuthenticationListItem>() {
+class AuthenticationViewModel : ListViewModel<AuthenticationListItem>() {
 
     private val _items = MutableLiveData<List<AuthenticationListItem>>()
     override val items: LiveData<List<AuthenticationListItem>> = _items

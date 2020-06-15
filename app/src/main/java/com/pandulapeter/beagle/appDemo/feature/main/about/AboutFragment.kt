@@ -2,16 +2,18 @@ package com.pandulapeter.beagle.appDemo.feature.main.about
 
 import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.databinding.FragmentAboutBinding
-import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.list.ListFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
+import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.HeaderModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AboutFragment : DestinationFragment<FragmentAboutBinding, AboutViewModel>(R.layout.fragment_about, R.string.about_title) {
+class AboutFragment : ListFragment<AboutViewModel, ListItem>(R.string.about_title) {
 
     override val viewModel by viewModel<AboutViewModel>()
-    override val appBar get() = binding.appBar
+
+    override fun createAdapter() = object : BaseAdapter<ListItem>() {}
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         HeaderModule(

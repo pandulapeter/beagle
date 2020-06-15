@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.feature.main.inspiration.list
+package com.pandulapeter.beagle.appDemo.feature.main.setup.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,7 +25,7 @@ class ButtonViewHolder private constructor(
 
     data class UiModel(
         override val id: String = "button"
-    ) : InspirationListItem
+    ) : SetupListItem
 
     companion object {
         fun create(

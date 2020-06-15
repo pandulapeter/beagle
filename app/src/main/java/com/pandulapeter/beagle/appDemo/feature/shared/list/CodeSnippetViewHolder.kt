@@ -8,6 +8,7 @@ import com.pandulapeter.beagle.appDemo.databinding.ItemCodeSnippetBinding
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.BasicSetupListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
+import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 
 class CodeSnippetViewHolder private constructor(
     binding: ItemCodeSnippetBinding
@@ -16,7 +17,7 @@ class CodeSnippetViewHolder private constructor(
     data class UiModel(
         val codeSnippet: String,
         override val id: String = "codeSnippet_$codeSnippet"
-    ) : ListItem, InspirationListItem, BasicSetupListItem, AuthenticationListItem
+    ) : ListItem, SetupListItem, InspirationListItem, BasicSetupListItem, AuthenticationListItem
 
     companion object {
         fun create(

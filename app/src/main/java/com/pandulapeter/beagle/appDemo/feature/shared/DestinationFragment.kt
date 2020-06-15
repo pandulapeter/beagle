@@ -10,14 +10,13 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.BR
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.utils.color
 import com.pandulapeter.beagle.common.contracts.module.Module
 
 abstract class DestinationFragment<B : ViewDataBinding, VM : ViewModel>(
     @LayoutRes layoutResourceId: Int,
     @StringRes protected val titleResourceId: Int,
-    @ColorRes private val backgroundColorResourceId: Int = R.color.transparent
+    @ColorRes private val backgroundColorResourceId: Int
 ) : BaseFragment<B>(layoutResourceId) {
 
     protected abstract val viewModel: VM

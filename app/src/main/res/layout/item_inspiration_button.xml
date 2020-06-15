@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.ButtonViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.setup.list.ButtonViewHolder.UiModel" />
 
     </data>
 
