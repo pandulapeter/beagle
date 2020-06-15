@@ -26,7 +26,7 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
     }
 
     companion object {
-        const val TAG = "DebugMenuDialog"
+        const val TAG = "debugMenuDialog"
 
         fun show(fragmentManager: FragmentManager) = DebugMenuDialog().show(fragmentManager, TAG)
     }
