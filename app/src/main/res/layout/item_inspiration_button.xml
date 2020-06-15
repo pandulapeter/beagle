@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,6 +11,7 @@
     </data>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/large_content_padding"
@@ -17,8 +19,11 @@
         android:layout_marginTop="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding"
+        android:drawablePadding="@dimen/large_content_padding"
         android:paddingTop="@dimen/content_padding"
         android:paddingBottom="@dimen/content_padding"
-        android:text="@string/inspiration_welcome_github_button" />
+        android:text="@string/inspiration_welcome_github_button"
+        tools:drawableEnd="@drawable/ic_github"
+        tools:drawableRight="@drawable/ic_github" />
 
 </layout>

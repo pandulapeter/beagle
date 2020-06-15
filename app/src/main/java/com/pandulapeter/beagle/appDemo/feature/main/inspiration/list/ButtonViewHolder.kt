@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemInspirationButtonBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.appDemo.utils.drawable
 
 class ButtonViewHolder private constructor(
     binding: ItemInspirationButtonBinding,
@@ -19,6 +20,7 @@ class ButtonViewHolder private constructor(
                 onButtonClicked()
             }
         }
+        binding.button.setCompoundDrawablesWithIntrinsicBounds(null, null, binding.button.context.drawable(R.drawable.ic_github), null)
     }
 
     data class UiModel(
