@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/setup"
+        android:icon="@drawable/ic_setup"
+        android:title="@string/setup_title" />
+
+    <item
         android:id="@+id/inspiration"
         android:icon="@drawable/ic_inspiration"
         android:title="@string/inspiration_title" />

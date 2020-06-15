@@ -5,6 +5,9 @@
     <string name="back">Back</string>
     <string name="coming_soon">Coming soon…</string>
 
+    <!-- Setup -->
+    <string name="setup_title">Setup</string>
+
     <!-- Inspiration -->
     <string name="inspiration_title">Inspiration</string>
     <string name="inspiration_beagle_text_1"><b>This is the debug menu configured by you</b>\n\n

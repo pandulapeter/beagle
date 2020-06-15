@@ -15,14 +15,14 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
         add(
             TextCell(
                 id = "${module.id}_manufacturer",
-                text = "Manufacturer: ${Build.MANUFACTURER}",
+                text = "• Manufacturer: ${Build.MANUFACTURER}",
                 onItemSelected = null
             )
         )
         add(
             TextCell(
                 id = "${module.id}_model",
-                text = "Model: ${Build.MODEL}",
+                text = "• Model: ${Build.MODEL}",
                 onItemSelected = null
             )
         )
@@ -31,7 +31,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
             add(
                 TextCell(
                     id = "${module.id}_screen",
-                    text = "Screen: ${dm.widthPixels} * ${dm.heightPixels} (${dm.densityDpi} dpi)",
+                    text = "• Screen: ${dm.widthPixels} * ${dm.heightPixels} (${dm.densityDpi} dpi)",
                     onItemSelected = null
                 )
             )
@@ -39,7 +39,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
         add(
             TextCell(
                 id = "${module.id}_sdkVersion",
-                text = "Android SDK version: ${Build.VERSION.SDK_INT}",
+                text = "• Android SDK version: ${Build.VERSION.SDK_INT}",
                 onItemSelected = null
             )
         )
