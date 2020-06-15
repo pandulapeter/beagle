@@ -12,7 +12,7 @@ internal class ItemListDelegate<T : BeagleListItemContract> : ExpandableModuleDe
         addAll(module.items.map { item ->
             TextCell(
                 id = "${module.id}_${item.id}",
-                text = item.title,
+                text = "• ${item.title}",
                 onItemSelected = module.onItemSelected?.let { onItemSelected ->
                     {
                         module.items.firstOrNull { it.id == item.id }?.let { onItemSelected(it) }

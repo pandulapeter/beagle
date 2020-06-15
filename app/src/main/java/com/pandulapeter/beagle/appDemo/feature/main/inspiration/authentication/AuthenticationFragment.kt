@@ -3,13 +3,13 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.utils.hideKeyboard
+import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -72,7 +72,7 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
     )
 
     private fun signIn() {
-        Snackbar.make(binding.recyclerView, R.string.case_study_authentication_signing_in, Snackbar.LENGTH_SHORT).show()
+        binding.recyclerView.showSnackbar(R.string.case_study_authentication_signing_in)
         activity?.currentFocus?.hideKeyboard()
     }
 

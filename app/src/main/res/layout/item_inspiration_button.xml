@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.ButtonViewHolder.UiModel" />
+
+    </data>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_content_padding"
+        android:layout_marginLeft="@dimen/large_content_padding"
+        android:layout_marginTop="@dimen/large_content_padding"
+        android:layout_marginEnd="@dimen/large_content_padding"
+        android:layout_marginRight="@dimen/large_content_padding"
+        android:paddingTop="@dimen/content_padding"
+        android:paddingBottom="@dimen/content_padding"
+        android:text="@string/inspiration_welcome_github_button" />
+
+</layout>

@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.appDemo.feature.main.inspiration
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.Inspiration
 import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
+import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.appDemo.utils.showToast
 import com.pandulapeter.beagle.appDemo.utils.waitForLayout
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
@@ -93,7 +96,7 @@ class InspirationFragment : DestinationFragment<FragmentInspirationBinding, Insp
     }
 
     private fun setupRecyclerView() {
-        val inspirationAdapter = InspirationAdapter(::onCaseStudySelected)
+        val inspirationAdapter = InspirationAdapter(::onCaseStudySelected, ::onGitHubButtonClicked)
         binding.recyclerView.run {
             adapter = inspirationAdapter
             layoutManager = LinearLayoutManager(context)
@@ -130,6 +133,15 @@ class InspirationFragment : DestinationFragment<FragmentInspirationBinding, Insp
         else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
     }
 
+    private fun onGitHubButtonClicked() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL))
+        if (intent.resolveActivity(requireContext().packageManager) != null) {
+            startActivity(intent)
+        } else {
+            binding.recyclerView.showSnackbar(R.string.inspiration_welcome_browser_not_found)
+        }
+    }
+
     private data class RadioGroupOption(
         override val title: String,
         override val id: String = title
@@ -137,6 +149,7 @@ class InspirationFragment : DestinationFragment<FragmentInspirationBinding, Insp
 
     companion object {
         private const val TUTORIAL_SWITCH_ID = "tutorialSwitch"
+        private const val GITHUB_URL = "https://github.com/pandulapeter/beagle"
 
         fun newInstance() = InspirationFragment()
     }

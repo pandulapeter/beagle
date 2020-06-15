@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.ButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.CaseStudyViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
@@ -18,6 +19,7 @@ class InspirationViewModel : ViewModel() {
     fun refreshItems(shouldShowTutorial: Boolean) {
         _items.value = mutableListOf<InspirationListItem>().apply {
             add(TextViewHolder.UiModel(R.string.inspiration_welcome_hint_1))
+            add(ButtonViewHolder.UiModel())
             if (shouldShowTutorial) {
                 add(TextViewHolder.UiModel(R.string.inspiration_welcome_hint_2))
                 add(CodeSnippetViewHolder.UiModel("Beagle.initialize(this)"))

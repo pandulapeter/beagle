@@ -31,7 +31,7 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment() {
                     displayMetrics.heightPixels.let { windowHeight ->
                         if (windowHeight > 0) {
                             val insets = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                dialog.window?.decorView?.rootWindowInsets?.let { it.systemWindowInsetTop + it.systemWindowInsetBottom } ?: 0
+                                dialog.window?.decorView?.rootWindowInsets?.systemWindowInsetTop ?: 0
                             } else 0
                             height = windowHeight - insets
                             BottomSheetBehavior.from<View>(this@run).run {
