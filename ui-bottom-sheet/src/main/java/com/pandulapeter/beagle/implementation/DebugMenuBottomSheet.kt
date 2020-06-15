@@ -1,11 +1,13 @@
 package com.pandulapeter.beagle.implementation
 
+import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pandulapeter.beagle.BeagleCore
@@ -26,10 +28,18 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment() {
                 layoutParams = layoutParams.apply {
                     val displayMetrics = DisplayMetrics()
                     BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-                    displayMetrics.heightPixels.let {
-                        if (it > 0)
-                            height = it
+                    displayMetrics.heightPixels.let { windowHeight ->
+                        if (windowHeight > 0) {
+                            val insets = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                dialog.window?.decorView?.rootWindowInsets?.let { it.systemWindowInsetTop + it.systemWindowInsetBottom } ?: 0
+                            } else 0
+                            height = windowHeight - insets
+                            BottomSheetBehavior.from<View>(this@run).run {
+                                peekHeight = windowHeight / 2
+                            }
+                        }
                     }
+                    dialog.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 }
             }
         }
