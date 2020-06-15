@@ -5,13 +5,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListFragment
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
+import com.pandulapeter.beagle.appDemo.feature.shared.list.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.appDemo.utils.showToast
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
-import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.LabelModule
@@ -32,35 +31,34 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
 
     override fun createAdapter() = SetupAdapter(::onGitHubButtonClicked)
 
-    override fun getBeagleModules(): List<Module<*>> = listOf(
-        TextModule(text = getText(R.string.inspiration_beagle_text_1)),
-        LabelModule(title = getString(R.string.inspiration_beagle_label)),
-        SwitchModule(text = getString(R.string.inspiration_beagle_switch), onValueChanged = {
-            showToast(if (it) R.string.inspiration_beagle_switch_toast_on else R.string.inspiration_beagle_switch_toast_off)
+    override fun getBeagleModules() = listOf(
+        TextModule(text = getText(R.string.setup_beagle_text_1)),
+        LabelModule(title = getString(R.string.setup_beagle_label)),
+        SwitchModule(text = getString(R.string.setup_beagle_switch), onValueChanged = {
+            showToast(if (it) R.string.setup_beagle_switch_toast_on else R.string.setup_beagle_switch_toast_off)
         }),
-        ButtonModule(text = getString(R.string.inspiration_beagle_button), onButtonPressed = {
-            showToast(R.string.inspiration_beagle_button_toast)
+        ButtonModule(text = getString(R.string.setup_beagle_button), onButtonPressed = {
+            showToast(R.string.setup_beagle_button_toast)
         }),
-        CheckBoxModule(text = getString(R.string.inspiration_beagle_check_box), onValueChanged = {
-            showToast(if (it) R.string.inspiration_beagle_check_box_toast_on else R.string.inspiration_beagle_check_box_toast_off)
+        CheckBoxModule(text = getString(R.string.setup_beagle_check_box), onValueChanged = {
+            showToast(if (it) R.string.setup_beagle_check_box_toast_on else R.string.setup_beagle_check_box_toast_off)
         }),
         listOf(
-            RadioGroupOption(getString(R.string.inspiration_beagle_radio_group_option_1)),
-            RadioGroupOption(getString(R.string.inspiration_beagle_radio_group_option_2)),
-            RadioGroupOption(getString(R.string.inspiration_beagle_radio_group_option_3))
+            RadioGroupOption(getString(R.string.setup_beagle_radio_group_option_1)),
+            RadioGroupOption(getString(R.string.setup_beagle_radio_group_option_2)),
+            RadioGroupOption(getString(R.string.setup_beagle_radio_group_option_3))
         ).let { radioGroupOptions ->
             SingleSelectionListModule(
-                title = getString(R.string.inspiration_beagle_radio_group),
+                title = getString(R.string.setup_beagle_radio_group),
                 items = radioGroupOptions,
                 initiallySelectedItemId = radioGroupOptions.first().id,
                 onSelectionChanged = { showToast(it?.title.orEmpty()) }
             )
         },
-        TextModule(text = getText(R.string.inspiration_beagle_text_2))
+        TextModule(text = getText(R.string.setup_beagle_text_2))
     )
 
-    private fun onGitHubButtonClicked() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL))
+    private fun onGitHubButtonClicked() = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL)).let { intent ->
         if (intent.resolveActivity(requireContext().packageManager) != null) {
             startActivity(intent)
         } else {
