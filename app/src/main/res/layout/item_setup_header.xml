@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="com.pandulapeter.beagle.appDemo.feature.main.setup.list.HeaderViewHolder.UiModel" />
+
+    </data>
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/large_content_padding"
+        android:paddingLeft="@dimen/large_content_padding"
+        android:paddingTop="@dimen/content_padding"
+        android:paddingEnd="@dimen/large_content_padding"
+        android:paddingRight="@dimen/large_content_padding"
+        android:paddingBottom="@dimen/content_padding"
+        android:text="@{uiModel.titleResourceId}"
+        android:textStyle="bold"
+        tools:text="Title" />
+
+</layout>

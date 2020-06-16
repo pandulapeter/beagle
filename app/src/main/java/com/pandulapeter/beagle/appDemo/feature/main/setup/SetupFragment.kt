@@ -32,7 +32,11 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         refreshBeagle()
     }
 
-    override fun createAdapter() = SetupAdapter(::onGitHubButtonClicked, viewModel::onRadioButtonSelected)
+    override fun createAdapter() = SetupAdapter(
+        onGitHubButtonClicked = ::onGitHubButtonClicked,
+        onRadioButtonSelected = viewModel::onRadioButtonSelected,
+        onHeaderSelected = viewModel::onHeaderSelected
+    )
 
     override fun createLayoutManager() = GridLayoutManager(context, spanCount, RecyclerView.VERTICAL, false).apply {
         spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

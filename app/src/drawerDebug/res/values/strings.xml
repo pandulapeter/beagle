@@ -1,6 +1,6 @@
 <resources>
 
     <string name="app_name">Beagle (drawer)</string>
-    <string name="inspiration_welcome_hint_3"><b><i>In this demo you can trigger the debug menu at any time by shaking the device, swiping from the right side of the screen, or tapping on the Beagle logo in the bottom-right corner.</i></b></string>
+    <string name="setup_hint">In this demo application you can trigger the debug menu at any time by shaking the device, swiping from the right side of the screen or by tapping on the Beagle logo in the bottom-right corner.</string>
 
 </resources>

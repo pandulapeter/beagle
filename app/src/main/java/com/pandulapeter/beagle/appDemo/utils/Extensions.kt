@@ -2,11 +2,13 @@ package com.pandulapeter.beagle.appDemo.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Build
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
@@ -14,6 +16,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
@@ -36,6 +39,13 @@ fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this,
 fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensionPixelSize(dimensionResourceId)
 
 fun Context.drawable(@DrawableRes drawableResId: Int) = AppCompatResources.getDrawable(this, drawableResId)
+
+fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int) = drawable(drawableResourceId)!!.let { drawable ->
+    DrawableCompat.wrap(drawable.mutate()).apply {
+        DrawableCompat.setTint(this, tint)
+        DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)
+    }
+}
 
 fun View.hideKeyboard() {
     clearFocus()

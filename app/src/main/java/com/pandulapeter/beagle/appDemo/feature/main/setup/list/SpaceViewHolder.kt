@@ -6,13 +6,14 @@ import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSetupSpaceBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import java.util.UUID
 
 class SpaceViewHolder private constructor(
     binding: ItemSetupSpaceBinding
 ) : BaseViewHolder<ItemSetupSpaceBinding, SpaceViewHolder.UiModel>(binding) {
 
     data class UiModel(
-        override val id: String = "space"
+        override val id: String = "space_${UUID.randomUUID()}"
     ) : SetupListItem
 
     companion object {
