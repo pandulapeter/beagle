@@ -30,28 +30,19 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
 
     override fun getBeagleModules() = mutableListOf(TextModule(text = getString(R.string.inspiration_beagle_text)))
 
-    //TODO: Simplify
     private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) = when (caseStudy) {
-        CaseStudy.BASIC_SETUP -> parentFragmentManager.handleReplace(
-            addToBackStack = true,
-            sharedElements = listOf(view),
-            transitionType = TransitionType.MODAL,
-            newInstance = BasicSetupFragment.Companion::newInstance
-        )
-        CaseStudy.AUTHENTICATION -> parentFragmentManager.handleReplace(
-            addToBackStack = true,
-            sharedElements = listOf(view),
-            transitionType = TransitionType.MODAL,
-            newInstance = AuthenticationFragment.Companion::newInstance
-        )
-        CaseStudy.FEATURE_TOGGLES -> parentFragmentManager.handleReplace(
-            addToBackStack = true,
-            sharedElements = listOf(view),
-            transitionType = TransitionType.MODAL,
-            newInstance = FeatureTogglesFragment.Companion::newInstance
-        )
+        CaseStudy.BASIC_SETUP -> navigateTo(BasicSetupFragment.Companion::newInstance, view)
+        CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
+        CaseStudy.FEATURE_TOGGLES -> navigateTo(FeatureTogglesFragment.Companion::newInstance, view)
         else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
     }
+
+    private inline fun <reified T : InspirationDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T, sharedElement: View) = parentFragmentManager.handleReplace(
+        addToBackStack = true,
+        sharedElements = listOf(sharedElement),
+        transitionType = TransitionType.MODAL,
+        newInstance = newInstance
+    )
 
     companion object {
         fun newInstance() = InspirationFragment()
