@@ -11,7 +11,6 @@ import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
-import com.pandulapeter.beagle.appDemo.utils.showToast
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
@@ -47,15 +46,9 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     override fun getBeagleModules() = listOf(
         TextModule(text = getText(R.string.setup_beagle_text_1)),
         LabelModule(title = getString(R.string.setup_beagle_label)),
-        SwitchModule(text = getString(R.string.setup_beagle_switch), onValueChanged = {
-            showToast(if (it) R.string.setup_beagle_switch_toast_on else R.string.setup_beagle_switch_toast_off)
-        }),
-        ButtonModule(text = getString(R.string.setup_beagle_button), onButtonPressed = {
-            showToast(R.string.setup_beagle_button_toast)
-        }),
-        CheckBoxModule(text = getString(R.string.setup_beagle_check_box), onValueChanged = {
-            showToast(if (it) R.string.setup_beagle_check_box_toast_on else R.string.setup_beagle_check_box_toast_off)
-        }),
+        SwitchModule(text = getString(R.string.setup_beagle_switch), onValueChanged = {}),
+        ButtonModule(text = getString(R.string.setup_beagle_button), onButtonPressed = {}),
+        CheckBoxModule(text = getString(R.string.setup_beagle_check_box), onValueChanged = {}),
         listOf(
             RadioGroupOption(getString(R.string.setup_beagle_radio_group_option_1)),
             RadioGroupOption(getString(R.string.setup_beagle_radio_group_option_2)),
@@ -65,7 +58,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
                 title = getString(R.string.setup_beagle_radio_group),
                 items = radioGroupOptions,
                 initiallySelectedItemId = radioGroupOptions.first().id,
-                onSelectionChanged = { showToast(it?.title.orEmpty()) }
+                onSelectionChanged = { }
             )
         },
         TextModule(text = getText(R.string.setup_beagle_text_2))

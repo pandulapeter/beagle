@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.Inspiration
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
-import com.pandulapeter.beagle.appDemo.utils.showToast
+import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,7 +34,7 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
         CaseStudy.BASIC_SETUP -> navigateTo(BasicSetupFragment.Companion::newInstance, view)
         CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
         CaseStudy.FEATURE_TOGGLES -> navigateTo(FeatureTogglesFragment.Companion::newInstance, view)
-        else -> showToast("TODO: Open ${getString(caseStudy.title)} example")
+        else -> binding.root.showSnackbar(caseStudy.title)
     }
 
     private inline fun <reified T : InspirationDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T, sharedElement: View) = parentFragmentManager.handleReplace(

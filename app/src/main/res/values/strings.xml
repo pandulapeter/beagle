@@ -11,38 +11,37 @@
 Beagle is a free and open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.</string>
     <string name="setup_github_button">Check it out on GitHub</string>
     <string name="setup_app_not_found">No application can handle this link</string>
-    <string name="setup_hint">In this demo application you can trigger the debug menu at any time by shaking the device or by tapping on the Beagle logo in the bottom-right corner.</string>
+    <string name="setup_hint">In this demo application you can trigger the debug menu at any time by shaking the device or by tapping on the Beagle logo in the bottom-right corner.\n\n
+The following sections provide guidance on setting up the library:</string>
     <string name="setup_header_1">Initialization</string>
-    <string name="setup_text_2">The library offers five variants that display the debug menu in different ways. The first step to integrating it is to select the one that fits your application\'s needs:</string>
+    <string name="setup_text_2">The first step towards having Beagle in your project is making sure that the JitPack Maven repository is added to the <b>allprojects</b> block of your project-level <b>build.gradle</b> file.</string>
+    <string name="setup_text_3">The library offers five variants that display the debug menu in different ways. The next step is selecting the one that fits your application\'s needs the most…</string>
     <string name="setup_variant_activity">Activity</string>
     <string name="setup_variant_bottom_sheet">Bottom sheet</string>
     <string name="setup_variant_dialog">Dialog</string>
     <string name="setup_variant_drawer">Drawer</string>
     <string name="setup_variant_view">View</string>
+    <string name="setup_text_4">…and adding the following dependencies to the module-level <b>build.gradle</b> file:</string>
+    <string name="setup_text_5">Specifying the <b>noop</b> variant for release builds ensures that none of Beagle\'s functionality makes its way to production, but you can still use the same public API without getting compilation errors.\n\n
+After adding the dependencies, the library can be initialized with a single line of code in the <b>onCreate()</b> method of your custom <b>Application</b> class:</string>
     <string name="setup_header_2">Module configuration</string>
-    <string name="setup_text_3">After adding the dependencies, the library can be initialized with a single line of code in the <b>onCreate()</b> method of your custom <b>Application</b> class:</string>
-    <string name="setup_text_5">The next step after initialization is configuring a list of modules. The simplest way to do that is to call:</string>
+    <string name="setup_text_6">At this point if you run your app, you should see an empty debug menu when you trigger it. To make it more useful, we should configure a list of modules.</string>
+    <string name="setup_text_7">Beagle provides multiple ways to set and change the list of modules, the simplest of which is calling:</string>
     <string name="setup_header_3">Other features</string>
+    <string name="setup_text_8">TODO</string>
     <string name="setup_beagle_text_1"><b>This is the debug menu configured by you</b>\n\n
-It should contain useful information, like the version number of the app, the build date, or information about the device it\'s running on.\n\n
-You can use it to display network requests, track analytics events, see custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing of your app.\n\n
-It can also contain various dynamic features, like switches, radio groups, buttons, sliders, etc. that you can use to set up a \"God mode\" during development.</string>
+It should contain useful information, like the version number of your app, the build date, or information about the device it\'s running on.\n\n
+You can use it to track network requests, show analytics events, display custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing process.\n\n
+It can also contain various interactive features, such as switches, radio groups, buttons, sliders, etc. that you can use to set up a \"God mode\" during development.</string>
     <string name="setup_beagle_label">For example:</string>
     <string name="setup_beagle_switch">Here is a switch. It does nothing.</string>
-    <string name="setup_beagle_switch_toast_on">The switch is on. Nothing happened.</string>
-    <string name="setup_beagle_switch_toast_off">The switch is off. Still nothing.</string>
     <string name="setup_beagle_button">This button also does nothing</string>
-    <string name="setup_beagle_button_toast">Nothing, as promised</string>
-    <string name="setup_beagle_check_box">This check box does nothing</string>
-    <string name="setup_beagle_check_box_toast_on">Check box checked</string>
-    <string name="setup_beagle_check_box_toast_off">Check box unchecked</string>
+    <string name="setup_beagle_check_box">Neither does this check box</string>
     <string name="setup_beagle_radio_group">This radio group does…</string>
     <string name="setup_beagle_radio_group_option_1">Nothing</string>
     <string name="setup_beagle_radio_group_option_2">Nada</string>
     <string name="setup_beagle_radio_group_option_3">Zilch</string>
-    <string name="setup_beagle_text_2">Best of all: none of this will be present in your release builds, as the <b>noop</b> implementation that should be used in those situations has the same public API (so it won\'t break your code) but none of the underlying logic.\n\n
-The module configuration can be changed at any time. For example in the case of this application you will see very different Beagle setups as you explore the various case studies.\n\n
-The library was written in Kotlin and supports API levels 16 and above.</string>
+    <string name="setup_beagle_text_2">The contents of the debug menu can be changed at any time. For example, in the case of this application, you will see very different Beagle setups as you explore the various screens and case studies.</string>
     <string name="setup_beagle_tutorial_switch">Show detailed tutorial</string>
 
     <!-- Inspiration -->

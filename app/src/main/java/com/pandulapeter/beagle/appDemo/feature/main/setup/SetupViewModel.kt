@@ -18,7 +18,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
 
     private val _items = MutableLiveData<List<SetupListItem>>()
     override val items: LiveData<List<SetupListItem>> = _items
-    private var selectedUiVariant by Delegates.observable(UiVariant.ACTIVITY) { _, _, _ -> refreshItems() }
+    private var selectedUiVariant by Delegates.observable(UiVariant.DRAWER) { _, _, _ -> refreshItems() }
     private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
 
     init {
@@ -58,11 +58,12 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                                 "}"
                     )
                 )
-                add(TextViewHolder.UiModel(R.string.setup_text_2))
+                add(TextViewHolder.UiModel(R.string.setup_text_3))
                 add(SpaceViewHolder.UiModel())
                 addAll(UiVariant.values().map { uiVariant ->
                     RadioButtonViewHolder.UiModel(uiVariant.titleResourceId, uiVariant == selectedUiVariant)
                 })
+                add(TextViewHolder.UiModel(R.string.setup_text_4))
                 add(
                     CodeSnippetViewHolder.UiModel(
                         id = "codeSnippet_gradle",
@@ -81,13 +82,17 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                                 "}"
                     )
                 )
-                add(TextViewHolder.UiModel(R.string.setup_text_3))
+                add(TextViewHolder.UiModel(R.string.setup_text_5))
                 add(CodeSnippetViewHolder.UiModel("Beagle.initialize(this)"))
+                add(TextViewHolder.UiModel(R.string.setup_text_6))
+                add(SpaceViewHolder.UiModel())
             }
             add(HeaderViewHolder.UiModel(R.string.setup_header_2, selectedSection == Section.MODULE_CONFIGURATION))
             if (selectedSection == Section.MODULE_CONFIGURATION) {
-                add(TextViewHolder.UiModel(R.string.setup_text_5))
+                add(TextViewHolder.UiModel(R.string.setup_text_7))
                 add(CodeSnippetViewHolder.UiModel("Beagle.setModules(module1, module2, …)"))
+                add(TextViewHolder.UiModel(R.string.setup_text_8))
+                add(SpaceViewHolder.UiModel())
             }
             add(HeaderViewHolder.UiModel(R.string.setup_header_3, selectedSection == Section.OTHER_FEATURES))
             if (selectedSection == Section.OTHER_FEATURES) {

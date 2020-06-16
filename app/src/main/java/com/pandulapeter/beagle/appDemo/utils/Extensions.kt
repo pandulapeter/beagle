@@ -7,7 +7,6 @@ import android.os.Build
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
@@ -29,10 +28,6 @@ import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
-
-fun Fragment.showToast(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-
-fun Fragment.showToast(@StringRes messageResourceId: Int) = showToast(getString(messageResourceId))
 
 fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
 
