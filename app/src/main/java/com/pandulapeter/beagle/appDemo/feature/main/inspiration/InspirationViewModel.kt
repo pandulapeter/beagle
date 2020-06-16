@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListViewModel
+import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.CaseStudyViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder

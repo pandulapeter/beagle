@@ -7,7 +7,7 @@ import android.view.View
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.appDemo.utils.showToast
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract

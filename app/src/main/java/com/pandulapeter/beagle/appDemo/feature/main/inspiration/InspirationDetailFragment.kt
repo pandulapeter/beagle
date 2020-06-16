@@ -8,9 +8,9 @@ import androidx.annotation.StringRes
 import androidx.core.view.ViewCompat
 import com.google.android.material.transition.MaterialContainerTransform
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListViewModel
+import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.utils.shouldUseContainerTransform
 
 abstract class InspirationDetailFragment<VM : ListViewModel<LI>, LI : ListItem>(

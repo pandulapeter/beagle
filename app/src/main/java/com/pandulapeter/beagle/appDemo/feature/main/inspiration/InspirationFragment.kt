@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.Basic
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.FeatureTogglesFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.showToast

@@ -3,7 +3,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.setup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListViewModel
+import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.ButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder

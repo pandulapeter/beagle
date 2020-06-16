@@ -6,10 +6,10 @@ import androidx.annotation.CallSuper
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentContainerBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
-import com.pandulapeter.beagle.appDemo.feature.shared.DestinationFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 
-abstract class ContainerFragment(private val newInstance: () -> DestinationFragment<*, *>) : BaseFragment<FragmentContainerBinding>(R.layout.fragment_container) {
+abstract class ContainerFragment(private val newInstance: () -> ListFragment<*, *>) : BaseFragment<FragmentContainerBinding>(R.layout.fragment_container) {
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

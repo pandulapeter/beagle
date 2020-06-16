@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle.appDemo.feature.main.playground
 
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListFragment
+import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.common.contracts.module.Module
