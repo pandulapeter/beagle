@@ -29,7 +29,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         refreshBeagle()
     }
 
-    override fun createAdapter() = SetupAdapter(::onGitHubButtonClicked)
+    override fun createAdapter() = SetupAdapter(::onGitHubButtonClicked, viewModel::onRadioButtonSelected)
 
     override fun getBeagleModules() = listOf(
         TextModule(text = getText(R.string.setup_beagle_text_1)),
@@ -62,7 +62,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         if (intent.resolveActivity(requireContext().packageManager) != null) {
             startActivity(intent)
         } else {
-            binding.recyclerView.showSnackbar(R.string.inspiration_welcome_browser_not_found)
+            binding.recyclerView.showSnackbar(R.string.setup_app_not_found)
         }
     }
 

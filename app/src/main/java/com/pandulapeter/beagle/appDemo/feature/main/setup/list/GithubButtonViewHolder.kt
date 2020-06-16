@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.databinding.ItemInspirationButtonBinding
+import com.pandulapeter.beagle.appDemo.databinding.ItemSetupGithubButtonBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 import com.pandulapeter.beagle.appDemo.utils.drawable
 
-class ButtonViewHolder private constructor(
-    binding: ItemInspirationButtonBinding,
+class GithubButtonViewHolder private constructor(
+    binding: ItemSetupGithubButtonBinding,
     onButtonClicked: () -> Unit
-) : BaseViewHolder<ItemInspirationButtonBinding, ButtonViewHolder.UiModel>(binding) {
+) : BaseViewHolder<ItemSetupGithubButtonBinding, GithubButtonViewHolder.UiModel>(binding) {
 
     init {
         binding.root.setOnClickListener {
@@ -31,8 +31,8 @@ class ButtonViewHolder private constructor(
         fun create(
             parent: ViewGroup,
             onButtonClicked: () -> Unit
-        ) = ButtonViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_inspiration_button, parent, false),
+        ) = GithubButtonViewHolder(
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_setup_github_button, parent, false),
             onButtonClicked = onButtonClicked
         )
     }
