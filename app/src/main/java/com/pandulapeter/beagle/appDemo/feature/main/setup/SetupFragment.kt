@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
@@ -22,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup_title) {
 
     override val viewModel by viewModel<SetupViewModel>()
+    private val spanCount get() = context?.resources?.getInteger(R.integer.setup_radio_button_span) ?: 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,6 +33,12 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     }
 
     override fun createAdapter() = SetupAdapter(::onGitHubButtonClicked, viewModel::onRadioButtonSelected)
+
+    override fun createLayoutManager() = GridLayoutManager(context, spanCount, RecyclerView.VERTICAL, false).apply {
+        spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int) = if (viewModel.shouldBeFullSize(position)) spanCount else 1
+        }
+    }
 
     override fun getBeagleModules() = listOf(
         TextModule(text = getText(R.string.setup_beagle_text_1)),

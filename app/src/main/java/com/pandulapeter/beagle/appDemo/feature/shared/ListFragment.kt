@@ -6,6 +6,7 @@ import androidx.annotation.CallSuper
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.BR
 import com.pandulapeter.beagle.appDemo.R
@@ -23,9 +24,11 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     protected abstract val viewModel: VM
 
+    protected abstract fun getBeagleModules(): List<Module<*>>
+
     protected abstract fun createAdapter(): BaseAdapter<LI>
 
-    protected abstract fun getBeagleModules(): List<Module<*>>
+    protected open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(context)
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +46,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
         val listAdapter = createAdapter()
         binding.recyclerView.run {
             adapter = listAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = createLayoutManager()
             setHasFixedSize(true)
             waitForLayout { startPostponedEnterTransition() }
         }

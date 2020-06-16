@@ -11,7 +11,7 @@
 Beagle is a free, open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.</string>
     <string name="setup_github_button">Check it out on GitHub</string>
     <string name="setup_app_not_found">No application can handle this link</string>
-    <string name="setup_text_2">The library offers five variants that display the debug menu in different ways. The first step to integrate it is selecting one that best fits your application\'s needs:</string>
+    <string name="setup_text_2">The library offers five variants that display the debug menu in different ways. The first step to integrating it is to select one that best fits your application\'s needs:</string>
     <string name="setup_variant_activity">Activity</string>
     <string name="setup_variant_bottom_sheet">Bottom sheet</string>
     <string name="setup_variant_dialog">Dialog</string>

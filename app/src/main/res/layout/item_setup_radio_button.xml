@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/beagle_content_padding"
         android:layout_marginLeft="@dimen/beagle_content_padding"
-        android:layout_marginTop="@dimen/content_padding"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:checked="@{uiModel.checked}"

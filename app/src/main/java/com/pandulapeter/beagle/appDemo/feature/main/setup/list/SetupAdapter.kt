@@ -12,18 +12,21 @@ class SetupAdapter(
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is GithubButtonViewHolder.UiModel -> R.layout.item_setup_github_button
+        is SpaceViewHolder.UiModel -> R.layout.item_setup_space
         is RadioButtonViewHolder.UiModel -> R.layout.item_setup_radio_button
         else -> super.getItemViewType(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
         R.layout.item_setup_github_button -> GithubButtonViewHolder.create(parent, onGitHubButtonClicked)
+        R.layout.item_setup_space -> SpaceViewHolder.create(parent)
         R.layout.item_setup_radio_button -> RadioButtonViewHolder.create(parent, onRadioButtonSelected)
         else -> super.onCreateViewHolder(parent, viewType)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*, *>, position: Int) = when (holder) {
         is GithubButtonViewHolder -> holder.bind(getItem(position) as GithubButtonViewHolder.UiModel)
+        is SpaceViewHolder -> holder.bind(getItem(position) as SpaceViewHolder.UiModel)
         is RadioButtonViewHolder -> holder.bind(getItem(position) as RadioButtonViewHolder.UiModel)
         else -> super.onBindViewHolder(holder, position)
     }
