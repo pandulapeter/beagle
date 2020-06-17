@@ -18,8 +18,9 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
 
     private val _items = MutableLiveData<List<SetupListItem>>()
     override val items: LiveData<List<SetupListItem>> = _items
-    private var selectedUiVariant by Delegates.observable(UiVariant.DRAWER) { _, _, _ -> refreshItems() }
-    private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
+    private var selectedUiVariant by Delegates.observable(UiVariant.ACTIVITY) { _, _, _ -> refreshItems() }
+    private var selectedSection by Delegates.observable<Section?>(Section.WELCOME) { _, _, _ -> refreshItems() }
+    private var hasSectionJustChanged = true
 
     init {
         refreshItems()
@@ -34,18 +35,26 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     fun onHeaderSelected(position: Int) {
         Section.fromResourceId((_items.value?.get(position) as? HeaderViewHolder.UiModel?)?.titleResourceId).let {
             selectedSection = if (it == selectedSection) null else it
+            hasSectionJustChanged = true
         }
     }
 
     fun shouldBeFullSize(position: Int) = _items.value?.get(position) !is RadioButtonViewHolder.UiModel
 
+    fun shouldSetAppBarToNotLifted() = hasSectionJustChanged.also {
+        hasSectionJustChanged = false
+    }
+
     private fun refreshItems() {
         _items.value = mutableListOf<SetupListItem>().apply {
-            add(TextViewHolder.UiModel(R.string.setup_text_1))
-            add(GithubButtonViewHolder.UiModel())
-            add(TextViewHolder.UiModel(R.string.setup_hint))
-            add(SpaceViewHolder.UiModel())
-            add(HeaderViewHolder.UiModel(R.string.setup_header_1, selectedSection == Section.INITIALIZATION))
+            add(HeaderViewHolder.UiModel(R.string.setup_header_1, selectedSection == Section.WELCOME))
+            if (selectedSection == Section.WELCOME) {
+                add(TextViewHolder.UiModel(R.string.setup_text_1))
+                add(GithubButtonViewHolder.UiModel())
+                add(TextViewHolder.UiModel(R.string.setup_hint))
+                add(SpaceViewHolder.UiModel())
+            }
+            add(HeaderViewHolder.UiModel(R.string.setup_header_2, selectedSection == Section.INITIALIZATION))
             if (selectedSection == Section.INITIALIZATION) {
                 add(TextViewHolder.UiModel(R.string.setup_text_2))
                 add(
@@ -87,16 +96,22 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                 add(TextViewHolder.UiModel(R.string.setup_text_6))
                 add(SpaceViewHolder.UiModel())
             }
-            add(HeaderViewHolder.UiModel(R.string.setup_header_2, selectedSection == Section.MODULE_CONFIGURATION))
+            add(HeaderViewHolder.UiModel(R.string.setup_header_3, selectedSection == Section.MODULE_CONFIGURATION))
             if (selectedSection == Section.MODULE_CONFIGURATION) {
                 add(TextViewHolder.UiModel(R.string.setup_text_7))
                 add(CodeSnippetViewHolder.UiModel("Beagle.setModules(module1, module2, …)"))
                 add(TextViewHolder.UiModel(R.string.setup_text_8))
                 add(SpaceViewHolder.UiModel())
             }
-            add(HeaderViewHolder.UiModel(R.string.setup_header_3, selectedSection == Section.OTHER_FEATURES))
+            add(HeaderViewHolder.UiModel(R.string.setup_header_4, selectedSection == Section.OTHER_FEATURES))
             if (selectedSection == Section.OTHER_FEATURES) {
-                //TODO
+                add(TextViewHolder.UiModel(R.string.setup_text_9))
+                add(SpaceViewHolder.UiModel())
+            }
+            add(HeaderViewHolder.UiModel(R.string.setup_header_5, selectedSection == Section.TROUBLESHOOTING))
+            if (selectedSection == Section.TROUBLESHOOTING) {
+                add(TextViewHolder.UiModel(R.string.setup_text_9))
+                add(SpaceViewHolder.UiModel())
             }
         }
     }
@@ -114,9 +129,11 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     }
 
     private enum class Section(@StringRes val titleResourceId: Int) {
-        INITIALIZATION(R.string.setup_header_1),
-        MODULE_CONFIGURATION(R.string.setup_header_2),
-        OTHER_FEATURES(R.string.setup_header_3);
+        WELCOME(R.string.setup_header_1),
+        INITIALIZATION(R.string.setup_header_2),
+        MODULE_CONFIGURATION(R.string.setup_header_3),
+        OTHER_FEATURES(R.string.setup_header_4),
+        TROUBLESHOOTING(R.string.setup_header_5);
 
         companion object {
             fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }

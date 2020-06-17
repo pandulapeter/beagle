@@ -31,6 +31,8 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     protected open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(context)
 
+    protected open fun onListUpdated() = Unit
+
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,6 +53,6 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
             setHasFixedSize(true)
             waitForLayout { startPostponedEnterTransition() }
         }
-        viewModel.items.observe(viewLifecycleOwner, listAdapter::submitList)
+        viewModel.items.observe(viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
     }
 }
