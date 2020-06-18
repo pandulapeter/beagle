@@ -18,6 +18,7 @@ import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
@@ -53,6 +54,10 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
             )
         ),
         LabelModule(title = "Label"),
+        LongTextModule(
+            title = "LongText",
+            text = "This is a longer piece of text that only becomes visible when the user expands the header."
+        ),
         MultipleSelectionListModule(
             title = "MultipleSelectionList",
             items = listOf(

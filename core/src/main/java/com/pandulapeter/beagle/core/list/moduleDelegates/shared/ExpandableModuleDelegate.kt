@@ -17,7 +17,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
 
     private fun MutableList<Cell<*>>.addHeader(module: M) = add(
         ExpandableHeaderCell(
-            id = module.id,
+            id = "header_${module.id}",
             text = module.title,
             isExpanded = module.isExpanded,
             canExpand = module.canExpand,

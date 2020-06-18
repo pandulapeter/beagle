@@ -20,6 +20,7 @@ class PlaygroundViewModel : ListViewModel<PlaygroundListItem>() {
             ModuleViewHolder.UiModel("ItemList"),
             ModuleViewHolder.UiModel("KeyValueList"),
             ModuleViewHolder.UiModel("Label"),
+            ModuleViewHolder.UiModel("LongText"),
             ModuleViewHolder.UiModel("MultipleSelectionList"),
             ModuleViewHolder.UiModel("Padding"),
             ModuleViewHolder.UiModel("SingleSelectionList"),
