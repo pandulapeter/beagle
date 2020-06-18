@@ -47,72 +47,91 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
 
     private fun refreshItems() {
         _items.value = mutableListOf<SetupListItem>().apply {
-            add(HeaderViewHolder.UiModel(R.string.setup_header_1, selectedSection == Section.WELCOME))
-            if (selectedSection == Section.WELCOME) {
-                add(TextViewHolder.UiModel(R.string.setup_text_1))
-                add(GithubButtonViewHolder.UiModel())
-                add(TextViewHolder.UiModel(R.string.setup_hint))
-                add(SpaceViewHolder.UiModel())
-            }
-            add(HeaderViewHolder.UiModel(R.string.setup_header_2, selectedSection == Section.INITIALIZATION))
-            if (selectedSection == Section.INITIALIZATION) {
-                add(TextViewHolder.UiModel(R.string.setup_text_2))
-                add(
-                    CodeSnippetViewHolder.UiModel(
-                        "allprojects {\n" +
-                                "    repositories {\n" +
-                                "        …\n" +
-                                "        maven { url \"https://jitpack.io\" }\n" +
-                                "    }\n" +
-                                "}"
-                    )
+            addWelcomeSection()
+            addInitializationSection()
+            addModuleConfigurationSection()
+            addTroubleshootingSection()
+        }
+    }
+
+    private fun MutableList<SetupListItem>.addWelcomeSection() {
+        add(HeaderViewHolder.UiModel(R.string.setup_header_1, selectedSection == Section.WELCOME))
+        if (selectedSection == Section.WELCOME) {
+            add(TextViewHolder.UiModel(R.string.setup_text_1))
+            add(GithubButtonViewHolder.UiModel())
+            add(TextViewHolder.UiModel(R.string.setup_hint))
+            add(SpaceViewHolder.UiModel())
+        }
+    }
+
+    private fun MutableList<SetupListItem>.addInitializationSection() {
+        add(HeaderViewHolder.UiModel(R.string.setup_header_2, selectedSection == Section.INITIALIZATION))
+        if (selectedSection == Section.INITIALIZATION) {
+            add(TextViewHolder.UiModel(R.string.setup_text_2))
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    "allprojects {\n" +
+                            "    repositories {\n" +
+                            "        …\n" +
+                            "        maven { url \"https://jitpack.io\" }\n" +
+                            "    }\n" +
+                            "}"
                 )
-                add(TextViewHolder.UiModel(R.string.setup_text_3))
-                add(SpaceViewHolder.UiModel())
-                addAll(UiVariant.values().map { uiVariant ->
-                    RadioButtonViewHolder.UiModel(uiVariant.titleResourceId, uiVariant == selectedUiVariant)
-                })
-                add(TextViewHolder.UiModel(R.string.setup_text_4))
-                add(
-                    CodeSnippetViewHolder.UiModel(
-                        id = "codeSnippet_gradle",
-                        codeSnippet = "dependencies {\n" +
-                                "    …\n" +
-                                //"    def beagleVersion = \"2.x.y\"\n" +
-                                "    debugImplementation \"com.github.pandulapeter.beagle:ui-${when (selectedUiVariant) {
-                                    UiVariant.ACTIVITY -> "activity"
-                                    UiVariant.BOTTOM_SHEET -> "bottom-sheet"
-                                    UiVariant.DIALOG -> "dialog"
-                                    UiVariant.DRAWER -> "drawer"
-                                    UiVariant.VIEW -> "view"
-                                }
-                                }:\$beagleVersion\"\n" +
-                                "    releaseImplementation \"com.github.pandulapeter.beagle:noop:\$beagleVersion\"\n" +
-                                "}"
-                    )
+            )
+            add(TextViewHolder.UiModel(R.string.setup_text_3))
+            add(SpaceViewHolder.UiModel())
+            addAll(UiVariant.values().map { uiVariant ->
+                RadioButtonViewHolder.UiModel(uiVariant.titleResourceId, uiVariant == selectedUiVariant)
+            })
+            add(TextViewHolder.UiModel(R.string.setup_text_4))
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    id = "codeSnippet_gradle",
+                    codeSnippet = "dependencies {\n" +
+                            "    …\n" +
+                            //"    def beagleVersion = \"2.x.y\"\n" +
+                            "    debugImplementation \"com.github.pandulapeter.beagle:ui-${when (selectedUiVariant) {
+                                UiVariant.ACTIVITY -> "activity"
+                                UiVariant.BOTTOM_SHEET -> "bottom-sheet"
+                                UiVariant.DIALOG -> "dialog"
+                                UiVariant.DRAWER -> "drawer"
+                                UiVariant.VIEW -> "view"
+                            }
+                            }:\$beagleVersion\"\n" +
+                            "    releaseImplementation \"com.github.pandulapeter.beagle:noop:\$beagleVersion\"\n" +
+                            "}"
                 )
-                add(TextViewHolder.UiModel(R.string.setup_text_5))
-                add(CodeSnippetViewHolder.UiModel("Beagle.initialize(this)"))
-                add(TextViewHolder.UiModel(R.string.setup_text_6))
-                add(SpaceViewHolder.UiModel())
-            }
-            add(HeaderViewHolder.UiModel(R.string.setup_header_3, selectedSection == Section.MODULE_CONFIGURATION))
-            if (selectedSection == Section.MODULE_CONFIGURATION) {
-                add(TextViewHolder.UiModel(R.string.setup_text_7))
-                add(CodeSnippetViewHolder.UiModel("Beagle.setModules(module1, module2, …)"))
-                add(TextViewHolder.UiModel(R.string.setup_text_8))
-                add(SpaceViewHolder.UiModel())
-            }
-            add(HeaderViewHolder.UiModel(R.string.setup_header_4, selectedSection == Section.OTHER_FEATURES))
-            if (selectedSection == Section.OTHER_FEATURES) {
-                add(TextViewHolder.UiModel(R.string.setup_text_9))
-                add(SpaceViewHolder.UiModel())
-            }
-            add(HeaderViewHolder.UiModel(R.string.setup_header_5, selectedSection == Section.TROUBLESHOOTING))
-            if (selectedSection == Section.TROUBLESHOOTING) {
-                add(TextViewHolder.UiModel(R.string.setup_text_9))
-                add(SpaceViewHolder.UiModel())
-            }
+            )
+            add(TextViewHolder.UiModel(R.string.setup_text_5))
+            add(CodeSnippetViewHolder.UiModel("Beagle.initialize(this)"))
+            add(TextViewHolder.UiModel(R.string.setup_text_6))
+            add(SpaceViewHolder.UiModel())
+        }
+    }
+
+    private fun MutableList<SetupListItem>.addModuleConfigurationSection() {
+        add(HeaderViewHolder.UiModel(R.string.setup_header_3, selectedSection == Section.MODULE_CONFIGURATION))
+        if (selectedSection == Section.MODULE_CONFIGURATION) {
+            add(TextViewHolder.UiModel(R.string.setup_text_7))
+            add(CodeSnippetViewHolder.UiModel("Beagle.setModules(module1, module2, …)"))
+            add(TextViewHolder.UiModel(R.string.setup_text_8))
+            add(SpaceViewHolder.UiModel())
+        }
+    }
+
+    private fun MutableList<SetupListItem>.addOtherFeaturesSection() {
+        add(HeaderViewHolder.UiModel(R.string.setup_header_4, selectedSection == Section.OTHER_FEATURES))
+        if (selectedSection == Section.OTHER_FEATURES) {
+            add(TextViewHolder.UiModel(R.string.setup_text_9))
+            add(SpaceViewHolder.UiModel())
+        }
+    }
+
+    private fun MutableList<SetupListItem>.addTroubleshootingSection() {
+        add(HeaderViewHolder.UiModel(R.string.setup_header_5, selectedSection == Section.TROUBLESHOOTING))
+        if (selectedSection == Section.TROUBLESHOOTING) {
+            add(TextViewHolder.UiModel(R.string.setup_text_9))
+            add(SpaceViewHolder.UiModel())
         }
     }
 
