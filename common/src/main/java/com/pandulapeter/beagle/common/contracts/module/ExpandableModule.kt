@@ -16,4 +16,9 @@ interface ExpandableModule<M : Module<M>> : Module<M> {
      *  Whether or not the list is expanded the first time the module becomes visible.
      */
     val isExpandedInitially: Boolean
+
+    /**
+     *  Whether or not the list has any elements.
+     */
+    val canExpand: Boolean
 }

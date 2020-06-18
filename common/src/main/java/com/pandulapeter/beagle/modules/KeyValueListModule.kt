@@ -18,5 +18,7 @@ data class KeyValueListModule(
     val pairs: List<Pair<CharSequence, CharSequence>>
 ) : ExpandableModule<KeyValueListModule> {
 
+    override val canExpand = pairs.isNotEmpty()
+
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

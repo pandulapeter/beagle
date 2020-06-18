@@ -20,6 +20,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
             id = module.id,
             text = module.title,
             isExpanded = module.isExpanded,
+            canExpand = module.canExpand,
             onItemSelected = {
                 module.isExpanded = !module.isExpanded
                 BeagleCore.implementation.refreshCells()

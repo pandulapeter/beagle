@@ -26,6 +26,7 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
     val onSelectionChanged: (selectedItem: T?) -> Unit
 ) : ExpandableModule<SingleSelectionListModule<T>>, PersistableModule<String, SingleSelectionListModule<T>> {
 
+    override val canExpand = items.isNotEmpty()
     override val initialValue = initiallySelectedItemId.orEmpty() //TODO: Using an empty string is not a great idea, this should be null
     override val onValueChanged: (newValue: String) -> Unit = { newValue -> onSelectionChanged(items.firstOrNull { it.id == newValue }) }
 

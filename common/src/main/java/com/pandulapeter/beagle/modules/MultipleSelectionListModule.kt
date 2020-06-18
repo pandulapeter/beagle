@@ -26,6 +26,7 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
     val onSelectionChanged: (selectedItems: Set<T>) -> Unit
 ) : ExpandableModule<MultipleSelectionListModule<T>>, PersistableModule<Set<String>, MultipleSelectionListModule<T>> {
 
+    override val canExpand = items.isNotEmpty()
     override val onValueChanged: (newValue: Set<String>) -> Unit = { newValue -> onSelectionChanged(newValue.mapNotNull { itemId -> items.firstOrNull { it.id == itemId } }.toSet()) }
     override val initialValue: Set<String> = initiallySelectedItemIds
 

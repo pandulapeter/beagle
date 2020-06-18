@@ -13,6 +13,7 @@ internal data class ExpandableHeaderCell(
     override val id: String,
     private val text: CharSequence,
     val isExpanded: Boolean,
+    val canExpand: Boolean,
     val onItemSelected: () -> Unit
 ) : Cell<ExpandableHeaderCell> {
 
@@ -30,12 +31,13 @@ internal data class ExpandableHeaderCell(
         override fun bind(model: ExpandableHeaderCell) {
             textView.run {
                 text = model.text
-                setCompoundDrawablesWithIntrinsicBounds(null, null, if (model.isExpanded) drawableCollapse else drawableExpand, null)
+                setCompoundDrawablesWithIntrinsicBounds(null, null, if (model.canExpand) if (model.isExpanded) drawableCollapse else drawableExpand else null, null)
                 setOnClickListener {
                     if (adapterPosition != RecyclerView.NO_POSITION) {
                         model.onItemSelected()
                     }
                 }
+                isClickable = model.canExpand
             }
         }
     }

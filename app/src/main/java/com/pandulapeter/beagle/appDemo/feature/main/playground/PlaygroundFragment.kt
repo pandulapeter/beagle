@@ -20,7 +20,6 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
-import kotlinx.android.synthetic.main.item_playground_module.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>(R.string.playground_title) {
@@ -32,9 +31,13 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
     override fun getBeagleModules(): List<Module<*>> = listOf(
         ButtonModule(text = "Button", onButtonPressed = {}),
         CheckBoxModule(text = "Checkbox", onValueChanged = {}),
-        ItemListModule<BeagleListItemContract>(
+        ItemListModule(
             title = "ItemList",
-            items = listOf(),
+            items = listOf(
+                ListItem("Item 1"),
+                ListItem("Item 2"),
+                ListItem("Item 3")
+            ),
             onItemSelected = {}
         ),
         KeyValueListModule(
@@ -46,15 +49,23 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
             )
         ),
         LabelModule(title = "Label"),
-        MultipleSelectionListModule<BeagleListItemContract>(
+        MultipleSelectionListModule(
             title = "MultipleSelectionList",
-            items = listOf(),
+            items = listOf(
+                ListItem("Checkbox 1"),
+                ListItem("Checkbox 2"),
+                ListItem("Checkbox 3")
+            ),
             initiallySelectedItemIds = emptySet(),
             onSelectionChanged = {}
         ),
-        SingleSelectionListModule<BeagleListItemContract>(
+        SingleSelectionListModule(
             title = "SingleSelectionList",
-            items = listOf(),
+            items = listOf(
+                ListItem("Radio button 1"),
+                ListItem("Radio button 2"),
+                ListItem("Radio button 3")
+            ),
             initiallySelectedItemId = null,
             onSelectionChanged = {}
         ),
@@ -67,6 +78,13 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
             title = "Header"
         )
     )
+
+    private data class ListItem(
+        override val title: String
+    ) : BeagleListItemContract {
+
+        override val id = title
+    }
 
     companion object {
         fun newInstance() = PlaygroundFragment()
