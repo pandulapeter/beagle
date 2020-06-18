@@ -18,6 +18,7 @@ import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
+import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
@@ -60,6 +61,7 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
             initiallySelectedItemIds = emptySet(),
             onSelectionChanged = {}
         ),
+        PaddingModule(),
         SingleSelectionListModule(
             title = "SingleSelectionList",
             items = listOf(
@@ -77,7 +79,8 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
         DeviceInfoModule(),
         ForceCrashButtonModule(),
         HeaderModule(
-            title = "Header"
+            title = "Header title",
+            subtitle = "Header subtitle"
         )
     )
 

@@ -16,6 +16,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.KeyValueListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.MultipleSelectionListDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.PaddingDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SingleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
@@ -30,6 +31,7 @@ import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
+import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
@@ -50,8 +52,9 @@ internal class ListManager {
         LabelModule::class to LabelDelegate(),
         ItemListModule::class to ItemListDelegate<BeagleListItemContract>(),
         KeyValueListModule::class to KeyValueListDelegate(),
-        SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
         MultipleSelectionListModule::class to MultipleSelectionListDelegate<BeagleListItemContract>(),
+        PaddingModule::class to PaddingDelegate(),
+        SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )
