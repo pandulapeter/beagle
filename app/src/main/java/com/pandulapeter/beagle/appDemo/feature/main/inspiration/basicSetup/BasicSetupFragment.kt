@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
+import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import org.koin.android.ext.android.inject
 
@@ -26,6 +27,7 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
             text = "Built on ${BuildConfig.BUILD_DATE}"
         ),
         AppInfoButtonModule(),
+        ForceCrashButtonModule(),
         AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }),
         DeviceInfoModule()
     )

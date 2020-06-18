@@ -67,9 +67,11 @@ It can also contain various interactive features, such as switches, radio groups
     <string name="case_study_basic_setup_text_4">The last line uses a custom build config field:</string>
     <string name="case_study_basic_setup_text_5"><b>AppInfoButton</b>\n\n
 A simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
-    <string name="case_study_basic_setup_text_6"><b>AnimationDurationSwitch</b>\n\n
+    <string name="case_study_basic_setup_text_6"><b>ForceCrashButton</b>\n\n
+This module can be used to easily test the application\'s crash reporting capabilities.</string>
+    <string name="case_study_basic_setup_text_7"><b>AnimationDurationSwitch</b>\n\n
 A frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
-    <string name="case_study_basic_setup_text_7"><b>DeviceInfo</b>\n\n
+    <string name="case_study_basic_setup_text_8"><b>DeviceInfo</b>\n\n
 Displays important information about the device such as the Android SDK version or the screen resolution that can be helpful in identifying potential device-specific issues.</string>
 
     <!-- Case studies / Authentication -->

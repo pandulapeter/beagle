@@ -29,6 +29,7 @@ class BasicSetupViewModel : ListViewModel<BasicSetupListItem>() {
                         "        text = headerText\n" +
                         "    ),\n" +
                         "    AppInfoButtonModule(),\n" +
+                        "    ForceCrashButtonModule(),\n" +
                         "    AnimationDurationSwitchModule()\n" +
                         "    DeviceInformationModule()\n" +
                         ")"
@@ -52,8 +53,9 @@ class BasicSetupViewModel : ListViewModel<BasicSetupListItem>() {
             ),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_5),
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_6),
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_7),
             LoadingIndicatorViewHolder.UiModel(),
-            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_7)
+            TextViewHolder.UiModel(R.string.case_study_basic_setup_text_8)
         )
     }
 }

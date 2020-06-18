@@ -27,6 +27,7 @@ class PlaygroundViewModel : ListViewModel<PlaygroundListItem>() {
             ModuleViewHolder.UiModel("AnimationDurationSwitch"),
             ModuleViewHolder.UiModel("AppInfo"),
             ModuleViewHolder.UiModel("DeviceInfo"),
+            ModuleViewHolder.UiModel("ForceCrashButton"),
             ModuleViewHolder.UiModel("Header")
         )
     )
