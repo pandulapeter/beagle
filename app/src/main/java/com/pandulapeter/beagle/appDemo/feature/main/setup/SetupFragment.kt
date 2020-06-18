@@ -15,6 +15,7 @@ import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
+import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -53,6 +54,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
 
     override fun getBeagleModules() = listOf(
         TextModule(text = getText(R.string.setup_beagle_text_1)),
+        DividerModule(),
         LabelModule(title = getString(R.string.setup_beagle_label)),
         SwitchModule(text = getString(R.string.setup_beagle_switch), onValueChanged = {}),
         ButtonModule(text = getString(R.string.setup_beagle_button), onButtonPressed = {}),
@@ -69,6 +71,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
                 onSelectionChanged = { }
             )
         },
+        DividerModule(),
         TextModule(text = getText(R.string.setup_beagle_text_2))
     )
 

@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.AppInfoButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.CheckBoxDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.DeviceInfoDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.DividerDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ForceCrashButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.HeaderDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ItemListDelegate
@@ -25,6 +26,7 @@ import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
+import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
@@ -47,6 +49,7 @@ internal class ListManager {
         ButtonModule::class to ButtonDelegate(),
         CheckBoxModule::class to CheckBoxDelegate(),
         DeviceInfoModule::class to DeviceInfoDelegate(),
+        DividerModule::class to DividerDelegate(),
         ForceCrashButtonModule::class to ForceCrashButtonDelegate(),
         HeaderModule::class to HeaderDelegate(),
         LabelModule::class to LabelDelegate(),

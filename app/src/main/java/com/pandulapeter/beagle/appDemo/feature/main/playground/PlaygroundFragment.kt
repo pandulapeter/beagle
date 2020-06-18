@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
+import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
@@ -33,6 +34,7 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
     override fun getBeagleModules(): List<Module<*>> = listOf(
         ButtonModule(text = "Button", onButtonPressed = {}),
         CheckBoxModule(text = "Checkbox", onValueChanged = {}),
+        DividerModule(),
         ItemListModule(
             title = "ItemList",
             items = listOf(

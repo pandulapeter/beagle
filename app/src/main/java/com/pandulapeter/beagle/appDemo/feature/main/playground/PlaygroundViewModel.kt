@@ -16,6 +16,7 @@ class PlaygroundViewModel : ListViewModel<PlaygroundListItem>() {
             TextViewHolder.UiModel(R.string.playground_generic_modules),
             ModuleViewHolder.UiModel("Button"),
             ModuleViewHolder.UiModel("CheckBox"),
+            ModuleViewHolder.UiModel("Divider"),
             ModuleViewHolder.UiModel("ItemList"),
             ModuleViewHolder.UiModel("KeyValueList"),
             ModuleViewHolder.UiModel("Label"),
