@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
@@ -14,6 +15,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import org.koin.android.ext.android.inject
+import org.koin.ext.scope
 
 class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel, AuthenticationListItem>(R.string.case_study_authentication_title) {
 
@@ -46,7 +48,7 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
         super.onPause()
     }
 
-    override fun createAdapter() = AuthenticationAdapter(::signIn)
+    override fun createAdapter() = AuthenticationAdapter(viewModel.viewModelScope, ::signIn)
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         ItemListModule(

@@ -11,7 +11,7 @@
     <string name="setup_text_1">Beagle is a free and open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.</string>
     <string name="setup_github_button">Check it out on GitHub</string>
     <string name="setup_app_not_found">No application can handle this link</string>
-    <string name="setup_hint">In this demo application you can trigger the debug menu at any time by shaking the device or by tapping on the Beagle logo in the bottom-right corner.\n\n
+    <string name="setup_hint">In this demo application you can trigger the debug menu at any time by shaking the device (one decided shake is enough, think of your phone as a judge\'s gavel) or by tapping on the Beagle logo in the bottom-right corner.\n\n
 The following sections provide some guidance with setting up the library while the rest of the application serves as a demo / showcase for the built-in feature set.</string>
     <string name="setup_header_2">Initialization</string>
     <string name="setup_text_2">The first step towards having Beagle in your project is making sure that the JitPack Maven repository is added to the <b>allprojects</b> block of your project-level <b>build.gradle</b> file.</string>

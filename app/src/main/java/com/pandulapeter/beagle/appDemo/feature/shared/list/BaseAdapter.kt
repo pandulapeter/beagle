@@ -2,10 +2,23 @@ package com.pandulapeter.beagle.appDemo.feature.shared.list
 
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import java.util.ArrayDeque
 
-abstract class BaseAdapter<T : ListItem> : ListAdapter<T, BaseViewHolder<*, *>>(ListItem.DiffCallback()) {
+
+open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : RecyclerView.Adapter<BaseViewHolder<*, *>>() {
+
+    private var items = emptyList<T>()
+    private var job: Job? = null
+    private val pendingUpdates = ArrayDeque<List<T>>()
+
+    final override fun getItemCount() = getCurrentList().size
 
     @CallSuper
     override fun getItemViewType(position: Int) = when (getItem(position)) {
@@ -26,5 +39,56 @@ abstract class BaseAdapter<T : ListItem> : ListAdapter<T, BaseViewHolder<*, *>>(
         is CodeSnippetViewHolder -> holder.bind(getItem(position) as CodeSnippetViewHolder.UiModel)
         is TextViewHolder -> holder.bind(getItem(position) as TextViewHolder.UiModel)
         else -> throw  IllegalArgumentException("Unsupported item type at position $position.")
+    }
+
+    fun getItem(position: Int) = getCurrentList()[position]
+
+    fun submitList(newItems: List<T>, onListUpdated: () -> Unit) {
+        pendingUpdates.add(newItems)
+        if (pendingUpdates.size == 1) {
+            update(newItems, onListUpdated)
+        }
+    }
+
+    private fun getCurrentList() = (pendingUpdates.peekLast() ?: items)
+
+    private fun update(newItems: List<T>, onListUpdated: (() -> Unit)? = null) {
+        job?.cancel()
+        job = scope.launch(Dispatchers.IO) {
+            val result = DiffUtil.calculateDiff(DiffCallback(items, newItems))
+            job = launch(Dispatchers.Main) {
+                items = newItems
+                result.dispatchUpdatesTo(this@BaseAdapter)
+                processQueue(onListUpdated)
+                job = null
+            }
+        }
+    }
+
+    private fun processQueue(onListUpdated: (() -> Unit)?) {
+        pendingUpdates.remove()
+        if (pendingUpdates.isEmpty()) {
+            onListUpdated?.invoke()
+        } else {
+            if (pendingUpdates.size > 1) {
+                val lastList = pendingUpdates.peekLast()
+                pendingUpdates.clear()
+                pendingUpdates.add(lastList)
+            }
+            pendingUpdates.peek()?.let { update(it, onListUpdated) }
+        }
+    }
+
+    private class DiffCallback<T : ListItem>(private val oldItems: List<T>, private val newItems: List<T>) : DiffUtil.Callback() {
+
+        override fun getOldListSize() = oldItems.size
+
+        override fun getNewListSize() = newItems.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldItems[oldItemPosition].id == newItems[newItemPosition].id
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldItems[oldItemPosition] == newItems[newItemPosition]
+
+        override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int) = Unit
     }
 }

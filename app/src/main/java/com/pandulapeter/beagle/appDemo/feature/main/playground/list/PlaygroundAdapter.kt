@@ -4,8 +4,9 @@ import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import kotlinx.coroutines.CoroutineScope
 
-class PlaygroundAdapter : BaseAdapter<PlaygroundListItem>() {
+class PlaygroundAdapter(scope: CoroutineScope) : BaseAdapter<PlaygroundListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is ModuleViewHolder.UiModel -> R.layout.item_playground_module

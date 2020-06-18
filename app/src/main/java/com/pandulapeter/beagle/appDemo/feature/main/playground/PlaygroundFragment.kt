@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.main.playground
 
+import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
@@ -12,7 +13,7 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
 
     override val viewModel by viewModel<PlaygroundViewModel>()
 
-    override fun createAdapter() = PlaygroundAdapter()
+    override fun createAdapter() = PlaygroundAdapter(viewModel.viewModelScope)
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         TextModule(text = "Work in progress")

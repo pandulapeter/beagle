@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles
 
+import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
@@ -12,7 +13,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
 
     override val viewModel by inject<FeatureTogglesViewModel>()
 
-    override fun createAdapter() = object : BaseAdapter<ListItem>() {}
+    override fun createAdapter() = BaseAdapter<ListItem>(viewModel.viewModelScope)
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         TextModule(text = "TODO: Add switches, radio groups, checkbox groups.")

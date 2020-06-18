@@ -4,12 +4,14 @@ import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import kotlinx.coroutines.CoroutineScope
 
 class SetupAdapter(
+    scope: CoroutineScope,
     private val onGitHubButtonClicked: () -> Unit,
     private val onRadioButtonSelected: (Int) -> Unit,
     private val onHeaderSelected: (Int) -> Unit
-) : BaseAdapter<SetupListItem>() {
+) : BaseAdapter<SetupListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is GithubButtonViewHolder.UiModel -> R.layout.item_setup_github_button

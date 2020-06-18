@@ -4,8 +4,9 @@ import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import kotlinx.coroutines.CoroutineScope
 
-class BasicSetupAdapter : BaseAdapter<BasicSetupListItem>() {
+class BasicSetupAdapter(scope: CoroutineScope) : BaseAdapter<BasicSetupListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is LoadingIndicatorViewHolder.UiModel -> R.layout.item_basic_setup_loading_indicator

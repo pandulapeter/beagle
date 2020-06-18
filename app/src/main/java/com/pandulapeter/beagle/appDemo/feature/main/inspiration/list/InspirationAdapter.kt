@@ -6,10 +6,12 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import kotlinx.coroutines.CoroutineScope
 
 class InspirationAdapter(
+    scope: CoroutineScope,
     private val onCaseStudyClicked: (CaseStudy, View) -> Unit
-) : BaseAdapter<InspirationListItem>() {
+) : BaseAdapter<InspirationListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is CaseStudyViewHolder.UiModel -> R.layout.item_inspiration_case_study

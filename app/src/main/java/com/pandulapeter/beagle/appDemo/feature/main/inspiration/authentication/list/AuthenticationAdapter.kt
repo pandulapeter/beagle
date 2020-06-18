@@ -4,10 +4,12 @@ import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import kotlinx.coroutines.CoroutineScope
 
 class AuthenticationAdapter(
+    scope: CoroutineScope,
     private val onButtonClicked: () -> Unit
-) : BaseAdapter<AuthenticationListItem>() {
+) : BaseAdapter<AuthenticationListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is EmailInputViewHolder.UiModel -> R.layout.item_authentication_email_input

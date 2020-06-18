@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.main.about
 
+import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
@@ -13,7 +14,7 @@ class AboutFragment : ListFragment<AboutViewModel, ListItem>(R.string.about_titl
 
     override val viewModel by viewModel<AboutViewModel>()
 
-    override fun createAdapter() = object : BaseAdapter<ListItem>() {}
+    override fun createAdapter() = BaseAdapter<ListItem>(viewModel.viewModelScope)
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         HeaderModule(

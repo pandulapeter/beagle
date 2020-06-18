@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup
 
+import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
@@ -16,7 +17,7 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
 
     override val viewModel by inject<BasicSetupViewModel>()
 
-    override fun createAdapter() = BasicSetupAdapter()
+    override fun createAdapter() = BasicSetupAdapter(viewModel.viewModelScope)
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         HeaderModule(

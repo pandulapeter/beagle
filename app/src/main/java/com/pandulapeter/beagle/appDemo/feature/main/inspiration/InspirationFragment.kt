@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.AuthenticationFragment
@@ -26,7 +27,7 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
         refreshBeagle()
     }
 
-    override fun createAdapter() = InspirationAdapter(::onCaseStudySelected)
+    override fun createAdapter() = InspirationAdapter(viewModel.viewModelScope, ::onCaseStudySelected)
 
     override fun getBeagleModules() = mutableListOf(TextModule(text = getString(R.string.inspiration_beagle_text)))
 

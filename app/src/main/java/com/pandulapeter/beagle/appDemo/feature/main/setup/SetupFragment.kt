@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
@@ -32,6 +33,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     }
 
     override fun createAdapter() = SetupAdapter(
+        scope = viewModel.viewModelScope,
         onGitHubButtonClicked = ::onGitHubButtonClicked,
         onRadioButtonSelected = viewModel::onRadioButtonSelected,
         onHeaderSelected = viewModel::onHeaderSelected
