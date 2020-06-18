@@ -18,7 +18,7 @@ open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : Recycl
     private var job: Job? = null
     private val pendingUpdates = ArrayDeque<List<T>>()
 
-    final override fun getItemCount() = getCurrentList().size
+    final override fun getItemCount() = items.size
 
     @CallSuper
     override fun getItemViewType(position: Int) = when (getItem(position)) {
@@ -41,18 +41,16 @@ open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : Recycl
         else -> throw  IllegalArgumentException("Unsupported item type at position $position.")
     }
 
-    fun getItem(position: Int) = getCurrentList()[position]
+    fun getItem(position: Int) = items[position]
 
-    fun submitList(newItems: List<T>, onListUpdated: () -> Unit) {
+    fun submitList(newItems: List<T>, onListUpdated: (() -> Unit)? = null) {
         pendingUpdates.add(newItems)
         if (pendingUpdates.size == 1) {
             update(newItems, onListUpdated)
         }
     }
 
-    private fun getCurrentList() = (pendingUpdates.peekLast() ?: items)
-
-    private fun update(newItems: List<T>, onListUpdated: (() -> Unit)? = null) {
+    private fun update(newItems: List<T>, onListUpdated: (() -> Unit)?) {
         job?.cancel()
         job = scope.launch(Dispatchers.IO) {
             val result = DiffUtil.calculateDiff(DiffCallback(items, newItems))
