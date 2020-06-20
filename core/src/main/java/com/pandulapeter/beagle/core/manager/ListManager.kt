@@ -146,7 +146,7 @@ internal class ListManager {
                                     if (referencePosition == -1) {
                                         add(newIndex++, module)
                                     } else {
-                                        add(referencePosition - newModules.size + newIndex++, module)
+                                        add(referencePosition, module)
                                     }
                                 }
                             }
