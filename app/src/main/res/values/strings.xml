@@ -32,11 +32,12 @@ In case you only want to change some parts of the debug menu without affecting t
 For adding a one or more modules you can use this:</string>
     <string name="setup_text_9">In this function, the optional <b>positioning</b> parameter can be used to specify the place of the new modules (first, last, or above / below a module that\'s already part of the menu). Specifying the optional <b>lifecycleOwner</b> will automatically remove the modules when that lifecycle is over which is ideal for elements that are specific to a single screen.\n\n
 The following function exists for manually removing one or more modules from the debug menu:</string>
-    <string name="setup_text_10">None of these functions should throw runtime exceptions in case of invalid arguments.</string>
+    <string name="setup_text_10">Last but not least, the following function is exposed to get the reference of an already added module instance:</string>
+    <string name="setup_text_11">None of these functions should throw runtime exceptions in case of invalid arguments.</string>
     <string name="setup_header_4">Other features</string>
-    <string name="setup_text_11"><i>[coming soon]</i></string>
-    <string name="setup_header_5">Troubleshooting</string>
     <string name="setup_text_12"><i>[coming soon]</i></string>
+    <string name="setup_header_5">Troubleshooting</string>
+    <string name="setup_text_13"><i>[coming soon]</i></string>
     <string name="setup_debug_menu_text_1"><b>This is the debug menu configured by you</b>\n\n
 It should contain useful information, like the version number of your app, the build date, or information about the device it\'s running on.\n\n
 You can use it to track network requests, show analytics events, display custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing process.\n\n

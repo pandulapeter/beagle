@@ -12,7 +12,7 @@ Clone this repository, pick a build variant and run the **app** configuration. I
 
 <img src="metadata/screenshotOld01.png" width="25%" /><img src="metadata/screenshotOld02.png" width="25%" /><img src="metadata/screenshotOld01.png" width="25%" /><img src="metadata/screenshotOld02.png" width="25%" />
 
-This demo application also contains instructions on how to initialize the library and how to implement the various features that are being showcased. As a result you should consider giving it a try if you're interested in the library. If you don't feel like building it yourself, you can also download it from the Play Store:
+This demo application also contains instructions on how to set up Beagle and how to implement the various features that are being showcased. As a result you should consider giving it a try if you're interested in the library. If you don't feel like building it yourself, you can also download it from the Play Store:
 
 [<img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" />](https://play.google.com/store/apps/details?id=com.pandulapeter.beagleExample)
 

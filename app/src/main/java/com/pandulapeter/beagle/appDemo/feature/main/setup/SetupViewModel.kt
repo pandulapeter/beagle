@@ -128,6 +128,8 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
             add(TextViewHolder.UiModel(R.string.setup_text_9))
             add(CodeSnippetViewHolder.UiModel("Beagle.remove(moduleId1, moduleId2, ...)"))
             add(TextViewHolder.UiModel(R.string.setup_text_10))
+            add(CodeSnippetViewHolder.UiModel("Beagle.find<ModuleType>(moduleId)"))
+            add(TextViewHolder.UiModel(R.string.setup_text_11))
             add(SpaceViewHolder.UiModel())
         }
     }
@@ -135,7 +137,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     private fun MutableList<SetupListItem>.addOtherFeaturesSection() {
         add(HeaderViewHolder.UiModel(R.string.setup_header_4, selectedSection == Section.OTHER_FEATURES))
         if (selectedSection == Section.OTHER_FEATURES) {
-            add(TextViewHolder.UiModel(R.string.setup_text_11))
+            add(TextViewHolder.UiModel(R.string.setup_text_12))
             add(SpaceViewHolder.UiModel())
         }
     }
@@ -143,7 +145,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     private fun MutableList<SetupListItem>.addTroubleshootingSection() {
         add(HeaderViewHolder.UiModel(R.string.setup_header_5, selectedSection == Section.TROUBLESHOOTING))
         if (selectedSection == Section.TROUBLESHOOTING) {
-            add(TextViewHolder.UiModel(R.string.setup_text_12))
+            add(TextViewHolder.UiModel(R.string.setup_text_13))
             add(SpaceViewHolder.UiModel())
         }
     }
