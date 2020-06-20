@@ -6,6 +6,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetai
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.TextModule
 import org.koin.android.ext.android.inject
 
@@ -16,7 +17,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
     override fun createAdapter() = BaseAdapter<ListItem>(viewModel.viewModelScope)
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
-        TextModule(text = "TODO: Add switches, radio groups, checkbox groups.")
+        LabelModule(title = getString(R.string.case_study_feature_toggles_text_1))
     )
 
     companion object {

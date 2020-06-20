@@ -13,6 +13,7 @@ abstract class ContainerFragment(private val newInstance: () -> ListFragment<*, 
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        postponeEnterTransition()
         if (savedInstanceState == null && currentFragment == null) {
             childFragmentManager.handleReplace(addToBackStack = true, newInstance = newInstance)
         }

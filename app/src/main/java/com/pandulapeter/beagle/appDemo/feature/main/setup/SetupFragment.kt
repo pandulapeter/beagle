@@ -53,26 +53,26 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     }
 
     override fun getBeagleModules() = listOf(
-        TextModule(text = getText(R.string.setup_beagle_text_1)),
+        TextModule(text = getText(R.string.setup_debug_menu_text_1)),
         DividerModule(),
-        LabelModule(title = getString(R.string.setup_beagle_label)),
-        SwitchModule(text = getString(R.string.setup_beagle_switch), onValueChanged = {}),
-        ButtonModule(text = getString(R.string.setup_beagle_button), onButtonPressed = {}),
-        CheckBoxModule(text = getString(R.string.setup_beagle_check_box), onValueChanged = {}),
+        LabelModule(title = getString(R.string.setup_debug_menu_label)),
+        SwitchModule(text = getString(R.string.setup_debug_menu_switch), onValueChanged = {}),
+        ButtonModule(text = getString(R.string.setup_debug_menu_button), onButtonPressed = {}),
+        CheckBoxModule(text = getString(R.string.setup_debug_menu_check_box), onValueChanged = {}),
         listOf(
-            RadioGroupOption(getString(R.string.setup_beagle_radio_group_option_1)),
-            RadioGroupOption(getString(R.string.setup_beagle_radio_group_option_2)),
-            RadioGroupOption(getString(R.string.setup_beagle_radio_group_option_3))
+            RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_1)),
+            RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_2)),
+            RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_3))
         ).let { radioGroupOptions ->
             SingleSelectionListModule(
-                title = getString(R.string.setup_beagle_radio_group),
+                title = getString(R.string.setup_debug_menu_radio_group),
                 items = radioGroupOptions,
                 initiallySelectedItemId = radioGroupOptions.first().id,
                 onSelectionChanged = { }
             )
         },
         DividerModule(),
-        TextModule(text = getText(R.string.setup_beagle_text_2))
+        TextModule(text = getText(R.string.setup_debug_menu_text_2))
     )
 
     private fun onGitHubButtonClicked() = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL)).let { intent ->

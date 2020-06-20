@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.common.configuration.Positioning
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
@@ -66,6 +67,10 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
 
     override fun setModules(vararg modules: Module<*>) = listManager.setModules(modules.toList())
+
+    override fun addModule(module: Module<*>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) = listManager.addModule(module, positioning, lifecycleOwner)
+
+    override fun removeModule(id: String) = listManager.removeModule(id)
 
     override fun <M : Module<M>> findModule(id: String) = listManager.findModule<M>(id)
 

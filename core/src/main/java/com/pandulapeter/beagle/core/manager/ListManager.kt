@@ -1,7 +1,12 @@
 package com.pandulapeter.beagle.core.manager
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.beagle.common.configuration.Positioning
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.CellAdapter
@@ -77,6 +82,25 @@ internal class ListManager {
         refreshCells()
     }
 
+    fun addModule(module: Module<*>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
+        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+            fun onCreate() = addModule(module, positioning)
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            fun onDestroy() {
+                removeModule(module.id)
+                lifecycleOwner.lifecycle.removeObserver(this)
+            }
+        }) ?: addModule(module, positioning)
+    }
+
+    fun removeModule(id: String) {
+        modules.removeAll { it.id == id }
+        refreshCells()
+    }
+
     @Suppress("UNCHECKED_CAST")
     fun <M : Module<*>> findModule(id: String): M? = modules.firstOrNull { it.id == id } as? M?
 
@@ -90,4 +114,39 @@ internal class ListManager {
             moduleDelegates[module::class] = it
         })).forceCreateCells(module)
     })
+
+    private fun addModule(module: Module<*>, positioning: Positioning) {
+        modules.apply {
+            indexOfFirst { it.id == module.id }.also { currentIndex ->
+                if (currentIndex != -1) {
+                    removeAt(currentIndex)
+                    add(currentIndex, module)
+                } else {
+                    when (positioning) {
+                        Positioning.Bottom -> add(module)
+                        Positioning.Top -> add(0, module)
+                        is Positioning.Below -> {
+                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                if (referencePosition == -1) {
+                                    add(module)
+                                } else {
+                                    add(referencePosition + 1, module)
+                                }
+                            }
+                        }
+                        is Positioning.Above -> {
+                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                if (referencePosition == -1) {
+                                    add(0, module)
+                                } else {
+                                    add(referencePosition, module)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        refreshCells()
+    }
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.common.configuration.Positioning
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
@@ -79,6 +80,26 @@ interface BeagleContract {
      * @param modules - The new [Module] implementations to use.
      */
     fun setModules(vararg modules: Module<*>) = Unit
+
+    /**
+     * Use this function to add a new module to the list. If there already is one with the same ID, it will be replaced.
+     *
+     * @param module - The new module to be added.
+     * @param positioning - The positioning of the new trick. Optional, [Positioning.Bottom] by default.
+     * @param lifecycleOwner - The [LifecycleOwner] which should manage for how long the module should remain added. Null if the module should not be removed automatically. Null by default.
+     */
+    fun addModule(
+        module: Module<*>,
+        positioning: Positioning = Positioning.Bottom,
+        lifecycleOwner: LifecycleOwner? = null
+    ) = Unit
+
+    /**
+     * Remove the module with the specified ID from the debug menu.
+     *
+     * @param id - The ID of the module to be removed.
+     */
+    fun removeModule(id: String) = Unit
 
     /**
      * Can be used to get the reference to a [Module].

@@ -51,7 +51,10 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
             adapter = listAdapter
             layoutManager = createLayoutManager()
             setHasFixedSize(true)
-            waitForLayout { startPostponedEnterTransition() }
+            waitForLayout {
+                startPostponedEnterTransition()
+                parentFragment?.startPostponedEnterTransition()
+            }
         }
         viewModel.items.observe(viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
     }
