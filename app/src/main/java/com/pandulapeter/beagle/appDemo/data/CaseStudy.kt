@@ -22,6 +22,11 @@ enum class CaseStudy(
         title = R.string.case_study_feature_toggles_title,
         description = R.string.case_study_feature_toggles_description
     ),
+    STATIC_DATA(
+        title = R.string.case_study_static_data_title,
+        description = R.string.case_study_static_data_description,
+        isReady = false
+    ),
     ANALYTICS(
         title = R.string.case_study_analytics_title,
         description = R.string.case_study_analytics_description,

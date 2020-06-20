@@ -97,6 +97,10 @@ Another idea to save time is to automatically display the debug menu when the sc
     <string name="case_study_feature_toggles_description">Test different implementations without creating new builds. Persist these feature flags across app launches with a single extra line of code!</string>
     <string name="case_study_feature_toggles_text_1">Work in progress…</string>
 
+    <!-- Case studies / Static data -->
+    <string name="case_study_static_data_title">Static data</string>
+    <string name="case_study_static_data_description">Ideas for potentially useful information to display.</string>
+
     <!-- Case studies / Analytics -->
     <string name="case_study_analytics_title">Logging analytics events</string>
     <string name="case_study_analytics_description">Making sure that every required event is tracked from an admin panel can be cumbersome. Why not display the events right in the app, in real time?</string>
