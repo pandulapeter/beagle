@@ -44,7 +44,9 @@ import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
@@ -71,6 +73,7 @@ internal class ListManager {
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )
+    private var job: Job? = null
 
     fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
         adapter = cellAdapter
@@ -79,11 +82,15 @@ internal class ListManager {
     }
 
     fun setModules(newModules: List<Module<*>>) {
-        modules.clear()
-        modules.addAll(newModules.distinctBy { it.id })
-        refreshCells()
+        job?.cancel()
+        job = GlobalScope.launch(Dispatchers.IO) {
+            modules.clear()
+            modules.addAll(newModules.distinctBy { it.id })
+            refreshCells()
+        }
     }
 
+    @Suppress("unused")
     fun addModules(newModules: List<Module<*>>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
 
@@ -99,8 +106,11 @@ internal class ListManager {
     }
 
     fun removeModules(ids: List<String>) {
-        modules.removeAll { ids.contains(it.id) }
-        refreshCells()
+        job?.cancel()
+        job = GlobalScope.launch(Dispatchers.IO) {
+            modules.removeAll { ids.contains(it.id) }
+            refreshCells()
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -111,7 +121,8 @@ internal class ListManager {
 
     //TODO: Throw exception if no handler is found
     fun refreshCells() {
-        GlobalScope.launch {
+        job?.cancel()
+        job = GlobalScope.launch(Dispatchers.IO) {
             cellAdapter.submitList(modules.flatMap { module ->
                 (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
                     moduleDelegates[module::class] = it
@@ -121,32 +132,35 @@ internal class ListManager {
     }
 
     private fun addModules(newModules: List<Module<*>>, positioning: Positioning) {
-        modules.apply {
-            var newIndex = 0
-            newModules.forEach { module ->
-                indexOfFirst { it.id == module.id }.also { currentIndex ->
-                    if (currentIndex != -1) {
-                        removeAt(currentIndex)
-                        add(currentIndex, module)
-                    } else {
-                        when (positioning) {
-                            Positioning.Bottom -> add(module)
-                            Positioning.Top -> add(newIndex++, module)
-                            is Positioning.Below -> {
-                                indexOfFirst { it.id == positioning.id }.also { referencePosition ->
-                                    if (referencePosition == -1) {
-                                        add(module)
-                                    } else {
-                                        add(referencePosition + 1 + newIndex++, module)
+        job?.cancel()
+        job = GlobalScope.launch(Dispatchers.IO) {
+            modules.apply {
+                var newIndex = 0
+                newModules.forEach { module ->
+                    indexOfFirst { it.id == module.id }.also { currentIndex ->
+                        if (currentIndex != -1) {
+                            removeAt(currentIndex)
+                            add(currentIndex, module)
+                        } else {
+                            when (positioning) {
+                                Positioning.Bottom -> add(module)
+                                Positioning.Top -> add(newIndex++, module)
+                                is Positioning.Below -> {
+                                    indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                        if (referencePosition == -1) {
+                                            add(module)
+                                        } else {
+                                            add(referencePosition + 1 + newIndex++, module)
+                                        }
                                     }
                                 }
-                            }
-                            is Positioning.Above -> {
-                                indexOfFirst { it.id == positioning.id }.also { referencePosition ->
-                                    if (referencePosition == -1) {
-                                        add(newIndex++, module)
-                                    } else {
-                                        add(referencePosition, module)
+                                is Positioning.Above -> {
+                                    indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                        if (referencePosition == -1) {
+                                            add(newIndex++, module)
+                                        } else {
+                                            add(referencePosition, module)
+                                        }
                                     }
                                 }
                             }
@@ -154,7 +168,7 @@ internal class ListManager {
                     }
                 }
             }
+            refreshCells()
         }
-        refreshCells()
     }
 }
