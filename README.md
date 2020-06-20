@@ -12,7 +12,7 @@ Clone this repository, pick a build variant and run the **app** configuration. I
 
 <img src="metadata/screenshotOld01.png" width="25%" /><img src="metadata/screenshotOld02.png" width="25%" /><img src="metadata/screenshotOld01.png" width="25%" /><img src="metadata/screenshotOld02.png" width="25%" />
 
-This showcase application also contains instructions on how to implement the various features that are being presented. As a result you should consider giving it a try if you're interested in the library. If you don't feel like building it yourself, you can also download it from the Play Store:
+This demo application also contains instructions on how to initialize the library and how to implement the various features that are being showcased. As a result you should consider giving it a try if you're interested in the library. If you don't feel like building it yourself, you can also download it from the Play Store:
 
 [<img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" />](https://play.google.com/store/apps/details?id=com.pandulapeter.beagleExample)
 
@@ -78,7 +78,7 @@ By default you can fetch Beagle by shaking the device. If nothing happens, make 
 After this a number of modules should be provided, but this configuration can be changed at any time (from any thread) and the UI will automatically be updated. The simplest way of doing this is by calling:
 
 ```kotlin
-Beagle.setModules(module1, module2, ...)
+Beagle.set(module1, module2, …)
 ```
 At this point you should be aware of two options:
 * The list of [built-in modules](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/modules/). Every file in this package is documented. These modules should cover most use cases and have the advantage of also providing a fake, **noop** implementation which means that no part of their logic is compiled into your release builds.

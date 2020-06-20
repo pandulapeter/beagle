@@ -43,7 +43,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
         refreshBeagle()
     }
 
-    protected fun refreshBeagle() = Beagle.setModules(*getBeagleModules().toTypedArray())
+    protected fun refreshBeagle() = Beagle.set(*getBeagleModules().toTypedArray())
 
     private fun setupRecyclerView() {
         val listAdapter = createAdapter()

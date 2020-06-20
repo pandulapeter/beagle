@@ -79,7 +79,7 @@ interface BeagleContract {
      *
      * @param modules - The new [Module] implementations to use.
      */
-    fun setModules(vararg modules: Module<*>) = Unit
+    fun set(vararg modules: Module<*>) = Unit
 
     /**
      * Use this function to add new modules to the debug menu without removing the current ones. Modules with duplicated ID-s will get replaced.
@@ -88,14 +88,14 @@ interface BeagleContract {
      * @param positioning - The positioning of the new trick. Optional, [Positioning.Bottom] by default.
      * @param lifecycleOwner - The [LifecycleOwner] which should manage for how long the module should remain added. Null if the module should not be removed automatically. Null by default.
      */
-    fun addModules(vararg modules: Module<*>, positioning: Positioning = Positioning.Bottom, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun add(vararg modules: Module<*>, positioning: Positioning = Positioning.Bottom, lifecycleOwner: LifecycleOwner? = null) = Unit
 
     /**
      * Remove one or more modules with the specified ID-s from the debug menu.
      *
      * @param ids - The ID-s of the modules to be removed.
      */
-    fun removeModules(vararg ids: String) = Unit
+    fun remove(vararg ids: String) = Unit
 
     /**
      * Can be used to get the reference to a [Module].
@@ -107,16 +107,16 @@ interface BeagleContract {
      *  - The module with the specified ID is not currently added to the debug menu.
      *  - The type casting failed.
      */
-    fun <M : Module<M>> findModule(id: String): M? = null
+    fun <M : Module<M>> find(id: String): M? = null
 
     /**
-     * Can be used to get the reference to a [Module.Delegate] by the type of the module it's supposed to handle.
+     * Can be used to find the [Module.Delegate] implementation by the type of the module it's supposed to handle.
      *
      * @return The [Module.Delegate] implementation or null. Reasons for returning null:
      *  - No module delegate is registered for the specified type.
      *  - The type casting failed.
      */
-    fun <M : Module<M>> findModuleDelegate(type: KClass<out M>): Module.Delegate<M>? = null
+    fun <M : Module<M>> delegateFor(type: KClass<out M>): Module.Delegate<M>? = null
     //endregion
 
     //region Listeners
@@ -212,7 +212,7 @@ interface BeagleContract {
      *
      * Manually updating the cells is only needed when writing custom modules, the build-in features already handle calling this function when needed.
      */
-    fun refreshCells() = Unit
+    fun refresh() = Unit
 
     /**
      * Call this function to trigger invalidating the overlay layout. This will result in calling all registered [OverlayListener] implementations.

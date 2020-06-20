@@ -23,11 +23,16 @@ Due to the existence of the legacy implementation, most classes have been moved 
 You're right! Here are the big changes you should be aware of if you were familiar with the old API:
 * You should update the way the library is added in your **build.gradle** file, as mentioned in the readme. The dependencies are a bit different!
 * Probably every Beagle-related import you had needs to be manually fixed. The main changes to be aware of:
+    * Many public function names are shorter:
+        * *Beagle.setModules()* is now *Beagle.set()*
+        * *Beagle.addModule()* is now *Beagle.add()* (and supports adding multiple modules simultaneously)
+        * *Beagle.removeModule()* is now *Beagle.remove()* (and supports removing multiple modules simultaneously)
     * There are no more puns in the API.
         * *Beagle.imprint()* has become **Beagle.initialize()**
         * *Trick*s were renamed to **Module**s
         * The *fetch()* and *dismiss()* functions are now simply **show()** and **hide()**. 
-    * Trick (now Module) is no longer a sealed class. Having all of the implementations in the same file was great because you could see all the built-in options using code completion suggestions, but it didn't offer a way for you to write your own modules and was not very scalable. The new way to see all the built-in modules is by going to [this link](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/modules/). Most of them are renamed.
+    * Trick (now Module) is no longer a sealed class. Having all of the implementations in the same file was great because you could see all the built-in options using code completion suggestions, but it didn't offer a way for you to write your own modules and was not very scalable. The new way to see all the built-in modules is by going to [this link](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules). Most of them are renamed.
+    * Adding listeners is now more organized: there are three types of functions (add, remove, clear) for all types of listeners (Log, Overlay, Visibility).
     * When configuring the Behavior of the library:
         * There is no more *TriggerGesture* as it no longer makes sense for all UI-s. On the other hand a configurable **shakeThreshold** which can be set to null to disable the shake-to-show feature.
         * There is no need to specify your application's package name anymore. However, with **excludedPackageNames** you can specify a list of Activities for which you don't want to support a debug menu. 

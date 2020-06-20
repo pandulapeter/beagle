@@ -41,7 +41,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      * @return - The current value or null if the module delegate was not found (this will be the case in the noop variant).
      */
     @Suppress("UNCHECKED_CAST")
-    fun getCurrentValue(beagle: BeagleContract): T? = (beagle.findModuleDelegate((this as M)::class) as? Delegate<T, M>?)?.getCurrentValue(this as M)
+    fun getCurrentValue(beagle: BeagleContract): T? = (beagle.delegateFor((this as M)::class) as? Delegate<T, M>?)?.getCurrentValue(this as M)
 
     /**
      * Can be used to update the current value at any time. Changes should also be reflected on the UI of the debug menu.
@@ -50,7 +50,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      * @param newValue - The new value.
      */
     @Suppress("UNCHECKED_CAST")
-    fun setCurrentValue(beagle: BeagleContract, newValue: T) = (beagle.findModuleDelegate((this as M)::class) as? Delegate<T, M>?)?.setCurrentValue(this as M, newValue)
+    fun setCurrentValue(beagle: BeagleContract, newValue: T) = (beagle.delegateFor((this as M)::class) as? Delegate<T, M>?)?.setCurrentValue(this as M, newValue)
 
     /**
      * All [PersistableModule] implementations must have their corresponding delegate that contains the implementation details.

@@ -33,7 +33,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
                 } else {
                     BeagleCore.implementation.memoryStorageManager.booleans[module.id] = newValue
                 }
-                BeagleCore.implementation.refreshCells()
+                BeagleCore.implementation.refresh()
                 callOnValueChanged(module, newValue)
             }
         }
@@ -56,7 +56,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
                 } else {
                     BeagleCore.implementation.memoryStorageManager.strings[module.id] = newValue
                 }
-                BeagleCore.implementation.refreshCells()
+                BeagleCore.implementation.refresh()
                 callOnValueChanged(module, newValue)
             }
         }
@@ -79,7 +79,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
                 } else {
                     BeagleCore.implementation.memoryStorageManager.stringSets[module.id] = newValue
                 }
-                BeagleCore.implementation.refreshCells()
+                BeagleCore.implementation.refresh()
                 callOnValueChanged(module, newValue)
             }
         }

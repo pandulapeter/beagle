@@ -114,11 +114,11 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         add(HeaderViewHolder.UiModel(R.string.setup_header_3, selectedSection == Section.MODULE_CONFIGURATION))
         if (selectedSection == Section.MODULE_CONFIGURATION) {
             add(TextViewHolder.UiModel(R.string.setup_text_7))
-            add(CodeSnippetViewHolder.UiModel("Beagle.setModules(module1, module2, …)"))
+            add(CodeSnippetViewHolder.UiModel("Beagle.set(module1, module2, …)"))
             add(TextViewHolder.UiModel(R.string.setup_text_8))
             add(
                 CodeSnippetViewHolder.UiModel(
-                    "Beagle.addModules(\n" +
+                    "Beagle.add(\n" +
                             "    module1, module2, …,\n" +
                             "    positioning =  …, // Optional\n" +
                             "    lifecycleOwner =  … // Optional\n" +
@@ -126,7 +126,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                 )
             )
             add(TextViewHolder.UiModel(R.string.setup_text_9))
-            add(CodeSnippetViewHolder.UiModel("Beagle.removeModules(moduleId1, moduleId2, ...)"))
+            add(CodeSnippetViewHolder.UiModel("Beagle.remove(moduleId1, moduleId2, ...)"))
             add(TextViewHolder.UiModel(R.string.setup_text_10))
             add(SpaceViewHolder.UiModel())
         }

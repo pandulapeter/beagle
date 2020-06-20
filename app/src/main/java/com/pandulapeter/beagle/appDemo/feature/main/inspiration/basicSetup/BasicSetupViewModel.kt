@@ -22,7 +22,7 @@ class BasicSetupViewModel : ListViewModel<BasicSetupListItem>() {
         _items.value = listOf(
             TextViewHolder.UiModel(R.string.case_study_basic_setup_text_1),
             CodeSnippetViewHolder.UiModel(
-                "Beagle.setModules(\n" +
+                "Beagle.set(\n" +
                         "    HeaderModule(\n" +
                         "        title = headerTitle,\n" +
                         "        subtitle = subtitle,\n" +

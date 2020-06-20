@@ -66,15 +66,15 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
 
-    override fun setModules(vararg modules: Module<*>) = listManager.setModules(modules.toList())
+    override fun set(vararg modules: Module<*>) = listManager.setModules(modules.toList())
 
-    override fun addModules(vararg modules: Module<*>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) = listManager.addModules(modules.toList(), positioning, lifecycleOwner)
+    override fun add(vararg modules: Module<*>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) = listManager.addModules(modules.toList(), positioning, lifecycleOwner)
 
-    override fun removeModules(vararg ids: String) = listManager.removeModules(ids.toList())
+    override fun remove(vararg ids: String) = listManager.removeModules(ids.toList())
 
-    override fun <M : Module<M>> findModule(id: String) = listManager.findModule<M>(id)
+    override fun <M : Module<M>> find(id: String) = listManager.findModule<M>(id)
 
-    override fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = listManager.findModuleDelegate(type)
+    override fun <M : Module<M>> delegateFor(type: KClass<out M>) = listManager.findModuleDelegate(type)
 
     override fun addLogListener(listener: LogListener, lifecycleOwner: LifecycleOwner?) = logListenerManager.addListener(listener, lifecycleOwner)
 
@@ -97,10 +97,10 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun log(tag: String?, message: String, payload: String?) {
         logListenerManager.notifyOverlayListenersOnLogEntry(tag, message, payload)
         //TODO: Save, update UI.
-        refreshCells()
+        refresh()
     }
 
-    override fun refreshCells() = listManager.refreshCells()
+    override fun refresh() = listManager.refreshCells()
 
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
