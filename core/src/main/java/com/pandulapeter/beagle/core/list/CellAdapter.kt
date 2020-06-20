@@ -37,9 +37,11 @@ internal class CellAdapter : RecyclerView.Adapter<ViewHolder<out Cell<*>>>() {
     override fun onBindViewHolder(holder: ViewHolder<out Cell<*>>, position: Int) = holder.forceBind(items[position])
 
     fun submitList(newItems: List<Cell<*>>, onListUpdated: (() -> Unit)? = null) {
-        pendingUpdates.add(newItems)
-        if (pendingUpdates.size == 1) {
-            update(newItems, onListUpdated)
+        GlobalScope.launch(Dispatchers.Main) {
+            pendingUpdates.add(newItems)
+            if (pendingUpdates.size == 1) {
+                update(newItems, onListUpdated)
+            }
         }
     }
 

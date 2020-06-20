@@ -82,24 +82,20 @@ interface BeagleContract {
     fun setModules(vararg modules: Module<*>) = Unit
 
     /**
-     * Use this function to add a new module to the list. If there already is one with the same ID, it will be replaced.
+     * Use this function to add new modules to the debug menu without removing the current ones. Modules with duplicated ID-s will get replaced.
      *
-     * @param module - The new module to be added.
+     * @param modules - The new modules to be added.
      * @param positioning - The positioning of the new trick. Optional, [Positioning.Bottom] by default.
      * @param lifecycleOwner - The [LifecycleOwner] which should manage for how long the module should remain added. Null if the module should not be removed automatically. Null by default.
      */
-    fun addModule(
-        module: Module<*>,
-        positioning: Positioning = Positioning.Bottom,
-        lifecycleOwner: LifecycleOwner? = null
-    ) = Unit
+    fun addModules(vararg modules: Module<*>, positioning: Positioning = Positioning.Bottom, lifecycleOwner: LifecycleOwner? = null) = Unit
 
     /**
-     * Remove the module with the specified ID from the debug menu.
+     * Remove one or more modules with the specified ID-s from the debug menu.
      *
-     * @param id - The ID of the module to be removed.
+     * @param ids - The ID-s of the modules to be removed.
      */
-    fun removeModule(id: String) = Unit
+    fun removeModules(vararg ids: String) = Unit
 
     /**
      * Can be used to get the reference to a [Module].

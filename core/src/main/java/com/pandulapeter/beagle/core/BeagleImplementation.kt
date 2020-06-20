@@ -68,9 +68,9 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun setModules(vararg modules: Module<*>) = listManager.setModules(modules.toList())
 
-    override fun addModule(module: Module<*>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) = listManager.addModule(module, positioning, lifecycleOwner)
+    override fun addModules(vararg modules: Module<*>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) = listManager.addModules(modules.toList(), positioning, lifecycleOwner)
 
-    override fun removeModule(id: String) = listManager.removeModule(id)
+    override fun removeModules(vararg ids: String) = listManager.removeModules(ids.toList())
 
     override fun <M : Module<M>> findModule(id: String) = listManager.findModule<M>(id)
 

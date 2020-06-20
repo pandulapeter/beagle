@@ -29,10 +29,10 @@ After adding the dependencies, the library can be initialized with a single line
     <string name="setup_text_7">Beagle provides multiple ways to set or change the list of modules, the simplest of which is calling:</string>
     <string name="setup_text_8">This function can be called at any time, from any thread, to replace the current configuration with a new list of modules (provided as variable arguments).\n\n
 In case you only want to change some parts of the debug menu without affecting the others, there are functions that give you more granular control over the modules.\n\n
-For adding a single module (or replacing one with the same ID) you can use this:</string>
-    <string name="setup_text_9">In the function above, the optional <b>positioning</b> parameter can be used to specify the place of the new module (first, last, or above / below a module that\'s already part of the menu). Specifying the optional <b>lifecycleOwner</b> will automatically remove the module when that lifecycle is over which is ideal for elements that are specific to a single screen.\n\n
-The following function exists for manually removing a module from the debug menu:</string>
-    <string name="setup_text_10">None of these functions should produce crashes in case of invalid arguments.</string>
+For adding a one or more modules you can use this:</string>
+    <string name="setup_text_9">In this function, the optional <b>positioning</b> parameter can be used to specify the place of the new modules (first, last, or above / below a module that\'s already part of the menu). Specifying the optional <b>lifecycleOwner</b> will automatically remove the modules when that lifecycle is over which is ideal for elements that are specific to a single screen.\n\n
+The following function exists for manually removing one or more modules from the debug menu:</string>
+    <string name="setup_text_10">None of these functions should throw runtime exceptions in case of invalid arguments.</string>
     <string name="setup_header_4">Other features</string>
     <string name="setup_text_11"><i>[coming soon]</i></string>
     <string name="setup_header_5">Troubleshooting</string>

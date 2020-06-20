@@ -44,6 +44,8 @@ import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
 internal class ListManager {
@@ -82,22 +84,22 @@ internal class ListManager {
         refreshCells()
     }
 
-    fun addModule(module: Module<*>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
+    fun addModules(newModules: List<Module<*>>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
 
             @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-            fun onCreate() = addModule(module, positioning)
+            fun onCreate() = addModules(newModules, positioning)
 
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun onDestroy() {
-                removeModule(module.id)
+                removeModules(newModules.map { it.id })
                 lifecycleOwner.lifecycle.removeObserver(this)
             }
-        }) ?: addModule(module, positioning)
+        }) ?: addModules(newModules, positioning)
     }
 
-    fun removeModule(id: String) {
-        modules.removeAll { it.id == id }
+    fun removeModules(ids: List<String>) {
+        modules.removeAll { ids.contains(it.id) }
         refreshCells()
     }
 
@@ -107,39 +109,45 @@ internal class ListManager {
     @Suppress("UNCHECKED_CAST")
     fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = moduleDelegates[type] as Module.Delegate<M>
 
-    //TODO: Move to a coroutine (watch out for threading issues)
     //TODO: Throw exception if no handler is found
-    fun refreshCells() = cellAdapter.submitList(modules.flatMap { module ->
-        (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
-            moduleDelegates[module::class] = it
-        })).forceCreateCells(module)
-    })
+    fun refreshCells() {
+        GlobalScope.launch {
+            cellAdapter.submitList(modules.flatMap { module ->
+                (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
+                    moduleDelegates[module::class] = it
+                })).forceCreateCells(module)
+            })
+        }
+    }
 
-    private fun addModule(module: Module<*>, positioning: Positioning) {
+    private fun addModules(newModules: List<Module<*>>, positioning: Positioning) {
         modules.apply {
-            indexOfFirst { it.id == module.id }.also { currentIndex ->
-                if (currentIndex != -1) {
-                    removeAt(currentIndex)
-                    add(currentIndex, module)
-                } else {
-                    when (positioning) {
-                        Positioning.Bottom -> add(module)
-                        Positioning.Top -> add(0, module)
-                        is Positioning.Below -> {
-                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
-                                if (referencePosition == -1) {
-                                    add(module)
-                                } else {
-                                    add(referencePosition + 1, module)
+            var newIndex = 0
+            newModules.forEach { module ->
+                indexOfFirst { it.id == module.id }.also { currentIndex ->
+                    if (currentIndex != -1) {
+                        removeAt(currentIndex)
+                        add(currentIndex, module)
+                    } else {
+                        when (positioning) {
+                            Positioning.Bottom -> add(module)
+                            Positioning.Top -> add(newIndex++, module)
+                            is Positioning.Below -> {
+                                indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                    if (referencePosition == -1) {
+                                        add(module)
+                                    } else {
+                                        add(referencePosition + 1 + newIndex++, module)
+                                    }
                                 }
                             }
-                        }
-                        is Positioning.Above -> {
-                            indexOfFirst { it.id == positioning.id }.also { referencePosition ->
-                                if (referencePosition == -1) {
-                                    add(0, module)
-                                } else {
-                                    add(referencePosition, module)
+                            is Positioning.Above -> {
+                                indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                    if (referencePosition == -1) {
+                                        add(newIndex++, module)
+                                    } else {
+                                        add(referencePosition - newModules.size + newIndex++, module)
+                                    }
                                 }
                             }
                         }
