@@ -1,7 +1,7 @@
 buildscript {
     ext {
         libraryGroup = "com.github.pandulapeter.beagle"
-        libraryVersion = "2.0.0-alpha09"
+        libraryVersion = "2.0.0-alpha10"
         libraryMinimumSdkVersion = 16
         libraryCompileSdkVersion = 29
         libraryTargetSdkVersion = 29

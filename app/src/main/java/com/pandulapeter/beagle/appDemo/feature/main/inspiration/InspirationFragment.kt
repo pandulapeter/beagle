@@ -22,8 +22,8 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
     override val viewModel by viewModel<InspirationViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
+        super.onViewCreated(view, savedInstanceState)
         refreshBeagle()
     }
 

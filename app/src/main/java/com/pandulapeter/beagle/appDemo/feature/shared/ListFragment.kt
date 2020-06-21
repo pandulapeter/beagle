@@ -35,7 +35,6 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         binding.setVariable(BR.viewModel, viewModel)
         binding.root.setBackgroundColor(requireContext().color(backgroundColorResourceId))
         binding.appBar.setup(titleResourceId, parentFragmentManager.backStackEntryCount <= 1, requireActivity())
@@ -51,10 +50,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
             adapter = listAdapter
             layoutManager = createLayoutManager()
             setHasFixedSize(true)
-            waitForLayout {
-                startPostponedEnterTransition()
-                parentFragment?.startPostponedEnterTransition()
-            }
+            waitForLayout { startPostponedEnterTransition() }
         }
         viewModel.items.observe(viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
     }

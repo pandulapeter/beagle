@@ -34,8 +34,8 @@ abstract class InspirationDetailFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
+        super.onViewCreated(view, savedInstanceState)
         ViewCompat.setTransitionName(binding.root, getString(titleResourceId))
     }
 }
