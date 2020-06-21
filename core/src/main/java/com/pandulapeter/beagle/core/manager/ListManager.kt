@@ -44,15 +44,18 @@ import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.concurrent.Executors
 import kotlin.reflect.KClass
 
 internal class ListManager {
 
     private val cellAdapter = CellAdapter()
+    private val moduleManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
     private val modules = mutableListOf<Module<*>>()
     private val moduleDelegates = mutableMapOf(
         AnimationDurationSwitchModule::class to AnimationDurationSwitchDelegate(),
@@ -83,84 +86,83 @@ internal class ListManager {
 
     fun setModules(newModules: List<Module<*>>) {
         job?.cancel()
-        job = GlobalScope.launch(Dispatchers.IO) {
-            modules.clear()
-            modules.addAll(newModules.distinctBy { it.id })
-            refreshCells()
-        }
+        job = GlobalScope.launch { setModulesInternal(newModules) }
     }
 
-    @Suppress("unused")
     fun addModules(newModules: List<Module<*>>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
-        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-            fun onCreate() = addModules(newModules, positioning)
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-            fun onDestroy() {
-                removeModules(newModules.map { it.id })
-                lifecycleOwner.lifecycle.removeObserver(this)
-            }
-        }) ?: addModules(newModules, positioning)
+        job?.cancel()
+        job = GlobalScope.launch { addModulesInternal(newModules, positioning, lifecycleOwner) }
     }
 
     fun removeModules(ids: List<String>) {
         job?.cancel()
-        job = GlobalScope.launch(Dispatchers.IO) {
-            modules.removeAll { ids.contains(it.id) }
-            refreshCells()
-        }
+        job = GlobalScope.launch { removeModulesInternal(ids) }
     }
 
+    fun refreshCells() {
+        job?.cancel()
+        job = GlobalScope.launch { refreshCellsInternal() }
+    }
+
+    //TODO: This might cause concurrency issues. Consider making it a suspend function.
     @Suppress("UNCHECKED_CAST")
     fun <M : Module<*>> findModule(id: String): M? = modules.firstOrNull { it.id == id } as? M?
 
+    //TODO: This might cause concurrency issues. Consider making it a suspend function.
     @Suppress("UNCHECKED_CAST")
     fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = moduleDelegates[type] as Module.Delegate<M>
 
-    //TODO: Throw exception if no handler is found
-    fun refreshCells() {
-        job?.cancel()
-        job = GlobalScope.launch(Dispatchers.IO) {
-            cellAdapter.submitList(modules.flatMap { module ->
-                (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
-                    moduleDelegates[module::class] = it
-                })).forceCreateCells(module)
-            })
-        }
+    private suspend fun setModulesInternal(newModules: List<Module<*>>) = withContext(moduleManagerContext) {
+        modules.clear()
+        modules.addAll(newModules.distinctBy { it.id })
+        refreshCellsInternal()
     }
 
-    private fun addModules(newModules: List<Module<*>>, positioning: Positioning) {
-        job?.cancel()
-        job = GlobalScope.launch(Dispatchers.IO) {
-            modules.apply {
-                var newIndex = 0
-                newModules.forEach { module ->
-                    indexOfFirst { it.id == module.id }.also { currentIndex ->
-                        if (currentIndex != -1) {
-                            removeAt(currentIndex)
-                            add(currentIndex, module)
-                        } else {
-                            when (positioning) {
-                                Positioning.Bottom -> add(module)
-                                Positioning.Top -> add(newIndex++, module)
-                                is Positioning.Below -> {
-                                    indexOfFirst { it.id == positioning.id }.also { referencePosition ->
-                                        if (referencePosition == -1) {
-                                            add(module)
-                                        } else {
-                                            add(referencePosition + 1 + newIndex++, module)
-                                        }
+    @Suppress("unused")
+    private suspend fun addModulesInternal(newModules: List<Module<*>>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) =
+        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+            fun onCreate() {
+                job?.cancel()
+                job = GlobalScope.launch { addModulesInternal(newModules, positioning) }
+            }
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            fun onDestroy() {
+                job?.cancel()
+                job = GlobalScope.launch { removeModules(newModules.map { it.id }) }
+                lifecycleOwner.lifecycle.removeObserver(this)
+            }
+        }) ?: addModulesInternal(newModules, positioning)
+
+    private suspend fun addModulesInternal(newModules: List<Module<*>>, positioning: Positioning) = withContext(moduleManagerContext) {
+        modules.apply {
+            var newIndex = 0
+            newModules.forEach { module ->
+                indexOfFirst { it.id == module.id }.also { currentIndex ->
+                    if (currentIndex != -1) {
+                        removeAt(currentIndex)
+                        add(currentIndex, module)
+                    } else {
+                        when (positioning) {
+                            Positioning.Bottom -> add(module)
+                            Positioning.Top -> add(newIndex++, module)
+                            is Positioning.Below -> {
+                                indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                    if (referencePosition == -1) {
+                                        add(module)
+                                    } else {
+                                        add(referencePosition + 1 + newIndex++, module)
                                     }
                                 }
-                                is Positioning.Above -> {
-                                    indexOfFirst { it.id == positioning.id }.also { referencePosition ->
-                                        if (referencePosition == -1) {
-                                            add(newIndex++, module)
-                                        } else {
-                                            add(referencePosition, module)
-                                        }
+                            }
+                            is Positioning.Above -> {
+                                indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                                    if (referencePosition == -1) {
+                                        add(newIndex++, module)
+                                    } else {
+                                        add(referencePosition, module)
                                     }
                                 }
                             }
@@ -168,7 +170,21 @@ internal class ListManager {
                     }
                 }
             }
-            refreshCells()
         }
+        refreshCellsInternal()
+    }
+
+    private suspend fun removeModulesInternal(ids: List<String>) = withContext(moduleManagerContext) {
+        modules.removeAll { ids.contains(it.id) }
+        refreshCellsInternal()
+    }
+
+    //TODO: Throw exception if no handler is found
+    private suspend fun refreshCellsInternal() = withContext(moduleManagerContext) {
+        cellAdapter.submitList(modules.flatMap { module ->
+            (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
+                moduleDelegates[module::class] = it
+            })).forceCreateCells(module)
+        })
     }
 }

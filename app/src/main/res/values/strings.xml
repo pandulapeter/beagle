@@ -50,7 +50,7 @@ It can also contain various interactive features, such as switches, radio groups
     <string name="setup_debug_menu_radio_group_option_1">Nothing</string>
     <string name="setup_debug_menu_radio_group_option_2">Nada</string>
     <string name="setup_debug_menu_radio_group_option_3">Zilch</string>
-    <string name="setup_debug_menu_text_2">The contents of the debug menu can be changed at any time. For example, in the case of this application, you will see very different Beagle setups as you explore the various screens and case studies.</string>
+    <string name="setup_debug_menu_text_2">The contents of the debug menu can be changed at any time, from any thread. For example, in the case of this application, you will see very different Beagle setups as you explore the various screens and case studies.</string>
     <string name="setup_debug_menu_tutorial_switch">Show detailed tutorial</string>
 
     <!-- Inspiration -->
