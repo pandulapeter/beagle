@@ -7,6 +7,8 @@
 
 **[Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version.**
 
+**If you're feeling adventurous, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).**
+
 ## See it in action
 Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:
 
