@@ -25,10 +25,10 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
     override fun createAdapter() = AboutAdapter(viewModel.viewModelScope) { uiModel ->
         when (uiModel.textResourceId) {
             R.string.about_github -> openGitHubRepository()
-            R.string.about_google_play -> openStoreListing()
+            R.string.about_google_play -> openPlayStoreListing()
             R.string.about_share -> openShareSheet()
             R.string.about_contact -> openEmailComposer()
-            R.string.about_donate -> binding.recyclerView.showSnackbar(R.string.coming_soon) //TODO
+            R.string.about_donate -> openInAppPurchaseDialog()
             R.string.about_open_source -> navigateToLicences()
         }
     }
@@ -43,7 +43,7 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
 
     private fun openGitHubRepository() = binding.recyclerView.openUrl(GITHUB_URL)
 
-    private fun openStoreListing() {
+    private fun openPlayStoreListing() {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$PACKAGE_NAME")))
         } catch (_: ActivityNotFoundException) {
@@ -70,13 +70,13 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
         )
     )
 
-    private fun navigateToLicences() {
-        parentFragmentManager.handleReplace(
-            transitionType = TransitionType.MODAL,
-            addToBackStack = true,
-            newInstance = LicencesFragment.Companion::newInstance
-        )
-    }
+    private fun openInAppPurchaseDialog() = binding.recyclerView.showSnackbar(R.string.coming_soon) //TODO
+
+    private fun navigateToLicences() = parentFragmentManager.handleReplace(
+        transitionType = TransitionType.MODAL,
+        addToBackStack = true,
+        newInstance = LicencesFragment.Companion::newInstance
+    )
 
     companion object {
         private const val PACKAGE_NAME = "com.pandulapeter.beagleExample"

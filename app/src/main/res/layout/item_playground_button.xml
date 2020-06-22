@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="com.pandulapeter.beagle.appDemo.feature.main.playground.list.ButtonViewHolder.UiModel" />
+
+    </data>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_content_padding"
+        android:layout_marginLeft="@dimen/large_content_padding"
+        android:layout_marginTop="@dimen/large_content_padding"
+        android:layout_marginEnd="@dimen/large_content_padding"
+        android:layout_marginRight="@dimen/large_content_padding"
+        android:gravity="center"
+        android:text="@{uiModel.textResourceId}"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:theme="@style/DarkTheme"
+        app:backgroundTint="@color/brand_dark"
+        app:rippleColor="?attr/colorControlHighlight"
+        tools:text="Text" />
+
+</layout>

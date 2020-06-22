@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.A
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.BasicSetupViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.FeatureTogglesViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.AddModuleViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.setup.SetupViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -18,6 +19,7 @@ private val featureModule = module {
     viewModel { AuthenticationViewModel() }
     viewModel { FeatureTogglesViewModel() }
     viewModel { PlaygroundViewModel() }
+    viewModel { AddModuleViewModel() }
     viewModel { AboutViewModel() }
     viewModel { LicencesViewModel() }
 }

@@ -2,9 +2,13 @@ package com.pandulapeter.beagle.appDemo.feature.main.playground
 
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
+import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.AddModuleFragment
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
+import com.pandulapeter.beagle.appDemo.utils.TransitionType
+import com.pandulapeter.beagle.appDemo.utils.handleReplace
+import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
@@ -30,7 +34,12 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
 
     override val viewModel by viewModel<PlaygroundViewModel>()
 
-    override fun createAdapter() = PlaygroundAdapter(viewModel.viewModelScope)
+    override fun createAdapter() = PlaygroundAdapter(viewModel.viewModelScope) { uiModel ->
+        when (uiModel.textResourceId) {
+            R.string.playground_add_module -> navigateToAddModule()
+            R.string.playground_generate_code -> generateCode()
+        }
+    }
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         ButtonModule(text = "Button", onButtonPressed = {}),
@@ -90,6 +99,14 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
             subtitle = "Header subtitle"
         )
     )
+
+    private fun navigateToAddModule() = parentFragmentManager.handleReplace(
+        transitionType = TransitionType.MODAL,
+        addToBackStack = true,
+        newInstance = AddModuleFragment.Companion::newInstance
+    )
+
+    private fun generateCode() = binding.recyclerView.showSnackbar(R.string.coming_soon) //TODO: Open the dialog with the code snippet
 
     private data class ListItem(
         override val title: String

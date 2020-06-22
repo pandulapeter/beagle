@@ -4,7 +4,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 import java.util.UUID
 
 /**
- * Displays an empty space of specified size.
+ * Adds empty space between two other modules.
  *
  * @param id - A unique identifier for the module. Optional, random string by default.
  */
