@@ -15,7 +15,6 @@ class PlaygroundViewModel : ListViewModel<PlaygroundListItem>() {
         listOf(
             TextViewHolder.UiModel(R.string.playground_description),
             ButtonViewHolder.UiModel(R.string.playground_add_module),
-            ButtonViewHolder.UiModel(R.string.playground_generate_code),
             ModuleViewHolder.UiModel("Button"),
             ModuleViewHolder.UiModel("CheckBox"),
             ModuleViewHolder.UiModel("Divider"),
@@ -32,7 +31,8 @@ class PlaygroundViewModel : ListViewModel<PlaygroundListItem>() {
             ModuleViewHolder.UiModel("AppInfo"),
             ModuleViewHolder.UiModel("DeviceInfo"),
             ModuleViewHolder.UiModel("ForceCrashButton"),
-            ModuleViewHolder.UiModel("Header")
+            ModuleViewHolder.UiModel("Header"),
+            ButtonViewHolder.UiModel(R.string.playground_generate_code)
         )
     )
 }

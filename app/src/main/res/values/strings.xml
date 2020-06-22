@@ -109,31 +109,48 @@
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
-    <string name="playground_description">This page will contain a drag-and-drop editor that can be used to easily configure and preview Beagle modules. It will also generate the code for the configuration.\n\nThe default list of modules should also be an example that is usable for most apps.</string>
+    <string name="playground_description">Drag-and-drop modules, add new ones using the button below or remove them by swiping horizontally to easily preview different configurations. You can use the button below the list to generate the source code at any time.</string>
     <string name="playground_add_module">Add new module</string>
     <string name="playground_generate_code">Generate code</string>
 
     <!-- Add module -->
     <string name="add_module_title">Add new module</string>
-    <string name="add_module_generic_modules"><b>Generic modules:</b>\n</string>
-    <string name="add_module_button"><b>Button</b>\nDisplays a simple button.</string>
-    <string name="add_module_check_box"><b>CheckBox</b>\nDisplays a simple check box.</string>
-    <string name="add_module_divider"><b>Divider</b>\nDisplays a simple horizontal line.</string>
-    <string name="add_module_item_list"><b>ItemList</b>\nDisplays a list of simple items represented by [BeagleListItemContract].</string>
-    <string name="add_module_key_value_list"><b>KeyValueList</b>\nDisplays a list of key-value pairs that can be collapsed into a header.</string>
-    <string name="add_module_label"><b>Label</b>\nDisplays a section header label.</string>
-    <string name="add_module_long_text"><b>LongText</b>\nDisplays a longer piece of text that can be collapsed into a title.</string>
-    <string name="add_module_multiple_selection_list"><b>MultipleSelectionList</b>\nDisplays a list of check boxes represented by [BeagleListItemContract] instances. Any number of items can be selected at any given time.</string>
-    <string name="add_module_padding"><b>Padding</b>\nAdds empty space between two other modules</string>
-    <string name="add_module_single_selection_list"><b>SingleSelectionList</b>\nDisplays a list of radio buttons represented by [BeagleListItemContract] instances. Only one item is selected at any given time.</string>
-    <string name="add_module_switch"><b>Switch</b>\nDisplays a simple switch.</string>
-    <string name="add_module_text"><b>Text</b>\nDisplays a piece of text. Can be used for click handling as well.</string>
-    <string name="add_module_unique_modules"><b>Unique modules:</b>\n</string>
-    <string name="add_module_animation_duration_switch"><b>AnimationDurationSwitch</b>\nDisplays a switch that, when enabled, increases the duration of animations.</string>
-    <string name="add_module_app_info"><b>AppInfo</b>\nDisplays a button that links to the Android App Info page for your app.</string>
-    <string name="add_module_device_info"><b>DeviceInfo</b>\nDisplays information about the current device and the OS.</string>
-    <string name="add_module_force_crash_button"><b>ForceCrashButton</b>\nDisplays a button that throws an exception when pressed - useful for testing crash reporting.</string>
-    <string name="add_module_header"><b>Header</b>\nDisplays a configurable title, subtitle and text.</string>
+    <string name="add_module_generic_modules"><b>Generic modules</b> (any number of instances can be added)</string>
+    <string name="add_module_button">Button</string>
+    <string name="add_module_button_description">Displays a simple button.</string>
+    <string name="add_module_check_box">CheckBox</string>
+    <string name="add_module_check_box_description">Displays a simple check box.</string>
+    <string name="add_module_divider">Divider</string>
+    <string name="add_module_divider_description">Displays a simple horizontal line.</string>
+    <string name="add_module_item_list">ItemList</string>
+    <string name="add_module_item_list_description">Displays a list of simple items represented by [BeagleListItemContract].</string>
+    <string name="add_module_key_value_list">KeyValueList</string>
+    <string name="add_module_key_value_list_description">Displays a list of key-value pairs that can be collapsed into a header.</string>
+    <string name="add_module_label">Label</string>
+    <string name="add_module_label_description">Displays a section header label.</string>
+    <string name="add_module_long_text">LongText</string>
+    <string name="add_module_long_text_description">Displays a longer piece of text that can be collapsed into a title.</string>
+    <string name="add_module_multiple_selection_list">MultipleSelectionList</string>
+    <string name="add_module_multiple_selection_list_description">Displays a list of check boxes represented by [BeagleListItemContract] instances. Any number of items can be selected at any given time.</string>
+    <string name="add_module_padding">Padding</string>
+    <string name="add_module_padding_description">Adds empty space between two other modules</string>
+    <string name="add_module_single_selection_list">SingleSelectionList</string>
+    <string name="add_module_single_selection_list_description">Displays a list of radio buttons represented by [BeagleListItemContract] instances. Only one item is selected at any given time.</string>
+    <string name="add_module_switch">Switch</string>
+    <string name="add_module_switch_description">Displays a simple switch.</string>
+    <string name="add_module_text">Text</string>
+    <string name="add_module_text_description">Displays a piece of text. Can be used for click handling as well.</string>
+    <string name="add_module_unique_modules"><b>Unique modules</b> (only a single instance can be added)</string>
+    <string name="add_module_animation_duration_switch">AnimationDurationSwitch</string>
+    <string name="add_module_animation_duration_switch_description">Displays a switch that, when enabled, increases the duration of animations.</string>
+    <string name="add_module_app_info">AppInfo</string>
+    <string name="add_module_app_info_description">Displays a button that links to the Android App Info page for your app.</string>
+    <string name="add_module_device_info">DeviceInfo</string>
+    <string name="add_module_device_info_description">Displays information about the current device and the OS.</string>
+    <string name="add_module_force_crash_button">ForceCrashButton</string>
+    <string name="add_module_force_crash_button_description">Displays a button that throws an exception when pressed - useful for testing crash reporting.</string>
+    <string name="add_module_header">Header</string>
+    <string name="add_module_header_description">Displays a configurable title, subtitle and text.</string>
 
     <!-- About -->
     <string name="about_title">About</string>

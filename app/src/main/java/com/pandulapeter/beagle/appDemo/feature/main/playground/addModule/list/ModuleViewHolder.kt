@@ -24,6 +24,7 @@ class ModuleViewHolder private constructor(
 
     data class UiModel(
         @StringRes val titleResourceId: Int,
+        @StringRes val descriptionResourceId: Int,
         override val id: String = "module_$titleResourceId"
     ) : AddModuleListItem
 
