@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.appDemo.utils.tintedDrawable
 
 class HeaderViewHolder private constructor(
     binding: ItemSetupHeaderBinding,
-    onItemSelected: (Int) -> Unit
+    onItemSelected: (UiModel) -> Unit
 ) : BaseViewHolder<ItemSetupHeaderBinding, HeaderViewHolder.UiModel>(binding) {
 
     //TODO: Replace with animated vector drawables.
@@ -21,10 +21,8 @@ class HeaderViewHolder private constructor(
 
     init {
         binding.root.setOnClickListener {
-            adapterPosition.let { adapterPosition ->
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onItemSelected(adapterPosition)
-                }
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                binding.uiModel?.let(onItemSelected)
             }
         }
     }
@@ -43,7 +41,7 @@ class HeaderViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onItemSelected: (Int) -> Unit
+            onItemSelected: (UiModel) -> Unit
         ) = HeaderViewHolder(
             binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_setup_header, parent, false),
             onItemSelected = onItemSelected

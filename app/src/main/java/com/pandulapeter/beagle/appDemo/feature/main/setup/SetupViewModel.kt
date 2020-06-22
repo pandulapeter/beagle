@@ -26,14 +26,14 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         refreshItems()
     }
 
-    fun onRadioButtonSelected(position: Int) {
-        UiVariant.fromResourceId((_items.value?.get(position) as? RadioButtonViewHolder.UiModel?)?.titleResourceId)?.let {
+    fun onRadioButtonSelected(uiModel: RadioButtonViewHolder.UiModel) {
+        UiVariant.fromResourceId(uiModel.titleResourceId)?.let {
             selectedUiVariant = it
         }
     }
 
-    fun onHeaderSelected(position: Int) {
-        Section.fromResourceId((_items.value?.get(position) as? HeaderViewHolder.UiModel?)?.titleResourceId).let {
+    fun onHeaderSelected(uiModel: HeaderViewHolder.UiModel) {
+        Section.fromResourceId(uiModel.titleResourceId).let {
             selectedSection = if (it == selectedSection) null else it
             hasSectionJustChanged = true
         }

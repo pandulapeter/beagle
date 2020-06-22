@@ -12,15 +12,13 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class CaseStudyViewHolder private constructor(
     binding: ItemInspirationCaseStudyBinding,
-    onItemSelected: (position: Int, view: View) -> Unit
+    onItemSelected: (UiModel, View) -> Unit
 ) : BaseViewHolder<ItemInspirationCaseStudyBinding, CaseStudyViewHolder.UiModel>(binding) {
 
     init {
         binding.root.setOnClickListener {
-            adapterPosition.let { adapterPosition ->
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onItemSelected(adapterPosition, itemView)
-                }
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                binding.uiModel?.let { uiModel -> onItemSelected(uiModel, itemView) }
             }
         }
     }
@@ -35,7 +33,7 @@ class CaseStudyViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onItemSelected: (position: Int, view: View) -> Unit
+            onItemSelected: (UiModel, View) -> Unit
         ) = CaseStudyViewHolder(
             binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_inspiration_case_study, parent, false),
             onItemSelected = onItemSelected

@@ -4,13 +4,13 @@
     <string name="open_debug_menu">Open debug menu</string>
     <string name="back">Back</string>
     <string name="coming_soon">Coming soon…</string>
+    <string name="app_not_found">No application can handle this link</string>
 
     <!-- Setup -->
     <string name="setup_title">Setup</string>
     <string name="setup_header_1">Welcome</string>
     <string name="setup_text_1">Beagle is a free and open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.</string>
     <string name="setup_github_button">Check it out on GitHub</string>
-    <string name="setup_app_not_found">No application can handle this link</string>
     <string name="setup_hint">In this demo application you can trigger the debug menu at any time by shaking the device (one decided shake is enough, think of your phone as a judge\'s gavel) or by tapping on the Beagle logo in the bottom-right corner.\n\n
 The following sections provide some guidance with setting up the library while the rest of the application serves as a demo / showcase for the built-in feature set.</string>
     <string name="setup_header_2">Initialization</string>
@@ -130,5 +130,6 @@ Another idea to save time is to automatically display the debug menu when the sc
     <!-- About -->
     <string name="about_title">About</string>
     <string name="about_description">This page will contain the link to the GitHub repository, the list of open-source licenses and maybe a Donate button.</string>
+    <string name="about_github_repository">GitHub repository</string>
 
 </resources>

@@ -9,8 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 class SetupAdapter(
     scope: CoroutineScope,
     private val onGitHubButtonClicked: () -> Unit,
-    private val onRadioButtonSelected: (Int) -> Unit,
-    private val onHeaderSelected: (Int) -> Unit
+    private val onRadioButtonSelected: (RadioButtonViewHolder.UiModel) -> Unit,
+    private val onHeaderSelected: (HeaderViewHolder.UiModel) -> Unit
 ) : BaseAdapter<SetupListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {

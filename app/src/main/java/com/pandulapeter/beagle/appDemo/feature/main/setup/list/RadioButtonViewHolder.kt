@@ -11,15 +11,13 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class RadioButtonViewHolder private constructor(
     binding: ItemSetupRadioButtonBinding,
-    onRadioButtonSelected: (Int) -> Unit
+    onRadioButtonSelected: (UiModel) -> Unit
 ) : BaseViewHolder<ItemSetupRadioButtonBinding, RadioButtonViewHolder.UiModel>(binding) {
 
     init {
         binding.radioButton.setOnCheckedChangeListener { _, isChecked ->
-            adapterPosition.let { adapterPosition ->
-                if (adapterPosition != RecyclerView.NO_POSITION && isChecked && isChecked != binding.uiModel?.isChecked) {
-                    onRadioButtonSelected(adapterPosition)
-                }
+            if (adapterPosition != RecyclerView.NO_POSITION && isChecked && isChecked != binding.uiModel?.isChecked) {
+                binding.uiModel?.let(onRadioButtonSelected)
             }
         }
     }
@@ -33,7 +31,7 @@ class RadioButtonViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onRadioButtonSelected: (Int) -> Unit
+            onRadioButtonSelected: (UiModel) -> Unit
         ) = RadioButtonViewHolder(
             binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_setup_radio_button, parent, false),
             onRadioButtonSelected = onRadioButtonSelected

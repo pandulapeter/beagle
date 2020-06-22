@@ -1,32 +1,28 @@
-package com.pandulapeter.beagle.appDemo.feature.main.inspiration.list
+package com.pandulapeter.beagle.appDemo.feature.main.about.list
 
-import android.view.View
 import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 import kotlinx.coroutines.CoroutineScope
 
-class InspirationAdapter(
+class AboutAdapter(
     scope: CoroutineScope,
-    private val onCaseStudyClicked: (CaseStudy, View) -> Unit
-) : BaseAdapter<InspirationListItem>(scope) {
+    private val onItemClicked: (ClickableItemViewHolder.UiModel) -> Unit
+) : BaseAdapter<AboutListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
-        is CaseStudyViewHolder.UiModel -> R.layout.item_inspiration_case_study
+        is ClickableItemViewHolder.UiModel -> R.layout.item_about_clickable_item
         else -> super.getItemViewType(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
-        R.layout.item_inspiration_case_study -> CaseStudyViewHolder.create(parent) { uiModel, view ->
-            onCaseStudyClicked(uiModel.caseStudy, view)
-        }
+        R.layout.item_about_clickable_item -> ClickableItemViewHolder.create(parent, onItemClicked)
         else -> super.onCreateViewHolder(parent, viewType)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*, *>, position: Int) = when (holder) {
-        is CaseStudyViewHolder -> holder.bind(getItem(position) as CaseStudyViewHolder.UiModel)
+        is ClickableItemViewHolder -> holder.bind(getItem(position) as ClickableItemViewHolder.UiModel)
         else -> super.onBindViewHolder(holder, position)
     }
 }

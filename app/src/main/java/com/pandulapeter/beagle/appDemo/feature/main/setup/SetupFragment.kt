@@ -1,17 +1,16 @@
 package com.pandulapeter.beagle.appDemo.feature.main.setup
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
+import com.pandulapeter.beagle.appDemo.feature.main.about.AboutFragment
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
-import com.pandulapeter.beagle.appDemo.utils.showSnackbar
+import com.pandulapeter.beagle.appDemo.utils.openUrl
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
@@ -75,13 +74,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         TextModule(text = getText(R.string.setup_debug_menu_text_2))
     )
 
-    private fun onGitHubButtonClicked() = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_URL)).let { intent ->
-        if (intent.resolveActivity(requireContext().packageManager) != null) {
-            startActivity(intent)
-        } else {
-            binding.recyclerView.showSnackbar(R.string.setup_app_not_found)
-        }
-    }
+    private fun onGitHubButtonClicked() = binding.recyclerView.openUrl(AboutFragment.GITHUB_URL)
 
     private data class RadioGroupOption(
         override val title: String,
@@ -89,8 +82,6 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     ) : BeagleListItemContract
 
     companion object {
-        private const val GITHUB_URL = "https://github.com/pandulapeter/beagle"
-
         fun newInstance() = SetupFragment()
     }
 }
