@@ -16,14 +16,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:drawablePadding="@dimen/large_content_padding"
-        android:paddingStart="@dimen/large_content_padding"
-        android:paddingLeft="@dimen/large_content_padding"
-        android:paddingTop="@dimen/content_padding"
-        android:paddingEnd="@dimen/large_content_padding"
-        android:paddingRight="@dimen/large_content_padding"
-        android:paddingBottom="@dimen/content_padding"
+        android:padding="@dimen/large_content_padding"
         android:text="@{uiModel.textResourceId}"
-        android:textStyle="bold"
         tools:text="Text" />
 
 </layout>

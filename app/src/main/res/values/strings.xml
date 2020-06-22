@@ -11,8 +11,7 @@
     <string name="setup_header_1">Welcome</string>
     <string name="setup_text_1">Beagle is a free and open-source library that adds a smart and easily customizable debug menu to the internal builds of your Android apps.</string>
     <string name="setup_github_button">Check it out on GitHub</string>
-    <string name="setup_hint">In this demo application you can trigger the debug menu at any time by shaking the device (one decided shake is enough, think of your phone as a judge\'s gavel) or by tapping on the Beagle logo in the bottom-right corner.\n\n
-The following sections provide some guidance with setting up the library while the rest of the application serves as a demo / showcase for the built-in feature set.</string>
+    <string name="setup_hint">In this demo application you can trigger the debug menu at any time by shaking the device (one decided shake is enough, think of your phone as a judge\'s gavel) or by tapping on the Beagle logo in the bottom-right corner.\n\nThe following sections provide some guidance with setting up the library while the rest of the application serves as a demo / showcase for the built-in feature set.</string>
     <string name="setup_header_2">Initialization</string>
     <string name="setup_text_2">The first step towards having Beagle in your project is making sure that the JitPack Maven repository is added to the <b>allprojects</b> block of your project-level <b>build.gradle</b> file.</string>
     <string name="setup_text_3">The library offers five variants that display the debug menu in different ways. The next step is selecting the one that fits your application\'s needs the most…</string>
@@ -22,26 +21,19 @@ The following sections provide some guidance with setting up the library while t
     <string name="setup_variant_drawer">Drawer</string>
     <string name="setup_variant_view">View</string>
     <string name="setup_text_4">…and adding the following dependencies to the module-level <b>build.gradle</b> file:</string>
-    <string name="setup_text_5">Specifying the <b>noop</b> variant for release builds ensures that none of Beagle\'s functionality makes its way to production, but you can still use the same public API without getting compilation errors.\n\n
-After adding the dependencies, the library can be initialized with a single line of code in the <b>onCreate()</b> method of your custom <b>Application</b> class:</string>
+    <string name="setup_text_5">Specifying the <b>noop</b> variant for release builds ensures that none of Beagle\'s functionality makes its way to production, but you can still use the same public API without getting compilation errors.\n\nAfter adding the dependencies, the library can be initialized with a single line of code in the <b>onCreate()</b> method of your custom <b>Application</b> class:</string>
     <string name="setup_header_3">Module configuration</string>
     <string name="setup_text_6">At this point if you run your app, you should see an empty debug menu when you trigger it. To make it more useful, we should configure a list of modules.</string>
     <string name="setup_text_7">Beagle provides multiple ways to set or change the list of modules, the simplest of which is calling:</string>
-    <string name="setup_text_8">This function can be called at any time, from any thread, to replace the current configuration with a new list of modules (provided as variable arguments).\n\n
-In case you only want to change some parts of the debug menu without affecting the others, there are functions that give you more granular control over the modules.\n\n
-For adding a one or more modules you can use this:</string>
-    <string name="setup_text_9">In this function, the optional <b>positioning</b> parameter can be used to specify the place of the new modules (first, last, or above / below a module that\'s already part of the menu). Specifying the optional <b>lifecycleOwner</b> will automatically remove the modules when that lifecycle is over which is ideal for elements that are specific to a single screen.\n\n
-The following function exists for manually removing one or more modules from the debug menu:</string>
+    <string name="setup_text_8">This function can be called at any time, from any thread, to replace the current configuration with a new list of modules (provided as variable arguments).\n\nIn case you only want to change some parts of the debug menu without affecting the others, there are functions that give you more granular control over the modules.\n\nFor adding a one or more modules you can use this:</string>
+    <string name="setup_text_9">In this function, the optional <b>positioning</b> parameter can be used to specify the place of the new modules (first, last, or above / below a module that\'s already part of the menu). Specifying the optional <b>lifecycleOwner</b> will automatically remove the modules when that lifecycle is over which is ideal for elements that are specific to a single screen.\n\nThe following function exists for manually removing one or more modules from the debug menu:</string>
     <string name="setup_text_10">Last but not least, the following function is exposed to get the reference of an already added module instance:</string>
     <string name="setup_text_11">None of these functions should throw runtime exceptions in case of invalid arguments.</string>
     <string name="setup_header_4">Other features</string>
     <string name="setup_text_12"><i>[coming soon]</i></string>
     <string name="setup_header_5">Troubleshooting</string>
     <string name="setup_text_13"><i>[coming soon]</i></string>
-    <string name="setup_debug_menu_text_1"><b>This is the debug menu configured by you</b>\n\n
-It should contain useful information, like the version number of your app, the build date, or information about the device it\'s running on.\n\n
-You can use it to track network requests, show analytics events, display custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing process.\n\n
-It can also contain various interactive features, such as switches, radio groups, buttons, sliders, etc. that you can use to set up a \"God mode\" during development.</string>
+    <string name="setup_debug_menu_text_1"><b>This is the debug menu configured by you</b>\n\nIt should contain useful information, like the version number of your app, the build date, or information about the device it\'s running on.\n\nYou can use it to track network requests, show analytics events, display custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing process.\n\nIt can also contain various interactive features, such as switches, radio groups, buttons, sliders, etc. that you can use to set up a \"God mode\" during development.</string>
     <string name="setup_debug_menu_label">For example:</string>
     <string name="setup_debug_menu_switch">Here is a switch. It does nothing.</string>
     <string name="setup_debug_menu_button">This button also does nothing</string>
@@ -66,14 +58,10 @@ It can also contain various interactive features, such as switches, radio groups
     <string name="case_study_basic_setup_text_2">Let\'s see what each individual module does.</string>
     <string name="case_study_basic_setup_text_3"><b>Header</b>\n\nAll this module does is apply a specific formatting to three pieces of text. The variables for this configuration are defined the following way:</string>
     <string name="case_study_basic_setup_text_4">The last line uses a custom build config field:</string>
-    <string name="case_study_basic_setup_text_5"><b>AppInfoButton</b>\n\n
-A simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
-    <string name="case_study_basic_setup_text_6"><b>ForceCrashButton</b>\n\n
-This module can be used to easily test the application\'s crash reporting capabilities.</string>
-    <string name="case_study_basic_setup_text_7"><b>AnimationDurationSwitch</b>\n\n
-A frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
-    <string name="case_study_basic_setup_text_8"><b>DeviceInfo</b>\n\n
-Displays important information about the device such as the Android SDK version or the screen resolution that can be helpful in identifying potential device-specific issues.</string>
+    <string name="case_study_basic_setup_text_5"><b>AppInfoButton</b>\n\nA simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
+    <string name="case_study_basic_setup_text_6"><b>ForceCrashButton</b>\n\nThis module can be used to easily test the application\'s crash reporting capabilities.</string>
+    <string name="case_study_basic_setup_text_7"><b>AnimationDurationSwitch</b>\n\nA frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
+    <string name="case_study_basic_setup_text_8"><b>DeviceInfo</b>\n\nDisplays important information about the device such as the Android SDK version or the screen resolution that can be helpful in identifying potential device-specific issues.</string>
 
     <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>
@@ -84,10 +72,8 @@ Displays important information about the device such as the Android SDK version 
     <string name="case_study_authentication_sign_in_button">Sign in</string>
     <string name="case_study_authentication_signing_in">Signing in!</string>
     <string name="case_study_authentication_text_2">To define a module that helps in this situation, first we need to create a representation of a test account:</string>
-    <string name="case_study_authentication_text_3">Extending <b>BeagleListItemContract</b> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\n
-The next step is creating the module:</string>
-    <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\n
-Another idea to save time is to automatically display the debug menu when the screen is opened, simply by calling:</string>
+    <string name="case_study_authentication_text_3">Extending <b>BeagleListItemContract</b> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\nThe next step is creating the module:</string>
+    <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\nAnother idea to save time is to automatically display the debug menu when the screen is opened, simply by calling:</string>
     <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
     <string name="case_study_authentication_show_automatically_switch">Show automatically</string>
     <string name="case_study_authentication_test_accounts">Test accounts</string>
@@ -129,7 +115,12 @@ Another idea to save time is to automatically display the debug menu when the sc
 
     <!-- About -->
     <string name="about_title">About</string>
-    <string name="about_description">This page will contain the link to the GitHub repository, the list of open-source licenses and maybe a Donate button.</string>
-    <string name="about_github_repository">GitHub repository</string>
+    <string name="about_description">Beagle is developed by me, Pandula Péter. Thanks for taking the time to check it out - I hope you\'ll find it useful in your projects. If you have any issues, questions or ideas, don\'t hesitate to contact me!\n</string>
+    <string name="about_github"><b>GitHub repository</b>\nCheck out the source code</string>
+    <string name="about_google_play"><b>Play Store listing</b>\nRate the app on Google Play</string>
+    <string name="about_share"><b>Share</b>\nSpread the word about Beagle</string>
+    <string name="about_contact"><b>Contact me</b>\nDrop me a line about any questions or problems</string>
+    <string name="about_open_source"><b>Open source licences</b>\nLegal information regarding dependencies</string>
+    <string name="about_donate"><b>Buy me a beer</b>\nIf you found my work useful, consider donating</string>
 
 </resources>
