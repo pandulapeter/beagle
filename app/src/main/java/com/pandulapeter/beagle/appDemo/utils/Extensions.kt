@@ -81,10 +81,10 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
             }
             TransitionType.MODAL -> {
                 if (sharedElements.isNullOrEmpty() || !shouldUseContainerTransform) {
-                    currentFragment?.exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-                    currentFragment?.reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-                    newFragment.enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-                    newFragment.returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+                    currentFragment?.exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
+                    currentFragment?.reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
+                    newFragment.enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
+                    newFragment.returnTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                 } else {
                     currentFragment?.exitTransition = Hold()
                     currentFragment?.reenterTransition = Hold()
