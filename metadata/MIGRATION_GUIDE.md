@@ -19,6 +19,8 @@ You should eventually! But a few reasons to postpone doing so:
 ## How should I update?
 Due to the existence of the legacy implementation, most classes have been moved to a different package and / or renamed in the new version. The simplest way to set up Beagle v2 is to follow the steps written for newcomers in the [main readme](https://github.com/pandulapeter/beagle/blob/master/README.md).
 
+Pay extra attention to the Gradle dependencies as they are not the same as they used to! This decision was made so that the old version can co-exist with the new one.
+
 ## That's not a proper migration guide...
 You're right! Here are the big changes you should be aware of if you were familiar with the old API:
 * You should update the way the library is added in your **build.gradle** file, as mentioned in the readme. The dependencies are a bit different!
