@@ -80,7 +80,7 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
                 }
             }
             TransitionType.MODAL -> {
-                if (sharedElements.isNullOrEmpty() || !shouldUseContainerTransform) {
+                if (sharedElements.isNullOrEmpty() || !isContainerTransformSupported) {
                     currentFragment?.exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
                     currentFragment?.reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                     newFragment.enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
@@ -102,7 +102,7 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
     }
 }
 
-val shouldUseContainerTransform = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+val isContainerTransformSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
 @BindingAdapter("transitionName")
 fun View.setTransitionName(@StringRes stringResourceId: Int) = setTransitionNameCompat(context.getString(stringResourceId))
@@ -110,11 +110,11 @@ fun View.setTransitionName(@StringRes stringResourceId: Int) = setTransitionName
 @BindingAdapter("transitionName")
 fun View.setTransitionNameCompat(transitionName: String) = ViewCompat.setTransitionName(this, transitionName)
 
-inline fun View.waitForLayout(crossinline block: () -> Unit) = with(viewTreeObserver) {
-    addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
+inline fun View.waitForPreDraw(crossinline block: () -> Unit) = with(viewTreeObserver) {
+    addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+        override fun onPreDraw() = consume {
             block()
-            viewTreeObserver.removeOnGlobalLayoutListener(this)
+            viewTreeObserver.removeOnPreDrawListener(this)
         }
     })
 }

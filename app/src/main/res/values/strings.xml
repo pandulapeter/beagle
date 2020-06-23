@@ -50,6 +50,7 @@
     <string name="inspiration_text_1">The module configuration very much depends on your application\'s specific needs, but the following example demonstrates some features that most developers will find useful:</string>
     <string name="inspiration_text_2">The true power of the library lies in modules that require a tiny bit of customization. Check out how Beagle can be useful in the following situations:</string>
     <string name="inspiration_beagle_text">Select one of the case studies to see the specialized version of the debug menu for the situation.</string>
+    <string name="inspiration_beagle_switch">Use shared element transitions</string>
 
     <!-- Case studies / Basic setup -->
     <string name="case_study_basic_setup_title">Basic setup</string>

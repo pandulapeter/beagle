@@ -11,7 +11,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
-import com.pandulapeter.beagle.appDemo.utils.shouldUseContainerTransform
+import com.pandulapeter.beagle.appDemo.utils.isContainerTransformSupported
 
 abstract class InspirationDetailFragment<VM : ListViewModel<LI>, LI : ListItem>(
     @StringRes titleResourceId: Int
@@ -19,7 +19,7 @@ abstract class InspirationDetailFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (shouldUseContainerTransform) {
+        if (isContainerTransformSupported) {
             sharedElementEnterTransition = MaterialContainerTransform().apply {
                 scrimColor = Color.TRANSPARENT
                 fadeProgressThresholds = MaterialContainerTransform.ProgressThresholds(0f, 0.5f)

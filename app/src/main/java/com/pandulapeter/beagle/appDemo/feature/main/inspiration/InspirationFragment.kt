@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.viewModelScope
+import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.AuthenticationFragment
@@ -13,7 +14,10 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.Inspiration
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
+import com.pandulapeter.beagle.appDemo.utils.isContainerTransformSupported
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
+import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,7 +33,16 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
 
     override fun createAdapter() = InspirationAdapter(viewModel.viewModelScope, ::onCaseStudySelected)
 
-    override fun getBeagleModules() = mutableListOf(TextModule(text = getString(R.string.inspiration_beagle_text)))
+    override fun getBeagleModules() = mutableListOf<Module<*>>().apply {
+        add(TextModule(text = getString(R.string.inspiration_beagle_text)))
+        if (isContainerTransformSupported) {
+            SwitchModule(
+                id = SHARED_ELEMENT_TRANSITIONS_SWITCH,
+                text = getString(R.string.inspiration_beagle_switch),
+                shouldBePersisted = true,
+                onValueChanged = {})
+        }
+    }
 
     private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) = when (caseStudy) {
         CaseStudy.BASIC_SETUP -> navigateTo(BasicSetupFragment.Companion::newInstance, view)
@@ -40,12 +53,15 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
 
     private inline fun <reified T : InspirationDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T, sharedElement: View) = parentFragmentManager.handleReplace(
         addToBackStack = true,
-        sharedElements = listOf(sharedElement),
+        //TODO: Unpredictable, frequent glitches
+        sharedElements = if (Beagle.find<SwitchModule>(SHARED_ELEMENT_TRANSITIONS_SWITCH)?.getCurrentValue(Beagle) == true) listOf(sharedElement) else emptyList(),
         transitionType = TransitionType.MODAL,
         newInstance = newInstance
     )
 
     companion object {
+        private const val SHARED_ELEMENT_TRANSITIONS_SWITCH = "sharedElementTransitions"
+
         fun newInstance() = InspirationFragment()
     }
 }
