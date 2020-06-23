@@ -27,7 +27,7 @@ internal class ListHeaderViewHolder(root: View) : RecyclerView.ViewHolder(root) 
         }
         iconImageView.visibleOrInvisible = viewModel.shouldShowIcon
         if (viewModel.shouldShowIcon) {
-            itemView.setOnClickListener { if (adapterPosition != RecyclerView.NO_POSITION) viewModel.onItemSelected() }
+            itemView.setOnClickListener { if (bindingAdapterPosition != RecyclerView.NO_POSITION) viewModel.onItemSelected() }
         } else {
             itemView.setOnClickListener(null)
         }

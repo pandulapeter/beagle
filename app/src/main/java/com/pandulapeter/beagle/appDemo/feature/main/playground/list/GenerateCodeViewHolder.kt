@@ -15,7 +15,7 @@ class GenerateCodeViewHolder private constructor(
 
     init {
         itemView.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 onGenerateCodeClicked()
             }
         }

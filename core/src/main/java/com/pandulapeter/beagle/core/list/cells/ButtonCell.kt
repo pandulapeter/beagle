@@ -26,8 +26,8 @@ internal data class ButtonCell(
         override fun bind(model: ButtonCell) = button.run {
             text = model.text
             itemView.setOnClickListener {
-                adapterPosition.let { adapterPosition ->
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                bindingAdapterPosition.let { bindingAdapterPosition ->
+                    if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                         model.onButtonPressed()
                     }
                 }

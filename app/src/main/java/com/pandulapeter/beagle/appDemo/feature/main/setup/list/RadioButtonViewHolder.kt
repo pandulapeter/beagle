@@ -16,7 +16,7 @@ class RadioButtonViewHolder private constructor(
 
     init {
         binding.radioButton.setOnCheckedChangeListener { _, isChecked ->
-            if (adapterPosition != RecyclerView.NO_POSITION && isChecked && isChecked != binding.uiModel?.isChecked) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION && isChecked && isChecked != binding.uiModel?.isChecked) {
                 binding.uiModel?.let(onRadioButtonSelected)
             }
         }

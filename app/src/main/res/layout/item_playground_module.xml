@@ -24,6 +24,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:padding="@dimen/large_content_padding"
             android:text="@{uiModel.title}"
             tools:drawableEnd="@drawable/ic_drag_handle"

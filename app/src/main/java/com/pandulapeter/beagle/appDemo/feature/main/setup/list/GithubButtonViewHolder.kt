@@ -16,7 +16,7 @@ class GithubButtonViewHolder private constructor(
 
     init {
         binding.root.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 onButtonClicked()
             }
         }

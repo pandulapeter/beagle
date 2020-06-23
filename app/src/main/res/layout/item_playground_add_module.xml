@@ -24,10 +24,12 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/large_content_padding"
+            android:gravity="center_vertical"
             android:padding="@dimen/large_content_padding"
             android:text="@string/playground_add_module"
-            tools:drawableEnd="@drawable/ic_drag_handle"
-            tools:drawableRight="@drawable/ic_drag_handle" />
+            tools:drawableLeft="@drawable/ic_add"
+            tools:drawableStart="@drawable/ic_add" />
 
     </com.google.android.material.card.MaterialCardView>
 
