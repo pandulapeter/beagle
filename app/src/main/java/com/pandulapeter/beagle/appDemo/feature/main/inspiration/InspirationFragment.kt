@@ -36,11 +36,13 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
     override fun getBeagleModules() = mutableListOf<Module<*>>().apply {
         add(TextModule(text = getString(R.string.inspiration_beagle_text)))
         if (isContainerTransformSupported) {
-            SwitchModule(
-                id = SHARED_ELEMENT_TRANSITIONS_SWITCH,
-                text = getString(R.string.inspiration_beagle_switch),
-                shouldBePersisted = true,
-                onValueChanged = {})
+            add(
+                SwitchModule(
+                    id = SHARED_ELEMENT_TRANSITIONS_SWITCH,
+                    text = getString(R.string.inspiration_beagle_switch),
+                    shouldBePersisted = true,
+                    onValueChanged = {})
+            )
         }
     }
 
@@ -51,13 +53,13 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
         else -> binding.root.showSnackbar(caseStudy.title)
     }
 
-    private inline fun <reified T : InspirationDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T, sharedElement: View) = parentFragmentManager.handleReplace(
+    private inline fun <reified T : InspirationDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T, sharedElement: View) = parentFragment?.childFragmentManager?.handleReplace(
         addToBackStack = true,
         //TODO: Unpredictable, frequent glitches
         sharedElements = if (Beagle.find<SwitchModule>(SHARED_ELEMENT_TRANSITIONS_SWITCH)?.getCurrentValue(Beagle) == true) listOf(sharedElement) else emptyList(),
         transitionType = TransitionType.MODAL,
         newInstance = newInstance
-    )
+    ) ?: Unit
 
     companion object {
         private const val SHARED_ELEMENT_TRANSITIONS_SWITCH = "sharedElementTransitions"

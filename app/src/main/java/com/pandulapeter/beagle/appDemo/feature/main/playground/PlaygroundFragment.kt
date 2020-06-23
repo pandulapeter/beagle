@@ -99,11 +99,11 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
         )
     )
 
-    private fun navigateToAddModule() = parentFragmentManager.handleReplace(
+    private fun navigateToAddModule() = parentFragment?.childFragmentManager?.handleReplace(
         transitionType = TransitionType.MODAL,
         addToBackStack = true,
         newInstance = AddModuleFragment.Companion::newInstance
-    )
+    ) ?: Unit
 
     private fun generateCode() = binding.recyclerView.showSnackbar(R.string.coming_soon) //TODO: Open the dialog with the code snippet
 

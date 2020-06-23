@@ -72,11 +72,11 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
 
     private fun openInAppPurchaseDialog() = binding.recyclerView.showSnackbar(R.string.coming_soon) //TODO
 
-    private fun navigateToLicences() = parentFragmentManager.handleReplace(
+    private fun navigateToLicences() = parentFragment?.childFragmentManager?.handleReplace(
         transitionType = TransitionType.MODAL,
         addToBackStack = true,
         newInstance = LicencesFragment.Companion::newInstance
-    )
+    ) ?: Unit
 
     companion object {
         private const val PACKAGE_NAME = "com.pandulapeter.beagleExample"

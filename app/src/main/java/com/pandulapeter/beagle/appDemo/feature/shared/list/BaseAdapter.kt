@@ -20,6 +20,10 @@ open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : Recycl
 
     final override fun getItemCount() = items.size
 
+    init {
+        stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
+    }
+
     @CallSuper
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is TextViewHolder.UiModel -> R.layout.item_text

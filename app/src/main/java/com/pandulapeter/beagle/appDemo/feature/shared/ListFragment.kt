@@ -37,7 +37,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.setVariable(BR.viewModel, viewModel)
         binding.root.setBackgroundColor(requireContext().color(backgroundColorResourceId))
-        binding.appBar.setup(titleResourceId, parentFragmentManager.backStackEntryCount <= 1, requireActivity())
+        binding.appBar.setup(titleResourceId, parentFragment?.childFragmentManager?.backStackEntryCount ?: 0 <= 1, requireActivity())
         setupRecyclerView()
         refreshBeagle()
     }
@@ -52,12 +52,12 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     private fun setupRecyclerView() {
         val listAdapter = createAdapter()
+        viewModel.items.observe(viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
         binding.recyclerView.run {
             adapter = listAdapter
             layoutManager = createLayoutManager()
             setHasFixedSize(true)
-            waitForPreDraw { post { startPostponedEnterTransition() } }
+            waitForPreDraw { postDelayed({ startPostponedEnterTransition() }, 100) }
         }
-        viewModel.items.observe(viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
     }
 }
