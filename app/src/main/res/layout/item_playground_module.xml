@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="@dimen/large_content_padding"
-            android:text="@{uiModel.title}"
+            android:text="@{uiModel.moduleWrapper.titleResourceId}"
             tools:drawableEnd="@drawable/ic_drag_handle"
             tools:drawableRight="@drawable/ic_drag_handle"
             tools:text="Title" />

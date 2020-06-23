@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <View xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/beagle_divider"
     android:layout_marginStart="@dimen/beagle_item_horizontal_margin"
@@ -8,4 +9,4 @@
     android:layout_marginEnd="@dimen/beagle_item_horizontal_margin"
     android:layout_marginRight="@dimen/beagle_item_horizontal_margin"
     android:layout_marginBottom="@dimen/beagle_item_vertical_margin"
-    android:background="?android:attr/textColorPrimary" />
+    tools:background="?android:attr/textColorPrimary" />

@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.playground
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
+import com.pandulapeter.beagle.appDemo.data.ModuleRepository
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.AddModuleViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.GenerateCodeViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.ModuleViewHolder
@@ -10,30 +11,18 @@ import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundLi
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 
-class PlaygroundViewModel : ListViewModel<PlaygroundListItem>() {
+class PlaygroundViewModel(val moduleRepository: ModuleRepository) : ListViewModel<PlaygroundListItem>() {
 
-    override val items: LiveData<List<PlaygroundListItem>> = MutableLiveData(
-        listOf(
-            TextViewHolder.UiModel(R.string.playground_description),
-            ModuleViewHolder.UiModel("Button"),
-            ModuleViewHolder.UiModel("CheckBox"),
-            ModuleViewHolder.UiModel("Divider"),
-            ModuleViewHolder.UiModel("ItemList"),
-            ModuleViewHolder.UiModel("KeyValueList"),
-            ModuleViewHolder.UiModel("Label"),
-            ModuleViewHolder.UiModel("LongText"),
-            ModuleViewHolder.UiModel("MultipleSelectionList"),
-            ModuleViewHolder.UiModel("Padding"),
-            ModuleViewHolder.UiModel("SingleSelectionList"),
-            ModuleViewHolder.UiModel("Switch"),
-            ModuleViewHolder.UiModel("Text"),
-            ModuleViewHolder.UiModel("AnimationDurationSwitch"),
-            ModuleViewHolder.UiModel("AppInfo"),
-            ModuleViewHolder.UiModel("DeviceInfo"),
-            ModuleViewHolder.UiModel("ForceCrashButton"),
-            ModuleViewHolder.UiModel("Header"),
-            AddModuleViewHolder.UiModel(),
-            GenerateCodeViewHolder.UiModel()
-        )
-    )
+    private val _items = MutableLiveData<List<PlaygroundListItem>>()
+    override val items: LiveData<List<PlaygroundListItem>> = _items
+    val modules get() = moduleRepository.modules
+
+    fun refreshModules() {
+        _items.value = mutableListOf<PlaygroundListItem>().apply {
+            add(TextViewHolder.UiModel(R.string.playground_description))
+            addAll(moduleRepository.modules.map { ModuleViewHolder.UiModel(it) })
+            add(AddModuleViewHolder.UiModel())
+            add(GenerateCodeViewHolder.UiModel())
+        }
+    }
 }
