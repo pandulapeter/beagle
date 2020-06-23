@@ -3,7 +3,8 @@ package com.pandulapeter.beagle.appDemo.feature.main.playground
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.feature.main.playground.list.ButtonViewHolder
+import com.pandulapeter.beagle.appDemo.feature.main.playground.list.AddModuleViewHolder
+import com.pandulapeter.beagle.appDemo.feature.main.playground.list.GenerateCodeViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.ModuleViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
@@ -14,7 +15,6 @@ class PlaygroundViewModel : ListViewModel<PlaygroundListItem>() {
     override val items: LiveData<List<PlaygroundListItem>> = MutableLiveData(
         listOf(
             TextViewHolder.UiModel(R.string.playground_description),
-            ButtonViewHolder.UiModel(R.string.playground_add_module),
             ModuleViewHolder.UiModel("Button"),
             ModuleViewHolder.UiModel("CheckBox"),
             ModuleViewHolder.UiModel("Divider"),
@@ -32,7 +32,8 @@ class PlaygroundViewModel : ListViewModel<PlaygroundListItem>() {
             ModuleViewHolder.UiModel("DeviceInfo"),
             ModuleViewHolder.UiModel("ForceCrashButton"),
             ModuleViewHolder.UiModel("Header"),
-            ButtonViewHolder.UiModel(R.string.playground_generate_code)
+            AddModuleViewHolder.UiModel(),
+            GenerateCodeViewHolder.UiModel()
         )
     )
 }

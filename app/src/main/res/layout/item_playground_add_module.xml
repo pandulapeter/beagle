@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.playground.list.ModuleViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.playground.list.AddModuleViewHolder.UiModel" />
 
     </data>
 
@@ -25,10 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/large_content_padding"
-            android:text="@{uiModel.title}"
+            android:text="@string/playground_add_module"
             tools:drawableEnd="@drawable/ic_drag_handle"
-            tools:drawableRight="@drawable/ic_drag_handle"
-            tools:text="Title" />
+            tools:drawableRight="@drawable/ic_drag_handle" />
 
     </com.google.android.material.card.MaterialCardView>
 

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.playground.list.ButtonViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.playground.list.GenerateCodeViewHolder.UiModel" />
 
     </data>
 
@@ -21,12 +20,11 @@
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding"
         android:gravity="center"
-        android:text="@{uiModel.textResourceId}"
+        android:text="@string/playground_generate_code"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:theme="@style/DarkTheme"
         app:backgroundTint="@color/brand_dark"
-        app:rippleColor="?attr/colorControlHighlight"
-        tools:text="Text" />
+        app:rippleColor="?attr/colorControlHighlight" />
 
 </layout>

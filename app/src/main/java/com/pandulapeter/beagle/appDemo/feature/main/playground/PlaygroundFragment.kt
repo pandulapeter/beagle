@@ -34,12 +34,11 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
 
     override val viewModel by viewModel<PlaygroundViewModel>()
 
-    override fun createAdapter() = PlaygroundAdapter(viewModel.viewModelScope) { uiModel ->
-        when (uiModel.textResourceId) {
-            R.string.playground_add_module -> navigateToAddModule()
-            R.string.playground_generate_code -> generateCode()
-        }
-    }
+    override fun createAdapter() = PlaygroundAdapter(
+        scope = viewModel.viewModelScope,
+        onAddModuleClicked = ::navigateToAddModule,
+        onGenerateCodeClicked = ::generateCode
+    )
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         ButtonModule(text = "Button", onButtonPressed = {}),
