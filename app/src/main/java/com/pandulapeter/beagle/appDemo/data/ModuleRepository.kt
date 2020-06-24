@@ -65,6 +65,11 @@ class ModuleRepository {
         notifyListeners()
     }
 
+    fun removeModule(id: String) {
+        _modules.removeAll { it.id == id }
+        notifyListeners()
+    }
+
     private fun notifyListeners() = listeners.forEach { it.onModuleListChanged() }
 
     interface Listener {

@@ -25,4 +25,10 @@ class PlaygroundViewModel(val moduleRepository: ModuleRepository) : ListViewMode
             add(GenerateCodeViewHolder.UiModel())
         }
     }
+
+    fun onModuleRemoved(position: Int) {
+        (_items.value?.get(position) as? ModuleViewHolder.UiModel?)?.moduleWrapper?.id?.let {
+            moduleRepository.removeModule(it)
+        }
+    }
 }

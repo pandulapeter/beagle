@@ -3,9 +3,12 @@ package com.pandulapeter.beagle.appDemo.feature.main.playground
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.ModuleRepository
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.AddModuleFragment
+import com.pandulapeter.beagle.appDemo.feature.main.playground.list.ModuleViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
@@ -20,6 +23,20 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ItemTouchHelper(object : ItemTouchHelper.Callback() {
+            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) = if (viewHolder is ModuleViewHolder) makeMovementFlags(
+                0, //TODO
+                ItemTouchHelper.START or ItemTouchHelper.END
+            ) else 0
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                //TODO
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = viewModel.onModuleRemoved(viewHolder.bindingAdapterPosition)
+
+        }).attachToRecyclerView(binding.recyclerView)
         if (viewModel.modules.isEmpty()) {
             registerListener()
         } else {
