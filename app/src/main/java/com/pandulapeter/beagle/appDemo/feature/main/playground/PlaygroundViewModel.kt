@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.ModuleRepository
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.AddModuleViewHolder
-import com.pandulapeter.beagle.appDemo.feature.main.playground.list.GenerateCodeViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.ModuleViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
+import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 
 class PlaygroundViewModel(val moduleRepository: ModuleRepository) : ListViewModel<PlaygroundListItem>() {
@@ -22,7 +22,8 @@ class PlaygroundViewModel(val moduleRepository: ModuleRepository) : ListViewMode
             add(TextViewHolder.UiModel(R.string.playground_description))
             addAll(moduleRepository.modules.map { ModuleViewHolder.UiModel(it) })
             add(AddModuleViewHolder.UiModel())
-            add(GenerateCodeViewHolder.UiModel())
+            add(TextViewHolder.UiModel(R.string.playground_generate_code))
+            add(CodeSnippetViewHolder.UiModel(id = "codeSnippet", codeSnippet = generateCodeSnippet()))
         }
     }
 
@@ -33,6 +34,9 @@ class PlaygroundViewModel(val moduleRepository: ModuleRepository) : ListViewMode
     }
 
     fun onModulesSwapped(oldPosition: Int, newPosition: Int) = moduleRepository.onModulesSwapped(oldPosition - FIRST_MODULE_OFFSET, newPosition - FIRST_MODULE_OFFSET)
+
+    //TODO: Proguard issues, among others
+    private fun generateCodeSnippet() = "//TODO: Work in progress\nBeagle.set(" + moduleRepository.modules.joinToString { "\n   ${it.module::class.java.simpleName}(…)" } + "\n)"
 
     companion object {
         private const val FIRST_MODULE_OFFSET = 1

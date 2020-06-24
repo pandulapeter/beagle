@@ -15,7 +15,6 @@ import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.consume
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
-import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>(R.string.playground_title), ModuleRepository.Listener {
@@ -48,7 +47,6 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
     override fun createAdapter() = PlaygroundAdapter(
         scope = viewModel.viewModelScope,
         onAddModuleClicked = ::navigateToAddModule,
-        onGenerateCodeClicked = ::generateCode,
         onDragHandleTouched = ::onDragHandleTouched
     )
 
@@ -64,8 +62,6 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
         addToBackStack = true,
         newInstance = AddModuleFragment.Companion::newInstance
     ) ?: Unit
-
-    private fun generateCode() = binding.recyclerView.showSnackbar(R.string.coming_soon) //TODO: Open the dialog with the code snippet
 
     private fun onDragHandleTouched(viewHolder: RecyclerView.ViewHolder) = itemTouchHelper.startDrag(viewHolder)
 
