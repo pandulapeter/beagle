@@ -98,6 +98,15 @@ interface BeagleContract {
     fun remove(vararg ids: String) = Unit
 
     /**
+     * Can be used to verify if a [Module] with the specified ID is added to the debug menu.
+     *
+     * @param id - The String identifier of the module specified in its constructor.
+     *
+     * @return Whether or not the debug menu contains a module with the specified ID.
+     */
+    fun contains(id: String): Boolean = false
+
+    /**
      * Can be used to get the reference to a [Module].
      * Useful if Beagle is used as the single source of truth for persisted debug data which can be queried from individual modules.
      *

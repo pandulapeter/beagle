@@ -104,6 +104,8 @@ internal class ListManager {
         job = GlobalScope.launch { refreshCellsInternal() }
     }
 
+    fun contains(id: String) = modules.any { it.id == id }
+
     //TODO: This might cause concurrency issues. Consider making it a suspend function.
     @Suppress("UNCHECKED_CAST")
     fun <M : Module<*>> findModule(id: String): M? = modules.firstOrNull { it.id == id } as? M?

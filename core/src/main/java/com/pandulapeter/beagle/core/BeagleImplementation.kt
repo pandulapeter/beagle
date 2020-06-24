@@ -72,6 +72,8 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun remove(vararg ids: String) = listManager.removeModules(ids.toList())
 
+    override fun contains(id: String) = listManager.contains(id)
+
     override fun <M : Module<M>> find(id: String) = listManager.findModule<M>(id)
 
     override fun <M : Module<M>> delegateFor(type: KClass<out M>) = listManager.findModuleDelegate(type)

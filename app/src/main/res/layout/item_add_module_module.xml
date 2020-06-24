@@ -18,18 +18,20 @@
         android:layout_marginLeft="@dimen/large_content_padding"
         android:layout_marginTop="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
-        android:layout_marginRight="@dimen/large_content_padding">
+        android:layout_marginRight="@dimen/large_content_padding"
+        android:clickable="@{uiModel.isEnabled}">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="@{uiModel.isEnabled ? 1f : 0.5f}"
             android:orientation="vertical"
             android:padding="@dimen/large_content_padding">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{uiModel.titleResourceId}"
+                android:text="@{uiModel.moduleWrapper.titleResourceId}"
                 android:textStyle="bold"
                 tools:text="Title" />
 

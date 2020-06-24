@@ -5,7 +5,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
@@ -45,9 +44,9 @@ class ModuleRepository {
             module = ItemListModule(
                 title = "ItemList",
                 items = listOf(
-                    ListItem("Item 1"),
-                    ListItem("Item 2"),
-                    ListItem("Item 3")
+                    SampleListItem("Item 1"),
+                    SampleListItem("Item 2"),
+                    SampleListItem("Item 3")
                 ),
                 onItemSelected = {}
             )
@@ -79,9 +78,9 @@ class ModuleRepository {
             module = MultipleSelectionListModule(
                 title = "MultipleSelectionList",
                 items = listOf(
-                    ListItem("Checkbox 1"),
-                    ListItem("Checkbox 2"),
-                    ListItem("Checkbox 3")
+                    SampleListItem("Checkbox 1"),
+                    SampleListItem("Checkbox 2"),
+                    SampleListItem("Checkbox 3")
                 ),
                 initiallySelectedItemIds = emptySet(),
                 onSelectionChanged = {}
@@ -96,9 +95,9 @@ class ModuleRepository {
             module = SingleSelectionListModule(
                 title = "SingleSelectionList",
                 items = listOf(
-                    ListItem("Radio button 1"),
-                    ListItem("Radio button 2"),
-                    ListItem("Radio button 3")
+                    SampleListItem("Radio button 1"),
+                    SampleListItem("Radio button 2"),
+                    SampleListItem("Radio button 3")
                 ),
                 initiallySelectedItemId = null,
                 onSelectionChanged = {}
@@ -166,12 +165,5 @@ class ModuleRepository {
 
     interface Listener {
         fun onModuleListChanged()
-    }
-
-    private data class ListItem(
-        override val title: String
-    ) : BeagleListItemContract {
-
-        override val id = title
     }
 }

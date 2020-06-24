@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
+import com.pandulapeter.beagle.appDemo.data.ModuleWrapper
 import com.pandulapeter.beagle.appDemo.databinding.ItemAddModuleModuleBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
@@ -23,9 +24,10 @@ class ModuleViewHolder private constructor(
     }
 
     data class UiModel(
-        @StringRes val titleResourceId: Int,
         @StringRes val descriptionResourceId: Int,
-        override val id: String = "module_$titleResourceId"
+        val moduleWrapper: ModuleWrapper,
+        val isEnabled: Boolean,
+        override val id: String = "module_${moduleWrapper.titleResourceId}"
     ) : AddModuleListItem
 
     companion object {
