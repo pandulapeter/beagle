@@ -31,4 +31,12 @@ class PlaygroundViewModel(val moduleRepository: ModuleRepository) : ListViewMode
             moduleRepository.removeModule(it)
         }
     }
+
+    fun onModulesSwapped(oldPosition: Int, newPosition: Int) {
+        (_items.value?.get(oldPosition) as? ModuleViewHolder.UiModel?)?.moduleWrapper?.id?.let { oldId ->
+            (_items.value?.get(newPosition) as? ModuleViewHolder.UiModel?)?.moduleWrapper?.id?.let { newId ->
+                moduleRepository.onModulesSwapped(oldId, newId)
+            }
+        }
+    }
 }

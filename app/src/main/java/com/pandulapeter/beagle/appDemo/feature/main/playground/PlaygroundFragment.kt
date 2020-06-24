@@ -13,6 +13,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundAd
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
+import com.pandulapeter.beagle.appDemo.utils.consume
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,14 +26,12 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
         super.onViewCreated(view, savedInstanceState)
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) = if (viewHolder is ModuleViewHolder) makeMovementFlags(
-                0, //TODO
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
                 ItemTouchHelper.START or ItemTouchHelper.END
             ) else 0
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                //TODO
-                return false
-            }
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) =
+                if (viewHolder is ModuleViewHolder && target is ModuleViewHolder) consume { viewModel.onModulesSwapped(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition) } else false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = viewModel.onModuleRemoved(viewHolder.bindingAdapterPosition)
 

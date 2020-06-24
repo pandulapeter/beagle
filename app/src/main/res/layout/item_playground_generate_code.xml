@@ -10,21 +10,27 @@
 
     </data>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Card"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/large_content_padding"
         android:layout_marginLeft="@dimen/large_content_padding"
         android:layout_marginTop="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding"
-        android:gravity="center"
-        android:text="@string/playground_generate_code"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:theme="@style/DarkTheme"
-        app:backgroundTint="@color/brand_dark"
-        app:rippleColor="?attr/colorControlHighlight" />
+        app:cardBackgroundColor="@color/brand_light">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/large_content_padding"
+            android:gravity="center"
+            android:padding="@dimen/large_content_padding"
+            android:text="@string/playground_generate_code"
+            android:textStyle="bold" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

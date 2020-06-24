@@ -70,6 +70,18 @@ class ModuleRepository {
         notifyListeners()
     }
 
+    //TODO: Needs to be improved
+    fun onModulesSwapped(oldId: String, newId: String) {
+        val oldIndex = _modules.indexOfFirst { it.id == oldId }
+        val newIndex = _modules.indexOfFirst { it.id == newId }
+        if (oldIndex != -1 && newIndex != -1) {
+            val oldItem = _modules[oldIndex]
+            _modules[oldIndex] = _modules[newIndex]
+            _modules[newIndex] = oldItem
+            notifyListeners()
+        }
+    }
+
     private fun notifyListeners() = listeners.forEach { it.onModuleListChanged() }
 
     interface Listener {
