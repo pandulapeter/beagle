@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
+import java.util.Collections
 
 class ModuleRepository {
 
@@ -70,16 +71,17 @@ class ModuleRepository {
         notifyListeners()
     }
 
-    //TODO: Needs to be improved
-    fun onModulesSwapped(oldId: String, newId: String) {
-        val oldIndex = _modules.indexOfFirst { it.id == oldId }
-        val newIndex = _modules.indexOfFirst { it.id == newId }
-        if (oldIndex != -1 && newIndex != -1) {
-            val oldItem = _modules[oldIndex]
-            _modules[oldIndex] = _modules[newIndex]
-            _modules[newIndex] = oldItem
-            notifyListeners()
+    fun onModulesSwapped(oldPosition: Int, newPosition: Int) {
+        if (oldPosition < newPosition) {
+            for (i in oldPosition until newPosition) {
+                Collections.swap(_modules, i, i + 1)
+            }
+        } else {
+            for (i in oldPosition downTo newPosition + 1) {
+                Collections.swap(_modules, i, i - 1)
+            }
         }
+        notifyListeners()
     }
 
     private fun notifyListeners() = listeners.forEach { it.onModuleListChanged() }

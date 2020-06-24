@@ -32,11 +32,9 @@ class PlaygroundViewModel(val moduleRepository: ModuleRepository) : ListViewMode
         }
     }
 
-    fun onModulesSwapped(oldPosition: Int, newPosition: Int) {
-        (_items.value?.get(oldPosition) as? ModuleViewHolder.UiModel?)?.moduleWrapper?.id?.let { oldId ->
-            (_items.value?.get(newPosition) as? ModuleViewHolder.UiModel?)?.moduleWrapper?.id?.let { newId ->
-                moduleRepository.onModulesSwapped(oldId, newId)
-            }
-        }
+    fun onModulesSwapped(oldPosition: Int, newPosition: Int) = moduleRepository.onModulesSwapped(oldPosition - FIRST_MODULE_OFFSET, newPosition - FIRST_MODULE_OFFSET)
+
+    companion object {
+        private const val FIRST_MODULE_OFFSET = 1
     }
 }
