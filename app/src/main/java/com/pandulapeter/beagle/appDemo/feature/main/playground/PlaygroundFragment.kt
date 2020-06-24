@@ -20,7 +20,11 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.moduleRepository.registerListener(viewLifecycleOwner, this)
+        if (viewModel.modules.isEmpty()) {
+            registerListener()
+        } else {
+            binding.root.postDelayed({ registerListener() }, 300)
+        }
     }
 
     override fun createAdapter() = PlaygroundAdapter(
@@ -43,6 +47,8 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
     ) ?: Unit
 
     private fun generateCode() = binding.recyclerView.showSnackbar(R.string.coming_soon) //TODO: Open the dialog with the code snippet
+
+    private fun registerListener() = viewModel.moduleRepository.registerListener(viewLifecycleOwner, this)
 
     companion object {
         fun newInstance() = PlaygroundFragment()

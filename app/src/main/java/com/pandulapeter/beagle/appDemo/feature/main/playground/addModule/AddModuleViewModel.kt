@@ -37,7 +37,7 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
         listOf(
             TextViewHolder.UiModel(R.string.add_module_generic_modules),
             createModuleUiModel(
-                titleResourceId = R.string.add_module_force_crash_button,
+                titleResourceId = R.string.add_module_button,
                 descriptionResourceId = R.string.add_module_button_description,
                 module = ButtonModule(text = "Button", onButtonPressed = {})
             ),
