@@ -110,7 +110,7 @@
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
-    <string name="playground_description">Use this interactive tool to quickly preview any module configuration and generate the code that can be used to create it.</string>
+    <string name="playground_description">Use this interactive tool to quickly preview any module configuration and generate the code that can be used to create it.\n\n• Press the "Add new module" button to add items\n•     Swipe horizontally to remove items\n• Swipe vertically to rearrange items (drag and drop)\n</string>
     <string name="playground_add_module">Add a new module</string>
     <string name="playground_generate_code">Generate code</string>
 
