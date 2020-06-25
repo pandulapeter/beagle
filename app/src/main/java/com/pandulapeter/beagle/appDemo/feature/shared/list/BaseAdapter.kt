@@ -17,6 +17,7 @@ open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : Recycl
     private var items = emptyList<T>()
     private var job: Job? = null
     private val pendingUpdates = ArrayDeque<List<T>>()
+    protected open val isAsynchronous = true
 
     final override fun getItemCount() = items.size
 
@@ -55,15 +56,22 @@ open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : Recycl
     }
 
     private fun update(newItems: List<T>, onListUpdated: (() -> Unit)?) {
-        job?.cancel()
-        job = scope.launch(Dispatchers.IO) {
-            val result = DiffUtil.calculateDiff(DiffCallback(items, newItems))
-            job = launch(Dispatchers.Main) {
-                items = newItems
-                result.dispatchUpdatesTo(this@BaseAdapter)
-                processQueue(onListUpdated)
-                job = null
+        if (isAsynchronous) {
+            job?.cancel()
+            job = scope.launch(Dispatchers.IO) {
+                val result = DiffUtil.calculateDiff(DiffCallback(items, newItems))
+                job = launch(Dispatchers.Main) {
+                    items = newItems
+                    result.dispatchUpdatesTo(this@BaseAdapter)
+                    processQueue(onListUpdated)
+                    job = null
+                }
             }
+        } else {
+            val result = DiffUtil.calculateDiff(DiffCallback(items, newItems))
+            items = newItems
+            result.dispatchUpdatesTo(this)
+            processQueue(onListUpdated)
         }
     }
 

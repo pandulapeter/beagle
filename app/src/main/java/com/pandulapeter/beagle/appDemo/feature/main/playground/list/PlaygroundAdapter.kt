@@ -13,6 +13,8 @@ class PlaygroundAdapter(
     private val onDragHandleTouched: (RecyclerView.ViewHolder) -> Unit
 ) : BaseAdapter<PlaygroundListItem>(scope) {
 
+    override val isAsynchronous = false
+
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is ModuleViewHolder.UiModel -> R.layout.item_playground_module
         is AddModuleViewHolder.UiModel -> R.layout.item_playground_add_module

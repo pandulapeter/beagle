@@ -110,13 +110,13 @@
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
-    <string name="playground_description">Use this interactive tool to quickly preview any module configuration and generate the code that can be used to create it.\n\n• Press the "Add new module" button to add items\n•     Swipe horizontally to remove items\n• Swipe vertically to rearrange items (drag and drop)\n</string>
+    <string name="playground_description">Use this interactive tool to quickly preview any module configuration and generate the code that can be used to create it. The debug menu will be updated automatically, in real time.\n\n• Press the "Add new module" button to add items\n•     Swipe horizontally to remove items\n• Swipe vertically to rearrange items (drag and drop)\n</string>
     <string name="playground_add_module">Add a new module</string>
     <string name="playground_generate_code">A similar configuration could be created with something like this:</string>
 
     <!-- Add module -->
     <string name="add_module_title">Add new module</string>
-    <string name="add_module_generic_modules"><b>Generic modules</b> (any number of instances can be added)</string>
+    <string name="add_module_generic_modules"><b>Generic modules</b>\nAny number of instances can be added</string>
     <string name="add_module_button">Button</string>
     <string name="add_module_button_description">Displays a simple button.</string>
     <string name="add_module_check_box">CheckBox</string>
@@ -141,7 +141,7 @@
     <string name="add_module_switch_description">Displays a simple switch.</string>
     <string name="add_module_text">Text</string>
     <string name="add_module_text_description">Displays a piece of text. Can be used for click handling as well.</string>
-    <string name="add_module_unique_modules"><b>Unique modules</b> (only a single instance can be added)</string>
+    <string name="add_module_unique_modules"><b>Unique modules</b>\nOnly a single instance can be added</string>
     <string name="add_module_animation_duration_switch">AnimationDurationSwitch</string>
     <string name="add_module_animation_duration_switch_description">Displays a switch that, when enabled, increases the duration of animations.</string>
     <string name="add_module_app_info">AppInfo</string>
