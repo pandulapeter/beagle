@@ -35,10 +35,10 @@ class PlaygroundViewModel(val moduleRepository: ModuleRepository) : ListViewMode
 
     fun onModulesSwapped(oldPosition: Int, newPosition: Int) = moduleRepository.onModulesSwapped(oldPosition - FIRST_MODULE_OFFSET, newPosition - FIRST_MODULE_OFFSET)
 
-    //TODO: Proguard issues, among others
-    private fun generateCodeSnippet() = "//TODO: Work in progress\nBeagle.set(" + moduleRepository.modules.joinToString { "\n   ${it.module::class.java.simpleName}(…)" } + "\n)"
+    private fun generateCodeSnippet() = "Beagle.set(" + moduleRepository.modules.joinToString { "$INDENTATION${it.codeSnippet.replace("\n", INDENTATION)}" } + "\n)"
 
     companion object {
         private const val FIRST_MODULE_OFFSET = 1
+        private const val INDENTATION = "\n   "
     }
 }

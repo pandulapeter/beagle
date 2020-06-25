@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_content_padding"
-                android:text="@{uiModel.descriptionResourceId}"
+                android:text="@{uiModel.moduleWrapper.descriptionResourceId}"
                 tools:text="Description" />
 
         </LinearLayout>

@@ -2,7 +2,6 @@ package com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
@@ -24,7 +23,6 @@ class ModuleViewHolder private constructor(
     }
 
     data class UiModel(
-        @StringRes val descriptionResourceId: Int,
         val moduleWrapper: ModuleWrapper,
         val isEnabled: Boolean,
         override val id: String = "module_${moduleWrapper.titleResourceId}"

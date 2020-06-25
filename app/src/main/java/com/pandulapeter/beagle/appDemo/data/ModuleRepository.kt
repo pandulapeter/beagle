@@ -4,41 +4,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
-import com.pandulapeter.beagle.modules.AppInfoButtonModule
-import com.pandulapeter.beagle.modules.DeviceInfoModule
-import com.pandulapeter.beagle.modules.ForceCrashButtonModule
-import com.pandulapeter.beagle.modules.HeaderModule
 import java.util.Collections
 
 class ModuleRepository {
 
     private val listeners = mutableListOf<Listener>()
     private val _modules = mutableListOf(
-        ModuleWrapper(
-            titleResourceId = R.string.add_module_header,
-            module = HeaderModule(
-                title = "Header title",
-                subtitle = "Header subtitle"
-            )
-        ),
-        ModuleWrapper(
-            titleResourceId = R.string.add_module_app_info,
-            module = AppInfoButtonModule()
-        ),
-        ModuleWrapper(
-            titleResourceId = R.string.add_module_force_crash_button,
-            module = ForceCrashButtonModule()
-        ),
-        ModuleWrapper(
-            titleResourceId = R.string.add_module_animation_duration_switch,
-            module = AnimationDurationSwitchModule()
-        ),
-        ModuleWrapper(
-            titleResourceId = R.string.add_module_device_info,
-            module = DeviceInfoModule()
-        )
+        ModuleWrapper.Header,
+        ModuleWrapper.AppInfoButton,
+        ModuleWrapper.ForceCrashButton,
+        ModuleWrapper.AnimationDurationSwitch,
+        ModuleWrapper.DeviceInfo
     )
     val modules: List<ModuleWrapper> get() = _modules
 
