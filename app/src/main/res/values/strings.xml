@@ -83,6 +83,23 @@
     <string name="case_study_feature_toggles_title">Feature toggles</string>
     <string name="case_study_feature_toggles_description">Test different implementations without creating new builds. Persist these feature flags across app launches with a single extra line of code!</string>
     <string name="case_study_feature_toggles_text_1">Coming soon…</string>
+    <string name="case_study_feature_toggles_hint_1">For simple on-off flags two UI representations are available:</string>
+    <string name="case_study_feature_toggles_switches">Switches</string>
+    <string name="case_study_feature_toggles_toggle_1">Toggle 1</string>
+    <string name="case_study_feature_toggles_toggle_2">Toggle 2</string>
+    <string name="case_study_feature_toggles_check_boxes">Check boxes</string>
+    <string name="case_study_feature_toggles_toggle_3">Toggle 3</string>
+    <string name="case_study_feature_toggles_toggle_4">Toggle 4</string>
+    <string name="case_study_feature_toggles_hint_2">Check boxes can also be grouped together, in this case a single callback is invoked every time one of the values changes:</string>
+    <string name="case_study_feature_toggles_check_box_group"><b>Check box group</b></string>
+    <string name="case_study_feature_toggles_check_box_1">Option 1</string>
+    <string name="case_study_feature_toggles_check_box_2">Option 2</string>
+    <string name="case_study_feature_toggles_check_box_3">Option 3</string>
+    <string name="case_study_feature_toggles_hint_3">In case only a single selection is considered valid at any time, radio buttons should be used:</string>
+    <string name="case_study_feature_toggles_radio_button_group"><b>Radio button group</b></string>
+    <string name="case_study_feature_toggles_radio_button_1">Option 1</string>
+    <string name="case_study_feature_toggles_radio_button_2">Option 2</string>
+    <string name="case_study_feature_toggles_radio_button_3">Option 3</string>
 
     <!-- Case studies / Static data -->
     <string name="case_study_static_data_title">Static data</string>
