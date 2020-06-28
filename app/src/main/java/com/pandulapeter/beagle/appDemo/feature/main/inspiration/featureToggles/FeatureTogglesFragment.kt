@@ -24,11 +24,11 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
     override fun getBeagleModules(): List<Module<*>> = listOf(
         TextModule(text = getString(R.string.case_study_feature_toggles_hint_1)),
         LabelModule(title = getString(R.string.case_study_feature_toggles_switches)),
-        SwitchModule(text = getString(R.string.case_study_feature_toggles_toggle_1), onValueChanged = {}),
-        SwitchModule(text = getString(R.string.case_study_feature_toggles_toggle_2), onValueChanged = {}),
+        SwitchModule(id = TOGGLE_1_ID, text = getString(R.string.case_study_feature_toggles_toggle_1), onValueChanged = { viewModel.updateItems() }),
+        SwitchModule(id = TOGGLE_2_ID, text = getString(R.string.case_study_feature_toggles_toggle_2), onValueChanged = { viewModel.updateItems() }),
         LabelModule(title = getString(R.string.case_study_feature_toggles_check_boxes)),
-        CheckBoxModule(text = getString(R.string.case_study_feature_toggles_toggle_3), onValueChanged = {}),
-        CheckBoxModule(text = getString(R.string.case_study_feature_toggles_toggle_4), onValueChanged = {}),
+        CheckBoxModule(id = TOGGLE_3_ID, text = getString(R.string.case_study_feature_toggles_toggle_3), onValueChanged = { viewModel.updateItems() }),
+        CheckBoxModule(id = TOGGLE_4_ID, text = getString(R.string.case_study_feature_toggles_toggle_4), onValueChanged = { viewModel.updateItems() }),
         TextModule(text = getString(R.string.case_study_feature_toggles_hint_2)),
         MultipleSelectionListModule(
             title = getText(R.string.case_study_feature_toggles_check_box_group),
@@ -39,7 +39,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             ),
             isExpandedInitially = true,
             initiallySelectedItemIds = emptySet(),
-            onSelectionChanged = {}
+            onSelectionChanged = { viewModel.updateItems() }
         ),
         TextModule(text = getString(R.string.case_study_feature_toggles_hint_3)),
         SingleSelectionListModule(
@@ -51,11 +51,16 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             ),
             isExpandedInitially = true,
             initiallySelectedItemId = getString(R.string.case_study_feature_toggles_radio_button_1),
-            onSelectionChanged = {}
+            onSelectionChanged = { viewModel.updateItems() }
         )
     )
 
     companion object {
+        const val TOGGLE_1_ID = "toggle1"
+        const val TOGGLE_2_ID = "toggle2"
+        const val TOGGLE_3_ID = "toggle3"
+        const val TOGGLE_4_ID = "toggle4"
+
         fun newInstance() = FeatureTogglesFragment()
     }
 }

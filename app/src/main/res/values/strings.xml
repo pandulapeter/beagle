@@ -55,7 +55,7 @@
     <!-- Case studies / Basic setup -->
     <string name="case_study_basic_setup_title">Basic setup</string>
     <string name="case_study_basic_setup_description">Built-in modules that can be added with almost no configuration and are useful for most projects.</string>
-    <string name="case_study_basic_setup_text_1">The current module configuration is initialized using the following code snippet:</string>
+    <string name="case_study_basic_setup_text_1">Open the debug menu to check out its features (except for the "Force crash" button, it works, no need to test it). The current module configuration is initialized using the following code snippet:</string>
     <string name="case_study_basic_setup_text_2">Let\'s see what each individual module does.</string>
     <string name="case_study_basic_setup_text_3"><b>Header</b>\n\nAll this module does is apply a specific formatting to three pieces of text. The variables for this configuration are defined the following way:</string>
     <string name="case_study_basic_setup_text_4">The last line uses a custom build config field:</string>
@@ -64,25 +64,25 @@
     <string name="case_study_basic_setup_text_7"><b>AnimationDurationSwitch</b>\n\nA frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
     <string name="case_study_basic_setup_text_8"><b>DeviceInfo</b>\n\nDisplays important information about the device such as the Android SDK version or the screen resolution that can be helpful in identifying potential device-specific issues.</string>
 
-    <!-- Case studies / Authentication -->
-    <string name="case_study_authentication_title">Authentication</string>
-    <string name="case_study_authentication_description">Simplify the QA process by presenting a list of test accounts and automatically filling in the necessary login information.</string>
-    <string name="case_study_authentication_text_1">Manually typing in the same credentials multiple times a day can be a huge waste of time.</string>
-    <string name="case_study_authentication_email">Email address</string>
-    <string name="case_study_authentication_password">Password</string>
-    <string name="case_study_authentication_sign_in_button">Sign in</string>
-    <string name="case_study_authentication_signing_in">Signing in!</string>
-    <string name="case_study_authentication_text_2">To define a module that helps in this situation, first we need to create a representation of a test account:</string>
-    <string name="case_study_authentication_text_3">Extending <b>BeagleListItemContract</b> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\nThe next step is creating the module:</string>
-    <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\nAnother idea to save time is to automatically display the debug menu when the screen is opened, simply by calling:</string>
-    <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
-    <string name="case_study_authentication_show_automatically_switch">Show automatically</string>
-    <string name="case_study_authentication_test_accounts">Test accounts</string>
-
     <!-- Case studies / Feature toggles -->
     <string name="case_study_feature_toggles_title">Feature toggles</string>
-    <string name="case_study_feature_toggles_description">Test different implementations without creating new builds. Persist these feature flags across app launches with a single extra line of code!</string>
-    <string name="case_study_feature_toggles_text_1">Coming soon…</string>
+    <string name="case_study_feature_toggles_description">Test different implementations without creating new builds, and persist these feature flags across app launches with a single extra line of code!</string>
+    <string name="case_study_feature_toggles_text_1">Turning some flags on or off or changing some specific part of the configuration at runtime is one of the most important use cases for a debug menu. This example showcases four ways Beagle can help you achieve this!</string>
+    <string name="case_study_feature_toggles_current_state"><b>Current state:</b></string>
+    <string name="case_study_feature_toggles_state_toggle_1_on">• Toggle 1: <b>ON</b></string>
+    <string name="case_study_feature_toggles_state_toggle_1_off">• Toggle 1: <b>OFF</b></string>
+    <string name="case_study_feature_toggles_state_toggle_2_on">• Toggle 2: <b>ON</b></string>
+    <string name="case_study_feature_toggles_state_toggle_2_off">• Toggle 2: <b>OFF</b></string>
+    <string name="case_study_feature_toggles_state_toggle_3_on">• Toggle 3: <b>ON</b></string>
+    <string name="case_study_feature_toggles_state_toggle_3_off">• Toggle 3: <b>OFF</b></string>
+    <string name="case_study_feature_toggles_state_toggle_4_on">• Toggle 4: <b>ON</b></string>
+    <string name="case_study_feature_toggles_state_toggle_4_off">• Toggle 4: <b>OFF</b></string>
+    <string name="case_study_feature_toggles_state_selected_check_box_options">• Selected check box options: <b>TODO</b></string>
+    <string name="case_study_feature_toggles_state_selected_radio_button_option">• Selected radio button option: <b>TODO</b></string>
+    <string name="case_study_feature_toggles_switch_description"><b>Switch</b>\n\nDescription coming soon…</string>
+    <string name="case_study_feature_toggles_check_box_description"><b>CheckBox</b>\n\nnDescription coming soon…</string>
+    <string name="case_study_feature_toggles_multiple_selection_list_description"><b>MultipleSelectionList</b>\n\nnDescription coming soon…</string>
+    <string name="case_study_feature_toggles_single_selection_list_description"><b>SingleSelectionList</b>\n\nnDescription coming soon…</string>
     <string name="case_study_feature_toggles_hint_1">For simple on-off flags two UI representations are available:</string>
     <string name="case_study_feature_toggles_switches">Switches</string>
     <string name="case_study_feature_toggles_toggle_1">Toggle 1</string>
@@ -100,6 +100,21 @@
     <string name="case_study_feature_toggles_radio_button_1">Option 1</string>
     <string name="case_study_feature_toggles_radio_button_2">Option 2</string>
     <string name="case_study_feature_toggles_radio_button_3">Option 3</string>
+
+    <!-- Case studies / Authentication -->
+    <string name="case_study_authentication_title">Authentication</string>
+    <string name="case_study_authentication_description">Simplify the QA process by presenting a list of test accounts and automatically filling in the necessary login information.</string>
+    <string name="case_study_authentication_text_1">Manually typing in the same credentials multiple times a day can be a huge waste of time.</string>
+    <string name="case_study_authentication_email">Email address</string>
+    <string name="case_study_authentication_password">Password</string>
+    <string name="case_study_authentication_sign_in_button">Sign in</string>
+    <string name="case_study_authentication_signing_in">Signing in!</string>
+    <string name="case_study_authentication_text_2">To define a module that helps in this situation, first we need to create a representation of a test account:</string>
+    <string name="case_study_authentication_text_3">Extending <b>BeagleListItemContract</b> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\nThe next step is creating the module:</string>
+    <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\nAnother idea to save time is to automatically display the debug menu when the screen is opened, simply by calling:</string>
+    <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
+    <string name="case_study_authentication_show_automatically_switch">Show automatically</string>
+    <string name="case_study_authentication_test_accounts">Test accounts</string>
 
     <!-- Case studies / Static data -->
     <string name="case_study_static_data_title">Static data</string>

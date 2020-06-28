@@ -14,13 +14,13 @@ enum class CaseStudy(
         title = R.string.case_study_basic_setup_title,
         description = R.string.case_study_basic_setup_description
     ),
-    AUTHENTICATION(
-        title = R.string.case_study_authentication_title,
-        description = R.string.case_study_authentication_description
-    ),
     FEATURE_TOGGLES(
         title = R.string.case_study_feature_toggles_title,
         description = R.string.case_study_feature_toggles_description
+    ),
+    AUTHENTICATION(
+        title = R.string.case_study_authentication_title,
+        description = R.string.case_study_authentication_description
     ),
     STATIC_DATA(
         title = R.string.case_study_static_data_title,
