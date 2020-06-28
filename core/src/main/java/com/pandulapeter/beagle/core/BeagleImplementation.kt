@@ -99,7 +99,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun clearVisibilityListeners() = visibilityListenerManager.clearListeners()
 
-    override fun log(tag: String?, message: String, payload: String?) {
+    override fun log(message: String, tag: String?, payload: String?) {
         logManager.log(tag, message, payload)
         logListenerManager.notifyOverlayListenersOnLogEntry(tag, message, payload)
         if (listManager.contains<LogListModule>()) {

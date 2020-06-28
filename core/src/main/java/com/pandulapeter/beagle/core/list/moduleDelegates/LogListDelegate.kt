@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.modules.LogListModule
 internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
 
     override fun MutableList<Cell<*>>.addItems(module: LogListModule) {
-        addAll(BeagleCore.implementation.getLogEntries(module.tag).map { entry ->
+        addAll(BeagleCore.implementation.getLogEntries(module.tag).take(module.maxItemCount).map { entry ->
             TextCell(
                 id = "${module.id}_${entry.id}",
                 text = entry.message,

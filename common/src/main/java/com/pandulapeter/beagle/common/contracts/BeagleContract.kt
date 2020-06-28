@@ -209,11 +209,11 @@ interface BeagleContract {
     /**
      * Adds a new log handled by instances of LogListModule and notifies the registered LogListeners.
      *
-     * @param tag - Optional tag that can be used to create filtered LogListModule instances, null by default.
      * @param message - The message that will be displayed.
+     * @param tag - Optional tag that can be used to create filtered LogListModule instances, null by default.
      * @param payload - Extra message that will only be displayed when the user selects the log entry. Optional, null by default.
      */
-    fun log(tag: String? = null, message: String, payload: String? = null) = Unit
+    fun log(message: String, tag: String? = null, payload: String? = null) = Unit
 
     /**
      * Call this function to trigger recreating every cell model for every module.

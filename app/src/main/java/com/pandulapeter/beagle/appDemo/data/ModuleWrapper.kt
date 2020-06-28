@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.appDemo.data
 
 import androidx.annotation.StringRes
+import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
@@ -14,12 +15,14 @@ import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
+import java.util.UUID
 
 sealed class ModuleWrapper(
     @StringRes val titleResourceId: Int,
@@ -99,6 +102,21 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_label_description,
         module = LabelModule(title = "Label"),
         codeSnippet = "LabelModule(title = \"Label\")"
+    )
+
+    class LogList : ModuleWrapper(
+        titleResourceId = R.string.add_module_log_list,
+        descriptionResourceId = R.string.add_module_log_list_description,
+        module = UUID.randomUUID().toString().let { tag ->
+            LogListModule(
+                tag = tag
+            ).also {
+                Beagle.log(message = "Log message 3", tag = tag)
+                Beagle.log(message = "Log message 2", tag = tag)
+                Beagle.log(message = "Log message 1", tag = tag)
+            }
+        },
+        codeSnippet = "LogListModule(tag = …)"
     )
 
     class LongText : ModuleWrapper(

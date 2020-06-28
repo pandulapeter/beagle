@@ -129,6 +129,8 @@
     <string name="add_module_key_value_list_description">Displays a list of key-value pairs that can be collapsed into a header.</string>
     <string name="add_module_label">Label</string>
     <string name="add_module_label_description">Displays a section header label.</string>
+    <string name="add_module_log_list">LogList</string>
+    <string name="add_module_log_list_description">Displays an expandable list of log messages. An example use case could be logging analytics events</string>
     <string name="add_module_long_text">LongText</string>
     <string name="add_module_long_text_description">Displays a longer piece of text that can be collapsed into a title.</string>
     <string name="add_module_multiple_selection_list">MultipleSelectionList</string>
