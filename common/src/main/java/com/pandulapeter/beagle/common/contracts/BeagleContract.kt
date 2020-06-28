@@ -207,7 +207,7 @@ interface BeagleContract {
     val currentActivity: FragmentActivity? get() = null
 
     /**
-     * Adds a new log entry to the LogListModule and notifies the registered LogListeners.
+     * Adds a new log handled by instances of LogListModule and notifies the registered LogListeners.
      *
      * @param tag - Optional tag that can be used to create filtered LogListModule instances, null by default.
      * @param message - The message that will be displayed.

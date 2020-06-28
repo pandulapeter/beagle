@@ -21,6 +21,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.HeaderDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.KeyValueListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.LogListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.LongTextDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.MultipleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.PaddingDelegate
@@ -38,6 +39,7 @@ import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.PaddingModule
@@ -67,6 +69,7 @@ internal class ListManager {
         ForceCrashButtonModule::class to ForceCrashButtonDelegate(),
         HeaderModule::class to HeaderDelegate(),
         LabelModule::class to LabelDelegate(),
+        LogListModule::class to LogListDelegate(),
         LongTextModule::class to LongTextDelegate(),
         ItemListModule::class to ItemListDelegate<BeagleListItemContract>(),
         KeyValueListModule::class to KeyValueListDelegate(),
@@ -105,6 +108,8 @@ internal class ListManager {
     }
 
     fun contains(id: String) = modules.any { it.id == id }
+
+    inline fun <reified M : Module<M>> contains() = modules.filterIsInstance<M>().isNotEmpty()
 
     //TODO: This might cause concurrency issues. Consider making it a suspend function.
     @Suppress("UNCHECKED_CAST")
