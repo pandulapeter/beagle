@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
-import com.pandulapeter.beagle.common.configuration.Positioning
+import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
@@ -85,10 +85,10 @@ interface BeagleContract {
      * Use this function to add new modules to the debug menu without removing the current ones. Modules with duplicated ID-s will get replaced.
      *
      * @param modules - The new modules to be added.
-     * @param positioning - The positioning of the new trick. Optional, [Positioning.Bottom] by default.
+     * @param placement - The positioning of the new trick. Optional, [Placement.Bottom] by default.
      * @param lifecycleOwner - The [LifecycleOwner] which should manage for how long the module should remain added. Null if the module should not be removed automatically. Null by default.
      */
-    fun add(vararg modules: Module<*>, positioning: Positioning = Positioning.Bottom, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun add(vararg modules: Module<*>, placement: Placement = Placement.Bottom, lifecycleOwner: LifecycleOwner? = null) = Unit
 
     /**
      * Remove one or more modules with the specified ID-s from the debug menu.

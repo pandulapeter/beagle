@@ -120,7 +120,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                 CodeSnippetViewHolder.UiModel(
                     "Beagle.add(\n" +
                             "    module1, module2, …,\n" +
-                            "    positioning =  …, // Optional\n" +
+                            "    placement =  …, // Optional\n" +
                             "    lifecycleOwner =  … // Optional\n" +
                             ")"
                 )

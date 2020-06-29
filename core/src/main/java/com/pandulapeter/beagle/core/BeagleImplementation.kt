@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
-import com.pandulapeter.beagle.common.configuration.Positioning
+import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
@@ -71,7 +71,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun set(vararg modules: Module<*>) = listManager.setModules(modules.toList())
 
-    override fun add(vararg modules: Module<*>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) = listManager.addModules(modules.toList(), positioning, lifecycleOwner)
+    override fun add(vararg modules: Module<*>, placement: Placement, lifecycleOwner: LifecycleOwner?) = listManager.addModules(modules.toList(), placement, lifecycleOwner)
 
     override fun remove(vararg ids: String) = listManager.removeModules(ids.toList())
 

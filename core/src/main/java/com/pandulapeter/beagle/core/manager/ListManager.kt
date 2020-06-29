@@ -6,7 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.common.configuration.Positioning
+import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.CellAdapter
@@ -95,9 +95,9 @@ internal class ListManager {
         job = GlobalScope.launch { setModulesInternal(newModules) }
     }
 
-    fun addModules(newModules: List<Module<*>>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
+    fun addModules(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?) {
         job?.cancel()
-        job = GlobalScope.launch { addModulesInternal(newModules, positioning, lifecycleOwner) }
+        job = GlobalScope.launch { addModulesInternal(newModules, placement, lifecycleOwner) }
     }
 
     fun removeModules(ids: List<String>) {
@@ -127,13 +127,13 @@ internal class ListManager {
     }
 
     @Suppress("unused")
-    private suspend fun addModulesInternal(newModules: List<Module<*>>, positioning: Positioning, lifecycleOwner: LifecycleOwner?) =
+    private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?) =
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
 
             @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
             fun onCreate() {
                 job?.cancel()
-                job = GlobalScope.launch { addModulesInternal(newModules, positioning) }
+                job = GlobalScope.launch { addModulesInternal(newModules, placement) }
             }
 
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
@@ -142,9 +142,9 @@ internal class ListManager {
                 job = GlobalScope.launch { removeModules(newModules.map { it.id }) }
                 lifecycleOwner.lifecycle.removeObserver(this)
             }
-        }) ?: addModulesInternal(newModules, positioning)
+        }) ?: addModulesInternal(newModules, placement)
 
-    private suspend fun addModulesInternal(newModules: List<Module<*>>, positioning: Positioning) = withContext(moduleManagerContext) {
+    private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement) = withContext(moduleManagerContext) {
         modules.apply {
             var newIndex = 0
             newModules.forEach { module ->
@@ -153,11 +153,11 @@ internal class ListManager {
                         removeAt(currentIndex)
                         add(currentIndex, module)
                     } else {
-                        when (positioning) {
-                            Positioning.Bottom -> add(module)
-                            Positioning.Top -> add(newIndex++, module)
-                            is Positioning.Below -> {
-                                indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                        when (placement) {
+                            Placement.Bottom -> add(module)
+                            Placement.Top -> add(newIndex++, module)
+                            is Placement.Below -> {
+                                indexOfFirst { it.id == placement.id }.also { referencePosition ->
                                     if (referencePosition == -1) {
                                         add(module)
                                     } else {
@@ -165,8 +165,8 @@ internal class ListManager {
                                     }
                                 }
                             }
-                            is Positioning.Above -> {
-                                indexOfFirst { it.id == positioning.id }.also { referencePosition ->
+                            is Placement.Above -> {
+                                indexOfFirst { it.id == placement.id }.also { referencePosition ->
                                     if (referencePosition == -1) {
                                         add(newIndex++, module)
                                     } else {
