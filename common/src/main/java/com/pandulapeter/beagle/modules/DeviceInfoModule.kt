@@ -19,7 +19,6 @@ data class DeviceInfoModule(
 ) : ExpandableModule<DeviceInfoModule> {
 
     override val id: String = ID
-    override val canExpand = true
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 

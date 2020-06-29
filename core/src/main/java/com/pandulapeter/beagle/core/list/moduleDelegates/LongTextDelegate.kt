@@ -7,6 +7,8 @@ import com.pandulapeter.beagle.modules.LongTextModule
 
 internal class LongTextDelegate : ExpandableModuleDelegate<LongTextModule> {
 
+    override fun canExpand(module: LongTextModule) = module.text.isNotBlank()
+
     override fun MutableList<Cell<*>>.addItems(module: LongTextModule) {
         add(
             TextCell(

@@ -10,6 +10,8 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule
 
 internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
 
+    override fun canExpand(module: DeviceInfoModule) = true
+
     override fun MutableList<Cell<*>>.addItems(module: DeviceInfoModule) {
         add(
             KeyValueCell(

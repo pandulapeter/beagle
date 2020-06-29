@@ -9,6 +9,8 @@ import com.pandulapeter.beagle.modules.SingleSelectionListModule
 
 internal class SingleSelectionListDelegate<T : BeagleListItemContract> : ExpandableModuleDelegate<SingleSelectionListModule<T>>, PersistableModuleDelegate.String<SingleSelectionListModule<T>>() {
 
+    override fun canExpand(module: SingleSelectionListModule<T>) = module.items.isNotEmpty()
+
     override fun MutableList<Cell<*>>.addItems(module: SingleSelectionListModule<T>) {
         addAll(module.items.map { item ->
             RadioButtonCell(

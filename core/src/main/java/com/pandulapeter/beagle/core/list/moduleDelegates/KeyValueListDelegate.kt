@@ -7,6 +7,8 @@ import com.pandulapeter.beagle.modules.KeyValueListModule
 
 internal class KeyValueListDelegate : ExpandableModuleDelegate<KeyValueListModule> {
 
+    override fun canExpand(module: KeyValueListModule) = module.pairs.isNotEmpty()
+
     override fun MutableList<Cell<*>>.addItems(module: KeyValueListModule) {
         addAll(module.pairs.mapIndexed { index, item ->
             KeyValueCell(

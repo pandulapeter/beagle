@@ -22,7 +22,6 @@ data class LogListModule(
 ) : ExpandableModule<LogListModule> {
 
     override val id = "logList_$tag"
-    override val canExpand = true //TODO
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

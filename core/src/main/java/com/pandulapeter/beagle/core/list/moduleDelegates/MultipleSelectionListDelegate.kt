@@ -10,6 +10,8 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 internal class MultipleSelectionListDelegate<T : BeagleListItemContract> : ExpandableModuleDelegate<MultipleSelectionListModule<T>>,
     PersistableModuleDelegate.StringSet<MultipleSelectionListModule<T>>() {
 
+    override fun canExpand(module: MultipleSelectionListModule<T>) = module.items.isNotEmpty()
+
     override fun MutableList<Cell<*>>.addItems(module: MultipleSelectionListModule<T>) {
         addAll(module.items.map { item ->
             CheckBoxCell(

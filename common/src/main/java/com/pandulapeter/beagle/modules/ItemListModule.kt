@@ -21,7 +21,5 @@ data class ItemListModule<T: BeagleListItemContract>(
     val onItemSelected: ((item: T) -> Unit)? = null
 ) : ExpandableModule<ItemListModule<T>> {
 
-    override val canExpand = items.isNotEmpty()
-
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

@@ -8,11 +8,13 @@ import com.pandulapeter.beagle.modules.LogListModule
 
 internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
 
+    override fun canExpand(module: LogListModule) = BeagleCore.implementation.getLogEntries(module.tag).isNotEmpty()
+
     override fun MutableList<Cell<*>>.addItems(module: LogListModule) {
         addAll(BeagleCore.implementation.getLogEntries(module.tag).take(module.maxItemCount).map { entry ->
             TextCell(
                 id = "${module.id}_${entry.id}",
-                text = entry.message,
+                text = "• ${entry.message}",
                 onItemSelected = if (entry.payload == null) null else null //TODO: Open dialog
             )
         })

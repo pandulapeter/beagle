@@ -8,6 +8,8 @@ import com.pandulapeter.beagle.modules.ItemListModule
 
 internal class ItemListDelegate<T : BeagleListItemContract> : ExpandableModuleDelegate<ItemListModule<T>> {
 
+    override fun canExpand(module: ItemListModule<T>) = module.items.isNotEmpty()
+
     override fun MutableList<Cell<*>>.addItems(module: ItemListModule<T>) {
         addAll(module.items.map { item ->
             TextCell(

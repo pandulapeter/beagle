@@ -20,13 +20,15 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
             id = "header_${module.id}",
             text = module.title,
             isExpanded = module.isExpanded,
-            canExpand = module.canExpand,
+            canExpand = canExpand(module),
             onItemSelected = {
                 module.isExpanded = !module.isExpanded
                 BeagleCore.implementation.refresh()
             }
         )
     )
+
+    fun canExpand(module: M): Boolean
 
     fun MutableList<Cell<*>>.addItems(module: M)
 

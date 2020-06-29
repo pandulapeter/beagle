@@ -18,7 +18,5 @@ data class LongTextModule(
     val text: CharSequence
 ) : ExpandableModule<LongTextModule> {
 
-    override val canExpand = text.isNotBlank()
-
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }
