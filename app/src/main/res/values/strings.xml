@@ -71,10 +71,10 @@
     <string name="case_study_feature_toggles_current_state"><b>Current state:</b>\n• Toggle 1: <b>%1$s</b>\n• Toggle 2: <b>%2$s</b>\n• Toggle 3: <b>%3$s</b>\n• Toggle 4: <b>%4$s</b>\n• Selected check box options: <b>%5$s</b>\n• Selected radio button option: <b>%6$s</b></string>
     <string name="case_study_feature_toggles_state_selected_radio_button_option"> <b>TODO</b></string>
     <string name="case_study_feature_toggles_switch_description"><b>Switch</b>\n\nDescription coming soon…</string>
-    <string name="case_study_feature_toggles_check_box_description"><b>CheckBox</b>\n\nnDescription coming soon…</string>
-    <string name="case_study_feature_toggles_multiple_selection_list_description"><b>MultipleSelectionList</b>\n\nnDescription coming soon…</string>
-    <string name="case_study_feature_toggles_single_selection_list_description"><b>SingleSelectionList</b>\n\nnDescription coming soon…</string>
-    <string name="case_study_feature_toggles_persisting_state"><b>Persisting state</b>\n\nnDescription coming soon…</string>
+    <string name="case_study_feature_toggles_check_box_description"><b>CheckBox</b>\n\nDescription coming soon…</string>
+    <string name="case_study_feature_toggles_multiple_selection_list_description"><b>MultipleSelectionList</b>\n\nDescription coming soon…</string>
+    <string name="case_study_feature_toggles_single_selection_list_description"><b>SingleSelectionList</b>\n\nDescription coming soon…</string>
+    <string name="case_study_feature_toggles_persisting_state"><b>Persisting state</b>\n\nDescription coming soon…</string>
     <string name="case_study_feature_toggles_hint_1">For simple on-off flags two UI representations are available:</string>
     <string name="case_study_feature_toggles_switches">Switches</string>
     <string name="case_study_feature_toggles_toggle_1">Toggle 1</string>
