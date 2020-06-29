@@ -102,7 +102,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun log(message: String, tag: String?, payload: String?) {
         logManager.log(tag, message, payload)
         logListenerManager.notifyOverlayListenersOnLogEntry(tag, message, payload)
-        if (listManager.contains<LogListModule>()) {
+        if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
             refresh()
         }
     }

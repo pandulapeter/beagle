@@ -17,11 +17,15 @@ data class LogListModule(
     override val title: CharSequence = "Logs",
     val tag: String? = null,
     val maxItemCount: Int = 10,
-    val shouldShowTimestamp: Boolean = false, //TODO: Not handled
+    val shouldShowTimestamp: Boolean = false, //TODO: Not handled - maybe use a (Long) -> String? lambda instead
     override val isExpandedInitially: Boolean = false
 ) : ExpandableModule<LogListModule> {
 
-    override val id = "logList_$tag"
+    override val id = formatId(tag)
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
+
+    companion object {
+        fun formatId(tag: String?) = "logList_$tag"
+    }
 }

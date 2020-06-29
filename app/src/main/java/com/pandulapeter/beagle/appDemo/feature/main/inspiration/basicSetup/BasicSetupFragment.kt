@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
+import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import org.koin.android.ext.android.inject
 
 class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicSetupListItem>(R.string.case_study_basic_setup_title) {
@@ -28,6 +29,7 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
         ),
         AppInfoButtonModule(),
         ForceCrashButtonModule(),
+        KeylineOverlaySwitchModule(),
         AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }),
         DeviceInfoModule()
     )

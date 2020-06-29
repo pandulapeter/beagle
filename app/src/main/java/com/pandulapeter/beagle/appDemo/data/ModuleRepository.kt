@@ -13,7 +13,9 @@ class ModuleRepository {
         ModuleWrapper.Header,
         ModuleWrapper.AppInfoButton,
         ModuleWrapper.ForceCrashButton,
+        ModuleWrapper.KeylineOverlaySwitch,
         ModuleWrapper.AnimationDurationSwitch,
+        ModuleWrapper.LogList(),
         ModuleWrapper.DeviceInfo
     )
     val modules: List<ModuleWrapper> get() = _modules

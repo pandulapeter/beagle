@@ -14,6 +14,7 @@ import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
+import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
@@ -244,5 +245,12 @@ sealed class ModuleWrapper(
                 "    title = \"Header title\",\n" +
                 "    subtitle = \"Header subtitle\"\n" +
                 ")"
+    )
+
+    object KeylineOverlaySwitch : ModuleWrapper(
+        titleResourceId = R.string.add_module_keyline_overlay_switch,
+        descriptionResourceId = R.string.add_module_keyline_overlay_switch_description,
+        module = KeylineOverlaySwitchModule(),
+        codeSnippet = "KeylineOverlaySwitchModule()"
     )
 }

@@ -61,8 +61,9 @@
     <string name="case_study_basic_setup_text_4">The last line uses a custom build config field:</string>
     <string name="case_study_basic_setup_text_5"><b>AppInfoButton</b>\n\nA simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
     <string name="case_study_basic_setup_text_6"><b>ForceCrashButton</b>\n\nThis module can be used to easily test the application\'s crash reporting capabilities.</string>
-    <string name="case_study_basic_setup_text_7"><b>AnimationDurationSwitch</b>\n\nA frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
-    <string name="case_study_basic_setup_text_8"><b>DeviceInfo</b>\n\nDisplays important information about the device such as the Android SDK version or the screen resolution that can be helpful in identifying potential device-specific issues.</string>
+    <string name="case_study_basic_setup_text_7"><b>KeylineOverlaySwitchModule</b>\n\nThis switch can be very useful when trying to create pixel-perfect layouts. The dimensions of the overlay grid are configurable, but the default values follow the Material Design specifications for mobile and tablet.</string>
+    <string name="case_study_basic_setup_text_8"><b>AnimationDurationSwitch</b>\n\nA frequent use case for this toggle is debugging animation / transition glitches. Check out how it affects this loading indicator:</string>
+    <string name="case_study_basic_setup_text_9"><b>DeviceInfo</b>\n\nDisplays important information about the device such as the Android SDK version or the screen resolution that can be helpful in identifying potential device-specific issues.</string>
 
     <!-- Case studies / Feature toggles -->
     <string name="case_study_feature_toggles_title">Feature toggles</string>
@@ -186,6 +187,8 @@
     <string name="add_module_force_crash_button_description">Displays a button that throws an exception when pressed - useful for testing crash reporting.</string>
     <string name="add_module_header">Header</string>
     <string name="add_module_header_description">Displays a configurable title, subtitle and text.</string>
+    <string name="add_module_keyline_overlay_switch">KeylineOverlaySwitch</string>
+    <string name="add_module_keyline_overlay_switch_description">Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.</string>
 
     <!-- About -->
     <string name="about_title">About</string>
