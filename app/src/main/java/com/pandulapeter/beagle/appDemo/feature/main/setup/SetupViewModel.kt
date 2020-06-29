@@ -89,7 +89,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                     id = "codeSnippet_gradle",
                     codeSnippet = "dependencies {\n" +
                             "    …\n" +
-                            //"    def beagleVersion = \"2.x.y\"\n" +
+                            "    def beagleVersion = \"2.x.y\" // Check the GitHub repository for the latest version\n" +
                             "    debugImplementation \"com.github.pandulapeter.beagle:ui-${when (selectedUiVariant) {
                                 UiVariant.ACTIVITY -> "activity"
                                 UiVariant.BOTTOM_SHEET -> "bottom-sheet"

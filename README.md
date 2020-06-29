@@ -3,11 +3,7 @@
 
 <img src="metadata/logo.png" width="20%" />
 
-**WARNING! The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use. Even this document contains references to unimplemented features.**
-
-**[Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version.**
-
-**If you're feeling adventurous, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).**
+**WARNING! The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use. [Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version. If you're feeling adventurous, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).**
 
 ## See it in action
 Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:
@@ -89,7 +85,7 @@ At this point you should be aware of two options:
 Check out [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagleExample) for some ideas on what is possible with the built-in modules or for a playground tool which can be used to preview any module configuration and generate the code for it.
 
 ## Documentation
-All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the individual modules, see the relevant class headers, as mentioned before.
+All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
 
 If you're interested in what's under the hood, [this document](https://github.com/pandulapeter/beagle/blob/master/metadata/DOCUMENTATION.md) can be helpful while navigating the source code. 
 
