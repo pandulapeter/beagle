@@ -55,8 +55,8 @@
     <string name="case_study_basic_setup_title">Basic setup</string>
     <string name="case_study_basic_setup_description">Built-in modules that can be added with almost no configuration and are useful for most projects.</string>
     <string name="case_study_basic_setup_text_1">Open the debug menu to check out its features (except for the "Force crash" button, it works, no need to test it). The current module configuration is initialized using the following code snippet:</string>
-    <string name="case_study_basic_setup_text_2">Let\'s see what each individual module does.</string>
-    <string name="case_study_basic_setup_text_3"><b>Header</b>\n\nAll this module does is apply a specific formatting to three pieces of text. The variables for this configuration are defined the following way:</string>
+    <string name="case_study_basic_setup_text_2">All of these modules can be customized by specifying some optional parameters, but for this example the default values are used. Let\'s see what each individual module does.</string>
+    <string name="case_study_basic_setup_text_3"><b>Header</b>\n\nThis module simply applies a specific formatting to three pieces of text. The variables for this configuration are defined the following way:</string>
     <string name="case_study_basic_setup_text_4">The last line uses a custom build config field:</string>
     <string name="case_study_basic_setup_text_5"><b>AppInfoButton</b>\n\nA simple shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
     <string name="case_study_basic_setup_text_6"><b>ForceCrashButton</b>\n\nThis module can be used to easily test the application\'s crash reporting capabilities.</string>
@@ -66,7 +66,7 @@
 
     <!-- Case studies / Feature toggles -->
     <string name="case_study_feature_toggles_title">Feature toggles</string>
-    <string name="case_study_feature_toggles_description">Test different implementations without creating new builds, and persist these feature flags across app launches with a single extra line of code!</string>
+    <string name="case_study_feature_toggles_description">Test different implementations without creating new builds, and persist these feature flags across app launches with a single extra line of code.</string>
     <string name="case_study_feature_toggles_text_1">Turning some flags on or off or changing some specific part of the configuration at runtime is one of the most important use cases for a debug menu. This example showcases four ways Beagle can help you achieve this.</string>
     <string name="case_study_feature_toggles_current_state"><b>Current state:</b>\n• Toggle 1: <b>%1$s</b>\n• Toggle 2: <b>%2$s</b>\n• Toggle 3: <b>%3$s</b>\n• Toggle 4: <b>%4$s</b>\n• Selected check box options: <b>%5$s</b>\n• Selected radio button option: <b>%6$s</b></string>
     <string name="case_study_feature_toggles_state_selected_radio_button_option"> <b>TODO</b></string>
@@ -93,6 +93,10 @@
     <string name="case_study_feature_toggles_radio_button_2">Option 2</string>
     <string name="case_study_feature_toggles_radio_button_3">Option 3</string>
 
+    <!-- Case studies / Static data -->
+    <string name="case_study_static_data_title">Static data</string>
+    <string name="case_study_static_data_description">Ideas for potentially useful information to display.</string>
+
     <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>
     <string name="case_study_authentication_description">Simplify the QA process by presenting a list of test accounts and automatically filling in the necessary login information.</string>
@@ -108,17 +112,13 @@
     <string name="case_study_authentication_show_automatically_switch">Show automatically</string>
     <string name="case_study_authentication_test_accounts">Test accounts</string>
 
-    <!-- Case studies / Static data -->
-    <string name="case_study_static_data_title">Static data</string>
-    <string name="case_study_static_data_description">Ideas for potentially useful information to display.</string>
+    <!-- Case studies / Network request interceptor -->
+    <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>
+    <string name="case_study_network_request_interceptor_description">See the incoming and outgoing REST API calls and their formatted JSON payload to quickly debug potential issues.</string>
 
     <!-- Case studies / Analytics -->
     <string name="case_study_analytics_title">Logging analytics events</string>
     <string name="case_study_analytics_description">Making sure that every required event is tracked from an admin panel can be cumbersome. Why not display the events right in the app, in real time?</string>
-
-    <!-- Case studies / Network request interceptor -->
-    <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>
-    <string name="case_study_network_request_interceptor_description">See the incoming and outgoing REST API calls and their formatted JSON payload to quickly debug potential issues.</string>
 
     <!-- Case studies / Environment switcher -->
     <string name="case_study_environment_switcher_title">Environment switcher</string>
@@ -136,7 +136,7 @@
     <string name="playground_title">Playground</string>
     <string name="playground_description">Use this interactive tool to quickly preview any module configuration and generate the code that can be used to create it. The debug menu will be updated automatically, in real time.\n\n• Drag the items vertically to rearrange them\n•     Swipe the items horizontally to remove them\n• Press the last button to add new items\n</string>
     <string name="playground_add_module">Add a new module</string>
-    <string name="playground_generate_code">A similar configuration could be created with something like this:</string>
+    <string name="playground_generate_code">This configuration could be created with something like this:</string>
 
     <!-- Add module -->
     <string name="add_module_title">Add new module</string>

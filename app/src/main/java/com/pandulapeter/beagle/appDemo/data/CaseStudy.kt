@@ -18,23 +18,23 @@ enum class CaseStudy(
         title = R.string.case_study_feature_toggles_title,
         description = R.string.case_study_feature_toggles_description
     ),
-    AUTHENTICATION(
-        title = R.string.case_study_authentication_title,
-        description = R.string.case_study_authentication_description
-    ),
     STATIC_DATA(
         title = R.string.case_study_static_data_title,
         description = R.string.case_study_static_data_description,
         isReady = false
     ),
-    ANALYTICS(
-        title = R.string.case_study_analytics_title,
-        description = R.string.case_study_analytics_description,
-        isReady = false
+    AUTHENTICATION(
+        title = R.string.case_study_authentication_title,
+        description = R.string.case_study_authentication_description
     ),
     NETWORK_REQUEST_INTERCEPTOR(
         title = R.string.case_study_network_request_interceptor_title,
         description = R.string.case_study_network_request_interceptor_description,
+        isReady = false
+    ),
+    ANALYTICS(
+        title = R.string.case_study_analytics_title,
+        description = R.string.case_study_analytics_description,
         isReady = false
     ),
     ENVIRONMENT_SWITCHER(
