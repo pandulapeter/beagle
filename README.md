@@ -48,7 +48,7 @@ So for example if you prefer the bottom-sheet UI, something like the following n
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.0.0-alpha09"
+    def beagleVersion = "2.0.0-alpha10"
     debugImplementation "com.github.pandulapeter.beagle:ui-bottom-sheet:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }

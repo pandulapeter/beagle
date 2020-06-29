@@ -26,10 +26,10 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Beagle.addUpdateListener(
-            lifecycleOwner = viewLifecycleOwner,
             listener = object : UpdateListener {
                 override fun onContentsChanged() = viewModel.updateItems()
-            }
+            },
+            lifecycleOwner = this
         )
     }
 
