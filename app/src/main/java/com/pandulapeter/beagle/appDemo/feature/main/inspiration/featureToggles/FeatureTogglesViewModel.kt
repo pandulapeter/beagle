@@ -80,6 +80,7 @@ class FeatureTogglesViewModel : ListViewModel<ListItem>() {
             add(CodeSnippetViewHolder.UiModel("MultipleSelectionListModule() //TODO"))
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_single_selection_list_description))
             add(CodeSnippetViewHolder.UiModel("SingleSelectionListModule() //TODO"))
+            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_persisting_state))
         }
     }
 }

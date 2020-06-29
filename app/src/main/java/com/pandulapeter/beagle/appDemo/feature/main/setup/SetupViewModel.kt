@@ -50,13 +50,12 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
             addWelcomeSection()
             addInitializationSection()
             addModuleConfigurationSection()
-            addOtherFeaturesSection()
             addTroubleshootingSection()
         }
     }
 
     private fun MutableList<SetupListItem>.addWelcomeSection() {
-        add(HeaderViewHolder.UiModel(R.string.setup_header_1, selectedSection == Section.WELCOME))
+        add(HeaderViewHolder.UiModel(Section.WELCOME.titleResourceId, selectedSection == Section.WELCOME))
         if (selectedSection == Section.WELCOME) {
             add(TextViewHolder.UiModel(R.string.setup_text_1))
             add(GithubButtonViewHolder.UiModel())
@@ -66,7 +65,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     }
 
     private fun MutableList<SetupListItem>.addInitializationSection() {
-        add(HeaderViewHolder.UiModel(R.string.setup_header_2, selectedSection == Section.INITIALIZATION))
+        add(HeaderViewHolder.UiModel(Section.INITIALIZATION.titleResourceId, selectedSection == Section.INITIALIZATION))
         if (selectedSection == Section.INITIALIZATION) {
             add(TextViewHolder.UiModel(R.string.setup_text_2))
             add(
@@ -111,7 +110,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     }
 
     private fun MutableList<SetupListItem>.addModuleConfigurationSection() {
-        add(HeaderViewHolder.UiModel(R.string.setup_header_3, selectedSection == Section.MODULE_CONFIGURATION))
+        add(HeaderViewHolder.UiModel(Section.MODULE_CONFIGURATION.titleResourceId, selectedSection == Section.MODULE_CONFIGURATION))
         if (selectedSection == Section.MODULE_CONFIGURATION) {
             add(TextViewHolder.UiModel(R.string.setup_text_7))
             add(CodeSnippetViewHolder.UiModel("Beagle.set(module1, module2, …)"))
@@ -134,17 +133,15 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         }
     }
 
-    private fun MutableList<SetupListItem>.addOtherFeaturesSection() {
-        add(HeaderViewHolder.UiModel(R.string.setup_header_4, selectedSection == Section.OTHER_FEATURES))
-        if (selectedSection == Section.OTHER_FEATURES) {
-            add(TextViewHolder.UiModel(R.string.setup_text_12))
-            add(SpaceViewHolder.UiModel())
-        }
-    }
-
     private fun MutableList<SetupListItem>.addTroubleshootingSection() {
-        add(HeaderViewHolder.UiModel(R.string.setup_header_5, selectedSection == Section.TROUBLESHOOTING))
+        add(HeaderViewHolder.UiModel(Section.TROUBLESHOOTING.titleResourceId, selectedSection == Section.TROUBLESHOOTING))
         if (selectedSection == Section.TROUBLESHOOTING) {
+            add(TextViewHolder.UiModel(R.string.setup_text_12))
+            add(CodeSnippetViewHolder.UiModel("override fun onBackPressed() {\n" +
+                    "    if (!Beagle.hide()) {\n" +
+                    "        super.onBackPressed()\n" +
+                    "    }\n" +
+                    "}"))
             add(TextViewHolder.UiModel(R.string.setup_text_13))
             add(SpaceViewHolder.UiModel())
         }
@@ -166,8 +163,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         WELCOME(R.string.setup_header_1),
         INITIALIZATION(R.string.setup_header_2),
         MODULE_CONFIGURATION(R.string.setup_header_3),
-        OTHER_FEATURES(R.string.setup_header_4),
-        TROUBLESHOOTING(R.string.setup_header_5);
+        TROUBLESHOOTING(R.string.setup_header_4);
 
         companion object {
             fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }

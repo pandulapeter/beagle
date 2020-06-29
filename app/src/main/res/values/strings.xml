@@ -28,11 +28,10 @@
     <string name="setup_text_8">This function can be called at any time, from any thread, to replace the current configuration with a new list of modules (provided as variable arguments).\n\nIn case you only want to change some parts of the debug menu without affecting the others, there are functions that give you more granular control over the modules.\n\nFor adding a one or more modules you can use this:</string>
     <string name="setup_text_9">In this function, the optional <b>placement</b> parameter can be used to specify the position of the new modules (first, last, or above / below a module that\'s already part of the menu). Specifying the optional <b>lifecycleOwner</b> will automatically remove the modules when that lifecycle is over which is ideal for elements that are specific to a single screen.\n\nThe following function exists for manually removing one or more modules from the debug menu:</string>
     <string name="setup_text_10">Last but not least, the following function is exposed to get the reference of an already added module instance:</string>
-    <string name="setup_text_11">None of these functions should throw runtime exceptions in case of invalid arguments.</string>
-    <string name="setup_header_4">Other features</string>
-    <string name="setup_text_12">Coming soon…</string>
-    <string name="setup_header_5">Troubleshooting</string>
-    <string name="setup_text_13">Coming soon…</string>
+    <string name="setup_text_11">None of these functions should throw runtime exceptions in case of invalid arguments.\n\nCheck out the rest of this demo application to see what you can achieve with the built-in modules! The <b>Inspiration</b> page contains a list of case studies showcasing situations where Beagle can be useful (with code snippets to show how each specific debug menu is created) while the <b>Playground</b> page provides an interactive tool for previewing any possible combination of modules.</string>
+    <string name="setup_header_4">Troubleshooting</string>
+    <string name="setup_text_12">In case of the drawer UI, if you have overwritten the Activity\'s <b>onBackPressed()</b> method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity\'s <b>onBackPressed()</b> you should check that <b>Beagle.hide()</b> returns false before doing any other checks or calling the super implementation:</string>
+    <string name="setup_text_13">If you can\'t seem to trigger Beagle in your app, make sure you\'re not adding any Fragments to the container with the ID <b>android.R.id.content</b> (if that\'s the case, introducing another FrameLayout into the View hierarchy for debug builds is a simple fix to the problem).\n\nIf you find any undocumented problems, feel free to reach out and open an issue on GitHub - I\'ll be quick to respond.</string>
     <string name="setup_debug_menu_text_1"><b>This is the debug menu configured by you</b>\n\nIt should contain useful information, like the version number of your app, the build date, or information about the device it\'s running on.\n\nYou can use it to track network requests, show analytics events, display custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing process.\n\nIt can also contain various interactive features, such as switches, radio groups, buttons, sliders, etc. that you can use to set up a \"God mode\" during development.</string>
     <string name="setup_debug_menu_label">For example:</string>
     <string name="setup_debug_menu_switch">Here is a switch. It does nothing.</string>
@@ -68,7 +67,7 @@
     <!-- Case studies / Feature toggles -->
     <string name="case_study_feature_toggles_title">Feature toggles</string>
     <string name="case_study_feature_toggles_description">Test different implementations without creating new builds, and persist these feature flags across app launches with a single extra line of code!</string>
-    <string name="case_study_feature_toggles_text_1">Turning some flags on or off or changing some specific part of the configuration at runtime is one of the most important use cases for a debug menu. This example showcases four ways Beagle can help you achieve this!</string>
+    <string name="case_study_feature_toggles_text_1">Turning some flags on or off or changing some specific part of the configuration at runtime is one of the most important use cases for a debug menu. This example showcases four ways Beagle can help you achieve this.</string>
     <string name="case_study_feature_toggles_current_state"><b>Current state:</b></string>
     <string name="case_study_feature_toggles_state_toggle_1_on">• Toggle 1: <b>ON</b></string>
     <string name="case_study_feature_toggles_state_toggle_1_off">• Toggle 1: <b>OFF</b></string>
@@ -84,6 +83,7 @@
     <string name="case_study_feature_toggles_check_box_description"><b>CheckBox</b>\n\nnDescription coming soon…</string>
     <string name="case_study_feature_toggles_multiple_selection_list_description"><b>MultipleSelectionList</b>\n\nnDescription coming soon…</string>
     <string name="case_study_feature_toggles_single_selection_list_description"><b>SingleSelectionList</b>\n\nnDescription coming soon…</string>
+    <string name="case_study_feature_toggles_persisting_state"><b>Persisting state</b>\n\nnDescription coming soon…</string>
     <string name="case_study_feature_toggles_hint_1">For simple on-off flags two UI representations are available:</string>
     <string name="case_study_feature_toggles_switches">Switches</string>
     <string name="case_study_feature_toggles_toggle_1">Toggle 1</string>
