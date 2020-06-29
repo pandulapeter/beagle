@@ -61,6 +61,7 @@ internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<
         }
     }
 
+    //TODO: Does not work well for RTL layouts.
     private fun Canvas.drawGridIfNeeded(module: KeylineOverlaySwitchModule) {
         if (module.getCurrentValue(BeagleCore.implementation) == true) {
             for (x in 0..width step keylineGrid) {

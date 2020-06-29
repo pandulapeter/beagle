@@ -1,6 +1,8 @@
 package com.pandulapeter.beagle.modules
 
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 /**
  * Displays an expandable list of log messages. An example use case could be logging analytics events.
@@ -10,14 +12,14 @@ import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
  * @param title - The title of the module. "Logs" by default.
  * @param tag - The tag for which the logs should be filtered, or null for no filtering. Null by default.
  * @param maxItemCount - The maximum number of messages that will appear when expanded. 10 by default.
- * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
+ * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with "HH:mm:ss" by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
 data class LogListModule(
     override val title: CharSequence = "Logs",
     val tag: String? = null,
     val maxItemCount: Int = 10,
-    val shouldShowTimestamp: Boolean = false, //TODO: Not handled - maybe use a (Long) -> String? lambda instead
+    val timestampFormatter: ((Long) -> String)? = { defaultFormatter.format(it) },
     override val isExpandedInitially: Boolean = false
 ) : ExpandableModule<LogListModule> {
 
@@ -26,6 +28,8 @@ data class LogListModule(
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 
     companion object {
+        private val defaultFormatter = SimpleDateFormat("HH:mm:ss", Locale.ENGLISH)
+
         fun formatId(tag: String?) = "logList_$tag"
     }
 }

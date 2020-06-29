@@ -25,7 +25,7 @@ class BasicSetupViewModel : ListViewModel<BasicSetupListItem>() {
                 "Beagle.set(\n" +
                         "    HeaderModule(\n" +
                         "        title = headerTitle,\n" +
-                        "        subtitle = subtitle,\n" +
+                        "        subtitle = headerSubtitle,\n" +
                         "        text = headerText\n" +
                         "    ),\n" +
                         "    AppInfoButtonModule(),\n" +
