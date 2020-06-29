@@ -1,12 +1,16 @@
 package com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles
 
+import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.viewModelScope
+import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.BeagleListItemContractImplementation
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
@@ -18,6 +22,16 @@ import org.koin.android.ext.android.inject
 class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel, FeatureTogglesListItem>(R.string.case_study_feature_toggles_title) {
 
     override val viewModel by inject<FeatureTogglesViewModel>()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Beagle.addUpdateListener(
+            lifecycleOwner = viewLifecycleOwner,
+            listener = object : UpdateListener {
+                override fun onContentsChanged() = viewModel.updateItems()
+            }
+        )
+    }
 
     override fun createAdapter() = FeatureTogglesAdapter(viewModel.viewModelScope)
 

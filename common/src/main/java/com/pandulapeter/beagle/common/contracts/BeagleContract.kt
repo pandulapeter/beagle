@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
+import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import kotlin.reflect.KClass
 
@@ -170,6 +171,27 @@ interface BeagleContract {
      * Removes all [OverlayListener] implementations, from the list of listeners.
      */
     fun clearOverlayListeners() = Unit
+
+    /**
+     * Adds a new [UpdateListener] implementation which can be used to get notified about change events to the contents of the debug menu.
+     * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is created / destroyed.
+     *
+     * @param listener - The [UpdateListener] implementation to add.
+     * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
+     */
+    fun addUpdateListener(listener: UpdateListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+
+    /**
+     * Removes the [UpdateListener] implementation, if it was added to the list of listeners.
+     *
+     * @param listener - The [UpdateListener] implementation to remove.
+     */
+    fun removeUpdateListener(listener: UpdateListener) = Unit
+
+    /**
+     * Removes all [UpdateListener] implementations, from the list of listeners.
+     */
+    fun clearUpdateListeners() = Unit
 
     /**
      * Adds a new [VisibilityListener] implementation to listen to the debug menu visibility changes.

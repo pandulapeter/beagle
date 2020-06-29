@@ -90,24 +90,24 @@ internal class ListManager {
         layoutManager = LinearLayoutManager(recyclerView.context)
     }
 
-    fun setModules(newModules: List<Module<*>>) {
+    fun setModules(newModules: List<Module<*>>, onContentsChanged: () -> Unit) {
         job?.cancel()
-        job = GlobalScope.launch { setModulesInternal(newModules) }
+        job = GlobalScope.launch { setModulesInternal(newModules, onContentsChanged) }
     }
 
-    fun addModules(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?) {
+    fun addModules(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?, onContentsChanged: () -> Unit) {
         job?.cancel()
-        job = GlobalScope.launch { addModulesInternal(newModules, placement, lifecycleOwner) }
+        job = GlobalScope.launch { addModulesInternal(newModules, placement, lifecycleOwner, onContentsChanged) }
     }
 
-    fun removeModules(ids: List<String>) {
+    fun removeModules(ids: List<String>, onContentsChanged: () -> Unit) {
         job?.cancel()
-        job = GlobalScope.launch { removeModulesInternal(ids) }
+        job = GlobalScope.launch { removeModulesInternal(ids, onContentsChanged) }
     }
 
-    fun refreshCells() {
+    fun refreshCells(onContentsChanged: () -> Unit) {
         job?.cancel()
-        job = GlobalScope.launch { refreshCellsInternal() }
+        job = GlobalScope.launch { refreshCellsInternal(onContentsChanged) }
     }
 
     fun contains(id: String) = modules.any { it.id == id }
@@ -120,31 +120,31 @@ internal class ListManager {
     @Suppress("UNCHECKED_CAST")
     fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = moduleDelegates[type] as Module.Delegate<M>
 
-    private suspend fun setModulesInternal(newModules: List<Module<*>>) = withContext(moduleManagerContext) {
+    private suspend fun setModulesInternal(newModules: List<Module<*>>, onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
         modules.clear()
         modules.addAll(newModules.distinctBy { it.id })
-        refreshCellsInternal()
+        refreshCellsInternal(onContentsChanged)
     }
 
     @Suppress("unused")
-    private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?) =
+    private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?, onContentsChanged: () -> Unit) =
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
 
             @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
             fun onCreate() {
                 job?.cancel()
-                job = GlobalScope.launch { addModulesInternal(newModules, placement) }
+                job = GlobalScope.launch { addModulesInternal(newModules, placement, onContentsChanged) }
             }
 
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun onDestroy() {
                 job?.cancel()
-                job = GlobalScope.launch { removeModules(newModules.map { it.id }) }
+                job = GlobalScope.launch { removeModules(newModules.map { it.id }, onContentsChanged) }
                 lifecycleOwner.lifecycle.removeObserver(this)
             }
-        }) ?: addModulesInternal(newModules, placement)
+        }) ?: addModulesInternal(newModules, placement, onContentsChanged)
 
-    private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement) = withContext(moduleManagerContext) {
+    private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement, onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
         modules.apply {
             var newIndex = 0
             newModules.forEach { module ->
@@ -179,20 +179,20 @@ internal class ListManager {
                 }
             }
         }
-        refreshCellsInternal()
+        refreshCellsInternal(onContentsChanged)
     }
 
-    private suspend fun removeModulesInternal(ids: List<String>) = withContext(moduleManagerContext) {
+    private suspend fun removeModulesInternal(ids: List<String>, onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
         modules.removeAll { ids.contains(it.id) }
-        refreshCellsInternal()
+        refreshCellsInternal(onContentsChanged)
     }
 
     //TODO: Throw exception if no handler is found
-    private suspend fun refreshCellsInternal() = withContext(moduleManagerContext) {
+    private suspend fun refreshCellsInternal(onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
         cellAdapter.submitList(modules.flatMap { module ->
             (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
                 moduleDelegates[module::class] = it
             })).forceCreateCells(module)
-        })
+        }, onContentsChanged)
     }
 }
