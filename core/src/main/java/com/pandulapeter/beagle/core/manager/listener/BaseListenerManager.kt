@@ -9,6 +9,13 @@ import androidx.lifecycle.OnLifecycleEvent
 internal abstract class BaseListenerManager<T> {
 
     private val listeners = mutableListOf<T>()
+    private val internalListeners = mutableListOf<T>()
+
+    fun addInternalListener(listener: T) {
+        if (!internalListeners.contains(listener)) {
+            internalListeners.add(listener)
+        }
+    }
 
     @Suppress("unused")
     fun addListener(listener: T, lifecycleOwner: LifecycleOwner?) {
@@ -31,7 +38,10 @@ internal abstract class BaseListenerManager<T> {
 
     fun clearListeners() = listeners.clear()
 
-    protected fun notifyListeners(notification: (T) -> Unit) = listeners.forEach(notification)
+    protected fun notifyListeners(notification: (T) -> Unit) {
+        internalListeners.forEach(notification)
+        listeners.forEach(notification)
+    }
 
     @CallSuper
     protected open fun addListener(listener: T) {

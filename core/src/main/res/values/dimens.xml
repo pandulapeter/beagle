@@ -8,4 +8,7 @@
     <dimen name="beagle_item_vertical_margin">@dimen/beagle_content_padding</dimen>
     <dimen name="beagle_divider">1dp</dimen>
     <dimen name="beagle_header_title">20sp</dimen>
+    <dimen name="beagle_default_keyline_grid">8dp</dimen>
+    <dimen name="beagle_default_keyline_primary">16dp</dimen>
+    <dimen name="beagle_default_keyline_secondary">72dp</dimen>
 </resources>

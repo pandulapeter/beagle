@@ -14,7 +14,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
  * @param grid - The distance between the grid lines. 8dp by default.
  * @param keylinePrimary - The distance between the edge of the screen and the primary keyline. 16dp by default (24dp on tablets).
  * @param keylineSecondary - The distance between the edge of the screen and the secondary keyline. 72dp by default (80dp on tablets).
- * @param color - The color to be used when drawing the grid. By default it will be the debug menu's text color.
+ * @param color - The color to be used when drawing the grid. It defaults to the theme's text color.
  * @param initialValue - Whether or not the switch is checked initially. Optional, false by default. If [shouldBePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
  * @param shouldBePersisted - Can be used to enable or disable persisting the value on the local storage. Optional, false by default.
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
