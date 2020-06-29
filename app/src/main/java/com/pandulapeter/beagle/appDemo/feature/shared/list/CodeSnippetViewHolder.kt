@@ -8,6 +8,7 @@ import com.pandulapeter.beagle.appDemo.databinding.ItemCodeSnippetBinding
 import com.pandulapeter.beagle.appDemo.feature.main.about.list.AboutListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.BasicSetupListItem
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
@@ -19,7 +20,7 @@ class CodeSnippetViewHolder private constructor(
     data class UiModel(
         val codeSnippet: String,
         override val id: String = "codeSnippet_$codeSnippet"
-    ) : ListItem, SetupListItem, InspirationListItem, BasicSetupListItem, AuthenticationListItem, PlaygroundListItem, AboutListItem
+    ) : ListItem, SetupListItem, InspirationListItem, BasicSetupListItem, FeatureTogglesListItem, AuthenticationListItem, PlaygroundListItem, AboutListItem
 
     companion object {
         fun create(

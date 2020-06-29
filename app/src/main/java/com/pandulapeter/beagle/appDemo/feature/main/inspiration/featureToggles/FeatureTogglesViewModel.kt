@@ -4,72 +4,38 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
+import com.pandulapeter.beagle.appDemo.data.BeagleListItemContractImplementation
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.CurrentStateViewHolder
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
-import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 import com.pandulapeter.beagle.modules.CheckBoxModule
+import com.pandulapeter.beagle.modules.MultipleSelectionListModule
+import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 
-class FeatureTogglesViewModel : ListViewModel<ListItem>() {
+class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
 
-    private val _items = MutableLiveData<List<ListItem>>()
-    override val items: LiveData<List<ListItem>> = _items
+    private val _items = MutableLiveData<List<FeatureTogglesListItem>>()
+    override val items: LiveData<List<FeatureTogglesListItem>> = _items
 
     init {
         updateItems()
     }
 
     fun updateItems() {
-        _items.value = mutableListOf<ListItem>().apply {
+        _items.value = mutableListOf<FeatureTogglesListItem>().apply {
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_text_1))
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_current_state))
+            //TODO: The values are incorrect the first time (modules are not yet added to Beagle)
             add(
-                TextViewHolder.UiModel(
-                    id = FeatureTogglesFragment.TOGGLE_1_ID,
-                    textResourceId = if (Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_1_ID)?.getCurrentValue(Beagle) == true)
-                        R.string.case_study_feature_toggles_state_toggle_1_on
-                    else
-                        R.string.case_study_feature_toggles_state_toggle_1_off
-                )
-            )
-            add(
-                TextViewHolder.UiModel(
-                    id = FeatureTogglesFragment.TOGGLE_2_ID,
-                    textResourceId = if (Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_2_ID)?.getCurrentValue(Beagle) == true)
-                        R.string.case_study_feature_toggles_state_toggle_2_on
-                    else
-                        R.string.case_study_feature_toggles_state_toggle_2_off
-                )
-            )
-            add(
-                TextViewHolder.UiModel(
-                    id = FeatureTogglesFragment.TOGGLE_3_ID,
-                    textResourceId = if (Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_3_ID)?.getCurrentValue(Beagle) == true)
-                        R.string.case_study_feature_toggles_state_toggle_3_on
-                    else
-                        R.string.case_study_feature_toggles_state_toggle_3_off
-                )
-            )
-            add(
-                TextViewHolder.UiModel(
-                    id = FeatureTogglesFragment.TOGGLE_4_ID,
-                    textResourceId = if (Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_4_ID)?.getCurrentValue(Beagle) == true)
-                        R.string.case_study_feature_toggles_state_toggle_4_on
-                    else
-                        R.string.case_study_feature_toggles_state_toggle_4_off
-                )
-            )
-            add(
-                TextViewHolder.UiModel(
-                    id = "checkBox",
-                    textResourceId = R.string.case_study_feature_toggles_state_selected_check_box_options
-                )
-            )
-            add(
-                TextViewHolder.UiModel(
-                    id = "radioButton",
-                    textResourceId = R.string.case_study_feature_toggles_state_selected_radio_button_option
+                CurrentStateViewHolder.UiModel(
+                    toggle1 = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_1_ID)?.getCurrentValue(Beagle) == true,
+                    toggle2 = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_2_ID)?.getCurrentValue(Beagle) == true,
+                    toggle3 = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_3_ID)?.getCurrentValue(Beagle) == true,
+                    toggle4 = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_4_ID)?.getCurrentValue(Beagle) == true,
+                    multipleSelectionOptions = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)?.getCurrentValue(Beagle)?.toList().orEmpty(),
+                    singleSelectionOption = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)?.getCurrentValue(Beagle)
                 )
             )
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_switch_description))

@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.databinding.ItemTextBinding
 import com.pandulapeter.beagle.appDemo.feature.main.about.list.AboutListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.BasicSetupListItem
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.list.AddModuleListItem
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
@@ -21,7 +22,7 @@ class TextViewHolder private constructor(
     data class UiModel(
         @StringRes val textResourceId: Int,
         override val id: String = "text_$textResourceId"
-    ) : ListItem, SetupListItem, InspirationListItem, BasicSetupListItem, AuthenticationListItem, PlaygroundListItem, AboutListItem, AddModuleListItem
+    ) : ListItem, SetupListItem, InspirationListItem, BasicSetupListItem, FeatureTogglesListItem, AuthenticationListItem, PlaygroundListItem, AboutListItem, AddModuleListItem
 
     companion object {
         fun create(
