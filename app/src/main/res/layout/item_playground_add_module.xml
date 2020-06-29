@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/large_content_padding"
         android:layout_marginLeft="@dimen/large_content_padding"
-        android:layout_marginTop="@dimen/large_content_padding"
+        android:layout_marginTop="@dimen/content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding">
 
@@ -26,7 +26,12 @@
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/large_content_padding"
             android:gravity="center_vertical"
-            android:padding="@dimen/large_content_padding"
+            android:paddingStart="@dimen/large_content_padding"
+            android:paddingLeft="@dimen/large_content_padding"
+            android:paddingTop="@dimen/content_padding"
+            android:paddingEnd="@dimen/large_content_padding"
+            android:paddingRight="@dimen/large_content_padding"
+            android:paddingBottom="@dimen/content_padding"
             android:text="@string/playground_add_module"
             tools:drawableLeft="@drawable/ic_add"
             tools:drawableStart="@drawable/ic_add" />

@@ -15,8 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:drawablePadding="@dimen/large_content_padding"
-        android:padding="@dimen/large_content_padding"
+        android:drawablePadding="@dimen/extra_large_content_padding"
+        android:paddingStart="@dimen/extra_large_content_padding"
+        android:paddingLeft="@dimen/extra_large_content_padding"
+        android:paddingTop="@dimen/large_content_padding"
+        android:paddingEnd="@dimen/large_content_padding"
+        android:paddingRight="@dimen/large_content_padding"
+        android:paddingBottom="@dimen/large_content_padding"
         android:text="@{uiModel.textResourceId}"
         tools:text="Text" />
 
