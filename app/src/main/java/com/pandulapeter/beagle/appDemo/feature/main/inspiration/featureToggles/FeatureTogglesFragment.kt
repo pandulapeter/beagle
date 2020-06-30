@@ -33,7 +33,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
         )
     }
 
-    override fun createAdapter() = FeatureTogglesAdapter(viewModel.viewModelScope)
+    override fun createAdapter() = FeatureTogglesAdapter(viewModel.viewModelScope, ::resetAll)
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         TextModule(text = getString(R.string.case_study_feature_toggles_hint_1)),
@@ -70,6 +70,15 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             onSelectionChanged = { viewModel.updateItems() }
         )
     )
+
+    private fun resetAll() {
+        Beagle.find<SwitchModule>(TOGGLE_1_ID)?.setCurrentValue(Beagle, false)
+        Beagle.find<SwitchModule>(TOGGLE_2_ID)?.setCurrentValue(Beagle, false)
+        Beagle.find<CheckBoxModule>(TOGGLE_3_ID)?.setCurrentValue(Beagle, false)
+        Beagle.find<CheckBoxModule>(TOGGLE_4_ID)?.setCurrentValue(Beagle, false)
+        Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(CHECK_BOX_GROUP_ID)?.setCurrentValue(Beagle, emptySet())
+        Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(RADIO_BUTTON_GROUP_ID)?.setCurrentValue(Beagle, getString(R.string.case_study_feature_toggles_radio_button_1))
+    }
 
     companion object {
         const val TOGGLE_1_ID = "toggle1"

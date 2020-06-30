@@ -11,13 +11,13 @@ import com.pandulapeter.beagle.appDemo.utils.drawable
 
 class GithubButtonViewHolder private constructor(
     binding: ItemSetupGithubButtonBinding,
-    onButtonClicked: () -> Unit
+    onButtonPressed: () -> Unit
 ) : BaseViewHolder<ItemSetupGithubButtonBinding, GithubButtonViewHolder.UiModel>(binding) {
 
     init {
         binding.root.setOnClickListener {
             if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                onButtonClicked()
+                onButtonPressed()
             }
         }
         binding.button.setCompoundDrawablesWithIntrinsicBounds(null, null, binding.button.context.drawable(R.drawable.ic_github), null)
@@ -30,10 +30,10 @@ class GithubButtonViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onButtonClicked: () -> Unit
+            onButtonPressed: () -> Unit
         ) = GithubButtonViewHolder(
             binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_setup_github_button, parent, false),
-            onButtonClicked = onButtonClicked
+            onButtonPressed = onButtonPressed
         )
     }
 }

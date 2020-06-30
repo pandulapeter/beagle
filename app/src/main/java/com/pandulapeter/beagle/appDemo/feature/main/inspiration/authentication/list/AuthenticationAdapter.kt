@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 
 class AuthenticationAdapter(
     scope: CoroutineScope,
-    private val onButtonClicked: () -> Unit
+    private val onButtonPressed: () -> Unit
 ) : BaseAdapter<AuthenticationListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
@@ -20,8 +20,8 @@ class AuthenticationAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
         R.layout.item_authentication_email_input -> EmailInputViewHolder.create(parent)
-        R.layout.item_authentication_password_input -> PasswordInputViewHolder.create(parent, onButtonClicked)
-        R.layout.item_authentication_button -> ButtonViewHolder.create(parent, onButtonClicked)
+        R.layout.item_authentication_password_input -> PasswordInputViewHolder.create(parent, onButtonPressed)
+        R.layout.item_authentication_button -> ButtonViewHolder.create(parent, onButtonPressed)
         else -> super.onCreateViewHolder(parent, viewType)
     }
 
