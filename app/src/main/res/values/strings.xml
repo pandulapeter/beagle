@@ -67,8 +67,16 @@
     <!-- Case studies / Feature toggles -->
     <string name="case_study_feature_toggles_title">Feature toggles</string>
     <string name="case_study_feature_toggles_description">Test different implementations without creating new builds, and persist these feature flags across app launches with a single extra line of code.</string>
-    <string name="case_study_feature_toggles_text_1">Turning some flags on or off or changing some specific part of the configuration at runtime is one of the most important use cases for a debug menu. This example showcases four ways Beagle can help you achieve this.</string>
-    <string name="case_study_feature_toggles_current_state"><b>Current state:</b>\n• Toggle 1: <b>%1$s</b>\n• Toggle 2: <b>%2$s</b>\n• Toggle 3: <b>%3$s</b>\n• Toggle 4: <b>%4$s</b>\n• Selected check box options: <b>%5$s</b>\n• Selected radio button option: <b>%6$s</b></string>
+    <string name="case_study_feature_toggles_text_1">Turning some flags on or off or changing some specific part of the configuration at runtime is one of the most important use cases for a debug menu. This example showcases four ways Beagle can help you achieve this.\n\nSee how the values on the card below are updated in real-time as you modify the flags in the debug menu:</string>
+    <string name="case_study_feature_toggles_current_state_title">Current state\n</string>
+    <string name="case_study_feature_toggles_current_state_on">ON</string>
+    <string name="case_study_feature_toggles_current_state_off">OFF</string>
+    <string name="case_study_feature_toggles_current_state_key_1">"\n• Toggle 1: "</string>
+    <string name="case_study_feature_toggles_current_state_key_2">"\n• Toggle 2: "</string>
+    <string name="case_study_feature_toggles_current_state_key_3">"\n• Toggle 3: "</string>
+    <string name="case_study_feature_toggles_current_state_key_4">"\n• Toggle 4: "</string>
+    <string name="case_study_feature_toggles_current_state_key_5">"\n• Check box group: "</string>
+    <string name="case_study_feature_toggles_current_state_key_6">"\n• Radio button group: "</string>
     <string name="case_study_feature_toggles_state_selected_radio_button_option"> <b>TODO</b></string>
     <string name="case_study_feature_toggles_switch_description"><b>Switch</b>\n\nDescription coming soon…</string>
     <string name="case_study_feature_toggles_check_box_description"><b>CheckBox</b>\n\nDescription coming soon…</string>

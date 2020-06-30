@@ -21,11 +21,11 @@
         android:layout_marginRight="@dimen/large_content_padding">
 
         <TextView
+            android:id="@+id/text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/large_content_padding"
-            android:text="@{@string/case_study_feature_toggles_current_state(uiModel.t1,uiModel.t2,uiModel.t3,uiModel.t4,uiModel.t5,uiModel.t6)}"
-            tools:text="@string/case_study_feature_toggles_current_state" />
+            tools:text="@string/case_study_feature_toggles_current_state_title" />
 
     </com.google.android.material.card.MaterialCardView>
 
