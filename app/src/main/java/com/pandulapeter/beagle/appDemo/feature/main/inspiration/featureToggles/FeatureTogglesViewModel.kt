@@ -104,6 +104,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
             add(CodeSnippetViewHolder.UiModel("Beagle.find<ModuleType>(moduleId)"))
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_5))
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_persisting_state))
+            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_bulk_apply))
         }
     }
 }
