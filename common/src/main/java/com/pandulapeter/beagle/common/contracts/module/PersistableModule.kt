@@ -24,6 +24,12 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
     val shouldBePersisted: Boolean
 
     /**
+     * Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step.
+     */
+    //TODO: Not implemented yet.
+    val shouldRequireConfirmation: Boolean
+
+    /**
      * Callback triggered when the user modifies the value.
      */
     val onValueChanged: (newValue: T) -> Unit

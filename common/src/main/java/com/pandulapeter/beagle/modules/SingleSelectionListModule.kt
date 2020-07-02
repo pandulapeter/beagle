@@ -14,6 +14,7 @@ import java.util.UUID
  * @param items - The list of items that should be displayed.
  * @param initiallySelectedItemId - The ID of the item that should be selected initially, or null for no initial selection. If [shouldBePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
  * @param shouldBePersisted - Can be used to enable or disable persisting the selected value on the local storage. This will only work if the module has a unique, constant ID. Optional, false by default.
+ * @param shouldRequireConfirmation - Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step. Optional, false by default.
  * @param onSelectionChanged - Callback called when the changes the selection. The parameter is the currently selected item.
  */
 data class SingleSelectionListModule<T : BeagleListItemContract>(
@@ -23,6 +24,7 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
     val items: List<T>,
     val initiallySelectedItemId: String?,
     override val shouldBePersisted: Boolean = false,
+    override val shouldRequireConfirmation: Boolean = false,
     val onSelectionChanged: (selectedItem: T?) -> Unit
 ) : ExpandableModule<SingleSelectionListModule<T>>, PersistableModule<String, SingleSelectionListModule<T>> {
 

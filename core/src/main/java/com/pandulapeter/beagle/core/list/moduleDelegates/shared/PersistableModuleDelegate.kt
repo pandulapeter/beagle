@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.core.list.moduleDelegates.shared
 
+import androidx.annotation.CallSuper
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.PersistableModule
 
@@ -14,6 +15,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
         }
     }
 
+    @CallSuper
     protected open fun callOnValueChanged(module: M, newValue: T) = module.onValueChanged(newValue)
 
     abstract class Boolean<M : PersistableModule<kotlin.Boolean, M>> : PersistableModuleDelegate<kotlin.Boolean, M>() {

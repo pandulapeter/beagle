@@ -31,6 +31,7 @@ data class KeylineOverlaySwitchModule(
 ) : PersistableModule<Boolean, KeylineOverlaySwitchModule> {
 
     override val id: String = ID
+    override val shouldRequireConfirmation = false
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 

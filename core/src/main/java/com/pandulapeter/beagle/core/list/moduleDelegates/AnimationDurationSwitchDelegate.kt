@@ -21,6 +21,6 @@ internal class AnimationDurationSwitchDelegate : PersistableModuleDelegate.Boole
             ValueAnimator::class.java.methods.firstOrNull { it.name == "setDurationScale" }?.invoke(null, if (newValue) module.multiplier else 1f)
         } catch (_: Throwable) {
         }
-        module.onValueChanged(newValue)
+        super.callOnValueChanged(module, newValue)
     }
 }

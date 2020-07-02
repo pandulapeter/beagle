@@ -43,7 +43,7 @@ internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<
 
     override fun callOnValueChanged(module: KeylineOverlaySwitchModule, newValue: kotlin.Boolean) {
         BeagleCore.implementation.invalidateOverlay()
-        module.onValueChanged(newValue)
+        super.callOnValueChanged(module, newValue)
     }
 
     private fun tryToInitialize(context: Context) {
