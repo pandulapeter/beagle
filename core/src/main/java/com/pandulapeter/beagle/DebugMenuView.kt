@@ -36,11 +36,13 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
     //TODO: Create a custom view for the button container and all related logic and improve their appearance
     private val largePadding = context.dimension(R.dimen.beagle_large_content_padding)
     private val applyButton = Button(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
+        isAllCaps = false
         text = BeagleCore.implementation.appearance.applyButtonText
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.applyPendingChanges() }
     }
     private val resetButton = Button(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
+        isAllCaps = false
         text = BeagleCore.implementation.appearance.resetButtonText
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.resetPendingChanges() }

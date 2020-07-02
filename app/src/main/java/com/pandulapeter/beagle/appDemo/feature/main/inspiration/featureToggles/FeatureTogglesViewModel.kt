@@ -21,9 +21,21 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
 
     private val _items = MutableLiveData<List<FeatureTogglesListItem>>()
     override val items: LiveData<List<FeatureTogglesListItem>> = _items
+    private val toggle1 get() = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_1_ID)
+    private val toggle2 get() = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_2_ID)
+    private val toggle3 get() = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_3_ID)
+    private val toggle4 get() = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_4_ID)
+    private val multipleSelectionOptions get() = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)
+    private val singleSelectionOption get() = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)
     var isBulkApplyEnabled = false
         set(value) {
             field = value
+            toggle1?.resetPendingChanges(Beagle)
+            toggle2?.resetPendingChanges(Beagle)
+            toggle3?.resetPendingChanges(Beagle)
+            toggle4?.resetPendingChanges(Beagle)
+            multipleSelectionOptions?.resetPendingChanges(Beagle)
+            singleSelectionOption?.resetPendingChanges(Beagle)
             updateItems()
         }
 
@@ -32,13 +44,12 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_text_1))
             add(
                 CurrentStateViewHolder.UiModel(
-                    toggle1 = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_1_ID)?.getCurrentValue(Beagle) == true,
-                    toggle2 = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_2_ID)?.getCurrentValue(Beagle) == true,
-                    toggle3 = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_3_ID)?.getCurrentValue(Beagle) == true,
-                    toggle4 = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_4_ID)?.getCurrentValue(Beagle) == true,
-                    multipleSelectionOptions = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)?.getCurrentValue(Beagle)
-                        ?.toList().orEmpty(),
-                    singleSelectionOption = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)?.getCurrentValue(Beagle)
+                    toggle1 = toggle1?.getCurrentValue(Beagle) == true,
+                    toggle2 = toggle2?.getCurrentValue(Beagle) == true,
+                    toggle3 = toggle3?.getCurrentValue(Beagle) == true,
+                    toggle4 = toggle4?.getCurrentValue(Beagle) == true,
+                    multipleSelectionOptions = multipleSelectionOptions?.getCurrentValue(Beagle)?.toList().orEmpty(),
+                    singleSelectionOption = singleSelectionOption?.getCurrentValue(Beagle)
                 )
             )
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_switch_description_1))
