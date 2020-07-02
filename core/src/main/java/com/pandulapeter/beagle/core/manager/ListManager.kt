@@ -6,9 +6,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.common.contracts.module.PersistableModule
 import com.pandulapeter.beagle.core.list.CellAdapter
 import com.pandulapeter.beagle.core.list.moduleDelegates.AnimationDurationSwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.AppInfoButtonDelegate
@@ -59,6 +61,7 @@ import kotlin.reflect.KClass
 
 internal class ListManager {
 
+    val hasPendingUpdates get() = persistableModules.any { it.hasPendingChanges(BeagleCore.implementation) }
     private val cellAdapter = CellAdapter()
     private val moduleManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
     private val modules = mutableListOf<Module<*>>()
@@ -84,6 +87,7 @@ internal class ListManager {
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )
+    private val persistableModules get() = modules.filterIsInstance<PersistableModule<*, *>>()
 
     fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
         adapter = cellAdapter
@@ -108,6 +112,16 @@ internal class ListManager {
     }
 
     fun contains(id: String) = modules.any { it.id == id }
+
+    fun applyPendingChanges() {
+        persistableModules.forEach { it.applyPendingChanges(BeagleCore.implementation) }
+        BeagleCore.implementation.refresh()
+    }
+
+    fun resetPendingChanges() {
+        persistableModules.forEach { it.resetPendingChanges(BeagleCore.implementation) }
+        BeagleCore.implementation.refresh()
+    }
 
     //TODO: This might cause concurrency issues. Consider making it a suspend function.
     @Suppress("UNCHECKED_CAST")

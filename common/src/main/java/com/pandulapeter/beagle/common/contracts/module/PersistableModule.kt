@@ -26,7 +26,6 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
     /**
      * Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step.
      */
-    //TODO: Not implemented yet.
     val shouldRequireConfirmation: Boolean
 
     /**
@@ -39,8 +38,39 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      */
     override fun createModuleDelegate(): Delegate<T, M>
 
+    //TODO: Reduce code duplication in the functions below.
+    /**
+     * Returns whether or not the module has any pending changes at the moment.
+     * Not designed to be overridden.
+     *
+     * @param beagle - This should simply be the Beagle singleton.
+     *
+     * @return True if there are pending changes for the module, false otherwise.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun hasPendingChanges(beagle: BeagleContract): Boolean = (beagle.delegateFor((this as M)::class) as? Delegate<T, M>?)?.hasPendingChanges(this as M) == true
+
+    /**
+     * Performs the pending change event after the user confirms it. The [hasPendingChanges] function is expected to return false after this call.
+     * Not designed to be overridden.
+     *
+     * @param beagle - This should simply be the Beagle singleton.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun applyPendingChanges(beagle: BeagleContract) = (beagle.delegateFor((this as M)::class) as? Delegate<T, M>?)?.applyPendingChanges(this as M)
+
+    /**
+     * Reverts the pending change event. The [hasPendingChanges] function is expected to return false after this call.
+     * Not designed to be overridden.
+     *
+     * @param beagle - This should simply be the Beagle singleton.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun resetPendingChanges(beagle: BeagleContract) = (beagle.delegateFor((this as M)::class) as? Delegate<T, M>?)?.resetPendingChanges(this as M)
+
     /**
      * Can be used to query the current value at any time.
+     * Not designed to be overridden.
      *
      * @param beagle - This should simply be the Beagle singleton.
      *
@@ -51,6 +81,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
 
     /**
      * Can be used to update the current value at any time. Changes should also be reflected on the UI of the debug menu.
+     * Not designed to be overridden.
      *
      * @param beagle - This should simply be the Beagle singleton.
      * @param newValue - The new value.
@@ -67,9 +98,27 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
     interface Delegate<T, M : Module<M>> : Module.Delegate<M> {
 
         /**
-         * Used only when [shouldRequireConfirmation] is true. Returns whether or not the module has any pending changes at the moment.
+         * Returns whether or not the module has any pending changes at the moment.
+         *
+         * @param module - The module to check.
+         *
+         * @return True if there are pending changes for the module, false otherwise.
          */
-        val hasPendingChanges: Boolean
+        fun hasPendingChanges(module: M): Boolean
+
+        /**
+         * Performs the pending change event after the user confirms it. The [hasPendingChanges] function for the same module is expected to return false after this call.
+         *
+         * @param module - The module for which the changes should be applied.
+         */
+        fun applyPendingChanges(module: M)
+
+        /**
+         * Reverts the pending change event. The [hasPendingChanges] function for the same module is expected to return false after this call.
+         *
+         * @param module - The module for which the changes should be reset.
+         */
+        fun resetPendingChanges(module: M)
 
         /**
          * Returns the current value.

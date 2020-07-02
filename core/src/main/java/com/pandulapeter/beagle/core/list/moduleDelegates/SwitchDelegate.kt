@@ -11,8 +11,8 @@ internal class SwitchDelegate : PersistableModuleDelegate.Boolean<SwitchModule>(
     override fun createCells(module: SwitchModule): List<Cell<*>> = listOf(
         SwitchCell(
             id = module.id,
-            text = if (module.shouldRequireConfirmation && hasPendingChanges) module.text.append("*") else module.text,
-            isChecked = getCurrentValue(module),
-            onValueChanged = { newValue -> setCurrentValue(module, newValue) })
+            text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text.append("*") else module.text,
+            isChecked = getUiValue(module),
+            onValueChanged = { newValue -> setUiValue(module, newValue) })
     )
 }

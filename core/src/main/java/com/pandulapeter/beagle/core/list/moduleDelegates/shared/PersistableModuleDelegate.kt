@@ -7,7 +7,50 @@ import com.pandulapeter.beagle.common.contracts.module.PersistableModule
 internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>> : PersistableModule.Delegate<T, M> {
 
     private var hasCalledListenerForTheFirstTime = false
-    override val hasPendingChanges = true
+    private val pendingUpdates = mutableListOf<PendingChangeEvent<T>>()
+    private val uiValues = mutableMapOf<kotlin.String, T>()
+
+    fun getUiValue(module: M) = if (module.shouldBePersisted) (uiValues[module.id] ?: getCurrentValue(module)) else getCurrentValue(module)
+
+    fun setUiValue(module: M, newValue: T) {
+        if (module.shouldRequireConfirmation) {
+            pendingUpdates.removeAll { it.moduleId == module.id }
+            if (getCurrentValue(module) == newValue) {
+                uiValues.remove(module.id)
+            } else {
+                uiValues[module.id] = newValue
+                pendingUpdates.add(
+                    PendingChangeEvent(
+                        moduleId = module.id,
+                        pendingValue = newValue
+                    )
+                )
+            }
+            BeagleCore.implementation.refresh()
+        } else if (hasValueChanged(newValue, module)) {
+            setCurrentValue(module, newValue)
+        }
+    }
+
+    protected fun hasValueChanged(newValue: T, module: M) = newValue != getUiValue(module)
+
+    override fun hasPendingChanges(module: M) = pendingUpdates.any { it.moduleId == module.id }
+
+    override fun applyPendingChanges(module: M) {
+        pendingUpdates.indexOfFirst { it.moduleId == module.id }.let { index ->
+            if (index != -1) {
+                uiValues.remove(module.id)
+                setCurrentValue(module, pendingUpdates[index].pendingValue)
+                pendingUpdates.removeAt(index)
+            }
+        }
+    }
+
+    override fun resetPendingChanges(module: M) {
+        pendingUpdates.removeAll { it.moduleId == module.id }
+        uiValues.remove(module.id)
+        getCurrentValue(module)?.let { setCurrentValue(module, it) }
+    }
 
     protected fun callListenerForTheFirstTimeIfNeeded(module: M, value: T) {
         if (module.shouldBePersisted && !hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {
@@ -30,7 +73,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
         }
 
         final override fun setCurrentValue(module: M, newValue: kotlin.Boolean) {
-            if (newValue != getCurrentValue(module)) {
+            if (hasValueChanged(newValue, module)) {
                 if (module.shouldBePersisted) {
                     BeagleCore.implementation.localStorageManager.booelans[module.id] = newValue
                 } else {
@@ -53,7 +96,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
         }
 
         final override fun setCurrentValue(module: M, newValue: kotlin.String) {
-            if (newValue != getCurrentValue(module)) {
+            if (hasValueChanged(newValue, module)) {
                 if (module.shouldBePersisted) {
                     BeagleCore.implementation.localStorageManager.strings[module.id] = newValue
                 } else {
@@ -76,7 +119,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
         }
 
         final override fun setCurrentValue(module: M, newValue: Set<kotlin.String>) {
-            if (newValue != getCurrentValue(module)) {
+            if (hasValueChanged(newValue, module)) {
                 if (module.shouldBePersisted) {
                     BeagleCore.implementation.localStorageManager.stringSets[module.id] = newValue
                 } else {
@@ -87,4 +130,9 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
             }
         }
     }
+
+    data class PendingChangeEvent<T>(
+        val moduleId: kotlin.String,
+        val pendingValue: T
+    )
 }

@@ -12,15 +12,15 @@ internal class SingleSelectionListDelegate<T : BeagleListItemContract> : Expanda
 
     override fun canExpand(module: SingleSelectionListModule<T>) = module.items.isNotEmpty()
 
-    override fun getTitle(module: SingleSelectionListModule<T>) = if (module.shouldRequireConfirmation && hasPendingChanges) module.title.append("*") else module.title
+    override fun getTitle(module: SingleSelectionListModule<T>) = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.title.append("*") else module.title
 
     override fun MutableList<Cell<*>>.addItems(module: SingleSelectionListModule<T>) {
         addAll(module.items.map { item ->
             RadioButtonCell(
                 id = "${module.id}_${item.id}",
                 text = item.title,
-                isChecked = item.id == getCurrentValue(module),
-                onValueChanged = { setCurrentValue(module, item.id) }
+                isChecked = item.id == getUiValue(module),
+                onValueChanged = { setUiValue(module, item.id) }
             )
         })
     }

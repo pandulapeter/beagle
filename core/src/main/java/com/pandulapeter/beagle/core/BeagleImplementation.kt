@@ -21,7 +21,6 @@ import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.LocalStorageManager
 import com.pandulapeter.beagle.core.manager.LogManager
 import com.pandulapeter.beagle.core.manager.MemoryStorageManager
-import com.pandulapeter.beagle.core.manager.PendingUpdateManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
@@ -45,7 +44,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         private set
     var behavior = Behavior()
         private set
-    internal val hasPendingUpdates get() = pendingUpdateManager.hasPendingUpdates
+    internal val hasPendingUpdates get() = listManager.hasPendingUpdates
     internal val memoryStorageManager by lazy { MemoryStorageManager() }
     internal lateinit var localStorageManager: LocalStorageManager
         private set
@@ -57,7 +56,6 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
     private val logManager by lazy { LogManager() }
     private val listManager by lazy { ListManager() }
-    private val pendingUpdateManager by lazy { PendingUpdateManager() }
 
     init {
         BeagleCore.implementation = this
@@ -127,10 +125,10 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListeners)
 
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
+
+    internal fun applyPendingChanges() = listManager.applyPendingChanges()
     
-    internal fun applyPendingChanges() = pendingUpdateManager.applyPendingChanges()
-    
-    internal fun resetPendingChanges() = pendingUpdateManager.resetPendingChanges()
+    internal fun resetPendingChanges() = listManager.resetPendingChanges()
 
     internal fun getLogEntries(tag: String?) = logManager.getEntries(tag)
 

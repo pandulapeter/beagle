@@ -13,19 +13,19 @@ internal class MultipleSelectionListDelegate<T : BeagleListItemContract> : Expan
 
     override fun canExpand(module: MultipleSelectionListModule<T>) = module.items.isNotEmpty()
 
-    override fun getTitle(module: MultipleSelectionListModule<T>) = if (module.shouldRequireConfirmation && hasPendingChanges) module.title.append("*") else module.title
+    override fun getTitle(module: MultipleSelectionListModule<T>) = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.title.append("*") else module.title
 
     override fun MutableList<Cell<*>>.addItems(module: MultipleSelectionListModule<T>) {
         addAll(module.items.map { item ->
             CheckBoxCell(
                 id = "${module.id}_${item.id}",
                 text = item.title,
-                isChecked = getCurrentValue(module).contains(item.id),
+                isChecked = getUiValue(module).contains(item.id),
                 onValueChanged = { isChecked ->
                     if (isChecked) {
-                        setCurrentValue(module, getCurrentValue(module) + item.id)
+                        setUiValue(module, getUiValue(module) + item.id)
                     } else {
-                        setCurrentValue(module, getCurrentValue(module) - item.id)
+                        setUiValue(module, getUiValue(module) - item.id)
                     }
                 }
             )

@@ -11,8 +11,8 @@ internal class CheckBoxDelegate : PersistableModuleDelegate.Boolean<CheckBoxModu
     override fun createCells(module: CheckBoxModule): List<Cell<*>> = listOf(
         CheckBoxCell(
             id = module.id,
-            text = if (module.shouldRequireConfirmation && hasPendingChanges) module.text.append("*") else module.text,
-            isChecked = getCurrentValue(module),
-            onValueChanged = { setCurrentValue(module, it) })
+            text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text.append("*") else module.text,
+            isChecked = getUiValue(module),
+            onValueChanged = { setUiValue(module, it) })
     )
 }
