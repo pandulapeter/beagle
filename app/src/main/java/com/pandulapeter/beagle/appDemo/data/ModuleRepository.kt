@@ -12,6 +12,7 @@ class ModuleRepository {
     private val _modules = mutableListOf(
         ModuleWrapper.Header,
         ModuleWrapper.AppInfoButton,
+        ModuleWrapper.DeveloperOptionsButton,
         ModuleWrapper.ForceCrashButton,
         ModuleWrapper.KeylineOverlaySwitch,
         ModuleWrapper.AnimationDurationSwitch,

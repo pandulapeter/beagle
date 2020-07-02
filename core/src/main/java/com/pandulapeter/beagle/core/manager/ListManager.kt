@@ -14,6 +14,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.AnimationDurationSwitch
 import com.pandulapeter.beagle.core.list.moduleDelegates.AppInfoButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.CheckBoxDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.DeveloperOptionsButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.DividerDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.ForceCrashButtonDelegate
@@ -33,6 +34,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
+import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
@@ -65,6 +67,7 @@ internal class ListManager {
         AppInfoButtonModule::class to AppInfoButtonDelegate(),
         ButtonModule::class to ButtonDelegate(),
         CheckBoxModule::class to CheckBoxDelegate(),
+        DeveloperOptionsButtonModule::class to DeveloperOptionsButtonDelegate(),
         DeviceInfoModule::class to DeviceInfoDelegate(),
         DividerModule::class to DividerDelegate(),
         ForceCrashButtonModule::class to ForceCrashButtonDelegate(),

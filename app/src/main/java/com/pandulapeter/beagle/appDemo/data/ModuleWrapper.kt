@@ -8,6 +8,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
+import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
@@ -214,10 +215,17 @@ sealed class ModuleWrapper(
     )
 
     object AppInfoButton : ModuleWrapper(
-        titleResourceId = R.string.add_module_app_info,
-        descriptionResourceId = R.string.add_module_app_info_description,
+        titleResourceId = R.string.add_module_app_info_button,
+        descriptionResourceId = R.string.add_module_app_info_button_description,
         module = AppInfoButtonModule(),
         codeSnippet = "AppInfoButtonModule()"
+    )
+
+    object DeveloperOptionsButton : ModuleWrapper(
+        titleResourceId = R.string.add_module_developer_options_button,
+        descriptionResourceId = R.string.add_module_developer_options_button_description,
+        module = DeveloperOptionsButtonModule(),
+        codeSnippet = "DeveloperOptionsButtonModule()"
     )
 
     object DeviceInfo : ModuleWrapper(

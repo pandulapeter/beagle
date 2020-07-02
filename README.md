@@ -82,7 +82,7 @@ At this point you should be aware of two options:
 * The list of [built-in modules](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/modules/). Every file in this package is documented. These modules should cover most use cases and have the advantage of also providing a fake, **noop** implementation which means that no part of their logic is compiled into your release builds.
 * The ability to write custom modules. For this a good starting point is looking at the built-in implementations from above, but [this document](https://github.com/pandulapeter/beagle/blob/master/metadata/CUSTOM_MODULES.md) also provides some guidance.
 
-Check out [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagleExample) for some ideas on what is possible with the built-in modules or for a playground tool which can be used to preview any module configuration and generate the code for it.
+Check out [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagleExample) for some ideas on what is possible with the built-in modules or for an interactive tool which can be used to preview any module configuration and generate the code for it.
 
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.

@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
+import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
@@ -28,6 +29,7 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
             text = "Built on ${BuildConfig.BUILD_DATE}"
         ),
         AppInfoButtonModule(),
+        DeveloperOptionsButtonModule(),
         ForceCrashButtonModule(),
         KeylineOverlaySwitchModule(),
         AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }),

@@ -32,6 +32,7 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             TextViewHolder.UiModel(R.string.add_module_unique_modules),
             createModuleUiModel(ModuleWrapper.AnimationDurationSwitch),
             createModuleUiModel(ModuleWrapper.AppInfoButton),
+            createModuleUiModel(ModuleWrapper.DeveloperOptionsButton),
             createModuleUiModel(ModuleWrapper.DeviceInfo),
             createModuleUiModel(ModuleWrapper.ForceCrashButton),
             createModuleUiModel(ModuleWrapper.Header),
