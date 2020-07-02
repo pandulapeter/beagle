@@ -49,7 +49,6 @@ import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -82,7 +81,6 @@ internal class ListManager {
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )
-    private var job: Job? = null
 
     fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
         adapter = cellAdapter
@@ -91,23 +89,19 @@ internal class ListManager {
     }
 
     fun setModules(newModules: List<Module<*>>, onContentsChanged: () -> Unit) {
-        job?.cancel()
-        job = GlobalScope.launch { setModulesInternal(newModules, onContentsChanged) }
+        GlobalScope.launch { setModulesInternal(newModules, onContentsChanged) }
     }
 
     fun addModules(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?, onContentsChanged: () -> Unit) {
-        job?.cancel()
-        job = GlobalScope.launch { addModulesInternal(newModules, placement, lifecycleOwner, onContentsChanged) }
+        GlobalScope.launch { addModulesInternal(newModules, placement, lifecycleOwner, onContentsChanged) }
     }
 
     fun removeModules(ids: List<String>, onContentsChanged: () -> Unit) {
-        job?.cancel()
-        job = GlobalScope.launch { removeModulesInternal(ids, onContentsChanged) }
+        GlobalScope.launch { removeModulesInternal(ids, onContentsChanged) }
     }
 
     fun refreshCells(onContentsChanged: () -> Unit) {
-        job?.cancel()
-        job = GlobalScope.launch { refreshCellsInternal(onContentsChanged) }
+        GlobalScope.launch { refreshCellsInternal(onContentsChanged) }
     }
 
     fun contains(id: String) = modules.any { it.id == id }
@@ -132,14 +126,12 @@ internal class ListManager {
 
             @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
             fun onCreate() {
-                job?.cancel()
-                job = GlobalScope.launch { addModulesInternal(newModules, placement, onContentsChanged) }
+                GlobalScope.launch { addModulesInternal(newModules, placement, onContentsChanged) }
             }
 
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun onDestroy() {
-                job?.cancel()
-                job = GlobalScope.launch { removeModules(newModules.map { it.id }, onContentsChanged) }
+                GlobalScope.launch { removeModules(newModules.map { it.id }, onContentsChanged) }
                 lifecycleOwner.lifecycle.removeObserver(this)
             }
         }) ?: addModulesInternal(newModules, placement, onContentsChanged)
@@ -187,7 +179,7 @@ internal class ListManager {
         refreshCellsInternal(onContentsChanged)
     }
 
-    //TODO: Throw exception if no handler is found
+    //TODO: Throw custom exception if no handler is found
     private suspend fun refreshCellsInternal(onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
         cellAdapter.submitList(modules.flatMap { module ->
             (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {

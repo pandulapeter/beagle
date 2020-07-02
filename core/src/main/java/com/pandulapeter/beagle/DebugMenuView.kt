@@ -6,36 +6,40 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowInsets
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.drawable
 
-class DebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RecyclerView(context.applyTheme(), attrs, defStyleAttr) {
+//TODO: in the ui-view module should notify the listeners when this view is attached / detached
+class DebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context.applyTheme(), attrs, defStyleAttr) {
 
     private val verticalMargin = context.dimension(R.dimen.beagle_item_vertical_margin)
-
-    //TODO: in the ui-view module call notify the listeners on attach / detach
-    init {
+    private val recyclerView = RecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
+        overScrollMode = View.OVER_SCROLL_NEVER
+        clipToPadding = false
+        setPadding(0, verticalMargin, 0, verticalMargin)
         BeagleCore.implementation.setupRecyclerView(this)
-        setBackgroundFromWindowBackground()
         minimumWidth = context.dimension(R.dimen.beagle_minimum_size)
         minimumHeight = context.dimension(R.dimen.beagle_minimum_size)
-        clipToPadding = false
-        overScrollMode = View.OVER_SCROLL_NEVER
+    }
+
+    init {
+        setBackgroundFromWindowBackground()
+        addView(recyclerView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets) }
             requestApplyInsets()
         }
-        setPadding(0, verticalMargin, 0, verticalMargin)
     }
 
-    //TODO: Does not always work
+    //TODO: Needs to be improved
     override fun onApplyWindowInsets(insets: WindowInsets?): WindowInsets {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             insets?.let {
-                setPadding(it.systemWindowInsetLeft, it.systemWindowInsetTop + verticalMargin, it.systemWindowInsetRight, it.systemWindowInsetBottom + verticalMargin)
+                recyclerView.setPadding(it.systemWindowInsetLeft, it.systemWindowInsetTop + verticalMargin, it.systemWindowInsetRight, it.systemWindowInsetBottom + verticalMargin)
             }
         }
         return super.onApplyWindowInsets(insets)

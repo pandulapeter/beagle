@@ -10,7 +10,7 @@ The modules in the **UI** column are exposed for public usage. The ones in the *
 
 Modules prefixed with **beagle** are deprecated.
 
-## TODO
+## Coming soon…
 Concepts to describe:
  - RecyclerView adapter implementation with dynamically updated delegates
  - OverlayFragment

@@ -233,7 +233,7 @@ interface BeagleContract {
      *
      * @param message - The message that will be displayed.
      * @param tag - Optional tag that can be used to create filtered LogListModule instances, null by default.
-     * @param payload - Extra message that will only be displayed when the user selects the log entry. Optional, null by default.
+     * @param payload - Extra message that will only be displayed when the user selects the log entry. Entries with payloads are marked with "*" at the end. Optional, null by default.
      */
     fun log(message: CharSequence, tag: String? = null, payload: CharSequence? = null) = Unit
 

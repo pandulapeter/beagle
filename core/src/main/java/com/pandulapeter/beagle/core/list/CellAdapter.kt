@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.ArrayDeque
 import kotlin.reflect.KClass
 
@@ -36,8 +37,8 @@ internal class CellAdapter : RecyclerView.Adapter<ViewHolder<out Cell<*>>>() {
 
     override fun onBindViewHolder(holder: ViewHolder<out Cell<*>>, position: Int) = holder.forceBind(items[position])
 
-    fun submitList(newItems: List<Cell<*>>, onListUpdated: (() -> Unit)? = null) {
-        GlobalScope.launch(Dispatchers.Main) {
+    suspend fun submitList(newItems: List<Cell<*>>, onListUpdated: (() -> Unit)? = null) {
+        withContext(Dispatchers.Main) {
             pendingUpdates.add(newItems)
             if (pendingUpdates.size == 1) {
                 update(newItems, onListUpdated)
