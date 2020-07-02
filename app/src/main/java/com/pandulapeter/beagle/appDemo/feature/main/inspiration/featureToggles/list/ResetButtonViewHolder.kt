@@ -22,7 +22,7 @@ class ResetButtonViewHolder private constructor(
     }
 
     data class UiModel(
-        override val id: String = "reset button"
+        override val id: String = "resetButton"
     ) : FeatureTogglesListItem
 
     companion object {

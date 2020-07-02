@@ -6,7 +6,7 @@ internal class LogManager {
 
     private val entries = mutableListOf<LogEntry>()
 
-    fun log(tag: String?, message: String, payload: String?) = entries.add(
+    fun log(tag: String?, message: CharSequence, payload: CharSequence?) = entries.add(
         0,
         LogEntry(
             tag = tag,

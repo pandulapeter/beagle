@@ -235,7 +235,7 @@ interface BeagleContract {
      * @param tag - Optional tag that can be used to create filtered LogListModule instances, null by default.
      * @param payload - Extra message that will only be displayed when the user selects the log entry. Optional, null by default.
      */
-    fun log(message: String, tag: String? = null, payload: String? = null) = Unit
+    fun log(message: CharSequence, tag: String? = null, payload: CharSequence? = null) = Unit
 
     /**
      * Call this function to trigger recreating every cell model for every module.

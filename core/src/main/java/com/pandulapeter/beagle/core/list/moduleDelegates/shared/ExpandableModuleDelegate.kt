@@ -18,7 +18,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
     private fun MutableList<Cell<*>>.addHeader(module: M) = add(
         ExpandableHeaderCell(
             id = "header_${module.id}",
-            text = module.title,
+            text = getTitle(module),
             isExpanded = module.isExpanded,
             canExpand = canExpand(module),
             onItemSelected = {
@@ -31,6 +31,8 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
     fun canExpand(module: M): Boolean
 
     fun MutableList<Cell<*>>.addItems(module: M)
+
+    fun getTitle(module: M) : CharSequence = module.title
 
     private var ExpandableModule<M>.isExpanded: Boolean
         get() = BeagleCore.implementation.memoryStorageManager.booleans[id] ?: isExpandedInitially

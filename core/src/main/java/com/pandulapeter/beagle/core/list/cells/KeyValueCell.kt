@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.append
 
 internal data class KeyValueCell(
     override val id: String,
@@ -28,7 +29,7 @@ internal data class KeyValueCell(
         private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
 
         override fun bind(model: KeyValueCell) = textView.run {
-            text = SpannableString("• ${model.key}: ${model.value}").apply {
+            text = SpannableString("• ".append(model.key.append(": ")).append(model.value)).apply {
                 setSpan(StyleSpan(Typeface.BOLD), 2, model.key.length + 3, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
             }
         }

@@ -9,7 +9,7 @@ internal class HeaderDelegate : Module.Delegate<HeaderModule> {
 
     override fun createCells(module: HeaderModule): List<Cell<*>> = listOf(
         HeaderCell(
-            id = "${module.id}_title",
+            id = module.id,
             title = module.title,
             subtitle = module.subtitle,
             text = module.text

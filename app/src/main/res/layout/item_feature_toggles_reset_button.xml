@@ -13,7 +13,6 @@
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
         android:layout_marginStart="@dimen/large_content_padding"
         android:layout_marginLeft="@dimen/large_content_padding"
         android:layout_marginTop="@dimen/large_content_padding"

@@ -15,7 +15,6 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import org.koin.android.ext.android.inject
-import org.koin.ext.scope
 
 class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel, AuthenticationListItem>(R.string.case_study_authentication_title) {
 
@@ -23,7 +22,7 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
     private val showAutomaticallySwitch by lazy {
         SwitchModule(
             id = SHOW_AUTOMATICALLY_SWITCH_ID,
-            text = getString(R.string.case_study_authentication_show_automatically_switch),
+            text = getText(R.string.case_study_authentication_show_automatically_switch),
             shouldBePersisted = true,
             onValueChanged = {}
         )
@@ -52,7 +51,7 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         ItemListModule(
-            title = getString(R.string.case_study_authentication_test_accounts),
+            title = getText(R.string.case_study_authentication_test_accounts),
             isExpandedInitially = true,
             items = listOf(
                 TestAccount("testaccount1@company.com", "password1"),

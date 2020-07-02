@@ -90,8 +90,12 @@
     <string name="case_study_feature_toggles_querying_and_changing_the_current_value_4">To use any of these methods, a reference to the module is needed. The simplest way to get that is saving it at the moment of instantiation, but if that is not convenient for some reason, the library\'s find function can also be used.</string>
     <string name="case_study_feature_toggles_querying_and_changing_the_current_value_5">Please note that this will return null if the module is not currently added to the debug menu.</string>
     <string name="case_study_feature_toggles_reset_all">Reset all</string>
-    <string name="case_study_feature_toggles_persisting_state"><b>Persisting state</b>\n\nAll of these modules have the optional <i>shouldBePersisted</i> constructor parameter, which is set to false by default. Setting it to true AND providing a distinct module ID (the auto-generated random value is inconsistent between app launches) will automatically save and restore the state of the module to / from <i>SharedPreferences</i>.\n\nIf the value is persisted, the <i>initialValue</i> / <i>initiallySelectedItemIds</i> / <i>initiallySelectedItemId</i> parameters are only taken into consideration when there is no value saved on the local storage.\n\nLastly, the callbacks of persisted modules are invoked when the module is added to the debug menu so that any custom logic that happens on manual selection could also be executed when the state is restored.\n\nThe current demo configuration saves and restores all the values for this screen.</string>
-    <string name="case_study_feature_toggles_bulk_apply"><b>Bulk apply</b>\n\nComing soon…</string>
+    <string name="case_study_feature_toggles_persisting_state"><b>Persisting state</b>\n\nAll of these modules have the optional <i>shouldBePersisted</i> constructor parameter, which is set to false by default. Setting it to true AND providing a unique module ID (the auto-generated random value is inconsistent between app launches) will automatically save and restore the state of the module to / from <i>SharedPreferences</i>.\n\nIf the value is persisted, the <i>initialValue</i> / <i>initiallySelectedItemIds</i> / <i>initiallySelectedItemId</i> parameters are only taken into consideration when there is no value saved on the local storage.\n\nLastly, the callbacks of persisted modules are invoked when the module is added to the debug menu so that any custom logic that happens on manual selection could also be executed when the state is restored.\n\nThe current demo configuration saves and restores all the values for this screen.</string>
+    <string name="case_study_feature_toggles_bulk_apply"><b>Bulk apply</b></string>
+    <string name="case_study_feature_toggles_bulk_apply_1_off">Right now all manual changes made to the values are applied instantaneously. You can change that:</string>
+    <string name="case_study_feature_toggles_bulk_apply_1_on">Right now all manual changes made to the values are applied after a confirmation. You can change that:</string>
+    <string name="case_study_feature_toggles_require_confirmation">Require confirmation</string>
+    <string name="case_study_feature_toggles_bulk_apply_2">Coming soon…</string>
     <string name="case_study_feature_toggles_hint_1">For simple on-off flags two UI representations are available:</string>
     <string name="case_study_feature_toggles_switches">Switches</string>
     <string name="case_study_feature_toggles_toggle_1">Toggle 1</string>
@@ -126,8 +130,8 @@
     <string name="case_study_authentication_text_3">Extending <i>BeagleListItemContract</i> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\nThe next step is creating the module:</string>
     <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\nAnother idea to save time is to automatically display the debug menu when the screen is opened, simply by calling:</string>
     <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
-    <string name="case_study_authentication_show_automatically_switch">Show automatically</string>
-    <string name="case_study_authentication_test_accounts">Test accounts</string>
+    <string name="case_study_authentication_test_accounts"><b>Test accounts</b></string>
+    <string name="case_study_authentication_show_automatically_switch"><b>Show automatically</b></string>
 
     <!-- Case studies / Network request interceptor -->
     <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>

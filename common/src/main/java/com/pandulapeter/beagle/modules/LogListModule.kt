@@ -19,7 +19,7 @@ data class LogListModule(
     override val title: CharSequence = "Logs",
     val tag: String? = null,
     val maxItemCount: Int = 10,
-    val timestampFormatter: ((Long) -> String)? = { defaultFormatter.format(it) },
+    val timestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },
     override val isExpandedInitially: Boolean = false
 ) : ExpandableModule<LogListModule> {
 

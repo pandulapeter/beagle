@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.BeagleListItemContractImplementation
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.BulkApplySwitchViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.CurrentStateViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.ResetButtonViewHolder
@@ -20,9 +21,14 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
 
     private val _items = MutableLiveData<List<FeatureTogglesListItem>>()
     override val items: LiveData<List<FeatureTogglesListItem>> = _items
+    var isBulkApplyEnabled = false
+        set(value) {
+            field = value
+            updateItems()
+        }
 
     fun updateItems() {
-        _items.value = mutableListOf<FeatureTogglesListItem>().apply {
+        _items.postValue(mutableListOf<FeatureTogglesListItem>().apply {
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_text_1))
             add(
                 CurrentStateViewHolder.UiModel(
@@ -105,6 +111,9 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_5))
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_persisting_state))
             add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_bulk_apply))
-        }
+            add(TextViewHolder.UiModel(if (isBulkApplyEnabled) R.string.case_study_feature_toggles_bulk_apply_1_on else R.string.case_study_feature_toggles_bulk_apply_1_off))
+            add(BulkApplySwitchViewHolder.UiModel(isBulkApplyEnabled))
+            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_bulk_apply_2))
+        })
     }
 }

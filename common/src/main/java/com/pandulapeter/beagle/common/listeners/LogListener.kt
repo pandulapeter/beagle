@@ -12,5 +12,5 @@ interface LogListener {
      * @param message - The main content of the log entry.
      * @param payload - Optional, extra content.
      */
-    fun onLogMessageAdded(tag: String?, message: String, payload: String?)
+    fun onLogMessageAdded(tag: String?, message: CharSequence, payload: CharSequence?)
 }
