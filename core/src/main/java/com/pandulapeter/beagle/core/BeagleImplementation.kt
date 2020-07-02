@@ -21,6 +21,7 @@ import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.LocalStorageManager
 import com.pandulapeter.beagle.core.manager.LogManager
 import com.pandulapeter.beagle.core.manager.MemoryStorageManager
+import com.pandulapeter.beagle.core.manager.PendingUpdateManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
@@ -44,6 +45,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         private set
     var behavior = Behavior()
         private set
+    internal val hasPendingUpdates get() = pendingUpdateManager.hasPendingUpdates
     internal val memoryStorageManager by lazy { MemoryStorageManager() }
     internal lateinit var localStorageManager: LocalStorageManager
         private set
@@ -55,6 +57,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
     private val logManager by lazy { LogManager() }
     private val listManager by lazy { ListManager() }
+    private val pendingUpdateManager by lazy { PendingUpdateManager() }
 
     init {
         BeagleCore.implementation = this
@@ -91,11 +94,13 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun clearLogListeners() = logListenerManager.clearListeners()
 
-    fun addInternalOverlayListener(listener: OverlayListener) = overlayListenerManager.addInternalListener(listener)
+    internal fun addInternalOverlayListener(listener: OverlayListener) = overlayListenerManager.addInternalListener(listener)
 
     override fun addOverlayListener(listener: OverlayListener, lifecycleOwner: LifecycleOwner?) = overlayListenerManager.addListener(listener, lifecycleOwner)
 
     override fun removeOverlayListener(listener: OverlayListener) = overlayListenerManager.removeListener(listener)
+
+    internal fun addInternalUpdateListener(listener: UpdateListener) = updateListenerManager.addInternalListener(listener)
 
     override fun addUpdateListener(listener: UpdateListener, lifecycleOwner: LifecycleOwner?) = updateListenerManager.addListener(listener, lifecycleOwner)
 
@@ -122,18 +127,22 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListeners)
 
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
+    
+    internal fun applyPendingChanges() = pendingUpdateManager.applyPendingChanges()
+    
+    internal fun resetPendingChanges() = pendingUpdateManager.resetPendingChanges()
 
-    fun getLogEntries(tag: String?) = logManager.getEntries(tag)
+    internal fun getLogEntries(tag: String?) = logManager.getEntries(tag)
 
-    fun createOverlayLayout(activity: FragmentActivity) = uiManager.createOverlayLayout(activity)
+    internal fun createOverlayLayout(activity: FragmentActivity) = uiManager.createOverlayLayout(activity)
 
     fun notifyVisibilityListenersOnShow() = visibilityListenerManager.notifyListenersOnShow()
 
     fun notifyVisibilityListenersOnHide() = visibilityListenerManager.notifyListenersOnHide()
 
-    fun notifyOverlayListenersOnDrawOver(canvas: Canvas) = overlayListenerManager.notifyListeners(canvas)
+    internal fun notifyOverlayListenersOnDrawOver(canvas: Canvas) = overlayListenerManager.notifyListeners(canvas)
 
     fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
 
-    fun setupRecyclerView(recyclerView: RecyclerView) = listManager.setupRecyclerView(recyclerView)
+    internal fun setupRecyclerView(recyclerView: RecyclerView) = listManager.setupRecyclerView(recyclerView)
 }

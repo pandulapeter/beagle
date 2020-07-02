@@ -33,6 +33,7 @@ internal abstract class BaseListenerManager<T> {
     }
 
     fun removeListener(listener: T) {
+        this.internalListeners.remove(listener)
         this.listeners.remove(listener)
     }
 
