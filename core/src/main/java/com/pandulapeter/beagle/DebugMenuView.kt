@@ -27,11 +27,15 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
     private val recyclerView = RecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
         overScrollMode = View.OVER_SCROLL_NEVER
         clipToPadding = false
-        setPadding(0, verticalMargin, 0, verticalMargin)
+        updatePadding()
         BeagleCore.implementation.setupRecyclerView(this)
         minimumWidth = context.dimension(R.dimen.beagle_minimum_size)
         minimumHeight = context.dimension(R.dimen.beagle_minimum_size)
     }
+    private var recyclerLeftPadding = 0
+    private var recyclerTopPadding = verticalMargin
+    private var recyclerRightPadding = 0
+    private var recyclerBottomPadding = verticalMargin
 
     //TODO: Create a custom view for the button container and all related logic and improve their appearance
     private val largePadding = context.dimension(R.dimen.beagle_large_content_padding)
@@ -91,6 +95,7 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     override fun onContentsChanged() {
         val hasPendingChanges = BeagleCore.implementation.hasPendingUpdates
+        recyclerView.updatePadding()
         buttonContainer.run {
             post {
                 animate()
@@ -101,12 +106,16 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
     }
 
-    //TODO: Needs to be improved
+    //TODO: Needs to be improved / handled on a per-module basis
     override fun onApplyWindowInsets(insets: WindowInsets?): WindowInsets {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             insets?.let {
-                recyclerView.setPadding(it.systemWindowInsetLeft, it.systemWindowInsetTop + verticalMargin, it.systemWindowInsetRight, it.systemWindowInsetBottom + verticalMargin)
-                buttonContainer.run { setPadding(paddingLeft, paddingTop, paddingRight, largePadding + insets.systemWindowInsetBottom) }
+                recyclerLeftPadding = it.systemWindowInsetLeft
+                recyclerTopPadding = it.systemWindowInsetTop + verticalMargin
+                recyclerRightPadding = it.systemWindowInsetRight
+                recyclerBottomPadding = it.systemWindowInsetBottom + verticalMargin
+                recyclerView.updatePadding()
+                buttonContainer.run { setPadding(it.systemWindowInsetLeft, paddingTop, it.systemWindowInsetRight, largePadding + insets.systemWindowInsetBottom) }
             }
         }
         return super.onApplyWindowInsets(insets)
@@ -121,4 +130,11 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
             background = context.drawable(typedValue.resourceId)
         }
     }
+
+    private fun RecyclerView.updatePadding() = setPadding(
+        recyclerLeftPadding,
+        recyclerTopPadding,
+        recyclerRightPadding,
+        recyclerBottomPadding.let { if (BeagleCore.implementation.hasPendingUpdates) it + buttonContainer.height else it }
+    )
 }
