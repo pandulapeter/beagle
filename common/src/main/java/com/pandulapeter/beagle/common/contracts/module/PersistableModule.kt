@@ -67,6 +67,11 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
     interface Delegate<T, M : Module<M>> : Module.Delegate<M> {
 
         /**
+         * Used only when [shouldRequireConfirmation] is true. Returns whether or not the module has any pending changes at the moment.
+         */
+        val hasPendingChanges: Boolean
+
+        /**
          * Returns the current value.
          */
         fun getCurrentValue(module: M): T

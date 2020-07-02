@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.common.contracts.module.PersistableModule
 internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>> : PersistableModule.Delegate<T, M> {
 
     private var hasCalledListenerForTheFirstTime = false
-    protected val hasPendingChanges = true //TODO
+    override val hasPendingChanges = true
 
     protected fun callListenerForTheFirstTimeIfNeeded(module: M, value: T) {
         if (module.shouldBePersisted && !hasCalledListenerForTheFirstTime && BeagleCore.implementation.currentActivity != null) {

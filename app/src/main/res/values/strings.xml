@@ -94,8 +94,8 @@
     <string name="case_study_feature_toggles_bulk_apply"><b>Bulk apply</b></string>
     <string name="case_study_feature_toggles_bulk_apply_1_off">Right now all manual changes made to the values are applied instantaneously. You can change that:</string>
     <string name="case_study_feature_toggles_bulk_apply_1_on">Right now all manual changes made to the values are applied after a confirmation. You can change that:</string>
-    <string name="case_study_feature_toggles_require_confirmation">Require confirmation</string>
-    <string name="case_study_feature_toggles_bulk_apply_2">Coming soon…</string>
+    <string name="case_study_feature_toggles_require_confirmation"><i>Require confirmation</i></string>
+    <string name="case_study_feature_toggles_bulk_apply_2">By setting the <i>shouldRequireConfirmation</i> parameter to true for any of the modules presented in this example, users will be given the option to Apply or Reset the changes they made. This means that the library will accumulate pending change events and invoke the necessary callbacks in bulk when the user presses the Apply button.\n\nModifying the values from code will still have instantaneous effect.</string>
     <string name="case_study_feature_toggles_hint_1">For simple on-off flags two UI representations are available:</string>
     <string name="case_study_feature_toggles_switches">Switches</string>
     <string name="case_study_feature_toggles_toggle_1">Toggle 1</string>

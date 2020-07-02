@@ -35,7 +35,7 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
         }
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy < 0) {
+                if (dy > 0) {
                     activity?.currentFocus?.hideKeyboard()
                 }
             }
