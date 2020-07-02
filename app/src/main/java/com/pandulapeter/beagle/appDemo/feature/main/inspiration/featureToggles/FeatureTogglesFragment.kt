@@ -38,11 +38,11 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
     override fun getBeagleModules(): List<Module<*>> = listOf(
         TextModule(text = getString(R.string.case_study_feature_toggles_hint_1)),
         LabelModule(title = getString(R.string.case_study_feature_toggles_switches)),
-        SwitchModule(id = TOGGLE_1_ID, text = getString(R.string.case_study_feature_toggles_toggle_1), onValueChanged = { viewModel.updateItems() }),
-        SwitchModule(id = TOGGLE_2_ID, text = getString(R.string.case_study_feature_toggles_toggle_2), onValueChanged = { viewModel.updateItems() }),
+        SwitchModule(id = TOGGLE_1_ID, text = getString(R.string.case_study_feature_toggles_toggle_1), shouldBePersisted = true, onValueChanged = { viewModel.updateItems() }),
+        SwitchModule(id = TOGGLE_2_ID, text = getString(R.string.case_study_feature_toggles_toggle_2), shouldBePersisted = true, onValueChanged = { viewModel.updateItems() }),
         LabelModule(title = getString(R.string.case_study_feature_toggles_check_boxes)),
-        CheckBoxModule(id = TOGGLE_3_ID, text = getString(R.string.case_study_feature_toggles_toggle_3), onValueChanged = { viewModel.updateItems() }),
-        CheckBoxModule(id = TOGGLE_4_ID, text = getString(R.string.case_study_feature_toggles_toggle_4), onValueChanged = { viewModel.updateItems() }),
+        CheckBoxModule(id = TOGGLE_3_ID, text = getString(R.string.case_study_feature_toggles_toggle_3), shouldBePersisted = true, onValueChanged = { viewModel.updateItems() }),
+        CheckBoxModule(id = TOGGLE_4_ID, text = getString(R.string.case_study_feature_toggles_toggle_4), shouldBePersisted = true, onValueChanged = { viewModel.updateItems() }),
         TextModule(text = getString(R.string.case_study_feature_toggles_hint_2)),
         MultipleSelectionListModule(
             id = CHECK_BOX_GROUP_ID,
@@ -53,6 +53,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
                 BeagleListItemContractImplementation(getString(R.string.case_study_feature_toggles_check_box_3))
             ),
             isExpandedInitially = true,
+            shouldBePersisted = true,
             initiallySelectedItemIds = emptySet(),
             onSelectionChanged = { viewModel.updateItems() }
         ),
@@ -66,6 +67,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
                 BeagleListItemContractImplementation(getString(R.string.case_study_feature_toggles_radio_button_3))
             ),
             isExpandedInitially = true,
+            shouldBePersisted = true,
             initiallySelectedItemId = getString(R.string.case_study_feature_toggles_radio_button_1),
             onSelectionChanged = { viewModel.updateItems() }
         )
