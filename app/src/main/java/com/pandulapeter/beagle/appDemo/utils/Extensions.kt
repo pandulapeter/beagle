@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -25,11 +27,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
+
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)!!
 
 fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
 
@@ -37,7 +43,7 @@ fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensi
 
 fun Context.drawable(@DrawableRes drawableResId: Int) = AppCompatResources.getDrawable(this, drawableResId)
 
-fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int) = drawable(drawableResourceId)!!.let { drawable ->
+fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int): Drawable = drawable(drawableResourceId)!!.let { drawable ->
     DrawableCompat.wrap(drawable.mutate()).apply {
         DrawableCompat.setTint(this, tint)
         DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)

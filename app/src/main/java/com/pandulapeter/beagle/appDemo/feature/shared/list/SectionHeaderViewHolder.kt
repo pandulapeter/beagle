@@ -1,7 +1,10 @@
 package com.pandulapeter.beagle.appDemo.feature.shared.list
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +13,7 @@ import com.pandulapeter.beagle.appDemo.databinding.ItemSectionHeaderBinding
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.BasicSetupListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
+import com.pandulapeter.beagle.appDemo.utils.animatedDrawable
 import com.pandulapeter.beagle.appDemo.utils.tintedDrawable
 
 class SectionHeaderViewHolder private constructor(
@@ -17,9 +21,7 @@ class SectionHeaderViewHolder private constructor(
     onItemSelected: (UiModel) -> Unit
 ) : BaseViewHolder<ItemSectionHeaderBinding, SectionHeaderViewHolder.UiModel>(binding) {
 
-    //TODO: Replace with animated vector drawables.
-    private val drawableExpand by lazy { itemView.context.tintedDrawable(R.drawable.ic_expand, binding.header.textColors.defaultColor) }
-    private val drawableCollapse by lazy { itemView.context.tintedDrawable(R.drawable.ic_collapse, binding.header.textColors.defaultColor) }
+    private var isExpanded: Boolean? = null
 
     init {
         binding.root.setOnClickListener {
@@ -31,8 +33,21 @@ class SectionHeaderViewHolder private constructor(
 
     override fun bind(uiModel: UiModel) = binding.header.run {
         super.bind(uiModel)
-        setCompoundDrawablesWithIntrinsicBounds(null, null, if (uiModel.isExpanded) drawableCollapse else drawableExpand, null)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && uiModel.isExpanded != isExpanded) {
+            isExpanded = uiModel.isExpanded
+            setCompoundDrawablesWithIntrinsicBounds(null, null, getAnimatedDrawable(uiModel.isExpanded), null)
+        } else {
+            setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable(uiModel.isExpanded), null)
+        }
     }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun TextView.getAnimatedDrawable(isExpanded: Boolean) = context.animatedDrawable(if (isExpanded) R.drawable.avd_expand else R.drawable.avd_collapse).apply {
+        setTintList(textColors)
+        start()
+    }
+
+    private fun TextView.getDrawable(isExpanded: Boolean) = context.tintedDrawable(if (isExpanded) R.drawable.ic_collapse else R.drawable.ic_expand, textColors.defaultColor)
 
     data class UiModel(
         @StringRes val titleResourceId: Int,

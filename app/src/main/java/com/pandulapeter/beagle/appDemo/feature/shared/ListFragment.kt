@@ -62,8 +62,9 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     private fun onListUpdated() {
         binding.appBar.run {
             postDelayed({
-                if (isAdded) {
+                try {
                     setLifted(binding.recyclerView.computeVerticalScrollOffset() != 0)
+                } catch (_: IllegalStateException) {
                 }
             }, 300)
         }
