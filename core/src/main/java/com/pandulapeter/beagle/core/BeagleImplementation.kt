@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
@@ -28,6 +27,7 @@ import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
+import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 import com.pandulapeter.beagle.modules.LogListModule
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
@@ -127,7 +127,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
     internal fun applyPendingChanges() = listManager.applyPendingChanges()
-    
+
     internal fun resetPendingChanges() = listManager.resetPendingChanges()
 
     internal fun getLogEntries(tag: String?) = logManager.getEntries(tag)
@@ -142,5 +142,5 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     fun hideKeyboard() = currentActivity?.currentFocus?.hideKeyboard() ?: Unit
 
-    internal fun setupRecyclerView(recyclerView: RecyclerView) = listManager.setupRecyclerView(recyclerView)
+    internal fun setupRecyclerView(recyclerView: GestureBlockingRecyclerView) = listManager.setupRecyclerView(recyclerView)
 }

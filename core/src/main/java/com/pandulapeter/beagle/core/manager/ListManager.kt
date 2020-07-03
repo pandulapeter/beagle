@@ -5,7 +5,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
@@ -32,6 +31,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.PaddingDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SingleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
+import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
@@ -53,7 +53,9 @@ import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
@@ -62,6 +64,8 @@ import kotlin.reflect.KClass
 internal class ListManager {
 
     val hasPendingUpdates get() = persistableModules.any { it.hasPendingChanges(BeagleCore.implementation) }
+    private var countDownJob: Job? = null
+    private var shouldBlockGestures = true
     private val cellAdapter = CellAdapter()
     private val moduleManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
     private val modules = mutableListOf<Module<*>>()
@@ -89,10 +93,11 @@ internal class ListManager {
     )
     private val persistableModules get() = modules.filterIsInstance<PersistableModule<*, *>>()
 
-    fun setupRecyclerView(recyclerView: RecyclerView) = recyclerView.run {
+    fun setupRecyclerView(recyclerView: GestureBlockingRecyclerView) = recyclerView.run {
         adapter = cellAdapter
         setHasFixedSize(true)
         layoutManager = LinearLayoutManager(recyclerView.context)
+        shouldBlockGestures = { this@ListManager.shouldBlockGestures }
     }
 
     fun setModules(newModules: List<Module<*>>, onContentsChanged: () -> Unit) {
@@ -198,10 +203,21 @@ internal class ListManager {
 
     //TODO: Throw custom exception if no handler is found
     private suspend fun refreshCellsInternal(onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
-        cellAdapter.submitList(modules.flatMap { module ->
+        val newCells = modules.flatMap { module ->
             (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
                 moduleDelegates[module::class] = it
             })).forceCreateCells(module)
-        }, onContentsChanged)
+        }
+        if (cellAdapter.itemCount > 0 && cellAdapter.itemCount != newCells.size) {
+            shouldBlockGestures = true
+        }
+        cellAdapter.submitList(newCells) {
+            onContentsChanged()
+            countDownJob?.cancel()
+            countDownJob = GlobalScope.launch {
+                delay(300)
+                shouldBlockGestures = false
+            }
+        }
     }
 }

@@ -8,9 +8,9 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.WindowInsets
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.R
@@ -18,6 +18,7 @@ import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.colorResource
 import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.drawable
+import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 
 //TODO: in the ui-view module should notify the listeners when this view is attached / detached
 class DebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context.applyTheme(), attrs, defStyleAttr), UpdateListener {
@@ -30,19 +31,19 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     //TODO: Create a custom view for the button container and all related logic and improve their appearance
     private val largePadding = context.dimension(R.dimen.beagle_large_content_padding)
-    private val applyButton = Button(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
+    private val applyButton = AppCompatButton(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
         isAllCaps = false
         text = BeagleCore.implementation.appearance.applyButtonText
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.applyPendingChanges() }
     }
-    private val resetButton = Button(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
+    private val resetButton = AppCompatButton(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
         isAllCaps = false
         text = BeagleCore.implementation.appearance.resetButtonText
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.resetPendingChanges() }
     }
-    private val buttonContainer = LinearLayout(context, attrs, defStyleAttr).apply {
+    private val buttonContainer = LinearLayout(context.applyTheme(), attrs, defStyleAttr).apply {
         orientation = LinearLayout.HORIZONTAL
         gravity = Gravity.CENTER
         addView(applyButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
@@ -63,7 +64,7 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         })
         background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, context.applyTheme().colorResource(android.R.attr.textColorPrimary)))
     }
-    private val recyclerView = RecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
+    private val recyclerView = GestureBlockingRecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
         clipToPadding = false
         updatePadding()
         BeagleCore.implementation.setupRecyclerView(this)
