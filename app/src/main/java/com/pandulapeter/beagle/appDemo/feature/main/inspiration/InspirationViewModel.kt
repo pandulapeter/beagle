@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.CaseStudyViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
+import com.pandulapeter.beagle.appDemo.feature.shared.list.SpaceViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 
 class InspirationViewModel : ListViewModel<InspirationListItem>() {
@@ -16,6 +17,7 @@ class InspirationViewModel : ListViewModel<InspirationListItem>() {
         CaseStudy.values().forEachIndexed { index, caseStudy ->
             add(CaseStudyViewHolder.UiModel(caseStudy))
             if (index == 0) {
+                add(SpaceViewHolder.UiModel())
                 add(TextViewHolder.UiModel(R.string.inspiration_text_2))
             }
         }

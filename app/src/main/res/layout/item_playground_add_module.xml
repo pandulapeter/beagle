@@ -18,7 +18,8 @@
         android:layout_marginLeft="@dimen/large_content_padding"
         android:layout_marginTop="@dimen/content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
-        android:layout_marginRight="@dimen/large_content_padding">
+        android:layout_marginRight="@dimen/large_content_padding"
+        android:layout_marginBottom="@dimen/large_content_padding">
 
         <TextView
             android:id="@+id/title"

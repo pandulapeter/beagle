@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.l
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.EmailInputViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.PasswordInputViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
+import com.pandulapeter.beagle.appDemo.feature.shared.list.SpaceViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 
 class AuthenticationViewModel : ListViewModel<AuthenticationListItem>() {
@@ -18,6 +19,7 @@ class AuthenticationViewModel : ListViewModel<AuthenticationListItem>() {
     private val text1 = TextViewHolder.UiModel(R.string.case_study_authentication_text_1)
     private val text2 = TextViewHolder.UiModel(R.string.case_study_authentication_text_2)
     private val button = ButtonViewHolder.UiModel()
+    private val space = SpaceViewHolder.UiModel()
     private val snippet1 = CodeSnippetViewHolder.UiModel(
         "data class TestAccount(\n" +
                 "    val email: String,\n" +
@@ -60,6 +62,7 @@ class AuthenticationViewModel : ListViewModel<AuthenticationListItem>() {
             EmailInputViewHolder.UiModel(email),
             PasswordInputViewHolder.UiModel(password),
             button,
+            space,
             text2,
             snippet1,
             text3,

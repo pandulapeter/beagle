@@ -18,6 +18,7 @@
         android:layout_marginTop="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding"
+        android:layout_marginBottom="@dimen/content_padding"
         android:text="@{uiModel.codeSnippet}"
         tools:text="Text" />
 
