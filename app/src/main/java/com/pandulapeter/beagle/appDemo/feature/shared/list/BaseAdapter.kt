@@ -21,6 +21,7 @@ open class BaseAdapter<T : ListItem>(
     private var job: Job? = null
     private val pendingUpdates = ArrayDeque<List<T>>()
     protected open val isAsynchronous = true
+    lateinit var blockGestures: () -> Unit
 
     final override fun getItemCount() = items.size
 
@@ -41,7 +42,10 @@ open class BaseAdapter<T : ListItem>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
         R.layout.item_text -> TextViewHolder.create(parent)
         R.layout.item_code_snippet -> CodeSnippetViewHolder.create(parent)
-        R.layout.item_section_header -> SectionHeaderViewHolder.create(parent, onSectionHeaderSelected)
+        R.layout.item_section_header -> SectionHeaderViewHolder.create(parent) {
+            blockGestures()
+            onSectionHeaderSelected(it)
+        }
         R.layout.item_space -> SpaceViewHolder.create(parent)
         else -> throw  IllegalArgumentException("Unsupported item view type: $viewType.")
     }

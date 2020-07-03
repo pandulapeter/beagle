@@ -33,6 +33,7 @@ import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
+import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)!!
@@ -75,6 +76,7 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
 ) {
     beginTransaction().apply {
         val currentFragment = findFragmentById(containerId)
+        (currentFragment as? ListFragment<*, *>?)?.blockGestures()
         val newFragment = findFragmentByTag(tag) ?: newInstance()
         when (transitionType) {
             TransitionType.SIBLING -> {

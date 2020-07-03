@@ -31,6 +31,10 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     protected open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(context)
 
+    fun blockGestures() {
+        binding.recyclerView.shouldBlockGestures = true
+    }
+
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.setVariable(BR.viewModel, viewModel)
@@ -49,9 +53,10 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     }
 
     private fun setupRecyclerView() {
-        val listAdapter = createAdapter()
+        val listAdapter = createAdapter().also { it.blockGestures = { binding.recyclerView.shouldBlockGestures = true } }
         viewModel.items.observe(viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
         binding.recyclerView.run {
+            shouldBlockGestures = true
             adapter = listAdapter
             layoutManager = createLayoutManager()
             setHasFixedSize(true)
@@ -64,6 +69,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
             postDelayed({
                 try {
                     setLifted(binding.recyclerView.computeVerticalScrollOffset() != 0)
+                    binding.recyclerView.shouldBlockGestures = false
                 } catch (_: IllegalStateException) {
                 }
             }, 300)
