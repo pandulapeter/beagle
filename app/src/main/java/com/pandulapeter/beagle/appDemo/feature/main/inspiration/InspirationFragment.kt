@@ -12,10 +12,10 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.Inspiration
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
+import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class InspirationFragment : ListFragment<InspirationViewModel, InspirationListItem>(R.string.inspiration_title) {
@@ -31,7 +31,7 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
     override fun createAdapter() = InspirationAdapter(viewModel.viewModelScope, ::onCaseStudySelected)
 
     override fun getBeagleModules() = listOf<Module<*>>(
-        TextModule(text = getString(R.string.inspiration_beagle_text))
+        createTextModule(R.string.inspiration_beagle_text)
     )
 
     private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) = when (caseStudy) {

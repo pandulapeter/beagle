@@ -34,6 +34,11 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
+import com.pandulapeter.beagle.modules.ButtonModule
+import com.pandulapeter.beagle.modules.CheckBoxModule
+import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.SwitchModule
+import com.pandulapeter.beagle.modules.TextModule
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)!!
@@ -146,3 +151,53 @@ var View.visible
     set(value) {
         visibility = if (value) View.VISIBLE else View.GONE
     }
+
+fun Fragment.createTextModule(
+    @StringRes textResourceId: Int,
+    id: String = "text_$textResourceId"
+) = TextModule(
+    id = id,
+    text = getText(textResourceId)
+)
+
+fun Fragment.createLabelModule(
+    @StringRes titleResourceId: Int,
+    id: String = "label_$titleResourceId"
+) = LabelModule(
+    id = id,
+    title = getText(titleResourceId)
+)
+
+fun Fragment.createSwitchModule(
+    @StringRes textResourceId: Int,
+    onValueChanged: (Boolean) -> Unit,
+    initialValue: Boolean = false,
+    id: String = "switch_$textResourceId"
+) = SwitchModule(
+    id = id,
+    text = getText(textResourceId),
+    initialValue = initialValue,
+    onValueChanged = onValueChanged
+)
+
+fun Fragment.createCheckBoxModule(
+    @StringRes textResourceId: Int,
+    onValueChanged: (Boolean) -> Unit,
+    initialValue: Boolean = false,
+    id: String = "checkBox_$textResourceId"
+) = CheckBoxModule(
+    id = id,
+    text = getText(textResourceId),
+    initialValue = initialValue,
+    onValueChanged = onValueChanged
+)
+
+fun Fragment.createButtonModule(
+    @StringRes textResourceId: Int,
+    onButtonPressed: () -> Unit,
+    id: String = "button_$textResourceId"
+) = ButtonModule(
+    id = id,
+    text = getText(textResourceId),
+    onButtonPressed = onButtonPressed
+)

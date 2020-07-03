@@ -9,14 +9,14 @@ import com.pandulapeter.beagle.appDemo.data.BeagleListItemContractImplementation
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
+import com.pandulapeter.beagle.appDemo.utils.createLabelModule
+import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.modules.CheckBoxModule
-import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
-import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel, FeatureTogglesListItem>(R.string.case_study_feature_toggles_title) {
@@ -43,8 +43,8 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
         })
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
-        TextModule(text = getString(R.string.case_study_feature_toggles_hint_1)),
-        LabelModule(title = getString(R.string.case_study_feature_toggles_switches)),
+        createTextModule(R.string.case_study_feature_toggles_hint_1),
+        createLabelModule(R.string.case_study_feature_toggles_switches),
         SwitchModule(
             id = TOGGLE_1_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_1),
@@ -59,7 +59,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
-        LabelModule(title = getString(R.string.case_study_feature_toggles_check_boxes)),
+        createLabelModule(R.string.case_study_feature_toggles_check_boxes),
         CheckBoxModule(
             id = TOGGLE_3_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_3),
@@ -74,7 +74,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
-        TextModule(text = getString(R.string.case_study_feature_toggles_hint_2)),
+        createTextModule(R.string.case_study_feature_toggles_hint_2),
         MultipleSelectionListModule(
             id = CHECK_BOX_GROUP_ID,
             title = getText(R.string.case_study_feature_toggles_check_box_group),
@@ -89,7 +89,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             initiallySelectedItemIds = emptySet(),
             onSelectionChanged = { viewModel.refreshItems() }
         ),
-        TextModule(text = getString(R.string.case_study_feature_toggles_hint_3)),
+        createTextModule(R.string.case_study_feature_toggles_hint_3),
         SingleSelectionListModule(
             id = RADIO_BUTTON_GROUP_ID,
             title = getText(R.string.case_study_feature_toggles_radio_button_group),

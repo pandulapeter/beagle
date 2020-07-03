@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public name="beagle_library_name" type="string"/>
+    <string name="beagle_library_name">Beagle</string>
+</resources>

@@ -10,15 +10,15 @@ import com.pandulapeter.beagle.appDemo.feature.main.about.AboutFragment
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
+import com.pandulapeter.beagle.appDemo.utils.createButtonModule
+import com.pandulapeter.beagle.appDemo.utils.createCheckBoxModule
+import com.pandulapeter.beagle.appDemo.utils.createLabelModule
+import com.pandulapeter.beagle.appDemo.utils.createSwitchModule
+import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.appDemo.utils.openUrl
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
-import com.pandulapeter.beagle.modules.ButtonModule
-import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.DividerModule
-import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
-import com.pandulapeter.beagle.modules.SwitchModule
-import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup_title) {
@@ -46,18 +46,19 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     }
 
     override fun getBeagleModules() = listOf(
-        TextModule(text = getText(R.string.setup_debug_menu_text_1)),
+        createTextModule(R.string.setup_debug_menu_text_1),
         DividerModule(),
-        LabelModule(title = getString(R.string.setup_debug_menu_label)),
-        SwitchModule(text = getString(R.string.setup_debug_menu_switch), onValueChanged = {}),
-        ButtonModule(text = getString(R.string.setup_debug_menu_button), onButtonPressed = {}),
-        CheckBoxModule(text = getString(R.string.setup_debug_menu_check_box), onValueChanged = {}),
+        createLabelModule(R.string.setup_debug_menu_label),
+        createSwitchModule(R.string.setup_debug_menu_switch, onValueChanged = {}),
+        createButtonModule(R.string.setup_debug_menu_button, onButtonPressed = {}),
+        createCheckBoxModule(R.string.setup_debug_menu_check_box, onValueChanged = {}),
         listOf(
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_1)),
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_2)),
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_3))
         ).let { radioGroupOptions ->
             SingleSelectionListModule(
+                id = "radioGroup",
                 title = getString(R.string.setup_debug_menu_radio_group),
                 items = radioGroupOptions,
                 initiallySelectedItemId = radioGroupOptions.first().id,
@@ -65,7 +66,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
             )
         },
         DividerModule(),
-        TextModule(text = getText(R.string.setup_debug_menu_text_2))
+        createTextModule(R.string.setup_debug_menu_text_2)
     )
 
     private fun onGitHubButtonClicked() = binding.recyclerView.openUrl(AboutFragment.GITHUB_URL)

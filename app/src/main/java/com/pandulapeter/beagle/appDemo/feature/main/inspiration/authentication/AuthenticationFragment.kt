@@ -51,6 +51,7 @@ class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         ItemListModule(
+            id = "testAccounts",
             title = getText(R.string.case_study_authentication_test_accounts),
             isExpandedInitially = true,
             items = listOf(

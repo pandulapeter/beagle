@@ -10,7 +10,9 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 
@@ -55,7 +57,7 @@ internal class DebugMenuDrawerLayout(
             val displayMetrics = DisplayMetrics()
             BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
             layoutParams = layoutParams.apply {
-                width = (displayMetrics.widthPixels * DRAWER_WIDTH_RATIO).roundToInt()
+                width = min(resources.getDimensionPixelSize(R.dimen.beagle_drawer_maximum_width), (displayMetrics.widthPixels * DRAWER_WIDTH_RATIO).roundToInt())
             }
         }
     }
