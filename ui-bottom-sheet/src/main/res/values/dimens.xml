@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="beagle_bottom_sheet_maximum_width">480dp</dimen>
+</resources>

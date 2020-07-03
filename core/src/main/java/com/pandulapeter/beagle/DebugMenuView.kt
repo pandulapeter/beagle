@@ -55,6 +55,7 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
                 marginEnd = rightMargin
             }
         })
+        clipChildren = false
         visibility = View.INVISIBLE
         addView(resetButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             leftMargin = largePadding / 2

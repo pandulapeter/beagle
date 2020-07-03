@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.implementation
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -10,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
+import kotlin.math.roundToInt
 
 
 @SuppressLint("ViewConstructor")
@@ -38,7 +40,6 @@ internal class DebugMenuDrawerLayout(
         addView(drawer, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, GravityCompat.END))
     }
 
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent) = if (ev.action == MotionEvent.ACTION_DOWN) {
         if (isDrawerVisible(drawer)) {
@@ -50,10 +51,21 @@ internal class DebugMenuDrawerLayout(
         super.onAttachedToWindow()
         setDrawerLockMode(if (Beagle.isUiEnabled) LOCK_MODE_UNDEFINED else LOCK_MODE_LOCKED_CLOSED)
         addDrawerListener(listener)
+        drawer.run {
+            val displayMetrics = DisplayMetrics()
+            BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+            layoutParams = layoutParams.apply {
+                width = (displayMetrics.widthPixels * DRAWER_WIDTH_RATIO).roundToInt()
+            }
+        }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         removeDrawerListener(listener)
+    }
+
+    companion object {
+        private const val DRAWER_WIDTH_RATIO = 0.6f
     }
 }
