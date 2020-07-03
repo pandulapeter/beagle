@@ -113,7 +113,7 @@ sealed class ModuleWrapper(
             LogListModule(
                 tag = tag
             ).also {
-                Beagle.log(message = "Log message 3", tag = tag)
+                Beagle.log(message = "Log message 3", tag = tag, payload = "Log payload")
                 Beagle.log(message = "Log message 2", tag = tag)
                 Beagle.log(message = "Log message 1", tag = tag)
             }

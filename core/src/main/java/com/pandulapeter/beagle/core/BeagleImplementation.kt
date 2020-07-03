@@ -27,6 +27,7 @@ import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
+import com.pandulapeter.beagle.core.view.AlertDialogFragment
 import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 import com.pandulapeter.beagle.modules.LogListModule
 import kotlin.properties.Delegates
@@ -125,6 +126,16 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListeners)
 
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
+
+    override fun showDialog(contents: CharSequence, isHorizontalScrollEnabled: Boolean) {
+        currentActivity?.supportFragmentManager?.let { fragmentManager ->
+            AlertDialogFragment.show(
+                fragmentManager = fragmentManager,
+                content = contents,
+                isHorizontalScrollEnabled = isHorizontalScrollEnabled
+            )
+        }
+    }
 
     internal fun applyPendingChanges() = listManager.applyPendingChanges()
 

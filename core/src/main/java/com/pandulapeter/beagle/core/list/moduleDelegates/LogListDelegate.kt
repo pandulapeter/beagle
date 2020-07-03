@@ -18,7 +18,7 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
                 text = (module.timestampFormatter?.let { formatter -> "• [".append(formatter(entry.timestamp)).append("] ").append(entry.message) } ?: "• ".append(entry.message)).let {
                     if (entry.payload == null) it else it.append("*")
                 },
-                onItemSelected = if (entry.payload == null) null else null //TODO: Open dialog
+                onItemSelected = if (entry.payload != null) fun() { BeagleCore.implementation.showDialog(contents = entry.payload) } else null
             )
         })
     }

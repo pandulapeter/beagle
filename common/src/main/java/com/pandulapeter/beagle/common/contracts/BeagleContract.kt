@@ -249,5 +249,13 @@ interface BeagleContract {
      * Call this function to trigger invalidating the overlay layout. This will result in calling all registered [OverlayListener] implementations.
      */
     fun invalidateOverlay() = Unit
+
+    /**
+     * Displays a dialog in debug builds.
+     *
+     * @param contents - The text that appears in the dialog.
+     * @param isHorizontalScrollEnabled - When true, the dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. False by default.
+     */
+    fun showDialog(contents: CharSequence, isHorizontalScrollEnabled: Boolean = false) = Unit
     //endregion
 }
