@@ -23,13 +23,6 @@ import com.pandulapeter.beagle.core.util.extension.drawable
 class DebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context.applyTheme(), attrs, defStyleAttr), UpdateListener {
 
     private val verticalMargin = context.dimension(R.dimen.beagle_item_vertical_margin)
-    private val recyclerView = RecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
-        clipToPadding = false
-        updatePadding()
-        BeagleCore.implementation.setupRecyclerView(this)
-        minimumWidth = context.dimension(R.dimen.beagle_minimum_size)
-        minimumHeight = context.dimension(R.dimen.beagle_minimum_size)
-    }
     private var recyclerLeftPadding = 0
     private var recyclerTopPadding = verticalMargin
     private var recyclerRightPadding = 0
@@ -69,6 +62,13 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
             }
         })
         background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, context.applyTheme().colorResource(android.R.attr.textColorPrimary)))
+    }
+    private val recyclerView = RecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
+        clipToPadding = false
+        updatePadding()
+        BeagleCore.implementation.setupRecyclerView(this)
+        minimumWidth = context.dimension(R.dimen.beagle_minimum_size)
+        minimumHeight = context.dimension(R.dimen.beagle_minimum_size)
     }
 
     init {

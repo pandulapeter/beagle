@@ -17,11 +17,11 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel, FeatureTogglesListItem>(R.string.case_study_feature_toggles_title) {
 
-    override val viewModel by inject<FeatureTogglesViewModel>()
+    override val viewModel by viewModel<FeatureTogglesViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -105,12 +105,6 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             onSelectionChanged = { viewModel.refreshItems() }
         )
     )
-
-    override fun onListUpdated() {
-        if (viewModel.shouldSetAppBarToNotLifted()) {
-            binding.appBar.setLifted(false)
-        }
-    }
 
     private fun resetAll() {
         Beagle.find<SwitchModule>(TOGGLE_1_ID)?.setCurrentValue(Beagle, false)

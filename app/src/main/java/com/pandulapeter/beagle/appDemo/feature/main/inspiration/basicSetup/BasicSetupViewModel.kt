@@ -18,7 +18,6 @@ class BasicSetupViewModel : ListViewModel<BasicSetupListItem>() {
     private val _items = MutableLiveData<List<BasicSetupListItem>>()
     override val items: LiveData<List<BasicSetupListItem>> = _items
     private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
-    private var hasSectionJustChanged = true
 
     init {
         refreshItems()
@@ -27,12 +26,7 @@ class BasicSetupViewModel : ListViewModel<BasicSetupListItem>() {
     fun onSectionHeaderSelected(uiModel: SectionHeaderViewHolder.UiModel) {
         Section.fromResourceId(uiModel.titleResourceId).let {
             selectedSection = if (it == selectedSection) null else it
-            hasSectionJustChanged = true
         }
-    }
-
-    fun shouldSetAppBarToNotLifted() = hasSectionJustChanged.also {
-        hasSectionJustChanged = false
     }
 
     fun refreshItems() {

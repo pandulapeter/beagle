@@ -45,12 +45,6 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         }
     }
 
-    override fun onListUpdated() {
-        if (viewModel.shouldSetAppBarToNotLifted()) {
-            binding.appBar.setLifted(false)
-        }
-    }
-
     override fun getBeagleModules() = listOf(
         TextModule(text = getText(R.string.setup_debug_menu_text_1)),
         DividerModule(),

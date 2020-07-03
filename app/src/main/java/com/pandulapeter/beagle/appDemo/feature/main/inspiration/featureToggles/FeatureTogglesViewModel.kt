@@ -32,7 +32,6 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
     private val multipleSelectionOptions get() = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)
     private val singleSelectionOption get() = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)
     private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
-    private var hasSectionJustChanged = true
     var isBulkApplyEnabled = false
         set(value) {
             field = value
@@ -48,12 +47,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
     fun onSectionHeaderSelected(uiModel: SectionHeaderViewHolder.UiModel) {
         Section.fromResourceId(uiModel.titleResourceId).let {
             selectedSection = if (it == selectedSection) null else it
-            hasSectionJustChanged = true
         }
-    }
-
-    fun shouldSetAppBarToNotLifted() = hasSectionJustChanged.also {
-        hasSectionJustChanged = false
     }
 
     fun refreshItems() {

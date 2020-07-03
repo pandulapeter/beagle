@@ -6,11 +6,11 @@ import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.common.contracts.module.Module
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LicencesFragment : ListFragment<LicencesViewModel, ListItem>(R.string.licences_title) {
 
-    override val viewModel by inject<LicencesViewModel>()
+    override val viewModel by viewModel<LicencesViewModel>()
 
     override fun getBeagleModules() = emptyList<Module<*>>()
 

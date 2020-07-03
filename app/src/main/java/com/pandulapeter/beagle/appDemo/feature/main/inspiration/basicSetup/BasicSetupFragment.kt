@@ -14,11 +14,11 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicSetupListItem>(R.string.case_study_basic_setup_title) {
 
-    override val viewModel by inject<BasicSetupViewModel>()
+    override val viewModel by viewModel<BasicSetupViewModel>()
 
     override fun createAdapter() = BasicSetupAdapter(
         scope = viewModel.viewModelScope,
@@ -38,12 +38,6 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
         AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }),
         DeviceInfoModule()
     )
-
-    override fun onListUpdated() {
-        if (viewModel.shouldSetAppBarToNotLifted()) {
-            binding.appBar.setLifted(false)
-        }
-    }
 
     companion object {
         fun newInstance() = BasicSetupFragment()

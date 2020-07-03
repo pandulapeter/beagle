@@ -7,10 +7,10 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.GithubButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.RadioButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
-import com.pandulapeter.beagle.appDemo.feature.shared.list.SpaceViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.SectionHeaderViewHolder
+import com.pandulapeter.beagle.appDemo.feature.shared.list.SpaceViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 import kotlin.properties.Delegates
 
@@ -20,7 +20,6 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     override val items: LiveData<List<SetupListItem>> = _items
     private var selectedUiVariant by Delegates.observable(UiVariant.ACTIVITY) { _, _, _ -> refreshItems() }
     private var selectedSection by Delegates.observable<Section?>(Section.WELCOME) { _, _, _ -> refreshItems() }
-    private var hasSectionJustChanged = true
 
     init {
         refreshItems()
@@ -35,15 +34,10 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     fun onSectionHeaderSelected(uiModel: SectionHeaderViewHolder.UiModel) {
         Section.fromResourceId(uiModel.titleResourceId).let {
             selectedSection = if (it == selectedSection) null else it
-            hasSectionJustChanged = true
         }
     }
 
     fun shouldBeFullSize(position: Int) = _items.value?.get(position) !is RadioButtonViewHolder.UiModel
-
-    fun shouldSetAppBarToNotLifted() = hasSectionJustChanged.also {
-        hasSectionJustChanged = false
-    }
 
     private fun refreshItems() {
         _items.value = mutableListOf<SetupListItem>().apply {

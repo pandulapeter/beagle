@@ -14,11 +14,11 @@ import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.SwitchModule
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuthenticationFragment : InspirationDetailFragment<AuthenticationViewModel, AuthenticationListItem>(R.string.case_study_authentication_title) {
 
-    override val viewModel by inject<AuthenticationViewModel>()
+    override val viewModel by viewModel<AuthenticationViewModel>()
     private val showAutomaticallySwitch by lazy {
         SwitchModule(
             id = SHOW_AUTOMATICALLY_SWITCH_ID,

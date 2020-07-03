@@ -31,8 +31,6 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     protected open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(context)
 
-    protected open fun onListUpdated() = Unit
-
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.setVariable(BR.viewModel, viewModel)
@@ -58,6 +56,16 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
             layoutManager = createLayoutManager()
             setHasFixedSize(true)
             waitForPreDraw { postDelayed({ startPostponedEnterTransition() }, 100) }
+        }
+    }
+
+    private fun onListUpdated() {
+        binding.appBar.run {
+            postDelayed({
+                if (isAdded) {
+                    setLifted(binding.recyclerView.computeVerticalScrollOffset() != 0)
+                }
+            }, 300)
         }
     }
 }
