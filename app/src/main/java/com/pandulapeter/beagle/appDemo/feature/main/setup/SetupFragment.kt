@@ -34,9 +34,9 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
 
     override fun createAdapter() = SetupAdapter(
         scope = viewModel.viewModelScope,
+        onSectionHeaderSelected = viewModel::onSectionHeaderSelected,
         onGitHubButtonClicked = ::onGitHubButtonClicked,
-        onRadioButtonSelected = viewModel::onRadioButtonSelected,
-        onHeaderSelected = viewModel::onHeaderSelected
+        onRadioButtonSelected = viewModel::onRadioButtonSelected
     )
 
     override fun createLayoutManager() = GridLayoutManager(context, spanCount, RecyclerView.VERTICAL, false).apply {

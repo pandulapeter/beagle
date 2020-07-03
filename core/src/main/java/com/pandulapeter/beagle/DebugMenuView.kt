@@ -7,7 +7,6 @@ import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
 import android.view.WindowInsets
 import android.widget.Button
 import android.widget.FrameLayout
@@ -25,7 +24,6 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     private val verticalMargin = context.dimension(R.dimen.beagle_item_vertical_margin)
     private val recyclerView = RecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
-        overScrollMode = View.OVER_SCROLL_NEVER
         clipToPadding = false
         updatePadding()
         BeagleCore.implementation.setupRecyclerView(this)

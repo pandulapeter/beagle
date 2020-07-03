@@ -20,7 +20,10 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
 
     override val viewModel by inject<BasicSetupViewModel>()
 
-    override fun createAdapter() = BasicSetupAdapter(viewModel.viewModelScope)
+    override fun createAdapter() = BasicSetupAdapter(
+        scope = viewModel.viewModelScope,
+        onSectionHeaderSelected = viewModel::onSectionHeaderSelected
+    )
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         HeaderModule(
@@ -35,6 +38,12 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
         AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }),
         DeviceInfoModule()
     )
+
+    override fun onListUpdated() {
+        if (viewModel.shouldSetAppBarToNotLifted()) {
+            binding.appBar.setLifted(false)
+        }
+    }
 
     companion object {
         fun newInstance() = BasicSetupFragment()

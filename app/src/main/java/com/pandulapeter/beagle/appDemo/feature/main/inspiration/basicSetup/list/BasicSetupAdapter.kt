@@ -4,9 +4,13 @@ import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.appDemo.feature.shared.list.SectionHeaderViewHolder
 import kotlinx.coroutines.CoroutineScope
 
-class BasicSetupAdapter(scope: CoroutineScope) : BaseAdapter<BasicSetupListItem>(scope) {
+class BasicSetupAdapter(
+    scope: CoroutineScope,
+    onSectionHeaderSelected: (SectionHeaderViewHolder.UiModel) -> Unit
+) : BaseAdapter<BasicSetupListItem>(scope, onSectionHeaderSelected) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is LoadingIndicatorViewHolder.UiModel -> R.layout.item_basic_setup_loading_indicator

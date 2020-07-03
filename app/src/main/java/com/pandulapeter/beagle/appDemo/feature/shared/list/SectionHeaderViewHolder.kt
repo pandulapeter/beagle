@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.feature.main.setup.list
+package com.pandulapeter.beagle.appDemo.feature.shared.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,16 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.databinding.ItemSetupHeaderBinding
-import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.appDemo.databinding.ItemSectionHeaderBinding
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.BasicSetupListItem
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
+import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.utils.tintedDrawable
 
-class HeaderViewHolder private constructor(
-    binding: ItemSetupHeaderBinding,
+class SectionHeaderViewHolder private constructor(
+    binding: ItemSectionHeaderBinding,
     onItemSelected: (UiModel) -> Unit
-) : BaseViewHolder<ItemSetupHeaderBinding, HeaderViewHolder.UiModel>(binding) {
+) : BaseViewHolder<ItemSectionHeaderBinding, SectionHeaderViewHolder.UiModel>(binding) {
 
     //TODO: Replace with animated vector drawables.
     private val drawableExpand by lazy { itemView.context.tintedDrawable(R.drawable.ic_expand, binding.header.textColors.defaultColor) }
@@ -35,15 +37,15 @@ class HeaderViewHolder private constructor(
     data class UiModel(
         @StringRes val titleResourceId: Int,
         val isExpanded: Boolean,
-        override val id: String = "header_$titleResourceId"
-    ) : SetupListItem
+        override val id: String = "sectionHeader_$titleResourceId"
+    ) : ListItem, SetupListItem, BasicSetupListItem, FeatureTogglesListItem
 
     companion object {
         fun create(
             parent: ViewGroup,
             onItemSelected: (UiModel) -> Unit
-        ) = HeaderViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_setup_header, parent, false),
+        ) = SectionHeaderViewHolder(
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_section_header, parent, false),
             onItemSelected = onItemSelected
         )
     }

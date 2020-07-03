@@ -12,7 +12,10 @@ import kotlinx.coroutines.launch
 import java.util.ArrayDeque
 
 
-open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : RecyclerView.Adapter<BaseViewHolder<*, *>>() {
+open class BaseAdapter<T : ListItem>(
+    private val scope: CoroutineScope,
+    private val onSectionHeaderSelected: (SectionHeaderViewHolder.UiModel) -> Unit = {}
+) : RecyclerView.Adapter<BaseViewHolder<*, *>>() {
 
     private var items = emptyList<T>()
     private var job: Job? = null
@@ -29,6 +32,8 @@ open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : Recycl
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is TextViewHolder.UiModel -> R.layout.item_text
         is CodeSnippetViewHolder.UiModel -> R.layout.item_code_snippet
+        is SectionHeaderViewHolder.UiModel -> R.layout.item_section_header
+        is SpaceViewHolder.UiModel -> R.layout.item_space
         else -> throw  IllegalArgumentException("Unsupported item type at position $position.")
     }
 
@@ -36,6 +41,8 @@ open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : Recycl
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
         R.layout.item_text -> TextViewHolder.create(parent)
         R.layout.item_code_snippet -> CodeSnippetViewHolder.create(parent)
+        R.layout.item_section_header -> SectionHeaderViewHolder.create(parent, onSectionHeaderSelected)
+        R.layout.item_space -> SpaceViewHolder.create(parent)
         else -> throw  IllegalArgumentException("Unsupported item view type: $viewType.")
     }
 
@@ -43,6 +50,8 @@ open class BaseAdapter<T : ListItem>(private val scope: CoroutineScope) : Recycl
     override fun onBindViewHolder(holder: BaseViewHolder<*, *>, position: Int) = when (holder) {
         is CodeSnippetViewHolder -> holder.bind(getItem(position) as CodeSnippetViewHolder.UiModel)
         is TextViewHolder -> holder.bind(getItem(position) as TextViewHolder.UiModel)
+        is SectionHeaderViewHolder -> holder.bind(getItem(position) as SectionHeaderViewHolder.UiModel)
+        is SpaceViewHolder -> holder.bind(getItem(position) as SpaceViewHolder.UiModel)
         else -> throw  IllegalArgumentException("Unsupported item type at position $position.")
     }
 

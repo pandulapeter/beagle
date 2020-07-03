@@ -27,7 +27,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
         super.onViewCreated(view, savedInstanceState)
         Beagle.addUpdateListener(
             listener = object : UpdateListener {
-                override fun onContentsChanged() = viewModel.updateItems()
+                override fun onContentsChanged() = viewModel.refreshItems()
             },
             lifecycleOwner = this
         )
@@ -35,6 +35,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
 
     override fun createAdapter() = FeatureTogglesAdapter(
         scope = viewModel.viewModelScope,
+        onSectionHeaderSelected = viewModel::onSectionHeaderSelected,
         onResetButtonPressed = ::resetAll,
         onBulkApplySwitchToggled = { isEnabled ->
             viewModel.isBulkApplyEnabled = isEnabled
@@ -49,14 +50,14 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             text = getString(R.string.case_study_feature_toggles_toggle_1),
             shouldBePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
-            onValueChanged = { viewModel.updateItems() }
+            onValueChanged = { viewModel.refreshItems() }
         ),
         SwitchModule(
             id = TOGGLE_2_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_2),
             shouldBePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
-            onValueChanged = { viewModel.updateItems() }
+            onValueChanged = { viewModel.refreshItems() }
         ),
         LabelModule(title = getString(R.string.case_study_feature_toggles_check_boxes)),
         CheckBoxModule(
@@ -64,14 +65,14 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             text = getString(R.string.case_study_feature_toggles_toggle_3),
             shouldBePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
-            onValueChanged = { viewModel.updateItems() }
+            onValueChanged = { viewModel.refreshItems() }
         ),
         CheckBoxModule(
             id = TOGGLE_4_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_4),
             shouldBePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
-            onValueChanged = { viewModel.updateItems() }
+            onValueChanged = { viewModel.refreshItems() }
         ),
         TextModule(text = getString(R.string.case_study_feature_toggles_hint_2)),
         MultipleSelectionListModule(
@@ -86,7 +87,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             shouldBePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemIds = emptySet(),
-            onSelectionChanged = { viewModel.updateItems() }
+            onSelectionChanged = { viewModel.refreshItems() }
         ),
         TextModule(text = getString(R.string.case_study_feature_toggles_hint_3)),
         SingleSelectionListModule(
@@ -101,9 +102,15 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
             shouldBePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemId = getString(R.string.case_study_feature_toggles_radio_button_1),
-            onSelectionChanged = { viewModel.updateItems() }
+            onSelectionChanged = { viewModel.refreshItems() }
         )
     )
+
+    override fun onListUpdated() {
+        if (viewModel.shouldSetAppBarToNotLifted()) {
+            binding.appBar.setLifted(false)
+        }
+    }
 
     private fun resetAll() {
         Beagle.find<SwitchModule>(TOGGLE_1_ID)?.setCurrentValue(Beagle, false)

@@ -5,12 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.GithubButtonViewHolder
-import com.pandulapeter.beagle.appDemo.feature.main.setup.list.HeaderViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.RadioButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
-import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SpaceViewHolder
+import com.pandulapeter.beagle.appDemo.feature.shared.list.SpaceViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
+import com.pandulapeter.beagle.appDemo.feature.shared.list.SectionHeaderViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 import kotlin.properties.Delegates
 
@@ -32,7 +32,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         }
     }
 
-    fun onHeaderSelected(uiModel: HeaderViewHolder.UiModel) {
+    fun onSectionHeaderSelected(uiModel: SectionHeaderViewHolder.UiModel) {
         Section.fromResourceId(uiModel.titleResourceId).let {
             selectedSection = if (it == selectedSection) null else it
             hasSectionJustChanged = true
@@ -55,8 +55,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     }
 
     private fun MutableList<SetupListItem>.addWelcomeSection() {
-        add(HeaderViewHolder.UiModel(Section.WELCOME.titleResourceId, selectedSection == Section.WELCOME))
-        if (selectedSection == Section.WELCOME) {
+        if (addSectionHeader(Section.WELCOME)) {
             add(TextViewHolder.UiModel(R.string.setup_text_1))
             add(GithubButtonViewHolder.UiModel())
             add(TextViewHolder.UiModel(R.string.setup_hint))
@@ -65,8 +64,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     }
 
     private fun MutableList<SetupListItem>.addInitializationSection() {
-        add(HeaderViewHolder.UiModel(Section.INITIALIZATION.titleResourceId, selectedSection == Section.INITIALIZATION))
-        if (selectedSection == Section.INITIALIZATION) {
+        if (addSectionHeader(Section.INITIALIZATION)) {
             add(TextViewHolder.UiModel(R.string.setup_text_2))
             add(
                 CodeSnippetViewHolder.UiModel(
@@ -110,8 +108,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     }
 
     private fun MutableList<SetupListItem>.addModuleConfigurationSection() {
-        add(HeaderViewHolder.UiModel(Section.MODULE_CONFIGURATION.titleResourceId, selectedSection == Section.MODULE_CONFIGURATION))
-        if (selectedSection == Section.MODULE_CONFIGURATION) {
+        if (addSectionHeader(Section.MODULE_CONFIGURATION)) {
             add(TextViewHolder.UiModel(R.string.setup_text_7))
             add(CodeSnippetViewHolder.UiModel("Beagle.set(module1, module2, …)"))
             add(TextViewHolder.UiModel(R.string.setup_text_8))
@@ -134,17 +131,24 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     }
 
     private fun MutableList<SetupListItem>.addTroubleshootingSection() {
-        add(HeaderViewHolder.UiModel(Section.TROUBLESHOOTING.titleResourceId, selectedSection == Section.TROUBLESHOOTING))
-        if (selectedSection == Section.TROUBLESHOOTING) {
+        if (addSectionHeader(Section.TROUBLESHOOTING)) {
             add(TextViewHolder.UiModel(R.string.setup_text_12))
-            add(CodeSnippetViewHolder.UiModel("override fun onBackPressed() {\n" +
-                    "    if (!Beagle.hide()) {\n" +
-                    "        super.onBackPressed()\n" +
-                    "    }\n" +
-                    "}"))
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    "override fun onBackPressed() {\n" +
+                            "    if (!Beagle.hide()) {\n" +
+                            "        super.onBackPressed()\n" +
+                            "    }\n" +
+                            "}"
+                )
+            )
             add(TextViewHolder.UiModel(R.string.setup_text_13))
             add(SpaceViewHolder.UiModel())
         }
+    }
+
+    private fun MutableList<SetupListItem>.addSectionHeader(section: Section) = (selectedSection == section).also { isExpanded ->
+        add(SectionHeaderViewHolder.UiModel(section.titleResourceId, isExpanded))
     }
 
     private enum class UiVariant(@StringRes val titleResourceId: Int) {

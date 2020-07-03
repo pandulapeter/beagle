@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.setup.list.HeaderViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.shared.list.SectionHeaderViewHolder.UiModel" />
 
     </data>
 

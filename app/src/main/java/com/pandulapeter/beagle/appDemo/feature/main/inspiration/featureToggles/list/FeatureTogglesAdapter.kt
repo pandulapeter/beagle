@@ -4,13 +4,15 @@ import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.appDemo.feature.shared.list.SectionHeaderViewHolder
 import kotlinx.coroutines.CoroutineScope
 
 class FeatureTogglesAdapter(
     scope: CoroutineScope,
+    onSectionHeaderSelected: (SectionHeaderViewHolder.UiModel) -> Unit,
     private val onResetButtonPressed: () -> Unit,
     private val onBulkApplySwitchToggled: (Boolean) -> Unit
-) : BaseAdapter<FeatureTogglesListItem>(scope) {
+) : BaseAdapter<FeatureTogglesListItem>(scope, onSectionHeaderSelected) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is CurrentStateViewHolder.UiModel -> R.layout.item_feature_toggles_current_state
