@@ -7,6 +7,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.view.WindowInsets
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -54,6 +55,7 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
                 marginEnd = rightMargin
             }
         })
+        visibility = View.INVISIBLE
         addView(resetButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             leftMargin = largePadding / 2
             rightMargin = largePadding
@@ -80,6 +82,7 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
             setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets) }
             requestApplyInsets()
         }
+        onContentsChanged()
     }
 
     override fun onAttachedToWindow() {
@@ -96,11 +99,15 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         val hasPendingChanges = BeagleCore.implementation.hasPendingUpdates
         recyclerView.updatePadding()
         buttonContainer.run {
+            if (hasPendingChanges) {
+                visibility = View.VISIBLE
+            }
             post {
                 animate()
-                    .translationY(if (hasPendingChanges) 0f else height.toFloat())
                     .alpha(if (hasPendingChanges) 1f else 0f)
                     .start()
+                applyButton.animate().translationY(if (hasPendingChanges) 0f else height.toFloat()).start()
+                resetButton.animate().translationY(if (hasPendingChanges) 0f else height.toFloat()).start()
             }
         }
     }

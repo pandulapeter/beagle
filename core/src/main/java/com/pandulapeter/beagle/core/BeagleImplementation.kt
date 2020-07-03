@@ -99,7 +99,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
 
     override fun removeOverlayListener(listener: OverlayListener) = overlayListenerManager.removeListener(listener)
 
-    internal fun addInternalUpdateListener(listener: UpdateListener) = updateListenerManager.addInternalListener(listener)
+    fun addInternalUpdateListener(listener: UpdateListener) = updateListenerManager.addInternalListener(listener)
 
     override fun addUpdateListener(listener: UpdateListener, lifecycleOwner: LifecycleOwner?) = updateListenerManager.addListener(listener, lifecycleOwner)
 
