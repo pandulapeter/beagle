@@ -13,17 +13,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/large_content_padding"
-        android:layout_marginLeft="@dimen/large_content_padding"
-        android:layout_marginEnd="@dimen/large_content_padding"
-        android:layout_marginRight="@dimen/large_content_padding"
-        android:orientation="vertical">
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="@dimen/large_content_padding">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/large_content_padding"
             android:text="@string/case_study_network_request_interceptor_something_went_wrong" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -31,10 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/large_content_padding"
-            android:layout_marginLeft="@dimen/large_content_padding"
-            android:layout_marginEnd="@dimen/large_content_padding"
-            android:layout_marginRight="@dimen/large_content_padding"
+            android:layout_marginTop="@dimen/large_content_padding"
             android:gravity="center"
             android:text="@string/case_study_network_request_interceptor_try_again"
             android:textAllCaps="false"

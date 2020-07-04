@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
+import com.pandulapeter.beagle.modules.NetworkLogListModule
 import kotlin.reflect.KClass
 
 /**
@@ -229,6 +230,15 @@ interface BeagleContract {
     val currentActivity: FragmentActivity? get() = null
 
     /**
+     * Cast this value to a nullable OkHttp Interceptor implementation and add it to your OkHttp builder to make the [NetworkLogListModule] work.
+     * The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.
+     *
+     * @return The nullable Interceptor that should be the argument for OkHttpClient.Builder().addInterceptor(). Reasons for returning null:
+     *  - The application depends on the noop variant.
+     */
+    val interceptor: Any? get() = null
+
+    /**
      * Adds a new log handled by instances of LogListModule and notifies the registered LogListeners.
      *
      * @param message - The message that will be displayed.
@@ -243,6 +253,11 @@ interface BeagleContract {
      * @param tag - A specific tag to filter out, or null to delete all logs. Null by default.
      */
     fun clearLogs(tag: String? = null) = Unit
+
+    /**
+     * Clears all network log messages.
+     */
+    fun clearNetworkLogs() = Unit
 
     /**
      * Call this function to trigger recreating every cell model for every module.

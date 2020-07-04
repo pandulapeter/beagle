@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestI
 
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
+import com.pandulapeter.beagle.appDemo.data.NetworkingManager
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.NetworkRequestInterceptorAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
@@ -20,7 +21,11 @@ class NetworkRequestInterceptorFragment : InspirationDetailFragment<NetworkReque
     )
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
-        NetworkLogListModule()
+        NetworkLogListModule(
+            isExpandedInitially = true,
+            shouldShowHeaders = true,
+            baseUrl = NetworkingManager.BASE_URL
+        )
     )
 
     companion object {

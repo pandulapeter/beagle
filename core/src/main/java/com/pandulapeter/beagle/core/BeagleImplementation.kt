@@ -27,10 +27,14 @@ import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
 import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
+import com.pandulapeter.beagle.core.util.NetworkInterceptor
+import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.view.AlertDialogFragment
 import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 import com.pandulapeter.beagle.modules.LogListModule
+import com.pandulapeter.beagle.modules.NetworkLogListModule
+import okhttp3.Interceptor
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
@@ -42,6 +46,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         }
     }
     override val currentActivity get() = debugMenuInjector.currentActivity
+    override val interceptor = NetworkInterceptor as Interceptor
     var appearance = Appearance()
         private set
     var behavior = Behavior()
@@ -128,6 +133,20 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun clearLogs(tag: String?) {
         logManager.clearLogs(tag)
         if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
+            refresh()
+        }
+    }
+
+    internal fun logNetworkEvent(entry: NetworkLogEntry) {
+        networkLogManager.log(entry)
+        if (listManager.contains(NetworkLogListModule.ID)) {
+            refresh()
+        }
+    }
+
+    override fun clearNetworkLogs() {
+        networkLogManager.clearLogs()
+        if (listManager.contains(NetworkLogListModule.ID)) {
             refresh()
         }
     }

@@ -48,6 +48,7 @@ class NetworkRequestInterceptorViewModel(
         if (selectedSong.id != loadedSong?.id) {
             job?.cancel()
             isLoading = true
+            refreshItems()
             job = viewModelScope.launch {
                 loadedSong = try {
                     networkingManager.songService.getSongAsync(selectedSong.id)
@@ -76,7 +77,18 @@ class NetworkRequestInterceptorViewModel(
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_2))
             add(CodeSnippetViewHolder.UiModel("NetworkRequestInterceptorFragment()"))
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_3))
-            add(CodeSnippetViewHolder.UiModel("//TODO: Coming soon"))
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    "OkHttpClient.Builder()\n" +
+                            "    .apply {\n" +
+                            "        (Beagle.interceptor as? Interceptor?)?.let {\n" +
+                            "            addInterceptor(it)\n" +
+                            "        }\n" +
+                            "    }\n" +
+                            "    .build()"
+                )
+            )
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_4))
         }
     }
 
@@ -88,7 +100,7 @@ class NetworkRequestInterceptorViewModel(
             .joinToString("\n") + "\n…"
 
     private enum class SongTitle(@StringRes val titleResourceId: Int, val id: String) {
-        SONG_1(titleResourceId = R.string.case_study_network_request_interceptor_song_1, id = "the_beatles-let_it_be"),
+        SONG_1(titleResourceId = R.string.case_study_network_request_interceptor_song_1, id = "eagles-hotel_california"),
         SONG_2(titleResourceId = R.string.case_study_network_request_interceptor_song_2, id = "the_rembrandts-ill_be_there_for_you"),
         SONG_3(titleResourceId = R.string.case_study_network_request_interceptor_song_3, id = "the_proclaimers-im_gonna_be");
 

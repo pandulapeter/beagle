@@ -6,13 +6,7 @@ internal class NetworkLogManager {
 
     private val entries = mutableListOf<NetworkLogEntry>()
 
-    fun log(message: String, payload: String) = entries.add(
-        0,
-        NetworkLogEntry(
-            message = message,
-            payload = payload
-        )
-    )
+    fun log(entry: NetworkLogEntry) = entries.add(0, entry)
 
     fun clearLogs() = entries.clear()
 
