@@ -21,7 +21,7 @@ internal class DrawerUiManager : UiManagerContract {
         activity.onBackPressedDispatcher.addCallback(activity, onBackPressedCallback)
         DebugMenuDrawerLayout(
             context = activity,
-            drawer = drawer
+            debugMenuView = drawer
         ).apply {
             updateDrawerLockMode()
             if (onBackPressedCallback.isEnabled) {
@@ -62,7 +62,7 @@ internal class DrawerUiManager : UiManagerContract {
         }
     }
 
-    private fun getDrawerView(activity: FragmentActivity?) = getDrawerLayout(activity)?.drawer
+    private fun getDrawerView(activity: FragmentActivity?) = getDrawerLayout(activity)?.debugMenuView
 
     private fun getDrawerLayout(activity: FragmentActivity?) = findOverlayFragment(activity)?.view as? DebugMenuDrawerLayout?
 
