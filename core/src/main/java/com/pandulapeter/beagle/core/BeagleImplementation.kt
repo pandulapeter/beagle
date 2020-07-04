@@ -46,7 +46,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         }
     }
     override val currentActivity get() = debugMenuInjector.currentActivity
-    override val interceptor = NetworkInterceptor as Interceptor
+    override val interceptor by lazy { NetworkInterceptor() as Interceptor }
     var appearance = Appearance()
         private set
     var behavior = Behavior()

@@ -10,27 +10,26 @@ import java.io.EOFException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
-internal object NetworkInterceptor : Interceptor {
+internal class NetworkInterceptor : Interceptor {
 
-    private val UTF8 = Charset.forName("UTF-8")
-    private const val MAX_STRING_LENGTH = 512 * 1024 //TODO: Come up with a less random value
+    private val utf8 = Charset.forName("UTF-8")
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val requestBody = request.body
         val requestJson = if (requestBody == null) {
-            ""
+            "[No payload]"
         } else if (bodyHasUnknownEncoding(request.headers)) {
-            "[encoded]"
+            "[Encoded]"
         } else if (requestBody.contentLength() > MAX_STRING_LENGTH) {
-            "[payload too large]"
+            "[Payload too large]"
         } else {
             val buffer = Buffer()
             requestBody.writeTo(buffer)
-            var charset: Charset? = UTF8
+            var charset: Charset? = utf8
             val contentType = requestBody.contentType()
             if (contentType != null) {
-                charset = contentType.charset(UTF8)
+                charset = contentType.charset(utf8)
             }
             if (isPlaintext(buffer)) {
                 charset?.let { buffer.readString(it) } ?: ""
@@ -64,7 +63,7 @@ internal object NetworkInterceptor : Interceptor {
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
         val responseBody = response.body
         val contentType = responseBody?.contentType()
-        val responseJson = if (contentType?.subtype == "json" && responseBody.source().buffer.isProbablyUtf8()) response.body?.string() else null
+        val responseJson = if ((contentType == null || contentType.subtype == "json") && responseBody?.source()?.buffer?.isProbablyUtf8() == true) response.body?.string() else null
         BeagleCore.implementation.logNetworkEvent(
             NetworkLogEntry(
                 isOutgoing = false,
@@ -121,5 +120,9 @@ internal object NetworkInterceptor : Interceptor {
         } catch (_: EOFException) {
             return false // Truncated UTF-8 sequence.
         }
+    }
+
+    companion object {
+        private const val MAX_STRING_LENGTH = 512 * 1024 //TODO: Come up with a less random value
     }
 }
