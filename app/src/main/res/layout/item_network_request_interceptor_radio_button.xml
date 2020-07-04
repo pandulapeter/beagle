@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.RadioButtonViewHolder.UiModel" />
+
+    </data>
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/radio_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/content_padding"
+        android:layout_marginLeft="@dimen/content_padding"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:checked="@{uiModel.checked}"
+        android:paddingStart="@dimen/content_padding"
+        android:paddingLeft="@dimen/content_padding"
+        android:paddingEnd="@dimen/large_content_padding"
+        android:paddingRight="@dimen/large_content_padding"
+        android:text="@{uiModel.titleResourceId}"
+        tools:text="Radio button" />
+
+</layout>
