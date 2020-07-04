@@ -161,7 +161,7 @@ internal class ListManager {
     private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement, onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
         modules.apply {
             var newIndex = 0
-            newModules.forEach { module ->
+            newModules.distinctBy { it.id }.forEach { module ->
                 indexOfFirst { it.id == module.id }.also { currentIndex ->
                     if (currentIndex != -1) {
                         removeAt(currentIndex)

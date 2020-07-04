@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list
+package com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.list
 
 import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
@@ -7,18 +7,18 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.SectionHeaderViewHolder
 import kotlinx.coroutines.CoroutineScope
 
-class BasicSetupAdapter(
+class SimpleSetupAdapter(
     scope: CoroutineScope,
     onSectionHeaderSelected: (SectionHeaderViewHolder.UiModel) -> Unit
-) : BaseAdapter<BasicSetupListItem>(scope, onSectionHeaderSelected) {
+) : BaseAdapter<SimpleSetupListItem>(scope, onSectionHeaderSelected) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
-        is LoadingIndicatorViewHolder.UiModel -> R.layout.item_basic_setup_loading_indicator
+        is LoadingIndicatorViewHolder.UiModel -> R.layout.item_simple_setup_loading_indicator
         else -> super.getItemViewType(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
-        R.layout.item_basic_setup_loading_indicator -> LoadingIndicatorViewHolder.create(parent)
+        R.layout.item_simple_setup_loading_indicator -> LoadingIndicatorViewHolder.create(parent)
         else -> super.onCreateViewHolder(parent, viewType)
     }
 

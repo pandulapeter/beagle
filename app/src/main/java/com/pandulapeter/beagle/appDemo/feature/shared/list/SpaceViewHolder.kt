@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSpaceBinding
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.BasicSetupListItem
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.list.SimpleSetupListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
@@ -18,7 +18,7 @@ class SpaceViewHolder private constructor(
 
     data class UiModel(
         override val id: String = "space_${UUID.randomUUID()}"
-    ) : ListItem, SetupListItem, InspirationListItem, BasicSetupListItem, FeatureTogglesListItem, AuthenticationListItem
+    ) : ListItem, SetupListItem, InspirationListItem, SimpleSetupListItem, FeatureTogglesListItem, AuthenticationListItem
 
     companion object {
         fun create(

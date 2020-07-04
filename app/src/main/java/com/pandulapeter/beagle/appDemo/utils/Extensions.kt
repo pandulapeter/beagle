@@ -37,6 +37,7 @@ import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 
@@ -157,6 +158,16 @@ fun Fragment.createTextModule(
     id: String = "text_$textResourceId"
 ) = TextModule(
     id = id,
+    text = getText(textResourceId)
+)
+
+fun Fragment.createLongTextModule(
+    @StringRes titleResourceId: Int,
+    @StringRes textResourceId: Int,
+    id: String = "text_$textResourceId"
+) = LongTextModule(
+    id = id,
+    title = getText(titleResourceId),
     text = getText(textResourceId)
 )
 

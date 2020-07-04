@@ -10,18 +10,17 @@ enum class CaseStudy(
     @StringRes val description: Int,
     val isReady: Boolean = true
 ) {
-    BASIC_SETUP(
-        title = R.string.case_study_basic_setup_title,
-        description = R.string.case_study_basic_setup_description
+    SIMPLE_SETUP(
+        title = R.string.case_study_simple_setup_title,
+        description = R.string.case_study_simple_setup_description
+    ),
+    STATIC_DATA(
+        title = R.string.case_study_static_data_title,
+        description = R.string.case_study_static_data_description
     ),
     FEATURE_TOGGLES(
         title = R.string.case_study_feature_toggles_title,
         description = R.string.case_study_feature_toggles_description
-    ),
-    STATIC_DATA(
-        title = R.string.case_study_static_data_title,
-        description = R.string.case_study_static_data_description,
-        isReady = false
     ),
     AUTHENTICATION(
         title = R.string.case_study_authentication_title,

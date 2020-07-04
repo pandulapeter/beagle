@@ -1,36 +1,29 @@
-package com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup
+package com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup
 
 import androidx.lifecycle.viewModelScope
-import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.BasicSetupAdapter
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.list.BasicSetupListItem
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.list.SimpleSetupAdapter
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.list.SimpleSetupListItem
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
-import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicSetupListItem>(R.string.case_study_basic_setup_title) {
+class SimpleSetupFragment : InspirationDetailFragment<SimpleSetupViewModel, SimpleSetupListItem>(R.string.case_study_simple_setup_title) {
 
-    override val viewModel by viewModel<BasicSetupViewModel>()
+    override val viewModel by viewModel<SimpleSetupViewModel>()
 
-    override fun createAdapter() = BasicSetupAdapter(
+    override fun createAdapter() = SimpleSetupAdapter(
         scope = viewModel.viewModelScope,
         onSectionHeaderSelected = viewModel::onSectionHeaderSelected
     )
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
-        HeaderModule(
-            title = getString(R.string.app_name),
-            subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
-            text = "Built on ${BuildConfig.BUILD_DATE}"
-        ),
         AppInfoButtonModule(),
         DeveloperOptionsButtonModule(),
         ForceCrashButtonModule(),
@@ -40,6 +33,6 @@ class BasicSetupFragment : InspirationDetailFragment<BasicSetupViewModel, BasicS
     )
 
     companion object {
-        fun newInstance() = BasicSetupFragment()
+        fun newInstance() = SimpleSetupFragment()
     }
 }

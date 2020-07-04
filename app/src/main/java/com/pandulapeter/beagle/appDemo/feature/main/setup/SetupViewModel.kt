@@ -19,7 +19,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     private val _items = MutableLiveData<List<SetupListItem>>()
     override val items: LiveData<List<SetupListItem>> = _items
     private var selectedUiVariant by Delegates.observable(UiVariant.ACTIVITY) { _, _, _ -> refreshItems() }
-    private var selectedSection by Delegates.observable<Section?>(Section.WELCOME) { _, _, _ -> refreshItems() }
+    private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
 
     init {
         refreshItems()
@@ -41,108 +41,100 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
 
     private fun refreshItems() {
         _items.value = mutableListOf<SetupListItem>().apply {
-            addWelcomeSection()
+            addTopSection()
             addInitializationSection()
             addModuleConfigurationSection()
             addTroubleshootingSection()
         }
     }
 
-    private fun MutableList<SetupListItem>.addWelcomeSection() {
-        if (addSectionHeader(Section.WELCOME)) {
-            add(TextViewHolder.UiModel(R.string.setup_text_1))
-            add(GithubButtonViewHolder.UiModel())
-            add(TextViewHolder.UiModel(R.string.setup_hint))
-            add(SpaceViewHolder.UiModel())
-        }
+    private fun MutableList<SetupListItem>.addTopSection() {
+        add(TextViewHolder.UiModel(R.string.setup_text_1))
+        add(GithubButtonViewHolder.UiModel())
+        add(TextViewHolder.UiModel(R.string.setup_hint))
     }
 
-    private fun MutableList<SetupListItem>.addInitializationSection() {
-        if (addSectionHeader(Section.INITIALIZATION)) {
-            add(TextViewHolder.UiModel(R.string.setup_text_2))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "allprojects {\n" +
-                            "    repositories {\n" +
-                            "        …\n" +
-                            "        maven { url \"https://jitpack.io\" }\n" +
-                            "    }\n" +
-                            "}"
-                )
+    private fun MutableList<SetupListItem>.addInitializationSection() = addSection(Section.INITIALIZATION) {
+        add(TextViewHolder.UiModel(R.string.setup_text_2))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "allprojects {\n" +
+                        "    repositories {\n" +
+                        "        …\n" +
+                        "        maven { url \"https://jitpack.io\" }\n" +
+                        "    }\n" +
+                        "}"
             )
-            add(TextViewHolder.UiModel(R.string.setup_text_3))
-            add(SpaceViewHolder.UiModel())
-            addAll(UiVariant.values().map { uiVariant ->
-                RadioButtonViewHolder.UiModel(uiVariant.titleResourceId, uiVariant == selectedUiVariant)
-            })
-            add(TextViewHolder.UiModel(R.string.setup_text_4))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    id = "codeSnippet_gradle",
-                    codeSnippet = "dependencies {\n" +
-                            "    …\n" +
-                            "    def beagleVersion = \"2.x.y\" // Check the GitHub repository for the latest version\n" +
-                            "    debugImplementation \"com.github.pandulapeter.beagle:ui-${when (selectedUiVariant) {
-                                UiVariant.ACTIVITY -> "activity"
-                                UiVariant.BOTTOM_SHEET -> "bottom-sheet"
-                                UiVariant.DIALOG -> "dialog"
-                                UiVariant.DRAWER -> "drawer"
-                                UiVariant.VIEW -> "view"
-                            }
-                            }:\$beagleVersion\"\n" +
-                            "    releaseImplementation \"com.github.pandulapeter.beagle:noop:\$beagleVersion\"\n" +
-                            "}"
-                )
+        )
+        add(TextViewHolder.UiModel(R.string.setup_text_3))
+        add(SpaceViewHolder.UiModel())
+        addAll(UiVariant.values().map { uiVariant ->
+            RadioButtonViewHolder.UiModel(uiVariant.titleResourceId, uiVariant == selectedUiVariant)
+        })
+        add(TextViewHolder.UiModel(R.string.setup_text_4))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                id = "codeSnippet_gradle",
+                codeSnippet = "dependencies {\n" +
+                        "    …\n" +
+                        "    def beagleVersion = \"2.x.y\" // Check the GitHub repository for the latest version\n" +
+                        "    debugImplementation \"com.github.pandulapeter.beagle:ui-${when (selectedUiVariant) {
+                            UiVariant.ACTIVITY -> "activity"
+                            UiVariant.BOTTOM_SHEET -> "bottom-sheet"
+                            UiVariant.DIALOG -> "dialog"
+                            UiVariant.DRAWER -> "drawer"
+                            UiVariant.VIEW -> "view"
+                        }
+                        }:\$beagleVersion\"\n" +
+                        "    releaseImplementation \"com.github.pandulapeter.beagle:noop:\$beagleVersion\"\n" +
+                        "}"
             )
-            add(TextViewHolder.UiModel(R.string.setup_text_5))
-            add(CodeSnippetViewHolder.UiModel("Beagle.initialize(this)"))
-            add(TextViewHolder.UiModel(R.string.setup_text_6))
-            add(SpaceViewHolder.UiModel())
-        }
+        )
+        add(TextViewHolder.UiModel(R.string.setup_text_5))
+        add(CodeSnippetViewHolder.UiModel("Beagle.initialize(this)"))
+        add(TextViewHolder.UiModel(R.string.setup_text_6))
     }
 
-    private fun MutableList<SetupListItem>.addModuleConfigurationSection() {
-        if (addSectionHeader(Section.MODULE_CONFIGURATION)) {
-            add(TextViewHolder.UiModel(R.string.setup_text_7))
-            add(CodeSnippetViewHolder.UiModel("Beagle.set(module1, module2, …)"))
-            add(TextViewHolder.UiModel(R.string.setup_text_8))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "Beagle.add(\n" +
-                            "    module1, module2, …,\n" +
-                            "    placement =  …, // Optional\n" +
-                            "    lifecycleOwner =  … // Optional\n" +
-                            ")"
-                )
+    private fun MutableList<SetupListItem>.addModuleConfigurationSection() = addSection(Section.MODULE_CONFIGURATION) {
+        add(TextViewHolder.UiModel(R.string.setup_text_7))
+        add(CodeSnippetViewHolder.UiModel("Beagle.set(module1, module2, …)"))
+        add(TextViewHolder.UiModel(R.string.setup_text_8))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "Beagle.add(\n" +
+                        "    module1, module2, …,\n" +
+                        "    placement =  …, // Optional\n" +
+                        "    lifecycleOwner =  … // Optional\n" +
+                        ")"
             )
-            add(TextViewHolder.UiModel(R.string.setup_text_9))
-            add(CodeSnippetViewHolder.UiModel("Beagle.remove(moduleId1, moduleId2, ...)"))
-            add(TextViewHolder.UiModel(R.string.setup_text_10))
-            add(CodeSnippetViewHolder.UiModel("Beagle.find<ModuleType>(moduleId)"))
-            add(TextViewHolder.UiModel(R.string.setup_text_11))
-            add(SpaceViewHolder.UiModel())
-        }
+        )
+        add(TextViewHolder.UiModel(R.string.setup_text_9))
+        add(CodeSnippetViewHolder.UiModel("Beagle.remove(moduleId1, moduleId2, ...)"))
+        add(TextViewHolder.UiModel(R.string.setup_text_10))
+        add(CodeSnippetViewHolder.UiModel("Beagle.find<ModuleType>(moduleId)"))
+        add(TextViewHolder.UiModel(R.string.setup_text_11))
     }
 
-    private fun MutableList<SetupListItem>.addTroubleshootingSection() {
-        if (addSectionHeader(Section.TROUBLESHOOTING)) {
-            add(TextViewHolder.UiModel(R.string.setup_text_12))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "override fun onBackPressed() {\n" +
-                            "    if (!Beagle.hide()) {\n" +
-                            "        super.onBackPressed()\n" +
-                            "    }\n" +
-                            "}"
-                )
+    private fun MutableList<SetupListItem>.addTroubleshootingSection() = addSection(Section.TROUBLESHOOTING) {
+        add(TextViewHolder.UiModel(R.string.setup_text_12))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "override fun onBackPressed() {\n" +
+                        "    if (!Beagle.hide()) {\n" +
+                        "        super.onBackPressed()\n" +
+                        "    }\n" +
+                        "}"
             )
-            add(TextViewHolder.UiModel(R.string.setup_text_13))
-            add(SpaceViewHolder.UiModel())
-        }
+        )
+        add(TextViewHolder.UiModel(R.string.setup_text_13))
     }
 
-    private fun MutableList<SetupListItem>.addSectionHeader(section: Section) = (selectedSection == section).also { isExpanded ->
+    private fun MutableList<SetupListItem>.addSection(section: Section, action: MutableList<SetupListItem>.() -> Unit) = (selectedSection == section).also { isExpanded ->
         add(SectionHeaderViewHolder.UiModel(section.titleResourceId, isExpanded))
+        if (isExpanded) {
+            action()
+            add(SpaceViewHolder.UiModel())
+        }
     }
 
     private enum class UiVariant(@StringRes val titleResourceId: Int) {
@@ -158,7 +150,6 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
     }
 
     private enum class Section(@StringRes val titleResourceId: Int) {
-        WELCOME(R.string.setup_header_1),
         INITIALIZATION(R.string.setup_header_2),
         MODULE_CONFIGURATION(R.string.setup_header_3),
         TROUBLESHOOTING(R.string.setup_header_4);

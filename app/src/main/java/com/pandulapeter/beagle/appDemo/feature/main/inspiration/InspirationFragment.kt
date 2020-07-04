@@ -6,10 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.AuthenticationFragment
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.basicSetup.BasicSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.FeatureTogglesFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.SimpleSetupFragment
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.staticData.StaticDataFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
@@ -35,9 +36,10 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
     )
 
     private fun onCaseStudySelected(caseStudy: CaseStudy, view: View) = when (caseStudy) {
-        CaseStudy.BASIC_SETUP -> navigateTo(BasicSetupFragment.Companion::newInstance, view)
-        CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
+        CaseStudy.SIMPLE_SETUP -> navigateTo(SimpleSetupFragment.Companion::newInstance, view)
+        CaseStudy.STATIC_DATA -> navigateTo(StaticDataFragment.Companion::newInstance, view)
         CaseStudy.FEATURE_TOGGLES -> navigateTo(FeatureTogglesFragment.Companion::newInstance, view)
+        CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
         else -> binding.root.showSnackbar(caseStudy.title)
     }
 

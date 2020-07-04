@@ -78,123 +78,106 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
         add(SpaceViewHolder.UiModel())
     }
 
-    private fun MutableList<FeatureTogglesListItem>.addSwitchSection() {
-        if (addSectionHeader(Section.SWITCH)) {
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_switch_description_1))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "SwitchModule(\n" +
-                            "    text = \"Text on the switch\", \n" +
-                            "    onValueChanged = { isChecked -> TODO() }\n" +
-                            ")"
-                )
+    private fun MutableList<FeatureTogglesListItem>.addSwitchSection() = addSection(Section.SWITCH) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_switch_description_1))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "SwitchModule(\n" +
+                        "    text = \"Text on the switch\", \n" +
+                        "    onValueChanged = { isChecked -> TODO() }\n" +
+                        ")"
             )
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_switch_description_2))
-            add(SpaceViewHolder.UiModel())
-        }
+        )
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_switch_description_2))
     }
 
-    private fun MutableList<FeatureTogglesListItem>.addCheckBoxSection() {
-        if (addSectionHeader(Section.CHECK_BOX)) {
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_check_box_description))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "CheckBoxModule(\n" +
-                            "    text = \"Text on the check box\", \n" +
-                            "    onValueChanged = { isChecked -> TODO() }\n" +
-                            ")"
-                )
+    private fun MutableList<FeatureTogglesListItem>.addCheckBoxSection() = addSection(Section.CHECK_BOX) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_check_box_description))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "CheckBoxModule(\n" +
+                        "    text = \"Text on the check box\", \n" +
+                        "    onValueChanged = { isChecked -> TODO() }\n" +
+                        ")"
             )
-            add(SpaceViewHolder.UiModel())
-        }
+        )
     }
 
-    private fun MutableList<FeatureTogglesListItem>.addMultipleSelectionListSection() {
-        if (addSectionHeader(Section.MULTIPLE_SELECTION_LIST)) {
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_multiple_selection_list_description_1))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "data class Option(\n" +
-                            "    override val id: String,\n" +
-                            "    override val title: String \n" +
-                            ") : BeagleListItemContract"
-                )
+    private fun MutableList<FeatureTogglesListItem>.addMultipleSelectionListSection() = addSection(Section.MULTIPLE_SELECTION_LIST) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_multiple_selection_list_description_1))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "data class Option(\n" +
+                        "    override val id: String,\n" +
+                        "    override val title: String \n" +
+                        ") : BeagleListItemContract"
             )
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_multiple_selection_list_description_2))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "MultipleSelectionListModule(\n" +
-                            "    title = \"Text in the header\",\n" +
-                            "    items = listOf(\n" +
-                            "        Option(id = \"option1\", title = \"Option 1\"),\n" +
-                            "        Option(id = \"option2\", title = \"Option 2\"),\n" +
-                            "        Option(id = \"option3\", title = \"Option 3\")\n" +
-                            "    ),\n" +
-                            "    initiallySelectedItemIds = emptySet(),\n" +
-                            "    onSelectionChanged = { selectedItems -> TODO() }\n" +
-                            ")"
-                )
+        )
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_multiple_selection_list_description_2))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "MultipleSelectionListModule(\n" +
+                        "    title = \"Text in the header\",\n" +
+                        "    items = listOf(\n" +
+                        "        Option(id = \"option1\", title = \"Option 1\"),\n" +
+                        "        Option(id = \"option2\", title = \"Option 2\"),\n" +
+                        "        Option(id = \"option3\", title = \"Option 3\")\n" +
+                        "    ),\n" +
+                        "    initiallySelectedItemIds = emptySet(),\n" +
+                        "    onSelectionChanged = { selectedItems -> TODO() }\n" +
+                        ")"
             )
-            add(SpaceViewHolder.UiModel())
-        }
+        )
     }
 
-    private fun MutableList<FeatureTogglesListItem>.addSingleSelectionListSection() {
-        if (addSectionHeader(Section.SINGLE_SELECTION_LIST)) {
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_single_selection_list_description_1))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "SingleSelectionListModule(\n" +
-                            "    title = \"Text in the header\",\n" +
-                            "    items = listOf(\n" +
-                            "        Option(id = \"option1\", title = \"Option 1\"),\n" +
-                            "        Option(id = \"option2\", title = \"Option 2\"),\n" +
-                            "        Option(id = \"option3\", title = \"Option 3\")\n" +
-                            "    ),\n" +
-                            "    initiallySelectedItemId = \"option1\",\n" +
-                            "    onSelectionChanged = { selectedItem -> TODO() }\n" +
-                            ")"
-                )
+    private fun MutableList<FeatureTogglesListItem>.addSingleSelectionListSection() = addSection(Section.SINGLE_SELECTION_LIST) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_single_selection_list_description_1))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "SingleSelectionListModule(\n" +
+                        "    title = \"Text in the header\",\n" +
+                        "    items = listOf(\n" +
+                        "        Option(id = \"option1\", title = \"Option 1\"),\n" +
+                        "        Option(id = \"option2\", title = \"Option 2\"),\n" +
+                        "        Option(id = \"option3\", title = \"Option 3\")\n" +
+                        "    ),\n" +
+                        "    initiallySelectedItemId = \"option1\",\n" +
+                        "    onSelectionChanged = { selectedItem -> TODO() }\n" +
+                        ")"
             )
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_single_selection_list_description_2))
-            add(SpaceViewHolder.UiModel())
-        }
+        )
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_single_selection_list_description_2))
     }
 
-    private fun MutableList<FeatureTogglesListItem>.addQueryingAndChangingTheCurrentValueSection() {
-        if (addSectionHeader(Section.QUERYING_AND_CHANGING_THE_CURRENT_VALUE)) {
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_1))
-            add(CodeSnippetViewHolder.UiModel("module.getCurrentValue(Beagle)"))
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_2))
-            add(CodeSnippetViewHolder.UiModel("module.setCurrentValue(Beagle, newValue)"))
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_3))
-            add(ResetButtonViewHolder.UiModel())
-            add(SpaceViewHolder.UiModel())
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_4))
-            add(CodeSnippetViewHolder.UiModel("Beagle.find<ModuleType>(moduleId)"))
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_5))
-            add(SpaceViewHolder.UiModel())
-        }
+    private fun MutableList<FeatureTogglesListItem>.addQueryingAndChangingTheCurrentValueSection() = addSection(Section.QUERYING_AND_CHANGING_THE_CURRENT_VALUE) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_1))
+        add(CodeSnippetViewHolder.UiModel("module.getCurrentValue(Beagle)"))
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_2))
+        add(CodeSnippetViewHolder.UiModel("module.setCurrentValue(Beagle, newValue)"))
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_3))
+        add(ResetButtonViewHolder.UiModel())
+        add(SpaceViewHolder.UiModel())
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_4))
+        add(CodeSnippetViewHolder.UiModel("Beagle.find<ModuleType>(moduleId)"))
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_5))
     }
 
-    private fun MutableList<FeatureTogglesListItem>.addPersistingStateSection() {
-        if (addSectionHeader(Section.PERSISTING_STATE)) {
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_persisting_state_description))
-            add(SpaceViewHolder.UiModel())
-        }
+    private fun MutableList<FeatureTogglesListItem>.addPersistingStateSection() = addSection(Section.PERSISTING_STATE) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_persisting_state_description))
     }
 
-    private fun MutableList<FeatureTogglesListItem>.addBulkApplySection() {
-        if (addSectionHeader(Section.BULK_APPLY)) {
-            add(TextViewHolder.UiModel(if (isBulkApplyEnabled) R.string.case_study_feature_toggles_bulk_apply_description_1_on else R.string.case_study_feature_toggles_bulk_apply_description_1_off))
-            add(BulkApplySwitchViewHolder.UiModel(isBulkApplyEnabled))
-            add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_bulk_apply_description_2))
-            add(SpaceViewHolder.UiModel())
-        }
+    private fun MutableList<FeatureTogglesListItem>.addBulkApplySection() = addSection(Section.BULK_APPLY) {
+        add(TextViewHolder.UiModel(if (isBulkApplyEnabled) R.string.case_study_feature_toggles_bulk_apply_description_1_on else R.string.case_study_feature_toggles_bulk_apply_description_1_off))
+        add(BulkApplySwitchViewHolder.UiModel(isBulkApplyEnabled))
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_bulk_apply_description_2))
     }
 
-    private fun MutableList<FeatureTogglesListItem>.addSectionHeader(section: Section) = (selectedSection == section).also { isExpanded ->
+    private fun MutableList<FeatureTogglesListItem>.addSection(section: Section, action: MutableList<FeatureTogglesListItem>.() -> Unit) = (selectedSection == section).also { isExpanded ->
         add(SectionHeaderViewHolder.UiModel(section.titleResourceId, isExpanded))
+        if (isExpanded) {
+            action()
+            add(SpaceViewHolder.UiModel())
+        }
     }
 
     private enum class Section(@StringRes val titleResourceId: Int) {
