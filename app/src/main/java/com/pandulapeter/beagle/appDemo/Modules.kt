@@ -5,8 +5,9 @@ import com.pandulapeter.beagle.appDemo.feature.main.about.AboutViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.about.licences.LicencesViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.AuthenticationViewModel
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.SimpleSetupViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.FeatureTogglesViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.NetworkRequestInterceptorViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.SimpleSetupViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.staticData.StaticDataViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.AddModuleViewModel
@@ -25,6 +26,7 @@ private val featureModule = module {
     viewModel { StaticDataViewModel() }
     viewModel { FeatureTogglesViewModel() }
     viewModel { AuthenticationViewModel() }
+    viewModel { NetworkRequestInterceptorViewModel() }
     viewModel { PlaygroundViewModel(get()) }
     viewModel { AddModuleViewModel(get()) }
     viewModel { AboutViewModel() }

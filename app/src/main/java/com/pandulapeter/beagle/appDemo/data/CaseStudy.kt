@@ -28,8 +28,7 @@ enum class CaseStudy(
     ),
     NETWORK_REQUEST_INTERCEPTOR(
         title = R.string.case_study_network_request_interceptor_title,
-        description = R.string.case_study_network_request_interceptor_description,
-        isReady = false
+        description = R.string.case_study_network_request_interceptor_description
     ),
     ANALYTICS(
         title = R.string.case_study_analytics_title,

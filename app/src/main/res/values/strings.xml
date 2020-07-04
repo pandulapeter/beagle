@@ -87,12 +87,11 @@
     <string name="case_study_static_data_key_value_list_1"><b>KeyValueList</b></string>
     <string name="case_study_static_data_key_value_list_2">Description coming soon…</string>
     <string name="case_study_static_data_module_text_1">This <i>piece of text</i> <u><b>contains</b> parts</u> with <b><i>special</i></b> <i><u>formatting</u></i>.</string>
-    <string name="case_study_static_data_module_label_1">Labels can be used to separate content,</string>
-    <string name="case_study_static_data_module_text_2">but adding spaces…</string>
-    <string name="case_study_static_data_module_text_3">…or dividers…</string>
-    <string name="case_study_static_data_module_text_4">…can also be useful.</string>
-    <string name="case_study_static_data_module_text_5">Longer pieces of content can be made expandable.</string>
-    <string name="case_study_static_data_module_text_6">This helps reduce visual clutter and also acts as a way to organize the module configuration.</string>
+    <string name="case_study_static_data_module_label_1">Labels can be used to separate content, but adding spaces…</string>
+    <string name="case_study_static_data_module_text_2">…or dividers…</string>
+    <string name="case_study_static_data_module_text_3">…can also be useful.</string>
+    <string name="case_study_static_data_module_text_4">Longer pieces of content can be made expandable.</string>
+    <string name="case_study_static_data_module_text_5">This helps reduce visual clutter and also acts as a way to organize the module configuration.</string>
     <string name="case_study_static_data_module_key_value_title">Another way to display information is to group it into key-value pairs.</string>
     <string name="case_study_static_data_module_key_1">Key 1</string>
     <string name="case_study_static_data_module_value_1">Value 1</string>
@@ -175,6 +174,7 @@
     <!-- Case studies / Network request interceptor -->
     <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>
     <string name="case_study_network_request_interceptor_description">See the incoming and outgoing REST API calls and their formatted JSON payload to quickly debug potential issues.</string>
+    <string name="case_study_network_request_interceptor_text_1">Coming soon…</string>
 
     <!-- Case studies / Analytics -->
     <string name="case_study_analytics_title">Logging analytics events</string>

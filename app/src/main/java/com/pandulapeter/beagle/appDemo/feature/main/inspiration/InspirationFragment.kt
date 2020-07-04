@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.A
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.FeatureTogglesFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.NetworkRequestInterceptorFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.SimpleSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.staticData.StaticDataFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
@@ -40,6 +41,7 @@ class InspirationFragment : ListFragment<InspirationViewModel, InspirationListIt
         CaseStudy.STATIC_DATA -> navigateTo(StaticDataFragment.Companion::newInstance, view)
         CaseStudy.FEATURE_TOGGLES -> navigateTo(FeatureTogglesFragment.Companion::newInstance, view)
         CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
+        CaseStudy.NETWORK_REQUEST_INTERCEPTOR -> navigateTo(NetworkRequestInterceptorFragment.Companion::newInstance, view)
         else -> binding.root.showSnackbar(caseStudy.title)
     }
 
