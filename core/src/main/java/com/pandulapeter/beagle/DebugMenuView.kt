@@ -87,8 +87,8 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         recyclerTopPadding = top + verticalMargin
         recyclerRightPadding = right
         recyclerBottomPadding = bottom + verticalMargin
-        recyclerView.updatePadding()
         buttonContainer.setPadding(left, top, right, bottom + largePadding)
+        recyclerView.updatePadding()
     }
 
     override fun onAttachedToWindow() {
@@ -132,6 +132,6 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         recyclerLeftPadding,
         recyclerTopPadding,
         recyclerRightPadding,
-        recyclerBottomPadding.let { if (BeagleCore.implementation.hasPendingUpdates) it + buttonContainer.height else it }
+        if (BeagleCore.implementation.hasPendingUpdates) verticalMargin + buttonContainer.height else recyclerBottomPadding
     )
 }
