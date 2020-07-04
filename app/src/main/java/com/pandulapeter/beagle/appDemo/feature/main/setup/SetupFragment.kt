@@ -47,7 +47,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
 
     override fun getBeagleModules() = listOf(
         createTextModule(R.string.setup_debug_menu_text_1),
-        DividerModule(),
+        DividerModule(id = "divider1"),
         createLabelModule(R.string.setup_debug_menu_label),
         createSwitchModule(R.string.setup_debug_menu_switch, onValueChanged = {}),
         createButtonModule(R.string.setup_debug_menu_button, onButtonPressed = {}),
@@ -65,7 +65,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
                 onSelectionChanged = { }
             )
         },
-        DividerModule(),
+        DividerModule(id = "divider2"),
         createTextModule(R.string.setup_debug_menu_text_2)
     )
 

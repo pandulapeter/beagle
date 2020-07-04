@@ -8,7 +8,6 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
-import android.view.WindowInsets
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatButton
@@ -69,7 +68,6 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
     private val recyclerView = GestureBlockingRecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
         clipToPadding = false
-        updatePadding()
         BeagleCore.implementation.setupRecyclerView(this)
         minimumWidth = context.dimension(R.dimen.beagle_minimum_size)
         minimumHeight = context.dimension(R.dimen.beagle_minimum_size)
@@ -79,11 +77,18 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         setBackgroundFromWindowBackground()
         addView(recyclerView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         addView(buttonContainer, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply { gravity = Gravity.BOTTOM })
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets) }
-            requestApplyInsets()
-        }
         onContentsChanged()
+        applyInsets(0, 0, 0, 0)
+    }
+
+    //TODO: Needs to be handled on a per-module basis
+    fun applyInsets(left: Int, top: Int, right: Int, bottom: Int) {
+        recyclerLeftPadding = left
+        recyclerTopPadding = top + verticalMargin
+        recyclerRightPadding = right
+        recyclerBottomPadding = bottom + verticalMargin
+        recyclerView.updatePadding()
+        buttonContainer.setPadding(left, top, right, bottom + largePadding)
     }
 
     override fun onAttachedToWindow() {
@@ -111,21 +116,6 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
                 resetButton.animate().translationY(if (hasPendingChanges) 0f else height.toFloat()).start()
             }
         }
-    }
-
-    //TODO: Needs to be improved / handled on a per-module basis
-    override fun onApplyWindowInsets(insets: WindowInsets?): WindowInsets {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            insets?.let {
-                recyclerLeftPadding = it.systemWindowInsetLeft
-                recyclerTopPadding = it.systemWindowInsetTop + verticalMargin
-                recyclerRightPadding = it.systemWindowInsetRight
-                recyclerBottomPadding = it.systemWindowInsetBottom + verticalMargin
-                recyclerView.updatePadding()
-                buttonContainer.run { setPadding(it.systemWindowInsetLeft, paddingTop, it.systemWindowInsetRight, largePadding + insets.systemWindowInsetBottom) }
-            }
-        }
-        return super.onApplyWindowInsets(insets)
     }
 
     private fun setBackgroundFromWindowBackground() {
