@@ -242,6 +242,8 @@
     <string name="add_module_header_description">Displays a configurable title, subtitle and text.</string>
     <string name="add_module_keyline_overlay_switch">KeylineOverlaySwitch</string>
     <string name="add_module_keyline_overlay_switch_description">Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.</string>
+    <string name="add_module_network_log_list">NetworkLogList</string>
+    <string name="add_module_network_log_list_description">Displays an expandable list of historical network activity. The entries are clickable to inspect their JSON payloads.</string>
 
     <!-- About -->
     <string name="about_title">About</string>

@@ -28,5 +28,4 @@ internal class LogManager {
     } else {
         entries.filter { it.tag == tag }
     }
-
 }

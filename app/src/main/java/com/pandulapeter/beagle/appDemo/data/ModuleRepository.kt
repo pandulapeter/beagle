@@ -16,6 +16,7 @@ class ModuleRepository {
         ModuleWrapper.ForceCrashButton,
         ModuleWrapper.KeylineOverlaySwitch,
         ModuleWrapper.AnimationDurationSwitch,
+        ModuleWrapper.NetworkLogList,
         ModuleWrapper.LogList(),
         ModuleWrapper.DeviceInfo
     )

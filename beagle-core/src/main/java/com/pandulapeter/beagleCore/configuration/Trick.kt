@@ -506,7 +506,7 @@ sealed class Trick {
 
     /**
      * Displays an expandable list of historical network activity.
-     * Use BeagleNetworkInterceptor to push a new message to the top of the list.
+     * Configure BeagleNetworkInterceptor to your OkHttpClient to start tracking requests.
      * This module can only be added once.
      *
      * @param title - The title of the module. "Network activity" by default.

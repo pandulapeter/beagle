@@ -20,6 +20,7 @@ import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.LocalStorageManager
 import com.pandulapeter.beagle.core.manager.LogManager
 import com.pandulapeter.beagle.core.manager.MemoryStorageManager
+import com.pandulapeter.beagle.core.manager.NetworkLogManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
@@ -56,6 +57,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     private val updateListenerManager by lazy { UpdateListenerManager() }
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
     private val logManager by lazy { LogManager() }
+    private val networkLogManager by lazy { NetworkLogManager() }
     private val listManager by lazy { ListManager() }
 
     init {
@@ -149,6 +151,8 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     internal fun resetPendingChanges() = listManager.resetPendingChanges()
 
     internal fun getLogEntries(tag: String?) = logManager.getEntries(tag)
+
+    internal fun getNetworkLogEntries() = networkLogManager.getEntries()
 
     internal fun createOverlayLayout(activity: FragmentActivity) = uiManager.createOverlayLayout(activity)
 

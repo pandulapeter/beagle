@@ -20,6 +20,7 @@ import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
+import com.pandulapeter.beagle.modules.NetworkLogListModule
 import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -260,5 +261,12 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_keyline_overlay_switch_description,
         module = KeylineOverlaySwitchModule(),
         codeSnippet = "KeylineOverlaySwitchModule()"
+    )
+
+    object NetworkLogList : ModuleWrapper(
+        titleResourceId = R.string.add_module_network_log_list,
+        descriptionResourceId = R.string.add_module_network_log_list_description,
+        module = NetworkLogListModule(),
+        codeSnippet = "NetworkLogListModule()"
     )
 }
