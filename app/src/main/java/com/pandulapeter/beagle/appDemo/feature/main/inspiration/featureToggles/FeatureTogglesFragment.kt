@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.BeagleListItemContractImplementation
+import com.pandulapeter.beagle.appDemo.data.model.BeagleListItemContractImplementation
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem

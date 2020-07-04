@@ -14,6 +14,10 @@ android {
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
         vectorDrawables.useSupportLibrary = true
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
     signingConfigs {
         internal {
             keyAlias "androiddebugkey"
@@ -101,6 +105,11 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "org.koin:koin-androidx-viewmodel:2.1.5"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion") { exclude module: "okhttp" }
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     activityDebugImplementation project(":ui-activity")
     activityInternalImplementation project(":ui-activity")
     bottomSheetDebugImplementation project(":ui-bottom-sheet")

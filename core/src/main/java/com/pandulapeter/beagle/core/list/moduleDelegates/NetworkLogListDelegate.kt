@@ -20,7 +20,7 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
             TextCell(
                 id = "${module.id}_${entry.id}",
                 text = (module.timestampFormatter?.let { formatter -> "• [".append(formatter(entry.timestamp)).append("] ").append(entry.message) } ?: "• ".append(entry.message)),
-                onItemSelected = { BeagleCore.implementation.showDialog(contents = entry.payload.formatToJson()) }
+                onItemSelected = { BeagleCore.implementation.showDialog(contents = "${entry.message}\n\n${entry.payload.formatToJson()}") }
             )
         })
     }

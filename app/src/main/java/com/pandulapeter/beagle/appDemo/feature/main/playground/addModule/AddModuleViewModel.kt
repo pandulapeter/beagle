@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.ModuleRepository
-import com.pandulapeter.beagle.appDemo.data.ModuleWrapper
+import com.pandulapeter.beagle.appDemo.data.model.ModuleWrapper
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.list.AddModuleListItem
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.list.ModuleViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel

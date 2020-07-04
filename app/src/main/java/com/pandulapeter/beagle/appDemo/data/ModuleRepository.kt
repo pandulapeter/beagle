@@ -4,6 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import com.pandulapeter.beagle.appDemo.data.model.ModuleWrapper
 import java.util.Collections
 
 class ModuleRepository {

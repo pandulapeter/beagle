@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.appDemo
 
 import com.pandulapeter.beagle.appDemo.data.ModuleRepository
+import com.pandulapeter.beagle.appDemo.data.NetworkingManager
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.about.licences.LicencesViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationViewModel
@@ -16,6 +17,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 private val dataModule = module {
+    single { NetworkingManager() }
     single { ModuleRepository() }
 }
 
@@ -26,7 +28,7 @@ private val featureModule = module {
     viewModel { StaticDataViewModel() }
     viewModel { FeatureTogglesViewModel() }
     viewModel { AuthenticationViewModel() }
-    viewModel { NetworkRequestInterceptorViewModel() }
+    viewModel { NetworkRequestInterceptorViewModel(get()) }
     viewModel { PlaygroundViewModel(get()) }
     viewModel { AddModuleViewModel(get()) }
     viewModel { AboutViewModel() }

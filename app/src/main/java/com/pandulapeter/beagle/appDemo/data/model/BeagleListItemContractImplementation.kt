@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.data
+package com.pandulapeter.beagle.appDemo.data.model
 
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 

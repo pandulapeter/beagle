@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.BeagleListItemContractImplementation
+import com.pandulapeter.beagle.appDemo.data.model.BeagleListItemContractImplementation
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.BulkApplySwitchViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.CurrentStateViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem

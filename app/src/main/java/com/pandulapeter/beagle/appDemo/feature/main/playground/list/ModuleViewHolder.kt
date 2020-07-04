@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.ModuleWrapper
+import com.pandulapeter.beagle.appDemo.data.model.ModuleWrapper
 import com.pandulapeter.beagle.appDemo.databinding.ItemPlaygroundModuleBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 import com.pandulapeter.beagle.appDemo.utils.tintedDrawable

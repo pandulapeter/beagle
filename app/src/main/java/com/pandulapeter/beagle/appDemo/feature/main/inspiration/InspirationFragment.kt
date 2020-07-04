@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.CaseStudy
+import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.AuthenticationFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.FeatureTogglesFragment
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationAdapter

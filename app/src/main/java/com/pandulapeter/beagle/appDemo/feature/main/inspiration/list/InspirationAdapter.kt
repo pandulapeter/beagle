@@ -3,7 +3,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.inspiration.list
 import android.view.View
 import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.CaseStudy
+import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 import kotlinx.coroutines.CoroutineScope
