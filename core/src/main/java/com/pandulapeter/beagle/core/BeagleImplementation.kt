@@ -33,7 +33,7 @@ import com.pandulapeter.beagle.modules.LogListModule
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
-class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleContract {
+class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override var isUiEnabled by Delegates.observable(true) { _, _, newValue ->
         if (!newValue) {
@@ -135,7 +135,7 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
     override fun showDialog(contents: CharSequence, isHorizontalScrollEnabled: Boolean) {
-        currentActivity?.supportFragmentManager?.let { fragmentManager ->
+        (uiManager.findHostFragmentManager() ?: currentActivity?.supportFragmentManager)?.let { fragmentManager ->
             AlertDialogFragment.show(
                 fragmentManager = fragmentManager,
                 content = contents,

@@ -32,11 +32,13 @@ internal class DebugMenuActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         BeagleCore.implementation.notifyVisibilityListenersOnShow()
+        (BeagleCore.implementation.uiManager as ActivityUiManager).debugMenuActivity = this
     }
 
     override fun onStop() {
-        super.onStop()
+        (BeagleCore.implementation.uiManager as ActivityUiManager).debugMenuActivity = null
         BeagleCore.implementation.notifyVisibilityListenersOnHide()
+        super.onStop()
     }
 
 

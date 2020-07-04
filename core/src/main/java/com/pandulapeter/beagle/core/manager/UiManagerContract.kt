@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.manager
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.core.OverlayFragment
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
@@ -19,6 +20,8 @@ interface UiManagerContract {
     fun createOverlayLayout(activity: FragmentActivity): View = OverlayFrameLayout(activity)
 
     fun findOverlayFragment(activity: FragmentActivity?): Fragment? = activity?.supportFragmentManager?.findFragmentByTag(OverlayFragment.TAG)
+
+    fun findHostFragmentManager() : FragmentManager? = null
 
     fun findOverlayView(activity: FragmentActivity?): View? = findOverlayFragment(activity)?.view
 
