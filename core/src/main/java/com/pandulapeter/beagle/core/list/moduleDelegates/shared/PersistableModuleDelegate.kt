@@ -10,7 +10,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
     private val pendingUpdates = mutableListOf<PendingChangeEvent<T>>()
     private val uiValues = mutableMapOf<kotlin.String, T>()
 
-    fun getUiValue(module: M) = if (module.shouldBePersisted) (uiValues[module.id] ?: getCurrentValue(module)) else getCurrentValue(module)
+    fun getUiValue(module: M) = if (module.shouldBePersisted && module.shouldRequireConfirmation) (uiValues[module.id] ?: getCurrentValue(module)) else getCurrentValue(module)
 
     fun setUiValue(module: M, newValue: T) {
         if (module.shouldRequireConfirmation) {
@@ -34,7 +34,7 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
 
     protected fun hasValueChanged(newValue: T, module: M) = newValue != getUiValue(module)
 
-    override fun hasPendingChanges(module: M) = pendingUpdates.any { it.moduleId == module.id }
+    override fun hasPendingChanges(module: M) = module.shouldRequireConfirmation && pendingUpdates.any { it.moduleId == module.id }
 
     override fun applyPendingChanges(module: M) {
         pendingUpdates.indexOfFirst { it.moduleId == module.id }.let { index ->
