@@ -28,7 +28,7 @@ class NetworkRequestInterceptorViewModel(
                 Log.d("DEBBB", "Hello - loading request")
                 val song = networkingManager.songService.getSongAsync("the_beatles-let_it_be")
                 Log.d("DEBBB", "Song ${song.id} loaded")
-                Beagle.showDialog(song.text)
+                Beagle.showDialog(song.text, true)
             } catch (exception: Exception) {
                 Log.d("DEBBB", "Error: ${exception.message}")
             }

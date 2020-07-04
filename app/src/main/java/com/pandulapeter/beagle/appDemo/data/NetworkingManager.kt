@@ -11,7 +11,7 @@ class NetworkingManager {
         .baseUrl("https://campfire-test1.herokuapp.com/v1/")
         .client(
             OkHttpClient.Builder()
-//        .addInterceptor(BeagleNetworkInterceptor)
+//TODO        .addInterceptor(BeagleNetworkInterceptor)
                 .build()
         )
         .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
