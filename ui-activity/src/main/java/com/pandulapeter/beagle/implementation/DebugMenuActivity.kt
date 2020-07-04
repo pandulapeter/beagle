@@ -2,9 +2,12 @@ package com.pandulapeter.beagle.implementation
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -14,6 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.DebugMenuView
 import com.pandulapeter.beagle.R
 
 internal class DebugMenuActivity : AppCompatActivity() {
@@ -26,6 +30,20 @@ internal class DebugMenuActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.beagle_close_button).apply {
             setImageDrawable(tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary)))
             setOnClickListener { onBackPressed() }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            val debugMenu = findViewById<DebugMenuView>(R.id.beagle_debug_menu)
+            val bottomNavigationOverlay = findViewById<View>(R.id.beagle_bottom_navigation_overlay)
+            bottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
+            window.decorView.run {
+                setOnApplyWindowInsetsListener { _, insets ->
+                    insets.also {
+                        debugMenu.applyInsets(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, it.systemWindowInsetBottom)
+                        bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
+                    }
+                }
+                requestApplyInsets()
+            }
         }
     }
 
