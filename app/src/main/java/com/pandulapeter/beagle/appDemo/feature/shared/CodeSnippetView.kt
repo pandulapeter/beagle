@@ -34,7 +34,7 @@ class CodeSnippetView @JvmOverloads constructor(
 
     init {
         addView(textView, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT))
-        setBackgroundColor(context.color(R.color.brand_light))
+        setBackgroundResource(R.drawable.bg_code_snippet)
         overScrollMode = View.OVER_SCROLL_NEVER
     }
 }

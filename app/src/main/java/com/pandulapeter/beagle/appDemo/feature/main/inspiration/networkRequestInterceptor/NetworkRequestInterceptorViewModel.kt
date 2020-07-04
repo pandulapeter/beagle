@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.NetworkingManager
 import com.pandulapeter.beagle.appDemo.data.model.Song
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.LoadingIndicatorViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.RadioButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.SongLyricsViewHolder
@@ -46,8 +47,7 @@ class NetworkRequestInterceptorViewModel(
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_1))
             addAll(SongTitle.values().map { songTitle -> RadioButtonViewHolder.UiModel(songTitle.titleResourceId, selectedSong == songTitle) })
             if (isLoading) {
-                //TODO: Add a proper loading indicator
-                add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_loading))
+                add(LoadingIndicatorViewHolder.UiModel())
             } else {
                 if (selectedSong.id == loadedSong?.id) {
                     add(SongLyricsViewHolder.UiModel(loadedSong?.text?.formatSongLyrics() ?: ""))
@@ -75,7 +75,12 @@ class NetworkRequestInterceptorViewModel(
         }
     }
 
-    private fun String.formatSongLyrics() = this //TODO
+    private fun String.formatSongLyrics() =
+        replace(Regex("\\[(.*?)[]]"), "") // Remove chords
+            .replace(Regex("\\{(.*?)[}]"), "") // Remove sections
+            .replace(Regex("[ ][ ]+"), "") // Remove consecutive whitespaces
+            .lines().filterNot { it.isEmpty() }.take(4) // Take the first four lines
+            .joinToString("\n") + "\n…"
 
     private enum class SongTitle(@StringRes val titleResourceId: Int, val id: String) {
         SONG_1(titleResourceId = R.string.case_study_network_request_interceptor_song_1, id = "the_beatles-let_it_be"),

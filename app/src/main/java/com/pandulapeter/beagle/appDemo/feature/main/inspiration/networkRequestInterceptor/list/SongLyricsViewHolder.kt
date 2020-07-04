@@ -12,9 +12,11 @@ class SongLyricsViewHolder private constructor(
 ) : BaseViewHolder<ItemNetworkRequestInterceptorSongLyricsBinding, SongLyricsViewHolder.UiModel>(binding) {
 
     data class UiModel(
-        val lyrics: CharSequence,
-        override val id: String = "songLyrics"
-    ) : NetworkRequestInterceptorListItem
+        val lyrics: CharSequence
+    ) : NetworkRequestInterceptorListItem {
+
+        override val id = "songLyrics"
+    }
 
     companion object {
         fun create(

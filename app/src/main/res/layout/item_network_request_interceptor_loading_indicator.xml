@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.SongLyricsViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.LoadingIndicatorViewHolder.UiModel" />
 
     </data>
 
-    <com.google.android.material.card.MaterialCardView
-        style="@style/Card"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/large_content_padding"
         android:layout_marginLeft="@dimen/large_content_padding"
         android:layout_marginTop="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
-        android:layout_marginRight="@dimen/large_content_padding">
+        android:layout_marginRight="@dimen/large_content_padding"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:padding="@dimen/large_content_padding"
-            android:text="@{uiModel.lyrics}"
-            tools:text="Song lyrics" />
+            android:text="@string/case_study_network_request_interceptor_loading" />
 
-    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
 </layout>
