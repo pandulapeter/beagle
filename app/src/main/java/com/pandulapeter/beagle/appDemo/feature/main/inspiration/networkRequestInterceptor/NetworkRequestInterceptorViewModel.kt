@@ -7,11 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.NetworkingManager
 import com.pandulapeter.beagle.appDemo.data.model.Song
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.ErrorViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.LoadingIndicatorViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.RadioButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.SongLyricsViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
+import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -42,24 +44,7 @@ class NetworkRequestInterceptorViewModel(
         SongTitle.fromResourceId(selectedItem.titleResourceId)?.let { selectedSong = it }
     }
 
-    private fun refreshItems() {
-        _items.value = mutableListOf<NetworkRequestInterceptorListItem>().apply {
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_1))
-            addAll(SongTitle.values().map { songTitle -> RadioButtonViewHolder.UiModel(songTitle.titleResourceId, selectedSong == songTitle) })
-            if (isLoading) {
-                add(LoadingIndicatorViewHolder.UiModel())
-            } else {
-                if (selectedSong.id == loadedSong?.id) {
-                    add(SongLyricsViewHolder.UiModel(loadedSong?.text?.formatSongLyrics() ?: ""))
-                } else {
-                    //TODO: Add a proper error state with Retry button
-                    add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_something_went_wrong))
-                }
-            }
-        }
-    }
-
-    private fun loadSong() {
+    fun loadSong() {
         if (selectedSong.id != loadedSong?.id) {
             job?.cancel()
             isLoading = true
@@ -72,6 +57,26 @@ class NetworkRequestInterceptorViewModel(
                 isLoading = false
                 refreshItems()
             }
+        }
+    }
+
+    private fun refreshItems() {
+        _items.value = mutableListOf<NetworkRequestInterceptorListItem>().apply {
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_1))
+            addAll(SongTitle.values().map { songTitle -> RadioButtonViewHolder.UiModel(songTitle.titleResourceId, selectedSong == songTitle) })
+            if (isLoading) {
+                add(LoadingIndicatorViewHolder.UiModel())
+            } else {
+                if (selectedSong.id == loadedSong?.id) {
+                    add(SongLyricsViewHolder.UiModel(loadedSong?.text?.formatSongLyrics() ?: ""))
+                } else {
+                    add(ErrorViewHolder.UiModel())
+                }
+            }
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_2))
+            add(CodeSnippetViewHolder.UiModel("NetworkRequestInterceptorFragment()"))
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_3))
+            add(CodeSnippetViewHolder.UiModel("//TODO: Coming soon"))
         }
     }
 

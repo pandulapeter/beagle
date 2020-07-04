@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.ErrorViewHolder.UiModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_content_padding"
+        android:layout_marginLeft="@dimen/large_content_padding"
+        android:layout_marginEnd="@dimen/large_content_padding"
+        android:layout_marginRight="@dimen/large_content_padding"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/large_content_padding"
+            android:text="@string/case_study_network_request_interceptor_something_went_wrong" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/try_again_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/large_content_padding"
+            android:layout_marginLeft="@dimen/large_content_padding"
+            android:layout_marginEnd="@dimen/large_content_padding"
+            android:layout_marginRight="@dimen/large_content_padding"
+            android:gravity="center"
+            android:text="@string/case_study_network_request_interceptor_try_again"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:theme="@style/DarkTheme"
+            app:backgroundTint="@color/brand_dark"
+            app:rippleColor="?attr/colorControlHighlight" />
+
+    </LinearLayout>
+
+</layout>

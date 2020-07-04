@@ -15,7 +15,8 @@ class NetworkRequestInterceptorFragment : InspirationDetailFragment<NetworkReque
 
     override fun createAdapter() = NetworkRequestInterceptorAdapter(
         scope = viewModel.viewModelScope,
-        onSongSelected = viewModel::onSongSelected
+        onSongSelected = viewModel::onSongSelected,
+        onTryAgainButtonPressed = viewModel::loadSong
     )
 
     override fun getBeagleModules(): List<Module<*>> = listOf(

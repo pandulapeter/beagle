@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package com.pandulapeter.beagle
 
 import android.annotation.SuppressLint
@@ -15,4 +13,7 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         gravity = Gravity.CENTER
         text = "DebugMenuView should not be visible to users when using the noop dependency."
     }
+
+    @Suppress("unused", "UNUSED_PARAMETER")
+    fun applyInsets(left: Int, top: Int, right: Int, bottom: Int) = Unit
 }
