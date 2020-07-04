@@ -123,6 +123,13 @@ class BeagleImplementation(private val uiManager: UiManagerContract) : BeagleCon
         }
     }
 
+    override fun clearLogs(tag: String?) {
+        logManager.clearLogs(tag)
+        if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
+            refresh()
+        }
+    }
+
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListeners)
 
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()

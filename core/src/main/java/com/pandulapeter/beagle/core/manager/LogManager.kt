@@ -15,6 +15,14 @@ internal class LogManager {
         )
     )
 
+    fun clearLogs(tag: String?) {
+        if (tag == null) {
+            entries.clear()
+        } else {
+            entries.removeAll { it.tag == tag }
+        }
+    }
+
     fun getEntries(tag: String?): List<LogEntry> = if (tag == null) {
         entries
     } else {

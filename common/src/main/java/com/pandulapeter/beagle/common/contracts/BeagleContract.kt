@@ -238,6 +238,13 @@ interface BeagleContract {
     fun log(message: CharSequence, tag: String? = null, payload: CharSequence? = null) = Unit
 
     /**
+     * Clears all log messages for the specified tag.
+     *
+     * @param tag - A specific tag to filter out, or null to delete all logs. Null by default.
+     */
+    fun clearLogs(tag: String? = null) = Unit
+
+    /**
      * Call this function to trigger recreating every cell model for every module.
      * Due to the underlying RecyclerView implementation this will only result in UI update events where differences are found.
      *
