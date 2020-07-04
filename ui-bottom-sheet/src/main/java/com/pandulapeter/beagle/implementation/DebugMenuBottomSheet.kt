@@ -86,11 +86,12 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
         }
     }
 
+    //TODO: Needs to be improved
     private fun updateApplyResetBlockPosition() {
         view?.let { debugMenu ->
             (debugMenu as ViewGroup).getChildAt(1).run {
                 layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
-                    bottomMargin = (behavior.peekHeight) * (1 - slideOffset).roundToInt()
+                    bottomMargin = ((behavior.peekHeight) * (1 - slideOffset)).roundToInt()
                 }
             }
         }

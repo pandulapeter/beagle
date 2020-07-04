@@ -81,7 +81,6 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         applyInsets(0, 0, 0, 0)
     }
 
-    //TODO: Needs to be handled on a per-module basis
     fun applyInsets(left: Int, top: Int, right: Int, bottom: Int) {
         recyclerLeftPadding = left
         recyclerTopPadding = top + verticalMargin

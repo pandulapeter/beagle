@@ -30,7 +30,19 @@ android {
             debuggable true
             minifyEnabled false
             shrinkResources false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
             signingConfig signingConfigs.internal
+        }
+        internal {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            applicationIdSuffix ".internal"
+            versionNameSuffix "-internal"
+            signingConfig signingConfigs.internal
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            matchingFallbacks = ["debug"]
         }
         release {
             debuggable false
@@ -69,10 +81,15 @@ android {
 
 configurations {
     activityDebugImplementation
+    activityInternalImplementation
     bottomSheetDebugImplementation
+    bottomSheetInternalImplementation
     dialogDebugImplementation
+    dialogInternalImplementation
     drawerDebugImplementation
+    drawerInternalImplementation
     viewDebugImplementation
+    viewInternalImplementation
 }
 
 dependencies {
@@ -85,9 +102,14 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "org.koin:koin-androidx-viewmodel:2.1.5"
     activityDebugImplementation project(":ui-activity")
+    activityInternalImplementation project(":ui-activity")
     bottomSheetDebugImplementation project(":ui-bottom-sheet")
+    bottomSheetInternalImplementation project(":ui-bottom-sheet")
     dialogDebugImplementation project(":ui-dialog")
+    dialogInternalImplementation project(":ui-dialog")
     drawerDebugImplementation project(":ui-drawer")
+    drawerInternalImplementation project(":ui-drawer")
     viewDebugImplementation project(":ui-view")
+    viewInternalImplementation project(":ui-view")
     releaseImplementation project(':noop')
 }
