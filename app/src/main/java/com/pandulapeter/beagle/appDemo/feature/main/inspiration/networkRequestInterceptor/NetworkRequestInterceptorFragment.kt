@@ -22,6 +22,7 @@ class NetworkRequestInterceptorFragment : InspirationDetailFragment<NetworkReque
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         NetworkLogListModule(
+            title = getText(R.string.case_study_network_request_interceptor_network_activity),
             isExpandedInitially = true,
             baseUrl = NetworkingManager.BASE_URL
         )

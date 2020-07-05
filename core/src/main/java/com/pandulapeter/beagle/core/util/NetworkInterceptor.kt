@@ -51,7 +51,7 @@ internal class NetworkInterceptor : Interceptor {
             BeagleCore.implementation.logNetworkEvent(
                 isOutgoing = false,
                 payload = exception.message ?: "HTTP Failed",
-                url = "FAIL [${request.method}] ${request.url}",
+                url = "[${request.method}] FAIL ${request.url}",
                 duration = -1L
             )
             throw exception
@@ -64,7 +64,7 @@ internal class NetworkInterceptor : Interceptor {
             isOutgoing = false,
             payload = responseJson ?: response.message,
             headers = response.headers.map { "[${it.first}] ${it.second}" },
-            url = "${response.code} [${request.method}] ${request.url}",
+            url = "[${request.method}] ${response.code} ${request.url}",
             duration = tookMs
         )
         return response.newBuilder().body(responseJson?.toResponseBody(responseBody?.contentType()) ?: responseBody).build()

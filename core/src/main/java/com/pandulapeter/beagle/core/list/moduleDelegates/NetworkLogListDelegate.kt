@@ -17,20 +17,22 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
 
     override fun MutableList<Cell<*>>.addItems(module: NetworkLogListModule) {
         addAll(BeagleCore.implementation.getNetworkLogEntries().take(module.maxItemCount).map { entry ->
-            TextCell(
-                id = "${module.id}_${entry.id}",
-                text = entry.url.replace(module.baseUrl, "").let { url ->
-                    (if (entry.isOutgoing) "↑ " else "↓ ").let { prefix ->
-                        module.timestampFormatter?.let { formatter -> "$prefix[".append(formatter(entry.timestamp)).append("] ").append(url) } ?: prefix.append(url)
-                    }
-                },
-                onItemSelected = {
-                    BeagleCore.implementation.showDialog(
-                        contents = "${entry.url}${entry.duration?.let { "\nDuration: $it ms" } ?: ""}\n\n${entry.payload.formatToJson()}",
-                        isHorizontalScrollEnabled = true
+            (if (entry.isOutgoing) "↑ " else "↓ ").let { prefix ->
+                (module.timestampFormatter?.let { formatter -> formatter(entry.timestamp) }).let { formattedTimestamp ->
+                    TextCell(
+                        id = "${module.id}_${entry.id}",
+                        text = entry.url.replace(module.baseUrl, "").let { url ->
+                            formattedTimestamp?.let { "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)
+                        },
+                        onItemSelected = {
+                            BeagleCore.implementation.showDialog(
+                                contents = "$prefix${entry.url}${formattedTimestamp?.let { "\nTimestamp: $formattedTimestamp" } ?: ""}${entry.duration?.let { "\nDuration: $it ms" } ?: ""}\n\n${entry.payload.formatToJson()}",
+                                isHorizontalScrollEnabled = true
+                            )
+                        }
                     )
                 }
-            )
+            }
         })
     }
 

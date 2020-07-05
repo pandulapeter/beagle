@@ -174,6 +174,7 @@
     <!-- Case studies / Network request interceptor -->
     <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>
     <string name="case_study_network_request_interceptor_description">See the incoming and outgoing REST API calls and their formatted JSON payload to quickly debug potential issues.</string>
+    <string name="case_study_network_request_interceptor_network_activity"><b>Network activity</b></string>
     <string name="case_study_network_request_interceptor_text_1">The lyrics for these songs are downloaded from the internet every time you change the selection.\n\nObserve how the debug menu tracks every outgoing and incoming network request. You can also tap on the individual entries to see the formatted JSON payload.\n</string>
     <string name="case_study_network_request_interceptor_loading">Loading…</string>
     <string name="case_study_network_request_interceptor_something_went_wrong">Something went wrong.</string>
