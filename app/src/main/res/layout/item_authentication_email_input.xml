@@ -5,7 +5,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.EmailInputViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.EmailInputViewHolder.UiModel" />
 
     </data>
 

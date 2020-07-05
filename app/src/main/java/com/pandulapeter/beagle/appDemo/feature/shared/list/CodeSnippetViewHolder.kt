@@ -6,11 +6,11 @@ import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemCodeSnippetBinding
 import com.pandulapeter.beagle.appDemo.feature.main.about.list.AboutListItem
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.list.AuthenticationListItem
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.list.InspirationListItem
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.list.SimpleSetupListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.list.FeatureTogglesListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.SimpleSetupListItem
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 
@@ -21,7 +21,7 @@ class CodeSnippetViewHolder private constructor(
     data class UiModel(
         val codeSnippet: String,
         override val id: String = "codeSnippet_$codeSnippet"
-    ) : ListItem, SetupListItem, InspirationListItem, SimpleSetupListItem, FeatureTogglesListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, PlaygroundListItem, AboutListItem
+    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureTogglesListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, PlaygroundListItem, AboutListItem
 
     companion object {
         fun create(

@@ -5,7 +5,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.LoadingIndicatorViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.LoadingIndicatorViewHolder.UiModel" />
 
     </data>
 

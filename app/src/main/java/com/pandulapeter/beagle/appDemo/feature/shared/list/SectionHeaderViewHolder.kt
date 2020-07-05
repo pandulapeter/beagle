@@ -10,8 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSectionHeaderBinding
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.list.SimpleSetupListItem
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.SimpleSetupListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.utils.animatedDrawable
 import com.pandulapeter.beagle.appDemo.utils.tintedDrawable

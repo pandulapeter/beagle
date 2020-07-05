@@ -5,7 +5,7 @@ import android.view.View
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentMainBinding
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutContainerFragment
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationContainerFragment
+import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesContainerFragment
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundContainerFragment
 import com.pandulapeter.beagle.appDemo.feature.main.setup.SetupContainerFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
@@ -20,7 +20,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
             consume {
                 when (item.itemId) {
                     R.id.setup -> childFragmentManager.handleReplace(addToBackStack = true, newInstance = SetupContainerFragment.Companion::newInstance)
-                    R.id.inspiration -> childFragmentManager.handleReplace(addToBackStack = true, newInstance = InspirationContainerFragment.Companion::newInstance)
+                    R.id.examples -> childFragmentManager.handleReplace(addToBackStack = true, newInstance = ExamplesContainerFragment.Companion::newInstance)
                     R.id.playground -> childFragmentManager.handleReplace(addToBackStack = true, newInstance = PlaygroundContainerFragment.Companion::newInstance)
                     R.id.about -> childFragmentManager.handleReplace(addToBackStack = true, newInstance = AboutContainerFragment.Companion::newInstance)
                     else -> throw  IllegalArgumentException("Unsupported bottom navigation item.")

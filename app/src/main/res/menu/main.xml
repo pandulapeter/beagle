@@ -7,9 +7,9 @@
         android:title="@string/setup_title" />
 
     <item
-        android:id="@+id/inspiration"
-        android:icon="@drawable/ic_inspiration"
-        android:title="@string/inspiration_title" />
+        android:id="@+id/examples"
+        android:icon="@drawable/ic_examples"
+        android:title="@string/examples_title" />
 
     <item
         android:id="@+id/playground"

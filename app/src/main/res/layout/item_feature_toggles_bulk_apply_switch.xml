@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.BulkApplySwitchViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.list.BulkApplySwitchViewHolder.UiModel" />
 
     </data>
 

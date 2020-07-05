@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.RadioButtonViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.RadioButtonViewHolder.UiModel" />
 
     </data>
 

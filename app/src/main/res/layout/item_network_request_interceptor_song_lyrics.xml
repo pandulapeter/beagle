@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.SongLyricsViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.SongLyricsViewHolder.UiModel" />
 
     </data>
 

@@ -44,10 +44,10 @@
     <string name="setup_debug_menu_tutorial_switch">Show detailed tutorial</string>
 
     <!-- Examples -->
-    <string name="inspiration_title">Examples</string>
-    <string name="inspiration_text">The module configuration very much depends on your application\'s specific needs, so there is no single setup that will be ideal for every situation.\n\nThe following examples demonstrate some of the library\'s features while also describing how they are implemented. Use them as inspiration for coming up with your own debug menu!</string>
-    <string name="inspiration_beagle_text">Select one of the case studies to see the specialized version of the debug menu for the situation.</string>
-    <string name="inspiration_beagle_switch">Use shared element transitions</string>
+    <string name="examples_title">Examples</string>
+    <string name="examples_text">The module configuration very much depends on your application\'s specific needs, so there is no single setup that will be ideal for every situation.\n\nThe following examples demonstrate some of the library\'s features while also describing how they are implemented. Use them as inspiration for coming up with your own debug menu!</string>
+    <string name="examples_beagle_text_1">Select one of the case studies to see the specialized version of the debug menu for the situation.</string>
+    <string name="examples_beagle_text_2">You can also navigate from the debug menu, why not?</string>
 
     <!-- Case studies / Simple setup -->
     <string name="case_study_simple_setup_title">Simple setup</string>
@@ -157,21 +157,6 @@
     <string name="case_study_feature_toggles_radio_button_2">Option 2</string>
     <string name="case_study_feature_toggles_radio_button_3">Option 3</string>
 
-    <!-- Case studies / Authentication -->
-    <string name="case_study_authentication_title">Authentication</string>
-    <string name="case_study_authentication_description">Simplify the QA process by presenting a list of test accounts and automatically filling in the necessary login information.</string>
-    <string name="case_study_authentication_text_1">Manually typing in the same credentials multiple times a day can be a huge waste of time.</string>
-    <string name="case_study_authentication_email">Email address</string>
-    <string name="case_study_authentication_password">Password</string>
-    <string name="case_study_authentication_sign_in_button">Sign in</string>
-    <string name="case_study_authentication_signing_in">Signing in!</string>
-    <string name="case_study_authentication_text_2">To define a module that helps in this situation, first we need to create a representation of a test account:</string>
-    <string name="case_study_authentication_text_3">Extending <i>BeagleListItemContract</i> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\nThe next step is creating the module:</string>
-    <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\nAnother idea to save time is to automatically display the debug menu when the screen is opened, simply by calling:</string>
-    <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
-    <string name="case_study_authentication_test_accounts"><b>Test accounts</b></string>
-    <string name="case_study_authentication_show_automatically_switch"><b>Show automatically</b></string>
-
     <!-- Case studies / Network request interceptor -->
     <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>
     <string name="case_study_network_request_interceptor_description">See the incoming and outgoing REST API calls and their formatted JSON payload to quickly debug potential issues.</string>
@@ -189,6 +174,21 @@
     <string name="case_study_network_request_interceptor_clear_logs">Clear logs</string>
     <string name="case_study_network_request_interceptor_logs_cleared">Logs cleared</string>
     <string name="case_study_network_request_interceptor_text_5">\nAs usual, the optional arguments of the module constructor can be used to fine-tune its behavior. For example, specifying a <i>baseUrl</i> is a good idea in most cases to avoid having the same URL prefix for every single entry.</string>
+
+    <!-- Case studies / Authentication -->
+    <string name="case_study_authentication_title">Authentication</string>
+    <string name="case_study_authentication_description">Simplify the QA process by presenting a list of test accounts and automatically filling in the necessary login information.</string>
+    <string name="case_study_authentication_text_1">Manually typing in the same credentials multiple times a day can be a huge waste of time.</string>
+    <string name="case_study_authentication_email">Email address</string>
+    <string name="case_study_authentication_password">Password</string>
+    <string name="case_study_authentication_sign_in_button">Sign in</string>
+    <string name="case_study_authentication_signing_in">Signing in!</string>
+    <string name="case_study_authentication_text_2">To define a module that helps in this situation, first we need to create a representation of a test account:</string>
+    <string name="case_study_authentication_text_3">Extending <i>BeagleListItemContract</i> is a must as it provides information to the library about a unique identifier for the model (in this case the email address is good enough) and the actual text that is displayed on the UI.\n\nThe next step is creating the module:</string>
+    <string name="case_study_authentication_text_4">To simplify the flow further, in the callback lambda we\'re hiding the debug menu and automatically starting the sign in flow.\n\nAnother idea to save time is to automatically display the debug menu when the screen is opened, simply by calling:</string>
+    <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
+    <string name="case_study_authentication_test_accounts"><b>Test accounts</b></string>
+    <string name="case_study_authentication_show_automatically_switch"><b>Show automatically</b></string>
 
     <!-- Case studies / Analytics -->
     <string name="case_study_analytics_title">Logging analytics events</string>

@@ -4,12 +4,12 @@ import com.pandulapeter.beagle.appDemo.data.ModuleRepository
 import com.pandulapeter.beagle.appDemo.data.NetworkingManager
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.about.licences.LicencesViewModel
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.InspirationViewModel
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.authentication.AuthenticationViewModel
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.FeatureTogglesViewModel
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.NetworkRequestInterceptorViewModel
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.simpleSetup.SimpleSetupViewModel
-import com.pandulapeter.beagle.appDemo.feature.main.inspiration.staticData.StaticDataViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.AuthenticationViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.FeatureTogglesViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.NetworkRequestInterceptorViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.SimpleSetupViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.staticData.StaticDataViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.AddModuleViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.setup.SetupViewModel
@@ -23,7 +23,7 @@ private val dataModule = module {
 
 private val featureModule = module {
     viewModel { SetupViewModel() }
-    viewModel { InspirationViewModel() }
+    viewModel { ExamplesViewModel() }
     viewModel { SimpleSetupViewModel() }
     viewModel { StaticDataViewModel() }
     viewModel { FeatureTogglesViewModel() }

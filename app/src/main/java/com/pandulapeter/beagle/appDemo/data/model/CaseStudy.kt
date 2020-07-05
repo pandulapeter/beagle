@@ -2,13 +2,12 @@ package com.pandulapeter.beagle.appDemo.data.model
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.appDemo.R
-import java.util.UUID
 
 enum class CaseStudy(
-    val id: String = UUID.randomUUID().toString(),
     @StringRes val title: Int,
     @StringRes val description: Int,
-    val isReady: Boolean = true
+    val isReady: Boolean = true,
+    val id: String = "caseStudy_$title"
 ) {
     SIMPLE_SETUP(
         title = R.string.case_study_simple_setup_title,
@@ -22,13 +21,13 @@ enum class CaseStudy(
         title = R.string.case_study_feature_toggles_title,
         description = R.string.case_study_feature_toggles_description
     ),
-    AUTHENTICATION(
-        title = R.string.case_study_authentication_title,
-        description = R.string.case_study_authentication_description
-    ),
     NETWORK_REQUEST_INTERCEPTOR(
         title = R.string.case_study_network_request_interceptor_title,
         description = R.string.case_study_network_request_interceptor_description
+    ),
+    AUTHENTICATION(
+        title = R.string.case_study_authentication_title,
+        description = R.string.case_study_authentication_description
     ),
     ANALYTICS(
         title = R.string.case_study_analytics_title,
