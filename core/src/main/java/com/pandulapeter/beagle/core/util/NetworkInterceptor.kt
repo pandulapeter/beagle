@@ -38,12 +38,10 @@ internal class NetworkInterceptor : Interceptor {
             }
         }
         BeagleCore.implementation.logNetworkEvent(
-            NetworkLogEntry(
-                isOutgoing = true,
-                body = requestJson,
-                headers = request.headers.map { "[${it.first}] ${it.second}" },
-                url = "[${request.method}] ${request.url}"
-            )
+            isOutgoing = true,
+            payload = requestJson,
+            headers = request.headers.map { "[${it.first}] ${it.second}" },
+            url = "[${request.method}] ${request.url}"
         )
         val startNs = System.nanoTime()
         val response: Response
@@ -51,12 +49,10 @@ internal class NetworkInterceptor : Interceptor {
             response = chain.proceed(request)
         } catch (exception: Exception) {
             BeagleCore.implementation.logNetworkEvent(
-                NetworkLogEntry(
-                    isOutgoing = false,
-                    body = exception.message ?: "HTTP Failed",
-                    url = "FAIL [${request.method}] ${request.url}",
-                    duration = -1L
-                )
+                isOutgoing = false,
+                payload = exception.message ?: "HTTP Failed",
+                url = "FAIL [${request.method}] ${request.url}",
+                duration = -1L
             )
             throw exception
         }
@@ -65,13 +61,11 @@ internal class NetworkInterceptor : Interceptor {
         val contentType = responseBody?.contentType()
         val responseJson = if ((contentType == null || contentType.subtype == "json") && responseBody?.source()?.buffer?.isProbablyUtf8() == true) response.body?.string() else null
         BeagleCore.implementation.logNetworkEvent(
-            NetworkLogEntry(
-                isOutgoing = false,
-                body = responseJson ?: response.message,
-                headers = response.headers.map { "[${it.first}] ${it.second}" },
-                url = "${response.code} [${request.method}] ${request.url}",
-                duration = tookMs
-            )
+            isOutgoing = false,
+            payload = responseJson ?: response.message,
+            headers = response.headers.map { "[${it.first}] ${it.second}" },
+            url = "${response.code} [${request.method}] ${request.url}",
+            duration = tookMs
         )
         return response.newBuilder().body(responseJson?.toResponseBody(responseBody?.contentType()) ?: responseBody).build()
     }

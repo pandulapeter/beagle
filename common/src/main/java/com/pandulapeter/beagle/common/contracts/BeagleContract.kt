@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
+import com.pandulapeter.beagle.common.listeners.NetworkLogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
@@ -153,6 +154,27 @@ interface BeagleContract {
     fun clearLogListeners() = Unit
 
     /**
+     * Adds a new [NetworkLogListener] implementation which can be used to get notified when a new network event is logged using Beagle.logNetworkEvent().
+     * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is created / destroyed.
+     *
+     * @param listener - The [NetworkLogListener] implementation to add.
+     * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
+     */
+    fun addNetworkLogListener(listener: NetworkLogListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+
+    /**
+     * Removes the [NetworkLogListener] implementation, if it was added to the list of listeners.
+     *
+     * @param listener - The [LogListener] implementation to remove.
+     */
+    fun removeNetworkLogListener(listener: NetworkLogListener) = Unit
+
+    /**
+     * Removes all [NetworkLogListener] implementations, from the list of listeners.
+     */
+    fun clearNetworkLogListeners() = Unit
+
+    /**
      * Adds a new [OverlayListener] implementation which can be used to draw over the application layout.
      * The optional [LifecycleOwner] can be used to to automatically add / remove the listener when the lifecycle is created / destroyed.
      *
@@ -253,6 +275,19 @@ interface BeagleContract {
      * @param tag - A specific tag to filter out, or null to delete all logs. Null by default.
      */
     fun clearLogs(tag: String? = null) = Unit
+
+    /**
+     * Adds a new log handled by NetworkLogListModule and notifies the registered NetworkLogListeners.
+     * This function should only be needed when writing custom loggers, the default Beagle.interceptor deals with calling it for normal REST API-s.
+     *
+     * @param isOutgoing - True for requests, false for responses.
+     * @param url - The complete URL of the endpoint. This will appear in the log list as the title of the entry.
+     * @param payload - The payload String of the request or null if not applicable. This will appear in the dialog when the user selects the entry. JSON strings will automatically be formatted.
+     * @param headers - The request headers, or null if not applicable. Null by default
+     * @param duration - The duration of the event, or null if not applicable. Null by default
+     * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
+     */
+    fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>? = null, duration: Long? = null, timestamp: Long = System.currentTimeMillis()) = Unit
 
     /**
      * Clears all network log messages.

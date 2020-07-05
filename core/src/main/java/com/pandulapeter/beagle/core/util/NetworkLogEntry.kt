@@ -5,7 +5,7 @@ import java.util.UUID
 
 internal data class NetworkLogEntry(
     val isOutgoing: Boolean,
-    val body: String,
+    val payload: String,
     val headers: List<String> = emptyList(),
     val url: String,
     val duration: Long? = null,

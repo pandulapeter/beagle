@@ -23,7 +23,6 @@ class NetworkRequestInterceptorFragment : InspirationDetailFragment<NetworkReque
     override fun getBeagleModules(): List<Module<*>> = listOf(
         NetworkLogListModule(
             isExpandedInitially = true,
-            shouldShowHeaders = true,
             baseUrl = NetworkingManager.BASE_URL
         )
     )

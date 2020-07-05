@@ -20,13 +20,13 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
             TextCell(
                 id = "${module.id}_${entry.id}",
                 text = entry.url.replace(module.baseUrl, "").let { url ->
-                    (if (entry.isOutgoing) "↑" else "↓").let { prefix ->
-                        module.timestampFormatter?.let { formatter -> "$prefix [".append(formatter(entry.timestamp)).append("] ").append(url) } ?: "$prefix ".append(url)
+                    (if (entry.isOutgoing) "↑ " else "↓ ").let { prefix ->
+                        module.timestampFormatter?.let { formatter -> "$prefix[".append(formatter(entry.timestamp)).append("] ").append(url) } ?: prefix.append(url)
                     }
                 },
                 onItemSelected = {
                     BeagleCore.implementation.showDialog(
-                        contents = "${entry.url}\n\n${entry.body.formatToJson()}",
+                        contents = "${entry.url}${entry.duration?.let { "\nDuration: $it ms" } ?: ""}\n\n${entry.payload.formatToJson()}",
                         isHorizontalScrollEnabled = true
                     )
                 }

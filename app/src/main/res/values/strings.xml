@@ -183,7 +183,7 @@
     <string name="case_study_network_request_interceptor_song_3">The Proclaimers - I\'m Gonna Be (500 Miles)</string>
     <string name="case_study_network_request_interceptor_text_2">\nThe module itself can be instantiated using a single line of code:</string>
     <string name="case_study_network_request_interceptor_text_3">However, it will only start working if a special interceptor is registered on the <i>OkHttpClient</i> used by the requests.</string>
-    <string name="case_study_network_request_interceptor_text_4">The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.</string>
+    <string name="case_study_network_request_interceptor_text_4">The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.\n\nTODO: Clear logs button + optional parameter explanation</string>
 
     <!-- Case studies / Analytics -->
     <string name="case_study_analytics_title">Logging analytics events</string>

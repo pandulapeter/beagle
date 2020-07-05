@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
+import com.pandulapeter.beagle.common.listeners.NetworkLogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
@@ -24,6 +25,7 @@ import com.pandulapeter.beagle.core.manager.NetworkLogManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
+import com.pandulapeter.beagle.core.manager.listener.NetworkLogListenerManager
 import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
@@ -58,6 +60,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     private val shakeDetector by lazy { ShakeDetector { show() } }
     private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
     private val logListenerManager by lazy { LogListenerManager() }
+    private val networkLogListenerManager by lazy { NetworkLogListenerManager() }
     private val overlayListenerManager by lazy { OverlayListenerManager() }
     private val updateListenerManager by lazy { UpdateListenerManager() }
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
@@ -100,6 +103,12 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun clearLogListeners() = logListenerManager.clearListeners()
 
+    override fun addNetworkLogListener(listener: NetworkLogListener, lifecycleOwner: LifecycleOwner?) = networkLogListenerManager.addListener(listener, lifecycleOwner)
+
+    override fun removeNetworkLogListener(listener: NetworkLogListener) = networkLogListenerManager.removeListener(listener)
+
+    override fun clearNetworkLogListeners() = networkLogListenerManager.clearListeners()
+
     internal fun addInternalOverlayListener(listener: OverlayListener) = overlayListenerManager.addInternalListener(listener)
 
     override fun addOverlayListener(listener: OverlayListener, lifecycleOwner: LifecycleOwner?) = overlayListenerManager.addListener(listener, lifecycleOwner)
@@ -137,8 +146,17 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         }
     }
 
-    internal fun logNetworkEvent(entry: NetworkLogEntry) {
+    override fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) {
+        val entry = NetworkLogEntry(
+            isOutgoing = isOutgoing,
+            payload = payload.orEmpty(),
+            headers = headers.orEmpty(),
+            url = url,
+            duration = duration,
+            timestamp = timestamp
+        )
         networkLogManager.log(entry)
+        networkLogListenerManager.notifyListeners(entry)
         if (listManager.contains(NetworkLogListModule.ID)) {
             refresh()
         }
