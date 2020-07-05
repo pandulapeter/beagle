@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.NetworkingManager
 import com.pandulapeter.beagle.appDemo.data.model.Song
+import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.ClearButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.ErrorViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.LoadingIndicatorViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
@@ -89,6 +90,8 @@ class NetworkRequestInterceptorViewModel(
                 )
             )
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_4))
+            add(ClearButtonViewHolder.UiModel())
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_5))
         }
     }
 

@@ -131,6 +131,7 @@
     <string name="case_study_feature_toggles_querying_and_changing_the_current_value_description_4">To use any of these methods, a reference to the module is needed. The simplest way to get that is saving it at the moment of instantiation, but if that is not convenient for some reason, the library\'s find function can also be used.</string>
     <string name="case_study_feature_toggles_querying_and_changing_the_current_value_description_5">Please note that this will return null if the module is not currently added to the debug menu.</string>
     <string name="case_study_feature_toggles_reset_all">Reset all</string>
+    <string name="case_study_feature_toggles_state_reset">All values were reset</string>
     <string name="case_study_feature_toggles_persisting_state"><b>Persisting state</b></string>
     <string name="case_study_feature_toggles_persisting_state_description">All of these modules have the optional <i>shouldBePersisted</i> constructor parameter, which is set to false by default. Setting it to true AND providing a unique module ID (the auto-generated random value is inconsistent between app launches) will automatically save and restore the state of the module to / from <i>SharedPreferences</i>.\n\nIf the value is persisted, the <i>initialValue</i> / <i>initiallySelectedItemIds</i> / <i>initiallySelectedItemId</i> parameters are only taken into consideration when there is no value saved on the local storage.\n\nLastly, the callbacks of persisted modules are invoked when the module is added to the debug menu so that any custom logic that happens on manual selection could also be executed when the state is restored.\n\nThe current demo configuration saves and restores all the values for this screen.</string>
     <string name="case_study_feature_toggles_bulk_apply"><b>Bulk apply</b></string>
@@ -184,7 +185,10 @@
     <string name="case_study_network_request_interceptor_song_3">The Proclaimers - I\'m Gonna Be (500 Miles)</string>
     <string name="case_study_network_request_interceptor_text_2">\nThe module itself can be instantiated using a single line of code:</string>
     <string name="case_study_network_request_interceptor_text_3">However, it will only start working if a special interceptor is registered on the <i>OkHttpClient</i> used by the requests.</string>
-    <string name="case_study_network_request_interceptor_text_4">The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.\n\nTODO: Clear logs button + optional parameter explanation</string>
+    <string name="case_study_network_request_interceptor_text_4">The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.\n\nIf, for some reason, you cannot use this interceptor (for example in case of socket-based API-s), the library exposes the <i>Beagle.logNetworkEvent(…)</i> function which populates the same module. Furthermore, you can use <i>Beagle.clearNetworkLogs()</i> to reset the list at any time.</string>
+    <string name="case_study_network_request_interceptor_clear_logs">Clear logs</string>
+    <string name="case_study_network_request_interceptor_logs_cleared">Logs cleared</string>
+    <string name="case_study_network_request_interceptor_text_5">\nAs usual, the optional arguments of the module constructor can be used to fine-tune its behavior. For example, specifying a <i>baseUrl</i> is a good idea in most cases to avoid having the same URL prefix for every single entry.</string>
 
     <!-- Case studies / Analytics -->
     <string name="case_study_analytics_title">Logging analytics events</string>

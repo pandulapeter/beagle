@@ -11,6 +11,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.l
 import com.pandulapeter.beagle.appDemo.feature.main.inspiration.featureToggles.list.FeatureTogglesListItem
 import com.pandulapeter.beagle.appDemo.utils.createLabelModule
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
+import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.modules.CheckBoxModule
@@ -113,6 +114,7 @@ class FeatureTogglesFragment : InspirationDetailFragment<FeatureTogglesViewModel
         Beagle.find<CheckBoxModule>(TOGGLE_4_ID)?.setCurrentValue(Beagle, false)
         Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(CHECK_BOX_GROUP_ID)?.setCurrentValue(Beagle, emptySet())
         Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(RADIO_BUTTON_GROUP_ID)?.setCurrentValue(Beagle, getString(R.string.case_study_feature_toggles_radio_button_1))
+        binding.recyclerView.showSnackbar(R.string.case_study_feature_toggles_state_reset)
     }
 
     companion object {
