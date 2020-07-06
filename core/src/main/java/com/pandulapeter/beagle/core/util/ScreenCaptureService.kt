@@ -20,28 +20,22 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.pandulapeter.beagle.BeagleCore
 
-@RequiresApi(Build.VERSION_CODES.M)
-class ScreenshotService : Service() {
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+internal class ScreenCaptureService : Service() {
     private var projection: MediaProjection? = null
     private var virtualDisplay: VirtualDisplay? = null
     private val handlerThread = HandlerThread(javaClass.simpleName, Process.THREAD_PRIORITY_BACKGROUND)
     private lateinit var handler: Handler
-    private lateinit var mgr: MediaProjectionManager
-    private lateinit var windowManager: WindowManager
 
     override fun onCreate() {
         super.onCreate()
-        mgr = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-        windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         handlerThread.start()
         handler = Handler(handlerThread.looper)
     }
 
-    override fun onStartCommand(i: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         moveToForeground()
-        handler.postDelayed({
-            startCapture(i.getIntExtra(EXTRA_RESULT_CODE, 0), i.getParcelableExtra(EXTRA_RESULT_INTENT) as Intent)
-        }, SCREENSHOT_DELAY)
+        handler.postDelayed({ startCapture(intent.getIntExtra(EXTRA_RESULT_CODE, 0), intent.getParcelableExtra(EXTRA_RESULT_INTENT) as Intent) }, SCREENSHOT_DELAY)
         return START_NOT_STICKY
     }
 
@@ -54,17 +48,17 @@ class ScreenshotService : Service() {
 
     private fun stopCapture() {
         if (projection != null) {
-            projection!!.stop()
-            virtualDisplay!!.release()
+            projection?.stop()
+            virtualDisplay?.release()
             projection = null
         }
     }
 
     private fun startCapture(resultCode: Int, resultData: Intent) {
-        projection = mgr.getMediaProjection(resultCode, resultData)
-        val screenshotWriter = ScreenshotWriter(windowManager, handler) { bitmap ->
-            BeagleCore.implementation.onScreenshotReady?.let {
-                it(bitmap)
+        projection = (getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?)?.getMediaProjection(resultCode, resultData)
+        val screenshotWriter = ScreenshotWriter(getSystemService(Context.WINDOW_SERVICE) as WindowManager, handler) { bitmap ->
+            BeagleCore.implementation.onScreenshotReady?.let { callback ->
+                callback(bitmap)
                 BeagleCore.implementation.onScreenshotReady = null
             }
             stopCapture()
@@ -91,11 +85,11 @@ class ScreenshotService : Service() {
 
     private fun moveToForeground() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(CHANNEL_WHATEVER) == null) {
-            notificationManager.createNotificationChannel(NotificationChannel(CHANNEL_WHATEVER, "Beagle screenshot", NotificationManager.IMPORTANCE_DEFAULT))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID) == null) {
+            notificationManager.createNotificationChannel(NotificationChannel(NOTIFICATION_CHANNEL_ID, "Beagle screenshot", NotificationManager.IMPORTANCE_DEFAULT))
         }
         startForeground(
-            NOTIFICATION_ID, NotificationCompat.Builder(this, CHANNEL_WHATEVER)
+            NOTIFICATION_ID, NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentTitle("Taking screenshot...").build()
@@ -103,11 +97,15 @@ class ScreenshotService : Service() {
     }
 
     companion object {
-        private const val CHANNEL_WHATEVER = "channel_beagle_screenshot"
+        private const val NOTIFICATION_CHANNEL_ID = "channel_beagle_screenshot"
         private const val NOTIFICATION_ID = 2657
         private const val SCREENSHOT_DELAY = 300L
-        const val EXTRA_RESULT_CODE = "resultCode"
-        const val EXTRA_RESULT_INTENT = "resultIntent"
-        const val VIRTUAL_DISPLAY_FLAGS = DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
+        private const val EXTRA_RESULT_CODE = "resultCode"
+        private const val EXTRA_RESULT_INTENT = "resultIntent"
+        private const val VIRTUAL_DISPLAY_FLAGS = DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
+
+        fun getStartIntent(context: Context, resultCode: Int, data: Intent) = Intent(context, ScreenCaptureService::class.java)
+            .putExtra(EXTRA_RESULT_CODE, resultCode)
+            .putExtra(EXTRA_RESULT_INTENT, data)
     }
 }

@@ -6,7 +6,7 @@
     <application>
 
         <service
-            android:name=".util.ScreenshotService"
+            android:name=".util.ScreenCaptureService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
 

@@ -3,6 +3,9 @@ package com.pandulapeter.beagle.core
 import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -23,6 +26,7 @@ import com.pandulapeter.beagle.core.manager.LocalStorageManager
 import com.pandulapeter.beagle.core.manager.LogManager
 import com.pandulapeter.beagle.core.manager.MemoryStorageManager
 import com.pandulapeter.beagle.core.manager.NetworkLogManager
+import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
 import com.pandulapeter.beagle.core.manager.ShakeDetector
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
@@ -31,12 +35,9 @@ import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.NetworkInterceptor
-import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.view.AlertDialogFragment
 import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
-import com.pandulapeter.beagle.modules.LogListModule
-import com.pandulapeter.beagle.modules.NetworkLogListModule
 import okhttp3.Interceptor
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
@@ -65,10 +66,15 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     private val overlayListenerManager by lazy { OverlayListenerManager() }
     private val updateListenerManager by lazy { UpdateListenerManager() }
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
-    private val logManager by lazy { LogManager() }
-    private val networkLogManager by lazy { NetworkLogManager() }
+    private val logManager by lazy { LogManager(logListenerManager, listManager, ::refresh) }
+    private val networkLogManager by lazy { NetworkLogManager(networkLogListenerManager, listManager, ::refresh) }
     private val listManager by lazy { ListManager() }
-    internal var onScreenshotReady: ((Bitmap) -> Unit)? = null
+    private val screenCaptureManager by lazy { ScreenCaptureManager() }
+    internal var onScreenshotReady: ((Bitmap?) -> Unit)?
+        get() = screenCaptureManager.onScreenshotReady
+        set(value) {
+            screenCaptureManager.onScreenshotReady = value
+        }
 
     init {
         BeagleCore.implementation = this
@@ -135,43 +141,19 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun clearVisibilityListeners() = visibilityListenerManager.clearListeners()
 
-    override fun log(message: CharSequence, tag: String?, payload: CharSequence?) {
-        logManager.log(tag, message, payload)
-        logListenerManager.notifyListeners(tag, message, payload)
-        if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
-            refresh()
-        }
-    }
+    override fun log(message: CharSequence, tag: String?, payload: CharSequence?) = logManager.log(tag, message, payload)
 
-    override fun clearLogs(tag: String?) {
-        logManager.clearLogs(tag)
-        if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
-            refresh()
-        }
-    }
+    override fun clearLogs(tag: String?) = logManager.clearLogs(tag)
 
-    override fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) {
-        val entry = NetworkLogEntry(
-            isOutgoing = isOutgoing,
-            payload = payload.orEmpty(),
-            headers = headers.orEmpty(),
-            url = url,
-            duration = duration,
-            timestamp = timestamp
-        )
-        networkLogManager.log(entry)
-        networkLogListenerManager.notifyListeners(entry)
-        if (listManager.contains(NetworkLogListModule.ID)) {
-            refresh()
-        }
-    }
+    override fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) =
+        networkLogManager.log(isOutgoing, url, payload, headers, duration, timestamp)
 
-    override fun clearNetworkLogs() {
-        networkLogManager.clearLogs()
-        if (listManager.contains(NetworkLogListModule.ID)) {
-            refresh()
-        }
-    }
+    override fun clearNetworkLogs() = networkLogManager.clearLogs()
+
+    override fun takeScreenshot(fileName: String, callback: (Uri?) -> Unit) = screenCaptureManager.takeScreenshot(fileName, callback)
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun recordScreen(fileName: String, callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(fileName, callback)
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListeners)
 

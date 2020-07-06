@@ -2,6 +2,9 @@ package com.pandulapeter.beagle.common.contracts
 
 import android.app.Application
 import android.content.Context
+import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
@@ -14,6 +17,8 @@ import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.modules.NetworkLogListModule
+import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlin.reflect.KClass
 
 /**
@@ -298,6 +303,29 @@ interface BeagleContract {
      * Clears all network log messages.
      */
     fun clearNetworkLogs() = Unit
+
+    /**
+     * Captures a screenshot image and saves it in the application's private directory (exposing it through a FileProvider).
+     * Below Android Lollipop the root view's drawing cache will be used which is an inferior solution (only the current application will be captured, without system bars for example).
+     * Above Android Lollipop the entire screen will be captured, after the user agrees to the system prompt.
+     *
+     * @param fileName - The name of the image file. The default a name will be generated based on the current timestamp.
+     * @param callback - The lambda that gets invoked after the screenshot is done, with the [Uri] pointing to the PNG file. The argument will be null if anything goes wrong.
+     */
+    fun takeScreenshot(fileName: String = "screenshot_${SimpleDateFormat("yyyy.MM.dd_HH:mm:ss", Locale.ENGLISH).format(System.currentTimeMillis())}.png", callback: (Uri?) -> Unit) =
+        callback.invoke(null)
+
+    /**
+     * Captures a screen recording video and saves it in the application's private directory (exposing it through a FileProvider).
+     * A notification will appear during the recording which contains the button to stop it.
+     * This feature relies on API-s only present on Android Lollipop and above. Recording will only be started after the user agrees to the system prompt.
+     *
+     * @param fileName - The name of the video file. The default a name will be generated based on the current timestamp.
+     * @param callback - The lambda that gets invoked after the recording is done, with the [Uri] pointing to the MP4 file. The argument will be null if anything goes wrong.
+     */
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun recordScreen(fileName: String = "screen_recording_${SimpleDateFormat("yyyy.MM.dd_HH:mm:ss", Locale.ENGLISH).format(System.currentTimeMillis())}.mp4", callback: (Uri?) -> Unit) =
+        callback.invoke(null)
 
     /**
      * Call this function to trigger recreating every cell model for every module.

@@ -12,10 +12,16 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import java.io.ByteArrayOutputStream
 
-@RequiresApi(Build.VERSION_CODES.M)
-class ScreenshotWriter(windowManager: WindowManager, handler: Handler, private val callback: (Bitmap) -> Unit) : OnImageAvailableListener {
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+internal class ScreenshotWriter(
+    windowManager: WindowManager,
+    handler: Handler,
+    private val callback: (Bitmap) -> Unit
+) : OnImageAvailableListener {
+
     val width: Int
     val height: Int
+    val surface: Surface get() = imageReader.surface
     private val imageReader: ImageReader
     private var latestBitmap: Bitmap? = null
 
@@ -31,10 +37,7 @@ class ScreenshotWriter(windowManager: WindowManager, handler: Handler, private v
         }
         this.width = width
         this.height = height
-        imageReader = ImageReader.newInstance(
-            width, height,
-            PixelFormat.RGBA_8888, 2
-        )
+        imageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 1)
         imageReader.setOnImageAvailableListener(this, handler)
     }
 
@@ -48,28 +51,16 @@ class ScreenshotWriter(windowManager: WindowManager, handler: Handler, private v
             val rowPadding = rowStride - pixelStride * width
             val bitmapWidth = width + rowPadding / pixelStride
             if (latestBitmap == null || latestBitmap!!.width != bitmapWidth || latestBitmap!!.height != height) {
-                if (latestBitmap != null) {
-                    latestBitmap!!.recycle()
-                }
+                latestBitmap?.recycle()
                 latestBitmap = Bitmap.createBitmap(bitmapWidth, height, Bitmap.Config.ARGB_8888)
             }
-            latestBitmap!!.copyPixelsFromBuffer(buffer)
+            latestBitmap?.copyPixelsFromBuffer(buffer)
             image.close()
-            val baos = ByteArrayOutputStream()
-            val cropped = Bitmap.createBitmap(
-                latestBitmap!!, 0, 0,
-                width, height
-            )
-            cropped.compress(Bitmap.CompressFormat.PNG, 100, baos)
-            callback(cropped)
-            close()
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            val croppedBitmap = Bitmap.createBitmap(latestBitmap!!, 0, 0, width, height)
+            croppedBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            callback(croppedBitmap)
+            imageReader.close()
         }
-    }
-
-    val surface: Surface
-        get() = imageReader.surface
-
-    private fun close() {
-        imageReader.close()
     }
 }
