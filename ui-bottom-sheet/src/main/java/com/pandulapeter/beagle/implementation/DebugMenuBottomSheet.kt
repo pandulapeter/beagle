@@ -77,7 +77,9 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        BeagleCore.implementation.notifyVisibilityListenersOnHide()
+        if (!isStateSaved) {
+            BeagleCore.implementation.notifyVisibilityListenersOnHide()
+        }
     }
 
     override fun onContentsChanged() = updateApplyResetBlockPosition()

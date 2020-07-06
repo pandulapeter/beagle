@@ -45,23 +45,23 @@ internal class DebugMenuActivity : AppCompatActivity() {
                 requestApplyInsets()
             }
         }
+        if (savedInstanceState == null) {
+            BeagleCore.implementation.notifyVisibilityListenersOnShow()
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        (BeagleCore.implementation.uiManager as ActivityUiManager).let {
-            if (it.debugMenuActivity == null) {
-                BeagleCore.implementation.notifyVisibilityListenersOnShow()
-            }
-            it.debugMenuActivity = this
-        }
+        (BeagleCore.implementation.uiManager as ActivityUiManager).debugMenuActivity = this
     }
 
     override fun onStop() {
         (BeagleCore.implementation.uiManager as ActivityUiManager).let {
             if (it.debugMenuActivity == this) {
                 it.debugMenuActivity = null
-                BeagleCore.implementation.notifyVisibilityListenersOnHide()
+                if (isFinishing) {
+                    BeagleCore.implementation.notifyVisibilityListenersOnHide()
+                }
             }
         }
         super.onStop()

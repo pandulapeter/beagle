@@ -39,7 +39,9 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        BeagleCore.implementation.notifyVisibilityListenersOnHide()
+        if (!isStateSaved) {
+            BeagleCore.implementation.notifyVisibilityListenersOnHide()
+        }
     }
 
     companion object {
