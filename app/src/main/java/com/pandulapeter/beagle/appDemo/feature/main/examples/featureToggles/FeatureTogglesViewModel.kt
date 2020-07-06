@@ -25,12 +25,12 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
 
     private val _items = MutableLiveData<List<FeatureTogglesListItem>>()
     override val items: LiveData<List<FeatureTogglesListItem>> = _items
-    private val toggle1 get() = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_1_ID)
-    private val toggle2 get() = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_2_ID)
-    private val toggle3 get() = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_3_ID)
-    private val toggle4 get() = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_4_ID)
-    private val multipleSelectionOptions get() = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)
-    private val singleSelectionOption get() = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)
+    val toggle1 get() = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_1_ID)
+    val toggle2 get() = Beagle.find<SwitchModule>(FeatureTogglesFragment.TOGGLE_2_ID)
+    val toggle3 get() = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_3_ID)
+    val toggle4 get() = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_4_ID)
+    val multipleSelectionOptions get() = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)
+    val singleSelectionOption get() = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)
     private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
     var isBulkApplyEnabled = false
         set(value) {

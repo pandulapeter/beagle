@@ -108,12 +108,12 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
     )
 
     private fun resetAll() {
-        Beagle.find<SwitchModule>(TOGGLE_1_ID)?.setCurrentValue(Beagle, false)
-        Beagle.find<SwitchModule>(TOGGLE_2_ID)?.setCurrentValue(Beagle, false)
-        Beagle.find<CheckBoxModule>(TOGGLE_3_ID)?.setCurrentValue(Beagle, false)
-        Beagle.find<CheckBoxModule>(TOGGLE_4_ID)?.setCurrentValue(Beagle, false)
-        Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(CHECK_BOX_GROUP_ID)?.setCurrentValue(Beagle, emptySet())
-        Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(RADIO_BUTTON_GROUP_ID)?.setCurrentValue(Beagle, getString(R.string.case_study_feature_toggles_radio_button_1))
+        viewModel.toggle1?.setCurrentValue(Beagle, false)
+        viewModel.toggle2?.setCurrentValue(Beagle, false)
+        viewModel.toggle3?.setCurrentValue(Beagle, false)
+        viewModel.toggle4?.setCurrentValue(Beagle, false)
+        viewModel.multipleSelectionOptions?.setCurrentValue(Beagle, emptySet())
+        viewModel.singleSelectionOption?.setCurrentValue(Beagle, getString(R.string.case_study_feature_toggles_radio_button_1))
         binding.recyclerView.showSnackbar(R.string.case_study_feature_toggles_state_reset)
     }
 
