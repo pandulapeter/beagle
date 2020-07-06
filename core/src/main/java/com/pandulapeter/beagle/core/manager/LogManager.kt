@@ -6,14 +6,17 @@ internal class LogManager {
 
     private val entries = mutableListOf<LogEntry>()
 
-    fun log(tag: String?, message: CharSequence, payload: CharSequence?) = entries.add(
-        0,
-        LogEntry(
-            tag = tag,
-            message = message,
-            payload = payload
+    fun log(tag: String?, message: CharSequence, payload: CharSequence?) {
+        entries.add(
+            0,
+            LogEntry(
+                tag = tag,
+                message = message,
+                payload = payload
+            )
         )
-    )
+        entries.sortByDescending { it.timestamp }
+    }
 
     fun clearLogs(tag: String?) {
         if (tag == null) {
