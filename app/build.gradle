@@ -34,6 +34,7 @@ android {
             debuggable true
             minifyEnabled false
             shrinkResources false
+            multiDexEnabled true
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             signingConfig signingConfigs.internal
@@ -42,6 +43,7 @@ android {
             debuggable false
             minifyEnabled true
             shrinkResources true
+            multiDexEnabled false
             applicationIdSuffix ".internal"
             versionNameSuffix "-internal"
             signingConfig signingConfigs.internal
@@ -52,6 +54,7 @@ android {
             debuggable false
             minifyEnabled true
             shrinkResources true
+            multiDexEnabled false
             applicationIdSuffix ".release"
             versionNameSuffix "-release"
             signingConfig signingConfigs.internal
@@ -98,6 +101,7 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.multidex:multidex:2.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
