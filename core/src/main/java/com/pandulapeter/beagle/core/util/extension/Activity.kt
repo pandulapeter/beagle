@@ -29,10 +29,10 @@ internal val Activity.supportsDebugMenu
             && BeagleCore.implementation.behavior.excludedPackageNames.none { componentName.className.startsWith(it) }
 
 internal suspend fun Activity.createScreenshotFromBitmap(bitmap: Bitmap, fileName: String): Uri? = withContext(Dispatchers.IO) {
-    val imagesFolder = File(cacheDir, "beagleScreenshots")
+    val folder = File(cacheDir, "beagleScreenCaptures")
     try {
-        imagesFolder.mkdirs()
-        val file = File(imagesFolder, fileName)
+        folder.mkdirs()
+        val file = File(folder, fileName)
         val stream = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         stream.flush()
@@ -51,11 +51,17 @@ internal fun Activity.shareFile(uri: Uri, fileType: String, title: String) {
     }, title))
 }
 
-
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 internal fun Activity.takeScreenshotWithMediaProjectionManager() {
     (BeagleCore.implementation.uiManager.findOverlayFragment(this as? FragmentActivity?) as? OverlayFragment?).let { overlayFragment ->
-        overlayFragment?.takeScreenshot() ?: BeagleCore.implementation.onScreenshotReady?.invoke(null)
+        overlayFragment?.startCapture(false) ?: BeagleCore.implementation.onScreenshotReady?.invoke(null)
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+internal fun Activity.recordScreenWithMediaProjectionManager() {
+    (BeagleCore.implementation.uiManager.findOverlayFragment(this as? FragmentActivity?) as? OverlayFragment?).let { overlayFragment ->
+        overlayFragment?.startCapture(true)
     }
 }
 

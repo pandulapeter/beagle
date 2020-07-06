@@ -312,7 +312,7 @@ interface BeagleContract {
      * @param fileName - The name of the image file. The default a name will be generated based on the current timestamp.
      * @param callback - The lambda that gets invoked after the screenshot is done, with the [Uri] pointing to the PNG file. The argument will be null if anything goes wrong.
      */
-    fun takeScreenshot(fileName: String = "screenshot_${SimpleDateFormat("yyyy.MM.dd_HH:mm:ss", Locale.ENGLISH).format(System.currentTimeMillis())}.png", callback: (Uri?) -> Unit) =
+    fun takeScreenshot(fileName: String = "screenshot_${SimpleDateFormat("yyyy.MM.dd_HH-mm-ss", Locale.ENGLISH).format(System.currentTimeMillis())}.png", callback: (Uri?) -> Unit) =
         callback.invoke(null)
 
     /**
@@ -324,7 +324,7 @@ interface BeagleContract {
      * @param callback - The lambda that gets invoked after the recording is done, with the [Uri] pointing to the MP4 file. The argument will be null if anything goes wrong.
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun recordScreen(fileName: String = "screen_recording_${SimpleDateFormat("yyyy.MM.dd_HH:mm:ss", Locale.ENGLISH).format(System.currentTimeMillis())}.mp4", callback: (Uri?) -> Unit) =
+    fun recordScreen(fileName: String = "screen_recording_${SimpleDateFormat("yyyy.MM.dd_HH-mm-ss", Locale.ENGLISH).format(System.currentTimeMillis())}.mp4", callback: (Uri?) -> Unit) =
         callback.invoke(null)
 
     /**

@@ -2,42 +2,27 @@ package com.pandulapeter.beagle.core.util
 
 import android.graphics.Bitmap
 import android.graphics.PixelFormat
-import android.graphics.Point
 import android.media.ImageReader
 import android.media.ImageReader.OnImageAvailableListener
 import android.os.Build
 import android.os.Handler
 import android.view.Surface
-import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import java.io.ByteArrayOutputStream
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 internal class ScreenshotWriter(
-    windowManager: WindowManager,
+    private val width: Int,
+    private val height: Int,
     handler: Handler,
     private val callback: (Bitmap) -> Unit
 ) : OnImageAvailableListener {
 
-    val width: Int
-    val height: Int
     val surface: Surface get() = imageReader.surface
-    private val imageReader: ImageReader
+    private val imageReader: ImageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 1)
     private var latestBitmap: Bitmap? = null
 
     init {
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getRealSize(size)
-        var width = size.x
-        var height = size.y
-        while (width * height > 2 shl 19) {
-            width = width shr 1
-            height = height shr 1
-        }
-        this.width = width
-        this.height = height
-        imageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 1)
         imageReader.setOnImageAvailableListener(this, handler)
     }
 

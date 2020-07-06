@@ -24,7 +24,7 @@ import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 data class ScreenRecordingButtonModule(
     val text: CharSequence = "Record screen",
-    val fileName: String = "screen_recording_${SimpleDateFormat("yyyy.MM.dd_HH:mm:ss", Locale.ENGLISH).format(System.currentTimeMillis())}.mp4",
+    val fileName: String = "screen_recording_${SimpleDateFormat("yyyy.MM.dd_HH-mm-ss", Locale.ENGLISH).format(System.currentTimeMillis())}.mp4",
     val shareSheetTitle: String = "Share",
     val onButtonPressed: () -> Unit = {}
 ) : Module<ScreenRecordingButtonModule> {

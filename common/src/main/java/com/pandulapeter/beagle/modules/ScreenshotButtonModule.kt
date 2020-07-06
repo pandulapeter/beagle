@@ -20,7 +20,7 @@ import java.util.Locale
  */
 data class ScreenshotButtonModule(
     val text: CharSequence = "Take a screenshot",
-    val fileName: String = "screenshot_${SimpleDateFormat("yyyy.MM.dd_HH:mm:ss", Locale.ENGLISH).format(System.currentTimeMillis())}.png",
+    val fileName: String = "screenshot_${SimpleDateFormat("yyyy.MM.dd_HH-mm-ss", Locale.ENGLISH).format(System.currentTimeMillis())}.png",
     val shareSheetTitle: String = "Share",
     val onButtonPressed: () -> Unit = {}
 ) : Module<ScreenshotButtonModule> {

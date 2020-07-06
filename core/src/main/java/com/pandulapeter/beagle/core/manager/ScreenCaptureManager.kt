@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
+import com.pandulapeter.beagle.core.util.extension.recordScreenWithMediaProjectionManager
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithDrawingCache
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithMediaProjectionManager
 import kotlinx.coroutines.Dispatchers
@@ -46,5 +47,6 @@ internal class ScreenCaptureManager {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun recordScreen(fileName: String, callback: (Uri?) -> Unit) {
         //TODO
+        currentActivity?.recordScreenWithMediaProjectionManager()
     }
 }

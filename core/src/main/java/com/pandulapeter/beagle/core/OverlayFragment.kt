@@ -18,31 +18,34 @@ internal class OverlayFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = BeagleCore.implementation.createOverlayLayout(requireActivity())
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun takeScreenshot() {
+    fun startCapture(isForVideo: Boolean) {
         (context?.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?).let { mediaProjectionManager ->
             if (mediaProjectionManager == null) {
                 BeagleCore.implementation.onScreenshotReady?.invoke(null)
             } else {
-                startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), SCREENSHOT_REQUEST)
+                startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), if (isForVideo) SCREEN_RECORDING_REQUEST else SCREENSHOT_REQUEST)
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == SCREENSHOT_REQUEST) {
-            if (data == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                BeagleCore.implementation.onScreenshotReady?.invoke(null)
-            } else {
-                requireContext().run { startService(ScreenCaptureService.getStartIntent(this, resultCode, data)) }
+        when (requestCode) {
+            SCREENSHOT_REQUEST,
+            SCREEN_RECORDING_REQUEST -> {
+                if (data == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    BeagleCore.implementation.onScreenshotReady?.invoke(null)
+                } else {
+                    requireContext().run { startService(ScreenCaptureService.getStartIntent(this, resultCode, data, requestCode == SCREEN_RECORDING_REQUEST)) }
+                }
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
     companion object {
         const val TAG = "beagleOverlayFragment"
         private const val SCREENSHOT_REQUEST = 4246
+        private const val SCREEN_RECORDING_REQUEST = 4247
 
         fun newInstance() = OverlayFragment()
     }
