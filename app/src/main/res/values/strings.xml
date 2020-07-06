@@ -260,8 +260,10 @@
     <string name="add_module_keyline_overlay_switch_description">Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.</string>
     <string name="add_module_network_log_list">NetworkLogList</string>
     <string name="add_module_network_log_list_description">Displays an expandable list of historical network activity. The entries are clickable to inspect their JSON payloads.</string>
+    <string name="add_module_network_screen_recording_button">ScreenRecordingButton</string>
+    <string name="add_module_network_screen_recording_button_description">Displays a button that takes a screen recording video of the current layout and allows the user to share it (only available on Android 5.0 Lollipop and above).</string>
     <string name="add_module_network_screenshot_button">ScreenshotButton</string>
-    <string name="add_module_network_screenshot_button_description">Displays a button that takes a screenshot of the current layout and allows the user to share it.</string>
+    <string name="add_module_network_screenshot_button_description">Displays a button that takes a screenshot image of the current layout and allows the user to share it.</string>
 
     <!-- About -->
     <string name="about_title">About</string>

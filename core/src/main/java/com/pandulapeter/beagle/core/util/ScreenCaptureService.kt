@@ -22,6 +22,7 @@ import com.pandulapeter.beagle.BeagleCore
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 internal class ScreenCaptureService : Service() {
+
     private var projection: MediaProjection? = null
     private var virtualDisplay: VirtualDisplay? = null
     private val handlerThread = HandlerThread(javaClass.simpleName, Process.THREAD_PRIORITY_BACKGROUND)
@@ -47,11 +48,9 @@ internal class ScreenCaptureService : Service() {
     override fun onBind(intent: Intent): IBinder? = throw IllegalStateException("Binding not supported.")
 
     private fun stopCapture() {
-        if (projection != null) {
-            projection?.stop()
-            virtualDisplay?.release()
-            projection = null
-        }
+        projection?.stop()
+        virtualDisplay?.release()
+        projection = null
     }
 
     private fun startCapture(resultCode: Int, resultData: Intent) {
@@ -65,11 +64,6 @@ internal class ScreenCaptureService : Service() {
             stopForeground(true)
             stopSelf()
         }
-        val cb: MediaProjection.Callback = object : MediaProjection.Callback() {
-            override fun onStop() {
-                virtualDisplay!!.release()
-            }
-        }
         virtualDisplay = projection?.createVirtualDisplay(
             "beagleScreenshot",
             screenshotWriter.width,
@@ -80,7 +74,11 @@ internal class ScreenCaptureService : Service() {
             null,
             handler
         )
-        projection?.registerCallback(cb, handler)
+        projection?.registerCallback(object : MediaProjection.Callback() {
+            override fun onStop() {
+                virtualDisplay?.release()
+            }
+        }, handler)
     }
 
     private fun moveToForeground() {

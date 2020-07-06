@@ -1,35 +1,39 @@
 package com.pandulapeter.beagle.modules
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
+import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 
 /**
- * Displays a button that takes a screenshot image of the current layout and allows the user to share it.
- * Below Android Lollipop the root view's drawing cache will be used which is an inferior solution (only the current application will be captured, without system bars for example).
- * Above Android Lollipop the entire screen will be captured, after the user agrees to the system prompt.
+ * Displays a button that takes a screen recording video of the current layout and allows the user to share it.
+ * A notification will appear during the recording which contains the button to stop it.
+ * This feature relies on API-s only present on Android Lollipop and above. Recording will only be started after the user agrees to the system prompt.
  * This module can only be added once. It uses the value of [ID] as id.
  *
- * @param text - The text that should be displayed on the button. "Take a screenshot" by default.
+ * @param text - The text that should be displayed on the button. "Record screen" by default.
  * @param fileName - The name of the image file. The default a name will be generated based on the current timestamp.
  * @param shareSheetTitle - The title of the share sheet (provided by the system). "Share" by default.
  * @param onButtonPressed - Callback called when the user presses the button. Optional, empty implementation by default.
  */
-data class ScreenshotButtonModule(
-    val text: CharSequence = "Take a screenshot",
-    val fileName: String = "screenshot_${SimpleDateFormat("yyyy.MM.dd_HH:mm:ss", Locale.ENGLISH).format(System.currentTimeMillis())}.png",
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+data class ScreenRecordingButtonModule(
+    val text: CharSequence = "Record screen",
+    val fileName: String = "screen_recording_${SimpleDateFormat("yyyy.MM.dd_HH:mm:ss", Locale.ENGLISH).format(System.currentTimeMillis())}.mp4",
     val shareSheetTitle: String = "Share",
     val onButtonPressed: () -> Unit = {}
-) : Module<ScreenshotButtonModule> {
+) : Module<ScreenRecordingButtonModule> {
 
     override val id: String = ID
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 
     companion object {
-        const val ID = "screenshotButton"
+        const val ID = "screenRecordingButton"
     }
 }

@@ -50,7 +50,7 @@ internal class ScreenshotWriter(
             val rowStride = planes[0].rowStride
             val rowPadding = rowStride - pixelStride * width
             val bitmapWidth = width + rowPadding / pixelStride
-            if (latestBitmap == null || latestBitmap!!.width != bitmapWidth || latestBitmap!!.height != height) {
+            if (latestBitmap?.width != bitmapWidth || latestBitmap?.height != height) {
                 latestBitmap?.recycle()
                 latestBitmap = Bitmap.createBitmap(bitmapWidth, height, Bitmap.Config.ARGB_8888)
             }

@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.appDemo.data.model
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
@@ -23,6 +25,7 @@ import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import com.pandulapeter.beagle.modules.PaddingModule
+import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -270,6 +273,14 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_network_log_list_description,
         module = NetworkLogListModule(baseUrl = NetworkingManager.BASE_URL),
         codeSnippet = "NetworkLogListModule()"
+    )
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    object ScreenRecordingButton : ModuleWrapper(
+        titleResourceId = R.string.add_module_network_screen_recording_button,
+        descriptionResourceId = R.string.add_module_network_screen_recording_button_description,
+        module = ScreenRecordingButtonModule(),
+        codeSnippet = "ScreenRecordingButtonModule()"
     )
 
     object ScreenshotButton : ModuleWrapper(

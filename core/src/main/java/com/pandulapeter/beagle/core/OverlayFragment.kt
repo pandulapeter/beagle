@@ -29,8 +29,8 @@ internal class OverlayFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == SCREENSHOT_REQUEST && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (data == null) {
+        if (requestCode == SCREENSHOT_REQUEST) {
+            if (data == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 BeagleCore.implementation.onScreenshotReady?.invoke(null)
             } else {
                 requireContext().run { startService(ScreenCaptureService.getStartIntent(this, resultCode, data)) }

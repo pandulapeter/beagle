@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.main.playground.addModule
 
+import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.Beagle
@@ -14,32 +15,35 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListViewModel<AddModuleListItem>() {
 
     override val items: LiveData<List<AddModuleListItem>> = MutableLiveData(
-        listOf(
-            TextViewHolder.UiModel(R.string.add_module_generic_modules),
-            createModuleUiModel(ModuleWrapper.Button()),
-            createModuleUiModel(ModuleWrapper.CheckBox()),
-            createModuleUiModel(ModuleWrapper.Divider()),
-            createModuleUiModel(ModuleWrapper.ItemList()),
-            createModuleUiModel(ModuleWrapper.KeyValueList()),
-            createModuleUiModel(ModuleWrapper.Label()),
-            createModuleUiModel(ModuleWrapper.LogList()),
-            createModuleUiModel(ModuleWrapper.LongText()),
-            createModuleUiModel(ModuleWrapper.MultipleSelectionList()),
-            createModuleUiModel(ModuleWrapper.Padding()),
-            createModuleUiModel(ModuleWrapper.SingleSelectionList()),
-            createModuleUiModel(ModuleWrapper.Switch()),
-            createModuleUiModel(ModuleWrapper.Text()),
-            TextViewHolder.UiModel(R.string.add_module_unique_modules),
-            createModuleUiModel(ModuleWrapper.AnimationDurationSwitch),
-            createModuleUiModel(ModuleWrapper.AppInfoButton),
-            createModuleUiModel(ModuleWrapper.DeveloperOptionsButton),
-            createModuleUiModel(ModuleWrapper.DeviceInfo),
-            createModuleUiModel(ModuleWrapper.ForceCrashButton),
-            createModuleUiModel(ModuleWrapper.Header),
-            createModuleUiModel(ModuleWrapper.KeylineOverlaySwitch),
-            createModuleUiModel(ModuleWrapper.NetworkLogList),
-            createModuleUiModel(ModuleWrapper.ScreenshotButton)
-        )
+        mutableListOf<AddModuleListItem>().apply {
+            add(TextViewHolder.UiModel(R.string.add_module_generic_modules))
+            add(createModuleUiModel(ModuleWrapper.Button()))
+            add(createModuleUiModel(ModuleWrapper.CheckBox()))
+            add(createModuleUiModel(ModuleWrapper.Divider()))
+            add(createModuleUiModel(ModuleWrapper.ItemList()))
+            add(createModuleUiModel(ModuleWrapper.KeyValueList()))
+            add(createModuleUiModel(ModuleWrapper.Label()))
+            add(createModuleUiModel(ModuleWrapper.LogList()))
+            add(createModuleUiModel(ModuleWrapper.LongText()))
+            add(createModuleUiModel(ModuleWrapper.MultipleSelectionList()))
+            add(createModuleUiModel(ModuleWrapper.Padding()))
+            add(createModuleUiModel(ModuleWrapper.SingleSelectionList()))
+            add(createModuleUiModel(ModuleWrapper.Switch()))
+            add(createModuleUiModel(ModuleWrapper.Text()))
+            add(TextViewHolder.UiModel(R.string.add_module_unique_modules))
+            add(createModuleUiModel(ModuleWrapper.AnimationDurationSwitch))
+            add(createModuleUiModel(ModuleWrapper.AppInfoButton))
+            add(createModuleUiModel(ModuleWrapper.DeveloperOptionsButton))
+            add(createModuleUiModel(ModuleWrapper.DeviceInfo))
+            add(createModuleUiModel(ModuleWrapper.ForceCrashButton))
+            add(createModuleUiModel(ModuleWrapper.Header))
+            add(createModuleUiModel(ModuleWrapper.KeylineOverlaySwitch))
+            add(createModuleUiModel(ModuleWrapper.NetworkLogList))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                add(createModuleUiModel(ModuleWrapper.ScreenRecordingButton))
+            }
+            add(createModuleUiModel(ModuleWrapper.ScreenshotButton))
+        }
     )
 
     fun onModuleSelected(moduleWrapper: ModuleWrapper) = moduleRepository.addModule(moduleWrapper)

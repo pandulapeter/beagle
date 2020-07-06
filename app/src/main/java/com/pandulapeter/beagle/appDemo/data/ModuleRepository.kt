@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.data
 
+import android.os.Build
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -10,17 +11,20 @@ import java.util.Collections
 class ModuleRepository {
 
     private val listeners = mutableListOf<Listener>()
-    private val _modules = mutableListOf(
-        ModuleWrapper.Header,
-        ModuleWrapper.AppInfoButton,
-        ModuleWrapper.DeveloperOptionsButton,
-        ModuleWrapper.ScreenshotButton,
-        ModuleWrapper.KeylineOverlaySwitch,
-        ModuleWrapper.AnimationDurationSwitch,
-        ModuleWrapper.NetworkLogList,
-        ModuleWrapper.LogList(),
-        ModuleWrapper.DeviceInfo
-    )
+    private val _modules = mutableListOf<ModuleWrapper>().apply {
+        add(ModuleWrapper.Header)
+        add(ModuleWrapper.AppInfoButton)
+        add(ModuleWrapper.DeveloperOptionsButton)
+        add(ModuleWrapper.ScreenshotButton)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            add(ModuleWrapper.ScreenRecordingButton)
+        }
+        add(ModuleWrapper.KeylineOverlaySwitch)
+        add(ModuleWrapper.AnimationDurationSwitch)
+        add(ModuleWrapper.NetworkLogList)
+        add(ModuleWrapper.LogList())
+        add(ModuleWrapper.DeviceInfo)
+    }
     val modules: List<ModuleWrapper> get() = _modules
 
     @Suppress("unused")
