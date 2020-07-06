@@ -49,13 +49,21 @@ internal class DebugMenuActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        BeagleCore.implementation.notifyVisibilityListenersOnShow()
-        (BeagleCore.implementation.uiManager as ActivityUiManager).debugMenuActivity = this
+        (BeagleCore.implementation.uiManager as ActivityUiManager).let {
+            if (it.debugMenuActivity == null) {
+                BeagleCore.implementation.notifyVisibilityListenersOnShow()
+            }
+            it.debugMenuActivity = this
+        }
     }
 
     override fun onStop() {
-        (BeagleCore.implementation.uiManager as ActivityUiManager).debugMenuActivity = null
-        BeagleCore.implementation.notifyVisibilityListenersOnHide()
+        (BeagleCore.implementation.uiManager as ActivityUiManager).let {
+            if (it.debugMenuActivity == this) {
+                it.debugMenuActivity = null
+                BeagleCore.implementation.notifyVisibilityListenersOnHide()
+            }
+        }
         super.onStop()
     }
 

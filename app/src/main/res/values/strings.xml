@@ -47,7 +47,7 @@
     <string name="examples_title">Examples</string>
     <string name="examples_text">The module configuration very much depends on your application\'s specific needs, so there is no single setup that will be ideal for every situation.\n\nThe following examples demonstrate some of the library\'s features while also describing how they are implemented. Use them as inspiration for coming up with your own debug menu!</string>
     <string name="examples_beagle_text_1">Select one of the case studies to see the specialized version of the debug menu for the situation.</string>
-    <string name="examples_beagle_text_2">You can also navigate from the debug menu, why not?</string>
+    <string name="examples_beagle_text_2">You can also navigate from here, why not?</string>
 
     <!-- Case studies / Simple setup -->
     <string name="case_study_simple_setup_title">Simple setup</string>

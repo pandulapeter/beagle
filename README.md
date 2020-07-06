@@ -30,13 +30,13 @@ allprojects {
 ```
 
 ### Step 2: Pick a UI implementation and configure the dependencies
-The actual UI of the debug menu can be displayed in multiple ways and this is specified by the suffix of the dependency.
+The actual UI of the debug menu can be displayed in multiple ways, which is specified by the suffix of the dependency.
 The following versions exist:
 * **ui-activity** - Displays the debug menu as a new screen (not recommended - modals are better).
 * **ui-bottom-sheet** - Displays the debug menu as a modal bottom sheet (recommended).
 * **ui-dialog** - Displays the debug menu as a modal dialog (recommended).
 * **ui-drawer** - Displays the debug menu as a side navigation drawer (highly recommended).
-* **ui-view** - Displaying the debug menu is the responsibility of the consumer (not recommended - show / hide / inset handling won't work out of the box).
+* **ui-view** - Displaying the debug menu is the responsibility of the consumer (not recommended - show() + hide() + inset handling won't work out of the box).
 * **noop** - No UI, no logic. It has the same public API as all other variants, but it does nothing (this is intended for production builds).
 
 So for example if you prefer the bottom-sheet UI, something like the following needs to be added to your module-level build.gradle file (check the widget below the code snippet for the latest version):
