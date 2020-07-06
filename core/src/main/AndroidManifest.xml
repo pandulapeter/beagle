@@ -1,1 +1,19 @@
-<manifest package="com.pandulapeter.beagle.core" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pandulapeter.beagle.core">
+
+    <application>
+
+        <provider
+            android:name=".BeagleFileProvider"
+            android:authorities="${applicationId}.beagle.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/beagle_file_paths" />
+
+        </provider>
+
+    </application>
+</manifest>

@@ -29,6 +29,7 @@ import com.pandulapeter.beagle.core.list.moduleDelegates.LongTextDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.MultipleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.NetworkLogListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.PaddingDelegate
+import com.pandulapeter.beagle.core.list.moduleDelegates.ScreenshotButtonDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SingleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
@@ -51,6 +52,7 @@ import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import com.pandulapeter.beagle.modules.PaddingModule
+import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
@@ -90,6 +92,7 @@ internal class ListManager {
         MultipleSelectionListModule::class to MultipleSelectionListDelegate<BeagleListItemContract>(),
         NetworkLogListModule::class to NetworkLogListDelegate(),
         PaddingModule::class to PaddingDelegate(),
+        ScreenshotButtonModule::class to ScreenshotButtonDelegate(),
         SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()

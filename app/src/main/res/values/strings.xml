@@ -27,7 +27,7 @@
     <string name="setup_text_8">This function can be called at any time, from any thread, to replace the current configuration with a new list of modules (provided as varargs).\n\nIn case you only want to change some parts of the debug menu without affecting the others, there are functions that give you more granular control over the modules.\n\nFor adding one or more modules you can use this:</string>
     <string name="setup_text_9">In this function, the optional <i>placement</i> parameter can be used to specify the position of the new modules (first, last, or above / below a module that\'s already part of the menu). Specifying the optional <i>lifecycleOwner</i> will automatically remove the modules when that lifecycle is over, which is ideal for elements that are specific to a single screen.\n\nThe following function exists for manually removing one or more modules from the debug menu:</string>
     <string name="setup_text_10">Last but not least, the following function is exposed to get the reference of an already added module instance:</string>
-    <string name="setup_text_11">None of these functions should throw runtime exceptions in case of invalid arguments.\n\nCheck out the rest of this demo application to see what you can achieve with the built-in modules. The <i>Examples</i> page contains a list of case studies showcasing various situations where Beagle can be useful (with code snippets to show how each specific debug menu is created), while the <i>Playground</i> page provides an interactive tool for previewing any possible combination of modules.</string>
+    <string name="setup_text_11">Check out the rest of this demo application to see what you can achieve with the built-in modules. The <i>Examples</i> page contains a list of case studies showcasing various situations where Beagle can be useful (with code snippets to show how each specific debug menu is created), while the <i>Playground</i> page provides an interactive tool for previewing any possible combination of modules.</string>
     <string name="setup_header_4">Troubleshooting</string>
     <string name="setup_text_12">In case of the drawer UI, if you have overwritten the Activity\'s <i>onBackPressed()</i> method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity\'s <i>onBackPressed()</i> you should check that <i>Beagle.hide()</i> returns false before doing any other checks or calling the super implementation:</string>
     <string name="setup_text_13">If you can\'t seem to trigger Beagle in your app, make sure you\'re not adding any Fragments to the container with the ID <i>android.R.id.content</i> (if that\'s the case, introducing another FrameLayout into the View hierarchy for debug builds is a simple fix to the problem).\n\nIf you find any undocumented problems, feel free to reach out and open an issue on GitHub - I\'ll be quick to respond.</string>
@@ -58,6 +58,8 @@
     <string name="case_study_simple_setup_app_info_button_2">A shortcut to the system settings page of your app. Can be useful if you need quick access to clearing the storage, for example.</string>
     <string name="case_study_simple_setup_developer_options_button_1"><b>DeveloperOptionsButton</b></string>
     <string name="case_study_simple_setup_developer_options_button_2">A shortcut to the system\'s Developer Options page.</string>
+    <string name="case_study_simple_setup_screenshot_button_1"><b>ScreenshotButton</b></string>
+    <string name="case_study_simple_setup_screenshot_button_2">Create a screenshot of the current screen and bring up the system\'s Share bottom sheet.</string>
     <string name="case_study_simple_setup_force_crash_button_1"><b>ForceCrashButton</b></string>
     <string name="case_study_simple_setup_force_crash_button_2">This module can be used to easily test the application\'s crash reporting capabilities.</string>
     <string name="case_study_simple_setup_keyline_overlay_switch_1"><b>KeylineOverlaySwitchModule</b></string>
@@ -258,6 +260,8 @@
     <string name="add_module_keyline_overlay_switch_description">Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.</string>
     <string name="add_module_network_log_list">NetworkLogList</string>
     <string name="add_module_network_log_list_description">Displays an expandable list of historical network activity. The entries are clickable to inspect their JSON payloads.</string>
+    <string name="add_module_network_screenshot_button">ScreenshotButton</string>
+    <string name="add_module_network_screenshot_button_description">Displays a button that takes a screenshot of the current layout and allows the user to share it.</string>
 
     <!-- About -->
     <string name="about_title">About</string>

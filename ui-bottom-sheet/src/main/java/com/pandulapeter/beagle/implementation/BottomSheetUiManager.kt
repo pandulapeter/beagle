@@ -15,7 +15,7 @@ internal class BottomSheetUiManager : UiManagerContract {
         }
     }
 
-    override fun hide(activity: FragmentActivity) = (activity.dialogToHide)?.let {
+    override fun hide(activity: FragmentActivity?) = (activity?.dialogToHide)?.let {
         it.dismiss()
         true
     } ?: false

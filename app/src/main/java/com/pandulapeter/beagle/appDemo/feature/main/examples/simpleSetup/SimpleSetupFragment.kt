@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
+import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SimpleSetupFragment : ExamplesDetailFragment<SimpleSetupViewModel, SimpleSetupListItem>(R.string.case_study_simple_setup_title) {
@@ -27,6 +28,7 @@ class SimpleSetupFragment : ExamplesDetailFragment<SimpleSetupViewModel, SimpleS
         AppInfoButtonModule(),
         DeveloperOptionsButtonModule(),
         ForceCrashButtonModule(),
+        ScreenshotButtonModule(),
         KeylineOverlaySwitchModule(),
         AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }),
         DeviceInfoModule()

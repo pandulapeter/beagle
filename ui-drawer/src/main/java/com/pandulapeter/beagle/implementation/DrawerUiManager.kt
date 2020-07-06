@@ -54,7 +54,7 @@ internal class DrawerUiManager : UiManagerContract {
         }
     }
 
-    override fun hide(activity: FragmentActivity): Boolean {
+    override fun hide(activity: FragmentActivity?): Boolean {
         val drawer = getDrawerView(activity)
         val drawerLayout = drawer?.parent as? DebugMenuDrawerLayout?
         return (drawerLayout?.isDrawerOpen(drawer) == true).also {

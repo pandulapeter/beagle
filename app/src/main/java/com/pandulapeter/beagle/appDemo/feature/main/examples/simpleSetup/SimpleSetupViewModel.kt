@@ -35,6 +35,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
             addAppInfoButtonSection()
             addDeveloperOptionsButtonSection()
             addForceCrashButtonSection()
+            addScreenshotButtonSection()
             addKeylineOverlaySwitchSection()
             addAnimationDurationSwitchSection()
             addDeviceInfoSection()
@@ -49,6 +50,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
                         "    AppInfoButtonModule(),\n" +
                         "    DeveloperOptionsButtonModule(),\n" +
                         "    ForceCrashButtonModule(),\n" +
+                        "    ScreenshotButtonModule(),\n" +
                         "    KeylineOverlaySwitchModule(),\n" +
                         "    AnimationDurationSwitchModule()\n" +
                         "    DeviceInformationModule()\n" +
@@ -68,6 +70,10 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
 
     private fun MutableList<SimpleSetupListItem>.addForceCrashButtonSection() = addSection(Section.FORCE_CRASH_BUTTON) {
         add(TextViewHolder.UiModel(R.string.case_study_simple_setup_force_crash_button_2))
+    }
+
+    private fun MutableList<SimpleSetupListItem>.addScreenshotButtonSection() = addSection(Section.SCREENSHOT_BUTTON) {
+        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_screenshot_button_2))
     }
 
     private fun MutableList<SimpleSetupListItem>.addKeylineOverlaySwitchSection() = addSection(Section.KEYLINE_OVERLAY_SWITCH) {
@@ -95,6 +101,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         APP_INFO_BUTTON(R.string.case_study_simple_setup_app_info_button_1),
         DEVELOPER_OPTIONS_BUTTON(R.string.case_study_simple_setup_developer_options_button_1),
         FORCE_CRASH_BUTTON(R.string.case_study_simple_setup_force_crash_button_1),
+        SCREENSHOT_BUTTON(R.string.case_study_simple_setup_screenshot_button_1),
         KEYLINE_OVERLAY_SWITCH(R.string.case_study_simple_setup_keyline_overlay_switch_1),
         ANIMATION_DURATION_SWITCH(R.string.case_study_simple_setup_animation_duration_switch_1),
         DEVICE_INFO(R.string.case_study_simple_setup_device_info_1);

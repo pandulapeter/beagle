@@ -23,6 +23,7 @@ import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import com.pandulapeter.beagle.modules.PaddingModule
+import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
@@ -269,5 +270,12 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_network_log_list_description,
         module = NetworkLogListModule(baseUrl = NetworkingManager.BASE_URL),
         codeSnippet = "NetworkLogListModule()"
+    )
+
+    object ScreenshotButton : ModuleWrapper(
+        titleResourceId = R.string.add_module_network_screenshot_button,
+        descriptionResourceId = R.string.add_module_network_screenshot_button_description,
+        module = ScreenshotButtonModule(),
+        codeSnippet = "ScreenshotButtonModule()"
     )
 }

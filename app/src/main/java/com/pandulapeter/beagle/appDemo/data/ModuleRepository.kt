@@ -14,6 +14,7 @@ class ModuleRepository {
         ModuleWrapper.Header,
         ModuleWrapper.AppInfoButton,
         ModuleWrapper.DeveloperOptionsButton,
+        ModuleWrapper.ScreenshotButton,
         ModuleWrapper.KeylineOverlaySwitch,
         ModuleWrapper.AnimationDurationSwitch,
         ModuleWrapper.NetworkLogList,

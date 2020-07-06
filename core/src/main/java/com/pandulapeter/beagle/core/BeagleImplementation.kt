@@ -82,7 +82,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun show() = (currentActivity?.let { if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) uiManager.show(it) else false } ?: false)
 
-    override fun hide() = (currentActivity?.let { uiManager.hide(it) } ?: false)
+    override fun hide() = uiManager.hide(currentActivity)
 
     override fun set(vararg modules: Module<*>) = listManager.setModules(modules.toList(), updateListenerManager::notifyListeners)
 
@@ -124,6 +124,8 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun clearUpdateListeners() = updateListenerManager.clearListeners()
 
     override fun clearOverlayListeners() = overlayListenerManager.clearListeners()
+
+    internal fun addInternalVisibilityListener(listener: VisibilityListener) = visibilityListenerManager.addInternalListener(listener)
 
     override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) = visibilityListenerManager.addListener(listener, lifecycleOwner)
 

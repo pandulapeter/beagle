@@ -114,11 +114,12 @@ interface BeagleContract {
      * Useful if Beagle is used as the single source of truth for persisted debug data which can be queried from individual modules.
      *
      * @param id - The String identifier of the module specified in its constructor.
+     * @throws ClassCastException - Due to type erasure, the library cannot catch possible type casting errors so expecting an incorrect type will cause a ClassCastException.
      *
      * @return The properly casted instance or null. Reasons for returning null:
      *  - The module with the specified ID is not currently added to the debug menu.
-     *  - The type casting failed.
      */
+    @Throws(ClassCastException::class)
     fun <M : Module<M>> find(id: String): M? = null
 
     /**
@@ -126,7 +127,6 @@ interface BeagleContract {
      *
      * @return The [Module.Delegate] implementation or null. Reasons for returning null:
      *  - No module delegate is registered for the specified type.
-     *  - The type casting failed.
      */
     fun <M : Module<M>> delegateFor(type: KClass<out M>): Module.Delegate<M>? = null
     //endregion

@@ -21,11 +21,11 @@ interface UiManagerContract {
 
     fun findOverlayFragment(activity: FragmentActivity?): Fragment? = activity?.supportFragmentManager?.findFragmentByTag(OverlayFragment.TAG)
 
-    fun findHostFragmentManager() : FragmentManager? = null
+    fun findHostFragmentManager(): FragmentManager? = null
 
     fun findOverlayView(activity: FragmentActivity?): View? = findOverlayFragment(activity)?.view
 
     fun show(activity: FragmentActivity): Boolean = false
 
-    fun hide(activity: FragmentActivity): Boolean = false
+    fun hide(activity: FragmentActivity?): Boolean = false
 }

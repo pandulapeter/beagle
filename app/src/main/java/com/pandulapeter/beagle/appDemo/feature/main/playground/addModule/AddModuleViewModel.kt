@@ -37,7 +37,8 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             createModuleUiModel(ModuleWrapper.ForceCrashButton),
             createModuleUiModel(ModuleWrapper.Header),
             createModuleUiModel(ModuleWrapper.KeylineOverlaySwitch),
-            createModuleUiModel(ModuleWrapper.NetworkLogList)
+            createModuleUiModel(ModuleWrapper.NetworkLogList),
+            createModuleUiModel(ModuleWrapper.ScreenshotButton)
         )
     )
 

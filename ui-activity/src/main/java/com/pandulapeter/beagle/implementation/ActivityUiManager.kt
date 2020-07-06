@@ -17,9 +17,9 @@ internal class ActivityUiManager : UiManagerContract {
         }
     }
 
-    override fun hide(activity: FragmentActivity) = (activity.shouldHide).also { shouldHide ->
+    override fun hide(activity: FragmentActivity?) = (debugMenuActivity?.shouldHide == true).also { shouldHide ->
         if (shouldHide) {
-            activity.supportFinishAfterTransition()
+            debugMenuActivity?.supportFinishAfterTransition()
         }
     }
 
