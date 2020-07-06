@@ -252,7 +252,12 @@ interface BeagleContract {
     val currentActivity: FragmentActivity? get() = null
 
     /**
-     * Cast this value to a nullable OkHttp Interceptor implementation and add it to your OkHttp builder to make the [NetworkLogListModule] work.
+     * Cast this value to a nullable OkHttp Interceptor implementation and add it to your OkHttp builder to make the [NetworkLogListModule] work:
+     *
+     * OkHttpClient.Builder()
+     *    .apply { (Beagle.interceptor as? Interceptor?)?.let { addInterceptor(it) } }
+     *    .build()
+     *
      * The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.
      *
      * @return The nullable Interceptor that should be the argument for OkHttpClient.Builder().addInterceptor(). Reasons for returning null:

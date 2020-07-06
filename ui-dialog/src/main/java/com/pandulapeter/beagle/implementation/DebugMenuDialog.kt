@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.implementation
 
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -16,7 +17,11 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
 
     override fun getContext() = super.getContext()?.applyTheme()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuView(context!!)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuView(context!!).also {
+        if (savedInstanceState == null) {
+            BeagleCore.implementation.notifyVisibilityListenersOnShow()
+        }
+    }
 
     override fun onResume() {
         super.onResume()
@@ -32,13 +37,8 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        BeagleCore.implementation.notifyVisibilityListenersOnShow()
-    }
-
-    override fun onStop() {
-        super.onStop()
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
         BeagleCore.implementation.notifyVisibilityListenersOnHide()
     }
 

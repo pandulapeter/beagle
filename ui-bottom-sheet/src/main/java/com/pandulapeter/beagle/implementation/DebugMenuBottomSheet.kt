@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.implementation
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -37,6 +38,9 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
     override fun onCreateDialog(savedInstanceState: Bundle?) = super.onCreateDialog(savedInstanceState).also {
         slideOffset = savedInstanceState?.getFloat(SLIDE_OFFSET, slideOffset) ?: slideOffset
         it.setOnShowListener { updateSize() }
+        if (savedInstanceState == null) {
+            BeagleCore.implementation.notifyVisibilityListenersOnShow()
+        }
     }
 
     override fun onResume() {
@@ -63,14 +67,17 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
 
     override fun onStart() {
         super.onStart()
-        BeagleCore.implementation.notifyVisibilityListenersOnShow()
         BeagleCore.implementation.addInternalUpdateListener(this)
     }
 
     override fun onStop() {
         BeagleCore.implementation.removeUpdateListener(this)
-        BeagleCore.implementation.notifyVisibilityListenersOnHide()
         super.onStop()
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        BeagleCore.implementation.notifyVisibilityListenersOnHide()
     }
 
     override fun onContentsChanged() = updateApplyResetBlockPosition()
