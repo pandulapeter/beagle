@@ -84,18 +84,18 @@ internal class ScreenCaptureService : Service() {
     private fun moveToForeground() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID) == null) {
-            notificationManager.createNotificationChannel(NotificationChannel(NOTIFICATION_CHANNEL_ID, "Beagle screenshot", NotificationManager.IMPORTANCE_DEFAULT))
+            notificationManager.createNotificationChannel(NotificationChannel(NOTIFICATION_CHANNEL_ID, "Beagle screen captures", NotificationManager.IMPORTANCE_DEFAULT))
         }
         startForeground(
             NOTIFICATION_ID, NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setContentTitle("Taking screenshot...").build()
+                .setContentTitle("Recording…").build()
         )
     }
 
     companion object {
-        private const val NOTIFICATION_CHANNEL_ID = "channel_beagle_screenshot"
+        private const val NOTIFICATION_CHANNEL_ID = "channel_beagle_screen_capture"
         private const val NOTIFICATION_ID = 2657
         private const val SCREENSHOT_DELAY = 300L
         private const val EXTRA_RESULT_CODE = "resultCode"

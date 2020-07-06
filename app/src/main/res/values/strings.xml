@@ -59,7 +59,9 @@
     <string name="case_study_simple_setup_developer_options_button_1"><b>DeveloperOptionsButton</b></string>
     <string name="case_study_simple_setup_developer_options_button_2">A shortcut to the system\'s Developer Options page.</string>
     <string name="case_study_simple_setup_screenshot_button_1"><b>ScreenshotButton</b></string>
-    <string name="case_study_simple_setup_screenshot_button_2">Create a screenshot of the current screen and bring up the system\'s Share bottom sheet.</string>
+    <string name="case_study_simple_setup_screenshot_button_2">Create a screenshot image of the current screen and bring up the system\'s Share bottom sheet.</string>
+    <string name="case_study_simple_setup_screen_recording_button_1"><b>ScreenRecordingButton</b></string>
+    <string name="case_study_simple_setup_screen_recording_button_2">Create a video recording and bring up the system\'s Share bottom sheet when done.</string>
     <string name="case_study_simple_setup_force_crash_button_1"><b>ForceCrashButton</b></string>
     <string name="case_study_simple_setup_force_crash_button_2">This module can be used to easily test the application\'s crash reporting capabilities.</string>
     <string name="case_study_simple_setup_keyline_overlay_switch_1"><b>KeylineOverlaySwitchModule</b></string>
