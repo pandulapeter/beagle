@@ -1,7 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pandulapeter.beagle.core">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application>
+
+        <service
+            android:name=".util.ScreenshotService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
 
         <provider
             android:name=".BeagleFileProvider"

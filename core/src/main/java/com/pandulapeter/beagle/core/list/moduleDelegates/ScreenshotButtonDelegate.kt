@@ -12,12 +12,15 @@ import android.os.Looper
 import android.util.TypedValue
 import android.view.PixelCopy
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
+import com.pandulapeter.beagle.core.OverlayFragment
 import com.pandulapeter.beagle.core.list.cells.ButtonCell
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +52,62 @@ internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule
         )
     )
 
-    internal fun Activity.takeAndShareScreenshot() = getScreenshot { shareImage(it) }
+    internal fun Activity.takeAndShareScreenshot() = takeScreenshot { shareImage(it) }
+
+    private fun Activity.takeScreenshot(callback: (Bitmap) -> Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            takeScreenshotWithMediaProjectionManager(callback)
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                takeScreenshotWithPixelCopy(callback)
+            } else {
+                takeScreenshotWithDrawingCache(callback)
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun Activity.takeScreenshotWithMediaProjectionManager(callback: (Bitmap) -> Unit) {
+        (BeagleCore.implementation.uiManager.findOverlayFragment(this as? FragmentActivity?) as? OverlayFragment?)?.takeScreenshot(callback)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun Activity.takeScreenshotWithPixelCopy(callback: (Bitmap) -> Unit) {
+        val rootView = findRootViewGroup()
+        val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
+        PixelCopy.request(
+            window,
+            Rect(0, 0, rootView.width, rootView.height),
+            bitmap, {
+                if (it == PixelCopy.SUCCESS) {
+                    callback(bitmap)
+                }
+            },
+            Handler(Looper.getMainLooper())
+        )
+    }
+
+    private fun Activity.takeScreenshotWithDrawingCache(callback: (Bitmap) -> Unit) {
+        val rootView = findRootViewGroup()
+        val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val bgDrawable = rootView.background
+        if (bgDrawable != null) {
+            bgDrawable.draw(canvas)
+        } else {
+            val typedValue = TypedValue()
+            theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
+            if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+                canvas.drawColor(typedValue.data)
+            } else {
+                AppCompatResources.getDrawable(this, typedValue.resourceId)?.draw(canvas)
+            }
+        }
+        rootView.draw(canvas)
+        callback(bitmap)
+    }
+
+    private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 
     private fun Activity.shareImage(image: Bitmap) {
         GlobalScope.launch(Dispatchers.IO) {
@@ -72,40 +130,4 @@ internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule
             }
         }
     }
-
-    private fun Activity.getScreenshot(callback: (Bitmap) -> Unit) {
-        val rootView = findRootViewGroup()
-        val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            PixelCopy.request(
-                window,
-                Rect(0, 0, rootView.width, rootView.height),
-                bitmap, {
-                    if (it == PixelCopy.SUCCESS) {
-                        callback(bitmap)
-                    }
-                },
-                Handler(Looper.getMainLooper())
-            )
-
-        } else {
-            val canvas = Canvas(bitmap)
-            val bgDrawable = rootView.background
-            if (bgDrawable != null) {
-                bgDrawable.draw(canvas)
-            } else {
-                val typedValue = TypedValue()
-                theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
-                if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
-                    canvas.drawColor(typedValue.data)
-                } else {
-                    AppCompatResources.getDrawable(this, typedValue.resourceId)?.draw(canvas)
-                }
-            }
-            rootView.draw(canvas)
-            callback(bitmap)
-        }
-    }
-
-    private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
 }

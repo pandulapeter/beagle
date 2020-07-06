@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.core
 
 import android.app.Application
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -67,6 +68,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     private val logManager by lazy { LogManager() }
     private val networkLogManager by lazy { NetworkLogManager() }
     private val listManager by lazy { ListManager() }
+    internal var onScreenshotReady: ((Bitmap) -> Unit)? = null
 
     init {
         BeagleCore.implementation = this
