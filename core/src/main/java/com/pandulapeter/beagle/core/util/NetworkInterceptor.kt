@@ -18,11 +18,11 @@ internal class NetworkInterceptor : Interceptor {
         val request = chain.request()
         val requestBody = request.body
         val requestJson = if (requestBody == null) {
-            "[No payload]"
+            "No payload"
         } else if (bodyHasUnknownEncoding(request.headers)) {
-            "[Encoded]"
+            "Encoded payload"
         } else if (requestBody.contentLength() > MAX_STRING_LENGTH) {
-            "[Payload too large]"
+            "Payload too large"
         } else {
             val buffer = Buffer()
             requestBody.writeTo(buffer)
@@ -34,7 +34,7 @@ internal class NetworkInterceptor : Interceptor {
             if (isPlaintext(buffer)) {
                 charset?.let { buffer.readString(it) } ?: ""
             } else {
-                "[Binary ${requestBody.contentLength()} -byte body]"
+                "Binary payload, ${requestBody.contentLength()}-byte body"
             }
         }
         BeagleCore.implementation.logNetworkEvent(
@@ -112,7 +112,7 @@ internal class NetworkInterceptor : Interceptor {
             }
             return true
         } catch (_: EOFException) {
-            return false // Truncated UTF-8 sequence.
+            return false
         }
     }
 

@@ -22,12 +22,13 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/large_content_padding" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_content_padding"
+            android:layout_marginTop="@dimen/content_padding"
             android:gravity="center"
             android:padding="@dimen/large_content_padding"
             android:text="@string/case_study_network_request_interceptor_loading" />

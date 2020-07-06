@@ -10,6 +10,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONTokener
+import kotlin.math.max
 
 internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListModule> {
 
@@ -26,7 +27,11 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
                         },
                         onItemSelected = {
                             BeagleCore.implementation.showDialog(
-                                contents = "$prefix${entry.url}${formattedTimestamp?.let { "\nTimestamp: $formattedTimestamp" } ?: ""}${entry.duration?.let { "\nDuration: $it ms" } ?: ""}\n\n${entry.payload.formatToJson()}",
+                                contents = "${prefix}${entry.url}"
+                                    .let { text -> if (module.shouldShowHeaders) text.append("\n• Headers:${if (entry.headers.isEmpty()) " [none]" else entry.headers.joinToString("") { "\n    • $it" }}") else text }
+                                    .let { text -> formattedTimestamp?.let { text.append("\n• Timestamp: $it") } ?: text }
+                                    .let { text -> entry.duration?.let { text.append("\n• Duration: ${max(0, it)} ms") } ?: text }
+                                    .append("\n\n${entry.payload.formatToJson()}"),
                                 isHorizontalScrollEnabled = true
                             )
                         }
@@ -37,9 +42,24 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
     }
 
     private fun String.formatToJson() = try {
-        val obj = JSONTokener(this).nextValue()
-        if (obj is JSONObject) obj.toString(4) else (obj as? JSONArray)?.toString(4) ?: (obj as String)
+        if (isJson()) {
+            val obj = JSONTokener(this).nextValue()
+            if (obj is JSONObject) obj.toString(4) else (obj as? JSONArray)?.toString(4) ?: (obj as String)
+        } else this
     } catch (e: JSONException) {
         this
+    }
+
+    private fun String.isJson(): Boolean {
+        try {
+            JSONObject(this)
+        } catch (_: JSONException) {
+            try {
+                JSONArray(this)
+            } catch (_: JSONException) {
+                return false
+            }
+        }
+        return true
     }
 }
