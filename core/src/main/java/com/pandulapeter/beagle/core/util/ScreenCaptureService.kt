@@ -74,28 +74,32 @@ internal class ScreenCaptureService : Service() {
         projection = (getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?)?.getMediaProjection(resultCode, resultData)
         val displayMetrics = DisplayMetrics()
         (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(displayMetrics)
-        var width = displayMetrics.widthPixels
-        var height = displayMetrics.heightPixels
-        while (width * height > 2 shl 19) {
-            width = width shr 1
-            height = height shr 1
-        }
         if (isForVideo) {
+            var width = displayMetrics.widthPixels
+            var height = displayMetrics.heightPixels
+            while (width > 720 && height > 720) {
+                width /= 2
+                height /= 2
+            }
+            width = (width / 2) * 2
+            height = (height / 2) * 2
             mediaRecorder = MediaRecorder().apply {
                 setVideoSource(MediaRecorder.VideoSource.SURFACE)
                 CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH).apply {
                     videoFrameHeight = width  //TODO
                     videoFrameWidth = height
                 }.let { profile ->
-                    setOutputFormat(profile.fileFormat)
+                    setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                     setVideoFrameRate(profile.videoFrameRate)
-                    setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight)
+                    setVideoSize(profile.videoFrameHeight, profile.videoFrameWidth)
                     setVideoEncodingBitRate(profile.videoBitRate)
                     setVideoEncoder(profile.videoCodec)
+                    setMaxFileSize(50000000) //TODO: 50Mb - should be configurable
+                    setMaxDuration(60000)  //TODO: 60sec - should be configurable
                 }
                 file = createFile("test_${System.currentTimeMillis()}.mp4")
-                setOutputFile(file.absolutePath) //TODO
-                prepare()
+                setOutputFile(file.absolutePath)
+                prepare() //TODO: Wrap in try / catch
             }
             virtualDisplay = projection?.createVirtualDisplay(
                 "captureDisplay",
