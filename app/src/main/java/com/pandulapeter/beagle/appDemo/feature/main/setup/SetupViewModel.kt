@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.setup
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.GithubButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.RadioButtonViewHolder
@@ -77,7 +78,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                 id = "codeSnippet_gradle",
                 codeSnippet = "dependencies {\n" +
                         "    …\n" +
-                        "    def beagleVersion = \"2.x.y\" // Check the GitHub repository for the latest version\n" +
+                        "    def beagleVersion = \"${BuildConfig.BEAGLE_VERSION}\" // Check the GitHub repository for the latest version\n" +
                         "    debugImplementation \"com.github.pandulapeter.beagle:ui-${when (selectedUiVariant) {
                             UiVariant.ACTIVITY -> "activity"
                             UiVariant.BOTTOM_SHEET -> "bottom-sheet"

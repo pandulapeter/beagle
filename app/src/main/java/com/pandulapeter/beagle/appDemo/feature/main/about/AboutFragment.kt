@@ -16,6 +16,7 @@ import com.pandulapeter.beagle.appDemo.utils.openUrl
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.HeaderModule
+import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about_title) {
@@ -38,7 +39,8 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
             title = getString(R.string.app_name),
             subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
             text = "Built on ${BuildConfig.BUILD_DATE}"
-        )
+        ),
+        TextModule(id = "beagleVersion", text = getString(R.string.about_version_text, BuildConfig.BEAGLE_VERSION))
     )
 
     private fun openGitHubRepository() = binding.recyclerView.openUrl(GITHUB_URL)
