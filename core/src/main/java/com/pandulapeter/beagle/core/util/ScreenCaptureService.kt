@@ -23,6 +23,7 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import java.io.File
@@ -149,13 +150,20 @@ internal class ScreenCaptureService : Service() {
         }
         startForeground(
             NOTIFICATION_ID,
+            //TODO: Make this customizable
             NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setAutoCancel(true)
                 .setSound(null)
+                .setSmallIcon(R.drawable.beagle_ic_recording)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentInfo("Recording…")
-                .setContentTitle("Recording…").build()
+                .setContentTitle("Recording…")
+                .setContentText("Recording…")
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setStyle(NotificationCompat.BigTextStyle().bigText("Recording…"))
+                //TODO: Add Stop action
+                .build()
         )
     }
 
