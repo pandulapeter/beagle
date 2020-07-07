@@ -141,12 +141,20 @@ internal class ScreenCaptureService : Service() {
     private fun moveToForeground() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID) == null) {
-            notificationManager.createNotificationChannel(NotificationChannel(NOTIFICATION_CHANNEL_ID, "Beagle screen captures", NotificationManager.IMPORTANCE_DEFAULT))
+            notificationManager.createNotificationChannel(
+                NotificationChannel(NOTIFICATION_CHANNEL_ID, "Beagle screen capture", NotificationManager.IMPORTANCE_LOW).apply {
+                    setSound(null, null)
+                }
+            )
         }
         startForeground(
-            NOTIFICATION_ID, NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+            NOTIFICATION_ID,
+            NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setAutoCancel(true)
+                .setSound(null)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_ALL)
+                .setContentInfo("Recording…")
                 .setContentTitle("Recording…").build()
         )
     }
@@ -158,16 +166,7 @@ internal class ScreenCaptureService : Service() {
     }
 
     private fun createVirtualDisplay(width: Int, height: Int, density: Int, surface: Surface?, flags: Int) {
-        virtualDisplay = projection?.createVirtualDisplay(
-            "captureDisplay",
-            width,
-            height,
-            density,
-            flags,
-            surface,
-            null,
-            handler
-        )
+        virtualDisplay = projection?.createVirtualDisplay("captureDisplay", width, height, density, flags, surface, null, handler)
     }
 
     companion object {
