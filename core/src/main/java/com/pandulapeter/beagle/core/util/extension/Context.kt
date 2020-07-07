@@ -21,6 +21,8 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.DrawableCompat
 import com.pandulapeter.beagle.BeagleCore
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
@@ -72,8 +74,14 @@ internal suspend fun Context.createScreenshotFromBitmap(bitmap: Bitmap, fileName
     }
 }
 
+private const val SCREEN_CAPTURES_FOLDER_NAME = "beagleScreenCaptures"
+
 internal fun Context.createFile(fileName: String): File {
-    val folder = File(cacheDir, "beagleScreenCaptures")
+    val folder = File(cacheDir, SCREEN_CAPTURES_FOLDER_NAME)
     folder.mkdirs()
     return File(folder, fileName)
+}
+
+internal fun Context.deleteOldScreenCaptures() {
+    GlobalScope.launch { File(cacheDir, SCREEN_CAPTURES_FOLDER_NAME).deleteRecursively() }
 }

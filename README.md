@@ -1,9 +1,9 @@
 # Beagle (Android library)
-*A smart, reliable, and highly customizable debug menu for Android apps*
+*A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, and many other useful features.*
 
 <img src="metadata/logo.png" width="20%" />
 
-**WARNING! The library is undergoing a complete rewrite with version 2.0.0. This is not yet ready for public use. [Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version. If you're feeling adventurous, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).**
+**WARNING! The library underwent a complete rewrite with version 2.0.0. [Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version. If you're feeling adventurous, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).**
 
 ## See it in action
 Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:

@@ -34,6 +34,7 @@ import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.NetworkInterceptor
+import com.pandulapeter.beagle.core.util.extension.deleteOldScreenCaptures
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.view.AlertDialogFragment
 import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
@@ -85,6 +86,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
             this.behavior = behavior
             this.localStorageManager = LocalStorageManager(application)
             debugMenuInjector.register(application)
+            application.deleteOldScreenCaptures()
         }
 
     override fun show() = (currentActivity?.let { if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) uiManager.show(it) else false } ?: false)
