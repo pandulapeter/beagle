@@ -16,13 +16,11 @@ import java.util.Locale
  *
  * @param text - The text that should be displayed on the button. "Take a screenshot" by default.
  * @param fileName - The name of the image file. The default a name will be generated based on the current timestamp.
- * @param shareSheetTitle - The title of the share sheet (provided by the system). "Share" by default.
  * @param onButtonPressed - Callback called when the user presses the button. Optional, empty implementation by default.
  */
 data class ScreenshotButtonModule(
     val text: CharSequence = "Take a screenshot",
     val fileName: String = "screenshot_${SimpleDateFormat(BeagleContract.FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH).format(System.currentTimeMillis())}.png",
-    val shareSheetTitle: String = "Share",
     val onButtonPressed: () -> Unit = {}
 ) : Module<ScreenshotButtonModule> {
 

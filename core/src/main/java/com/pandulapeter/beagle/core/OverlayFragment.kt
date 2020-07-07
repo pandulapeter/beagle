@@ -6,6 +6,7 @@ import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -15,14 +16,21 @@ import com.pandulapeter.beagle.core.util.ScreenCaptureService
 
 internal class OverlayFragment : Fragment() {
 
+    private var fileName: String = "file"
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = BeagleCore.implementation.createOverlayLayout(requireActivity())
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        fileName = savedInstanceState?.getString(FILE_NAME, fileName) ?: fileName
+    }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun startCapture(isForVideo: Boolean) {
+    fun startCapture(isForVideo: Boolean, fileName: String) {
         (context?.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?).let { mediaProjectionManager ->
             if (mediaProjectionManager == null) {
-                BeagleCore.implementation.onScreenshotReady?.invoke(null)
+                BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
             } else {
+                this.fileName = fileName
                 startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), if (isForVideo) SCREEN_RECORDING_REQUEST else SCREENSHOT_REQUEST)
             }
         }
@@ -33,17 +41,33 @@ internal class OverlayFragment : Fragment() {
             SCREENSHOT_REQUEST,
             SCREEN_RECORDING_REQUEST -> {
                 if (data == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    BeagleCore.implementation.onScreenshotReady?.invoke(null)
+                    BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
                 } else {
-                    requireContext().run { startService(ScreenCaptureService.getStartIntent(this, resultCode, data, requestCode == SCREEN_RECORDING_REQUEST)) }
+                    requireContext().run {
+                        startService(
+                            ScreenCaptureService.getStartIntent(
+                                this,
+                                resultCode,
+                                data,
+                                requestCode == SCREEN_RECORDING_REQUEST,
+                                fileName
+                            )
+                        )
+                    }
                 }
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(FILE_NAME, fileName)
+    }
+
     companion object {
         const val TAG = "beagleOverlayFragment"
+        private const val FILE_NAME = "fileName"
         private const val SCREENSHOT_REQUEST = 4246
         private const val SCREEN_RECORDING_REQUEST = 4247
 

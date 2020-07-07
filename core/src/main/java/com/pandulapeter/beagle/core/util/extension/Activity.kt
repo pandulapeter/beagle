@@ -12,6 +12,9 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 private val excludedPackageNames = listOf(
     "com.pandulapeter.beagle.implementation.DebugMenuActivity"
@@ -23,29 +26,29 @@ internal val Activity.supportsDebugMenu
             && BeagleCore.implementation.behavior.excludedPackageNames.none { componentName.className.startsWith(it) }
 
 
-internal fun Activity.shareFile(uri: Uri, fileType: String, title: String) {
+internal fun Activity.shareFile(uri: Uri, fileType: String) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
         type = fileType
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         putExtra(Intent.EXTRA_STREAM, uri)
-    }, title))
+    }, null))
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-internal fun Activity.takeScreenshotWithMediaProjectionManager() {
+internal fun Activity.takeScreenshotWithMediaProjectionManager(fileName: String) {
     (BeagleCore.implementation.uiManager.findOverlayFragment(this as? FragmentActivity?) as? OverlayFragment?).let { overlayFragment ->
-        overlayFragment?.startCapture(false) ?: BeagleCore.implementation.onScreenshotReady?.invoke(null)
+        overlayFragment?.startCapture(false, fileName) ?: BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-internal fun Activity.recordScreenWithMediaProjectionManager() {
+internal fun Activity.recordScreenWithMediaProjectionManager(fileName: String) {
     (BeagleCore.implementation.uiManager.findOverlayFragment(this as? FragmentActivity?) as? OverlayFragment?).let { overlayFragment ->
-        overlayFragment?.startCapture(true)
+        overlayFragment?.startCapture(true, fileName) ?: BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
     }
 }
 
-internal fun Activity.takeScreenshotWithDrawingCache() {
+internal fun Activity.takeScreenshotWithDrawingCache(fileName: String) {
     val rootView = findRootViewGroup()
     val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
@@ -62,7 +65,13 @@ internal fun Activity.takeScreenshotWithDrawingCache() {
         }
     }
     rootView.draw(canvas)
-    BeagleCore.implementation.onScreenshotReady?.invoke(bitmap)
+    GlobalScope.launch(Dispatchers.IO) {
+        (createScreenshotFromBitmap(bitmap, fileName))?.let { uri ->
+            launch(Dispatchers.Main) {
+                BeagleCore.implementation.onScreenCaptureReady?.invoke(uri)
+            }
+        }
+    }
 }
 
 private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)

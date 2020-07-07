@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.core
 
 import android.app.Application
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
@@ -70,10 +69,10 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     private val networkLogManager by lazy { NetworkLogManager(networkLogListenerManager, listManager, ::refresh) }
     private val listManager by lazy { ListManager() }
     private val screenCaptureManager by lazy { ScreenCaptureManager() }
-    internal var onScreenshotReady: ((Bitmap?) -> Unit)?
-        get() = screenCaptureManager.onScreenshotReady
+    internal var onScreenCaptureReady: ((Uri?) -> Unit)?
+        get() = screenCaptureManager.onScreenCaptureReady
         set(value) {
-            screenCaptureManager.onScreenshotReady = value
+            screenCaptureManager.onScreenCaptureReady = value
         }
 
     init {

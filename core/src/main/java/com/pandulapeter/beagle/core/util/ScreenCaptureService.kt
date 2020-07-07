@@ -24,8 +24,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
-import com.pandulapeter.beagle.core.util.extension.shareFile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -50,20 +53,21 @@ internal class ScreenCaptureService : Service() {
             startCapture(
                 resultCode = intent.getIntExtra(EXTRA_RESULT_CODE, 0),
                 resultData = intent.getParcelableExtra(EXTRA_RESULT_INTENT) as Intent,
-                isForVideo = intent.getBooleanExtra(EXTRA_IS_FOR_VIDEO, false)
+                isForVideo = intent.getBooleanExtra(EXTRA_IS_FOR_VIDEO, false),
+                fileName = intent.getStringExtra(EXTRA_FILE_NAME) ?: "fileName"
             )
         }, SCREENSHOT_DELAY)
         return START_NOT_STICKY
     }
 
     override fun onDestroy() {
-        stopCapture()
+        cleanUp()
         super.onDestroy()
     }
 
     override fun onBind(intent: Intent): IBinder? = throw IllegalStateException("Binding not supported.")
 
-    private fun stopCapture() {
+    private fun cleanUp() {
         projection?.stop()
         try {
             mediaRecorder?.stop()
@@ -75,7 +79,7 @@ internal class ScreenCaptureService : Service() {
         projection = null
     }
 
-    private fun startCapture(resultCode: Int, resultData: Intent, isForVideo: Boolean) {
+    private fun startCapture(resultCode: Int, resultData: Intent, isForVideo: Boolean, fileName: String) {
         projection = (getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?)?.getMediaProjection(resultCode, resultData)
         val displayMetrics = DisplayMetrics()
         (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(displayMetrics)
@@ -109,20 +113,23 @@ internal class ScreenCaptureService : Service() {
             createVirtualDisplay(downscaledWidth, downscaledHeight, displayMetrics.densityDpi, mediaRecorder?.surface, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR)
             mediaRecorder?.start()
             handler.postDelayed({
-                stopCapture()
-                BeagleCore.implementation.currentActivity?.shareFile(getUriForFile(file), "video/mp4", "Share video")
+                cleanUp()
+                BeagleCore.implementation.onScreenCaptureReady?.invoke(getUriForFile(file))
                 stopForeground(true)
                 stopSelf()
             }, 5000) //TODO: The user should stop the recording from the notification
         } else {
             val screenshotWriter = ScreenshotWriter(displayMetrics.widthPixels, displayMetrics.heightPixels, handler) { bitmap ->
-                BeagleCore.implementation.onScreenshotReady?.let { callback ->
-                    callback(bitmap)
-                    BeagleCore.implementation.onScreenshotReady = null
+                GlobalScope.launch(Dispatchers.IO) {
+                    (createScreenshotFromBitmap(bitmap, fileName))?.let { uri ->
+                        launch(Dispatchers.Main) {
+                            BeagleCore.implementation.onScreenCaptureReady?.invoke(uri)
+                            stopForeground(true)
+                            stopSelf()
+                        }
+                    }
                 }
-                stopCapture()
-                stopForeground(true)
-                stopSelf()
+                cleanUp()
             }
             createVirtualDisplay(
                 displayMetrics.widthPixels,
@@ -184,10 +191,12 @@ internal class ScreenCaptureService : Service() {
         private const val EXTRA_RESULT_CODE = "resultCode"
         private const val EXTRA_RESULT_INTENT = "resultIntent"
         private const val EXTRA_IS_FOR_VIDEO = "isForVideo"
+        private const val EXTRA_FILE_NAME = "fileName"
 
-        fun getStartIntent(context: Context, resultCode: Int, data: Intent, isForVideo: Boolean) = Intent(context, ScreenCaptureService::class.java)
+        fun getStartIntent(context: Context, resultCode: Int, data: Intent, isForVideo: Boolean, fileName: String) = Intent(context, ScreenCaptureService::class.java)
             .putExtra(EXTRA_RESULT_CODE, resultCode)
             .putExtra(EXTRA_RESULT_INTENT, data)
             .putExtra(EXTRA_IS_FOR_VIDEO, isForVideo)
+            .putExtra(EXTRA_FILE_NAME, fileName)
     }
 }

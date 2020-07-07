@@ -21,7 +21,7 @@ internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule
                         BeagleCore.implementation.removeVisibilityListener(this)
                         BeagleCore.implementation.takeScreenshot(module.fileName) { uri ->
                             if (uri != null) {
-                                BeagleCore.implementation.currentActivity?.shareFile(uri, "image/png", module.shareSheetTitle)
+                                BeagleCore.implementation.currentActivity?.shareFile(uri, "image/png")
                             }
                         }
                     }

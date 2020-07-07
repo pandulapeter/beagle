@@ -19,14 +19,12 @@ import java.util.Locale
  *
  * @param text - The text that should be displayed on the button. "Record screen" by default.
  * @param fileName - The name of the image file. The default a name will be generated based on the current timestamp.
- * @param shareSheetTitle - The title of the share sheet (provided by the system). "Share" by default.
  * @param onButtonPressed - Callback called when the user presses the button. Optional, empty implementation by default.
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 data class ScreenRecordingButtonModule(
     val text: CharSequence = "Record screen",
     val fileName: String = "screen_recording_${SimpleDateFormat(BeagleContract.FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH).format(System.currentTimeMillis())}.mp4",
-    val shareSheetTitle: String = "Share",
     val onButtonPressed: () -> Unit = {}
 ) : Module<ScreenRecordingButtonModule> {
 

@@ -23,7 +23,7 @@ internal class ScreenRecordingButtonDelegate : Module.Delegate<ScreenRecordingBu
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             BeagleCore.implementation.recordScreen(module.fileName) { uri ->
                                 if (uri != null) {
-                                    BeagleCore.implementation.currentActivity?.shareFile(uri, "video/mp4", module.shareSheetTitle)
+                                    BeagleCore.implementation.currentActivity?.shareFile(uri, "video/mp4")
                                 }
                             }
                         }
