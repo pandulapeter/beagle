@@ -36,8 +36,8 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         HeaderModule(
-            title = getString(R.string.app_name),
-            subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+            title = "${getString(R.string.app_name)} v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+            subtitle = BuildConfig.APPLICATION_ID,
             text = "Built on ${BuildConfig.BUILD_DATE}"
         ),
         TextModule(id = "beagleVersion", text = getString(R.string.about_version_text, BuildConfig.BEAGLE_VERSION))

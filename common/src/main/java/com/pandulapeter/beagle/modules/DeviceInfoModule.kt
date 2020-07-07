@@ -3,7 +3,6 @@ package com.pandulapeter.beagle.modules
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.DeviceInfoModule.Companion.ID
-import com.pandulapeter.beagle.modules.HeaderModule.Companion.ID
 
 
 /**

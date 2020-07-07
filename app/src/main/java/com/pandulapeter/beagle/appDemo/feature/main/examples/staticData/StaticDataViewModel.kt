@@ -67,8 +67,8 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_static_data_header_2))
         add(
             CodeSnippetViewHolder.UiModel(
-                "val headerTitle = getString(R.string.app_name)\n" +
-                        "val headerSubitle = \"v\${BuildConfig.VERSION_NAME} (\${BuildConfig.VERSION_CODE})\"\n" +
+                "val headerTitle = \"\${getString(R.string.app_name)} v\${BuildConfig.VERSION_NAME} (\${BuildConfig.VERSION_CODE})\",\n" +
+                        "val headerSubtitle = BuildConfig.APPLICATION_ID,\n" +
                         "val headerText = \"Built on \${BuildConfig.BUILD_DATE}\""
             )
         )

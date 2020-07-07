@@ -283,7 +283,7 @@
     <!-- About -->
     <string name="about_title">About</string>
     <string name="about_description">Beagle is developed by me, Pandula Péter. Thanks for taking the time to check it out - I hope you\'ll find it useful in your projects. If you have any issues, questions or ideas, don\'t hesitate to contact me!\n</string>
-    <string name="about_version_text">This build uses Beagle version %s.</string>
+    <string name="about_version_text">This build depends on version %s of the Beagle library.</string>
     <string name="about_github"><b>GitHub repository</b>\nCheck out the source code</string>
     <string name="about_google_play"><b>Play Store listing</b>\nRate the app on Google Play</string>
     <string name="about_share"><b>Share</b>\nSpread the word about Beagle</string>

@@ -27,8 +27,8 @@ class StaticDataFragment : ExamplesDetailFragment<StaticDataViewModel, ListItem>
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         HeaderModule(
-            title = getString(R.string.app_name),
-            subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+            title = "${getString(R.string.app_name)} v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+            subtitle = BuildConfig.APPLICATION_ID,
             text = "Built on ${BuildConfig.BUILD_DATE}\n"
         ),
         createTextModule(R.string.case_study_static_data_module_text_1),
