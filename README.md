@@ -3,7 +3,7 @@
 
 <img src="metadata/logo.png" width="20%" />
 
-**WARNING! The library underwent a complete rewrite with version 2.0.0. [Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the stable version. If you're feeling adventurous, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).**
+**WARNING! The library underwent a complete rewrite with version 2.0.0. [Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the old version, or check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md) if you're ready to upgrade.**
 
 ## See it in action
 Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:
@@ -13,8 +13,6 @@ Clone this repository, pick a build variant and run the **app** configuration. I
 This demo application also contains instructions on how to set up Beagle and how to implement the various features that are being showcased. As a result you should consider giving it a try if you're interested in the library. If you don't feel like building it yourself, you can also download it from the Play Store:
 
 [<img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" />](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle)
-
-**Note: The app is not yet published, so the link doesn't work.**
 
 ## Use it in your project
 ### Step 1: Add the Jitpack repository
@@ -44,7 +42,7 @@ So for example if you prefer the bottom-sheet UI, something like the following n
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.0.0-alpha12"
+    def beagleVersion = "2.0.0-beta01"
     debugImplementation "com.github.pandulapeter.beagle:ui-bottom-sheet:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
@@ -55,9 +53,7 @@ The latest version is:
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
-**Note 1**: In case of the drawer UI, if you have overwritten the Activity's onBackPressed() method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity's onBackPressed() you should check that Beagle.hide() returns false before doing any other checks or calling the super implementation.
-
-**Note 2**: If your project contains multiple modules, you might want to use Beagle in all of them so that you can access its logging capabilities from everywhere. In this case specifying the dependencies in your core Android module and exposing them through the **api** keyword instead of **implementation** might be a reasonable idea.
+**Note**: In case of the drawer UI, if you have overwritten the Activity's onBackPressed() method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity's onBackPressed() you should check that Beagle.hide() returns false before doing any other checks or calling the super implementation.
 
 ### Step 3: Initialize the library
 Just one line of code, preferably in the Application's onCreate() method:

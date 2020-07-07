@@ -3,9 +3,7 @@
 
 <img src="logo.png" width="20%" />
 
-**The library is undergoing a complete rewrite with version 2.0.0.**
-
-**[Click here](https://github.com/pandulapeter/beagle/blob/master/README.md) to see the updated readme file.**
+**WARNING. This version of the library is deprecated. [Click here](https://github.com/pandulapeter/beagle/blob/master/README.md) to see the readme file for the new version. If you're ready to upgrade, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).**
 
 ## See it in action
 Clone this repository and run the **beagle-example** configuration. It should look something like this:
