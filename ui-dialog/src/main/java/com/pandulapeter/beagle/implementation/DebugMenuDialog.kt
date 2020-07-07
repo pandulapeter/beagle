@@ -27,12 +27,14 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
         super.onResume()
         view?.run {
             val displayMetrics = DisplayMetrics()
-            BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-            val verticalInsets = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) dialog?.window?.decorView?.rootWindowInsets?.let { it.systemWindowInsetTop + it.stableInsetBottom } ?: 0 else 0
-            val horizontalInsets = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) dialog?.window?.decorView?.rootWindowInsets?.let { it.systemWindowInsetLeft + it.stableInsetRight } ?: 0 else 0
-            layoutParams = layoutParams.apply {
-                width = ((displayMetrics.widthPixels - horizontalInsets) * DIALOG_WIDTH_RATIO).roundToInt()
-                height = ((displayMetrics.heightPixels - verticalInsets) * DIALOG_HEIGHT_RATIO).roundToInt()
+            BeagleCore.implementation.currentActivity?.run {
+                windowManager.defaultDisplay.getMetrics(displayMetrics)
+                val verticalInsets = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) window.decorView.rootWindowInsets?.let { it.systemWindowInsetTop + it.systemWindowInsetBottom } ?: 0 else 0
+                val horizontalInsets = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) window.decorView.rootWindowInsets?.let { it.systemWindowInsetLeft + it.systemWindowInsetRight } ?: 0 else 0
+                layoutParams = layoutParams.apply {
+                    width = ((displayMetrics.widthPixels - horizontalInsets) * DIALOG_WIDTH_RATIO).roundToInt()
+                    height = ((displayMetrics.heightPixels - verticalInsets) * DIALOG_HEIGHT_RATIO).roundToInt()
+                }
             }
         }
     }

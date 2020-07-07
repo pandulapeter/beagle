@@ -165,7 +165,7 @@
     <string name="case_study_feature_toggles_radio_button_3">Option 3</string>
     <string name="case_study_feature_toggles_hint_4">For adjusting numeric values, using a slider is the simplest solution:</string>
     <string name="case_study_feature_toggles_slider_label">Slider</string>
-    <string name="case_study_feature_toggles_slider_title">Current value: %d</string>
+    <string name="case_study_feature_toggles_slider_title">Selected value: %d</string>
 
     <!-- Case studies / Network request interceptor -->
     <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>

@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.implementation
 
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.DebugMenuView
 import com.pandulapeter.beagle.R
@@ -30,10 +32,18 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
     }
     private lateinit var behavior: BottomSheetBehavior<View>
     private lateinit var bottomSheetView: View
+    private val topInset get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Beagle.currentActivity?.window?.decorView?.rootWindowInsets?.systemWindowInsetTop ?: 0 else 0
 
     override fun getContext() = super.getContext()?.applyTheme()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuView(requireContext())
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuView(requireContext()).also {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Beagle.currentActivity?.window?.decorView?.run {
+                setOnApplyWindowInsetsListener { _, insets -> insets.also { updateSize() } }
+                requestApplyInsets()
+            }
+        }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = super.onCreateDialog(savedInstanceState).also {
         slideOffset = savedInstanceState?.getFloat(SLIDE_OFFSET, slideOffset) ?: slideOffset
@@ -88,7 +98,7 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
         val displayMetrics = DisplayMetrics()
         BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         layoutParams = layoutParams.apply {
-            height = displayMetrics.heightPixels
+            height = displayMetrics.heightPixels - topInset
             width = min(displayMetrics.widthPixels, resources.getDimensionPixelSize(R.dimen.beagle_bottom_sheet_maximum_width))
             behavior.peekHeight = height / 2
             post { updateApplyResetBlockPosition() }
