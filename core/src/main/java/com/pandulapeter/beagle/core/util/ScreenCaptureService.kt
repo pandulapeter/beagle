@@ -22,6 +22,7 @@ import android.os.Process
 import android.util.DisplayMetrics
 import android.view.Surface
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.pandulapeter.beagle.BeagleCore
@@ -33,6 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.IOException
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 internal class ScreenCaptureService : Service() {
@@ -112,15 +114,22 @@ internal class ScreenCaptureService : Service() {
                     setVideoSize(profile.videoFrameHeight, profile.videoFrameWidth)
                     setVideoEncodingBitRate(profile.videoBitRate)
                     setVideoEncoder(profile.videoCodec)
-                    setMaxFileSize(50000000) //TODO: 50Mb - should be configurable
-                    setMaxDuration(60000)  //TODO: 60sec - should be configurable
                 }
                 file = createFile("test_${System.currentTimeMillis()}.mp4")
                 setOutputFile(file.absolutePath)
-                prepare() //TODO: Wrap in try / catch
+                try {
+                    prepare()
+                } catch (_: IllegalStateException) {
+                } catch (_: IOException) {
+                    onReady(null)
+                }
             }
             createVirtualDisplay(downscaledWidth, downscaledHeight, displayMetrics.densityDpi, mediaRecorder?.surface, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR)
-            mediaRecorder?.start()
+            try {
+                mediaRecorder?.start()
+            } catch (_: IllegalStateException) {
+                onReady(null)
+            }
         } else {
             val screenshotWriter = ScreenshotWriter(displayMetrics.widthPixels, displayMetrics.heightPixels, handler) { bitmap ->
                 GlobalScope.launch(Dispatchers.IO) {
@@ -149,7 +158,7 @@ internal class ScreenCaptureService : Service() {
         }
     }
 
-    private fun moveToForeground(shouldShowStopButton: Boolean) {
+    private fun moveToForeground(isForVideo: Boolean) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID) == null) {
             notificationManager.createNotificationChannel(
@@ -158,9 +167,12 @@ internal class ScreenCaptureService : Service() {
                 }
             )
         }
+        //TODO: Make UI strings customizable
+        if (isForVideo) {
+            Toast.makeText(this, "Recording in progress. Tap on the notification to stop it.", Toast.LENGTH_SHORT).show()
+        }
         startForeground(
             NOTIFICATION_ID,
-            //TODO: Make this customizable
             NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setAutoCancel(false)
                 .setSound(null)
@@ -170,7 +182,7 @@ internal class ScreenCaptureService : Service() {
                 .setContentTitle("Recording…")
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .apply {
-                    if (shouldShowStopButton) {
+                    if (isForVideo) {
                         setContentIntent(
                             PendingIntent.getService(
                                 this@ScreenCaptureService,

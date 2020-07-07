@@ -61,6 +61,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
             addMultipleSelectionListSection()
             addSingleSelectionListSection()
             addSliderSection()
+            addTextInputSection()
             addQueryingAndChangingTheCurrentValueSection()
             addPersistingStateSection()
             addBulkApplySection()
@@ -158,6 +159,10 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_slider_description_1))
     }
 
+    private fun MutableList<FeatureTogglesListItem>.addTextInputSection() = addSection(Section.TEXT_INPUT) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_text_input_description_1))
+    }
+
     private fun MutableList<FeatureTogglesListItem>.addQueryingAndChangingTheCurrentValueSection() = addSection(Section.QUERYING_AND_CHANGING_THE_CURRENT_VALUE) {
         add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_1))
         add(CodeSnippetViewHolder.UiModel("module.getCurrentValue(Beagle)"))
@@ -195,6 +200,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
         MULTIPLE_SELECTION_LIST(R.string.case_study_feature_toggles_multiple_selection_list),
         SINGLE_SELECTION_LIST(R.string.case_study_feature_toggles_single_selection_list),
         SLIDER(R.string.case_study_feature_toggles_slider),
+        TEXT_INPUT(R.string.case_study_feature_toggles_text_input),
         QUERYING_AND_CHANGING_THE_CURRENT_VALUE(R.string.case_study_feature_toggles_querying_and_changing_the_current_value),
         PERSISTING_STATE(R.string.case_study_feature_toggles_persisting_state),
         BULK_APPLY(R.string.case_study_feature_toggles_bulk_apply);

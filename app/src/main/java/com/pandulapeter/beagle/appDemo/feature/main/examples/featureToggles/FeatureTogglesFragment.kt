@@ -20,6 +20,7 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
+import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, FeatureTogglesListItem>(R.string.case_study_feature_toggles_title) {
@@ -116,9 +117,13 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
             id = SLIDER,
             text = { getString(R.string.case_study_feature_toggles_slider_title, it) },
             isPersisted = true,
+            initialValue = 5,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
-        )
+        ),
+        createTextModule(R.string.case_study_feature_toggles_hint_5),
+        createLabelModule(R.string.case_study_feature_toggles_text_input_label),
+        TextModule(id = "textInput", text = getString(R.string.case_study_feature_toggles_text_input_title, "[coming soon]")) //TODO
     )
 
     private fun resetAll() {
