@@ -9,8 +9,8 @@ android {
         applicationId "com.pandulapeter.beagle"
         minSdkVersion libraryMinimumSdkVersion
         targetSdkVersion libraryTargetSdkVersion
-        versionCode libraryVersionCode
-        versionName "0.0.1"
+        versionCode 2
+        versionName "0.0.2"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
         vectorDrawables.useSupportLibrary = true
     }
@@ -131,5 +131,5 @@ dependencies {
     drawerInternalImplementation project(":ui-drawer")
     viewDebugImplementation project(":ui-view")
     viewInternalImplementation project(":ui-view")
-    releaseImplementation project(':noop')
+    releaseImplementation project(":noop")
 }
