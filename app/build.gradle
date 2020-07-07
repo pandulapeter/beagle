@@ -25,6 +25,12 @@ android {
             storeFile file("internal.keystore")
             storePassword "android"
         }
+        release {
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+            storeFile file("internal.keystore")
+            storePassword "android"
+        }
     }
     buildFeatures {
         dataBinding = true
@@ -57,7 +63,7 @@ android {
             multiDexEnabled false
             applicationIdSuffix ".release"
             versionNameSuffix "-release"
-            signingConfig signingConfigs.internal
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
