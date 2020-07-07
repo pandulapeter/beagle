@@ -43,7 +43,7 @@ You're right! Here are the big changes you should be aware of if you were famili
 ## Check out the demo app!
 The example project found in this repository now acts both as a showcase for the library's feature set and a tutorial for integrating it. If you don't feel like cloning the repository, you can also download the app from the Play Store:
 
-[<img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" />](https://play.google.com/store/apps/details?id=com.pandulapeter.beagleExample)
+[<img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" />](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle)
 
 ## Let me know if you find something weird
 Feel free to open a new issue [here](https://github.com/pandulapeter/beagle/issues). As always, I'm happy to help with any problems you might encounter.

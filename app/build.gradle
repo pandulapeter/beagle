@@ -6,7 +6,7 @@ apply plugin: "kotlin-kapt"
 android {
     compileSdkVersion libraryCompileSdkVersion
     defaultConfig {
-        applicationId "com.pandulapeter.beagleExample"
+        applicationId "com.pandulapeter.beagle"
         minSdkVersion libraryMinimumSdkVersion
         targetSdkVersion libraryTargetSdkVersion
         versionCode libraryVersionCode
@@ -113,6 +113,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation "com.android.billingclient:billing:3.0.0"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     activityDebugImplementation project(":ui-activity")
     activityInternalImplementation project(":ui-activity")

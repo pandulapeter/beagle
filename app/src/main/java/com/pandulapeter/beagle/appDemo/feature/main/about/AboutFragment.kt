@@ -79,7 +79,7 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
     ) ?: Unit
 
     companion object {
-        private const val PACKAGE_NAME = "com.pandulapeter.beagleExample"
+        private const val PACKAGE_NAME = "com.pandulapeter.beagle"
         private const val EMAIL_ADDRESS = "pandulapeter@gmail.com"
         const val GITHUB_URL = "https://github.com/pandulapeter/beagle"
 
