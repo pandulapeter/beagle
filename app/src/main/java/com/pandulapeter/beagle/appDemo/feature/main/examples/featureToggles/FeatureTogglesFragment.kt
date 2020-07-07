@@ -15,6 +15,7 @@ import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.modules.CheckBoxModule
+import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
@@ -50,14 +51,14 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         SwitchModule(
             id = TOGGLE_1_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_1),
-            shouldBePersisted = true,
+            isPersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         SwitchModule(
             id = TOGGLE_2_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_2),
-            shouldBePersisted = true,
+            isPersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
@@ -65,17 +66,18 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         CheckBoxModule(
             id = TOGGLE_3_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_3),
-            shouldBePersisted = true,
+            isPersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         CheckBoxModule(
             id = TOGGLE_4_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_4),
-            shouldBePersisted = true,
+            isPersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
+        DividerModule("divider1"),
         createTextModule(R.string.case_study_feature_toggles_hint_2),
         MultipleSelectionListModule(
             id = CHECK_BOX_GROUP_ID,
@@ -86,11 +88,12 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
                 BeagleListItemContractImplementation(getString(R.string.case_study_feature_toggles_check_box_3))
             ),
             isExpandedInitially = true,
-            shouldBePersisted = true,
+            isPersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemIds = emptySet(),
             onSelectionChanged = { viewModel.refreshItems() }
         ),
+        DividerModule("divider2"),
         createTextModule(R.string.case_study_feature_toggles_hint_3),
         SingleSelectionListModule(
             id = RADIO_BUTTON_GROUP_ID,
@@ -101,17 +104,18 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
                 BeagleListItemContractImplementation(getString(R.string.case_study_feature_toggles_radio_button_3))
             ),
             isExpandedInitially = true,
-            shouldBePersisted = true,
+            isPersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemId = getString(R.string.case_study_feature_toggles_radio_button_1),
             onSelectionChanged = { viewModel.refreshItems() }
         ),
+        DividerModule("divider3"),
         createTextModule(R.string.case_study_feature_toggles_hint_4),
         createLabelModule(R.string.case_study_feature_toggles_slider_label),
         SliderModule(
             id = SLIDER,
             text = { getString(R.string.case_study_feature_toggles_slider_title, it) },
-            shouldBePersisted = true,
+            isPersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         )

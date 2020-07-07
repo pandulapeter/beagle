@@ -32,14 +32,14 @@
     <string name="setup_text_12">In case of the drawer UI, if you have overwritten the Activity\'s <i>onBackPressed()</i> method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity\'s <i>onBackPressed()</i> you should check that <i>Beagle.hide()</i> returns false before doing any other checks or calling the super implementation:</string>
     <string name="setup_text_13">If you can\'t seem to trigger Beagle in your app, make sure you\'re not adding any Fragments to the container with the ID <i>android.R.id.content</i> (if that\'s the case, introducing another FrameLayout into the View hierarchy for debug builds is a simple fix to the problem).\n\nIf you find any undocumented problems, feel free to reach out and open an issue on GitHub - I\'ll be quick to respond.</string>
     <string name="setup_debug_menu_text_1"><b>This is the debug menu configured by you</b>\n\nIt should contain useful information, like the version number of your app, the build date, or information about the device it\'s running on.\n\nYou can use it to track network requests, show analytics events, display custom logs, session-related data or anything that you consider useful for debugging potential issues or simplifying the testing process.\n\nIt can also contain various interactive features, such as switches, radio groups, buttons, sliders, etc. that you can use to set up a \"God mode\" during development.</string>
-    <string name="setup_debug_menu_label">For example:</string>
-    <string name="setup_debug_menu_switch">Here is a switch. It does nothing.</string>
-    <string name="setup_debug_menu_button">This button also does nothing</string>
-    <string name="setup_debug_menu_check_box">Neither does this check box</string>
-    <string name="setup_debug_menu_radio_group">This radio group does…</string>
-    <string name="setup_debug_menu_radio_group_option_1">Nothing</string>
-    <string name="setup_debug_menu_radio_group_option_2">Nada</string>
-    <string name="setup_debug_menu_radio_group_option_3">Zilch</string>
+    <string name="setup_debug_menu_app_info_button">Show app info</string>
+    <string name="setup_debug_menu_screenshot_button">Take a screenshot</string>
+    <string name="setup_debug_menu_keyline_overlay_switch"><b>Draw keyline overlay</b></string>
+    <string name="setup_debug_menu_radio_group"><b>Backend environment</b></string>
+    <string name="setup_debug_menu_radio_group_option_1">Development</string>
+    <string name="setup_debug_menu_radio_group_option_2">Staging</string>
+    <string name="setup_debug_menu_radio_group_option_3">Production</string>
+    <string name="setup_debug_menu_device_information"><b>Device information</b></string>
     <string name="setup_debug_menu_text_2">The contents of the debug menu can be changed at any time, from any thread. For example, in the case of this application, you will see very different Beagle setups as you explore the various screens and case studies.</string>
     <string name="setup_debug_menu_tutorial_switch">Show detailed tutorial</string>
 
@@ -140,7 +140,7 @@
     <string name="case_study_feature_toggles_reset_all">Reset all</string>
     <string name="case_study_feature_toggles_state_reset">All values were reset</string>
     <string name="case_study_feature_toggles_persisting_state"><b>Persisting state</b></string>
-    <string name="case_study_feature_toggles_persisting_state_description">All of these modules have the optional <i>shouldBePersisted</i> constructor parameter, which is set to false by default. Setting it to true AND providing a unique module ID (the auto-generated random value is inconsistent between app launches) will automatically save and restore the state of the module to / from <i>SharedPreferences</i>.\n\nIf the value is persisted, the <i>initialValue</i> / <i>initiallySelectedItemIds</i> / <i>initiallySelectedItemId</i> parameters are only taken into consideration when there is no value saved on the local storage.\n\nLastly, the callbacks of persisted modules are invoked when the module is added to the debug menu so that any custom logic that happens on manual selection could also be executed when the state is restored.\n\nThe current demo configuration saves and restores all the values for this screen.</string>
+    <string name="case_study_feature_toggles_persisting_state_description">All of these modules have the optional <i>isPersisted</i> constructor parameter, which is set to false by default. Setting it to true AND providing a unique module ID (the auto-generated random value is inconsistent between app launches) will automatically save and restore the state of the module to / from <i>SharedPreferences</i>.\n\nIf the value is persisted, the <i>initialValue</i> / <i>initiallySelectedItemIds</i> / <i>initiallySelectedItemId</i> parameters are only taken into consideration when there is no value saved on the local storage.\n\nLastly, the callbacks of persisted modules are invoked when the module is added to the debug menu so that any custom logic that happens on manual selection could also be executed when the state is restored.\n\nThe current demo configuration saves and restores all the values for this screen.</string>
     <string name="case_study_feature_toggles_bulk_apply"><b>Bulk apply</b></string>
     <string name="case_study_feature_toggles_bulk_apply_description_1_off">Right now all manual changes made to the values are applied instantaneously. You can change that:</string>
     <string name="case_study_feature_toggles_bulk_apply_description_1_on">Right now all manual changes made to the values are applied after a confirmation. You can change that:</string>

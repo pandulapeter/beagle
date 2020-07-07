@@ -13,7 +13,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
 
     /**
      * The initial value.
-     * If [shouldBePersisted] is true, the value coming from the local storage will override this field so it will only be used the first time the app is launched.
+     * If [isPersisted] is true, the value coming from the local storage will override this field so it will only be used the first time the app is launched.
      */
     val initialValue: T
 
@@ -21,7 +21,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      * Can be used to enable or disable persisting the value on the local storage.
      */
     //TODO: Create a Lint warning to enforce overriding the module ID if this property is true.
-    val shouldBePersisted: Boolean
+    val isPersisted: Boolean
 
     /**
      * Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step.

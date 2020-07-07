@@ -10,14 +10,14 @@ import com.pandulapeter.beagle.appDemo.feature.main.about.AboutFragment
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
-import com.pandulapeter.beagle.appDemo.utils.createButtonModule
-import com.pandulapeter.beagle.appDemo.utils.createCheckBoxModule
-import com.pandulapeter.beagle.appDemo.utils.createLabelModule
-import com.pandulapeter.beagle.appDemo.utils.createSwitchModule
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.appDemo.utils.openUrl
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
+import com.pandulapeter.beagle.modules.AppInfoButtonModule
+import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
+import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
+import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -48,10 +48,9 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     override fun getBeagleModules() = listOf(
         createTextModule(R.string.setup_debug_menu_text_1),
         DividerModule(id = "divider1"),
-        createLabelModule(R.string.setup_debug_menu_label),
-        createSwitchModule(R.string.setup_debug_menu_switch, onValueChanged = {}),
-        createButtonModule(R.string.setup_debug_menu_button, onButtonPressed = {}),
-        createCheckBoxModule(R.string.setup_debug_menu_check_box, onValueChanged = {}),
+        AppInfoButtonModule(text = getText(R.string.setup_debug_menu_app_info_button)),
+        ScreenshotButtonModule(text = getText(R.string.setup_debug_menu_screenshot_button)),
+        KeylineOverlaySwitchModule(text = getText(R.string.setup_debug_menu_keyline_overlay_switch)),
         listOf(
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_1)),
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_2)),
@@ -59,12 +58,14 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         ).let { radioGroupOptions ->
             SingleSelectionListModule(
                 id = "radioGroup",
-                title = getString(R.string.setup_debug_menu_radio_group),
+                title = getText(R.string.setup_debug_menu_radio_group),
                 items = radioGroupOptions,
-                initiallySelectedItemId = radioGroupOptions.first().id,
+                isPersisted = true,
+                initiallySelectedItemId = radioGroupOptions.last().id,
                 onSelectionChanged = { }
             )
         },
+        DeviceInfoModule(title = getText(R.string.setup_debug_menu_device_information)),
         DividerModule(id = "divider2"),
         createTextModule(R.string.setup_debug_menu_text_2)
     )
