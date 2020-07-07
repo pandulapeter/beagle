@@ -60,10 +60,8 @@ fun Context.applyTheme() = BeagleCore.implementation.appearance.themeResourceId?
 internal fun Context.getUriForFile(file: File) = FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".beagle.fileProvider", file)
 
 internal suspend fun Context.createScreenshotFromBitmap(bitmap: Bitmap, fileName: String): Uri? = withContext(Dispatchers.IO) {
-    val folder = File(cacheDir, "beagleScreenCaptures")
+    val file = createFile(fileName)
     try {
-        folder.mkdirs()
-        val file = File(folder, fileName)
         val stream = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         stream.flush()
@@ -72,4 +70,10 @@ internal suspend fun Context.createScreenshotFromBitmap(bitmap: Bitmap, fileName
     } catch (_: IOException) {
         null
     }
+}
+
+internal fun Context.createFile(fileName: String): File {
+    val folder = File(cacheDir, "beagleScreenCaptures")
+    folder.mkdirs()
+    return File(folder, fileName)
 }

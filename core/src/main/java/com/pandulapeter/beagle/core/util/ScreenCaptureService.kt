@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.util
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -24,6 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.createFile
 import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import kotlinx.coroutines.Dispatchers
@@ -48,15 +50,21 @@ internal class ScreenCaptureService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        moveToForeground()
-        handler.postDelayed({
-            startCapture(
-                resultCode = intent.getIntExtra(EXTRA_RESULT_CODE, 0),
-                resultData = intent.getParcelableExtra(EXTRA_RESULT_INTENT) as Intent,
-                isForVideo = intent.getBooleanExtra(EXTRA_IS_FOR_VIDEO, false),
-                fileName = intent.getStringExtra(EXTRA_FILE_NAME) ?: "fileName"
-            )
-        }, SCREENSHOT_DELAY)
+        when (intent.action) {
+            ACTION_DONE -> stopCapture()
+            null -> {
+                val isForVideo = intent.getBooleanExtra(EXTRA_IS_FOR_VIDEO, false)
+                moveToForeground(isForVideo)
+                handler.postDelayed({
+                    startCapture(
+                        resultCode = intent.getIntExtra(EXTRA_RESULT_CODE, 0),
+                        resultData = intent.getParcelableExtra(EXTRA_RESULT_INTENT) as Intent,
+                        isForVideo = isForVideo,
+                        fileName = intent.getStringExtra(EXTRA_FILE_NAME) ?: "fileName"
+                    )
+                }, SCREENSHOT_DELAY)
+            }
+        }
         return START_NOT_STICKY
     }
 
@@ -112,12 +120,6 @@ internal class ScreenCaptureService : Service() {
             }
             createVirtualDisplay(downscaledWidth, downscaledHeight, displayMetrics.densityDpi, mediaRecorder?.surface, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR)
             mediaRecorder?.start()
-            handler.postDelayed({
-                cleanUp()
-                BeagleCore.implementation.onScreenCaptureReady?.invoke(getUriForFile(file))
-                stopForeground(true)
-                stopSelf()
-            }, 5000) //TODO: The user should stop the recording from the notification
         } else {
             val screenshotWriter = ScreenshotWriter(displayMetrics.widthPixels, displayMetrics.heightPixels, handler) { bitmap ->
                 GlobalScope.launch(Dispatchers.IO) {
@@ -146,7 +148,14 @@ internal class ScreenCaptureService : Service() {
         }
     }
 
-    private fun moveToForeground() {
+    private fun stopCapture() {
+        cleanUp()
+        BeagleCore.implementation.onScreenCaptureReady?.invoke(getUriForFile(file))
+        stopForeground(true)
+        stopSelf()
+    }
+
+    private fun moveToForeground(shouldShowStopButton: Boolean) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID) == null) {
             notificationManager.createNotificationChannel(
@@ -159,25 +168,28 @@ internal class ScreenCaptureService : Service() {
             NOTIFICATION_ID,
             //TODO: Make this customizable
             NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setSound(null)
                 .setSmallIcon(R.drawable.beagle_ic_recording)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setContentInfo("Recording…")
                 .setContentTitle("Recording…")
-                .setContentText("Recording…")
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setStyle(NotificationCompat.BigTextStyle().bigText("Recording…"))
-                //TODO: Add Stop action
+                .apply {
+                    if (shouldShowStopButton) {
+                        setContentIntent(
+                            PendingIntent.getService(
+                                this@ScreenCaptureService,
+                                0,
+                                Intent(this@ScreenCaptureService, ScreenCaptureService::class.java).setAction(ACTION_DONE),
+                                0
+                            )
+                        )
+                        setStyle(NotificationCompat.BigTextStyle().bigText("Tap on this notification when done."))
+                    }
+                }
                 .build()
         )
-    }
-
-    private fun createFile(fileName: String): File {
-        val folder = File(cacheDir, "beagleScreenCaptures")
-        folder.mkdirs()
-        return File(folder, fileName)
     }
 
     private fun createVirtualDisplay(width: Int, height: Int, density: Int, surface: Surface?, flags: Int) {
@@ -192,6 +204,7 @@ internal class ScreenCaptureService : Service() {
         private const val EXTRA_RESULT_INTENT = "resultIntent"
         private const val EXTRA_IS_FOR_VIDEO = "isForVideo"
         private const val EXTRA_FILE_NAME = "fileName"
+        private const val ACTION_DONE = "done"
 
         fun getStartIntent(context: Context, resultCode: Int, data: Intent, isForVideo: Boolean, fileName: String) = Intent(context, ScreenCaptureService::class.java)
             .putExtra(EXTRA_RESULT_CODE, resultCode)
