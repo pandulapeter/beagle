@@ -32,7 +32,10 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     protected open fun createLayoutManager(): RecyclerView.LayoutManager = LinearLayoutManager(context)
 
     fun blockGestures() {
-        binding.recyclerView.shouldBlockGestures = true
+        try {
+            binding.recyclerView.shouldBlockGestures = true
+        } catch (_: IllegalStateException) {
+        }
     }
 
     @CallSuper

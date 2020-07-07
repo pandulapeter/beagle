@@ -13,6 +13,7 @@ import android.media.CamcorderProfile
 import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
+import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
@@ -51,7 +52,7 @@ internal class ScreenCaptureService : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         when (intent.action) {
-            ACTION_DONE -> stopCapture()
+            ACTION_DONE -> onReady(getUriForFile(file))
             null -> {
                 val isForVideo = intent.getBooleanExtra(EXTRA_IS_FOR_VIDEO, false)
                 moveToForeground(isForVideo)
@@ -124,14 +125,9 @@ internal class ScreenCaptureService : Service() {
             val screenshotWriter = ScreenshotWriter(displayMetrics.widthPixels, displayMetrics.heightPixels, handler) { bitmap ->
                 GlobalScope.launch(Dispatchers.IO) {
                     (createScreenshotFromBitmap(bitmap, fileName))?.let { uri ->
-                        launch(Dispatchers.Main) {
-                            BeagleCore.implementation.onScreenCaptureReady?.invoke(uri)
-                            stopForeground(true)
-                            stopSelf()
-                        }
+                        launch(Dispatchers.Main) { onReady(uri) }
                     }
                 }
-                cleanUp()
             }
             createVirtualDisplay(
                 displayMetrics.widthPixels,
@@ -140,19 +136,17 @@ internal class ScreenCaptureService : Service() {
                 screenshotWriter.surface,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
             )
-            projection?.registerCallback(object : MediaProjection.Callback() {
-                override fun onStop() {
-                    virtualDisplay?.release()
+            handler.postDelayed({
+                BeagleCore.implementation.onScreenCaptureReady?.let {
+                    if (!screenshotWriter.forceTry()) {
+                        onReady(null)
+                    }
                 }
-            }, handler)
+            }, SCREENSHOT_TIMEOUT)
         }
-    }
-
-    private fun stopCapture() {
-        cleanUp()
-        BeagleCore.implementation.onScreenCaptureReady?.invoke(getUriForFile(file))
-        stopForeground(true)
-        stopSelf()
+        if (virtualDisplay?.surface == null) {
+            onReady(null)
+        }
     }
 
     private fun moveToForeground(shouldShowStopButton: Boolean) {
@@ -196,10 +190,18 @@ internal class ScreenCaptureService : Service() {
         virtualDisplay = projection?.createVirtualDisplay("captureDisplay", width, height, density, flags, surface, null, handler)
     }
 
+    private fun onReady(uri: Uri?) {
+        cleanUp()
+        BeagleCore.implementation.onScreenCaptureReady?.invoke(uri)
+        stopForeground(true)
+        stopSelf()
+    }
+
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "channel_beagle_screen_capture"
         private const val NOTIFICATION_ID = 2657
         private const val SCREENSHOT_DELAY = 300L
+        private const val SCREENSHOT_TIMEOUT = 2000L
         private const val EXTRA_RESULT_CODE = "resultCode"
         private const val EXTRA_RESULT_INTENT = "resultIntent"
         private const val EXTRA_IS_FOR_VIDEO = "isForVideo"
