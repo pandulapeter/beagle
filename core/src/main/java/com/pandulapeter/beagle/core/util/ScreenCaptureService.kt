@@ -18,11 +18,12 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Process
 import android.util.DisplayMetrics
+import android.view.Surface
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.core.content.FileProvider
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import java.io.File
 
@@ -63,7 +64,10 @@ internal class ScreenCaptureService : Service() {
 
     private fun stopCapture() {
         projection?.stop()
-        mediaRecorder?.stop()
+        try {
+            mediaRecorder?.stop()
+        } catch (_: RuntimeException) {
+        }
         mediaRecorder?.release()
         mediaRecorder = null
         virtualDisplay?.release()
@@ -75,19 +79,19 @@ internal class ScreenCaptureService : Service() {
         val displayMetrics = DisplayMetrics()
         (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(displayMetrics)
         if (isForVideo) {
-            var width = displayMetrics.widthPixels
-            var height = displayMetrics.heightPixels
-            while (width > 720 && height > 720) {
-                width /= 2
-                height /= 2
+            var downscaledWidth = displayMetrics.widthPixels
+            var downscaledHeight = displayMetrics.heightPixels
+            while (downscaledWidth > 720 && downscaledHeight > 720) {
+                downscaledWidth /= 2
+                downscaledHeight /= 2
             }
-            width = (width / 2) * 2
-            height = (height / 2) * 2
+            downscaledWidth = (downscaledWidth / 2) * 2
+            downscaledHeight = (downscaledHeight / 2) * 2
             mediaRecorder = MediaRecorder().apply {
                 setVideoSource(MediaRecorder.VideoSource.SURFACE)
                 CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH).apply {
-                    videoFrameHeight = width  //TODO
-                    videoFrameWidth = height
+                    videoFrameHeight = downscaledWidth
+                    videoFrameWidth = downscaledHeight
                 }.let { profile ->
                     setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                     setVideoFrameRate(profile.videoFrameRate)
@@ -101,25 +105,14 @@ internal class ScreenCaptureService : Service() {
                 setOutputFile(file.absolutePath)
                 prepare() //TODO: Wrap in try / catch
             }
-            virtualDisplay = projection?.createVirtualDisplay(
-                "captureDisplay",
-                displayMetrics.widthPixels,
-                displayMetrics.heightPixels,
-                displayMetrics.densityDpi,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
-                mediaRecorder?.surface,
-                null,
-                handler
-            )
+            createVirtualDisplay(downscaledWidth, downscaledHeight, displayMetrics.densityDpi, mediaRecorder?.surface, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR)
             mediaRecorder?.start()
             handler.postDelayed({
                 stopCapture()
-                //TODO
-                val uri = FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".beagle.fileProvider", file)
-                BeagleCore.implementation.currentActivity?.shareFile(uri, "video/mp4", "Share video")
+                BeagleCore.implementation.currentActivity?.shareFile(getUriForFile(file), "video/mp4", "Share video")
                 stopForeground(true)
                 stopSelf()
-            }, 2000)
+            }, 5000) //TODO: The user should stop the recording from the notification
         } else {
             val screenshotWriter = ScreenshotWriter(displayMetrics.widthPixels, displayMetrics.heightPixels, handler) { bitmap ->
                 BeagleCore.implementation.onScreenshotReady?.let { callback ->
@@ -130,15 +123,12 @@ internal class ScreenCaptureService : Service() {
                 stopForeground(true)
                 stopSelf()
             }
-            virtualDisplay = projection?.createVirtualDisplay(
-                "beagleScreenshot",
+            createVirtualDisplay(
                 displayMetrics.widthPixels,
                 displayMetrics.heightPixels,
                 displayMetrics.densityDpi,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
                 screenshotWriter.surface,
-                null,
-                handler
+                DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
             )
             projection?.registerCallback(object : MediaProjection.Callback() {
                 override fun onStop() {
@@ -165,6 +155,19 @@ internal class ScreenCaptureService : Service() {
         val folder = File(cacheDir, "beagleScreenCaptures")
         folder.mkdirs()
         return File(folder, fileName)
+    }
+
+    private fun createVirtualDisplay(width: Int, height: Int, density: Int, surface: Surface?, flags: Int) {
+        virtualDisplay = projection?.createVirtualDisplay(
+            "captureDisplay",
+            width,
+            height,
+            density,
+            flags,
+            surface,
+            null,
+            handler
+        )
     }
 
     companion object {

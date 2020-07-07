@@ -2,10 +2,12 @@ package com.pandulapeter.beagle.core.util.extension
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.hardware.Sensor
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.net.Uri
 import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import androidx.annotation.AttrRes
@@ -15,8 +17,14 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.DrawableCompat
 import com.pandulapeter.beagle.BeagleCore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 internal fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
 
@@ -48,3 +56,20 @@ internal fun Context.unregisterSensorEventListener(sensorEventListener: SensorEv
 }
 
 fun Context.applyTheme() = BeagleCore.implementation.appearance.themeResourceId?.let { ContextThemeWrapper(this, it) } ?: this
+
+internal fun Context.getUriForFile(file: File) = FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".beagle.fileProvider", file)
+
+internal suspend fun Context.createScreenshotFromBitmap(bitmap: Bitmap, fileName: String): Uri? = withContext(Dispatchers.IO) {
+    val folder = File(cacheDir, "beagleScreenCaptures")
+    try {
+        folder.mkdirs()
+        val file = File(folder, fileName)
+        val stream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        stream.flush()
+        stream.close()
+        getUriForFile(file)
+    } catch (_: IOException) {
+        null
+    }
+}

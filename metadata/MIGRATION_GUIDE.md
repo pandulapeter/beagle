@@ -4,10 +4,10 @@ Things have changed a lot: Beagle has been rewritten from scratch based on your 
 ## Why should I update?
 Lots of exciting reasons!
 * Multiple ways to view the debug menu (besides the side drawer, we now have dialog, bottom sheet, full-screen Activity and the library also exposes a View which you can use wherever you want)
-* The functionality you're used to is still there, but there are lots of new features too.
+* The functionality you're used to is still there, but there are lots of new features too (like screen recording).
 * Ability to automatically persist debug settings between app launches.
 * Ability to write your own modules.
-* Cleaner public API.
+* Cleaner but more customizable public API.
 * Support for older Android SDK levels (down to 16)
 * Much better underlying implementation.
 

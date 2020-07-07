@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
@@ -40,7 +41,7 @@ data class NetworkLogListModule(
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 
     companion object {
-        private val defaultFormatter = SimpleDateFormat("HH:mm:ss", Locale.ENGLISH)
+        private val defaultFormatter by lazy { SimpleDateFormat(BeagleContract.LOG_TIME_FORMAT, Locale.ENGLISH) }
 
         const val ID = "networkLogList"
     }

@@ -9,15 +9,9 @@ import android.os.Build
 import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 private val excludedPackageNames = listOf(
     "com.pandulapeter.beagle.implementation.DebugMenuActivity"
@@ -28,20 +22,6 @@ internal val Activity.supportsDebugMenu
             && excludedPackageNames.none { componentName.className.startsWith(it) }
             && BeagleCore.implementation.behavior.excludedPackageNames.none { componentName.className.startsWith(it) }
 
-internal suspend fun Activity.createScreenshotFromBitmap(bitmap: Bitmap, fileName: String): Uri? = withContext(Dispatchers.IO) {
-    val folder = File(cacheDir, "beagleScreenCaptures")
-    try {
-        folder.mkdirs()
-        val file = File(folder, fileName)
-        val stream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        stream.flush()
-        stream.close()
-        FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".beagle.fileProvider", file)
-    } catch (_: IOException) {
-        null
-    }
-}
 
 internal fun Activity.shareFile(uri: Uri, fileType: String, title: String) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {

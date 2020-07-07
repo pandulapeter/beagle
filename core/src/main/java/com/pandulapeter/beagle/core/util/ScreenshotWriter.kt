@@ -19,7 +19,7 @@ internal class ScreenshotWriter(
 ) : OnImageAvailableListener {
 
     val surface: Surface get() = imageReader.surface
-    private val imageReader: ImageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 1)
+    private val imageReader: ImageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 3)
     private var latestBitmap: Bitmap? = null
 
     init {
