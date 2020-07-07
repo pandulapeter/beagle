@@ -116,6 +116,7 @@
     <string name="case_study_feature_toggles_current_state_key_4">"\n• Toggle 4: "</string>
     <string name="case_study_feature_toggles_current_state_key_5">"\n• Check box group: "</string>
     <string name="case_study_feature_toggles_current_state_key_6">"\n• Radio button group: "</string>
+    <string name="case_study_feature_toggles_current_state_key_7">"\n• Slider: "</string>
     <string name="case_study_feature_toggles_state_selected_radio_button_option"> <b>TODO</b></string>
     <string name="case_study_feature_toggles_switch"><b>Switch</b></string>
     <string name="case_study_feature_toggles_switch_description_1">The simplest way to initialize a Switch module is providing a text parameter together with a callback lambda, which will be invoked with the boolean argument of the new state every time the user toggles the switch:</string>
@@ -128,6 +129,8 @@
     <string name="case_study_feature_toggles_single_selection_list"><b>SingleSelectionList</b></string>
     <string name="case_study_feature_toggles_single_selection_list_description_1">In case of radio buttons, the important difference compared to the previous example is that at most a single item can be selected at any given time, so there is no need to deal with sets any more:</string>
     <string name="case_study_feature_toggles_single_selection_list_description_2">The module supports not having an initial selection, so both the <i>initiallySelectedItemId</i> parameter and the argument of the <i>onSelectionChanged</i> lambda are nullable.</string>
+    <string name="case_study_feature_toggles_slider"><b>Slider</b></string>
+    <string name="case_study_feature_toggles_slider_description_1">Coming soon…</string>
     <string name="case_study_feature_toggles_querying_and_changing_the_current_value"><b>Querying and changing the current value</b></string>
     <string name="case_study_feature_toggles_querying_and_changing_the_current_value_description_1">In case using the callbacks for the modules above is not enough, the current state can be queried at any time using this (somewhat cumbersome) function:</string>
     <string name="case_study_feature_toggles_querying_and_changing_the_current_value_description_2">A similar setter also exists to modify the state programatically.</string>
@@ -160,6 +163,9 @@
     <string name="case_study_feature_toggles_radio_button_1">Option 1</string>
     <string name="case_study_feature_toggles_radio_button_2">Option 2</string>
     <string name="case_study_feature_toggles_radio_button_3">Option 3</string>
+    <string name="case_study_feature_toggles_hint_4">For adjusting numeric values, using a slider is the simplest solution:</string>
+    <string name="case_study_feature_toggles_slider_label">Slider</string>
+    <string name="case_study_feature_toggles_slider_title">Current value: %d</string>
 
     <!-- Case studies / Network request interceptor -->
     <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>
@@ -241,6 +247,8 @@
     <string name="add_module_padding_description">Adds empty space between two other modules</string>
     <string name="add_module_single_selection_list">SingleSelectionList</string>
     <string name="add_module_single_selection_list_description">Displays a list of radio buttons represented by [BeagleListItemContract] instances. Only one item is selected at any given time.</string>
+    <string name="add_module_slider">Slider</string>
+    <string name="add_module_slider_description">Allows the user to adjust a numeric value.</string>
     <string name="add_module_switch">Switch</string>
     <string name="add_module_switch_description">Displays a simple switch.</string>
     <string name="add_module_text">Text</string>

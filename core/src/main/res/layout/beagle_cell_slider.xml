@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/beagle_item_horizontal_margin"
+    android:paddingLeft="@dimen/beagle_item_horizontal_margin"
+    android:paddingEnd="@dimen/beagle_item_horizontal_margin"
+    android:paddingRight="@dimen/beagle_item_horizontal_margin"
+    android:textColor="?android:attr/textColorPrimary">
+
+    <TextView
+        android:id="@+id/beagle_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/beagle_item_vertical_margin"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:text="Text" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/beagle_seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/beagle_content_padding"
+        android:paddingLeft="@dimen/beagle_content_padding"
+        android:paddingTop="@dimen/beagle_item_vertical_margin"
+        android:paddingEnd="@dimen/beagle_content_padding"
+        android:paddingRight="@dimen/beagle_content_padding"
+        android:paddingBottom="@dimen/beagle_content_padding" />
+
+</LinearLayout>

@@ -1,11 +1,11 @@
-package com.pandulapeter.beagle.core.list.moduleDelegates
+package com.pandulapeter.beagle.core.list.delegates
 
 import android.os.Build
 import android.util.DisplayMetrics
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.KeyValueCell
-import com.pandulapeter.beagle.core.list.moduleDelegates.shared.ExpandableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 
 internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {

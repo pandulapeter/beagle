@@ -91,7 +91,7 @@ sealed class Trick {
      * This module can be added multiple times as long as the ID is unique.
      *
      * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
-     * @param name - A lambda that returns the name that should appear above the slider in function of it's current value.
+     * @param name - A lambda that returns the name that should appear above the slider in function of its current value.
      * @param minimumValue - The minimum value supported by the slider. 0 by default.
      * @param maximumValue - The maximum value supported by the slider. 10 by default.
      * @param initialValue - The initial value of the slider. By default it's the same as the slider's minimum value.

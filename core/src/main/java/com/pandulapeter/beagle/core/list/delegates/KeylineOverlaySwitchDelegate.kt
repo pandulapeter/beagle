@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.list.moduleDelegates
+package com.pandulapeter.beagle.core.list.delegates
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,7 +8,7 @@ import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.cells.SwitchCell
-import com.pandulapeter.beagle.core.list.moduleDelegates.shared.PersistableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.PersistableModuleDelegate
 import com.pandulapeter.beagle.core.util.extension.colorResource
 import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule

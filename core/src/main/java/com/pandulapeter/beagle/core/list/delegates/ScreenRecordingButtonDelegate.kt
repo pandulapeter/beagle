@@ -1,16 +1,17 @@
-package com.pandulapeter.beagle.core.list.moduleDelegates
+package com.pandulapeter.beagle.core.list.delegates
 
+import android.os.Build
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.list.cells.ButtonCell
 import com.pandulapeter.beagle.core.util.extension.shareFile
-import com.pandulapeter.beagle.modules.ScreenshotButtonModule
+import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 
-internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule> {
+internal class ScreenRecordingButtonDelegate : Module.Delegate<ScreenRecordingButtonModule> {
 
-    override fun createCells(module: ScreenshotButtonModule): List<Cell<*>> = listOf<Cell<*>>(
+    override fun createCells(module: ScreenRecordingButtonModule): List<Cell<*>> = listOf<Cell<*>>(
         ButtonCell(
             id = module.id,
             text = module.text,
@@ -19,9 +20,11 @@ internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule
                 val listener = object : VisibilityListener {
                     override fun onHidden() {
                         BeagleCore.implementation.removeVisibilityListener(this)
-                        BeagleCore.implementation.takeScreenshot(module.fileName) { uri ->
-                            if (uri != null) {
-                                BeagleCore.implementation.currentActivity?.shareFile(uri, "image/png")
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            BeagleCore.implementation.recordScreen(module.fileName) { uri ->
+                                if (uri != null) {
+                                    BeagleCore.implementation.currentActivity?.shareFile(uri, "video/mp4")
+                                }
                             }
                         }
                     }

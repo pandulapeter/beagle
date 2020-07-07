@@ -1,9 +1,9 @@
-package com.pandulapeter.beagle.core.list.moduleDelegates
+package com.pandulapeter.beagle.core.list.delegates
 
 import android.animation.ValueAnimator
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.SwitchCell
-import com.pandulapeter.beagle.core.list.moduleDelegates.shared.PersistableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.PersistableModuleDelegate
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 
 internal class AnimationDurationSwitchDelegate : PersistableModuleDelegate.Boolean<AnimationDurationSwitchModule>() {

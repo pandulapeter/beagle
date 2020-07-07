@@ -9,6 +9,7 @@ internal class LocalStorageManager(context: Context) {
 
     private val preferences = context.applicationContext.getSharedPreferences("beagle", Context.MODE_PRIVATE)
     val booelans by PersistedProperty.Boolean("boolean_")
+    val integers by PersistedProperty.Integer("integer_")
     val strings by PersistedProperty.String("string_")
     val stringSets by PersistedProperty.StringSet("stringSet_")
 
@@ -23,6 +24,11 @@ internal class LocalStorageManager(context: Context) {
         class Boolean(mainKey: kotlin.String) : PersistedProperty<kotlin.Boolean>(mainKey) {
 
             override fun createSharedPreferencesMap(preferences: SharedPreferences, mainKey: kotlin.String) = SharedPreferencesMap.Boolean(preferences, mainKey)
+        }
+
+        class Integer(mainKey: kotlin.String) : PersistedProperty<Int>(mainKey) {
+
+            override fun createSharedPreferencesMap(preferences: SharedPreferences, mainKey: kotlin.String) = SharedPreferencesMap.Integer(preferences, mainKey)
         }
 
         class String(mainKey: kotlin.String) : PersistedProperty<kotlin.String>(mainKey) {
@@ -57,6 +63,13 @@ internal class LocalStorageManager(context: Context) {
             override fun getFinal(key: kotlin.String) = if (preferences.contains(key)) preferences.getBoolean(key, false) else null
 
             override fun setFinal(key: kotlin.String, value: kotlin.Boolean?) = preferences.edit().putBoolean(key, value == true).apply()
+        }
+
+        class Integer(preferences: SharedPreferences, mainKey: kotlin.String) : SharedPreferencesMap<Int?>(preferences, mainKey) {
+
+            override fun getFinal(key: kotlin.String) = if (preferences.contains(key)) preferences.getInt(key, 0) else null
+
+            override fun setFinal(key: kotlin.String, value: Int?) = preferences.edit().putInt(key, value ?: 0).apply()
         }
 
         class String(preferences: SharedPreferences, mainKey: kotlin.String) : SharedPreferencesMap<kotlin.String?>(preferences, mainKey) {

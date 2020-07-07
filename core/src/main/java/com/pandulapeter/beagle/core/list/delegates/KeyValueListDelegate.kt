@@ -1,8 +1,8 @@
-package com.pandulapeter.beagle.core.list.moduleDelegates
+package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.KeyValueCell
-import com.pandulapeter.beagle.core.list.moduleDelegates.shared.ExpandableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.modules.KeyValueListModule
 
 internal class KeyValueListDelegate : ExpandableModuleDelegate<KeyValueListModule> {

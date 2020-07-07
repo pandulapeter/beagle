@@ -23,7 +23,8 @@ class CurrentStateViewHolder private constructor(
         val toggle3: Boolean,
         val toggle4: Boolean,
         val multipleSelectionOptions: List<String>,
-        val singleSelectionOption: String?
+        val singleSelectionOption: String?,
+        val slider: Int
     ) : FeatureTogglesListItem {
 
         override val id = "currentState"
@@ -41,13 +42,15 @@ class CurrentStateViewHolder private constructor(
                 val key4 = context.getString(R.string.case_study_feature_toggles_current_state_key_4)
                 val key5 = context.getString(R.string.case_study_feature_toggles_current_state_key_5)
                 val key6 = context.getString(R.string.case_study_feature_toggles_current_state_key_6)
+                val key7 = context.getString(R.string.case_study_feature_toggles_current_state_key_7)
                 val value1 = if (uiModel.toggle1) on else off
                 val value2 = if (uiModel.toggle2) on else off
                 val value3 = if (uiModel.toggle3) on else off
                 val value4 = if (uiModel.toggle4) on else off
                 val value5 = if (uiModel.multipleSelectionOptions.isEmpty()) "-" else uiModel.multipleSelectionOptions.sorted().joinToString()
                 val value6 = uiModel.singleSelectionOption.orEmpty()
-                text = SpannableString(key1 + value1 + key2 + value2 + key3 + value3 + key4 + value4 + key5 + value5 + key6 + value6).apply {
+                val value7 = uiModel.slider.toString()
+                text = SpannableString(key1 + value1 + key2 + value2 + key3 + value3 + key4 + value4 + key5 + value5 + key6 + value6 + key7 + value7).apply {
                     characterIndex = 0
                     setBold(key1.length, value1.length)
                     setBold(key2.length, value2.length)
@@ -55,6 +58,7 @@ class CurrentStateViewHolder private constructor(
                     setBold(key4.length, value4.length)
                     setBold(key5.length, value5.length)
                     setBold(key6.length, value6.length)
+                    setBold(key7.length, value7.length)
                 }
             }
         }

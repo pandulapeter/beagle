@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.list.moduleDelegates.shared
+package com.pandulapeter.beagle.core.list.delegates.shared
 
 import androidx.annotation.CallSuper
 import com.pandulapeter.beagle.BeagleCore
@@ -78,6 +78,29 @@ internal abstract class PersistableModuleDelegate<T, M : PersistableModule<T, M>
                     BeagleCore.implementation.localStorageManager.booelans[module.id] = newValue
                 } else {
                     BeagleCore.implementation.memoryStorageManager.booleans[module.id] = newValue
+                }
+                BeagleCore.implementation.refresh()
+                callOnValueChanged(module, newValue)
+            }
+        }
+    }
+
+    abstract class Integer<M : PersistableModule<Int, M>> : PersistableModuleDelegate<Int, M>() {
+
+        final override fun getCurrentValue(module: M) = if (module.shouldBePersisted) {
+            (BeagleCore.implementation.localStorageManager.integers[module.id] ?: module.initialValue).also { value ->
+                callListenerForTheFirstTimeIfNeeded(module, value)
+            }
+        } else {
+            BeagleCore.implementation.memoryStorageManager.integers[module.id] ?: module.initialValue
+        }
+
+        final override fun setCurrentValue(module: M, newValue: Int) {
+            if (hasValueChanged(newValue, module)) {
+                if (module.shouldBePersisted) {
+                    BeagleCore.implementation.localStorageManager.integers[module.id] = newValue
+                } else {
+                    BeagleCore.implementation.memoryStorageManager.integers[module.id] = newValue
                 }
                 BeagleCore.implementation.refresh()
                 callOnValueChanged(module, newValue)

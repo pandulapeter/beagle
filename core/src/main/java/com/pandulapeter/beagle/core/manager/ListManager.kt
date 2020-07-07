@@ -11,29 +11,30 @@ import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.PersistableModule
 import com.pandulapeter.beagle.core.list.CellAdapter
-import com.pandulapeter.beagle.core.list.moduleDelegates.AnimationDurationSwitchDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.AppInfoButtonDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.ButtonDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.CheckBoxDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.DeveloperOptionsButtonDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.DeviceInfoDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.DividerDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.ForceCrashButtonDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.HeaderDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.ItemListDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.KeyValueListDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.KeylineOverlaySwitchDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.LabelDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.LogListDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.LongTextDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.MultipleSelectionListDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.NetworkLogListDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.PaddingDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.ScreenRecordingButtonDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.ScreenshotButtonDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.SingleSelectionListDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.SwitchDelegate
-import com.pandulapeter.beagle.core.list.moduleDelegates.TextDelegate
+import com.pandulapeter.beagle.core.list.delegates.AnimationDurationSwitchDelegate
+import com.pandulapeter.beagle.core.list.delegates.AppInfoButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.ButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.CheckBoxDelegate
+import com.pandulapeter.beagle.core.list.delegates.DeveloperOptionsButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
+import com.pandulapeter.beagle.core.list.delegates.DividerDelegate
+import com.pandulapeter.beagle.core.list.delegates.ForceCrashButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.HeaderDelegate
+import com.pandulapeter.beagle.core.list.delegates.ItemListDelegate
+import com.pandulapeter.beagle.core.list.delegates.KeyValueListDelegate
+import com.pandulapeter.beagle.core.list.delegates.KeylineOverlaySwitchDelegate
+import com.pandulapeter.beagle.core.list.delegates.LabelDelegate
+import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
+import com.pandulapeter.beagle.core.list.delegates.LongTextDelegate
+import com.pandulapeter.beagle.core.list.delegates.MultipleSelectionListDelegate
+import com.pandulapeter.beagle.core.list.delegates.NetworkLogListDelegate
+import com.pandulapeter.beagle.core.list.delegates.PaddingDelegate
+import com.pandulapeter.beagle.core.list.delegates.ScreenRecordingButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.ScreenshotButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.SingleSelectionListDelegate
+import com.pandulapeter.beagle.core.list.delegates.SliderDelegate
+import com.pandulapeter.beagle.core.list.delegates.SwitchDelegate
+import com.pandulapeter.beagle.core.list.delegates.TextDelegate
 import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
@@ -56,6 +57,7 @@ import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
+import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.GlobalScope
@@ -97,6 +99,7 @@ internal class ListManager {
         ScreenRecordingButtonModule::class to ScreenRecordingButtonDelegate(),
         ScreenshotButtonModule::class to ScreenshotButtonDelegate(),
         SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
+        SliderModule::class to SliderDelegate(),
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )
@@ -143,7 +146,7 @@ internal class ListManager {
 
     //TODO: This might cause concurrency issues. Consider making it a suspend function.
     @Suppress("UNCHECKED_CAST")
-    fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = moduleDelegates[type] as Module.Delegate<M>
+    fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = moduleDelegates[type] as? Module.Delegate<M>?
 
     private suspend fun setModulesInternal(newModules: List<Module<*>>, onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
         modules.clear()

@@ -17,6 +17,7 @@ import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
+import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -104,6 +105,15 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemId = getString(R.string.case_study_feature_toggles_radio_button_1),
             onSelectionChanged = { viewModel.refreshItems() }
+        ),
+        createTextModule(R.string.case_study_feature_toggles_hint_4),
+        createLabelModule(R.string.case_study_feature_toggles_slider_label),
+        SliderModule(
+            id = SLIDER,
+            text = { getString(R.string.case_study_feature_toggles_slider_title, it) },
+            shouldBePersisted = true,
+            shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
+            onValueChanged = { viewModel.refreshItems() }
         )
     )
 
@@ -114,6 +124,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         viewModel.toggle4?.setCurrentValue(Beagle, false)
         viewModel.multipleSelectionOptions?.setCurrentValue(Beagle, emptySet())
         viewModel.singleSelectionOption?.setCurrentValue(Beagle, getString(R.string.case_study_feature_toggles_radio_button_1))
+        viewModel.slider?.setCurrentValue(Beagle, 0)
         binding.recyclerView.showSnackbar(R.string.case_study_feature_toggles_state_reset)
     }
 
@@ -124,6 +135,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         const val TOGGLE_4_ID = "toggle4"
         const val CHECK_BOX_GROUP_ID = "checkBoxes"
         const val RADIO_BUTTON_GROUP_ID = "radioButtons"
+        const val SLIDER = "slider"
 
         fun newInstance() = FeatureTogglesFragment()
     }

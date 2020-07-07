@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.list.moduleDelegates.shared
+package com.pandulapeter.beagle.core.list.delegates.shared
 
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell

@@ -28,6 +28,7 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.MultipleSelectionList()))
             add(createModuleUiModel(ModuleWrapper.Padding()))
             add(createModuleUiModel(ModuleWrapper.SingleSelectionList()))
+            add(createModuleUiModel(ModuleWrapper.Slider()))
             add(createModuleUiModel(ModuleWrapper.Switch()))
             add(createModuleUiModel(ModuleWrapper.Text()))
             add(TextViewHolder.UiModel(R.string.add_module_unique_modules))

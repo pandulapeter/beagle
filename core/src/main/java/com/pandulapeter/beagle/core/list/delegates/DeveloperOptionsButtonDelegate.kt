@@ -1,25 +1,22 @@
-package com.pandulapeter.beagle.core.list.moduleDelegates
+package com.pandulapeter.beagle.core.list.delegates
 
 import android.content.Intent
-import android.net.Uri
 import android.provider.Settings
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.cells.ButtonCell
-import com.pandulapeter.beagle.modules.AppInfoButtonModule
+import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 
-internal class AppInfoButtonDelegate : Module.Delegate<AppInfoButtonModule> {
+internal class DeveloperOptionsButtonDelegate : Module.Delegate<DeveloperOptionsButtonModule> {
 
-    override fun createCells(module: AppInfoButtonModule): List<Cell<*>> = listOf<Cell<*>>(
+    override fun createCells(module: DeveloperOptionsButtonModule): List<Cell<*>> = listOf<Cell<*>>(
         ButtonCell(
             id = module.id,
             text = module.text,
             onButtonPressed = {
                 BeagleCore.implementation.currentActivity?.run {
-                    startActivity(Intent().apply {
-                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                        data = Uri.fromParts("package", packageName, null)
+                    startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS).apply {
                         if (module.shouldOpenInNewTask) {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         }

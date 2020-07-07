@@ -18,6 +18,7 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
+import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import kotlin.properties.Delegates
 
@@ -31,6 +32,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
     val toggle4 get() = Beagle.find<CheckBoxModule>(FeatureTogglesFragment.TOGGLE_4_ID)
     val multipleSelectionOptions get() = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)
     val singleSelectionOption get() = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)
+    val slider get() = Beagle.find<SliderModule>(FeatureTogglesFragment.SLIDER)
     private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
     var isBulkApplyEnabled = false
         set(value) {
@@ -41,6 +43,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
             toggle4?.resetPendingChanges(Beagle)
             multipleSelectionOptions?.resetPendingChanges(Beagle)
             singleSelectionOption?.resetPendingChanges(Beagle)
+            slider?.resetPendingChanges(Beagle)
             refreshItems()
         }
 
@@ -57,6 +60,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
             addCheckBoxSection()
             addMultipleSelectionListSection()
             addSingleSelectionListSection()
+            addSliderSection()
             addQueryingAndChangingTheCurrentValueSection()
             addPersistingStateSection()
             addBulkApplySection()
@@ -72,7 +76,8 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
                 toggle3 = toggle3?.getCurrentValue(Beagle) == true,
                 toggle4 = toggle4?.getCurrentValue(Beagle) == true,
                 multipleSelectionOptions = multipleSelectionOptions?.getCurrentValue(Beagle)?.toList().orEmpty(),
-                singleSelectionOption = singleSelectionOption?.getCurrentValue(Beagle)
+                singleSelectionOption = singleSelectionOption?.getCurrentValue(Beagle),
+                slider = slider?.getCurrentValue(Beagle) ?: 0
             )
         )
         add(SpaceViewHolder.UiModel())
@@ -149,6 +154,10 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_single_selection_list_description_2))
     }
 
+    private fun MutableList<FeatureTogglesListItem>.addSliderSection() = addSection(Section.SLIDER) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_slider_description_1))
+    }
+
     private fun MutableList<FeatureTogglesListItem>.addQueryingAndChangingTheCurrentValueSection() = addSection(Section.QUERYING_AND_CHANGING_THE_CURRENT_VALUE) {
         add(TextViewHolder.UiModel(R.string.case_study_feature_toggles_querying_and_changing_the_current_value_description_1))
         add(CodeSnippetViewHolder.UiModel("module.getCurrentValue(Beagle)"))
@@ -185,6 +194,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
         CHECK_BOX(R.string.case_study_feature_toggles_check_box),
         MULTIPLE_SELECTION_LIST(R.string.case_study_feature_toggles_multiple_selection_list),
         SINGLE_SELECTION_LIST(R.string.case_study_feature_toggles_single_selection_list),
+        SLIDER(R.string.case_study_feature_toggles_slider),
         QUERYING_AND_CHANGING_THE_CURRENT_VALUE(R.string.case_study_feature_toggles_querying_and_changing_the_current_value),
         PERSISTING_STATE(R.string.case_study_feature_toggles_persisting_state),
         BULK_APPLY(R.string.case_study_feature_toggles_bulk_apply);

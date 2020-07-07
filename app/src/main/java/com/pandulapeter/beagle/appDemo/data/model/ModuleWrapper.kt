@@ -28,6 +28,7 @@ import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
+import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import java.util.UUID
@@ -197,6 +198,13 @@ sealed class ModuleWrapper(
                 "    initiallySelectedItemId = null,\n" +
                 "    onSelectionChanged = {}\n" +
                 ")"
+    )
+
+    class Slider : ModuleWrapper(
+        titleResourceId = R.string.add_module_slider,
+        descriptionResourceId = R.string.add_module_slider_description,
+        module = SliderModule(text = { "Slider ($it)" }, onValueChanged = {}),
+        codeSnippet = "SliderModule(text = { \"Slider (\$it)\" }, onValueChanged = {})"
     )
 
     class Switch : ModuleWrapper(
