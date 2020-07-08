@@ -115,12 +115,6 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
 
 val isContainerTransformSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
-@BindingAdapter("transitionName")
-fun View.setTransitionName(@StringRes stringResourceId: Int) = setTransitionNameCompat(context.getString(stringResourceId))
-
-@BindingAdapter("transitionName")
-fun View.setTransitionNameCompat(transitionName: String) = ViewCompat.setTransitionName(this, transitionName)
-
 inline fun View.waitForPreDraw(crossinline block: () -> Unit) = with(viewTreeObserver) {
     addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
         override fun onPreDraw() = consume {

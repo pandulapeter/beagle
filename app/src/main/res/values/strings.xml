@@ -41,7 +41,6 @@
     <string name="setup_debug_menu_radio_group_option_3">Production</string>
     <string name="setup_debug_menu_device_information"><b>Device information</b></string>
     <string name="setup_debug_menu_text_2">The contents of the debug menu can be changed at any time, from any thread. For example, in the case of this application, you will see very different Beagle setups as you explore the various screens and case studies.</string>
-    <string name="setup_debug_menu_tutorial_switch">Show detailed tutorial</string>
 
     <!-- Examples -->
     <string name="examples_title">Examples</string>
@@ -118,7 +117,6 @@
     <string name="case_study_feature_toggles_current_state_key_6">"\n• Radio button group: "</string>
     <string name="case_study_feature_toggles_current_state_key_7">"\n• Slider: "</string>
     <string name="case_study_feature_toggles_current_state_key_8">"\n• Text input: "</string>
-    <string name="case_study_feature_toggles_state_selected_radio_button_option"> <b>TODO</b></string>
     <string name="case_study_feature_toggles_switch"><b>Switch</b></string>
     <string name="case_study_feature_toggles_switch_description_1">The simplest way to initialize a Switch module is providing a text parameter together with a callback lambda, which will be invoked with the boolean argument of the new state every time the user toggles the switch:</string>
     <string name="case_study_feature_toggles_switch_description_2">Initially the switch will be off, but this can be changed by overriding the default value of the <i>initialValue</i> parameter.</string>
