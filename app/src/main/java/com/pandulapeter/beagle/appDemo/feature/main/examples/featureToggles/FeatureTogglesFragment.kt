@@ -40,6 +40,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
     override fun createAdapter() = FeatureTogglesAdapter(
         scope = viewModel.viewModelScope,
         onSectionHeaderSelected = viewModel::onSectionHeaderSelected,
+        onCurrentStateCardPressed = { Beagle.show() },
         onResetButtonPressed = ::resetAll,
         onBulkApplySwitchToggled = { isEnabled ->
             viewModel.isBulkApplyEnabled = isEnabled

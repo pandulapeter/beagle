@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 class FeatureTogglesAdapter(
     scope: CoroutineScope,
     onSectionHeaderSelected: (SectionHeaderViewHolder.UiModel) -> Unit,
+    private val onCurrentStateCardPressed: () -> Unit,
     private val onResetButtonPressed: () -> Unit,
     private val onBulkApplySwitchToggled: (Boolean) -> Unit
 ) : BaseAdapter<FeatureTogglesListItem>(scope, onSectionHeaderSelected) {
@@ -22,7 +23,7 @@ class FeatureTogglesAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
-        R.layout.item_feature_toggles_current_state -> CurrentStateViewHolder.create(parent)
+        R.layout.item_feature_toggles_current_state -> CurrentStateViewHolder.create(parent, onCurrentStateCardPressed)
         R.layout.item_feature_toggles_reset_button -> ResetButtonViewHolder.create(parent, onResetButtonPressed)
         R.layout.item_feature_toggles_bulk_apply_switch -> BulkApplySwitchViewHolder.create(parent, onBulkApplySwitchToggled)
         else -> super.onCreateViewHolder(parent, viewType)

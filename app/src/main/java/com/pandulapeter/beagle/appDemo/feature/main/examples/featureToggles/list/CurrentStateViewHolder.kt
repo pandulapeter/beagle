@@ -7,15 +7,25 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemFeatureTogglesCurrentStateBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class CurrentStateViewHolder private constructor(
-    binding: ItemFeatureTogglesCurrentStateBinding
+    binding: ItemFeatureTogglesCurrentStateBinding,
+    onCurrentStateCardPressed: () -> Unit
 ) : BaseViewHolder<ItemFeatureTogglesCurrentStateBinding, CurrentStateViewHolder.UiModel>(binding) {
 
     private var characterIndex = 0
+
+    init {
+        binding.root.setOnClickListener {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                onCurrentStateCardPressed()
+            }
+        }
+    }
 
     data class UiModel(
         val toggle1: Boolean,
@@ -71,9 +81,11 @@ class CurrentStateViewHolder private constructor(
 
     companion object {
         fun create(
-            parent: ViewGroup
+            parent: ViewGroup,
+            onCurrentStateCardPressed: () -> Unit
         ) = CurrentStateViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_feature_toggles_current_state, parent, false)
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_feature_toggles_current_state, parent, false),
+            onCurrentStateCardPressed = onCurrentStateCardPressed
         )
     }
 }
