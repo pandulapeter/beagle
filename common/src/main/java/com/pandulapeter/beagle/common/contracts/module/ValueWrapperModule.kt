@@ -3,17 +3,18 @@ package com.pandulapeter.beagle.common.contracts.module
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 
 /**
- * Modules that wrap primitives that can be persisted in SharedPreferences must implement this interface.
+ * Modules that wrap values should implement this interface.
+ * These modules support saving to / loading from Shared Preferences as well as bulk apply.
  * The save-load functionality is optional and will only work if the ID of the module is constant across app sessions.
  *
  * @param T - The type of data to persist.
  * @param M - The type of the module.
  */
-interface PersistableModule<T, M : Module<M>> : Module<M> {
+interface ValueWrapperModule<T, M : Module<M>> : Module<M> {
 
     /**
      * The initial value.
-     * If [isPersisted] is true, the value coming from the local storage will override this field so it will only be used the first time the app is launched.
+     * If [isValuePersisted] is true, the value coming from the local storage will override this field so it will only be used the first time the app is launched.
      */
     val initialValue: T
 
@@ -21,7 +22,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
      * Can be used to enable or disable persisting the value on the local storage.
      */
     //TODO: Create a Lint warning to enforce overriding the module ID if this property is true.
-    val isPersisted: Boolean
+    val isValuePersisted: Boolean
 
     /**
      * Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step.
@@ -90,7 +91,7 @@ interface PersistableModule<T, M : Module<M>> : Module<M> {
     fun setCurrentValue(beagle: BeagleContract, newValue: T) = (beagle.delegateFor((this as M)::class) as? Delegate<T, M>?)?.setCurrentValue(this as M, newValue)
 
     /**
-     * All [PersistableModule] implementations must have their corresponding delegate that contains the implementation details.
+     * All [ValueWrapperModule] implementations must have their corresponding delegate that contains the implementation details.
      *
      * @param T - The type of data to persist.
      * @param M - The type of the module.

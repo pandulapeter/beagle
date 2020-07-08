@@ -52,14 +52,14 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         SwitchModule(
             id = TOGGLE_1_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_1),
-            isPersisted = true,
+            isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         SwitchModule(
             id = TOGGLE_2_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_2),
-            isPersisted = true,
+            isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
@@ -67,14 +67,14 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         CheckBoxModule(
             id = TOGGLE_3_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_3),
-            isPersisted = true,
+            isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         CheckBoxModule(
             id = TOGGLE_4_ID,
             text = getString(R.string.case_study_feature_toggles_toggle_4),
-            isPersisted = true,
+            isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
@@ -89,7 +89,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
                 BeagleListItemContractImplementation(getString(R.string.case_study_feature_toggles_check_box_3))
             ),
             isExpandedInitially = true,
-            isPersisted = true,
+            isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemIds = emptySet(),
             onSelectionChanged = { viewModel.refreshItems() }
@@ -105,7 +105,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
                 BeagleListItemContractImplementation(getString(R.string.case_study_feature_toggles_radio_button_3))
             ),
             isExpandedInitially = true,
-            isPersisted = true,
+            isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemId = getString(R.string.case_study_feature_toggles_radio_button_1),
             onSelectionChanged = { viewModel.refreshItems() }
@@ -116,7 +116,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         SliderModule(
             id = SLIDER,
             text = { getString(R.string.case_study_feature_toggles_slider_title, it) },
-            isPersisted = true,
+            isValuePersisted = true,
             initialValue = SLIDER_DEFAULT_VALUE,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             onValueChanged = { viewModel.refreshItems() }

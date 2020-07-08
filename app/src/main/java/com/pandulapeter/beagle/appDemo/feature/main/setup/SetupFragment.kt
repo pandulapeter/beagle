@@ -60,7 +60,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
                 id = "radioGroup",
                 title = getText(R.string.setup_debug_menu_radio_group),
                 items = radioGroupOptions,
-                isPersisted = true,
+                isValuePersisted = true,
                 initiallySelectedItemId = radioGroupOptions.last().id,
                 onSelectionChanged = { }
             )

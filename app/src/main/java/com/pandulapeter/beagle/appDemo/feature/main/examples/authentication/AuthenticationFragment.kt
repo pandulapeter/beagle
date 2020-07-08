@@ -23,7 +23,7 @@ class AuthenticationFragment : ExamplesDetailFragment<AuthenticationViewModel, A
         SwitchModule(
             id = SHOW_AUTOMATICALLY_SWITCH_ID,
             text = getText(R.string.case_study_authentication_show_automatically_switch),
-            isPersisted = true,
+            isValuePersisted = true,
             onValueChanged = {}
         )
     }

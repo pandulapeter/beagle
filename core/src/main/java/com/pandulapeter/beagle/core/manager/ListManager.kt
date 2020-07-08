@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.common.contracts.module.PersistableModule
+import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.core.list.CellAdapter
 import com.pandulapeter.beagle.core.list.delegates.AnimationDurationSwitchDelegate
 import com.pandulapeter.beagle.core.list.delegates.AppInfoButtonDelegate
@@ -103,7 +103,7 @@ internal class ListManager {
         SwitchModule::class to SwitchDelegate(),
         TextModule::class to TextDelegate()
     )
-    private val persistableModules get() = modules.filterIsInstance<PersistableModule<*, *>>()
+    private val persistableModules get() = modules.filterIsInstance<ValueWrapperModule<*, *>>()
 
     fun setupRecyclerView(recyclerView: GestureBlockingRecyclerView) = recyclerView.run {
         adapter = cellAdapter
