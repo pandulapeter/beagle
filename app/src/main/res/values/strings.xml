@@ -145,7 +145,7 @@
     <string name="case_study_feature_toggles_bulk_apply"><b>Bulk apply</b></string>
     <string name="case_study_feature_toggles_bulk_apply_description_1_off">Right now all manual changes made to the values are applied instantaneously. You can change that:</string>
     <string name="case_study_feature_toggles_bulk_apply_description_1_on">Right now all manual changes made to the values are applied after a confirmation. You can change that:</string>
-    <string name="case_study_feature_toggles_require_confirmation"><i>Require confirmation</i></string>
+    <string name="case_study_feature_toggles_require_confirmation"><i>Require confirmation for all modules</i></string>
     <string name="case_study_feature_toggles_bulk_apply_description_2">By setting the <i>shouldRequireConfirmation</i> parameter to true for any of the modules presented in this example, users will be given the option to Apply or Reset the changes they made. This means that the library will accumulate pending change events and invoke the necessary callbacks in bulk when the user presses the Apply button.\n\nModifying the values from code will still have instantaneous effect.</string>
     <string name="case_study_feature_toggles_hint_1"><i>For simple on-off flags two UI representations are available:</i></string>
     <string name="case_study_feature_toggles_switches">Switches</string>
@@ -169,7 +169,7 @@
     <string name="case_study_feature_toggles_slider_title">Current value: %d</string>
     <string name="case_study_feature_toggles_hint_5"><i>Last but not least, the library is also capable of handling text input:</i></string>
     <string name="case_study_feature_toggles_text_input_label">Text input</string>
-    <string name="case_study_feature_toggles_text_input_title">Current value: %s (tap to change it)</string>
+    <string name="case_study_feature_toggles_text_input_title">Current value: %s (tap on this item to change it)</string>
 
     <!-- Case studies / Network request interceptor -->
     <string name="case_study_network_request_interceptor_title">Intercepting network requests</string>
@@ -257,6 +257,8 @@
     <string name="add_module_switch_description">Displays a simple switch.</string>
     <string name="add_module_text">Text</string>
     <string name="add_module_text_description">Displays a piece of text. Can be used for click handling as well.</string>
+    <string name="add_module_text_input">TextInput</string>
+    <string name="add_module_text_input_description">Allows the user to enter a text value.</string>
     <string name="add_module_unique_modules"><b>Unique modules</b>\nOnly a single instance can be added</string>
     <string name="add_module_animation_duration_switch">AnimationDurationSwitch</string>
     <string name="add_module_animation_duration_switch_description">Displays a switch that, when enabled, increases the duration of animations.</string>

@@ -20,6 +20,7 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
+import com.pandulapeter.beagle.modules.TextInputModule
 import kotlin.properties.Delegates
 
 class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
@@ -33,7 +34,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
     val multipleSelectionOptions get() = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)
     val singleSelectionOption get() = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)
     val slider get() = Beagle.find<SliderModule>(FeatureTogglesFragment.SLIDER)
-    val textInput get() = Beagle.find<SliderModule>(FeatureTogglesFragment.TEXT_INPUT) //TODO
+    val textInput get() = Beagle.find<TextInputModule>(FeatureTogglesFragment.TEXT_INPUT)
     private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
     var isBulkApplyEnabled = false
         set(value) {
@@ -45,6 +46,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
             multipleSelectionOptions?.resetPendingChanges(Beagle)
             singleSelectionOption?.resetPendingChanges(Beagle)
             slider?.resetPendingChanges(Beagle)
+            textInput?.resetPendingChanges(Beagle)
             refreshItems()
         }
 
@@ -80,7 +82,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
                 multipleSelectionOptions = multipleSelectionOptions?.getCurrentValue(Beagle)?.toList().orEmpty(),
                 singleSelectionOption = singleSelectionOption?.getCurrentValue(Beagle),
                 slider = slider?.getCurrentValue(Beagle) ?: 0,
-                text = textInput?.getCurrentValue(Beagle)?.toString().orEmpty() //TODO
+                text = textInput?.getCurrentValue(Beagle).orEmpty()
             )
         )
         add(SpaceViewHolder.UiModel())

@@ -35,6 +35,7 @@ import com.pandulapeter.beagle.core.list.delegates.SingleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.delegates.SliderDelegate
 import com.pandulapeter.beagle.core.list.delegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.delegates.TextDelegate
+import com.pandulapeter.beagle.core.list.delegates.TextInputDelegate
 import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
@@ -59,6 +60,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
+import com.pandulapeter.beagle.modules.TextInputModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -101,7 +103,8 @@ internal class ListManager {
         SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
         SliderModule::class to SliderDelegate(),
         SwitchModule::class to SwitchDelegate(),
-        TextModule::class to TextDelegate()
+        TextModule::class to TextDelegate(),
+        TextInputModule::class to TextInputDelegate()
     )
     private val persistableModules get() = modules.filterIsInstance<ValueWrapperModule<*, *>>()
 

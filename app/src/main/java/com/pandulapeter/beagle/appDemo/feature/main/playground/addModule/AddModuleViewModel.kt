@@ -31,6 +31,7 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.Slider()))
             add(createModuleUiModel(ModuleWrapper.Switch()))
             add(createModuleUiModel(ModuleWrapper.Text()))
+            add(createModuleUiModel(ModuleWrapper.TextInput()))
             add(TextViewHolder.UiModel(R.string.add_module_unique_modules))
             add(createModuleUiModel(ModuleWrapper.AnimationDurationSwitch))
             add(createModuleUiModel(ModuleWrapper.AppInfoButton))

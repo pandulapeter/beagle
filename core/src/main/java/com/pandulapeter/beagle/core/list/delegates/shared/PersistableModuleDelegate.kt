@@ -10,7 +10,7 @@ internal abstract class PersistableModuleDelegate<T, M : ValueWrapperModule<T, M
     private val pendingUpdates = mutableListOf<PendingChangeEvent<T>>()
     private val uiValues = mutableMapOf<kotlin.String, T>()
 
-    fun getUiValue(module: M) = if (module.isValuePersisted && module.shouldRequireConfirmation) (uiValues[module.id] ?: getCurrentValue(module)) else getCurrentValue(module)
+    fun getUiValue(module: M) = if (module.shouldRequireConfirmation) (uiValues[module.id] ?: getCurrentValue(module)) else getCurrentValue(module)
 
     fun setUiValue(module: M, newValue: T) {
         if (module.shouldRequireConfirmation) {

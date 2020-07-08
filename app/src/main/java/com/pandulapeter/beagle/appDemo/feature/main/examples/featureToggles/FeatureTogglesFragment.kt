@@ -20,7 +20,7 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
-import com.pandulapeter.beagle.modules.TextModule
+import com.pandulapeter.beagle.modules.TextInputModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, FeatureTogglesListItem>(R.string.case_study_feature_toggles_title) {
@@ -124,7 +124,14 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         ),
         createTextModule(R.string.case_study_feature_toggles_hint_5),
         createLabelModule(R.string.case_study_feature_toggles_text_input_label),
-        TextModule(id = "textInput", text = getString(R.string.case_study_feature_toggles_text_input_title, "[coming soon]")) //TODO
+        TextInputModule(
+            id = TEXT_INPUT,
+            text = { getString(R.string.case_study_feature_toggles_text_input_title, it) },
+            initialValue = TEXT_DEFAULT_VALUE,
+            shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
+            isValuePersisted = true,
+            onValueChanged = { viewModel.refreshItems() }
+        )
     )
 
     private fun resetAll() {
@@ -135,7 +142,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         viewModel.multipleSelectionOptions?.setCurrentValue(Beagle, emptySet())
         viewModel.singleSelectionOption?.setCurrentValue(Beagle, getString(R.string.case_study_feature_toggles_radio_button_1))
         viewModel.slider?.setCurrentValue(Beagle, SLIDER_DEFAULT_VALUE)
-        //TODO: viewModel.textInput?.setCurrentValue(Beagle, TEXT_DEFAULT_VALUE)
+        viewModel.textInput?.setCurrentValue(Beagle, TEXT_DEFAULT_VALUE)
         binding.recyclerView.showSnackbar(R.string.case_study_feature_toggles_state_reset)
     }
 
@@ -149,7 +156,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         const val SLIDER = "slider"
         const val TEXT_INPUT = "textInput"
         const val SLIDER_DEFAULT_VALUE = 5
-        //const val TEXT_DEFAULT_VALUE = "Hello world"
+        const val TEXT_DEFAULT_VALUE = "Hello world"
 
         fun newInstance() = FeatureTogglesFragment()
     }

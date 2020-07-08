@@ -30,6 +30,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
+import com.pandulapeter.beagle.modules.TextInputModule
 import com.pandulapeter.beagle.modules.TextModule
 import java.util.UUID
 
@@ -219,6 +220,13 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_text_description,
         module = TextModule(text = "Text"),
         codeSnippet = "TextModule(text = \"Text\")"
+    )
+
+    class TextInput : ModuleWrapper(
+        titleResourceId = R.string.add_module_text_input,
+        descriptionResourceId = R.string.add_module_text_input_description,
+        module = TextInputModule(text = { "Text input ($it)" }, initialValue = "Hello!", onValueChanged = {}),
+        codeSnippet = "TextInputModule(text = { \"Text input (\$it)\" }, initialValue = \"Hello!\", onValueChanged = {})"
     )
 
     object AnimationDurationSwitch : ModuleWrapper(
