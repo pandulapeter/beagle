@@ -19,7 +19,7 @@ import okio.IOException
 import java.io.File
 import java.io.FileOutputStream
 
-internal fun Activity.takeAndShareScreenshot() = getScreenshot() { shareImage(it) }
+internal fun Activity.takeAndShareScreenshot() = getScreenshot { shareImage(it) }
 
 @Suppress("BlockingMethodInNonBlockingContext")
 private fun Activity.shareImage(image: Bitmap) {

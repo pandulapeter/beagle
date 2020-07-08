@@ -19,7 +19,7 @@ class CodeSnippetView @JvmOverloads constructor(
 ) : HorizontalScrollView(context, attrs, defStyleAttr) {
 
     private val textView = AppCompatTextView(context, attrs, defStyleAttr).apply {
-        typeface = Typeface.create("monospace", Typeface.NORMAL);
+        typeface = Typeface.create("monospace", Typeface.NORMAL)
         setTextColor(context.color(R.color.black))
         setTextSize(TypedValue.COMPLEX_UNIT_PX, context.dimension(R.dimen.code_snippet).toFloat())
         context.dimension(R.dimen.content_padding).let { setPadding(it, it, it, it) }

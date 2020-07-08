@@ -135,6 +135,7 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         viewModel.multipleSelectionOptions?.setCurrentValue(Beagle, emptySet())
         viewModel.singleSelectionOption?.setCurrentValue(Beagle, getString(R.string.case_study_feature_toggles_radio_button_1))
         viewModel.slider?.setCurrentValue(Beagle, SLIDER_DEFAULT_VALUE)
+        //TODO: viewModel.textInput?.setCurrentValue(Beagle, TEXT_DEFAULT_VALUE)
         binding.recyclerView.showSnackbar(R.string.case_study_feature_toggles_state_reset)
     }
 
@@ -146,7 +147,9 @@ class FeatureTogglesFragment : ExamplesDetailFragment<FeatureTogglesViewModel, F
         const val CHECK_BOX_GROUP_ID = "checkBoxes"
         const val RADIO_BUTTON_GROUP_ID = "radioButtons"
         const val SLIDER = "slider"
+        const val TEXT_INPUT = "textInput"
         const val SLIDER_DEFAULT_VALUE = 5
+        //const val TEXT_DEFAULT_VALUE = "Hello world"
 
         fun newInstance() = FeatureTogglesFragment()
     }

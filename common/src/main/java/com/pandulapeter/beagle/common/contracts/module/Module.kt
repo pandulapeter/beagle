@@ -45,7 +45,7 @@ interface Module<M : Module<M>> {
         /**
          * For internal use only.
          */
-        @RestrictTo(RestrictTo.Scope.LIBRARY)
+        @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
         @Suppress("UNCHECKED_CAST")
         fun forceCreateCells(module: Module<*>) = createCells(module as M)
     }

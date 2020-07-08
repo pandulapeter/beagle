@@ -21,7 +21,7 @@ abstract class ViewHolder<T : Cell<T>>(view: View) : RecyclerView.ViewHolder(vie
     /**
      * For internal use only.
      */
-    @RestrictTo(RestrictTo.Scope.LIBRARY)
+    @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
     @Suppress("UNCHECKED_CAST")
     fun forceBind(model: Cell<*>) = try {
         bind(model as T)

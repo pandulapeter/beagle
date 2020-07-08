@@ -8,7 +8,6 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ActivityBeagleDemoBinding
 import com.pandulapeter.beagle.appDemo.feature.main.MainFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
-import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.updateSystemBars
 

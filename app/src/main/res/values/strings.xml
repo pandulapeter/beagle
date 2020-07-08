@@ -117,6 +117,7 @@
     <string name="case_study_feature_toggles_current_state_key_5">"\n• Check box group: "</string>
     <string name="case_study_feature_toggles_current_state_key_6">"\n• Radio button group: "</string>
     <string name="case_study_feature_toggles_current_state_key_7">"\n• Slider: "</string>
+    <string name="case_study_feature_toggles_current_state_key_8">"\n• Text input: "</string>
     <string name="case_study_feature_toggles_state_selected_radio_button_option"> <b>TODO</b></string>
     <string name="case_study_feature_toggles_switch"><b>Switch</b></string>
     <string name="case_study_feature_toggles_switch_description_1">The simplest way to initialize a Switch module is providing a text parameter together with a callback lambda, which will be invoked with the boolean argument of the new state every time the user toggles the switch:</string>

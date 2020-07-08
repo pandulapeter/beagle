@@ -5,7 +5,6 @@ platform :android do
     desc "Build all app variants"
     lane :build do
         gradle(task: "clean")
-        gradle(task: "lint")
         gradle(task: "assembleActivityInternal")
         gradle(task: "assembleBottomSheetInternal")
         gradle(task: "assembleDialogInternal")

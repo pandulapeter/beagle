@@ -33,6 +33,7 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
     val multipleSelectionOptions get() = Beagle.find<MultipleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.CHECK_BOX_GROUP_ID)
     val singleSelectionOption get() = Beagle.find<SingleSelectionListModule<BeagleListItemContractImplementation>>(FeatureTogglesFragment.RADIO_BUTTON_GROUP_ID)
     val slider get() = Beagle.find<SliderModule>(FeatureTogglesFragment.SLIDER)
+    val textInput get() = Beagle.find<SliderModule>(FeatureTogglesFragment.TEXT_INPUT) //TODO
     private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
     var isBulkApplyEnabled = false
         set(value) {
@@ -78,7 +79,8 @@ class FeatureTogglesViewModel : ListViewModel<FeatureTogglesListItem>() {
                 toggle4 = toggle4?.getCurrentValue(Beagle) == true,
                 multipleSelectionOptions = multipleSelectionOptions?.getCurrentValue(Beagle)?.toList().orEmpty(),
                 singleSelectionOption = singleSelectionOption?.getCurrentValue(Beagle),
-                slider = slider?.getCurrentValue(Beagle) ?: 0
+                slider = slider?.getCurrentValue(Beagle) ?: 0,
+                text = textInput?.getCurrentValue(Beagle)?.toString().orEmpty() //TODO
             )
         )
         add(SpaceViewHolder.UiModel())
