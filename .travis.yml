@@ -1,0 +1,33 @@
+language: android
+dist: trusty
+jdk: oraclejdk8
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-29.0.0
+    - android-29
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-19
+  licenses:
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+    - .+
+before_install:
+  - yes | sdkmanager "platforms;android-29"
+  - yes | sdkmanager "platforms;android-28"
+  - gem update --system
+install:
+  - bundle install
+script:
+  - bundle exec fastlane build
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/

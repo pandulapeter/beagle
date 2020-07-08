@@ -3,6 +3,8 @@
 
 <img src="metadata/logo.png" width="20%" />
 
+<img src="https://api.travis-ci.org/pandulapeter/beagle.svg?branch=master&status=unknown" width="20%" />
+
 **WARNING! The library underwent a complete rewrite with version 2.0.0. [Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the old version, or check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md) if you're ready to upgrade.**
 
 ## See it in action

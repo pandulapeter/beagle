@@ -1,0 +1,16 @@
+fastlane_version "2.68.0"
+default_platform :android
+
+platform :android do
+    desc "Build all app variants"
+    lane :build do
+        gradle(task: "clean")
+        gradle(task: "lint")
+        gradle(task: "assembleActivityInternal")
+        gradle(task: "assembleBottomSheetInternal")
+        gradle(task: "assembleDialogInternal")
+        gradle(task: "assembleDrawerInternal")
+        gradle(task: "assembleViewInternal")
+        gradle(task: "assembleViewRelease")
+    end
+end
