@@ -1,8 +1,11 @@
 package com.pandulapeter.beagle.core.list.delegates
 
+import android.app.Dialog
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.pandulapeter.beagle.BeagleCore
@@ -25,39 +28,45 @@ internal class TextInputDelegate : PersistableModuleDelegate.String<TextInputMod
                     AlertDialog.Builder(this)
                         .setView(R.layout.beagle_view_text_input_dialog)
                         .create()
-                        .apply {
-                            setOnShowListener {
-                                findViewById<EditText>(R.id.beagle_edit_text)?.let { editText ->
-                                    getCurrentValue(module).let { currentValue ->
-                                        editText.setText(currentValue)
-                                        editText.setSelection(currentValue.length)
-                                        editText.requestFocus()
-                                        editText.setOnEditorActionListener { _, actionId, _ ->
-                                            true.also {
-                                                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                                                    dismiss()
-                                                }
-                                            }
-                                        }
-                                    }
-                                    editText.addTextChangedListener(object : TextWatcher {
-                                        override fun afterTextChanged(s: Editable?) {
-                                            s?.toString()?.let { newValue ->
-                                                if (module.validator(newValue)) {
-                                                    setUiValue(module, newValue)
-                                                }
-                                            }
-                                        }
-
-                                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-
-                                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
-                                    })
-                                }
-                            }
-                        }
+                        .apply { setOnShowListener { findViewById<EditText>(R.id.beagle_edit_text)?.initialize(this, module) } }
                         .show()
                 }
             })
     )
+
+    private fun setNewValue(module: TextInputModule, newValue: kotlin.String) {
+        if (module.validator(newValue)) {
+            setUiValue(module, newValue)
+        }
+    }
+
+    private fun EditText.initialize(dialog: Dialog, module: TextInputModule) {
+        getCurrentValue(module).let { currentValue ->
+            setText(currentValue)
+            setSelection(currentValue.length)
+            requestFocus()
+            post { (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(this, 0) }
+            setOnEditorActionListener { _, actionId, _ ->
+                true.also {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        if (!module.areRealTimeUpdatesEnabled) {
+                            setNewValue(module, text?.toString().orEmpty())
+                        }
+                        dialog.dismiss()
+                    }
+                }
+            }
+        }
+        if (module.areRealTimeUpdatesEnabled) {
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    setNewValue(module, s?.toString().orEmpty())
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+            })
+        }
+    }
 }
