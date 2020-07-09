@@ -4,6 +4,7 @@ package com.pandulapeter.beagleCore.configuration
  * Used for specifying the way the drawer can be opened.
  */
 @Suppress("unused")
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 enum class TriggerGesture {
 
     /**

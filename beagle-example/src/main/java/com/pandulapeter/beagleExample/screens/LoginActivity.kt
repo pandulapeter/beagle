@@ -13,6 +13,7 @@ import com.pandulapeter.beagleExample.R
 import com.pandulapeter.beagleExample.utils.mockTestAccounts
 import com.pandulapeter.beagleExample.utils.showKeyboard
 
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
     override fun onCreate(savedInstanceState: Bundle?) {

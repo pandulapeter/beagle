@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.utils
 import android.annotation.SuppressLint
 import kotlin.random.Random
 
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 internal object LoremIpsumGenerator {
 
     @SuppressLint("DefaultLocale")

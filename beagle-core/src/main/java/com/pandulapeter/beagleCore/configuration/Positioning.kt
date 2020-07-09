@@ -3,6 +3,7 @@ package com.pandulapeter.beagleCore.configuration
 /**
  * Used for specifying the position of a newly added module.
  */
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 sealed class Positioning {
 
     /**

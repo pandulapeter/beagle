@@ -12,6 +12,7 @@ import com.pandulapeter.beagleCore.configuration.TriggerGesture
 /**
  * This interface ensures that the real implementation and the "noop" variant have the same public API.
  */
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 @Suppress("unused")
 interface BeagleContract {
 

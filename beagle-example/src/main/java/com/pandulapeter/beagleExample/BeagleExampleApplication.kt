@@ -13,6 +13,7 @@ import com.pandulapeter.beagleExample.utils.mockBackendEnvironments
 import com.pandulapeter.beagleExample.utils.mockColors
 
 @Suppress("unused")
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 class BeagleExampleApplication : Application() {
 
     override fun onCreate() {

@@ -11,6 +11,7 @@ import com.pandulapeter.beagleExample.networking.NetworkingManager
 import com.pandulapeter.beagleExample.utils.executeRequest
 import com.pandulapeter.beagleExample.utils.logMessages
 
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {

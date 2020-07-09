@@ -11,6 +11,7 @@ import java.util.UUID
 /**
  * Contains all supported modules that can be added to the drawer.
  */
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 sealed class Trick {
 
     //region Generic modules
@@ -21,6 +22,7 @@ sealed class Trick {
      * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
      * @param size - The size of the space to be left empty, or null for the default padding of 8dp. Null by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class Padding(
         override val id: String = UUID.randomUUID().toString(),
         @Dimension val size: Int? = null
@@ -32,6 +34,7 @@ sealed class Trick {
      *
      * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class Divider(
         override val id: String = UUID.randomUUID().toString()
     ) : Trick()
@@ -44,6 +47,7 @@ sealed class Trick {
      * @param text - The text that should be displayed.
      * @param isTitle - Whether or not the text should appear in bold style. False by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class Text(
         override val id: String = UUID.randomUUID().toString(),
         val text: CharSequence,
@@ -59,6 +63,7 @@ sealed class Trick {
      * @param text - The text that should be displayed.
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class LongText(
         override val id: String = UUID.randomUUID().toString(),
         override val title: CharSequence,
@@ -81,6 +86,7 @@ sealed class Trick {
      * @param id - A unique ID for the module. If you don't intend to dynamically remove / modify the module, a suitable default value is auto-generated.
      * @param drawable - The drawable that should be displayed.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class Image(
         override val id: String = UUID.randomUUID().toString(),
         val drawable: Drawable?
@@ -98,6 +104,7 @@ sealed class Trick {
      * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onValueChanged lambda will only get called after the user presses that button. False by default.
      * @param onValueChanged - Callback that gets invoked when the user changes the value of the slider.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class Slider(
         override val id: String = UUID.randomUUID().toString(),
         val name: (value: Int) -> CharSequence,
@@ -129,6 +136,7 @@ sealed class Trick {
      * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onValueChanged lambda will only get called after the user presses that button. False by default.
      * @param onValueChanged - Callback that gets invoked when the user changes the value of the toggle.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class Toggle(
         override val id: String = UUID.randomUUID().toString(),
         val title: CharSequence,
@@ -155,6 +163,7 @@ sealed class Trick {
      * @param text - The text that should be displayed on the button.
      * @param onButtonPressed - The callback that gets invoked when the user presses the button.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class Button(
         override val id: String = UUID.randomUUID().toString(),
         val text: CharSequence,
@@ -170,6 +179,7 @@ sealed class Trick {
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      * @param pairs - The list of key-value pairs.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class KeyValue(
         override val id: String = UUID.randomUUID().toString(),
         override val title: CharSequence,
@@ -196,6 +206,7 @@ sealed class Trick {
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      * @param onItemSelected - The callback that will get executed when an item is selected.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class SimpleList<T : BeagleListItemContract>(
         override val id: String = UUID.randomUUID().toString(),
         override val title: CharSequence,
@@ -227,6 +238,7 @@ sealed class Trick {
      * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onItemSelectionChanged lambda will only get called after the user presses that button. False by default.
      * @param onItemSelectionChanged - The callback that will get executed when the selected item is changed.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class SingleSelectionList<T : BeagleListItemContract>(
         override val id: String = UUID.randomUUID().toString(),
         override val title: CharSequence,
@@ -272,6 +284,7 @@ sealed class Trick {
      * @param needsConfirmation - If true, an "Apply" button will appear after any modification and the onItemSelectionChanged lambda will only get called after the user presses that button. False by default.
      * @param onItemSelectionChanged - The callback that will get executed when the list of selected items is changed.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class MultipleSelectionList<T : BeagleListItemContract>(
         override val id: String = UUID.randomUUID().toString(),
         override val title: CharSequence,
@@ -321,6 +334,7 @@ sealed class Trick {
      * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class LogList(
         override val title: CharSequence = "Logs",
         val tag: String? = null,
@@ -348,6 +362,7 @@ sealed class Trick {
      * @param subtitle - The subtitle of the the debug menu. Consider using the build version ("v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"). Null by default (hidden subtitle).
      * @param text - Additional text you want to display on the debug drawer. Null by default (hidden text).
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class Header(
         val title: CharSequence? = null,
         val subtitle: CharSequence? = null,
@@ -371,6 +386,7 @@ sealed class Trick {
      * @param keylinePrimary - The distance between the edge of the screen and the secondary keyline. 72dp by default (80dp on tablets).
      * @param gridColor - The color to be used when drawing the grid. By default it will be the debug menu's text color.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class KeylineOverlayToggle(
         val title: CharSequence = "Keyline overlay",
         @Dimension val keylineGrid: Int? = null,
@@ -393,6 +409,7 @@ sealed class Trick {
      * @param title - The text that appears near the switch. "Show view bounds" by default.
      * @param color - The color to be used when drawing the overlay. By default it will be the debug menu's text color.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class ViewBoundsOverlayToggle(
         val title: CharSequence = "Show view bounds",
         @ColorInt val color: Int? = null
@@ -412,6 +429,7 @@ sealed class Trick {
      * @param title - The text that appears near the switch. "Slow down animations" by default.
      * @param multiplier - The multiplier that should be applied for all animation durations. 4f by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class AnimatorDurationToggle(
         val title: CharSequence = "Slow down animations",
         val multiplier: Float = 4f
@@ -431,6 +449,7 @@ sealed class Trick {
      * @param text - The text that should be displayed on the button. "Show app info" by default.
      * @param shouldOpenInNewTask - Whether or not the App Info page will be opened with the Intent.FLAG_ACTIVITY_NEW_TASK flag. False by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class AppInfoButton(
         val text: CharSequence = "Show app info",
         val shouldOpenInNewTask: Boolean = false
@@ -449,6 +468,7 @@ sealed class Trick {
      *
      * @param text - The text that should be displayed on the button. "Take a screenshot" by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class ScreenshotButton(
         val text: CharSequence = "Take a screenshot"
     ) : Trick() {
@@ -467,6 +487,7 @@ sealed class Trick {
      * @param text - The text that should be displayed on the button. "Force crash" by default.
      * @param message - The detail message of the exception. "Test crash: Beagle was a bad boy." by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class ForceCrashButton(
         val text: CharSequence = "Force crash",
         val message: String = "Test crash: Beagle was a bad boy."
@@ -489,6 +510,7 @@ sealed class Trick {
      * @param maximumWordCount - The maximum number of words to be generated (must be larger or equal to minimumWordCount). 40 by default.
      * @param onStringReady - A callback that can be implemented for custom handling of the generated string. It will only be called if editTextId is null. If both this and editTextId are null, the text will be copied to the clipboard. Null by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class LoremIpsumButton(
         val text: CharSequence = "Generate Lorem Ipsum",
         @IdRes val editTextId: Int? = null,
@@ -516,6 +538,7 @@ sealed class Trick {
      * @param shouldShowTimestamp - Whether or not each message should display the timestamp when it was added. False by default.
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class NetworkLogList(
         override val title: CharSequence = "Network activity",
         val baseUrl: String = "",
@@ -545,6 +568,7 @@ sealed class Trick {
      * @param title - The title of the module. "Device information" by default.
      * @param isInitiallyExpanded - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     data class DeviceInformationKeyValue(
         override val title: CharSequence = "Device information",
         override val isInitiallyExpanded: Boolean = false
@@ -567,6 +591,7 @@ sealed class Trick {
     //region Implementation details
     abstract val id: String
 
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     interface Expandable {
 
         val id: String
@@ -577,6 +602,7 @@ sealed class Trick {
         fun toggleExpandedState()
     }
 
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     interface Confirmable<T> {
         val id: String
         val needsConfirmation: Boolean
@@ -614,16 +640,19 @@ sealed class Trick {
         private var pendingChanges = emptyList<PendingChangeEvent>()
         val hasPendingChanges get() = pendingChanges.isNotEmpty()
 
+        @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
         fun addPendingChange(pendingChange: PendingChangeEvent) {
             pendingChanges = (listOf(pendingChange) + pendingChanges).distinctBy { it.trickId }
             pendingChangeListener?.invoke()
         }
 
+        @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
         fun removePendingChange(trickId: String) {
             pendingChanges = pendingChanges.filterNot { it.trickId == trickId }
             pendingChangeListener?.invoke()
         }
 
+        @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
         fun applyPendingChanges() {
             if (pendingChanges.isNotEmpty()) {
                 pendingChanges.asReversed().toList().forEach { changeEvent ->
@@ -635,10 +664,12 @@ sealed class Trick {
             }
         }
 
+        @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
         fun resetPendingChanges() {
             pendingChanges.forEach { changeEvent -> changeEvent.reset() }
         }
 
+        @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
         fun clearPendingChanges() {
             pendingChanges = emptyList()
             pendingChangeListener?.invoke()

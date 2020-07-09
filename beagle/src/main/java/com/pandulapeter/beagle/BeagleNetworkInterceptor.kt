@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Interceptor that should be set on the OkHttpClient's builder. Make sure it's the last applied interceptor, otherwise you might not see all relevant information.
  */
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
 
     private val UTF8 = Charset.forName("UTF-8")

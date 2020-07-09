@@ -45,6 +45,7 @@ import kotlin.math.max
 /**
  * The main singleton that handles the debug drawer's functionality.
  */
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 @Suppress("StaticFieldLeak", "unused")
 object Beagle : BeagleContract, SensorEventListener {
 
@@ -52,6 +53,7 @@ object Beagle : BeagleContract, SensorEventListener {
     /**
      * Use this flag to disable the debug drawer at runtime.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override var isEnabled = true
         set(value) {
             if (field != value) {
@@ -63,17 +65,20 @@ object Beagle : BeagleContract, SensorEventListener {
     /**
      * Can be used to access the most recently resumed Activity instance.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override var currentActivity: Activity? = null
         private set
 
     /**
      * Can be used to verify if any of the tricks have pending changes (returns whether or not the "Apply" button is visible).
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override val hasPendingChanges get() = Trick.hasPendingChanges
 
     /**
      * Will be called after the user presses the "Apply" button and the callbacks for all pending changes have been invoked.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override var onAllChangesApplied: (() -> Unit)?
         get() = Trick.onAllChangesApplied
         set(value) {
@@ -88,6 +93,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param appearance - The [Appearance] that specifies the appearance of the drawer. Optional.
      * @param behavior - The [Behavior] that specifies the behavior of the drawer. Optional.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun imprint(
         application: Application,
         appearance: Appearance,
@@ -111,6 +117,7 @@ object Beagle : BeagleContract, SensorEventListener {
      *
      * @param tricks - The new list of tricks.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun learn(vararg tricks: Trick) {
         Trick.clearPendingChanges()
         moduleList = tricks.toList()
@@ -123,6 +130,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param positioning - The positioning of the new trick. [Positioning.Bottom] by default.
      * @param lifecycleOwner - The [LifecycleOwner] which should dictate for how long the module should be added. Null if the module should not be removed automatically. Null by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun learn(trick: Trick, positioning: Positioning, lifecycleOwner: LifecycleOwner?) {
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
 
@@ -142,6 +150,7 @@ object Beagle : BeagleContract, SensorEventListener {
      *
      * @param id - The ID of the trick to be removed.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun forget(id: String) {
         Trick.removePendingChange(id)
         moduleList = moduleList.filterNot { it.id == id }
@@ -150,6 +159,7 @@ object Beagle : BeagleContract, SensorEventListener {
     /**
      * Tries to open the current Activity's debug drawer.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun fetch() {
         if (isEnabled && drawers.containsKey(currentActivity)) {
             notifyListenersOnDragStarted()
@@ -162,6 +172,7 @@ object Beagle : BeagleContract, SensorEventListener {
      *
      * @return - True if the drawer was open, false otherwise
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun dismiss(): Boolean {
         val drawer = drawers[currentActivity]
         val drawerLayout = drawer?.parent as? BeagleDrawerLayout?
@@ -177,6 +188,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param tag - An optional tag that can be later used for filtering. Null by default.
      * @param payload - An optional String payload that can be opened in a dialog when the user clicks on a log message. Null by default.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun log(message: String, tag: String?, payload: String?) {
         logItems = logItems.toMutableList().apply { add(0, LogItem(message = message, tag = tag, payload = payload)) }
     }
@@ -187,6 +199,7 @@ object Beagle : BeagleContract, SensorEventListener {
      * @param lifecycleOwner - By providing a [LifecycleOwner] Beagle will automatically remove the listener once the lifecycle is over. Null by default.
      * @param listener - The [BeagleListener] to add.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun addListener(lifecycleOwner: LifecycleOwner?, listener: BeagleListener) {
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
 
@@ -206,6 +219,7 @@ object Beagle : BeagleContract, SensorEventListener {
      *
      * @param listener - The [BeagleListener] to remove.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun removeListener(listener: BeagleListener) {
         listeners.remove(listener)
     }
@@ -213,6 +227,7 @@ object Beagle : BeagleContract, SensorEventListener {
     /**
      * Removes all [BeagleListener] implementations.
      */
+    @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
     override fun removeAllListeners() = listeners.clear()
     //endregion
 

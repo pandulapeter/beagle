@@ -13,6 +13,7 @@ import kotlinx.android.parcel.Parcelize
  * @param applyButtonText - The text on the Apply button that appears when the user makes changes that are not handled in real-time (see the "needsConfirmation" parameter of some Tricks). "Apply" by default.
  * @param resetButtonText - The text on the Reset button that appears when the user makes changes that are not handled in real-time (see the "needsConfirmation" parameter of some Tricks). "Reset" by default.
  */
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 @Parcelize
 data class Appearance(
     @StyleRes val themeResourceId: Int? = null,

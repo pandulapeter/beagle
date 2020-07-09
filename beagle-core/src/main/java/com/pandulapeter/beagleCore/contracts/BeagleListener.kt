@@ -3,6 +3,7 @@ package com.pandulapeter.beagleCore.contracts
 /**
  * Listener used for observing the state changes of the debug menu. Used for Beagle.addListener(), Beagle.removeListener or Beagle.removeAllListeners().
  */
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 interface BeagleListener {
 
     /**

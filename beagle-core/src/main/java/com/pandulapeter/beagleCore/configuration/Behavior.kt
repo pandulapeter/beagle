@@ -13,6 +13,7 @@ import kotlinx.android.parcel.Parcelize
  * @param packageName - Tha base package name of the application. Beagle will only work in Activities that are under this package. If not specified, an educated guess will be made (that won't work if your setup includes product flavors for example).
  * @param excludedActivities - The list of Activity classes where you specifically don't want to use Beagle. Empty by default.
  */
+@Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 @Parcelize
 data class Behavior(
     val triggerGesture: TriggerGesture = TriggerGesture.SWIPE_AND_SHAKE,
