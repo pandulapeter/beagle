@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 
 class NetworkRequestInterceptorAdapter(
     scope: CoroutineScope,
+    private val onSongCardPressed: () -> Unit,
     private val onTryAgainButtonPressed: () -> Unit,
     private val onSongSelected: (RadioButtonViewHolder.UiModel) -> Unit,
     private val onClearLogsButtonPressed: () -> Unit
@@ -26,7 +27,7 @@ class NetworkRequestInterceptorAdapter(
         R.layout.item_network_request_interceptor_radio_button -> RadioButtonViewHolder.create(parent, onSongSelected)
         R.layout.item_network_request_interceptor_loading_indicator -> LoadingIndicatorViewHolder.create(parent)
         R.layout.item_network_request_interceptor_error -> ErrorViewHolder.create(parent, onTryAgainButtonPressed)
-        R.layout.item_network_request_interceptor_song_lyrics -> SongLyricsViewHolder.create(parent)
+        R.layout.item_network_request_interceptor_song_lyrics -> SongLyricsViewHolder.create(parent, onSongCardPressed)
         R.layout.item_network_request_interceptor_clear_button -> ClearButtonViewHolder.create(parent, onClearLogsButtonPressed)
         else -> super.onCreateViewHolder(parent, viewType)
     }

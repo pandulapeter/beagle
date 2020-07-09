@@ -6,7 +6,9 @@
     android:layout_height="wrap_content"
     android:background="@null"
     android:imeOptions="actionDone"
+    android:importantForAutofill="no"
     android:inputType="text"
     android:padding="@dimen/beagle_large_content_padding"
     android:textColor="?android:attr/textColorPrimary"
+    tools:ignore="LabelFor"
     tools:text="Text" />

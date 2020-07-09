@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.core.list.delegates
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
@@ -19,20 +20,33 @@ import com.pandulapeter.beagle.modules.TextInputModule
 
 internal class TextInputDelegate : PersistableModuleDelegate.String<TextInputModule>() {
 
-    override fun createCells(module: TextInputModule): List<Cell<*>> = listOf(
-        TextCell(
-            id = module.id,
-            text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text(getUiValue(module)).append("*") else module.text(getUiValue(module)),
-            onItemSelected = {
-                BeagleCore.implementation.currentActivity?.applyTheme()?.run {
-                    AlertDialog.Builder(this)
-                        .setView(R.layout.beagle_view_text_input_dialog)
-                        .create()
-                        .apply { setOnShowListener { findViewById<EditText>(R.id.beagle_edit_text)?.initialize(this, module) } }
-                        .show()
-                }
-            })
-    )
+    override fun createCells(module: TextInputModule): List<Cell<*>> = (DialogInterface.OnClickListener { dialog, button ->
+        if (button == DialogInterface.BUTTON_POSITIVE && !module.areRealTimeUpdatesEnabled) {
+            setNewValue(module, (dialog as AlertDialog).findViewById<EditText>(R.id.beagle_edit_text)?.text?.toString().orEmpty())
+        }
+        dialog.dismiss()
+    }).let { onDialogButtonPressed ->
+        listOf(
+            TextCell(
+                id = module.id,
+                text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text(getUiValue(module)).append("*") else module.text(getUiValue(module)),
+                onItemSelected = {
+                    BeagleCore.implementation.currentActivity?.applyTheme()?.run {
+                        AlertDialog.Builder(this)
+                            .setView(R.layout.beagle_view_text_input_dialog)
+                            .setPositiveButton(module.doneText, onDialogButtonPressed)
+                            .apply {
+                                if (!module.areRealTimeUpdatesEnabled) {
+                                    setNegativeButton(module.cancelText, onDialogButtonPressed)
+                                }
+                            }
+                            .create()
+                            .apply { setOnShowListener { findViewById<EditText>(R.id.beagle_edit_text)?.initialize(this, module) } }
+                            .show()
+                    }
+                })
+        )
+    }
 
     private fun setNewValue(module: TextInputModule, newValue: kotlin.String) {
         if (module.validator(newValue)) {
