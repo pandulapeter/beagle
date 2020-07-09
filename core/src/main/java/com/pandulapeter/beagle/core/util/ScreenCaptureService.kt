@@ -115,7 +115,7 @@ internal class ScreenCaptureService : Service() {
                     setVideoEncodingBitRate(profile.videoBitRate)
                     setVideoEncoder(profile.videoCodec)
                 }
-                file = createFile("test_${System.currentTimeMillis()}.mp4")
+                file = createFile(fileName)
                 setOutputFile(file.absolutePath)
                 try {
                     prepare()
@@ -160,26 +160,29 @@ internal class ScreenCaptureService : Service() {
 
     private fun moveToForeground(isForVideo: Boolean) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID) == null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId) == null) {
             notificationManager.createNotificationChannel(
-                NotificationChannel(NOTIFICATION_CHANNEL_ID, "Beagle screen capture", NotificationManager.IMPORTANCE_LOW).apply {
+                NotificationChannel(
+                    BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId,
+                    BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelName,
+                    NotificationManager.IMPORTANCE_LOW
+                ).apply {
                     setSound(null, null)
                 }
             )
         }
-        //TODO: Make UI strings customizable
         if (isForVideo) {
-            Toast.makeText(this, "Recording in progress. Tap on the notification to stop it.", Toast.LENGTH_SHORT).show()
+            BeagleCore.implementation.appearance.screenRecordingToastText?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
         }
         startForeground(
             NOTIFICATION_ID,
-            NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+            NotificationCompat.Builder(this, BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId)
                 .setAutoCancel(false)
                 .setSound(null)
                 .setSmallIcon(R.drawable.beagle_ic_recording)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setContentTitle("Recording…")
+                .setContentTitle(BeagleCore.implementation.appearance.screenCaptureServiceNotificationTitle)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .apply {
                     if (isForVideo) {
@@ -191,7 +194,7 @@ internal class ScreenCaptureService : Service() {
                                 0
                             )
                         )
-                        setStyle(NotificationCompat.BigTextStyle().bigText("Tap on this notification when done."))
+                        setStyle(NotificationCompat.BigTextStyle().bigText(BeagleCore.implementation.appearance.screenCaptureServiceNotificationContent))
                     }
                 }
                 .build()
@@ -210,7 +213,6 @@ internal class ScreenCaptureService : Service() {
     }
 
     companion object {
-        private const val NOTIFICATION_CHANNEL_ID = "channel_beagle_screen_capture"
         private const val NOTIFICATION_ID = 2657
         private const val SCREENSHOT_DELAY = 300L
         private const val SCREENSHOT_TIMEOUT = 2000L

@@ -264,6 +264,7 @@ interface BeagleContract {
      *    .build()
      *
      * The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.
+     * When setting multiple interceptors, consider their order: in general logging interceptors should be the last.
      *
      * @return The nullable Interceptor that should be the argument for OkHttpClient.Builder().addInterceptor(). Reasons for returning null:
      *  - The application depends on the noop variant.
