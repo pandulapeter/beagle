@@ -292,6 +292,8 @@
     <string name="about_contact"><b>Contact me</b>\nDrop me a line about any questions or problems</string>
     <string name="about_open_source"><b>Open source licences</b>\nLegal information regarding dependencies</string>
     <string name="about_donate"><b>Buy me a beer</b>\nIf you found my work useful, consider donating</string>
+    <string name="about_donate_success">Thank you very much for your support!</string>
+    <string name="about_donate_error">Something went wrong</string>
 
     <!-- Licences -->
     <string name="licences_title">Licences</string>

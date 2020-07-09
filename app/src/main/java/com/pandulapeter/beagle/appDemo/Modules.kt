@@ -13,6 +13,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.staticData.StaticDa
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.AddModuleViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.setup.SetupViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -31,7 +32,7 @@ private val featureModule = module {
     viewModel { NetworkRequestInterceptorViewModel(get()) }
     viewModel { PlaygroundViewModel(get()) }
     viewModel { AddModuleViewModel(get()) }
-    viewModel { AboutViewModel() }
+    viewModel { AboutViewModel(androidContext()) }
     viewModel { LicencesViewModel() }
 }
 

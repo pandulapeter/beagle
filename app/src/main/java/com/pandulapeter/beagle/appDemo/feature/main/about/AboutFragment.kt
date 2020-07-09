@@ -3,6 +3,8 @@ package com.pandulapeter.beagle.appDemo.feature.main.about
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
@@ -12,6 +14,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.about.list.AboutListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
+import com.pandulapeter.beagle.appDemo.utils.observe
 import com.pandulapeter.beagle.appDemo.utils.openUrl
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
@@ -22,6 +25,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about_title) {
 
     override val viewModel by viewModel<AboutViewModel>()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.snackbarMessage.observe(viewLifecycleOwner) { messageResourceId ->
+            if (messageResourceId != null) {
+                binding.recyclerView.showSnackbar(messageResourceId)
+                viewModel.snackbarMessage.value = null
+            }
+        }
+    }
 
     override fun createAdapter() = AboutAdapter(viewModel.viewModelScope) { uiModel ->
         when (uiModel.textResourceId) {
@@ -72,7 +85,9 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
         )
     )
 
-    private fun openInAppPurchaseDialog() = binding.recyclerView.showSnackbar(R.string.coming_soon) //TODO
+    private fun openInAppPurchaseDialog() {
+        activity?.let { viewModel.startPurchaseFlow(it) }
+    }
 
     private fun navigateToLicences() = parentFragment?.childFragmentManager?.handleReplace(
         transitionType = TransitionType.MODAL,
@@ -81,7 +96,7 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
     ) ?: Unit
 
     companion object {
-        private const val PACKAGE_NAME = "com.pandulapeter.beagle"
+        const val PACKAGE_NAME = "com.pandulapeter.beagle"
         private const val EMAIL_ADDRESS = "pandulapeter@gmail.com"
         const val GITHUB_URL = "https://github.com/pandulapeter/beagle"
 

@@ -97,6 +97,9 @@ Check out the [Issues](https://github.com/pandulapeter/beagle/issues) page for t
 
 Don't hesitate to open a new issue if you find a bug or if you have any questions / feature requests!
 
+## Buy me a beer
+If you found my work useful and are considering a small donation, the About section of the [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle) has an option for you to do so. Thanks in advance!
+
 ## License
 ```
 Copyright 2020 Pandula Péter
