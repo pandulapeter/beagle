@@ -8,7 +8,11 @@
     android:imeOptions="actionDone"
     android:importantForAutofill="no"
     android:inputType="text"
-    android:padding="@dimen/beagle_large_content_padding"
+    android:paddingStart="@dimen/beagle_large_content_padding"
+    android:paddingLeft="@dimen/beagle_large_content_padding"
+    android:paddingTop="@dimen/beagle_large_content_padding"
+    android:paddingEnd="@dimen/beagle_large_content_padding"
+    android:paddingRight="@dimen/beagle_large_content_padding"
     android:textColor="?android:attr/textColorPrimary"
     tools:ignore="LabelFor"
     tools:text="Text" />

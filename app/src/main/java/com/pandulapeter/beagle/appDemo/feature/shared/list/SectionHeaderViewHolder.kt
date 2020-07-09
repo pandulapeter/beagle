@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSectionHeaderBinding
 import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.SimpleSetupListItem
-import com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.list.FeatureTogglesListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.utils.animatedDrawable
 import com.pandulapeter.beagle.appDemo.utils.tintedDrawable
@@ -53,7 +53,7 @@ class SectionHeaderViewHolder private constructor(
         @StringRes val titleResourceId: Int,
         val isExpanded: Boolean,
         override val id: String = "sectionHeader_$titleResourceId"
-    ) : ListItem, SetupListItem, SimpleSetupListItem, FeatureTogglesListItem
+    ) : ListItem, SetupListItem, SimpleSetupListItem, FeatureFlagsListItem
 
     companion object {
         fun create(

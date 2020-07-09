@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.list
+package com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list
 
 import android.graphics.Typeface
 import android.text.SpannableString
@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.databinding.ItemFeatureTogglesCurrentStateBinding
+import com.pandulapeter.beagle.appDemo.databinding.ItemFeatureFlagsCurrentStateBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class CurrentStateViewHolder private constructor(
-    binding: ItemFeatureTogglesCurrentStateBinding,
+    binding: ItemFeatureFlagsCurrentStateBinding,
     onCurrentStateCardPressed: () -> Unit
-) : BaseViewHolder<ItemFeatureTogglesCurrentStateBinding, CurrentStateViewHolder.UiModel>(binding) {
+) : BaseViewHolder<ItemFeatureFlagsCurrentStateBinding, CurrentStateViewHolder.UiModel>(binding) {
 
     private var characterIndex = 0
 
@@ -36,7 +36,7 @@ class CurrentStateViewHolder private constructor(
         val singleSelectionOption: String?,
         val slider: Int,
         val text: String
-    ) : FeatureTogglesListItem {
+    ) : FeatureFlagsListItem {
 
         override val id = "currentState"
     }
@@ -45,16 +45,16 @@ class CurrentStateViewHolder private constructor(
         super.bind(uiModel)
         binding.textView.run {
             if (uiModel.singleSelectionOption != null || text.isBlank()) {
-                val on = context.getString(R.string.case_study_feature_toggles_current_state_on)
-                val off = context.getString(R.string.case_study_feature_toggles_current_state_off)
-                val key1 = context.getString(R.string.case_study_feature_toggles_current_state_key_1)
-                val key2 = context.getString(R.string.case_study_feature_toggles_current_state_key_2)
-                val key3 = context.getString(R.string.case_study_feature_toggles_current_state_key_3)
-                val key4 = context.getString(R.string.case_study_feature_toggles_current_state_key_4)
-                val key5 = context.getString(R.string.case_study_feature_toggles_current_state_key_5)
-                val key6 = context.getString(R.string.case_study_feature_toggles_current_state_key_6)
-                val key7 = context.getString(R.string.case_study_feature_toggles_current_state_key_7)
-                val key8 = context.getString(R.string.case_study_feature_toggles_current_state_key_8)
+                val on = context.getString(R.string.case_study_feature_flags_current_state_on)
+                val off = context.getString(R.string.case_study_feature_flags_current_state_off)
+                val key1 = context.getString(R.string.case_study_feature_flags_current_state_key_1)
+                val key2 = context.getString(R.string.case_study_feature_flags_current_state_key_2)
+                val key3 = context.getString(R.string.case_study_feature_flags_current_state_key_3)
+                val key4 = context.getString(R.string.case_study_feature_flags_current_state_key_4)
+                val key5 = context.getString(R.string.case_study_feature_flags_current_state_key_5)
+                val key6 = context.getString(R.string.case_study_feature_flags_current_state_key_6)
+                val key7 = context.getString(R.string.case_study_feature_flags_current_state_key_7)
+                val key8 = context.getString(R.string.case_study_feature_flags_current_state_key_8)
                 val value1 = if (uiModel.toggle1) on else off
                 val value2 = if (uiModel.toggle2) on else off
                 val value3 = if (uiModel.toggle3) on else off
@@ -88,7 +88,7 @@ class CurrentStateViewHolder private constructor(
             parent: ViewGroup,
             onCurrentStateCardPressed: () -> Unit
         ) = CurrentStateViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_feature_toggles_current_state, parent, false),
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_feature_flags_current_state, parent, false),
             onCurrentStateCardPressed = onCurrentStateCardPressed
         )
     }

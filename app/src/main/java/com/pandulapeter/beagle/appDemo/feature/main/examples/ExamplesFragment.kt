@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.AuthenticationFragment
-import com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.FeatureTogglesFragment
+import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.FeatureFlagsFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.NetworkRequestInterceptorFragment
@@ -53,7 +53,7 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
     private fun onCaseStudySelected(caseStudy: CaseStudy, view: View? = null) = when (caseStudy) {
         CaseStudy.SIMPLE_SETUP -> navigateTo(SimpleSetupFragment.Companion::newInstance, view)
         CaseStudy.STATIC_DATA -> navigateTo(StaticDataFragment.Companion::newInstance, view)
-        CaseStudy.FEATURE_TOGGLES -> navigateTo(FeatureTogglesFragment.Companion::newInstance, view)
+        CaseStudy.FEATURE_FLAGS -> navigateTo(FeatureFlagsFragment.Companion::newInstance, view)
         CaseStudy.NETWORK_REQUEST_INTERCEPTOR -> navigateTo(NetworkRequestInterceptorFragment.Companion::newInstance, view)
         CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
         else -> binding.root.showSnackbar(caseStudy.title)

@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.list
+package com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list
 
 import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
@@ -7,25 +7,25 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.SectionHeaderViewHolder
 import kotlinx.coroutines.CoroutineScope
 
-class FeatureTogglesAdapter(
+class FeatureFlagsAdapter(
     scope: CoroutineScope,
     onSectionHeaderSelected: (SectionHeaderViewHolder.UiModel) -> Unit,
     private val onCurrentStateCardPressed: () -> Unit,
     private val onResetButtonPressed: () -> Unit,
     private val onBulkApplySwitchToggled: (Boolean) -> Unit
-) : BaseAdapter<FeatureTogglesListItem>(scope, onSectionHeaderSelected) {
+) : BaseAdapter<FeatureFlagsListItem>(scope, onSectionHeaderSelected) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
-        is CurrentStateViewHolder.UiModel -> R.layout.item_feature_toggles_current_state
-        is ResetButtonViewHolder.UiModel -> R.layout.item_feature_toggles_reset_button
-        is BulkApplySwitchViewHolder.UiModel -> R.layout.item_feature_toggles_bulk_apply_switch
+        is CurrentStateViewHolder.UiModel -> R.layout.item_feature_flags_current_state
+        is ResetButtonViewHolder.UiModel -> R.layout.item_feature_flags_reset_button
+        is BulkApplySwitchViewHolder.UiModel -> R.layout.item_feature_flags_bulk_apply_switch
         else -> super.getItemViewType(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
-        R.layout.item_feature_toggles_current_state -> CurrentStateViewHolder.create(parent, onCurrentStateCardPressed)
-        R.layout.item_feature_toggles_reset_button -> ResetButtonViewHolder.create(parent, onResetButtonPressed)
-        R.layout.item_feature_toggles_bulk_apply_switch -> BulkApplySwitchViewHolder.create(parent, onBulkApplySwitchToggled)
+        R.layout.item_feature_flags_current_state -> CurrentStateViewHolder.create(parent, onCurrentStateCardPressed)
+        R.layout.item_feature_flags_reset_button -> ResetButtonViewHolder.create(parent, onResetButtonPressed)
+        R.layout.item_feature_flags_bulk_apply_switch -> BulkApplySwitchViewHolder.create(parent, onBulkApplySwitchToggled)
         else -> super.onCreateViewHolder(parent, viewType)
     }
 

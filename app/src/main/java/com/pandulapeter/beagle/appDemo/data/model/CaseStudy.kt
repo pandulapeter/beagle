@@ -17,9 +17,9 @@ enum class CaseStudy(
         title = R.string.case_study_static_data_title,
         description = R.string.case_study_static_data_description
     ),
-    FEATURE_TOGGLES(
-        title = R.string.case_study_feature_toggles_title,
-        description = R.string.case_study_feature_toggles_description
+    FEATURE_FLAGS(
+        title = R.string.case_study_feature_flags_title,
+        description = R.string.case_study_feature_flags_description
     ),
     NETWORK_REQUEST_INTERCEPTOR(
         title = R.string.case_study_network_request_interceptor_title,

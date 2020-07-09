@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.examples.featureToggles.list.ResetButtonViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.ResetButtonViewHolder.UiModel" />
 
     </data>
 
@@ -19,7 +19,7 @@
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding"
         android:gravity="center"
-        android:text="@string/case_study_feature_toggles_reset_all"
+        android:text="@string/case_study_feature_flags_reset_all"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:theme="@style/DarkTheme"
