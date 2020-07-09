@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemTextBinding
+import com.pandulapeter.beagle.appDemo.feature.main.about.licences.list.LicencesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.about.list.AboutListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
@@ -24,7 +25,7 @@ class TextViewHolder private constructor(
         @StringRes val textResourceId: Int,
         override val id: String = "text_$textResourceId"
     ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureFlagsListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, PlaygroundListItem, AboutListItem,
-        AddModuleListItem
+        AddModuleListItem, LicencesListItem
 
     companion object {
         fun create(

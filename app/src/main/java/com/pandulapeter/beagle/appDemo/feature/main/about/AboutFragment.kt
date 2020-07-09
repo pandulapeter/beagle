@@ -62,7 +62,7 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$PACKAGE_NAME")))
         } catch (_: ActivityNotFoundException) {
-            binding.root.openUrl("https://play.google.com/store/apps/details?id=$PACKAGE_NAME")
+            binding.recyclerView.openUrl("https://play.google.com/store/apps/details?id=$PACKAGE_NAME")
         }
     }
 
