@@ -93,12 +93,12 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun hide() = uiManager.hide(currentActivity)
 
-    override fun set(vararg modules: Module<*>) = listManager.setModules(modules.toList(), updateListenerManager::notifyListeners)
+    override fun set(vararg modules: Module<*>) = listManager.setModules(modules.toList(), updateListenerManager::notifyListenersOnContentsChanged)
 
     override fun add(vararg modules: Module<*>, placement: Placement, lifecycleOwner: LifecycleOwner?) =
-        listManager.addModules(modules.toList(), placement, lifecycleOwner, updateListenerManager::notifyListeners)
+        listManager.addModules(modules.toList(), placement, lifecycleOwner, updateListenerManager::notifyListenersOnContentsChanged)
 
-    override fun remove(vararg ids: String) = listManager.removeModules(ids.toList(), updateListenerManager::notifyListeners)
+    override fun remove(vararg ids: String) = listManager.removeModules(ids.toList(), updateListenerManager::notifyListenersOnContentsChanged)
 
     override fun contains(id: String) = listManager.contains(id)
 
@@ -156,7 +156,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun recordScreen(fileName: String, callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(fileName, callback)
 
-    override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListeners)
+    override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)
 
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
@@ -170,7 +170,10 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         }
     }
 
-    internal fun applyPendingChanges() = listManager.applyPendingChanges()
+    internal fun applyPendingChanges() {
+        listManager.applyPendingChanges()
+        updateListenerManager.notifyListenersOnAllPendingChangesApplied()
+    }
 
     internal fun resetPendingChanges() = listManager.resetPendingChanges()
 
