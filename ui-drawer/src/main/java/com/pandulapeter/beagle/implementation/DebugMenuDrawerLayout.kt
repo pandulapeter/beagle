@@ -42,10 +42,6 @@ internal class DebugMenuDrawerLayout(
     init {
         addView(OverlayFrameLayout(context), LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT))
         addView(debugMenuView, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, GravityCompat.END))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            setOnApplyWindowInsetsListener { _, insets -> insets.also { debugMenuView.applyInsets(0, it.systemWindowInsetTop, it.systemWindowInsetRight, it.systemWindowInsetBottom) } }
-            requestApplyInsets()
-        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -64,6 +60,21 @@ internal class DebugMenuDrawerLayout(
             BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
             layoutParams = layoutParams.apply {
                 width = min(resources.getDimensionPixelSize(R.dimen.beagle_drawer_maximum_width), (displayMetrics.widthPixels * DRAWER_WIDTH_RATIO).roundToInt())
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            Beagle.currentActivity?.window?.decorView?.run {
+                setOnApplyWindowInsetsListener { _, insets ->
+                    onApplyWindowInsets(insets).also {
+                        debugMenuView.applyInsets(
+                            0,
+                            it.systemWindowInsetTop,
+                            it.systemWindowInsetRight,
+                            it.systemWindowInsetBottom
+                        )
+                    }
+                }
+                requestApplyInsets()
             }
         }
     }

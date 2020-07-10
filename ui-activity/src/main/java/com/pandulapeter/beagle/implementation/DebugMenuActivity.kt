@@ -37,7 +37,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
             bottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
-                    insets.also {
+                    onApplyWindowInsets(insets).also {
                         debugMenu.applyInsets(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, it.systemWindowInsetBottom)
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
                     }

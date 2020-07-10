@@ -39,7 +39,7 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuView(requireContext()).also {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Beagle.currentActivity?.window?.decorView?.run {
-                setOnApplyWindowInsetsListener { _, insets -> insets.also { updateSize() } }
+                setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets).also { updateSize() } }
                 requestApplyInsets()
             }
         }
