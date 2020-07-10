@@ -161,10 +161,28 @@ class FeatureFlagsViewModel : ListViewModel<FeatureFlagsListItem>() {
 
     private fun MutableList<FeatureFlagsListItem>.addSliderSection() = addSection(Section.SLIDER) {
         add(TextViewHolder.UiModel(R.string.case_study_feature_flags_slider_description_1))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "SliderModule(\n" +
+                        "    text = { currentValue -> \"Current value: \$currentValue\"},\n" +
+                        "    onValueChanged = { newValue -> TODO() }\n" +
+                        "),"
+            )
+        )
+        add(TextViewHolder.UiModel(R.string.case_study_feature_flags_slider_description_2))
     }
 
     private fun MutableList<FeatureFlagsListItem>.addTextInputSection() = addSection(Section.TEXT_INPUT) {
         add(TextViewHolder.UiModel(R.string.case_study_feature_flags_text_input_description_1))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "TextInputModule(\n" +
+                        "    text = { currentValue -> \"Current value: \$currentValue\" },\n" +
+                        "    onValueChanged = { newValue -> TODO() }\n" +
+                        ")"
+            )
+        )
+        add(TextViewHolder.UiModel(R.string.case_study_feature_flags_text_input_description_2))
     }
 
     private fun MutableList<FeatureFlagsListItem>.addQueryingAndChangingTheCurrentValueSection() = addSection(Section.QUERYING_AND_CHANGING_THE_CURRENT_VALUE) {
