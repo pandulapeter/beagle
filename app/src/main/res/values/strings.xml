@@ -191,7 +191,7 @@
     <string name="case_study_network_request_interceptor_text_4">The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.\n\nIf, for some reason, you cannot use this interceptor (for example in case of socket-based API-s), the library exposes the <i>Beagle.logNetworkEvent(…)</i> function which populates the same module. Furthermore, you can use <i>Beagle.clearNetworkLogs()</i> to reset the list at any time.</string>
     <string name="case_study_network_request_interceptor_clear_logs">Clear logs</string>
     <string name="case_study_network_request_interceptor_logs_cleared">Logs cleared</string>
-    <string name="case_study_network_request_interceptor_text_5">\nAs usual, the optional arguments of the module constructor can be used to fine-tune its behavior. For example, specifying a <i>baseUrl</i> is a good idea in most cases to avoid having the same URL prefix for every single entry.</string>
+    <string name="case_study_network_request_interceptor_text_5">\nAs usual, the optional arguments of the module constructor can be used to fine-tune its behavior. For example, specifying a <i>baseUrl</i> is a good idea in most cases to avoid having the same URL prefix for every single entry. Another optional parameter, <i>maxItemCount</i> limits the total number of entries displayed in the list (and defaults to 10, when not specified).</string>
 
     <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>
