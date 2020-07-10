@@ -51,16 +51,26 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
                         "        subtitle = headerSubtitle,\n" +
                         "        text = headerText\n" +
                         "    ),\n" +
-                        "    TextModule(…),\n" +
-                        "    LongTextModule(…),\n" +
-                        "    LabelModule(…),\n" +
+                        "    TextModule(text = \"…\"),\n" +
+                        "    LongTextModule(\n" +
+                        "        title = \"…\",\n" +
+                        "        text = \"…\"\n" +
+                        "    ),\n" +
+                        "    LabelModule(title = \"…\"),\n" +
                         "    PaddingModule(),\n" +
                         "    DividerModule()\n" +
-                        "    KeyValueListModule(…)\n" +
+                        "    KeyValueListModule(\n" +
+                        "        title = \"…\",\n" +
+                        "        pairs = listOf(\n" +
+                        "            \"Key 1\" to \"Value 1\",\n" +
+                        "            \"Key 2\" to \"Value 2\",\n" +
+                        "            \"Key 3\" to \"Value 3\"\n" +
+                        "        )\n" +
+                        "    )\n" +
                         ")"
             )
         )
-        add(SpaceViewHolder.UiModel())
+        add(TextViewHolder.UiModel(R.string.case_study_static_data_top_2))
     }
 
     private fun MutableList<ListItem>.addHeaderSection() = addSection(Section.HEADER) {
