@@ -39,6 +39,7 @@ You're right! Here are the big changes you should be aware of if you were famili
         * There is no more *TriggerGesture* as it no longer makes sense for all UI-s. On the other hand a configurable **shakeThreshold** which can be set to null to disable the shake-to-show feature.
         * There is no need to specify your application's package name anymore. However, with **excludedPackageNames** you can specify a list of Activities for which you don't want to support a debug menu. 
 * The constructors of the module classes are probably also a bit different. As before, the KDoc headers are the best source of information on which parameter does what.
+* The ViewOverlayToggle trick has no equivalent module in the new version for the time being. There is a DeveloperOptionsButtonModule which can be used to access the superior implementation coming from the system, there is no reason to try and compete with that. 
 
 ## Check out the demo app!
 The example project found in this repository now acts both as a showcase for the library's feature set and a tutorial for integrating it. If you don't feel like cloning the repository, you can also download the app from the Play Store:

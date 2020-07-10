@@ -39,13 +39,13 @@ The following versions exist:
 * **ui-view** - Displaying the debug menu View is your responsibility (not recommended: Beagle.show(), Beagle.hide(), the related VisibilityListener as well as the inset handling logic won't work out of the box).
 * **noop** - No UI, no logic. It has the same public API as all other variants, but it does nothing (this is intended for production builds).
 
-So for example if you prefer the bottom-sheet UI, something like the following needs to be added to your module-level build.gradle file (check the widget below the code snippet for the latest version):
+So for example if you prefer the Drawer UI, something like the following needs to be added to your module-level build.gradle file (check the widget below the code snippet for the latest version):
 
 ```groovy
 dependencies {
     …
     def beagleVersion = "2.0.0-beta01"
-    debugImplementation "com.github.pandulapeter.beagle:ui-bottom-sheet:$beagleVersion"
+    debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
 ```
