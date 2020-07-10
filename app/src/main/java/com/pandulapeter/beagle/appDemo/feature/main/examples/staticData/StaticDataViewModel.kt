@@ -94,6 +94,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
                         "}"
             )
         )
+        add(TextViewHolder.UiModel(R.string.case_study_static_data_header_4))
     }
 
     private fun MutableList<ListItem>.addTextSection() = addSection(Section.TEXT) {
