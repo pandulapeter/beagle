@@ -10,9 +10,11 @@ Clone this repository, pick a build variant and run the **app** configuration. I
 
 <img src="metadata/screenshot01.png" width="25%" /><img src="metadata/screenshot02.png" width="25%" /><img src="metadata/screenshot03.png" width="25%" /><img src="metadata/screenshot04.png" width="25%" />
 
-This demo application also contains instructions on how to set up Beagle and how to implement the various features that are being showcased. As a result you should consider giving it a try if you're interested in the library. If you don't feel like building it yourself, you can also download it from the Play Store:
+This demo application also contains instructions on how to set up Beagle and how to implement the various features that are being showcased. You should definitely consider giving it a try if you're interested in using the library in your projects. If you don't feel like building it for yourself, you can also download it from the Play Store:
 
 [<img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" />](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle)
+
+The tutorials in the app cover everything from this readme, but in more detail.
 
 ## Use it in your project
 ### Step 1: Add the Jitpack repository
