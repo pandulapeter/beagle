@@ -2,5 +2,6 @@
 <resources>
 
     <integer name="setup_radio_button_span">3</integer>
+    <integer name="analytics_check_box_span">2</integer>
 
 </resources>

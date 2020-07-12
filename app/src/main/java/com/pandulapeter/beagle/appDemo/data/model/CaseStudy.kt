@@ -33,11 +33,6 @@ enum class CaseStudy(
         title = R.string.case_study_authentication_title,
         description = R.string.case_study_authentication_description
     ),
-    ENVIRONMENT_SWITCHER(
-        title = R.string.case_study_environment_switcher_title,
-        description = R.string.case_study_environment_switcher_description,
-        isReady = false
-    ),
     MOCK_DATA_GENERATOR(
         title = R.string.case_study_mock_data_generator_title,
         description = R.string.case_study_mock_data_generator_description,

@@ -1,6 +1,8 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.analytics
 
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
@@ -14,12 +16,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AnalyticsFragment : ExamplesDetailFragment<AnalyticsViewModel, AnalyticsListItem>(R.string.case_study_analytics_title) {
 
     override val viewModel by viewModel<AnalyticsViewModel>()
+    private val spanCount get() = context?.resources?.getInteger(R.integer.analytics_check_box_span) ?: 1
 
     override fun createAdapter() = AnalyticsAdapter(
         scope = viewModel.viewModelScope,
         onSwitchToggled = viewModel::onSwitchToggled,
         onClearButtonPressed = ::onClearButtonPressed
     )
+
+    override fun createLayoutManager() = GridLayoutManager(context, spanCount, RecyclerView.VERTICAL, false).apply {
+        spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int) = if (viewModel.shouldBeFullSize(position)) spanCount else 1
+        }
+    }
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         LogListModule(

@@ -35,6 +35,8 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
         }
     }
 
+    fun shouldBeFullSize(position: Int) = _items.value?.get(position) !is CheckBoxViewHolder.UiModel
+
     private fun refreshItems() {
         _items.value = listOf(
             TextViewHolder.UiModel(R.string.case_study_analytics_text_1),
@@ -46,7 +48,7 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
             CodeSnippetViewHolder.UiModel(
                 "Beagle.log(\n" +
                         "    tag = LOG_TAG,\n" +
-                        "    message = \"Message to display\"\n" +
+                        "    message = \"…\"\n" +
                         ")"
             ),
             TextViewHolder.UiModel(R.string.case_study_analytics_text_3),

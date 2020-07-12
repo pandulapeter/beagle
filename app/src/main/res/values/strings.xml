@@ -129,7 +129,7 @@
     <string name="case_study_feature_flags_multiple_selection_list_description_2">After this we can define the module by specifying a list of items as well as a title for the list, the set of the initial selection ID-s and the callback (which will be invoked with the set of currently selected items as its argument).</string>
     <string name="case_study_feature_flags_single_selection_list"><b>SingleSelectionList</b></string>
     <string name="case_study_feature_flags_single_selection_list_description_1">In case of radio buttons, the important difference compared to the previous example is that at most a single item can be selected at any given time. As a result, there is no need to deal with sets any more:</string>
-    <string name="case_study_feature_flags_single_selection_list_description_2">The module supports not having an initial selection, so both the <i>initiallySelectedItemId</i> parameter and the argument of the <i>onSelectionChanged</i> lambda are nullable.</string>
+    <string name="case_study_feature_flags_single_selection_list_description_2">The module supports not having an initial selection, so both the <i>initiallySelectedItemId</i> parameter and the argument of the <i>onSelectionChanged</i> lambda are nullable.\n\nWhen testing on multiple backend environments is needed, a SingleSelectionListModule is the ideal choice for changing the base URL of the server the app is connecting to.</string>
     <string name="case_study_feature_flags_slider"><b>Slider</b></string>
     <string name="case_study_feature_flags_slider_description_1">Adjusting the value of an integer within a specified range can be done using the SliderModule:</string>
     <string name="case_study_feature_flags_slider_description_2">One interesting aspect to note here is that the <i>text</i> displayed on top of the seek bar is defined as a lambda that receives the current value (after every change event) and returns a CharSequence.\n\nThe optional parameters to configure the behavior of the slider are <i>minimumValue</i>, <i>maximumValue</i> and <i>initialValue</i> (the latter defaults to <i>minimumValue</i>, if not specified).</string>
@@ -224,10 +224,6 @@
     <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
     <string name="case_study_authentication_test_accounts"><b>Test accounts</b></string>
     <string name="case_study_authentication_show_automatically_switch"><b>Show automatically</b></string>
-
-    <!-- Case studies / Environment switcher -->
-    <string name="case_study_environment_switcher_title">Environment switcher</string>
-    <string name="case_study_environment_switcher_description">Change the application\'s base URL at runtime.</string>
 
     <!-- Case studies / Mock data generator -->
     <string name="case_study_mock_data_generator_title">Mock data generator</string>
