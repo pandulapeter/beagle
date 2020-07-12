@@ -191,7 +191,7 @@
     <string name="case_study_network_request_interceptor_text_4">The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.\n\nIf, for some reason, you cannot use this interceptor (for example in case of socket-based API-s), the library exposes the <i>Beagle.logNetworkEvent(…)</i> function which populates the same module. Furthermore, you can use <i>Beagle.clearNetworkLogs()</i> to reset the list at any time.</string>
     <string name="case_study_network_request_interceptor_clear_logs">Clear logs</string>
     <string name="case_study_network_request_interceptor_logs_cleared">Logs cleared</string>
-    <string name="case_study_network_request_interceptor_text_5">\nAs usual, the optional arguments of the module constructor can be used to fine-tune its behavior. For example, specifying a <i>baseUrl</i> is a good idea in most cases to avoid having the same URL prefix for every single entry. Another optional parameter, <i>maxItemCount</i> limits the total number of entries displayed in the list (and defaults to 10, when not specified).</string>
+    <string name="case_study_network_request_interceptor_text_5">\nAs usual, the optional arguments of the module constructor can be used to fine-tune its behavior:\n  • Specifying a <i>baseUrl</i> is a good idea in most cases to avoid having the same URL prefix for every single entry.\n  • <i>maxItemCount</i> limits the total number of entries displayed in the list (and defaults to 10, when not specified).\n  • The <i>timestampFormatter</i> lambda can be used to override the way the timestamps of the events are displayed (or set to null to remove displaying timestamps altogether).</string>
 
     <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>
@@ -211,6 +211,15 @@
     <!-- Case studies / Analytics -->
     <string name="case_study_analytics_title">Logging analytics events</string>
     <string name="case_study_analytics_description">Making sure that every required event is tracked from an admin panel can be cumbersome. Why not display the events right in the app, in real time?</string>
+    <string name="case_study_analytics_module_title">Analytics events</string>
+    <string name="case_study_analytics_text_1">Check out how any state change made to the following four switches is tracked by the debug menu:</string>
+    <string name="case_study_analytics_toggle_1">Toggle 1</string>
+    <string name="case_study_analytics_toggle_2">Toggle 2</string>
+    <string name="case_study_analytics_toggle_3">Toggle 3</string>
+    <string name="case_study_analytics_toggle_4">Toggle 4</string>
+    <string name="case_study_analytics_text_2">Coming soon…</string>
+    <string name="case_study_analytics_clear_logs">Clear logs</string>
+    <string name="case_study_analytics_logs_cleared">Logs cleared</string>
 
     <!-- Case studies / Environment switcher -->
     <string name="case_study_environment_switcher_title">Environment switcher</string>

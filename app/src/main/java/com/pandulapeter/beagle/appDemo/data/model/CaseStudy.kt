@@ -31,8 +31,7 @@ enum class CaseStudy(
     ),
     ANALYTICS(
         title = R.string.case_study_analytics_title,
-        description = R.string.case_study_analytics_description,
-        isReady = false
+        description = R.string.case_study_analytics_description
     ),
     ENVIRONMENT_SWITCHER(
         title = R.string.case_study_environment_switcher_title,

@@ -11,6 +11,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.about.list.AboutListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.AnalyticsListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.SimpleSetupListItem
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.list.AddModuleListItem
@@ -24,7 +25,8 @@ class TextViewHolder private constructor(
     data class UiModel(
         @StringRes val textResourceId: Int,
         override val id: String = "text_$textResourceId"
-    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureFlagsListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, PlaygroundListItem, AboutListItem,
+    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureFlagsListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, AnalyticsListItem, PlaygroundListItem,
+        AboutListItem,
         AddModuleListItem, LicencesListItem
 
     companion object {

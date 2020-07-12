@@ -5,6 +5,7 @@ import com.pandulapeter.beagle.appDemo.data.NetworkingManager
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.about.licences.LicencesViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.AnalyticsViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.AuthenticationViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.FeatureFlagsViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.NetworkRequestInterceptorViewModel
@@ -30,6 +31,7 @@ private val featureModule = module {
     viewModel { FeatureFlagsViewModel() }
     viewModel { AuthenticationViewModel() }
     viewModel { NetworkRequestInterceptorViewModel(get()) }
+    viewModel { AnalyticsViewModel() }
     viewModel { PlaygroundViewModel(get()) }
     viewModel { AddModuleViewModel(get()) }
     viewModel { AboutViewModel(androidContext()) }

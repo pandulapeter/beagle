@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
+import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.AnalyticsFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.AuthenticationFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.FeatureFlagsFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesAdapter
@@ -56,6 +57,7 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
         CaseStudy.FEATURE_FLAGS -> navigateTo(FeatureFlagsFragment.Companion::newInstance, view)
         CaseStudy.NETWORK_REQUEST_INTERCEPTOR -> navigateTo(NetworkRequestInterceptorFragment.Companion::newInstance, view)
         CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
+        CaseStudy.ANALYTICS -> navigateTo(AnalyticsFragment.Companion::newInstance, view)
         else -> binding.root.showSnackbar(caseStudy.title)
     }
 
