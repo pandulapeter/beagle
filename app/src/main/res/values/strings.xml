@@ -191,7 +191,24 @@
     <string name="case_study_network_request_interceptor_text_4">The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.\n\nIf, for some reason, you cannot use this interceptor (for example in case of socket-based API-s), the library exposes the <i>Beagle.logNetworkEvent(…)</i> function which populates the same module. Furthermore, you can use <i>Beagle.clearNetworkLogs()</i> to reset the list at any time.</string>
     <string name="case_study_network_request_interceptor_clear_logs">Clear logs</string>
     <string name="case_study_network_request_interceptor_logs_cleared">Logs cleared</string>
-    <string name="case_study_network_request_interceptor_text_5">\nAs usual, the optional arguments of the module constructor can be used to fine-tune its behavior:\n  • Specifying a <i>baseUrl</i> is a good idea in most cases to avoid having the same URL prefix for every single entry.\n  • <i>maxItemCount</i> limits the total number of entries displayed in the list (and defaults to 10, when not specified).\n  • The <i>timestampFormatter</i> lambda can be used to override the way the timestamps of the events are displayed (or set to null to remove displaying timestamps altogether).</string>
+    <string name="case_study_network_request_interceptor_text_5">\nAs usual, the optional arguments of the module constructor can be used to fine-tune its behavior:\n  • Specifying a <i>baseUrl</i> is a good idea in most cases to avoid having the same URL prefix for every single entry.\n  • <i>maxItemCount</i> limits the total number of entries displayed in the list (and defaults to 10, when not specified).\n  • The <i>timestampFormatter</i> lambda can be used to override the way the timestamps of the events are displayed (or set to null to remove displaying timestamps altogether).\n\nThe library also provides a way to listen to any updates made to the list of network log events through the <i>NetworkLogListener</i> interface which can be used with the <i>Beagle.addNetworkLogListener()</i>, <i>Beagle.removeNetworkLogListener()</i>, and <i>Beagle.clearNetworkLogListeners()</i> functions.</string>
+
+    <!-- Case studies / Analytics -->
+    <string name="case_study_analytics_title">Logging analytics events</string>
+    <string name="case_study_analytics_description">Making sure that every required event is tracked from an admin panel can be cumbersome. Why not display the events right in the app, in real time?</string>
+    <string name="case_study_analytics_module_title">Analytics events</string>
+    <string name="case_study_analytics_text_1">Check out how any state change made to the following four check boxes is tracked by the debug menu:\n</string>
+    <string name="case_study_analytics_toggle_1">Toggle 1</string>
+    <string name="case_study_analytics_toggle_2">Toggle 2</string>
+    <string name="case_study_analytics_toggle_3">Toggle 3</string>
+    <string name="case_study_analytics_toggle_4">Toggle 4</string>
+    <string name="case_study_analytics_text_2">This was achieved using Beagle\'s logging capabilities (and logging analytics events is of course just a small subset of the potential use cases for the feature). A single log() function is invoked every time a change is made:</string>
+    <string name="case_study_analytics_text_3">The <i>tag</i> parameter is optional, and is there to help with filtering, as multiple instances of LogListModule can be present at any time in the menu, each distinguished by the tag they are set up to track. If no tag is provided for the module, it will display all log messages.</string>
+    <string name="case_study_analytics_text_4">All of the parameters from the constructor above are optional and have reasonable default values.\n\nThe list of log entries can be cleared any time using:</string>
+    <string name="case_study_analytics_text_5">Again, not providing a tag would signal the intention of clearing all messages, regardless of tag. See it in action:</string>
+    <string name="case_study_analytics_text_6">\nLast bug not least, it is worth pointing out that, similarly to the NetworkLogListModule, we have the option to override the default timestmap formatting using the <i>timestampFormatter</i> parameter, and listen to changes with the <i>LogListener</i> interface (used with the <i>Beagle.addLogListener()</i>, <i>Beagle.removeLogListener()</i>, and <i>Beagle.clearLogListeners()</i> functions).</string>
+    <string name="case_study_analytics_clear_logs">Clear logs</string>
+    <string name="case_study_analytics_logs_cleared">Logs cleared</string>
 
     <!-- Case studies / Authentication -->
     <string name="case_study_authentication_title">Authentication</string>
@@ -207,19 +224,6 @@
     <string name="case_study_authentication_text_5">You can test this implementation by toggling the \"Show automatically\" switch and re-opening this screen.</string>
     <string name="case_study_authentication_test_accounts"><b>Test accounts</b></string>
     <string name="case_study_authentication_show_automatically_switch"><b>Show automatically</b></string>
-
-    <!-- Case studies / Analytics -->
-    <string name="case_study_analytics_title">Logging analytics events</string>
-    <string name="case_study_analytics_description">Making sure that every required event is tracked from an admin panel can be cumbersome. Why not display the events right in the app, in real time?</string>
-    <string name="case_study_analytics_module_title">Analytics events</string>
-    <string name="case_study_analytics_text_1">Check out how any state change made to the following four switches is tracked by the debug menu:</string>
-    <string name="case_study_analytics_toggle_1">Toggle 1</string>
-    <string name="case_study_analytics_toggle_2">Toggle 2</string>
-    <string name="case_study_analytics_toggle_3">Toggle 3</string>
-    <string name="case_study_analytics_toggle_4">Toggle 4</string>
-    <string name="case_study_analytics_text_2">Coming soon…</string>
-    <string name="case_study_analytics_clear_logs">Clear logs</string>
-    <string name="case_study_analytics_logs_cleared">Logs cleared</string>
 
     <!-- Case studies / Environment switcher -->
     <string name="case_study_environment_switcher_title">Environment switcher</string>

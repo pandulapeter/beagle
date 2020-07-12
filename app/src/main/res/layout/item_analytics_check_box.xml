@@ -7,18 +7,20 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.SwitchViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.CheckBoxViewHolder.UiModel" />
 
     </data>
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/bulk_apply_switch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_content_padding"
+        android:layout_marginLeft="@dimen/large_content_padding"
         android:checked="@{uiModel.isChecked}"
-        android:gravity="center"
-        android:paddingStart="@dimen/large_content_padding"
-        android:paddingLeft="@dimen/large_content_padding"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/content_padding"
+        android:paddingLeft="@dimen/content_padding"
         android:paddingEnd="@dimen/large_content_padding"
         android:paddingRight="@dimen/large_content_padding"
         android:text="@{uiModel.text}"

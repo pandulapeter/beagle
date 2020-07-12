@@ -25,13 +25,13 @@ enum class CaseStudy(
         title = R.string.case_study_network_request_interceptor_title,
         description = R.string.case_study_network_request_interceptor_description
     ),
-    AUTHENTICATION(
-        title = R.string.case_study_authentication_title,
-        description = R.string.case_study_authentication_description
-    ),
     ANALYTICS(
         title = R.string.case_study_analytics_title,
         description = R.string.case_study_analytics_description
+    ),
+    AUTHENTICATION(
+        title = R.string.case_study_authentication_title,
+        description = R.string.case_study_authentication_description
     ),
     ENVIRONMENT_SWITCHER(
         title = R.string.case_study_environment_switcher_title,

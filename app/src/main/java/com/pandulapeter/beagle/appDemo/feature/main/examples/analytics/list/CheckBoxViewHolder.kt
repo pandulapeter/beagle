@@ -6,13 +6,13 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.databinding.ItemAnalyticsSwitchBinding
+import com.pandulapeter.beagle.appDemo.databinding.ItemAnalyticsCheckBoxBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
-class SwitchViewHolder private constructor(
-    binding: ItemAnalyticsSwitchBinding,
+class CheckBoxViewHolder private constructor(
+    binding: ItemAnalyticsCheckBoxBinding,
     onStateChanged: (Int, Boolean) -> Unit
-) : BaseViewHolder<ItemAnalyticsSwitchBinding, SwitchViewHolder.UiModel>(binding) {
+) : BaseViewHolder<ItemAnalyticsCheckBoxBinding, CheckBoxViewHolder.UiModel>(binding) {
 
     init {
         binding.bulkApplySwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -36,8 +36,8 @@ class SwitchViewHolder private constructor(
         fun create(
             parent: ViewGroup,
             onStateChanged: (Int, Boolean) -> Unit
-        ) = SwitchViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_analytics_switch, parent, false),
+        ) = CheckBoxViewHolder(
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_analytics_check_box, parent, false),
             onStateChanged = onStateChanged
         )
     }

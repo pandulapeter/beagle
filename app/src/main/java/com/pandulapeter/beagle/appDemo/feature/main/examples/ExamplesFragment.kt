@@ -56,8 +56,8 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
         CaseStudy.STATIC_DATA -> navigateTo(StaticDataFragment.Companion::newInstance, view)
         CaseStudy.FEATURE_FLAGS -> navigateTo(FeatureFlagsFragment.Companion::newInstance, view)
         CaseStudy.NETWORK_REQUEST_INTERCEPTOR -> navigateTo(NetworkRequestInterceptorFragment.Companion::newInstance, view)
-        CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
         CaseStudy.ANALYTICS -> navigateTo(AnalyticsFragment.Companion::newInstance, view)
+        CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
         else -> binding.root.showSnackbar(caseStudy.title)
     }
 

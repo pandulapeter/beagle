@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemCodeSnippetBinding
 import com.pandulapeter.beagle.appDemo.feature.main.about.list.AboutListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.AnalyticsListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
@@ -21,7 +22,8 @@ class CodeSnippetViewHolder private constructor(
     data class UiModel(
         val codeSnippet: String,
         override val id: String = "codeSnippet_$codeSnippet"
-    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureFlagsListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, PlaygroundListItem, AboutListItem
+    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureFlagsListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, AnalyticsListItem, PlaygroundListItem,
+        AboutListItem
 
     companion object {
         fun create(
