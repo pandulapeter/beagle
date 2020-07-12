@@ -27,11 +27,12 @@ internal data class ExpandableHeaderCell(
         private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
         private val drawableExpand by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_expand, textView.textColors.defaultColor) }
         private val drawableCollapse by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_collapse, textView.textColors.defaultColor) }
+        private val drawableEmpty by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_empty, textView.textColors.defaultColor) }
 
         override fun bind(model: ExpandableHeaderCell) {
             textView.run {
                 text = model.text
-                setCompoundDrawablesWithIntrinsicBounds(null, null, if (model.canExpand) if (model.isExpanded) drawableCollapse else drawableExpand else null, null)
+                setCompoundDrawablesWithIntrinsicBounds(null, null, if (model.canExpand) if (model.isExpanded) drawableCollapse else drawableExpand else drawableEmpty, null)
                 setOnClickListener {
                     if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                         model.onItemSelected()
