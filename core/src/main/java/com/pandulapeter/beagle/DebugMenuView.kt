@@ -82,12 +82,14 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     fun applyInsets(left: Int, top: Int, right: Int, bottom: Int) {
+        val scrollBy = recyclerTopPadding - top - verticalMargin
         recyclerLeftPadding = left
         recyclerTopPadding = top + verticalMargin
         recyclerRightPadding = right
         recyclerBottomPadding = bottom + verticalMargin
         buttonContainer.setPadding(left, top, right, bottom + largePadding)
         recyclerView.updatePadding()
+        recyclerView.scrollBy(0, scrollBy)
     }
 
     override fun onAttachedToWindow() {
