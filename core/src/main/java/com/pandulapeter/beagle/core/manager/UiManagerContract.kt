@@ -13,7 +13,8 @@ interface UiManagerContract {
     fun addOverlayFragment(activity: FragmentActivity) {
         activity.supportFragmentManager
             .beginTransaction()
-            .add(android.R.id.content, findOverlayFragment(activity) ?: OverlayFragment.newInstance(), OverlayFragment.TAG)
+            .replace(android.R.id.content, findOverlayFragment(activity) ?: OverlayFragment.newInstance(), OverlayFragment.TAG)
+            .setReorderingAllowed(true)
             .commit()
     }
 

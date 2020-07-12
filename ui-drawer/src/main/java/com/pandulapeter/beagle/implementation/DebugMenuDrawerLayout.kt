@@ -13,7 +13,6 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.DebugMenuView
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -21,6 +20,7 @@ import kotlin.math.roundToInt
 @SuppressLint("ViewConstructor")
 internal class DebugMenuDrawerLayout(
     context: Context,
+    overlayFrameLayout: View,
     val debugMenuView: DebugMenuView
 ) : DrawerLayout(context) {
 
@@ -40,7 +40,7 @@ internal class DebugMenuDrawerLayout(
     }
 
     init {
-        addView(OverlayFrameLayout(context), LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT))
+        addView(overlayFrameLayout, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT))
         addView(debugMenuView, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, GravityCompat.END))
     }
 
