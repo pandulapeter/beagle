@@ -55,33 +55,42 @@ internal class DebugMenuDrawerLayout(
         super.onAttachedToWindow()
         setDrawerLockMode(if (Beagle.isUiEnabled) LOCK_MODE_UNDEFINED else LOCK_MODE_LOCKED_CLOSED)
         addDrawerListener(listener)
-        debugMenuView.run {
-            val displayMetrics = DisplayMetrics()
-            BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-            layoutParams = layoutParams.apply {
-                width = min(resources.getDimensionPixelSize(R.dimen.beagle_drawer_maximum_width), (displayMetrics.widthPixels * DRAWER_WIDTH_RATIO).roundToInt())
-            }
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            Beagle.currentActivity?.window?.decorView?.run {
-                setOnApplyWindowInsetsListener { _, insets ->
-                    onApplyWindowInsets(insets).also {
-                        debugMenuView.applyInsets(
-                            0,
-                            it.systemWindowInsetTop,
-                            it.systemWindowInsetRight,
-                            it.systemWindowInsetBottom
-                        )
-                    }
-                }
-                requestApplyInsets()
-            }
-        }
+        setDrawerSize(DisplayMetrics())
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         removeDrawerListener(listener)
+    }
+
+    private fun setDrawerSize(displayMetrics: DisplayMetrics) {
+        if (displayMetrics.widthPixels == 0) {
+            post {
+                BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+                setDrawerSize(displayMetrics)
+            }
+        } else {
+            debugMenuView.run {
+                layoutParams = layoutParams.apply {
+                    width = min(resources.getDimensionPixelSize(R.dimen.beagle_drawer_maximum_width), (displayMetrics.widthPixels * DRAWER_WIDTH_RATIO).roundToInt())
+                }
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                Beagle.currentActivity?.window?.decorView?.run {
+                    setOnApplyWindowInsetsListener { _, insets ->
+                        onApplyWindowInsets(insets).also {
+                            debugMenuView.applyInsets(
+                                0,
+                                it.systemWindowInsetTop,
+                                it.systemWindowInsetRight,
+                                it.systemWindowInsetBottom
+                            )
+                        }
+                    }
+                    requestApplyInsets()
+                }
+            }
+        }
     }
 
     companion object {
