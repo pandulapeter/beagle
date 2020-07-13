@@ -38,6 +38,11 @@ enum class CaseStudy(
         description = R.string.case_study_mock_data_generator_description,
         isReady = false
     ),
+    OVERLAY(
+        title = R.string.case_study_overlay_title,
+        description = R.string.case_study_overlay_description,
+        isReady = false
+    ),
     BUG_REPORTER(
         title = R.string.case_study_bug_reporting_tool_title,
         description = R.string.case_study_bug_reporting_tool_description,

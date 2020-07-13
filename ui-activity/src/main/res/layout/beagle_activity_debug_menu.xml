@@ -25,7 +25,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.pandulapeter.beagle.DebugMenuView
+    <com.pandulapeter.beagle.core.view.InternalDebugMenuView
         android:id="@+id/beagle_debug_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

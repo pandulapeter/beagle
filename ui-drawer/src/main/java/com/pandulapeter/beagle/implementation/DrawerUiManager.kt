@@ -6,7 +6,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.DebugMenuView
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 
 internal class DrawerUiManager : UiManagerContract {
@@ -17,7 +17,7 @@ internal class DrawerUiManager : UiManagerContract {
         }
     }
 
-    override fun createOverlayLayout(activity: FragmentActivity) = DebugMenuView(activity).let { drawer ->
+    override fun createOverlayLayout(activity: FragmentActivity) = InternalDebugMenuView(activity).let { drawer ->
         activity.onBackPressedDispatcher.addCallback(activity, onBackPressedCallback)
         DebugMenuDrawerLayout(
             context = activity,

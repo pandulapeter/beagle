@@ -17,7 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.DebugMenuView
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.R
 
 internal class DebugMenuActivity : AppCompatActivity() {
@@ -32,7 +32,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
             setOnClickListener { onBackPressed() }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            val debugMenu = findViewById<DebugMenuView>(R.id.beagle_debug_menu)
+            val debugMenu = findViewById<InternalDebugMenuView>(R.id.beagle_debug_menu)
             val bottomNavigationOverlay = findViewById<View>(R.id.beagle_bottom_navigation_overlay)
             bottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
             window.decorView.run {

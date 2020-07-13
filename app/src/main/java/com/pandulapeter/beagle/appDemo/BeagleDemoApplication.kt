@@ -17,7 +17,7 @@ class BeagleDemoApplication : Application() {
             androidContext(this@BeagleDemoApplication)
             modules(modules)
         }
-        Beagle.initialize(this, Appearance(themeResourceId = R.style.AppTheme))
+        Beagle.initialize(this, Appearance(themeResourceId = R.style.DebugMenuTheme))
     }
 
     override fun attachBaseContext(base: Context) {

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/debug_menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/debug_menu"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/brand_dark"
+            android:theme="@style/DebugMenuTheme"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+            tools:visibility="visible">
+
+            <com.pandulapeter.beagle.DebugMenuView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/white" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/beagle_button"
+            android:layout_width="@dimen/floating_action_button_size"
+            android:layout_height="@dimen/floating_action_button_size"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/large_content_padding"
+            android:layout_marginRight="@dimen/large_content_padding"
+            android:layout_marginBottom="@dimen/beagle_button_margin"
+            android:contentDescription="@string/open_debug_menu"
+            android:src="@drawable/img_logo"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_container"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_container"
+            app:layout_constraintRight_toRightOf="@+id/fragment_container" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

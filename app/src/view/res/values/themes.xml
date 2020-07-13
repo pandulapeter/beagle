@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="DebugMenuTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/brand_light</item>
+        <item name="colorAccent">@color/brand_light</item>
+        <item name="materialButtonStyle">@style/Button</item>
+        <item name="android:windowBackground">@color/brand_dark</item>
+    </style>
+
+</resources>

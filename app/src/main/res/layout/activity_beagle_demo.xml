@@ -22,6 +22,12 @@
             android:contentDescription="@string/open_debug_menu"
             android:src="@drawable/img_logo" />
 
+        <!-- Just to simplify dealing with the debug menu in the View variant. -->
+        <View
+            android:id="@+id/debug_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </FrameLayout>
 
 </layout>

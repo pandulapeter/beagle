@@ -229,6 +229,10 @@
     <string name="case_study_mock_data_generator_title">Mock data generator</string>
     <string name="case_study_mock_data_generator_description">Filling your development database with random content like \"d23fMIMnow81\" makes your app look bad. Why not add a simple Lorem Ipsum generator instead?</string>
 
+    <!-- Case studies / Overlay -->
+    <string name="case_study_overlay_title">Drawing over the app</string>
+    <string name="case_study_overlay_description">The library exposes a canvas that can be used to draw any piece of important information over the main contents of your app.</string>
+
     <!-- Case studies / Bug reporting tool -->
     <string name="case_study_bug_reporting_tool_title">Bug reporting tool</string>
     <string name="case_study_bug_reporting_tool_description">Fetch Beagle, take a screenshot, draw on it, provide additional details, add configurable build and device information and send them to an email address, or create a Jira ticket directly.</string>

@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.DebugMenuView
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.util.extension.applyTheme
@@ -36,7 +36,8 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
 
     override fun getContext() = super.getContext()?.applyTheme()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = DebugMenuView(requireContext()).also {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = InternalDebugMenuView(requireContext())
+        .also {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Beagle.currentActivity?.window?.decorView?.run {
                 setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets).also { updateSize() } }

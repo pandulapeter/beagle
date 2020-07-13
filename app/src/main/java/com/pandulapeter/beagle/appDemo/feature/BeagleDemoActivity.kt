@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.appDemo.feature
 
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.Beagle
@@ -10,6 +11,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.MainFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
 import com.pandulapeter.beagle.appDemo.utils.updateSystemBars
+import com.pandulapeter.beagle.appDemo.utils.visible
 
 class BeagleDemoActivity : AppCompatActivity() {
 
@@ -20,7 +22,10 @@ class BeagleDemoActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_beagle_demo)
-        binding.beagleButton.setOnClickListener { Beagle.show() }
+        binding.beagleButton.setOnClickListener {
+            Beagle.show()
+            binding.debugMenu.visible = !binding.debugMenu.visible
+        }
         if (savedInstanceState == null) {
             supportFragmentManager.handleReplace(transitionType = null, newInstance = MainFragment.Companion::newInstance)
         }
@@ -32,7 +37,9 @@ class BeagleDemoActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (!Beagle.hide() && currentFragment?.onBackPressed() != true) {
+        if (binding.debugMenu is FrameLayout && binding.debugMenu.visible) {
+            binding.debugMenu.visible = false
+        } else if (!Beagle.hide() && currentFragment?.onBackPressed() != true) {
             super.onBackPressed()
         }
     }

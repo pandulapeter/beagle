@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle
+package com.pandulapeter.beagle.core.view
 
 import android.content.Context
 import android.graphics.Color
@@ -10,18 +10,19 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.annotation.CallSuper
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.colorResource
 import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.drawable
-import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 
-//TODO: in the ui-view module should notify the listeners when this view is attached / detached
-class DebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context.applyTheme(), attrs, defStyleAttr), UpdateListener {
+class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context.applyTheme(), attrs, defStyleAttr),
+    UpdateListener {
 
     private val verticalMargin = context.dimension(R.dimen.beagle_item_vertical_margin)
     private var recyclerLeftPadding = 0
@@ -81,22 +82,13 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
         applyInsets(0, 0, 0, 0)
     }
 
-    fun applyInsets(left: Int, top: Int, right: Int, bottom: Int) {
-        val scrollBy = recyclerTopPadding - top - verticalMargin
-        recyclerLeftPadding = left
-        recyclerTopPadding = top + verticalMargin
-        recyclerRightPadding = right
-        recyclerBottomPadding = bottom + verticalMargin
-        buttonContainer.setPadding(left, top, right, bottom + largePadding)
-        recyclerView.updatePadding()
-        recyclerView.scrollBy(0, scrollBy)
-    }
-
+    @CallSuper
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         BeagleCore.implementation.addInternalUpdateListener(this)
     }
 
+    @CallSuper
     override fun onDetachedFromWindow() {
         BeagleCore.implementation.removeUpdateListener(this)
         super.onDetachedFromWindow()
@@ -117,6 +109,17 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
                 resetButton.animate().translationY(if (hasPendingChanges) 0f else height.toFloat()).start()
             }
         }
+    }
+
+    fun applyInsets(left: Int, top: Int, right: Int, bottom: Int) {
+        val scrollBy = recyclerTopPadding - top - verticalMargin
+        recyclerLeftPadding = left
+        recyclerTopPadding = top + verticalMargin
+        recyclerRightPadding = right
+        recyclerBottomPadding = bottom + verticalMargin
+        buttonContainer.setPadding(left, top, right, bottom + largePadding)
+        recyclerView.updatePadding()
+        recyclerView.scrollBy(0, scrollBy)
     }
 
     private fun setBackgroundFromWindowBackground() {

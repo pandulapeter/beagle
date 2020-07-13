@@ -11,7 +11,7 @@ class DebugMenuView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     init {
         gravity = Gravity.CENTER
-        text = "DebugMenuView should not be visible to users when using the noop dependency."
+        text = "The DebugMenuView should not be visible\nwhen using the noop dependency."
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")

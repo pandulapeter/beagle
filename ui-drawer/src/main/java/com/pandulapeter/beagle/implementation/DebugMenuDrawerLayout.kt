@@ -11,7 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.DebugMenuView
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.R
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -21,7 +21,7 @@ import kotlin.math.roundToInt
 internal class DebugMenuDrawerLayout(
     context: Context,
     overlayFrameLayout: View,
-    val debugMenuView: DebugMenuView
+    val debugMenuView: InternalDebugMenuView
 ) : DrawerLayout(context) {
 
     private val listener = object : DrawerListener {
