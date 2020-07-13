@@ -10,39 +10,50 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule
 
 internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
 
-    override fun canExpand(module: DeviceInfoModule) = true
+    override fun canExpand(module: DeviceInfoModule) = module.shouldShowManufacturer
+            || module.shouldShowModel
+            || module.shouldShowDisplayMetrics
+            || module.shouldShowAndroidVersion
 
     override fun MutableList<Cell<*>>.addItems(module: DeviceInfoModule) {
-        add(
-            KeyValueCell(
-                id = "${module.id}_manufacturer",
-                key = "Manufacturer",
-                value = Build.MANUFACTURER
-            )
-        )
-        add(
-            KeyValueCell(
-                id = "${module.id}_model",
-                key = "Model",
-                value = Build.MODEL
-            )
-        )
-        val dm = DisplayMetrics()
-        BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
+        if (module.shouldShowManufacturer) {
             add(
                 KeyValueCell(
-                    id = "${module.id}_screen",
-                    key = "Screen",
-                    value = "${dm.widthPixels} * ${dm.heightPixels} (${dm.densityDpi} dpi)"
+                    id = "${module.id}_manufacturer",
+                    key = "Manufacturer",
+                    value = Build.MANUFACTURER
                 )
             )
         }
-        add(
-            KeyValueCell(
-                id = "${module.id}_sdkVersion",
-                key = "Android SDK version",
-                value = Build.VERSION.SDK_INT.toString()
+        if (module.shouldShowModel) {
+            add(
+                KeyValueCell(
+                    id = "${module.id}_model",
+                    key = "Model",
+                    value = Build.MODEL
+                )
             )
-        )
+        }
+        if (module.shouldShowDisplayMetrics) {
+            val dm = DisplayMetrics()
+            BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
+                add(
+                    KeyValueCell(
+                        id = "${module.id}_screen",
+                        key = "Screen",
+                        value = "${dm.widthPixels} * ${dm.heightPixels} (${dm.densityDpi} dpi)"
+                    )
+                )
+            }
+        }
+        if (module.shouldShowAndroidVersion) {
+            add(
+                KeyValueCell(
+                    id = "${module.id}_sdkVersion",
+                    key = "Android SDK version",
+                    value = Build.VERSION.SDK_INT.toString()
+                )
+            )
+        }
     }
 }
