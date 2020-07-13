@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesAdapte
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.MockDataGeneratorFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.NetworkRequestInterceptorFragment
+import com.pandulapeter.beagle.appDemo.feature.main.examples.overlay.OverlayFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.SimpleSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.staticData.StaticDataFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
@@ -60,6 +61,7 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
         CaseStudy.ANALYTICS -> navigateTo(AnalyticsFragment.Companion::newInstance, view)
         CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
         CaseStudy.MOCK_DATA_GENERATOR -> navigateTo(MockDataGeneratorFragment.Companion::newInstance, view)
+        CaseStudy.OVERLAY -> navigateTo(OverlayFragment.Companion::newInstance, view)
         else -> binding.root.showSnackbar(caseStudy.title)
     }
 

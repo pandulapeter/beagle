@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.Auth
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.FeatureFlagsViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.MockDataGeneratorViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.NetworkRequestInterceptorViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.overlay.OverlayViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.SimpleSetupViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.staticData.StaticDataViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundViewModel
@@ -34,6 +35,7 @@ private val featureModule = module {
     viewModel { NetworkRequestInterceptorViewModel(get()) }
     viewModel { AnalyticsViewModel() }
     viewModel { MockDataGeneratorViewModel() }
+    viewModel { OverlayViewModel() }
     viewModel { PlaygroundViewModel(get()) }
     viewModel { AddModuleViewModel(get()) }
     viewModel { AboutViewModel(androidContext()) }

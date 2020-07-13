@@ -28,6 +28,7 @@ internal abstract class BaseListenerManager<T> {
             fun onDestroy() {
                 removeListener(listener)
                 lifecycleOwner.lifecycle.removeObserver(this)
+                onListenerRemoved()
             }
         }) ?: addListener(listener)
     }
@@ -35,9 +36,13 @@ internal abstract class BaseListenerManager<T> {
     fun removeListener(listener: T) {
         this.internalListeners.remove(listener)
         this.listeners.remove(listener)
+        onListenerRemoved()
     }
 
-    fun clearListeners() = listeners.clear()
+    fun clearListeners() {
+        listeners.clear()
+        onListenerRemoved()
+    }
 
     protected fun notifyListeners(notification: (T) -> Unit) {
         internalListeners.forEach(notification)
@@ -50,4 +55,6 @@ internal abstract class BaseListenerManager<T> {
             listeners.add(listener)
         }
     }
+
+    protected open fun onListenerRemoved() = Unit
 }

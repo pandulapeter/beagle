@@ -39,8 +39,7 @@ enum class CaseStudy(
     ),
     OVERLAY(
         title = R.string.case_study_overlay_title,
-        description = R.string.case_study_overlay_description,
-        isReady = false
+        description = R.string.case_study_overlay_description
     ),
     BUG_REPORTER(
         title = R.string.case_study_bug_reporting_tool_title,

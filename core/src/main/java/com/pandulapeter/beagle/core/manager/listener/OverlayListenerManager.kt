@@ -12,4 +12,6 @@ internal class OverlayListenerManager : BaseListenerManager<OverlayListener>() {
         super.addListener(listener)
         BeagleCore.implementation.invalidateOverlay()
     }
+
+    override fun onListenerRemoved() = BeagleCore.implementation.invalidateOverlay()
 }
