@@ -95,8 +95,13 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
     }
 
     override fun onContentsChanged() {
-        val hasPendingChanges = BeagleCore.implementation.hasPendingUpdates
-        recyclerView.updatePadding()
+        //TODO: Great job Peter, hope you're proud of yourself.
+        val hasPendingChanges = try {
+            BeagleCore.implementation.hasPendingUpdates
+        } catch (_: ConcurrentModificationException) {
+            false
+        }
+        recyclerView.updatePadding(hasPendingChanges)
         buttonContainer.run {
             if (hasPendingChanges) {
                 visibility = View.VISIBLE
@@ -118,7 +123,7 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
         recyclerRightPadding = right
         recyclerBottomPadding = bottom + verticalMargin
         buttonContainer.setPadding(left, top, right, bottom + largePadding)
-        recyclerView.updatePadding()
+        recyclerView.updatePadding(BeagleCore.implementation.hasPendingUpdates)
         recyclerView.scrollBy(0, scrollBy)
     }
 
@@ -132,10 +137,10 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
         }
     }
 
-    private fun RecyclerView.updatePadding() = setPadding(
+    private fun RecyclerView.updatePadding(hasPendingUpdates: Boolean) = setPadding(
         recyclerLeftPadding,
         recyclerTopPadding,
         recyclerRightPadding,
-        if (BeagleCore.implementation.hasPendingUpdates) verticalMargin + buttonContainer.height else recyclerBottomPadding
+        if (hasPendingUpdates) verticalMargin + buttonContainer.height else recyclerBottomPadding
     )
 }

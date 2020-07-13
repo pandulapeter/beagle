@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.Anal
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.list.MockDataGeneratorListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.SimpleSetupListItem
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
@@ -22,8 +23,8 @@ class CodeSnippetViewHolder private constructor(
     data class UiModel(
         val codeSnippet: String,
         override val id: String = "codeSnippet_$codeSnippet"
-    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureFlagsListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, AnalyticsListItem, PlaygroundListItem,
-        AboutListItem
+    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureFlagsListItem, AuthenticationListItem, NetworkRequestInterceptorListItem, AnalyticsListItem,
+        MockDataGeneratorListItem, PlaygroundListItem, AboutListItem
 
     companion object {
         fun create(

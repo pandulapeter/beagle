@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.Auth
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.FeatureFlagsFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.MockDataGeneratorFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.NetworkRequestInterceptorFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.SimpleSetupFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.staticData.StaticDataFragment
@@ -58,6 +59,7 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
         CaseStudy.NETWORK_REQUEST_INTERCEPTOR -> navigateTo(NetworkRequestInterceptorFragment.Companion::newInstance, view)
         CaseStudy.ANALYTICS -> navigateTo(AnalyticsFragment.Companion::newInstance, view)
         CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
+        CaseStudy.MOCK_DATA_GENERATOR -> navigateTo(MockDataGeneratorFragment.Companion::newInstance, view)
         else -> binding.root.showSnackbar(caseStudy.title)
     }
 

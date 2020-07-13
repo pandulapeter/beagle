@@ -109,6 +109,7 @@ internal class ListManager {
         TextModule::class to TextDelegate(),
         TextInputModule::class to TextInputDelegate()
     )
+    //TODO: This might cause concurrency issues. Consider making it a suspend function.
     private val persistableModules get() = modules.filterIsInstance<ValueWrapperModule<*, *>>()
 
     fun setupRecyclerView(recyclerView: GestureBlockingRecyclerView) = recyclerView.run {

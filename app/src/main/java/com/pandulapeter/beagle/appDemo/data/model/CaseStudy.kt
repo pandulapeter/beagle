@@ -35,8 +35,7 @@ enum class CaseStudy(
     ),
     MOCK_DATA_GENERATOR(
         title = R.string.case_study_mock_data_generator_title,
-        description = R.string.case_study_mock_data_generator_description,
-        isReady = false
+        description = R.string.case_study_mock_data_generator_description
     ),
     OVERLAY(
         title = R.string.case_study_overlay_title,
