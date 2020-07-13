@@ -76,7 +76,7 @@ class NetworkRequestInterceptorViewModel(
                 }
             }
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_2))
-            add(CodeSnippetViewHolder.UiModel("NetworkRequestInterceptorFragment()"))
+            add(CodeSnippetViewHolder.UiModel("NetworkLogListModule()"))
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_3))
             add(
                 CodeSnippetViewHolder.UiModel(
