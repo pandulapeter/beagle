@@ -11,8 +11,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.R
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -44,12 +44,12 @@ internal class DebugMenuDrawerLayout(
         addView(debugMenuView, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, GravityCompat.END))
     }
 
+    override fun onInterceptTouchEvent(ev: MotionEvent?) = isDrawerOpen(debugMenuView) && super.onInterceptTouchEvent(ev)
+
     @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(ev: MotionEvent) = if (ev.action == MotionEvent.ACTION_DOWN) {
-        if (isDrawerVisible(debugMenuView)) {
-            super.onTouchEvent(ev)
-        } else (((width - 2 * ViewConfiguration.get(context).scaledTouchSlop) <= ev.x) && super.onTouchEvent(ev))
-    } else super.onTouchEvent(ev)
+    override fun onTouchEvent(ev: MotionEvent) = if (isDrawerVisible(debugMenuView)) {
+        super.onTouchEvent(ev)
+    } else (((width - 2 * ViewConfiguration.get(context).scaledTouchSlop) <= ev.x) && super.onTouchEvent(ev))
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
