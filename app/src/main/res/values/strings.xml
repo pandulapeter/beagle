@@ -231,11 +231,11 @@
     <string name="case_study_mock_data_generator_minimum_word_count">Minimum word count: %d</string>
     <string name="case_study_mock_data_generator_maximum_word_count">Maximum word count: %d</string>
     <string name="case_study_mock_data_generator_start_with_lorem_ipsum">Start with "Lorem ipsum"</string>
-    <string name="case_study_mock_data_generator_generate_sentences">Generate sentences</string>
+    <string name="case_study_mock_data_generator_generate_sentence">Generate sentence</string>
     <string name="case_study_mock_data_generator_generate_text">Generate text</string>
     <string name="case_study_mock_data_generator_text_1">Beagle can be used to generate random pieces of text that, from a distance, look like real text. This minor detail can make the internal builds of your app much more pleasant to test as the user-generated content will somewhat resemble the live environment, and you can see the design the way it was meant to be seen.</string>
     <string name="case_study_mock_data_generator_default_hint">Generate Lorem Ipsum using the debug menu</string>
-    <string name="case_study_mock_data_generator_text_2">The <i>LoremIpsumGeneratorButtonModule</i> simply adds a button to the debug menu. While the only mandatory constructor parameter is the <i>onLoremIpsumReady</i> lambda, you have multiple options to customize the way the text is generated:</string>
+    <string name="case_study_mock_data_generator_text_2">\nThe <i>LoremIpsumGeneratorButtonModule</i> simply adds a button to the debug menu. While the only mandatory constructor parameter is the <i>onLoremIpsumReady</i> lambda, you have multiple options to customize the way the text is generated:</string>
     <string name="case_study_mock_data_generator_text_3">In the case of this implementation, all the important parameters can be adjusted from the debug menu.</string>
 
     <!-- Case studies / Overlay -->

@@ -28,10 +28,10 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
     private val minimumWordCount get() = minimumWordCountSlider.getCurrentValue(Beagle) ?: 1
     private val maximumWordCountSlider by lazy {
         SliderModule(
-            text = { getString(R.string.case_study_mock_data_generator_minimum_word_count, it) },
+            text = { getString(R.string.case_study_mock_data_generator_maximum_word_count, it) },
             minimumValue = 6,
             maximumValue = 20,
-            initialValue = 10,
+            initialValue = 8,
             onValueChanged = { refreshBeagle() }
         )
     }
@@ -44,14 +44,14 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
         )
     }
     private val shouldStartWithLoremIpsum get() = shouldStartWithLoremIpsumCheckBox.getCurrentValue(Beagle) == true
-    private val shouldGenerateSentencesCheckBox by lazy {
+    private val shouldGenerateSentenceCheckBox by lazy {
         CheckBoxModule(
-            text = getText(R.string.case_study_mock_data_generator_generate_sentences),
+            text = getText(R.string.case_study_mock_data_generator_generate_sentence),
             initialValue = true,
             onValueChanged = { refreshBeagle() }
         )
     }
-    private val shouldGenerateSentences get() = shouldGenerateSentencesCheckBox.getCurrentValue(Beagle) == true
+    private val shouldGenerateSentence get() = shouldGenerateSentenceCheckBox.getCurrentValue(Beagle) == true
 
     override fun createAdapter() = MockDataGeneratorAdapter(viewModel.viewModelScope) { Beagle.show() }
 
@@ -59,14 +59,14 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
         minimumWordCountSlider,
         maximumWordCountSlider,
         shouldStartWithLoremIpsumCheckBox,
-        shouldGenerateSentencesCheckBox,
+        shouldGenerateSentenceCheckBox,
         PaddingModule(),
         LoremIpsumGeneratorButtonModule(
             text = getText(R.string.case_study_mock_data_generator_generate_text),
             minimumWordCount = minimumWordCount,
             maximumWordCount = maximumWordCount,
             shouldStartWithLoremIpsum = shouldStartWithLoremIpsum,
-            shouldGenerateSentences = shouldGenerateSentences,
+            shouldGenerateSentence = shouldGenerateSentence,
             onLoremIpsumReady = {
                 viewModel.generatedText = it
                 updateUi()
@@ -78,7 +78,7 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
         minimumWordCount = minimumWordCount,
         maximumWordCount = maximumWordCount,
         shouldStartWithLoremIpsum = shouldStartWithLoremIpsum,
-        shouldGenerateSentences = shouldGenerateSentences,
+        shouldGenerateSentence = shouldGenerateSentence,
         generatedText = viewModel.generatedText ?: getString(R.string.case_study_mock_data_generator_default_hint)
     )
 

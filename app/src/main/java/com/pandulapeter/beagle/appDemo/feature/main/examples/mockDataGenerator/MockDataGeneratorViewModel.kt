@@ -19,7 +19,7 @@ class MockDataGeneratorViewModel : ListViewModel<MockDataGeneratorListItem>() {
         minimumWordCount: Int,
         maximumWordCount: Int,
         shouldStartWithLoremIpsum: Boolean,
-        shouldGenerateSentences: Boolean,
+        shouldGenerateSentence: Boolean,
         generatedText: String
     ) {
         _items.value = listOf(
@@ -33,7 +33,7 @@ class MockDataGeneratorViewModel : ListViewModel<MockDataGeneratorListItem>() {
                         "    minimumWordCount = $minimumWordCount,\n" +
                         "    maximumWordCount = $maximumWordCount,\n" +
                         "    shouldStartWithLoremIpsum = $shouldStartWithLoremIpsum,\n" +
-                        "    shouldGenerateSentences = $shouldGenerateSentences,\n" +
+                        "    shouldGenerateSentence = $shouldGenerateSentence,\n" +
                         "    onLoremIpsumReady = ::setText\n" +
                         ")"
             ),
