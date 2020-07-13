@@ -25,7 +25,6 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.Label()))
             add(createModuleUiModel(ModuleWrapper.LogList()))
             add(createModuleUiModel(ModuleWrapper.LongText()))
-            add(createModuleUiModel(ModuleWrapper.LoremIpsumGeneratorButton()))
             add(createModuleUiModel(ModuleWrapper.MultipleSelectionList()))
             add(createModuleUiModel(ModuleWrapper.Padding()))
             add(createModuleUiModel(ModuleWrapper.SingleSelectionList()))
@@ -41,6 +40,7 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.ForceCrashButton))
             add(createModuleUiModel(ModuleWrapper.Header))
             add(createModuleUiModel(ModuleWrapper.KeylineOverlaySwitch))
+            add(createModuleUiModel(ModuleWrapper.LoremIpsumGeneratorButton()))
             add(createModuleUiModel(ModuleWrapper.NetworkLogList))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 add(createModuleUiModel(ModuleWrapper.ScreenRecordingButton))

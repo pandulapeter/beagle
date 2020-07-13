@@ -144,13 +144,6 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    class LoremIpsumGeneratorButton : ModuleWrapper(
-        titleResourceId = R.string.add_module_lorem_ipsum_generator_button,
-        descriptionResourceId = R.string.add_module_lorem_ipsum_generator_button_description,
-        module = LoremIpsumGeneratorButtonModule { Beagle.currentActivity?.run { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() } },
-        codeSnippet = "LoremIpsumGeneratorButtonModule { generatedText -> TODO() }"
-    )
-
     class MultipleSelectionList : ModuleWrapper(
         titleResourceId = R.string.add_module_multiple_selection_list,
         descriptionResourceId = R.string.add_module_multiple_selection_list_description,
@@ -291,6 +284,13 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_keyline_overlay_switch_description,
         module = KeylineOverlaySwitchModule(),
         codeSnippet = "KeylineOverlaySwitchModule()"
+    )
+
+    class LoremIpsumGeneratorButton : ModuleWrapper(
+        titleResourceId = R.string.add_module_lorem_ipsum_generator_button,
+        descriptionResourceId = R.string.add_module_lorem_ipsum_generator_button_description,
+        module = LoremIpsumGeneratorButtonModule { Beagle.currentActivity?.run { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() } },
+        codeSnippet = "LoremIpsumGeneratorButtonModule { generatedText -> TODO() }"
     )
 
     object NetworkLogList : ModuleWrapper(
