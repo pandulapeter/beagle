@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.appDemo.data.model
 
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.Beagle
@@ -22,6 +23,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
+import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import com.pandulapeter.beagle.modules.PaddingModule
@@ -140,6 +142,13 @@ sealed class ModuleWrapper(
                 "    title = \"LongText\",\n" +
                 "    text = \"This is a longer piece of text that only becomes visible when the user expands the header.\"\n" +
                 ")"
+    )
+
+    class LoremIpsumGeneratorButton : ModuleWrapper(
+        titleResourceId = R.string.add_module_lorem_ipsum_generator_button,
+        descriptionResourceId = R.string.add_module_lorem_ipsum_generator_button_description,
+        module = LoremIpsumGeneratorButtonModule { Beagle.currentActivity?.run { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() } },
+        codeSnippet = "LoremIpsumGeneratorButtonModule { generatedText -> TODO() }"
     )
 
     class MultipleSelectionList : ModuleWrapper(

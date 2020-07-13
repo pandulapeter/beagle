@@ -262,6 +262,8 @@
     <string name="add_module_log_list_description">Displays an expandable list of log messages. An example use case could be logging analytics events</string>
     <string name="add_module_long_text">LongText</string>
     <string name="add_module_long_text_description">Displays a longer piece of text that can be collapsed into a title.</string>
+    <string name="add_module_lorem_ipsum_generator_button">LoremIpsumGeneratorButton</string>
+    <string name="add_module_lorem_ipsum_generator_button_description">Displays a button that generates a random text and returns it in a callback lambda.</string>
     <string name="add_module_multiple_selection_list">MultipleSelectionList</string>
     <string name="add_module_multiple_selection_list_description">Displays a list of check boxes represented by [BeagleListItemContract] instances. Any number of items can be selected at any given time.</string>
     <string name="add_module_padding">Padding</string>

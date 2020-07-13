@@ -26,6 +26,7 @@ import com.pandulapeter.beagle.core.list.delegates.KeylineOverlaySwitchDelegate
 import com.pandulapeter.beagle.core.list.delegates.LabelDelegate
 import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
 import com.pandulapeter.beagle.core.list.delegates.LongTextDelegate
+import com.pandulapeter.beagle.core.list.delegates.LoremIpsumGeneratorButtonDelegate
 import com.pandulapeter.beagle.core.list.delegates.MultipleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.delegates.NetworkLogListDelegate
 import com.pandulapeter.beagle.core.list.delegates.PaddingDelegate
@@ -52,6 +53,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.modules.LabelModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
+import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import com.pandulapeter.beagle.modules.PaddingModule
@@ -92,6 +94,7 @@ internal class ListManager {
         LabelModule::class to LabelDelegate(),
         LogListModule::class to LogListDelegate(),
         LongTextModule::class to LongTextDelegate(),
+        LoremIpsumGeneratorButtonModule::class to LoremIpsumGeneratorButtonDelegate(),
         ItemListModule::class to ItemListDelegate<BeagleListItemContract>(),
         KeylineOverlaySwitchModule::class to KeylineOverlaySwitchDelegate(),
         KeyValueListModule::class to KeyValueListDelegate(),
