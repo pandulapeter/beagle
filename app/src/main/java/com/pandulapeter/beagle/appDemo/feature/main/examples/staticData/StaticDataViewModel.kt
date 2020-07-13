@@ -89,7 +89,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
                         "    …\n" +
                         "    defaultConfig {\n" +
                         "        …\n" +
-                        "        buildConfigField(\"String\", \"BUILD_DATE\", \"\\\"\${new Date ().format(\"yyyy.MM.dd\")}\\\"\")\n" +
+                        "        buildConfigField(\"String\", \"BUILD_DATE\", \"\\\"\${new Date ().format(\"yyyy-MM-dd\")}\\\"\")\n" +
                         "    }\n" +
                         "}"
             )

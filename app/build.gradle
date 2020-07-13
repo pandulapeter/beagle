@@ -11,7 +11,7 @@ android {
         targetSdkVersion libraryTargetSdkVersion
         versionCode 6
         versionName "0.0.6"
-        buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy.MM.dd")}\"")
+        buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy-MM-dd")}\"")
         buildConfigField("String", "BEAGLE_VERSION", "\"$libraryVersion\"")
         vectorDrawables.useSupportLibrary = true
     }
