@@ -10,12 +10,12 @@ import com.pandulapeter.beagle.modules.ForceCrashButtonModule.Companion.ID
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text that should be displayed on the button. "Force crash" by default.
- * @param message - The detail message of the exception. "Test crash: Beagle was a bad boy." by default.
+ * @param exception - The [RuntimeException] to throw. The default value has the "Test crash" message.
  * @param onButtonPressed - Callback called when the user presses the button. Optional, empty implementation by default.
  */
 data class ForceCrashButtonModule(
     val text: CharSequence = "Force crash",
-    val message: String = "Test crash: Beagle was a bad boy.",
+    val exception: RuntimeException = RuntimeException("Test crash"),
     val onButtonPressed: () -> Unit = {}
 ) : Module<ForceCrashButtonModule> {
 

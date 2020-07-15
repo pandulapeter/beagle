@@ -13,7 +13,7 @@ internal class ForceCrashButtonDelegate : Module.Delegate<ForceCrashButtonModule
             text = module.text,
             onButtonPressed = {
                 module.onButtonPressed()
-                throw RuntimeException(module.message)
+                throw RuntimeException(module.exception)
             }
         )
     )
