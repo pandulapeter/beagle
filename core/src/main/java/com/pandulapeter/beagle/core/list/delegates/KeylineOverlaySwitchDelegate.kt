@@ -24,11 +24,11 @@ internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<
 
     init {
         BeagleCore.implementation.addInternalOverlayListener(object : OverlayListener {
-            override fun onDrawOver(canvas: Canvas) {
+            override fun onDrawOver(canvas: Canvas, leftInset: Int, topInset: Int, rightInset: Int, bottomInset: Int) {
                 if (module == null) {
                     BeagleCore.implementation.currentActivity?.let { tryToInitialize(it) }
                 }
-                module?.let { canvas.drawGridIfNeeded(it) }
+                module?.let { canvas.drawGridIfNeeded(it, leftInset, topInset, rightInset, bottomInset) }
             }
         })
     }
@@ -62,17 +62,17 @@ internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<
     }
 
     //TODO: Does not work well for RTL layouts.
-    private fun Canvas.drawGridIfNeeded(module: KeylineOverlaySwitchModule) {
+    private fun Canvas.drawGridIfNeeded(module: KeylineOverlaySwitchModule, leftInset: Int, topInset: Int, rightInset: Int, bottomInset: Int) {
         if (module.getCurrentValue(BeagleCore.implementation) == true) {
             for (x in 0..width step keylineGrid) {
-                drawLine(x.toFloat(), 0f, x.toFloat(), height.toFloat(), gridPaint)
+                drawLine(leftInset + x.toFloat(), topInset.toFloat(), leftInset + x.toFloat(), height.toFloat() - bottomInset, gridPaint)
             }
             for (y in 0..height step keylineGrid) {
-                drawLine(0f, y.toFloat(), width.toFloat(), y.toFloat(), gridPaint)
+                drawLine(leftInset.toFloat(), topInset + y.toFloat(), width.toFloat() - rightInset, topInset + y.toFloat(), gridPaint)
             }
-            drawLine(keylinePrimary, 0f, keylinePrimary, height.toFloat(), keylinePaint)
-            drawLine(keylineSecondary, 0f, keylineSecondary, height.toFloat(), keylinePaint)
-            drawLine(width - keylinePrimary, 0f, width - keylinePrimary, height.toFloat(), keylinePaint)
+            drawLine(leftInset + keylinePrimary, 0f, leftInset + keylinePrimary, height.toFloat(), keylinePaint)
+            drawLine(leftInset + keylineSecondary, 0f, leftInset + keylineSecondary, height.toFloat(), keylinePaint)
+            drawLine(width - keylinePrimary - rightInset, 0f, width - keylinePrimary - rightInset, height.toFloat(), keylinePaint)
         }
     }
 
