@@ -47,7 +47,7 @@ internal class DebugMenuDrawerLayout(
     override fun onInterceptTouchEvent(ev: MotionEvent?) = isDrawerOpen(debugMenuView) && super.onInterceptTouchEvent(ev)
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(ev: MotionEvent) = if (isDrawerVisible(debugMenuView)) {
+    override fun onTouchEvent(ev: MotionEvent) = if (isDrawerVisible(debugMenuView) || ev.action == MotionEvent.ACTION_MOVE) {
         super.onTouchEvent(ev)
     } else (((width - 2 * ViewConfiguration.get(context).scaledTouchSlop) <= ev.x) && super.onTouchEvent(ev))
 
