@@ -60,12 +60,14 @@ class OverlayFragment : ExamplesDetailFragment<OverlayViewModel, ListItem>(R.str
         outState.putBoolean(IS_SWITCH_ENABLED, isSwitchEnabled)
     }
 
-    override fun onDrawOver(canvas: Canvas) {
+    override fun onDrawOver(canvas: Canvas, leftInset: Int, topInset: Int, rightInset: Int, bottomInset: Int) {
         if (isSwitchEnabled) {
+            val usableWidth = canvas.width - leftInset - rightInset
+            val usableHeight = canvas.height - topInset - bottomInset
             canvas.drawCircle(
-                canvas.width * 0.5f,
-                canvas.height * 0.5f,
-                min(canvas.width, canvas.height) * 0.25f,
+                leftInset + usableWidth * 0.5f,
+                topInset + usableHeight * 0.5f,
+                min(usableWidth, usableHeight) * 0.25f,
                 paint
             )
         }

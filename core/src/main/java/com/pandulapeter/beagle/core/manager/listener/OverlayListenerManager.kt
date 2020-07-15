@@ -1,12 +1,27 @@
 package com.pandulapeter.beagle.core.manager.listener
 
 import android.graphics.Canvas
+import android.os.Build
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 
 internal class OverlayListenerManager : BaseListenerManager<OverlayListener>() {
 
-    fun notifyListeners(canvas: Canvas) = notifyListeners { it.onDrawOver(canvas) }
+    fun notifyListeners(canvas: Canvas) {
+        var leftInset = 0
+        var topInset = 0
+        var rightInset = 0
+        var bottomInset = 0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            BeagleCore.implementation.currentActivity?.window?.decorView?.rootWindowInsets?.let {
+                leftInset = it.systemWindowInsetLeft
+                topInset = it.systemWindowInsetTop
+                rightInset = it.systemWindowInsetRight
+                bottomInset = it.systemWindowInsetBottom
+            }
+        }
+        notifyListeners { it.onDrawOver(canvas, leftInset, topInset, rightInset, bottomInset) }
+    }
 
     override fun addListener(listener: OverlayListener) {
         super.addListener(listener)

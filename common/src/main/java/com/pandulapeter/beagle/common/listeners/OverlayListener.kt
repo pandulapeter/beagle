@@ -12,9 +12,12 @@ interface OverlayListener {
 
     /**
      * Called after the root layout is redrawn.
-     * TODO: Expose information about the window insets.
      *
      * @param canvas - The [Canvas] you can use to draw over the View hierarchy.
+     * @param leftInset - The left system window inset for the current decorView, or 0 on SDK levels where this is not available.
+     * @param topInset - The top system window inset for the current decorView, or 0 on SDK levels where this is not available.
+     * @param rightInset - The right system window inset for the current decorView, or 0 on SDK levels where this is not available.
+     * @param bottomInset - The bottom system window inset for the current decorView, or 0 on SDK levels where this is not available.
      */
-    fun onDrawOver(canvas: Canvas)
+    fun onDrawOver(canvas: Canvas, leftInset: Int, topInset: Int, rightInset: Int, bottomInset: Int)
 }

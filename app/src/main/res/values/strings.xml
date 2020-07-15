@@ -244,7 +244,7 @@
     <string name="case_study_overlay_hint">Enable the switch below to draw a translucent circle over the app\'s layout (only on this screen).</string>
     <string name="case_study_overlay_enable">Draw circle</string>
     <string name="case_study_overlay_text_1">Beagle exposes the <i>OverlayListener</i> interface that can be used to draw anything on a canvas above the app\'s layout.</string>
-    <string name="case_study_overlay_text_2">To avoid memory leaks as well as the cumbersome business of manually removing the listener, this implementation is tied to the current Fragment\'s View lifecycle (which means that closing the screen automatically removes the listener).\n\nAny pending changes to this overlay will only take effect after invalidating the current canvas. This can be done using:</string>
+    <string name="case_study_overlay_text_2">As you can see, the callback also contains information about the root system window insets, these numbers will be 0 on unsupported SDK levels.\n\nTo avoid memory leaks as well as the cumbersome business of manually removing the listener, this implementation is tied to the current Fragment\'s View lifecycle (which means that closing the screen automatically removes the listener).\n\nAny pending changes to this overlay will only take effect after invalidating the current canvas. This can be done using:</string>
     <string name="case_study_overlay_text_3">Multiple <i>OverlayListener</i> implementations can draw on the canvas: invalidating basically invokes all registered listeners in order.\n\nA more useful example of overlay listeners is implemented in the built-in <i>KeylineOverlaySwitch</i> module.</string>
 
     <!-- Case studies / Bug reporting tool -->
