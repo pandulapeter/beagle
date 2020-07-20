@@ -91,7 +91,7 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
                 }
             }
             TransitionType.MODAL -> {
-                if (sharedElements.isNullOrEmpty() || !isContainerTransformSupported) {
+                if (sharedElements.isNullOrEmpty()) { // || !isContainerTransformSupported) {
                     currentFragment?.exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
                     currentFragment?.reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
                     newFragment.enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
@@ -113,7 +113,7 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
     }
 }
 
-val isContainerTransformSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+//val isContainerTransformSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
 @BindingAdapter("transitionName")
 fun View.setTransitionName(@StringRes stringResourceId: Int) = setTransitionNameCompat(context.getString(stringResourceId))

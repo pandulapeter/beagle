@@ -30,7 +30,7 @@ internal data class TextCell(
                     setOnClickListener(null)
                 } else {
                     setOnClickListener {
-                        if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                        if (adapterPosition != RecyclerView.NO_POSITION) {
                             onItemSelected()
                         }
                     }
