@@ -17,6 +17,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 private val excludedPackageNames = listOf(
+    "com.pandulapeter.beagle.core.view.GalleryActivity",
     "com.pandulapeter.beagle.implementation.DebugMenuActivity"
 )
 

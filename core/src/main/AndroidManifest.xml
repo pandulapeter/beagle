@@ -5,6 +5,8 @@
 
     <application>
 
+        <activity android:name=".view.GalleryActivity" />
+
         <service
             android:name=".util.ScreenCaptureService"
             android:exported="false"
