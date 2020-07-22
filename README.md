@@ -82,6 +82,25 @@ At this point you should be aware of two options:
 
 Check out [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle) for some ideas on what is possible with the built-in modules or for an interactive tool which can be used to preview any module configuration and generate the code for it.
 
+Here is one minimal example that should work for any project:
+
+```kotlin
+Beagle.set(
+    HeaderModule(
+        title = getString(R.string.app_name),
+        subtitle = BuildConfig.APPLICATION_ID,
+        text = "${BuildConfig.BUILD_TYPE} v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+    ),
+    AppInfoButtonModule(),
+    DeveloperOptionsButtonModule(),
+    ScreenshotButtonModule(),
+    ScreenRecordingButtonModule(),
+    KeylineOverlaySwitchModule(),
+    AnimationDurationSwitchModule(),
+    DeviceInfoModule()
+)
+```
+
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
 
