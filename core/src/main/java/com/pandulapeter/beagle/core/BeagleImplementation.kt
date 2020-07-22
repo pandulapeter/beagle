@@ -151,10 +151,10 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun clearNetworkLogs() = networkLogManager.clearLogs()
 
-    override fun takeScreenshot(fileName: String, callback: (Uri?) -> Unit) = screenCaptureManager.takeScreenshot(fileName, callback)
+    override fun takeScreenshot(callback: (Uri?) -> Unit) = screenCaptureManager.takeScreenshot(behavior.getImageFileName(), callback)
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun recordScreen(fileName: String, callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(fileName, callback)
+    override fun recordScreen(callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(behavior.getVideoFileName(), callback)
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)
 

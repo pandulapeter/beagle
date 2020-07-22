@@ -21,7 +21,7 @@ internal class ScreenRecordingButtonDelegate : Module.Delegate<ScreenRecordingBu
                     override fun onHidden() {
                         BeagleCore.implementation.removeVisibilityListener(this)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            BeagleCore.implementation.recordScreen(module.fileName) { uri ->
+                            BeagleCore.implementation.recordScreen { uri ->
                                 if (uri != null) {
                                     BeagleCore.implementation.currentActivity?.shareFile(uri, "video/mp4")
                                 }

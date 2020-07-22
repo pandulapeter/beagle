@@ -19,7 +19,7 @@ internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule
                 val listener = object : VisibilityListener {
                     override fun onHidden() {
                         BeagleCore.implementation.removeVisibilityListener(this)
-                        BeagleCore.implementation.takeScreenshot(module.fileName) { uri ->
+                        BeagleCore.implementation.takeScreenshot { uri ->
                             if (uri != null) {
                                 BeagleCore.implementation.currentActivity?.shareFile(uri, "image/png")
                             }
