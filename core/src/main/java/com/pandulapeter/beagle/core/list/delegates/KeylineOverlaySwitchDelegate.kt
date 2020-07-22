@@ -49,11 +49,7 @@ internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<
     private fun tryToInitialize(context: Context) {
         BeagleCore.implementation.find<KeylineOverlaySwitchModule>(KeylineOverlaySwitchModule.ID)?.let { module ->
             this.module = module
-            gridPaint.color = module.color ?: context.colorResource(android.R.attr.textColorPrimary)
-            gridPaint.alpha = GRID_ALPHA
             gridPaint.strokeWidth = context.dimension(R.dimen.beagle_divider).toFloat()
-            keylinePaint.color = module.color ?: context.colorResource(android.R.attr.textColorPrimary)
-            keylinePaint.alpha = KEYLINE_ALPHA
             keylinePaint.strokeWidth = context.dimension(R.dimen.beagle_divider).toFloat()
             keylineGrid = module.grid ?: context.dimension(R.dimen.beagle_default_keyline_grid)
             keylinePrimary = (module.keylinePrimary ?: context.dimension(R.dimen.beagle_default_keyline_primary)).toFloat()
@@ -64,6 +60,10 @@ internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<
     //TODO: Does not work well for RTL layouts.
     private fun Canvas.drawGridIfNeeded(module: KeylineOverlaySwitchModule, leftInset: Int, topInset: Int, rightInset: Int, bottomInset: Int) {
         if (module.getCurrentValue(BeagleCore.implementation) == true) {
+            gridPaint.color = module.color ?: BeagleCore.implementation.currentActivity?.colorResource(android.R.attr.textColorPrimary) ?: gridPaint.color
+            keylinePaint.color = gridPaint.color
+            gridPaint.alpha = GRID_ALPHA
+            keylinePaint.alpha = KEYLINE_ALPHA
             for (x in 0..width step keylineGrid) {
                 drawLine(leftInset + x.toFloat(), topInset.toFloat(), leftInset + x.toFloat(), height.toFloat() - bottomInset, gridPaint)
             }
