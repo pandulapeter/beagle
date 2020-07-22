@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.colorResource
+import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.tintedDrawable
 
-//TODO
 internal class GalleryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +24,8 @@ internal class GalleryActivity : AppCompatActivity() {
             setImageDrawable(tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary)))
             setOnClickListener { onBackPressed() }
         }
+        val textView = findViewById<TextView>(R.id.beagle_text_view)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            val textView = findViewById<TextView>(R.id.beagle_text_view)
             val bottomNavigationOverlay = findViewById<View>(R.id.beagle_bottom_navigation_overlay)
             bottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
             window.decorView.run {
@@ -38,5 +38,7 @@ internal class GalleryActivity : AppCompatActivity() {
                 requestApplyInsets()
             }
         }
+        //TODO:
+        textView.text = getString(R.string.beagle_coming_soon) + "\n\n" + getScreenCapturesFolder().listFiles()?.joinToString(separator = "\n") { it.name } ?: ""
     }
 }

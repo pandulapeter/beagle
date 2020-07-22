@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.core.manager
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -7,13 +8,16 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.recordScreenWithMediaProjectionManager
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithDrawingCache
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithMediaProjectionManager
+import com.pandulapeter.beagle.core.util.performOnHide
+import com.pandulapeter.beagle.core.view.GalleryActivity
 
 internal class ScreenCaptureManager {
 
     var onScreenCaptureReady: ((Uri?) -> Unit)? = null
     private val currentActivity get() = BeagleCore.implementation.currentActivity
+    private val behavior get() = BeagleCore.implementation.behavior
 
-    fun takeScreenshot(fileName: String, callback: (Uri?) -> Unit) {
+    fun takeScreenshot(callback: (Uri?) -> Unit) {
         if (onScreenCaptureReady != null) {
             callback(null)
         } else {
@@ -22,6 +26,7 @@ internal class ScreenCaptureManager {
                 onScreenCaptureReady = null
             }
             currentActivity?.run {
+                val fileName = behavior.getImageFileName()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     takeScreenshotWithMediaProjectionManager(fileName)
                 } else {
@@ -32,7 +37,7 @@ internal class ScreenCaptureManager {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun recordScreen(fileName: String, callback: (Uri?) -> Unit) {
+    fun recordScreen(callback: (Uri?) -> Unit) {
         if (onScreenCaptureReady != null) {
             callback(null)
         } else {
@@ -40,7 +45,9 @@ internal class ScreenCaptureManager {
                 callback(uri)
                 onScreenCaptureReady = null
             }
-            currentActivity?.recordScreenWithMediaProjectionManager(fileName)
+            currentActivity?.recordScreenWithMediaProjectionManager(behavior.getVideoFileName())
         }
     }
+
+    fun openGallery() = performOnHide { currentActivity?.run { startActivity(Intent(this, GalleryActivity::class.java)) } }
 }

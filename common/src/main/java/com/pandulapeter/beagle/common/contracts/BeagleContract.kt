@@ -250,6 +250,7 @@ interface BeagleContract {
      *  - The application does not have any created activities.
      *  - The currently visible Activity is not a subclass of [FragmentActivity].
      *  - The currently visible Activity does not support a debug menu (social login overlay, in-app-purchase overlay, manually excluded package specified by the [Behavior], etc).
+     *  - The currently visible Activity is the debug menu (let me know if this is an issue...)
      *  - The application depends on the noop variant.
      */
     val currentActivity: FragmentActivity? get() = null

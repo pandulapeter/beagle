@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.core
 
 import android.app.Application
-import android.content.Intent
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
@@ -35,11 +34,8 @@ import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.NetworkInterceptor
-import com.pandulapeter.beagle.core.util.extension.deleteOldScreenCaptures
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
-import com.pandulapeter.beagle.core.util.performOnHide
 import com.pandulapeter.beagle.core.view.AlertDialogFragment
-import com.pandulapeter.beagle.core.view.GalleryActivity
 import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
 import okhttp3.Interceptor
 import kotlin.properties.Delegates
@@ -89,7 +85,6 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
             this.behavior = behavior
             this.localStorageManager = LocalStorageManager(application)
             debugMenuInjector.register(application)
-            application.deleteOldScreenCaptures()
         }
 
     override fun show() = (currentActivity?.let { if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) uiManager.show(it) else false } ?: false)
@@ -154,12 +149,12 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun clearNetworkLogs() = networkLogManager.clearLogs()
 
-    override fun takeScreenshot(callback: (Uri?) -> Unit) = screenCaptureManager.takeScreenshot(behavior.getImageFileName(), callback)
+    override fun takeScreenshot(callback: (Uri?) -> Unit) = screenCaptureManager.takeScreenshot(callback)
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun recordScreen(callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(behavior.getVideoFileName(), callback)
+    override fun recordScreen(callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(callback)
 
-    override fun openGallery() = performOnHide { currentActivity?.run { startActivity(Intent(this, GalleryActivity::class.java)) } }
+    override fun openGallery() = screenCaptureManager.openGallery()
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)
 
