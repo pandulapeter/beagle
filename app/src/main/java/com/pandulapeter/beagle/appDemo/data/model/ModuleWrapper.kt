@@ -16,6 +16,7 @@ import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
+import com.pandulapeter.beagle.modules.GalleryButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
@@ -27,6 +28,7 @@ import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import com.pandulapeter.beagle.modules.PaddingModule
+import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
@@ -266,6 +268,13 @@ sealed class ModuleWrapper(
         codeSnippet = "ForceCrashButtonModule()"
     )
 
+    object GalleryButton : ModuleWrapper(
+        titleResourceId = R.string.add_module_gallery_button,
+        descriptionResourceId = R.string.add_module_gallery_button_description,
+        module = GalleryButtonModule(),
+        codeSnippet = "GalleryButtonModule()"
+    )
+
     object Header : ModuleWrapper(
         titleResourceId = R.string.add_module_header,
         descriptionResourceId = R.string.add_module_header_description,
@@ -298,6 +307,13 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_network_log_list_description,
         module = NetworkLogListModule(baseUrl = NetworkingManager.BASE_URL),
         codeSnippet = "NetworkLogListModule()"
+    )
+
+    object ScreenCaptureToolbox : ModuleWrapper(
+        titleResourceId = R.string.add_module_network_screen_capture_toolbox,
+        descriptionResourceId = R.string.add_module_network_screen_capture_toolbox_description,
+        module = ScreenCaptureToolboxModule(),
+        codeSnippet = "ScreenCaptureToolboxModule()"
     )
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

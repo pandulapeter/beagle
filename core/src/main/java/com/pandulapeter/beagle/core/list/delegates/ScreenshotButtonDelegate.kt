@@ -16,21 +16,27 @@ internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule
             text = module.text,
             onButtonPressed = {
                 module.onButtonPressed()
-                val listener = object : VisibilityListener {
-                    override fun onHidden() {
-                        BeagleCore.implementation.removeVisibilityListener(this)
-                        BeagleCore.implementation.takeScreenshot { uri ->
-                            if (uri != null) {
-                                BeagleCore.implementation.currentActivity?.shareFile(uri, "image/png")
-                            }
-                        }
-                    }
-                }
-                BeagleCore.implementation.addInternalVisibilityListener(listener)
-                if (!BeagleCore.implementation.hide()) {
-                    listener.onHidden()
-                }
+                hideDebugMenuAndTakeScreenshot()
             }
         )
     )
+
+    companion object {
+        fun hideDebugMenuAndTakeScreenshot() {
+            val listener = object : VisibilityListener {
+                override fun onHidden() {
+                    BeagleCore.implementation.removeVisibilityListener(this)
+                    BeagleCore.implementation.takeScreenshot { uri ->
+                        if (uri != null) {
+                            BeagleCore.implementation.currentActivity?.shareFile(uri, "image/png")
+                        }
+                    }
+                }
+            }
+            BeagleCore.implementation.addInternalVisibilityListener(listener)
+            if (!BeagleCore.implementation.hide()) {
+                listener.onHidden()
+            }
+        }
+    }
 }

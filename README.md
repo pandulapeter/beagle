@@ -82,7 +82,7 @@ At this point you should be aware of two options:
 
 Check out [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle) for some ideas on what is possible with the built-in modules or for an interactive tool which can be used to preview any module configuration and generate the code for it.
 
-Here is one minimal example that should work for any project:
+Here is a minimal example that should work for most projects:
 
 ```kotlin
 Beagle.set(

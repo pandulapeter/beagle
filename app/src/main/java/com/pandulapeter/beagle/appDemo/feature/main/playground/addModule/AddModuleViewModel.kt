@@ -38,10 +38,12 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.DeveloperOptionsButton))
             add(createModuleUiModel(ModuleWrapper.DeviceInfo))
             add(createModuleUiModel(ModuleWrapper.ForceCrashButton))
+            add(createModuleUiModel(ModuleWrapper.GalleryButton))
             add(createModuleUiModel(ModuleWrapper.Header))
             add(createModuleUiModel(ModuleWrapper.KeylineOverlaySwitch))
             add(createModuleUiModel(ModuleWrapper.LoremIpsumGeneratorButton()))
             add(createModuleUiModel(ModuleWrapper.NetworkLogList))
+            add(createModuleUiModel(ModuleWrapper.ScreenCaptureToolbox))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 add(createModuleUiModel(ModuleWrapper.ScreenRecordingButton))
             }

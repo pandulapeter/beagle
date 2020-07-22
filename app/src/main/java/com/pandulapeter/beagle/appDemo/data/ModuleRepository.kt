@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.appDemo.data
 
-import android.os.Build
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -15,13 +14,11 @@ class ModuleRepository {
         add(ModuleWrapper.Header)
         add(ModuleWrapper.AppInfoButton)
         add(ModuleWrapper.DeveloperOptionsButton)
-        add(ModuleWrapper.ScreenshotButton)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            add(ModuleWrapper.ScreenRecordingButton)
-        }
         add(ModuleWrapper.KeylineOverlaySwitch)
         add(ModuleWrapper.AnimationDurationSwitch)
+        add(ModuleWrapper.Divider())
         add(ModuleWrapper.NetworkLogList)
+        add(ModuleWrapper.ScreenCaptureToolbox)
         add(ModuleWrapper.LogList())
         add(ModuleWrapper.DeviceInfo)
     }

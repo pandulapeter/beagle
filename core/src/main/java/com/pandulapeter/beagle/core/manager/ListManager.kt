@@ -19,6 +19,7 @@ import com.pandulapeter.beagle.core.list.delegates.DeveloperOptionsButtonDelegat
 import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.list.delegates.DividerDelegate
 import com.pandulapeter.beagle.core.list.delegates.ForceCrashButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.GalleryButtonDelegate
 import com.pandulapeter.beagle.core.list.delegates.HeaderDelegate
 import com.pandulapeter.beagle.core.list.delegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.delegates.KeyValueListDelegate
@@ -30,6 +31,7 @@ import com.pandulapeter.beagle.core.list.delegates.LoremIpsumGeneratorButtonDele
 import com.pandulapeter.beagle.core.list.delegates.MultipleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.delegates.NetworkLogListDelegate
 import com.pandulapeter.beagle.core.list.delegates.PaddingDelegate
+import com.pandulapeter.beagle.core.list.delegates.ScreenCaptureToolboxDelegate
 import com.pandulapeter.beagle.core.list.delegates.ScreenRecordingButtonDelegate
 import com.pandulapeter.beagle.core.list.delegates.ScreenshotButtonDelegate
 import com.pandulapeter.beagle.core.list.delegates.SingleSelectionListDelegate
@@ -46,6 +48,7 @@ import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
+import com.pandulapeter.beagle.modules.GalleryButtonModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
@@ -57,6 +60,7 @@ import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import com.pandulapeter.beagle.modules.PaddingModule
+import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
@@ -90,6 +94,7 @@ internal class ListManager {
         DeviceInfoModule::class to DeviceInfoDelegate(),
         DividerModule::class to DividerDelegate(),
         ForceCrashButtonModule::class to ForceCrashButtonDelegate(),
+        GalleryButtonModule::class to GalleryButtonDelegate(),
         HeaderModule::class to HeaderDelegate(),
         LabelModule::class to LabelDelegate(),
         LogListModule::class to LogListDelegate(),
@@ -101,6 +106,7 @@ internal class ListManager {
         MultipleSelectionListModule::class to MultipleSelectionListDelegate<BeagleListItemContract>(),
         NetworkLogListModule::class to NetworkLogListDelegate(),
         PaddingModule::class to PaddingDelegate(),
+        ScreenCaptureToolboxModule::class to ScreenCaptureToolboxDelegate(),
         ScreenRecordingButtonModule::class to ScreenRecordingButtonDelegate(),
         ScreenshotButtonModule::class to ScreenshotButtonDelegate(),
         SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
@@ -109,6 +115,7 @@ internal class ListManager {
         TextModule::class to TextDelegate(),
         TextInputModule::class to TextInputDelegate()
     )
+
     //TODO: This might cause concurrency issues. Consider making it a suspend function.
     private val persistableModules get() = modules.filterIsInstance<ValueWrapperModule<*, *>>()
 

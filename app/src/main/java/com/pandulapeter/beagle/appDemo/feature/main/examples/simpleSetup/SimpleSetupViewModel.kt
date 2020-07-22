@@ -37,6 +37,8 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
             addForceCrashButtonSection()
             addScreenshotButtonSection()
             addScreenRecordingButtonSection()
+            addGalleryButtonSection()
+            addScreenCaptureToolboxSection()
             addKeylineOverlaySwitchSection()
             addAnimationDurationSwitchSection()
             addDeviceInfoSection()
@@ -53,6 +55,8 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
                         "    ForceCrashButtonModule(),\n" +
                         "    ScreenshotButtonModule(),\n" +
                         "    ScreenRecordingButtonModule(), // Only available on API 21 and above\n" +
+                        "    GalleryButtonModule(),\n" +
+                        "    // ScreenCaptureToolboxModule(),\n" +
                         "    KeylineOverlaySwitchModule(),\n" +
                         "    AnimationDurationSwitchModule()\n" +
                         "    DeviceInformationModule()\n" +
@@ -82,6 +86,14 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_simple_setup_screen_recording_button_2))
     }
 
+    private fun MutableList<SimpleSetupListItem>.addGalleryButtonSection() = addSection(Section.GALLERY_BUTTON) {
+        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_gallery_button_2))
+    }
+
+    private fun MutableList<SimpleSetupListItem>.addScreenCaptureToolboxSection() = addSection(Section.SCREEN_CAPTURE_TOOLBOX) {
+        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_screen_capture_toolbox_2))
+    }
+
     private fun MutableList<SimpleSetupListItem>.addKeylineOverlaySwitchSection() = addSection(Section.KEYLINE_OVERLAY_SWITCH) {
         add(TextViewHolder.UiModel(R.string.case_study_simple_setup_keyline_overlay_switch_2))
     }
@@ -109,6 +121,8 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         FORCE_CRASH_BUTTON(R.string.case_study_simple_setup_force_crash_button_1),
         SCREENSHOT_BUTTON(R.string.case_study_simple_setup_screenshot_button_1),
         SCREEN_RECORDING_BUTTON(R.string.case_study_simple_setup_screen_recording_button_1),
+        GALLERY_BUTTON(R.string.case_study_simple_setup_gallery_button_1),
+        SCREEN_CAPTURE_TOOLBOX(R.string.case_study_simple_setup_screen_capture_toolbox_1),
         KEYLINE_OVERLAY_SWITCH(R.string.case_study_simple_setup_keyline_overlay_switch_1),
         ANIMATION_DURATION_SWITCH(R.string.case_study_simple_setup_animation_duration_switch_1),
         DEVICE_INFO(R.string.case_study_simple_setup_device_info_1);

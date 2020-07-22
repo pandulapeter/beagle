@@ -325,6 +325,12 @@ interface BeagleContract {
     fun recordScreen(callback: (Uri?) -> Unit) = callback.invoke(null)
 
     /**
+     * Opens the gallery of captured screenshot images and screen recording videos.
+     * Check out the [Appearance] class for customization options.
+     */
+    fun openGallery() = Unit
+
+    /**
      * Call this function to trigger recreating every cell model for every module.
      * Due to the underlying RecyclerView implementation this will only result in UI update events where differences are found.
      *

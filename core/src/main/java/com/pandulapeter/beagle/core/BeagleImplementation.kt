@@ -4,6 +4,7 @@ import android.app.Application
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -155,6 +156,12 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun recordScreen(callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(behavior.getVideoFileName(), callback)
+
+    override fun openGallery() {
+        currentActivity?.run {
+            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show() //TODO
+        }
+    }
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)
 

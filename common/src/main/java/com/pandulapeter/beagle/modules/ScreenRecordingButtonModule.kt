@@ -16,12 +16,12 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * Check out the [Behavior] class to override the default file naming logic.
  * This module can only be added once. It uses the value of [ID] as id.
  *
- * @param text - The text that should be displayed on the button. "Record video" by default.
+ * @param text - The text that should be displayed on the button. "Record a video" by default.
  * @param onButtonPressed - Callback called when the user presses the button. Optional, empty implementation by default.
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 data class ScreenRecordingButtonModule(
-    val text: CharSequence = "Record video",
+    val text: CharSequence = "Record a video",
     val onButtonPressed: () -> Unit = {}
 ) : Module<ScreenRecordingButtonModule> {
 

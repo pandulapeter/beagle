@@ -12,7 +12,9 @@ import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
+import com.pandulapeter.beagle.modules.GalleryButtonModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
+import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,6 +36,7 @@ class SimpleSetupFragment : ExamplesDetailFragment<SimpleSetupViewModel, SimpleS
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             add(ScreenRecordingButtonModule())
         }
+        add(GalleryButtonModule())
         add(KeylineOverlaySwitchModule())
         add(AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }))
         add(DeviceInfoModule())
