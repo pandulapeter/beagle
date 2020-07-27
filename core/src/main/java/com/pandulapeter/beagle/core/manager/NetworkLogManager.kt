@@ -9,6 +9,11 @@ internal class NetworkLogManager(
     private val listManager: ListManager,
     private val refresh: () -> Unit
 ) {
+    /**
+     * Holds the NetworkEntry logs, logged by the attached Network Calls.
+     *
+     * Critical resource, since it can be modified by multiple threads via [log] and [clearLogs] at the same time, every time it is accessed we need to do synchronization.
+     */
     private val entries = mutableListOf<NetworkLogEntry>()
 
     fun log(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) {
@@ -20,8 +25,10 @@ internal class NetworkLogManager(
             duration = duration,
             timestamp = timestamp
         )
-        entries.add(0, entry)
-        entries.sortByDescending { it.timestamp }
+        synchronized(entries) {
+            entries.add(0, entry)
+            entries.sortByDescending { it.timestamp }
+        }
         networkLogListenerManager.notifyListeners(entry)
         if (listManager.contains(NetworkLogListModule.ID)) {
             refresh()
@@ -29,11 +36,19 @@ internal class NetworkLogManager(
     }
 
     fun clearLogs() {
-        entries.clear()
+        synchronized(entries) {
+            entries.clear()
+        }
         if (listManager.contains(NetworkLogListModule.ID)) {
             refresh()
         }
     }
 
-    fun getEntries(): List<NetworkLogEntry> = entries
+    /**
+     * Returns the list of log entries created from Network Calls.
+     *
+     * New list creation is needed, otherwise we could not ensure there are no modifications while the list is being traversed via iterators.
+     * Synchronization is needed to make the copy to ensure the are no additions or removals from the list while traversing it.
+     */
+    fun getEntries(): List<NetworkLogEntry> = synchronized(entries) { entries.toList() }
 }
