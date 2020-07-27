@@ -19,8 +19,8 @@ data class Behavior(
     val excludedPackageNames: List<String> = emptyList(),
     val screenCaptureServiceNotificationChannelId: String = "channel_beagle_screen_capture",
     val screenCaptureServiceNotificationChannelName: CharSequence = "Beagle screen recorder",
-    val getImageFileName: () -> String = { "image_${simpleDateFormat.format(System.currentTimeMillis())}.png" },
-    val getVideoFileName: () -> String = { "video_${simpleDateFormat.format(System.currentTimeMillis())}.mp4" }
+    val getImageFileName: () -> String = { "${simpleDateFormat.format(System.currentTimeMillis())}_image.png" },
+    val getVideoFileName: () -> String = { "${simpleDateFormat.format(System.currentTimeMillis())}_video.mp4" }
 ) {
 
     companion object {
