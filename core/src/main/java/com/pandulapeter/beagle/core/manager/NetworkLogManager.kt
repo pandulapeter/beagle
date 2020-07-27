@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.modules.NetworkLogListModule
 internal class NetworkLogManager(
     private val networkLogListenerManager: NetworkLogListenerManager,
     private val listManager: ListManager,
-    private val refresh: () -> Unit
+    private val refreshUi: () -> Unit
 ) {
     /**
      * Holds the NetworkEntry logs, logged by the attached Network Calls.
@@ -31,16 +31,14 @@ internal class NetworkLogManager(
         }
         networkLogListenerManager.notifyListeners(entry)
         if (listManager.contains(NetworkLogListModule.ID)) {
-            refresh()
+            refreshUi()
         }
     }
 
     fun clearLogs() {
-        synchronized(entries) {
-            entries.clear()
-        }
+        synchronized(entries) { entries.clear() }
         if (listManager.contains(NetworkLogListModule.ID)) {
-            refresh()
+            refreshUi()
         }
     }
 

@@ -116,7 +116,7 @@ internal class ListManager {
         TextInputModule::class to TextInputDelegate()
     )
 
-    private val persistableModules get() = synchronized(modules) { modules.filterIsInstance<ValueWrapperModule<*, *>>() }.toList()
+    private val persistableModules get() = synchronized(modules) { modules.filterIsInstance<ValueWrapperModule<*, *>>().toList() }
 
     fun setupRecyclerView(recyclerView: GestureBlockingRecyclerView) = recyclerView.run {
         adapter = cellAdapter

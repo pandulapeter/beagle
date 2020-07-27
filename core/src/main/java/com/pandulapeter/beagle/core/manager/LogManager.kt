@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.modules.LogListModule
 internal class LogManager(
     private val logListenerManager: LogListenerManager,
     private val listManager: ListManager,
-    private val refresh: () -> Unit
+    private val refreshUi: () -> Unit
 ) {
     private val entries = mutableListOf<LogEntry>()
 
@@ -25,7 +25,7 @@ internal class LogManager(
         }
         logListenerManager.notifyListeners(tag, message, payload)
         if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
-            refresh()
+            refreshUi()
         }
     }
 
@@ -38,15 +38,15 @@ internal class LogManager(
             }
         }
         if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
-            refresh()
+            refreshUi()
         }
     }
 
     fun getEntries(tag: String?): List<LogEntry> = synchronized(entries) {
         if (tag == null) {
-            entries
+            entries.toList()
         } else {
-            entries.filter { it.tag == tag }
+            entries.filter { it.tag == tag }.toList()
         }
-    }.toList()
+    }
 }
