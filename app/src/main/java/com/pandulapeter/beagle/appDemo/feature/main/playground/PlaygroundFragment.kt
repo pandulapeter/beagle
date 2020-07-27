@@ -65,7 +65,12 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
 
     private fun onDragHandleTouched(viewHolder: RecyclerView.ViewHolder) = itemTouchHelper.startDrag(viewHolder)
 
-    private fun registerListener() = viewModel.moduleRepository.registerListener(viewLifecycleOwner, this)
+    private fun registerListener() {
+        try {
+            viewModel.moduleRepository.registerListener(viewLifecycleOwner, this)
+        } catch (_: IllegalStateException) {
+        }
+    }
 
     companion object {
         fun newInstance() = PlaygroundFragment()
