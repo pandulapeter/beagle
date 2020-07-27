@@ -12,8 +12,10 @@ internal abstract class BaseListenerManager<T> {
     private val internalListeners = mutableListOf<T>()
 
     fun addInternalListener(listener: T) {
-        if (!internalListeners.contains(listener)) {
-            internalListeners.add(listener)
+        synchronized(internalListeners) {
+            if (!internalListeners.contains(listener)) {
+                internalListeners.add(listener)
+            }
         }
     }
 
@@ -34,25 +36,27 @@ internal abstract class BaseListenerManager<T> {
     }
 
     fun removeListener(listener: T) {
-        this.internalListeners.remove(listener)
-        this.listeners.remove(listener)
+        synchronized(internalListeners) { internalListeners.remove(listener) }
+        synchronized(listeners) { listeners.remove(listener) }
         onListenerRemoved()
     }
 
     fun clearListeners() {
-        listeners.clear()
+        synchronized(listeners) { listeners.clear() }
         onListenerRemoved()
     }
 
     protected fun notifyListeners(notification: (T) -> Unit) {
-        internalListeners.forEach(notification)
-        listeners.forEach(notification)
+        synchronized(internalListeners) { internalListeners.forEach(notification) }
+        synchronized(listeners) { listeners.forEach(notification) }
     }
 
     @CallSuper
     protected open fun addListener(listener: T) {
-        if (!listeners.contains(listener)) {
-            listeners.add(listener)
+        synchronized(listeners) {
+            if (!listeners.contains(listener)) {
+                listeners.add(listener)
+            }
         }
     }
 
