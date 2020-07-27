@@ -116,8 +116,7 @@ internal class ListManager {
         TextInputModule::class to TextInputDelegate()
     )
 
-    //TODO: This might cause concurrency issues. Consider making it a suspend function.
-    private val persistableModules get() = modules.filterIsInstance<ValueWrapperModule<*, *>>()
+    private val persistableModules get() = synchronized(modules) { modules.filterIsInstance<ValueWrapperModule<*, *>>() }.toList()
 
     fun setupRecyclerView(recyclerView: GestureBlockingRecyclerView) = recyclerView.run {
         adapter = cellAdapter
@@ -142,7 +141,7 @@ internal class ListManager {
         GlobalScope.launch { refreshCellsInternal(onContentsChanged) }
     }
 
-    fun contains(id: String) = modules.any { it.id == id }
+    fun contains(id: String) = synchronized(modules) { modules.any { it.id == id } }
 
     fun applyPendingChanges() {
         persistableModules.forEach { it.applyPendingChanges(BeagleCore.implementation) }
@@ -154,17 +153,17 @@ internal class ListManager {
         BeagleCore.implementation.refresh()
     }
 
-    //TODO: This might cause concurrency issues. Consider making it a suspend function.
     @Suppress("UNCHECKED_CAST")
-    fun <M : Module<*>> findModule(id: String): M? = modules.firstOrNull { it.id == id } as? M?
+    fun <M : Module<*>> findModule(id: String): M? = synchronized(modules) { modules.firstOrNull { it.id == id } as? M? }
 
-    //TODO: This might cause concurrency issues. Consider making it a suspend function.
     @Suppress("UNCHECKED_CAST")
-    fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = moduleDelegates[type] as? Module.Delegate<M>?
+    fun <M : Module<M>> findModuleDelegate(type: KClass<out M>) = synchronized(modules) { moduleDelegates[type] as? Module.Delegate<M>? }
 
     private suspend fun setModulesInternal(newModules: List<Module<*>>, onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
-        modules.clear()
-        modules.addAll(newModules.distinctBy { it.id })
+        synchronized(modules) {
+            modules.clear()
+            modules.addAll(newModules.distinctBy { it.id })
+        }
         refreshCellsInternal(onContentsChanged)
     }
 
@@ -185,32 +184,34 @@ internal class ListManager {
         }) ?: addModulesInternal(newModules, placement, onContentsChanged)
 
     private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement, onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
-        modules.apply {
-            var newIndex = 0
-            newModules.distinctBy { it.id }.forEach { module ->
-                indexOfFirst { it.id == module.id }.also { currentIndex ->
-                    if (currentIndex != -1) {
-                        removeAt(currentIndex)
-                        add(currentIndex, module)
-                    } else {
-                        when (placement) {
-                            Placement.Bottom -> add(module)
-                            Placement.Top -> add(newIndex++, module)
-                            is Placement.Below -> {
-                                indexOfFirst { it.id == placement.id }.also { referencePosition ->
-                                    if (referencePosition == -1) {
-                                        add(module)
-                                    } else {
-                                        add(referencePosition + 1 + newIndex++, module)
+        synchronized(modules) {
+            modules.apply {
+                var newIndex = 0
+                newModules.distinctBy { it.id }.forEach { module ->
+                    indexOfFirst { it.id == module.id }.also { currentIndex ->
+                        if (currentIndex != -1) {
+                            removeAt(currentIndex)
+                            add(currentIndex, module)
+                        } else {
+                            when (placement) {
+                                Placement.Bottom -> add(module)
+                                Placement.Top -> add(newIndex++, module)
+                                is Placement.Below -> {
+                                    indexOfFirst { it.id == placement.id }.also { referencePosition ->
+                                        if (referencePosition == -1) {
+                                            add(module)
+                                        } else {
+                                            add(referencePosition + 1 + newIndex++, module)
+                                        }
                                     }
                                 }
-                            }
-                            is Placement.Above -> {
-                                indexOfFirst { it.id == placement.id }.also { referencePosition ->
-                                    if (referencePosition == -1) {
-                                        add(newIndex++, module)
-                                    } else {
-                                        add(referencePosition, module)
+                                is Placement.Above -> {
+                                    indexOfFirst { it.id == placement.id }.also { referencePosition ->
+                                        if (referencePosition == -1) {
+                                            add(newIndex++, module)
+                                        } else {
+                                            add(referencePosition, module)
+                                        }
                                     }
                                 }
                             }
@@ -223,16 +224,20 @@ internal class ListManager {
     }
 
     private suspend fun removeModulesInternal(ids: List<String>, onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
-        modules.removeAll { ids.contains(it.id) }
+        synchronized(modules) {
+            modules.removeAll { ids.contains(it.id) }
+        }
         refreshCellsInternal(onContentsChanged)
     }
 
     //TODO: Throw custom exception if no handler is found
     private suspend fun refreshCellsInternal(onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
-        val newCells = modules.flatMap { module ->
-            (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
-                moduleDelegates[module::class] = it
-            })).forceCreateCells(module)
+        val newCells = synchronized(modules) {
+            modules.flatMap { module ->
+                (moduleDelegates[module::class] ?: (module.createModuleDelegate().also {
+                    moduleDelegates[module::class] = it
+                })).forceCreateCells(module)
+            }
         }
         if (cellAdapter.itemCount > 0 && cellAdapter.itemCount != newCells.size) {
             shouldBlockGestures = true
