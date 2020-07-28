@@ -3,7 +3,9 @@
 
     <application>
 
-        <activity android:name=".implementation.DebugMenuActivity" />
+        <activity
+            android:name=".implementation.DebugMenuActivity"
+            android:launchMode="singleTop" />
 
     </application>
 

@@ -5,7 +5,9 @@
 
     <application>
 
-        <activity android:name=".view.gallery.GalleryActivity" />
+        <activity
+            android:name=".view.gallery.GalleryActivity"
+            android:launchMode="singleTop" />
 
         <service
             android:name=".util.ScreenCaptureService"
