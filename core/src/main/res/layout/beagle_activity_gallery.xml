@@ -25,12 +25,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/beagle_text_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/beagle_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/beagle_coming_soon"
+        android:clipToPadding="false"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     <!--TODO: Hacky - why do we need this? -->

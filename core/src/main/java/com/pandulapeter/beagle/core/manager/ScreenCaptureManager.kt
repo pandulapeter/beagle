@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.core.util.extension.recordScreenWithMediaProjecti
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithDrawingCache
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithMediaProjectionManager
 import com.pandulapeter.beagle.core.util.performOnHide
-import com.pandulapeter.beagle.core.view.GalleryActivity
+import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
 
 internal class ScreenCaptureManager {
 
@@ -26,7 +26,7 @@ internal class ScreenCaptureManager {
                 onScreenCaptureReady = null
             }
             currentActivity?.run {
-                val fileName = behavior.getImageFileName()
+                val fileName = "${behavior.getImageFileName()}$IMAGE_EXTENSION"
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     takeScreenshotWithMediaProjectionManager(fileName)
                 } else {
@@ -45,9 +45,14 @@ internal class ScreenCaptureManager {
                 callback(uri)
                 onScreenCaptureReady = null
             }
-            currentActivity?.recordScreenWithMediaProjectionManager(behavior.getVideoFileName())
+            currentActivity?.recordScreenWithMediaProjectionManager("${behavior.getVideoFileName()}$VIDEO_EXTENSION")
         }
     }
 
     fun openGallery() = performOnHide { currentActivity?.run { startActivity(Intent(this, GalleryActivity::class.java)) } }
+
+    companion object {
+        const val IMAGE_EXTENSION = ".png"
+        const val VIDEO_EXTENSION = ".mp4"
+    }
 }

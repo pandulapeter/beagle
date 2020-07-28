@@ -13,6 +13,7 @@ import androidx.annotation.StyleRes
  * @param screenCaptureServiceNotificationContent - The content for the notification described for the [screenCaptureServiceNotificationTitle] parameter. "Tap on this notification when done." by default.
  * @param screenCaptureGalleryNotificationTitle - The title for the notification displayed after a screen capture is done, by default it's "Screen captured".
  * @param screenCaptureGalleryNotificationContent - The content for the notification described for the [screenCaptureGalleryNotificationTitle] parameter. "Tap on this notification to open the Gallery." by default.
+ * @param screenCaptureServiceNotificationChannelName - The name for the notification channel that handles all notifications related to screen capture. "Screen capture notifications" by default.
  */
 data class Appearance(
     @StyleRes val themeResourceId: Int? = null,
@@ -22,5 +23,6 @@ data class Appearance(
     val screenCaptureServiceNotificationTitle: CharSequence = "Recording…",
     val screenCaptureServiceNotificationContent: CharSequence = "Tap on this notification when done.",
     val screenCaptureGalleryNotificationTitle: CharSequence = "Screen captured",
-    val screenCaptureGalleryNotificationContent: CharSequence = "Tap on this notification to open the Gallery."
+    val screenCaptureGalleryNotificationContent: CharSequence = "Tap on this notification to open the Gallery.",
+    val screenCaptureServiceNotificationChannelName: CharSequence = "Screen capture notifications"
 )

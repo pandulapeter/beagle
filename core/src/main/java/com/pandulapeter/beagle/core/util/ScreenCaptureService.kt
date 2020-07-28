@@ -30,7 +30,7 @@ import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.createFile
 import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
-import com.pandulapeter.beagle.core.view.GalleryActivity
+import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -165,7 +165,7 @@ internal class ScreenCaptureService : Service() {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
                     BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId,
-                    BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelName,
+                    BeagleCore.implementation.appearance.screenCaptureServiceNotificationChannelName,
                     NotificationManager.IMPORTANCE_LOW
                 ).apply {
                     setSound(null, null)
