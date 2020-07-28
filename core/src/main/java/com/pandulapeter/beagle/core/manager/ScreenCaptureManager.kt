@@ -53,6 +53,8 @@ internal class ScreenCaptureManager {
 
     companion object {
         const val IMAGE_EXTENSION = ".png"
+        const val IMAGE_TYPE = "image/png"
         const val VIDEO_EXTENSION = ".mp4"
+        const val VIDEO_TYPE = "video/mp4"
     }
 }

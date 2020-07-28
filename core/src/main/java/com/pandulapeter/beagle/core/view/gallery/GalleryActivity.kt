@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
 import com.pandulapeter.beagle.core.util.extension.colorResource
+import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.getUriForFile
+import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.tintedDrawable
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
 
@@ -52,5 +55,11 @@ internal class GalleryActivity : AppCompatActivity() {
         viewModel.loadMedia(this)
     }
 
-    private fun onItemSelected(fileName: String) = Toast.makeText(this, "$fileName selected", Toast.LENGTH_SHORT).show()
+    private fun onItemSelected(fileName: String) {
+        val uri = getUriForFile(getScreenCapturesFolder().resolve(fileName))
+        when {
+            fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> shareFile(uri, ScreenCaptureManager.IMAGE_TYPE)
+            fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> shareFile(uri, ScreenCaptureManager.VIDEO_TYPE)
+        }
+    }
 }
