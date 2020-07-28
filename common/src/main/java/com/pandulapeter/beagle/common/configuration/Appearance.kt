@@ -9,8 +9,10 @@ import androidx.annotation.StyleRes
  * @param applyButtonText - The text on the Apply button that appears when the user makes changes that are not handled in real-time (see the "shouldRequireConfirmation" parameter of some Modules). "Apply" by default.
  * @param resetButtonText - The text on the Reset button that appears when the user makes changes that are not handled in real-time (see the "shouldRequireConfirmation" parameter of some Modules). "Reset" by default.
  * @param screenRecordingToastText - A Toast message displayed every time a screen recording is started, or null for no Toast. "Recording in progress. Tap on the notification to stop it." by default.
- * @param screenCaptureServiceNotificationTitle - Recording the screen for screenshot images or videos requires a foreground service with a notification. The title for the notification, by default is "Recording…".
+ * @param screenCaptureServiceNotificationTitle - Recording the screen for screenshot images or videos requires a foreground service with a notification. The title for the notification, by default it's "Recording…".
  * @param screenCaptureServiceNotificationContent - The content for the notification described for the [screenCaptureServiceNotificationTitle] parameter. "Tap on this notification when done." by default.
+ * @param screenCaptureGalleryNotificationTitle - The title for the notification displayed after a screen capture is done, by default it's "Screen captured".
+ * @param screenCaptureGalleryNotificationContent - The content for the notification described for the [screenCaptureGalleryNotificationTitle] parameter. "Tap on this notification to open the Gallery." by default.
  */
 data class Appearance(
     @StyleRes val themeResourceId: Int? = null,
@@ -18,5 +20,7 @@ data class Appearance(
     val resetButtonText: CharSequence = "Reset",
     val screenRecordingToastText: CharSequence? = "Recording in progress. Tap on the notification to stop it.",
     val screenCaptureServiceNotificationTitle: CharSequence = "Recording…",
-    val screenCaptureServiceNotificationContent: CharSequence = "Tap on this notification when done."
+    val screenCaptureServiceNotificationContent: CharSequence = "Tap on this notification when done.",
+    val screenCaptureGalleryNotificationTitle: CharSequence = "Screen captured",
+    val screenCaptureGalleryNotificationContent: CharSequence = "Tap on this notification to open the Gallery."
 )

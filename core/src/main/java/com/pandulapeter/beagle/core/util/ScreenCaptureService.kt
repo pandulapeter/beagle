@@ -30,6 +30,7 @@ import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.createFile
 import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
+import com.pandulapeter.beagle.core.view.GalleryActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -175,7 +176,7 @@ internal class ScreenCaptureService : Service() {
             BeagleCore.implementation.appearance.screenRecordingToastText?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
         }
         startForeground(
-            NOTIFICATION_ID,
+            RECORDING_NOTIFICATION_ID,
             NotificationCompat.Builder(this, BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId)
                 .setAutoCancel(false)
                 .setSound(null)
@@ -206,14 +207,40 @@ internal class ScreenCaptureService : Service() {
     }
 
     private fun onReady(uri: Uri?) {
+        showGalleryNotification()
         cleanUp()
         BeagleCore.implementation.onScreenCaptureReady?.invoke(uri)
         stopForeground(true)
         stopSelf()
     }
 
+    private fun showGalleryNotification() {
+        (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(GALLERY_NOTIFICATION_ID,
+            NotificationCompat.Builder(this, BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId)
+                .setAutoCancel(false)
+                .setSound(null)
+                .setSmallIcon(R.drawable.beagle_ic_recording)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setContentTitle(BeagleCore.implementation.appearance.screenCaptureGalleryNotificationTitle)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .apply {
+                    setContentIntent(
+                        PendingIntent.getActivity(
+                            this@ScreenCaptureService,
+                            0,
+                            Intent(this@ScreenCaptureService, GalleryActivity::class.java),
+                            0
+                        )
+                    )
+                    setStyle(NotificationCompat.BigTextStyle().bigText(BeagleCore.implementation.appearance.screenCaptureGalleryNotificationContent))
+                }
+                .build())
+    }
+
     companion object {
-        private const val NOTIFICATION_ID = 2657
+        private const val RECORDING_NOTIFICATION_ID = 2657
+        private const val GALLERY_NOTIFICATION_ID = 2656
         private const val SCREENSHOT_DELAY = 300L
         private const val SCREENSHOT_TIMEOUT = 2000L
         private const val EXTRA_RESULT_CODE = "resultCode"
