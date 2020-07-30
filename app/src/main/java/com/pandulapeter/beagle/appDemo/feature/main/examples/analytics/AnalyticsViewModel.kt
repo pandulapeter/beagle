@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.Clea
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
+import com.pandulapeter.beagle.log.BeagleLogger
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -76,7 +77,7 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
         override fun setValue(thisRef: AnalyticsViewModel, property: KProperty<*>, value: Boolean) {
             if (value != currentValue) {
                 currentValue = value
-                Beagle.log(
+                BeagleLogger.log(
                     tag = AnalyticsFragment.LOG_TAG,
                     message = "Toggle $toggleIndex turned ${if (value) "on" else "off"}."
                 )

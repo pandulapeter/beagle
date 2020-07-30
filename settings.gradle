@@ -8,7 +8,6 @@ include ":ui-bottom-sheet"
 include ":ui-dialog"
 include ":ui-drawer"
 include ":ui-view"
-include ":log-common"
 include ":log-noop"
 include ":log"
 //TODO: Remove legacy implementation

@@ -134,4 +134,7 @@ dependencies {
     viewDebugImplementation project(":ui-view")
     viewInternalImplementation project(":ui-view")
     releaseImplementation project(":noop")
+
+    //TODO:
+    implementation project(":log")
 }
