@@ -100,6 +100,40 @@ Beagle.set(
     DeviceInfoModule()
 )
 ```
+## Logging and intercepting network events
+To add content to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt) or [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), you can simply call Beagle.log() and Beagle.logNetworkEvent() respectively. However, you might need to access this functionality from pure Java / Kotlin modules or, in the case of network events you might want to use an interceptor that works out of the box.
+
+### Logging
+To access the same functionality that Beagle.log() provides from a pure Kotlin / Java module, first you need to add these dependencies:
+
+```groovy
+dependencies {
+    …
+    debugImplementation "com.github.pandulapeter.beagle:log:$beagleVersion"
+    releaseImplementation "com.github.pandulapeter.beagle:log-noop:$beagleVersion"
+}
+```
+
+These libraries provide the BeagleLogger object which needs to be connected to the main library when it is initialized:
+
+```kotlin
+Beagle.initialize(
+    …
+    behavior = Behavior(
+        …
+        logger = BeagleLogger
+    )
+)
+```
+
+To add log messages, now you can call the following:
+
+```kotlin
+BeagleLogger.log(…)
+```
+
+### Intercepting network events
+I'm in the middle of moving this functionality into a separate dependency, similar to how the Logger above works. Coming soon…
 
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.

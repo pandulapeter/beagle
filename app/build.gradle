@@ -124,17 +124,25 @@ dependencies {
     implementation "com.android.billingclient:billing:3.0.0"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     activityDebugImplementation project(":ui-activity")
+    activityDebugImplementation project(":log")
     activityInternalImplementation project(":ui-activity")
+    activityInternalImplementation project(":log")
     bottomSheetDebugImplementation project(":ui-bottom-sheet")
+    bottomSheetDebugImplementation project(":log")
     bottomSheetInternalImplementation project(":ui-bottom-sheet")
+    bottomSheetInternalImplementation project(":log")
     dialogDebugImplementation project(":ui-dialog")
+    dialogDebugImplementation project(":log")
     dialogInternalImplementation project(":ui-dialog")
+    dialogInternalImplementation project(":log")
     drawerDebugImplementation project(":ui-drawer")
+    drawerDebugImplementation project(":log")
     drawerInternalImplementation project(":ui-drawer")
+    drawerInternalImplementation project(":log")
     viewDebugImplementation project(":ui-view")
+    viewDebugImplementation project(":log")
     viewInternalImplementation project(":ui-view")
+    viewInternalImplementation project(":log")
     releaseImplementation project(":noop")
-
-    //TODO:
-    implementation project(":log")
+    releaseImplementation project(":log-noop")
 }
