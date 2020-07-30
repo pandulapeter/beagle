@@ -271,7 +271,7 @@ interface BeagleContract {
     val interceptor: Any? get() = null
 
     /**
-     * Adds a new log handled by instances of LogListModule and notifies the registered LogListeners.
+     * Adds a new log message handled by instances of LogListModule and notifies the registered LogListeners.
      *
      * @param message - The message that will be displayed.
      * @param tag - Optional tag that can be used to create filtered LogListModule instances, null by default.
@@ -287,8 +287,7 @@ interface BeagleContract {
     fun clearLogs(tag: String? = null) = Unit
 
     /**
-     * Adds a new log handled by NetworkLogListModule and notifies the registered NetworkLogListeners.
-     * This function should only be needed when writing custom loggers, the default Beagle.interceptor deals with calling it for normal REST API-s.
+     * Adds a new network log message handled by NetworkLogListModule and notifies the registered NetworkLogListeners.
      *
      * @param isOutgoing - True for requests, false for responses.
      * @param url - The complete URL of the endpoint. This will appear in the log list as the title of the entry.

@@ -93,10 +93,10 @@ Beagle.set(
     ),
     AppInfoButtonModule(),
     DeveloperOptionsButtonModule(),
-    ScreenshotButtonModule(),
-    ScreenRecordingButtonModule(),
     KeylineOverlaySwitchModule(),
     AnimationDurationSwitchModule(),
+    DividerModule(),
+    ScreenCaptureToolboxModule(),
     DeviceInfoModule()
 )
 ```
@@ -114,7 +114,7 @@ dependencies {
 }
 ```
 
-These libraries provide the BeagleLogger object which needs to be connected to the main library when it is initialized:
+These libraries provide the BeagleLogger object which needs to be connected to the main library when it is initialized in the Application class:
 
 ```kotlin
 Beagle.initialize(
@@ -132,7 +132,7 @@ To add log messages, now you can call the following:
 BeagleLogger.log(…)
 ```
 
-The messages list will be merged with the ones logged using the regular Beagle.log() function (unless they are filtered by their tags).
+The messages list will be merged with the ones logged using the regular Beagle.log() function (unless they are filtered by their tags). You can also use BeagleLogger.clearLogs() if you cannot access Beagle.clearLogs().
 
 ### Intercepting network events
 I'm in the middle of moving this functionality into a separate dependency, similar to how the Logger above works. Coming soon…

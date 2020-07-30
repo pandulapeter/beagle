@@ -85,7 +85,8 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
             this.behavior = behavior
             this.localStorageManager = LocalStorageManager(application)
             debugMenuInjector.register(application)
-            behavior.logger?.register(::log)
+            behavior.logger?.register(::log, ::clearLogs)
+            behavior.networkLogger?.register(::logNetworkEvent, ::clearNetworkLogs)
         }
 
     override fun show() = (currentActivity?.let { if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) uiManager.show(it) else false } ?: false)
