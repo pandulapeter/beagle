@@ -2,7 +2,6 @@ package com.pandulapeter.beagle.appDemo.feature.main.examples.analytics
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.AnalyticsListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.CheckBoxViewHolder
@@ -65,7 +64,25 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
             CodeSnippetViewHolder.UiModel("Beagle.clearLogs(LOG_TAG)"),
             TextViewHolder.UiModel(R.string.case_study_analytics_text_5),
             ClearButtonViewHolder.UiModel(),
-            TextViewHolder.UiModel(R.string.case_study_analytics_text_6)
+            TextViewHolder.UiModel(R.string.case_study_analytics_text_6),
+            CodeSnippetViewHolder.UiModel(
+                "dependencies {\n" +
+                        "    …\n" +
+                        "    debugImplementation \"com.github.pandulapeter.beagle:log:\$beagleVersion\"\n" +
+                        "    releaseImplementation \"com.github.pandulapeter.beagle:log-noop:\$beagleVersion\"\n" +
+                        "}"
+            ),
+            TextViewHolder.UiModel(R.string.case_study_analytics_text_7),
+            CodeSnippetViewHolder.UiModel(
+                "Beagle.initialize(\n" +
+                        "    …\n" +
+                        "    behavior = Behavior(\n" +
+                        "        …\n" +
+                        "        logger = BeagleLogger\n" +
+                        "    )\n" +
+                        ")"
+            ),
+            TextViewHolder.UiModel(R.string.case_study_analytics_text_8)
         )
     }
 
