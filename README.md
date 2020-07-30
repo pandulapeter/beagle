@@ -109,8 +109,8 @@ To access the same functionality that Beagle.log() provides from a pure Kotlin /
 ```groovy
 dependencies {
     …
-    debugApi "com.github.pandulapeter.beagle:log:$beagleVersion"
-    releaseApi "com.github.pandulapeter.beagle:log-noop:$beagleVersion"
+    api "com.github.pandulapeter.beagle:log:$beagleVersion"
+    //TODO: releaseApi "com.github.pandulapeter.beagle:log-noop:$beagleVersion"
 }
 ```
 
@@ -143,8 +143,8 @@ Add the following dependencies to the module where your networking logic is impl
 ```groovy
 dependencies {
     …
-    debugApi "com.github.pandulapeter.beagle:log-okhttp:$beagleVersion"
-    releaseApi "com.github.pandulapeter.beagle:log-okhttp-noop:$beagleVersion"
+    api "com.github.pandulapeter.beagle:log-okhttp:$beagleVersion"
+    //TODO: releaseApi "com.github.pandulapeter.beagle:log-okhttp-noop:$beagleVersion"
 }
 ```
 
@@ -177,8 +177,8 @@ Add the following dependencies to the module where your networking logic is impl
 ```groovy
 dependencies {
     …
-    debugApi "com.github.pandulapeter.beagle:log-ktor:$beagleVersion"
-    releaseApi "com.github.pandulapeter.beagle:log-ktor-noop:$beagleVersion"
+    api "com.github.pandulapeter.beagle:log-ktor:$beagleVersion"
+    //TODO: releaseApi "com.github.pandulapeter.beagle:log-ktor-noop:$beagleVersion"
 }
 ```
 
