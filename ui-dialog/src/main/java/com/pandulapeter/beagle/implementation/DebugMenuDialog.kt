@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.view.InternalDebugMenuView
+import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.core.util.extension.applyTheme
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import kotlin.math.roundToInt
 
 internal class DebugMenuDialog : AppCompatDialogFragment() {
@@ -29,8 +30,22 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
             val displayMetrics = DisplayMetrics()
             BeagleCore.implementation.currentActivity?.run {
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
-                val verticalInsets = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) window.decorView.rootWindowInsets?.let { it.systemWindowInsetTop + it.systemWindowInsetBottom } ?: 0 else 0
-                val horizontalInsets = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) window.decorView.rootWindowInsets?.let { it.systemWindowInsetLeft + it.systemWindowInsetRight } ?: 0 else 0
+                val output = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    window.decorView.rootWindowInsets?.let {
+                        BeagleCore.implementation.appearance.applyInsets?.invoke(
+                            Appearance.Insets(
+                                left = it.systemWindowInsetLeft,
+                                top = it.systemWindowInsetTop,
+                                right = it.systemWindowInsetRight,
+                                bottom = it.systemWindowInsetBottom
+                            )
+                        )
+                    }
+                } else null
+                val verticalInsets = output?.let { it.top + it.bottom }
+                    ?: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) window.decorView.rootWindowInsets?.let { it.systemWindowInsetTop + it.systemWindowInsetBottom } ?: 0 else 0
+                val horizontalInsets = output?.let { it.left + it.right }
+                    ?: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) window.decorView.rootWindowInsets?.let { it.systemWindowInsetLeft + it.systemWindowInsetRight } ?: 0 else 0
                 layoutParams = layoutParams.apply {
                     width = ((displayMetrics.widthPixels - horizontalInsets) * DIALOG_WIDTH_RATIO).roundToInt()
                     height = ((displayMetrics.heightPixels - verticalInsets) * DIALOG_HEIGHT_RATIO).roundToInt()

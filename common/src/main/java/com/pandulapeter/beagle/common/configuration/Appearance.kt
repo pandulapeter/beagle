@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.common.configuration
 
 import androidx.annotation.StyleRes
+import com.pandulapeter.beagle.common.configuration.Appearance.Insets
 
 /**
  * Specifies the appearance customization options for the debug menu. All parameters are optional.
@@ -14,6 +15,7 @@ import androidx.annotation.StyleRes
  * @param screenCaptureGalleryNotificationTitle - The title for the notification displayed after a screen capture is done, by default it's "Screen captured".
  * @param screenCaptureGalleryNotificationContent - The content for the notification described for the [screenCaptureGalleryNotificationTitle] parameter. "Tap on this notification to open the Gallery." by default.
  * @param screenCaptureServiceNotificationChannelName - The name for the notification channel that handles all notifications related to screen capture. "Screen capture notifications" by default.
+ * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. Null by default.
  */
 data class Appearance(
     @StyleRes val themeResourceId: Int? = null,
@@ -24,5 +26,14 @@ data class Appearance(
     val screenCaptureServiceNotificationContent: CharSequence = "Tap on this notification when done.",
     val screenCaptureGalleryNotificationTitle: CharSequence = "Screen captured",
     val screenCaptureGalleryNotificationContent: CharSequence = "Tap on this notification to open the Gallery.",
-    val screenCaptureServiceNotificationChannelName: CharSequence = "Screen capture notifications"
-)
+    val screenCaptureServiceNotificationChannelName: CharSequence = "Screen capture notifications",
+    val applyInsets: ((windowInsets: Insets) -> Insets)? = null
+) {
+
+    data class Insets(
+        val left: Int,
+        val top: Int,
+        val right: Int,
+        val bottom: Int
+    )
+}

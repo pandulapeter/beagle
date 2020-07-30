@@ -12,10 +12,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.R
+import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.util.extension.applyTheme
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -32,19 +33,31 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
     }
     private lateinit var behavior: BottomSheetBehavior<View>
     private lateinit var bottomSheetView: View
-    private val topInset get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Beagle.currentActivity?.window?.decorView?.rootWindowInsets?.systemWindowInsetTop ?: 0 else 0
+    private val topInset
+        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Beagle.currentActivity?.window?.decorView?.rootWindowInsets?.let {
+            BeagleCore.implementation.appearance.applyInsets?.invoke(
+                Appearance.Insets(
+                    left = it.systemWindowInsetLeft,
+                    top = it.systemWindowInsetTop,
+                    right = it.systemWindowInsetRight,
+                    bottom = it.systemWindowInsetBottom
+                )
+            )?.also { outputInsets ->
+                (view as? InternalDebugMenuView)?.applyInsets(outputInsets.left, 0, outputInsets.right, outputInsets.bottom)
+            }?.top ?: 0
+        } ?: 0 else 0
 
     override fun getContext() = super.getContext()?.applyTheme()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = InternalDebugMenuView(requireContext())
         .also {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Beagle.currentActivity?.window?.decorView?.run {
-                setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets).also { updateSize() } }
-                requestApplyInsets()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Beagle.currentActivity?.window?.decorView?.run {
+                    setOnApplyWindowInsetsListener { _, insets -> onApplyWindowInsets(insets).also { updateSize() } }
+                    requestApplyInsets()
+                }
             }
         }
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = super.onCreateDialog(savedInstanceState).also {
         slideOffset = savedInstanceState?.getFloat(SLIDE_OFFSET, slideOffset) ?: slideOffset

@@ -17,8 +17,9 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.R
+import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 
 internal class DebugMenuActivity : AppCompatActivity() {
 
@@ -38,8 +39,20 @@ internal class DebugMenuActivity : AppCompatActivity() {
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
-                        debugMenu.applyInsets(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, it.systemWindowInsetBottom)
-                        bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
+                        val input = Appearance.Insets(
+                            left = it.systemWindowInsetLeft,
+                            top = it.systemWindowInsetTop,
+                            right = it.systemWindowInsetRight,
+                            bottom = it.systemWindowInsetBottom
+                        )
+                        val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: Appearance.Insets(
+                            left = it.systemWindowInsetLeft,
+                            top = 0,
+                            right = it.systemWindowInsetRight,
+                            bottom = it.systemWindowInsetBottom
+                        )
+                        debugMenu.applyInsets(output.left, output.top, output.right, output.bottom)
+                        bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = output.bottom } }
                     }
                 }
                 requestApplyInsets()
