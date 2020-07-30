@@ -1,9 +1,9 @@
-package com.pandulapeter.beagle.logOkHttp
+package com.pandulapeter.beagle.logKtor
 
 import com.pandulapeter.beagle.commonBase.BeagleNetworkLoggerContract
 import okhttp3.Interceptor
 
-internal class OkHttpLoggerImplementation : BeagleNetworkLoggerContract {
+internal class KtorLoggerImplementation : BeagleNetworkLoggerContract {
 
     private var onNewLog: ((isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) -> Unit)? = null
     private var clearLogs: (() -> Unit)? = null

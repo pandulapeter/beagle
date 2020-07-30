@@ -18,9 +18,7 @@ class NetworkingManager {
         )
         .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
         .build()
-    val songService: SongService = retrofit.create(
-        SongService::class.java
-    )
+    val songService: SongService = retrofit.create(SongService::class.java)
 
     companion object {
         const val BASE_URL = "https://campfire-test1.herokuapp.com/v1/"
