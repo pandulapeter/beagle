@@ -135,7 +135,7 @@ BeagleLogger.log(…)
 The messages list will be merged with the ones logged using the regular Beagle.log() function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use BeagleLogger.clearLogs() if you cannot access Beagle.clearLogs().
 
 ### Intercepting network events
-Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment out of the box Beagle can hook into two networking libraries (but manually calling Beagle.logNetworkEvent() is always an option).
+Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment, out of the box, Beagle can hook into two networking libraries (but manually calling Beagle.logNetworkEvent() is always an option).
 
 ### OkHttp / Retrofit
 Add the following dependencies to the module where your networking logic is implemented:
@@ -171,6 +171,7 @@ OkHttpClient.Builder()
 
 ### Ktor
 **This is experimental and does not yet work as expected.**
+
 Add the following dependencies to the module where your networking logic is implemented:
  
 ```groovy
@@ -193,10 +194,10 @@ Beagle.initialize(
 )
 ```
 
-The last step is setting up the interceptor (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
+The last step is setting up the logger (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
 
 ```kotlin
-//TODO: Coming soon
+//TODO: Coming soon. But basiaclly BeagleKtorLogger.logger needs to be used as a nullable Ktor Logger.
 ```
 
 ## Documentation
