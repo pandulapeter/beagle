@@ -109,12 +109,12 @@ To access the same functionality that Beagle.log() provides from a pure Kotlin /
 ```groovy
 dependencies {
     …
-    debugImplementation "com.github.pandulapeter.beagle:log:$beagleVersion"
-    releaseImplementation "com.github.pandulapeter.beagle:log-noop:$beagleVersion"
+    debugApi "com.github.pandulapeter.beagle:log:$beagleVersion"
+    releaseApi "com.github.pandulapeter.beagle:log-noop:$beagleVersion"
 }
 ```
 
-These libraries provide the BeagleLogger object which needs to be connected to the main library when it is initialized in the Application class:
+These libraries provide the **BeagleLogger** object which needs to be connected to the main library when it is initialized in the Application class:
 
 ```kotlin
 Beagle.initialize(
@@ -132,10 +132,72 @@ To add log messages, now you can call the following:
 BeagleLogger.log(…)
 ```
 
-The messages list will be merged with the ones logged using the regular Beagle.log() function (unless they are filtered by their tags). You can also use BeagleLogger.clearLogs() if you cannot access Beagle.clearLogs().
+The messages list will be merged with the ones logged using the regular Beagle.log() function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use BeagleLogger.clearLogs() if you cannot access Beagle.clearLogs().
 
 ### Intercepting network events
-I'm in the middle of moving this functionality into a separate dependency, similar to how the Logger above works. Coming soon…
+Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment out of the box Beagle can hook into two networking libraries (but manually calling Beagle.logNetworkEvent() is always an option).
+
+### OkHttp / Retrofit
+Add the following dependencies to the module where your networking logic is implemented:
+
+```groovy
+dependencies {
+    …
+    debugApi "com.github.pandulapeter.beagle:log-okhttp:$beagleVersion"
+    releaseApi "com.github.pandulapeter.beagle:log-okhttp-noop:$beagleVersion"
+}
+```
+
+This will introduce the **BeagleOkHttpLogger** object which first needs to be connected to the main library, the moment it gets initialized:
+
+```kotlin
+Beagle.initialize(
+    …
+    behavior = Behavior(
+        …
+        networkLoggers = listOf(BeagleOkHttpLogger)
+    )
+)
+```
+
+The last step is setting up the interceptor (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
+
+```kotlin
+OkHttpClient.Builder()
+    …
+    .apply { (BeagleOkHttpLogger.logger as? Interceptor?)?.let { addInterceptor(it) } }
+    .build()
+```
+
+### Ktor
+**This is experimental and does not yet work as expected.**
+Add the following dependencies to the module where your networking logic is implemented:
+ 
+```groovy
+dependencies {
+    …
+    debugApi "com.github.pandulapeter.beagle:log-ktor:$beagleVersion"
+    releaseApi "com.github.pandulapeter.beagle:log-ktor-noop:$beagleVersion"
+}
+```
+
+This will introduce the **BeagleKtorLogger** object which first needs to be connected to the main library, the moment it gets initialized:
+
+```kotlin
+Beagle.initialize(
+    …
+    behavior = Behavior(
+        …
+        networkLoggers = listOf(BeagleKtorLogger)
+    )
+)
+```
+
+The last step is setting up the interceptor (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
+
+```kotlin
+//TODO: Coming soon
+```
 
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
