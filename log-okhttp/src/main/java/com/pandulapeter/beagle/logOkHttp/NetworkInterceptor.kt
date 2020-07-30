@@ -1,6 +1,5 @@
-package com.pandulapeter.beagle.core.util
+package com.pandulapeter.beagle.logOkHttp
 
-import com.pandulapeter.beagle.BeagleCore
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -10,7 +9,9 @@ import java.io.EOFException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
-internal class NetworkInterceptor : Interceptor {
+internal class NetworkInterceptor(
+    private val logNetworkEvent: () -> ((isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) -> Unit)?
+) : Interceptor {
 
     private val utf8 = Charset.forName("UTF-8")
 
@@ -37,22 +38,26 @@ internal class NetworkInterceptor : Interceptor {
                 "Binary payload, ${requestBody.contentLength()}-byte body"
             }
         }
-        BeagleCore.implementation.logNetworkEvent(
-            isOutgoing = true,
-            payload = requestJson,
-            headers = request.headers.map { "[${it.first}] ${it.second}" },
-            url = "[${request.method}] ${request.url}"
+        logNetworkEvent()?.invoke(
+            true,
+            "[${request.method}] ${request.url}",
+            requestJson,
+            request.headers.map { "[${it.first}] ${it.second}" },
+            null,
+            System.currentTimeMillis()
         )
         val startNs = System.nanoTime()
         val response: Response
         try {
             response = chain.proceed(request)
         } catch (exception: Exception) {
-            BeagleCore.implementation.logNetworkEvent(
-                isOutgoing = false,
-                payload = exception.message ?: "HTTP Failed",
-                url = "[${request.method}] FAIL ${request.url}",
-                duration = -1L
+            logNetworkEvent()?.invoke(
+                false,
+                "[${request.method}] FAIL ${request.url}",
+                exception.message ?: "HTTP Failed",
+                null,
+                -1L,
+                System.currentTimeMillis()
             )
             throw exception
         }
@@ -60,12 +65,13 @@ internal class NetworkInterceptor : Interceptor {
         val responseBody = response.body
         val contentType = responseBody?.contentType()
         val responseJson = if ((contentType == null || contentType.subtype == "json") && responseBody?.source()?.buffer?.isProbablyUtf8() == true) response.body?.string() else null
-        BeagleCore.implementation.logNetworkEvent(
-            isOutgoing = false,
-            payload = responseJson ?: response.message,
-            headers = response.headers.map { "[${it.first}] ${it.second}" },
-            url = "[${request.method}] ${response.code} ${request.url}",
-            duration = tookMs
+        logNetworkEvent()?.invoke(
+            false,
+            "[${request.method}] ${response.code} ${request.url}",
+            responseJson ?: response.message,
+            response.headers.map { "[${it.first}] ${it.second}" },
+            tookMs,
+            System.currentTimeMillis()
         )
         return response.newBuilder().body(responseJson?.toResponseBody(responseBody?.contentType()) ?: responseBody).build()
     }

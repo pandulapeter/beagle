@@ -10,6 +10,8 @@ include ":ui-drawer"
 include ":ui-view"
 include ":log-noop"
 include ":log"
+include ":log-okhttp-noop"
+include ":log-okhttp"
 //TODO: Remove legacy implementation
 include ":beagle"
 include ":beagle-core"

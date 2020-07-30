@@ -8,6 +8,9 @@ import java.util.Locale
 /**
  * Displays an expandable list of log messages. An example use case could be logging analytics events.
  * Use Beagle.log() to push a new message to the top of the list.
+ *
+ * If you want to log from a non-Android module, you can include a different dependency. Check out this section for guidance: https://github.com/pandulapeter/beagle#logging
+ *
  * Only a single instance of this module can be added for one specific tag.
  *
  * @param title - The title of the module. "Logs" by default.

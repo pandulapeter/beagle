@@ -1,0 +1,10 @@
+apply plugin: "java-library"
+apply plugin: "kotlin"
+group = libraryGroup
+version = libraryVersion
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    api project(":common-base")
+}

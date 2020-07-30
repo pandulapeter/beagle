@@ -16,7 +16,6 @@ import com.pandulapeter.beagle.common.listeners.NetworkLogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
-import com.pandulapeter.beagle.modules.NetworkLogListModule
 import kotlin.reflect.KClass
 
 /**
@@ -254,21 +253,6 @@ interface BeagleContract {
      *  - The application depends on the noop variant.
      */
     val currentActivity: FragmentActivity? get() = null
-
-    /**
-     * Cast this value to a nullable OkHttp Interceptor implementation and add it to your OkHttp builder to make the [NetworkLogListModule] work:
-     *
-     * OkHttpClient.Builder()
-     *    .apply { (Beagle.interceptor as? Interceptor?)?.let { addInterceptor(it) } }
-     *    .build()
-     *
-     * The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.
-     * When setting multiple interceptors, consider their order: in general logging interceptors should be the last.
-     *
-     * @return The nullable Interceptor that should be the argument for OkHttpClient.Builder().addInterceptor(). Reasons for returning null:
-     *  - The application depends on the noop variant.
-     */
-    val interceptor: Any? get() = null
 
     /**
      * Adds a new log message handled by instances of LogListModule and notifies the registered LogListeners.

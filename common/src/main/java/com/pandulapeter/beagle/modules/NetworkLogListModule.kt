@@ -10,14 +10,10 @@ import java.util.Locale
 
 /**
  * Displays an expandable list of historical network activity. The entries are clickable to inspect their JSON payloads.
- * To start tracking network events, Beagle.interceptor should be added to your OkHttp client. This value will be null for the noop variant,
- * but must be casted to be used:
  *
- * OkHttpClient.Builder()
- *    .apply { (Beagle.interceptor as? Interceptor?)?.let { addInterceptor(it) } }
- *    .build()
+ * While you can use Beagle.logNetworkEvent() to push messages to this list, automatically intercepting the network requests is probably a better solution.
+ * Check out this section for guidance: https://github.com/pandulapeter/beagle#intercepting-network-events
  *
- * The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param title - The title of the module. "Network activity" by default.

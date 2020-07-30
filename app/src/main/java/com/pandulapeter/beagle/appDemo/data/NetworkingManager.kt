@@ -1,6 +1,6 @@
 package com.pandulapeter.beagle.appDemo.data
 
-import com.pandulapeter.beagle.Beagle
+import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
 import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -13,7 +13,7 @@ class NetworkingManager {
         .baseUrl(BASE_URL)
         .client(
             OkHttpClient.Builder()
-                .apply { (Beagle.interceptor as? Interceptor?)?.let { addInterceptor(it) } }
+                .apply { (BeagleOkHttpLogger.logger as? Interceptor?)?.let { addInterceptor(it) } }
                 .build()
         )
         .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))

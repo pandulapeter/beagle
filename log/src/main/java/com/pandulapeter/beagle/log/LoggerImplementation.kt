@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.log
 
 import com.pandulapeter.beagle.commonBase.BeagleLoggerContract
 
-class BeagleLoggerImplementation : BeagleLoggerContract {
+internal class LoggerImplementation : BeagleLoggerContract {
 
     private var onNewLog: ((message: CharSequence, tag: String?, payload: CharSequence?) -> Unit)? = null
     private var clearLogs: ((tag: String?) -> Unit)? = null

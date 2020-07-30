@@ -25,6 +25,5 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation project(":common")
 }
