@@ -191,7 +191,7 @@
     <string name="case_study_network_request_interceptor_song_2">The Rembrandts - I\'ll Be There for You</string>
     <string name="case_study_network_request_interceptor_song_3">The Proclaimers - I\'m Gonna Be (500 Miles)</string>
     <string name="case_study_network_request_interceptor_text_2">\nThe module itself can be instantiated using a single line of code:</string>
-    <string name="case_study_network_request_interceptor_text_3">However, it will only start working if a special interceptor is registered on the <i>OkHttpClient</i> used by the requests.</string>
+    <string name="case_study_network_request_interceptor_text_3">However, it will only start working if a special interceptor is registered on the <i>OkHttpClient</i> used by the requests.\n\n<b>The following examples are outdated. They will be replaced soon, in the mean time, check out the readme file on the repo.</b></string>
     <string name="case_study_network_request_interceptor_text_4">The cumbersome casting was the only way to avoid the noop variant depending on OkHttp, sorry about that.\n\nIf, for some reason, you cannot use this interceptor (for example in case of socket-based API-s), the library exposes the <i>Beagle.logNetworkEvent(…)</i> function which populates the same module. Furthermore, you can use <i>Beagle.clearNetworkLogs()</i> to reset the list at any time.</string>
     <string name="case_study_network_request_interceptor_clear_logs">Clear logs</string>
     <string name="case_study_network_request_interceptor_logs_cleared">Logs cleared</string>
