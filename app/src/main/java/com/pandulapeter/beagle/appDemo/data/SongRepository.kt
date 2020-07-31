@@ -9,9 +9,9 @@ class SongRepository(
 ) {
     private val booleans = listOf(true, false)
 
-    suspend fun getSong(id: String) = if (booleans.random()) getSongFromRetrofit(id) else getSongFromKtor(id)
+    suspend fun getSong(id: String) = if (booleans.random()) getSongUsingRetrofit(id) else getSongUsingKtor(id)
 
-    private suspend fun getSongFromRetrofit(id: String) = retrofitRemoteSongSource.getSong(id)
+    private suspend fun getSongUsingRetrofit(id: String) = retrofitRemoteSongSource.getSong(id)
 
-    private suspend fun getSongFromKtor(id: String) = ktorRemoteSongSource.getSong(id)
+    private suspend fun getSongUsingKtor(id: String) = ktorRemoteSongSource.getSong(id)
 }

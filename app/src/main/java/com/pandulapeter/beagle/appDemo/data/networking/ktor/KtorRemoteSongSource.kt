@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.logKtor.BeagleKtorLogger
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.features.HttpClientFeature
+import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
@@ -15,16 +16,17 @@ import io.ktor.http.takeFrom
 class KtorRemoteSongSource : RemoteSongSource {
 
     private val client = HttpClient(Android) {
-//        install(JsonFeature) {
-//            serializer = KotlinxSerializer().apply {
-//                typeOf<Song>()
-//            }
+//        install(DefaultRequest) {
+//            headers.append(HttpHeaders.ContentType, "application/json")
 //        }
+        install(ForcedJsonFeature) {
+            serializer = GsonSerializer()
+        }
         (BeagleKtorLogger.logger as? HttpClientFeature<*, *>?)?.let { install(it) }
     }
 
     override suspend fun getSong(id: String): Song? = try {
-        client.get {
+        client.get<Song> {
             apiUrl(Constants.SONGS_ENDPOINT)
             parameter(Constants.PARAMETER_SONG_ID, id)
         }
