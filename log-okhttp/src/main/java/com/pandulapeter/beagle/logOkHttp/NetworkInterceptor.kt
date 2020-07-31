@@ -9,9 +9,10 @@ import java.io.EOFException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
-internal class NetworkInterceptor(
-    private val logNetworkEvent: () -> ((isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) -> Unit)?
-) : Interceptor {
+/**
+ * Modified version of https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
+ */
+internal class NetworkInterceptor : Interceptor {
 
     private val utf8 = Charset.forName("UTF-8")
 
@@ -38,26 +39,21 @@ internal class NetworkInterceptor(
                 "Binary payload, ${requestBody.contentLength()}-byte body"
             }
         }
-        logNetworkEvent()?.invoke(
-            true,
-            "[${request.method}] ${request.url}",
-            requestJson,
-            request.headers.map { "[${it.first}] ${it.second}" },
-            null,
-            System.currentTimeMillis()
+        BeagleOkHttpLogger.logNetworkEvent(
+            isOutgoing = true,
+            url = "[${request.method}] ${request.url}",
+            payload = requestJson,
+            headers = request.headers.map { "[${it.first}] ${it.second}" }
         )
         val startNs = System.nanoTime()
         val response: Response
         try {
             response = chain.proceed(request)
         } catch (exception: Exception) {
-            logNetworkEvent()?.invoke(
-                false,
-                "[${request.method}] FAIL ${request.url}",
-                exception.message ?: "HTTP Failed",
-                null,
-                -1L,
-                System.currentTimeMillis()
+            BeagleOkHttpLogger.logNetworkEvent(
+                isOutgoing = false,
+                url = "[${request.method}] FAIL ${request.url}",
+                payload = exception.message ?: "HTTP Failed"
             )
             throw exception
         }
@@ -65,13 +61,12 @@ internal class NetworkInterceptor(
         val responseBody = response.body
         val contentType = responseBody?.contentType()
         val responseJson = if ((contentType == null || contentType.subtype == "json") && responseBody?.source()?.buffer?.isProbablyUtf8() == true) response.body?.string() else null
-        logNetworkEvent()?.invoke(
-            false,
-            "[${request.method}] ${response.code} ${request.url}",
-            responseJson ?: response.message,
-            response.headers.map { "[${it.first}] ${it.second}" },
-            tookMs,
-            System.currentTimeMillis()
+        BeagleOkHttpLogger.logNetworkEvent(
+            isOutgoing = false,
+            url = "[${request.method}] ${response.code} ${request.url}",
+            payload = responseJson ?: response.message,
+            headers = response.headers.map { "[${it.first}] ${it.second}" },
+            duration = tookMs
         )
         return response.newBuilder().body(responseJson?.toResponseBody(responseBody?.contentType()) ?: responseBody).build()
     }
@@ -123,6 +118,6 @@ internal class NetworkInterceptor(
     }
 
     companion object {
-        private const val MAX_STRING_LENGTH = 512 * 1024 //TODO: Come up with a less random value
+        private const val MAX_STRING_LENGTH = 4096L
     }
 }

@@ -1,13 +1,13 @@
 package com.pandulapeter.beagle.logKtor
 
 import com.pandulapeter.beagle.commonBase.BeagleNetworkLoggerContract
-import io.ktor.client.features.logging.Logger
+import io.ktor.client.features.HttpClientFeature
 
 internal class KtorLoggerImplementation : BeagleNetworkLoggerContract {
 
     private var onNewLog: ((isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) -> Unit)? = null
     private var clearLogs: (() -> Unit)? = null
-    override val logger: Logger by lazy { NetworkInterceptor { onNewLog } }
+    override val logger: HttpClientFeature<*, *> = KtorLogger
 
     override fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) {
         onNewLog?.invoke(isOutgoing, url, payload, headers, duration, timestamp)

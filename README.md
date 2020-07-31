@@ -206,7 +206,10 @@ Beagle.initialize(
 The last step is setting up the logger (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
 
 ```kotlin
-//TODO: Coming soon. But basiaclly BeagleKtorLogger.logger needs to be used as a nullable Ktor Logger.
+val client = HttpClient(engine) {
+    …
+    (BeagleKtorLogger.logger as? HttpClientFeature<*,*>?)?.let { install(it) }
+}
 ```
 
 ## Documentation
