@@ -1,7 +1,9 @@
 package com.pandulapeter.beagle.appDemo
 
+import com.pandulapeter.beagle.appDemo.data.networking.ktor.KtorRemoteSongSource
 import com.pandulapeter.beagle.appDemo.data.ModuleRepository
-import com.pandulapeter.beagle.appDemo.data.NetworkingManager
+import com.pandulapeter.beagle.appDemo.data.networking.retrofit.RetrofitRemoteSongSource
+import com.pandulapeter.beagle.appDemo.data.SongRepository
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.about.licences.LicencesViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesViewModel
@@ -21,7 +23,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 private val dataModule = module {
-    single { NetworkingManager() }
+    single { RetrofitRemoteSongSource() }
+    single { KtorRemoteSongSource() }
+    single { SongRepository(get(), get()) }
     single { ModuleRepository() }
 }
 

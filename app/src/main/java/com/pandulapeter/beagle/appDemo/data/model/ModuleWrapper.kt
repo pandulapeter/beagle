@@ -6,7 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.NetworkingManager
+import com.pandulapeter.beagle.appDemo.data.networking.Constants
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
@@ -305,7 +305,7 @@ sealed class ModuleWrapper(
     object NetworkLogList : ModuleWrapper(
         titleResourceId = R.string.add_module_network_log_list,
         descriptionResourceId = R.string.add_module_network_log_list_description,
-        module = NetworkLogListModule(baseUrl = NetworkingManager.BASE_URL),
+        module = NetworkLogListModule(baseUrl = Constants.BASE_URL),
         codeSnippet = "NetworkLogListModule()"
     )
 

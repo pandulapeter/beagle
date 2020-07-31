@@ -176,8 +176,6 @@ OkHttpClient.Builder()
 ```
 
 ### Ktor
-**This is experimental and does not yet work as expected.**
-
 Add the following dependencies to the module where your networking logic is implemented:
  
 ```groovy

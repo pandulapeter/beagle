@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.log.BeagleLogger
+import com.pandulapeter.beagle.logKtor.BeagleKtorLogger
 import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -25,7 +26,7 @@ class BeagleDemoApplication : Application() {
             appearance = Appearance(themeResourceId = R.style.DebugMenuTheme),
             behavior = Behavior(
                 logger = BeagleLogger,
-                networkLoggers = listOf(BeagleOkHttpLogger)
+                networkLoggers = listOf(BeagleOkHttpLogger, BeagleKtorLogger)
             )
         )
     }

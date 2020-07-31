@@ -3,7 +3,7 @@ package com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInte
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.NetworkingManager
+import com.pandulapeter.beagle.appDemo.data.networking.Constants
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
@@ -28,7 +28,7 @@ class NetworkRequestInterceptorFragment : ExamplesDetailFragment<NetworkRequestI
         NetworkLogListModule(
             title = getText(R.string.case_study_network_request_interceptor_network_activity),
             isExpandedInitially = true,
-            baseUrl = NetworkingManager.BASE_URL
+            baseUrl = Constants.BASE_URL
         )
     )
 

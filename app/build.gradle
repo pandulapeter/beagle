@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
+//apply plugin: "kotlinx-serialization"
 apply plugin: "kotlin-kapt"
 
 android {
@@ -121,6 +122,10 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.0-alpha05" //TODO: Use $recyclerViewVersion once 1.2.0 becomes stable
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation "io.ktor:ktor-client-android:$ktorVersion"
+//    implementation "io.ktor:ktor-client-json:$ktorVersion"
+//    implementation "io.ktor:ktor-client-serialization:$ktorVersion"
+//    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:1.0-M1-1.4.0-rc"
     implementation "com.android.billingclient:billing:3.0.0"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     activityDebugImplementation project(":ui-activity")

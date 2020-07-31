@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.NetworkingManager
+import com.pandulapeter.beagle.appDemo.data.SongRepository
 import com.pandulapeter.beagle.appDemo.data.model.Song
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.ClearButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.ErrorViewHolder
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 class NetworkRequestInterceptorViewModel(
-    private val networkingManager: NetworkingManager
+    private val songRepository: SongRepository
 ) : ListViewModel<NetworkRequestInterceptorListItem>() {
 
     private var selectedSong by Delegates.observable(SongTitle.SONG_1) { _, oldValue, newValue ->
@@ -51,11 +51,7 @@ class NetworkRequestInterceptorViewModel(
             isLoading = true
             refreshItems()
             job = viewModelScope.launch {
-                loadedSong = try {
-                    networkingManager.songService.getSongAsync(selectedSong.id)
-                } catch (_: Exception) {
-                    null
-                }
+                loadedSong = songRepository.getSong(selectedSong.id)
                 isLoading = false
                 refreshItems()
             }

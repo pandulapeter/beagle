@@ -16,6 +16,7 @@ import io.ktor.http.charset
 import io.ktor.http.content.OutgoingContent
 import io.ktor.http.contentType
 import io.ktor.http.fullPath
+import io.ktor.http.isSuccess
 import io.ktor.util.AttributeKey
 import io.ktor.utils.io.ByteChannel
 import io.ktor.utils.io.ByteReadChannel
@@ -67,11 +68,11 @@ internal class KtorLogger {
         )
     }
 
-    private fun logResponseException(context: HttpClientCall, cause: Throwable) {
+    private fun logResponseException(context: HttpClientCall, cause: Throwable?) {
         BeagleKtorLogger.logNetworkEvent(
             isOutgoing = false,
             url = "[${context.request.method.value}] FAIL ${context.request.url.fullPath}",
-            payload = cause.message ?: "HTTP Failed"
+            payload = cause?.message ?: "HTTP Failed"
         )
     }
 
@@ -200,7 +201,11 @@ internal class KtorLogger {
 
             val observer: ResponseHandler = {
                 try {
-                    feature.logResponseBody(it.contentType(), it.content)
+                    if (it.status.isSuccess()) {
+                        feature.logResponseBody(it.contentType(), it.content)
+                    } else {
+                        feature.logResponseException(it.call, null)
+                    }
                 } catch (_: Throwable) {
                 }
             }
