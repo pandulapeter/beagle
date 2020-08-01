@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
@@ -16,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.google.android.material.appbar.MaterialToolbar
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.common.configuration.Appearance
@@ -28,9 +28,9 @@ internal class DebugMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beagle_activity_debug_menu)
         supportActionBar?.hide()
-        findViewById<ImageView>(R.id.beagle_close_button).apply {
-            setImageDrawable(tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary)))
-            setOnClickListener { onBackPressed() }
+        findViewById<MaterialToolbar>(R.id.beagle_toolbar).apply {
+            setNavigationOnClickListener { onBackPressed() }
+            navigationIcon = tintedDrawable(com.pandulapeter.beagle.core.R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             val debugMenu = findViewById<InternalDebugMenuView>(R.id.beagle_debug_menu)

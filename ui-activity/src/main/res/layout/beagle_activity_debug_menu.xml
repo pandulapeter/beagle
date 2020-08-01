@@ -11,17 +11,12 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         android:fitsSystemWindows="true"
-        android:padding="@dimen/beagle_content_padding"
         app:liftOnScroll="true">
 
-        <ImageView
-            android:id="@+id/beagle_close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/beagle_close_button"
-            android:padding="@dimen/beagle_content_padding" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/beagle_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
