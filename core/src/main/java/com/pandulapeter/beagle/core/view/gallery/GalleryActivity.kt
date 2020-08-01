@@ -27,6 +27,7 @@ import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
 internal class GalleryActivity : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(GalleryViewModel::class.java) }
+    private val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
@@ -48,7 +49,7 @@ internal class GalleryActivity : AppCompatActivity() {
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
-                        recyclerView.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, it.systemWindowInsetBottom)
+                        recyclerView.setPadding(it.systemWindowInsetLeft + contentPadding, contentPadding, it.systemWindowInsetRight + contentPadding, it.systemWindowInsetBottom + contentPadding)
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
                         emptyStateTextView.setPadding(largePadding, largePadding, largePadding, largePadding + it.systemWindowInsetBottom)
                     }
@@ -58,9 +59,7 @@ internal class GalleryActivity : AppCompatActivity() {
         }
         val adapter = GalleryAdapter { position -> viewModel.items.value?.get(position)?.id?.let(::onItemSelected) }
         recyclerView.setHasFixedSize(true)
-        val displayMetrics = DisplayMetrics()
-        windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-        recyclerView.layoutManager = GridLayoutManager(this, displayMetrics.widthPixels / dimension(R.dimen.beagle_gallery_item_minimum_size))
+        recyclerView.layoutManager = GridLayoutManager(this, getSpanCount())
         recyclerView.adapter = adapter
         viewModel.items.observe(this, Observer {
             adapter.submitList(it)
@@ -75,5 +74,11 @@ internal class GalleryActivity : AppCompatActivity() {
             fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> shareFile(uri, ScreenCaptureManager.IMAGE_TYPE)
             fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> shareFile(uri, ScreenCaptureManager.VIDEO_TYPE)
         }
+    }
+
+    private fun getSpanCount(): Int {
+        val displayMetrics = DisplayMetrics()
+        windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+        return displayMetrics.widthPixels / dimension(R.dimen.beagle_gallery_item_minimum_size)
     }
 }
