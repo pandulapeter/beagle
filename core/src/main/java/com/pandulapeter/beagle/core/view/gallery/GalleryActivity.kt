@@ -3,12 +3,13 @@ package com.pandulapeter.beagle.core.view.gallery
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.pandulapeter.beagle.BeagleCore
@@ -57,7 +58,9 @@ internal class GalleryActivity : AppCompatActivity() {
         }
         val adapter = GalleryAdapter { position -> viewModel.items.value?.get(position)?.id?.let(::onItemSelected) }
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        val displayMetrics = DisplayMetrics()
+        windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+        recyclerView.layoutManager = GridLayoutManager(this, displayMetrics.widthPixels / dimension(R.dimen.beagle_gallery_item_minimum_size))
         recyclerView.adapter = adapter
         viewModel.items.observe(this, Observer {
             adapter.submitList(it)

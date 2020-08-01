@@ -23,12 +23,12 @@ internal class GalleryViewModel : ViewModel() {
                 _items.value = context.getScreenCapturesFolder().listFiles().orEmpty().mapNotNull { file ->
                     file.name.let { fileName ->
                         when {
-                            fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> ImageViewHolder.UiModel(fileName)
-                            fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> VideoViewHolder.UiModel(fileName)
+                            fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> ImageViewHolder.UiModel(fileName, file.lastModified())
+                            fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> VideoViewHolder.UiModel(fileName, file.lastModified())
                             else -> null
                         }
                     }
-                }
+                }.sortedByDescending { it.lastModified }
             }
         }
     }

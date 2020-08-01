@@ -8,6 +8,8 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import coil.ImageLoader
+import coil.fetch.VideoFrameFileFetcher
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
@@ -51,6 +53,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         private set
     var behavior = Behavior()
         private set
+    lateinit var videoThumbnailLoader: ImageLoader
     internal val hasPendingUpdates get() = listManager.hasPendingUpdates
     internal val memoryStorageManager by lazy { MemoryStorageManager() }
     internal lateinit var localStorageManager: LocalStorageManager
@@ -84,6 +87,11 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
             debugMenuInjector.register(application)
             behavior.logger?.register(::log, ::clearLogs)
             behavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }
+            videoThumbnailLoader = ImageLoader.Builder(application)
+                .componentRegistry {
+                    add(VideoFrameFileFetcher(application))
+                }
+                .build()
         }
 
     override fun show() = (currentActivity?.let { if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) uiManager.show(it) else false } ?: false)

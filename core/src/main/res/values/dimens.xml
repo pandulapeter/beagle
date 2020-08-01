@@ -11,4 +11,5 @@
     <dimen name="beagle_default_keyline_grid">8dp</dimen>
     <dimen name="beagle_default_keyline_primary">16dp</dimen>
     <dimen name="beagle_default_keyline_secondary">72dp</dimen>
+    <dimen name="beagle_gallery_item_minimum_size">128dp</dimen>
 </resources>
