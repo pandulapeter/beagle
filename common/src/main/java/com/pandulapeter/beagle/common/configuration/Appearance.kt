@@ -15,6 +15,7 @@ import com.pandulapeter.beagle.common.configuration.Appearance.Insets
  * @param screenCaptureGalleryNotificationTitle - The title for the notification displayed after a screen capture is done, by default it's "Screen captured".
  * @param screenCaptureGalleryNotificationContent - The content for the notification described for the [screenCaptureGalleryNotificationTitle] parameter. "Tap on this notification to open the Gallery." by default.
  * @param screenCaptureServiceNotificationChannelName - The name for the notification channel that handles all notifications related to screen capture. "Screen capture notifications" by default.
+ * @param galleryTitle - The title of the Gallery screen. "Gallery" by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. Null by default.
  */
 data class Appearance(
@@ -27,6 +28,7 @@ data class Appearance(
     val screenCaptureGalleryNotificationTitle: CharSequence = "Screen captured",
     val screenCaptureGalleryNotificationContent: CharSequence = "Tap on this notification to open the Gallery.",
     val screenCaptureServiceNotificationChannelName: CharSequence = "Screen capture notifications",
+    val galleryTitle: CharSequence = "Gallery",
     val applyInsets: ((windowInsets: Insets) -> Insets)? = null
 ) {
 

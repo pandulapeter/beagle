@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="beagle_close_button">Close</string>
     <string name="beagle_coming_soon">Coming soon…</string>
 </resources>

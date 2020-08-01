@@ -17,8 +17,8 @@ class ModuleRepository {
         add(ModuleWrapper.KeylineOverlaySwitch)
         add(ModuleWrapper.AnimationDurationSwitch)
         add(ModuleWrapper.Divider())
-        add(ModuleWrapper.NetworkLogList)
         add(ModuleWrapper.ScreenCaptureToolbox)
+        add(ModuleWrapper.NetworkLogList)
         add(ModuleWrapper.LogList())
         add(ModuleWrapper.DeviceInfo)
     }

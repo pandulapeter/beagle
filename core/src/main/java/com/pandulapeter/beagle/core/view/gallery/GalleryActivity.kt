@@ -4,12 +4,12 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
@@ -29,9 +29,10 @@ internal class GalleryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beagle_activity_gallery)
         supportActionBar?.hide()
-        findViewById<ImageView>(R.id.beagle_close_button).apply {
-            setImageDrawable(tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary)))
-            setOnClickListener { onBackPressed() }
+        findViewById<MaterialToolbar>(R.id.beagle_toolbar).apply {
+            setNavigationOnClickListener { onBackPressed() }
+            navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
+            title = BeagleCore.implementation.appearance.galleryTitle
         }
         val recyclerView = findViewById<RecyclerView>(R.id.beagle_recycler_view)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
