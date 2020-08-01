@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Modified version of https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
  */
-internal class NetworkInterceptor : Interceptor {
+internal class OkHttpInterceptor : Interceptor {
 
     private val utf8 = Charset.forName("UTF-8")
 

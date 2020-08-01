@@ -16,9 +16,6 @@ import io.ktor.http.takeFrom
 class KtorRemoteSongSource : RemoteSongSource {
 
     private val client = HttpClient(Android) {
-//        install(DefaultRequest) {
-//            headers.append(HttpHeaders.ContentType, "application/json")
-//        }
         install(ForcedJsonFeature) {
             serializer = GsonSerializer()
         }
