@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,10 +15,12 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
 import com.pandulapeter.beagle.core.util.extension.colorResource
+import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.tintedDrawable
+import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
 
 internal class GalleryActivity : AppCompatActivity() {
@@ -34,6 +37,9 @@ internal class GalleryActivity : AppCompatActivity() {
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
             title = BeagleCore.implementation.appearance.galleryTitle
         }
+        val emptyStateTextView = findViewById<TextView>(R.id.beagle_text_view)
+        emptyStateTextView.text = BeagleCore.implementation.appearance.galleryNoMediaMessage
+        val largePadding = dimension(R.dimen.beagle_large_content_padding)
         val recyclerView = findViewById<RecyclerView>(R.id.beagle_recycler_view)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             val bottomNavigationOverlay = findViewById<View>(R.id.beagle_bottom_navigation_overlay)
@@ -43,6 +49,7 @@ internal class GalleryActivity : AppCompatActivity() {
                     onApplyWindowInsets(insets).also {
                         recyclerView.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, it.systemWindowInsetBottom)
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
+                        emptyStateTextView.setPadding(largePadding, largePadding, largePadding, largePadding + it.systemWindowInsetBottom)
                     }
                 }
                 requestApplyInsets()
@@ -52,7 +59,10 @@ internal class GalleryActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-        viewModel.items.observe(this, Observer { adapter.submitList(it) })
+        viewModel.items.observe(this, Observer {
+            adapter.submitList(it)
+            emptyStateTextView.visible = it.isEmpty()
+        })
         viewModel.loadMedia(this)
     }
 

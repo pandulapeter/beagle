@@ -27,6 +27,15 @@
         android:clipToPadding="false"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
+    <TextView
+        android:id="@+id/beagle_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="@dimen/beagle_large_content_padding"
+        android:visibility="gone"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
     <!--TODO: Hacky - why do we need this? -->
     <View
         android:id="@+id/beagle_bottom_navigation_overlay"
