@@ -29,6 +29,7 @@ internal class AlertDialogFragment : DialogFragment() {
                         addView(AppCompatTextView(context).apply {
                             text = arguments?.getCharSequence(CONTENT)
                             context.dimension(R.dimen.beagle_large_content_padding).let { padding -> setPadding(padding, padding, padding, padding) }
+                            setTextIsSelectable(true)
                         }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
                 })
