@@ -101,7 +101,7 @@ Beagle.set(
 )
 ```
 ## Logging and intercepting network events
-To add content to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt) or [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), you can simply call Beagle.log() and Beagle.logNetworkEvent() respectively. However, you might need to access this functionality from pure Java / Kotlin modules or, in the case of network events, you might want to use an interceptor that works out of the box.
+To add content to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt) or [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), you can simply call Beagle.log() and Beagle.logNetworkEvent() respectively. However, you might need to access this functionality from pure Java / Kotlin modules or, in the case of network events, you might want to use an Interceptor / Logger that works out of the box.
 
 ### Logging
 To access the same functionality that Beagle.log() provides from a pure Kotlin / Java module, first you need to add the following to the module in question:
