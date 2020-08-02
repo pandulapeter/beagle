@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.common.configuration
 
 import androidx.annotation.StyleRes
-import com.pandulapeter.beagle.common.configuration.Appearance.Insets
 
 /**
  * Specifies the appearance customization options for the debug menu. All parameters are optional.
@@ -32,12 +31,4 @@ data class Appearance(
     val galleryTitle: CharSequence = "Gallery",
     val galleryNoMediaMessage: CharSequence = "No media found",
     val applyInsets: ((windowInsets: Insets) -> Insets)? = null
-) {
-
-    data class Insets(
-        val left: Int = 0,
-        val top: Int = 0,
-        val right: Int = 0,
-        val bottom: Int = 0
-    )
-}
+)

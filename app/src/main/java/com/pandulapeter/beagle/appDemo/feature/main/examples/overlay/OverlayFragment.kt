@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.appDemo.utils.color
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
+import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -60,13 +61,13 @@ class OverlayFragment : ExamplesDetailFragment<OverlayViewModel, ListItem>(R.str
         outState.putBoolean(IS_SWITCH_ENABLED, isSwitchEnabled)
     }
 
-    override fun onDrawOver(canvas: Canvas, leftInset: Int, topInset: Int, rightInset: Int, bottomInset: Int) {
+    override fun onDrawOver(canvas: Canvas, insets: Insets) {
         if (isSwitchEnabled) {
-            val usableWidth = canvas.width - leftInset - rightInset
-            val usableHeight = canvas.height - topInset - bottomInset
+            val usableWidth = canvas.width - insets.left - insets.right
+            val usableHeight = canvas.height - insets.top - insets.bottom
             canvas.drawCircle(
-                leftInset + usableWidth * 0.5f,
-                topInset + usableHeight * 0.5f,
+                insets.left + usableWidth * 0.5f,
+                insets.top + usableHeight * 0.5f,
                 min(usableWidth, usableHeight) * 0.25f,
                 paint
             )

@@ -18,7 +18,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 
 internal class DebugMenuActivity : AppCompatActivity() {
@@ -39,13 +39,13 @@ internal class DebugMenuActivity : AppCompatActivity() {
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
-                        val input = Appearance.Insets(
+                        val input = Insets(
                             left = it.systemWindowInsetLeft,
                             top = it.systemWindowInsetTop,
                             right = it.systemWindowInsetRight,
                             bottom = it.systemWindowInsetBottom
                         )
-                        val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: Appearance.Insets(
+                        val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: Insets(
                             left = it.systemWindowInsetLeft,
                             top = 0,
                             right = it.systemWindowInsetRight,

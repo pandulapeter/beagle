@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
+import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
@@ -17,6 +18,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
  * @param color - The color to be used when drawing the grid. It defaults to the theme's text color.
  * @param initialValue - Whether or not the switch is checked initially. Optional, false by default. If [isValuePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
  * @param isValuePersisted - Can be used to enable or disable persisting the value on the local storage. Optional, false by default.
+ * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. Null by default.
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
  */
 data class KeylineOverlaySwitchModule(
@@ -27,6 +29,7 @@ data class KeylineOverlaySwitchModule(
     @ColorInt val color: Int? = null,
     override val initialValue: Boolean = false,
     override val isValuePersisted: Boolean = false,
+    val applyInsets: ((windowInsets: Insets) -> Insets)? = null,
     override val onValueChanged: (Boolean) -> Unit = {}
 ) : ValueWrapperModule<Boolean, KeylineOverlaySwitchModule> {
 

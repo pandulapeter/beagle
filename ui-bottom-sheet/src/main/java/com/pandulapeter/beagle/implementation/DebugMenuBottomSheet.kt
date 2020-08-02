@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
@@ -36,7 +36,7 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
     private val topInset
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Beagle.currentActivity?.window?.decorView?.rootWindowInsets?.let {
             BeagleCore.implementation.appearance.applyInsets?.invoke(
-                Appearance.Insets(
+                Insets(
                     left = it.systemWindowInsetLeft,
                     top = it.systemWindowInsetTop,
                     right = it.systemWindowInsetRight,

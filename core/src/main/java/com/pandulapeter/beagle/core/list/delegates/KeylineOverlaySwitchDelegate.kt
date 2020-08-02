@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.core.R
@@ -24,11 +25,14 @@ internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<
 
     init {
         BeagleCore.implementation.addInternalOverlayListener(object : OverlayListener {
-            override fun onDrawOver(canvas: Canvas, leftInset: Int, topInset: Int, rightInset: Int, bottomInset: Int) {
+            override fun onDrawOver(canvas: Canvas, insets: Insets) {
                 if (module == null) {
                     BeagleCore.implementation.currentActivity?.let { tryToInitialize(it) }
                 }
-                module?.let { canvas.drawGridIfNeeded(it, leftInset, topInset, rightInset, bottomInset) }
+                module?.let {
+                    val processedInsets = it.applyInsets?.invoke(insets) ?: insets
+                    canvas.drawGridIfNeeded(it, processedInsets.left, processedInsets.top, processedInsets.right, processedInsets.bottom)
+                }
             }
         })
     }

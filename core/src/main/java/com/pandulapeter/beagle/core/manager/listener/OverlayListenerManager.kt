@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.manager.listener
 import android.graphics.Canvas
 import android.os.Build
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 
 internal class OverlayListenerManager : BaseListenerManager<OverlayListener>() {
@@ -20,7 +21,8 @@ internal class OverlayListenerManager : BaseListenerManager<OverlayListener>() {
                 bottomInset = it.systemWindowInsetBottom
             }
         }
-        notifyListeners { it.onDrawOver(canvas, leftInset, topInset, rightInset, bottomInset) }
+        val insets = Insets(leftInset, topInset, rightInset, bottomInset)
+        notifyListeners { it.onDrawOver(canvas, insets) }
     }
 
     override fun addListener(listener: OverlayListener) {

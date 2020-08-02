@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import kotlin.math.roundToInt
@@ -33,7 +33,7 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
                 val output = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     window.decorView.rootWindowInsets?.let {
                         BeagleCore.implementation.appearance.applyInsets?.invoke(
-                            Appearance.Insets(
+                            Insets(
                                 left = it.systemWindowInsetLeft,
                                 top = it.systemWindowInsetTop,
                                 right = it.systemWindowInsetRight,

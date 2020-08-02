@@ -12,7 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -80,13 +80,13 @@ internal class DebugMenuDrawerLayout(
                 Beagle.currentActivity?.window?.decorView?.run {
                     setOnApplyWindowInsetsListener { _, insets ->
                         onApplyWindowInsets(insets).also {
-                            val input = Appearance.Insets(
+                            val input = Insets(
                                 left = it.systemWindowInsetLeft,
                                 top = it.systemWindowInsetTop,
                                 right = it.systemWindowInsetRight,
                                 bottom = it.systemWindowInsetBottom
                             )
-                            val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: Appearance.Insets(
+                            val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: Insets(
                                 left = 0,
                                 top = it.systemWindowInsetTop,
                                 right = it.systemWindowInsetRight,
