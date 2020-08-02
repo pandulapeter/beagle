@@ -97,6 +97,7 @@ Beagle.set(
     AnimationDurationSwitchModule(),
     DividerModule(),
     ScreenCaptureToolboxModule(),
+    LogListModule(),
     DeviceInfoModule()
 )
 ```
