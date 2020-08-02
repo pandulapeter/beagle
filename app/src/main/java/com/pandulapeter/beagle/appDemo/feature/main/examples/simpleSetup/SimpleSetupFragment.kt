@@ -37,6 +37,7 @@ class SimpleSetupFragment : ExamplesDetailFragment<SimpleSetupViewModel, SimpleS
             add(ScreenRecordingButtonModule())
         }
         add(GalleryButtonModule())
+        add(ScreenCaptureToolboxModule())
         add(KeylineOverlaySwitchModule())
         add(AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }))
         add(DeviceInfoModule())

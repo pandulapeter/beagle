@@ -49,7 +49,7 @@ internal class KtorLogger {
         BeagleKtorLogger.logNetworkEvent(
             isOutgoing = false,
             url = "[${response.call.request.method.value}] ${response.status.value} ${response.call.request.url.fullPath}",
-            payload = "Response payload logging not implemented yet",//TODO: readPayload(response.contentType(), response.content),
+            payload = "Ktor response payload logging not implemented yet",//TODO: readPayload(response.contentType(), response.content),
             headers = readHeaders(response.headers.entries()),
             duration = response.responseTime.timestamp - response.requestTime.timestamp
         )

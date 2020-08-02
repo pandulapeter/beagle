@@ -56,7 +56,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
                         "    ScreenshotButtonModule(),\n" +
                         "    ScreenRecordingButtonModule(), // Only available on API 21 and above\n" +
                         "    GalleryButtonModule(),\n" +
-                        "    // ScreenCaptureToolboxModule(),\n" +
+                        "    ScreenCaptureToolboxModule(),\n" +
                         "    KeylineOverlaySwitchModule(),\n" +
                         "    AnimationDurationSwitchModule()\n" +
                         "    DeviceInformationModule()\n" +
