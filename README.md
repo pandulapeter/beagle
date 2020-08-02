@@ -104,7 +104,7 @@ Beagle.set(
 To add content to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt) or [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), you can simply call Beagle.log() and Beagle.logNetworkEvent() respectively. However, you might need to access this functionality from pure Java / Kotlin modules or, in the case of network events, you might want to use an interceptor that works out of the box.
 
 ### Logging
-To access the same functionality that Beagle.log() provides from a pure Kotlin / Java module, first you need to add the following dependencies to the module in question:
+To access the same functionality that Beagle.log() provides from a pure Kotlin / Java module, first you need to add the following to the module in question:
 
 ```groovy
 dependencies {
@@ -140,8 +140,8 @@ The messages list will be merged with the ones logged using the regular Beagle.l
 ### Intercepting network events
 Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment, out of the box, Beagle can hook into two networking libraries (but manually calling Beagle.logNetworkEvent() is always an option).
 
-### OkHttp / Retrofit
-Add the following dependencies to the module where your networking logic is implemented:
+### OkHttp
+Add the following to the module where your networking logic is implemented:
 
 ```groovy
 dependencies {
@@ -166,17 +166,17 @@ Beagle.initialize(
 )
 ```
 
-The last step is setting up the interceptor (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
+The last step is setting up the Interceptor (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
 
 ```kotlin
-OkHttpClient.Builder()
+val client = OkHttpClient.Builder()
     …
     .apply { (BeagleOkHttpLogger.logger as? Interceptor?)?.let { addInterceptor(it) } }
     .build()
 ```
 
-### Ktor
-Add the following dependencies to the module where your networking logic is implemented:
+### Ktor (Android engine)
+Add the following to the module where your networking logic is implemented:
  
 ```groovy
 dependencies {
@@ -201,7 +201,7 @@ Beagle.initialize(
 )
 ```
 
-The last step is setting up the logger (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
+The last step is setting up the Logger (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
 
 ```kotlin
 val client = HttpClient(engine) {

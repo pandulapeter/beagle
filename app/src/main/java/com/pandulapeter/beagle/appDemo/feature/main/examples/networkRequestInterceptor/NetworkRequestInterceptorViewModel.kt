@@ -76,18 +76,74 @@ class NetworkRequestInterceptorViewModel(
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_3))
             add(
                 CodeSnippetViewHolder.UiModel(
-                    "OkHttpClient.Builder()\n" +
-                            "    .apply {\n" +
-                            "        (Beagle.interceptor as? Interceptor?)?.let {\n" +
-                            "            addInterceptor(it)\n" +
-                            "        }\n" +
-                            "    }\n" +
-                            "    .build()"
+                    "dependencies {\n" +
+                            "    …\n" +
+                            "    api \"com.github.pandulapeter.beagle:log-okhttp:\$beagleVersion\"\n" +
+                            "    \n" +
+                            "    // Alternative for Android modules:\n" +
+                            "    // debugApi \"com.github.pandulapeter.beagle:log-okhttp:\$beagleVersion\"\n" +
+                            "    // releaseApi \"com.github.pandulapeter.beagle:log-okhttp-noop:\$beagleVersion\"\n" +
+                            "}"
                 )
             )
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_4))
-            add(ClearButtonViewHolder.UiModel())
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    "Beagle.initialize(\n" +
+                            "    …\n" +
+                            "    behavior = Behavior(\n" +
+                            "        …\n" +
+                            "        networkLoggers = listOf(BeagleOkHttpLogger)\n" +
+                            "    )\n" +
+                            ")"
+                )
+            )
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_5))
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    "val client = OkHttpClient.Builder()\n" +
+                            "    …\n" +
+                            "    .apply { (BeagleOkHttpLogger.logger as? Interceptor?)?.let { addInterceptor(it) } }\n" +
+                            "    .build()"
+                )
+            )
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_6))
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    "dependencies {\n" +
+                            "    …\n" +
+                            "    api \"com.github.pandulapeter.beagle:log-ktor:\$beagleVersion\"\n" +
+                            "    \n" +
+                            "    // Alternative for Android modules:\n" +
+                            "    // debugApi \"com.github.pandulapeter.beagle:log-ktor:\$beagleVersion\"\n" +
+                            "    // releaseApi \"com.github.pandulapeter.beagle:log-ktor-noop:\$beagleVersion\"\n" +
+                            "}"
+                )
+            )
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_7))
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    "Beagle.initialize(\n" +
+                            "    …\n" +
+                            "    behavior = Behavior(\n" +
+                            "        …\n" +
+                            "        networkLoggers = listOf(BeagleKtorLogger)\n" +
+                            "    )\n" +
+                            ")"
+                )
+            )
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_8))
+            add(
+                CodeSnippetViewHolder.UiModel(
+                    "val client = HttpClient(engine) {\n" +
+                            "    …\n" +
+                            "    (BeagleKtorLogger.logger as? HttpClientFeature<*,*>?)?.let { install(it) }\n" +
+                            "}"
+                )
+            )
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_9))
+            add(ClearButtonViewHolder.UiModel())
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_10))
         }
     }
 
