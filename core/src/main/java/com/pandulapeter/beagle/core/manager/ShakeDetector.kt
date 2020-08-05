@@ -1,9 +1,13 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
+import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -14,13 +18,12 @@ import com.pandulapeter.beagle.core.util.extension.unregisterSensorEventListener
 import kotlin.math.abs
 
 @Suppress("unused")
-internal class ShakeDetector(
-    private val onShakeDetected: () -> Unit
-) : SensorEventListener, LifecycleObserver {
+internal class ShakeDetector : SensorEventListener, LifecycleObserver {
 
     private var lastSensorUpdate = 0L
     private val previousEvent = SensorValues()
     private var application: Application? = null
+    private val vibrator by lazy { application?.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator? }
 
     fun initialize(application: Application): Boolean {
         application.unregisterSensorEventListener(this)
@@ -48,12 +51,29 @@ internal class ShakeDetector(
                     val currentTime = System.currentTimeMillis()
                     if (currentTime - lastSensorUpdate > SHAKE_DETECTION_DELAY) {
                         if (abs(event.x + event.y + event.z - previousEvent.x - previousEvent.y - previousEvent.z) / (currentTime - lastSensorUpdate) * 100 > threshold) {
-                            onShakeDetected()
+                            showDebugMenuAndVibrateIfNeeded()
                         }
                         previousEvent.x = event.x
                         previousEvent.y = event.y
                         previousEvent.z = event.z
                         lastSensorUpdate = currentTime
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun showDebugMenuAndVibrateIfNeeded() {
+        if (BeagleCore.implementation.show()) {
+            vibrator?.run {
+                val duration = BeagleCore.implementation.behavior.shakeHapticFeedbackDuration
+                if (duration > 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        @Suppress("DEPRECATION")
+                        vibrate(duration)
                     }
                 }
             }

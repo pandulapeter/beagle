@@ -58,7 +58,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     internal val memoryStorageManager by lazy { MemoryStorageManager() }
     internal lateinit var localStorageManager: LocalStorageManager
         private set
-    private val shakeDetector by lazy { ShakeDetector { show() } }
+    private val shakeDetector by lazy { ShakeDetector() }
     private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
     private val logListenerManager by lazy { LogListenerManager() }
     private val networkLogListenerManager by lazy { NetworkLogListenerManager() }

@@ -6,8 +6,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.core.manager.UiManagerContract
+import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 
 internal class DrawerUiManager : UiManagerContract {
 
@@ -48,12 +48,17 @@ internal class DrawerUiManager : UiManagerContract {
 
     override fun findOverlayView(activity: FragmentActivity?): View? = getDrawerLayout(activity)?.getChildAt(0)
 
-    override fun show(activity: FragmentActivity) = (Beagle.isUiEnabled).also {
-        getDrawerView(activity)?.run {
+    override fun show(activity: FragmentActivity) = if (Beagle.isUiEnabled) {
+        getDrawerView(activity)?.let { drawer ->
             BeagleCore.implementation.notifyVisibilityListenersOnShow()
-            (parent as DebugMenuDrawerLayout).openDrawer(this)
-        }
-    }
+            (drawer.parent as DebugMenuDrawerLayout).let { drawerLayout ->
+                drawerLayout.isDrawerVisible(drawer).let { isDrawerOpen ->
+                    drawerLayout.openDrawer(drawer)
+                    !isDrawerOpen
+                }
+            }
+        } ?: false
+    } else false
 
     override fun hide(activity: FragmentActivity?): Boolean {
         val drawer = getDrawerView(activity)
