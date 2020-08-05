@@ -15,7 +15,7 @@ import java.util.UUID
  * @param shouldRequireConfirmation - Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step. Optional, false by default.
  * @param id - A unique identifier for the module. Must be a unique constant for the save / load feature to work (see [isValuePersisted]]). Optional, random string by default.
  * @param validator - A lambda that returns whether or not its input is a valid value for this module. Optional, by default it accepts any String.
- * @param onValueChanged - Callback triggered when the user changes the current value. In case of persisted values, this will also get called the first time the module is added.
+ * @param onValueChanged - Callback triggered when the user changes the current value. In case of persisted values, this will also get called the first time the module is added. Empty implementation by default.
  */
 //TODO: Add parameters to customize EditText hint and input type.
 data class TextInputModule(
@@ -28,7 +28,7 @@ data class TextInputModule(
     override val shouldRequireConfirmation: Boolean = false,
     override val id: String = UUID.randomUUID().toString(),
     val validator: (String) -> Boolean = { true },
-    override val onValueChanged: (String) -> Unit
+    override val onValueChanged: (String) -> Unit = {}
 ) : ValueWrapperModule<String, TextInputModule> {
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")

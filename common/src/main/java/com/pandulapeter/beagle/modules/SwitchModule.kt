@@ -11,7 +11,7 @@ import java.util.UUID
  * @param isValuePersisted - Can be used to enable or disable persisting the value on the local storage. This will only work if the module has a unique, constant ID. Optional, false by default.
  * @param shouldRequireConfirmation - Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step. Optional, false by default.
  * @param id - A unique identifier for the module. Must be a unique constant for the save / load feature to work (see [isValuePersisted]]). Optional, random string by default.
- * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added.
+ * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Empty implementation by default.
  */
 data class SwitchModule(
     val text: CharSequence,
@@ -19,7 +19,7 @@ data class SwitchModule(
     override val isValuePersisted: Boolean = false,
     override val shouldRequireConfirmation: Boolean = false,
     override val id: String = UUID.randomUUID().toString(),
-    override val onValueChanged: (Boolean) -> Unit
+    override val onValueChanged: (Boolean) -> Unit = {}
 ) : ValueWrapperModule<Boolean, SwitchModule> {
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")

@@ -15,7 +15,7 @@ import java.util.UUID
  * @param shouldRequireConfirmation - Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step. Optional, false by default.
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. Optional, false by default.
  * @param id - A unique identifier for the module. Optional, random string by default.
- * @param onSelectionChanged - Callback called when the changes the selection. The parameter is a set with the currently selected items.
+ * @param onSelectionChanged - Callback called when the changes the selection. The parameter is a set with the currently selected items. Empty implementation by default.
  */
 data class MultipleSelectionListModule<T : BeagleListItemContract>(
     override val title: CharSequence,
@@ -25,7 +25,7 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
     override val shouldRequireConfirmation: Boolean = false,
     override val isExpandedInitially: Boolean = false,
     override val id: String = UUID.randomUUID().toString(),
-    val onSelectionChanged: (selectedItems: Set<T>) -> Unit
+    val onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
 ) : ExpandableModule<MultipleSelectionListModule<T>>, ValueWrapperModule<Set<String>, MultipleSelectionListModule<T>> {
 
     override val onValueChanged: (newValue: Set<String>) -> Unit = { newValue -> onSelectionChanged(newValue.mapNotNull { itemId -> items.firstOrNull { it.id == itemId } }.toSet()) }
