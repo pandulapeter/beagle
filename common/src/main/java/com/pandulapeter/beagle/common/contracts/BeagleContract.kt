@@ -59,7 +59,7 @@ interface BeagleContract {
      *  - The debug menu is already visible.
      *  - The application does not have any visible activities at the moment (the lifecycle must be at least in STARTED state).
      *  - The currently visible Activity is not a subclass of [FragmentActivity].
-     *  - The currently visible Activity does not support a debug menu (social login overlay, in-app-purchase overlay, manually excluded package specified by the [Behavior], etc).
+     *  - The currently visible Activity does not support a debug menu (social login overlay, in-app-purchase overlay, etc).
      *  - The currently visible Activity is part of a package that has manually been excluded in the [Behavior] class.
      *  - The application depends on the ui-view variant (in this case its your responsibility to show / hide the UI).
      *  - The application depends on the noop variant.

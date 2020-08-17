@@ -17,6 +17,11 @@ This demo application also contains instructions on how to set up Beagle and how
 The tutorials in the app cover everything from this readme, but in more detail.
 
 ## Use it in your project
+### Step 0: Check the requirements
+- Minimum SDK level: 16+
+- Target SDK level: 29+
+- Language: Kotlin (should work with Java as well but the API was not optimized for that)
+
 ### Step 1: Add the Jitpack repository
 Make sure that the following is part of your project-level build.gradle file:
 
@@ -141,7 +146,7 @@ The messages list will be merged with the ones logged using the regular Beagle.l
 ### Intercepting network events
 Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment, out of the box, Beagle can hook into two networking libraries (but manually calling Beagle.logNetworkEvent() is always an option).
 
-### OkHttp
+#### OkHttp
 Add the following to the module where your networking logic is implemented:
 
 ```groovy
@@ -176,7 +181,7 @@ val client = OkHttpClient.Builder()
     .build()
 ```
 
-### Ktor (Android engine)
+#### Ktor (Android engine)
 Add the following to the module where your networking logic is implemented:
  
 ```groovy
