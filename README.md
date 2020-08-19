@@ -20,7 +20,7 @@ The tutorials in the app cover everything from this readme, but in more detail.
 ### Step 0: Check the requirements
 - Minimum SDK level: 16+
 - Target SDK level: 29+
-- Language: Kotlin (should work with Java as well but the API was not optimized for that)
+- Language: Kotlin 1.4 (should work with Java as well but the API was not optimized for that)
 
 ### Step 1: Add the Jitpack repository
 Make sure that the following is part of your project-level build.gradle file:
