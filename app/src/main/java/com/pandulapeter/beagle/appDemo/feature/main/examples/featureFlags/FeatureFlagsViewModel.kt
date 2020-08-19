@@ -50,6 +50,10 @@ class FeatureFlagsViewModel : ListViewModel<FeatureFlagsListItem>() {
             refreshItems()
         }
 
+    init {
+        refreshItems()
+    }
+
     fun onSectionHeaderSelected(uiModel: SectionHeaderViewHolder.UiModel) {
         Section.fromResourceId(uiModel.titleResourceId).let {
             selectedSection = if (it == selectedSection) null else it
