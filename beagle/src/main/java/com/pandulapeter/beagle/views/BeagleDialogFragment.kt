@@ -22,7 +22,6 @@ import com.pandulapeter.beagleCore.configuration.Appearance
 
 internal class BeagleDialogFragment : AppCompatDialogFragment() {
 
-    //TODO: Add "Copy to clipboard" button
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         (arguments?.appearance?.themeResourceId?.let { ContextThemeWrapper(context, it) } ?: context)?.let { themedContext ->
             arguments?.title?.let { title ->

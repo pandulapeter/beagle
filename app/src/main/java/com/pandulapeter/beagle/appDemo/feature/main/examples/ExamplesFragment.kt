@@ -53,21 +53,20 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
         }
     }
 
-    private fun onCaseStudySelected(caseStudy: CaseStudy, view: View? = null) = when (caseStudy) {
-        CaseStudy.SIMPLE_SETUP -> navigateTo(SimpleSetupFragment.Companion::newInstance, view)
-        CaseStudy.STATIC_DATA -> navigateTo(StaticDataFragment.Companion::newInstance, view)
-        CaseStudy.FEATURE_FLAGS -> navigateTo(FeatureFlagsFragment.Companion::newInstance, view)
-        CaseStudy.NETWORK_REQUEST_INTERCEPTOR -> navigateTo(NetworkRequestInterceptorFragment.Companion::newInstance, view)
-        CaseStudy.ANALYTICS -> navigateTo(AnalyticsFragment.Companion::newInstance, view)
-        CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance, view)
-        CaseStudy.MOCK_DATA_GENERATOR -> navigateTo(MockDataGeneratorFragment.Companion::newInstance, view)
-        CaseStudy.OVERLAY -> navigateTo(OverlayFragment.Companion::newInstance, view)
+    private fun onCaseStudySelected(caseStudy: CaseStudy) = when (caseStudy) {
+        CaseStudy.SIMPLE_SETUP -> navigateTo(SimpleSetupFragment.Companion::newInstance)
+        CaseStudy.STATIC_DATA -> navigateTo(StaticDataFragment.Companion::newInstance)
+        CaseStudy.FEATURE_FLAGS -> navigateTo(FeatureFlagsFragment.Companion::newInstance)
+        CaseStudy.NETWORK_REQUEST_INTERCEPTOR -> navigateTo(NetworkRequestInterceptorFragment.Companion::newInstance)
+        CaseStudy.ANALYTICS -> navigateTo(AnalyticsFragment.Companion::newInstance)
+        CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance)
+        CaseStudy.MOCK_DATA_GENERATOR -> navigateTo(MockDataGeneratorFragment.Companion::newInstance)
+        CaseStudy.OVERLAY -> navigateTo(OverlayFragment.Companion::newInstance)
         else -> binding.root.showSnackbar(caseStudy.title)
     }
 
-    private inline fun <reified T : ExamplesDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T, sharedElement: View?) = parentFragment?.childFragmentManager?.handleReplace(
+    private inline fun <reified T : ExamplesDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T) = parentFragment?.childFragmentManager?.handleReplace(
         addToBackStack = true,
-        //TODO: Unpredictable, frequent glitches: sharedElements =  listOf(sharedElement),
         transitionType = TransitionType.MODAL,
         newInstance = newInstance
     ) ?: Unit

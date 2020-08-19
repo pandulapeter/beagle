@@ -363,8 +363,6 @@ object Beagle : BeagleContract, SensorEventListener {
         networkLogItems = networkLogItems.toMutableList().apply { add(0, networkLogItem) }
     }
 
-    //TODO: Make sure this doesn't break Activity shared element transitions.
-    //TODO: Find a smart way to handle the case when the root view is already a DrawerLayout.
     private fun createAndAddDrawerLayout(activity: Activity, shouldOpenDrawer: Boolean) =
         (appearance.themeResourceId?.let { ContextThemeWrapper(activity, it) } ?: activity).let { themedContext ->
             BeagleDrawer(themedContext).also { drawer ->

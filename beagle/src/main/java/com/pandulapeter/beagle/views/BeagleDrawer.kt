@@ -20,7 +20,6 @@ import com.pandulapeter.beagle.utils.setBackgroundFromWindowBackground
 import com.pandulapeter.beagle.views.drawerItems.DrawerItemViewModel
 import com.pandulapeter.beagleCore.configuration.Trick
 
-//TODO: RecyclerView scroll position is not restored.
 internal class BeagleDrawer @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -75,7 +74,6 @@ internal class BeagleDrawer @JvmOverloads constructor(
         requestApplyInsets()
     }
 
-    //TODO: This doesn't seem to be working in all cases.
     override fun dispatchApplyWindowInsets(insets: WindowInsets?): WindowInsets = super.dispatchApplyWindowInsets(insets?.also { windowsInsets ->
         recyclerView.run {
             setPadding(

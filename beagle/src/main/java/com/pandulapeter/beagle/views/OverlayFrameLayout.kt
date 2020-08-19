@@ -95,7 +95,6 @@ internal class OverlayFrameLayout @JvmOverloads constructor(
     }
 
     override fun onApplyWindowInsets(insets: WindowInsets?): WindowInsets {
-        //TODO: Not working correctly when windowLayoutInDisplayCutoutMode="shortEdges"
         insetX = insets?.systemWindowInsetLeft ?: 0
         insetY = insets?.systemWindowInsetTop ?: 0
         updateStatusBarHeight()

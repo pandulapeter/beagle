@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.list
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,13 +11,13 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class CaseStudyViewHolder private constructor(
     binding: ItemExamplesCaseStudyBinding,
-    onItemSelected: (UiModel, View) -> Unit
+    onItemSelected: (UiModel) -> Unit
 ) : BaseViewHolder<ItemExamplesCaseStudyBinding, CaseStudyViewHolder.UiModel>(binding) {
 
     init {
         binding.root.setOnClickListener {
             if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                binding.uiModel?.let { uiModel -> onItemSelected(uiModel, itemView) }
+                binding.uiModel?.let(onItemSelected)
             }
         }
     }
@@ -33,7 +32,7 @@ class CaseStudyViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onItemSelected: (UiModel, View) -> Unit
+            onItemSelected: (UiModel) -> Unit
         ) = CaseStudyViewHolder(
             binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_examples_case_study, parent, false),
             onItemSelected = onItemSelected

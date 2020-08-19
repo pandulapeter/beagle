@@ -8,9 +8,9 @@ import android.hardware.SensorEventListener
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
@@ -18,7 +18,7 @@ import com.pandulapeter.beagle.core.util.extension.unregisterSensorEventListener
 import kotlin.math.abs
 
 @Suppress("unused")
-internal class ShakeDetector : SensorEventListener, LifecycleObserver {
+internal class ShakeDetector : SensorEventListener, DefaultLifecycleObserver {
 
     private var lastSensorUpdate = 0L
     private val previousEvent = SensorValues()
@@ -35,12 +35,13 @@ internal class ShakeDetector : SensorEventListener, LifecycleObserver {
         }
     }
 
-    //TODO: User DefaultLifecycleObserver
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun registerSensor() = application?.registerSensorEventListener(this)
+    override fun onStart(owner: LifecycleOwner) {
+        application?.registerSensorEventListener(this)
+    }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun unregisterSensor() = application?.unregisterSensorEventListener(this)
+    override fun onStop(owner: LifecycleOwner) {
+        application?.unregisterSensorEventListener(this)
+    }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
 

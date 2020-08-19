@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 object BeagleNetworkInterceptor : BeagleNetworkInterceptorContract {
 
     private val UTF8 = Charset.forName("UTF-8")
-    private const val MAX_STRING_LENGTH = 512 * 1024 //TODO: Come up with a less random value
+    private const val MAX_STRING_LENGTH = 512 * 1024
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

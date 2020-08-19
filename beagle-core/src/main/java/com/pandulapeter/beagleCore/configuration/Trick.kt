@@ -633,7 +633,6 @@ sealed class Trick {
         }
     }
 
-    //TODO: Should be encapsulated + should not be part of the noop variant. Needs refactoring.
     companion object {
         var pendingChangeListener: (() -> Unit)? = null
         var onAllChangesApplied: (() -> Unit)? = null

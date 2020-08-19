@@ -4,12 +4,14 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.UiManagerContract
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 
-internal class DrawerUiManager : UiManagerContract {
+internal class DrawerUiManager : UiManagerContract, DrawerLayout.DrawerListener {
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -28,20 +30,10 @@ internal class DrawerUiManager : UiManagerContract {
             if (onBackPressedCallback.isEnabled) {
                 openDrawer(drawer, false)
             }
-            //TODO: This might be a memory leak. Use lifecycle-aware listeners
-            addDrawerListener(object : DrawerLayout.DrawerListener {
+            activity.lifecycle.addObserver(object : DefaultLifecycleObserver {
+                override fun onStart(owner: LifecycleOwner) = addDrawerListener(this@DrawerUiManager)
 
-                override fun onDrawerStateChanged(newState: Int) = Unit
-
-                override fun onDrawerSlide(drawerView: View, slideOffset: Float) = BeagleCore.implementation.hideKeyboard()
-
-                override fun onDrawerClosed(drawerView: View) {
-                    onBackPressedCallback.isEnabled = false
-                }
-
-                override fun onDrawerOpened(drawerView: View) {
-                    onBackPressedCallback.isEnabled = true
-                }
+                override fun onStop(owner: LifecycleOwner) = removeDrawerListener(this@DrawerUiManager)
             })
         }
     }
@@ -66,6 +58,18 @@ internal class DrawerUiManager : UiManagerContract {
         return (drawerLayout?.isDrawerOpen(drawer) == true).also {
             drawerLayout?.closeDrawers()
         }
+    }
+
+    override fun onDrawerStateChanged(newState: Int) = Unit
+
+    override fun onDrawerSlide(drawerView: View, slideOffset: Float) = BeagleCore.implementation.hideKeyboard()
+
+    override fun onDrawerClosed(drawerView: View) {
+        onBackPressedCallback.isEnabled = false
+    }
+
+    override fun onDrawerOpened(drawerView: View) {
+        onBackPressedCallback.isEnabled = true
     }
 
     private fun getDrawerView(activity: FragmentActivity?) = getDrawerLayout(activity)?.debugMenuView

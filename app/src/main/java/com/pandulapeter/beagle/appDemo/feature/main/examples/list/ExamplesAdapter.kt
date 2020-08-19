@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.list
 
-import android.view.View
 import android.view.ViewGroup
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
@@ -10,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 
 class ExamplesAdapter(
     scope: CoroutineScope,
-    private val onCaseStudyClicked: (CaseStudy, View) -> Unit
+    private val onCaseStudyClicked: (CaseStudy) -> Unit
 ) : BaseAdapter<ExamplesListItem>(scope) {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
@@ -19,9 +18,7 @@ class ExamplesAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, *> = when (viewType) {
-        R.layout.item_examples_case_study -> CaseStudyViewHolder.create(parent) { uiModel, view ->
-            onCaseStudyClicked(uiModel.caseStudy, view)
-        }
+        R.layout.item_examples_case_study -> CaseStudyViewHolder.create(parent) { uiModel -> onCaseStudyClicked(uiModel.caseStudy) }
         else -> super.onCreateViewHolder(parent, viewType)
     }
 
