@@ -3,8 +3,8 @@ buildscript {
         libraryGroup = "com.github.pandulapeter.beagle"
         libraryVersion = "2.0.0-beta16"
         libraryMinimumSdkVersion = 16
-        libraryCompileSdkVersion = 29
-        libraryTargetSdkVersion = 29
+        libraryCompileSdkVersion = 30
+        libraryTargetSdkVersion = 30
         libraryVersionCode = 1
         kotlinVersion = "1.4.0"
         coroutinesVersion = "1.3.9"

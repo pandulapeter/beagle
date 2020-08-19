@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.pandulapeter.beagle"
         minSdkVersion libraryMinimumSdkVersion
-        targetSdkVersion libraryTargetSdkVersion //TODO: Target SDK 30
+        targetSdkVersion libraryTargetSdkVersion
         versionCode 10
         versionName "0.0.10"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy-MM-dd")}\"")

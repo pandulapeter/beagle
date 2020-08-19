@@ -62,7 +62,7 @@ internal class ScreenCaptureService : Service() {
                 handler.postDelayed({
                     startCapture(
                         resultCode = intent.getIntExtra(EXTRA_RESULT_CODE, 0),
-                        resultData = intent.getParcelableExtra(EXTRA_RESULT_INTENT) as Intent,
+                        resultData = intent.getParcelableExtra(EXTRA_RESULT_INTENT)!!,
                         isForVideo = isForVideo,
                         fileName = intent.getStringExtra(EXTRA_FILE_NAME) ?: "fileName"
                     )
