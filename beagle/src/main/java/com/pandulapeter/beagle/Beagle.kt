@@ -46,7 +46,7 @@ import kotlin.math.max
  * The main singleton that handles the debug drawer's functionality.
  */
 @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
-@Suppress("StaticFieldLeak", "unused")
+@Suppress("StaticFieldLeak", "unused", "DeprecatedCallableAddReplaceWith")
 object Beagle : BeagleContract, SensorEventListener {
 
     //region Public API

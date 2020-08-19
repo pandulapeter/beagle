@@ -57,7 +57,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     private fun setupRecyclerView() {
         val listAdapter = createAdapter().also { it.blockGestures = { binding.recyclerView.shouldBlockGestures = true } }
-        viewModel.items.observe(viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
+        viewModel.items.observe(owner = viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
         binding.recyclerView.run {
             shouldBlockGestures = true
             adapter = listAdapter

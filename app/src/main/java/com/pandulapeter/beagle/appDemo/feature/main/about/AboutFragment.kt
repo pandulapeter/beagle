@@ -28,7 +28,7 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.snackbarMessage.observe(viewLifecycleOwner) { messageResourceId ->
+        viewModel.snackbarMessage.observe(owner = viewLifecycleOwner) { messageResourceId ->
             if (messageResourceId != null) {
                 binding.recyclerView.showSnackbar(messageResourceId)
                 viewModel.snackbarMessage.value = null

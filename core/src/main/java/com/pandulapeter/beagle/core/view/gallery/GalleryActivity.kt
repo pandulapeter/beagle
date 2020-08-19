@@ -61,7 +61,7 @@ internal class GalleryActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(this, getSpanCount())
         recyclerView.adapter = adapter
-        viewModel.items.observe(this, Observer {
+        viewModel.items.observe(this, {
             adapter.submitList(it)
             emptyStateTextView.visible = it.isEmpty()
         })

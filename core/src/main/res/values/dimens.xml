@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="beagle_small_content_padding">4dp</dimen>
     <dimen name="beagle_content_padding">8dp</dimen>
     <dimen name="beagle_large_content_padding">16dp</dimen>
     <dimen name="beagle_minimum_size">256dp</dimen>
