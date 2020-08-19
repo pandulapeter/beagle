@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.core.manager
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.hardware.Sensor
@@ -65,6 +66,7 @@ internal class ShakeDetector : SensorEventListener, DefaultLifecycleObserver {
     }
 
 
+    @SuppressLint("MissingPermission")
     private fun showDebugMenuAndVibrateIfNeeded() {
         if (BeagleCore.implementation.show()) {
             vibrator?.run {
