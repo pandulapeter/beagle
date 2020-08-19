@@ -7,9 +7,9 @@ buildscript {
         libraryTargetSdkVersion = 29
         libraryVersionCode = 1
         kotlinVersion = "1.3.72"
-        coroutinesVersion = "1.3.7"
+        coroutinesVersion = "1.3.9"
         annotationsVersion = "1.1.0"
-        appCompatVersion = "1.1.0"
+        appCompatVersion = "1.2.0"
         recyclerViewVersion = "1.1.0"
         lifecycleVersion = "2.2.0"
         materialVersion = "1.2.0"
@@ -18,7 +18,7 @@ buildscript {
         moshiVersion = "1.8.0"
         okHttpVersion = "4.7.2"
         ktorVersion = "1.3.2"
-        coilVersion = "0.11.0"
+        coilVersion = "0.12.0"
     }
     repositories {
         google()

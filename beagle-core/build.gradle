@@ -19,7 +19,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "androidx.annotation:annotation:1.1.0"
+    implementation "androidx.annotation:annotation:$annotationsVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
 }

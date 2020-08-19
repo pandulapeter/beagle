@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.request.LoadRequestBuilder
+import coil.request.ImageRequest
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
@@ -39,7 +39,7 @@ internal class VideoViewHolder private constructor(
             job?.cancel()
             job = GlobalScope.launch {
                 BeagleCore.implementation.videoThumbnailLoader.execute(
-                    LoadRequestBuilder(context)
+                    ImageRequest.Builder(context)
                         .data(context.getScreenCapturesFolder().resolve(uiModel.fileName))
                         .target(this@run)
                         .build()
