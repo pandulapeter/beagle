@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.KeyValueCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.modules.DeviceInfoModule
+import kotlin.math.roundToInt
 
 internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
 
@@ -36,12 +37,27 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
         }
         if (module.shouldShowDisplayMetrics) {
             val dm = DisplayMetrics()
+            //TODO: Deprecated API usage
             BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
                 add(
                     KeyValueCell(
-                        id = "${module.id}_screen",
-                        key = "Screen",
-                        value = "${dm.widthPixels} * ${dm.heightPixels} (${dm.densityDpi} dpi)"
+                        id = "${module.id}_resolution_px",
+                        key = "Resolution (px)",
+                        value = "${dm.widthPixels} * ${dm.heightPixels}"
+                    )
+                )
+                add(
+                    KeyValueCell(
+                        id = "${module.id}_resolution_dp",
+                        key = "Resolution (dp)",
+                        value = "${(dm.widthPixels / dm.density).roundToInt()} * ${(dm.heightPixels / dm.density).roundToInt()}"
+                    )
+                )
+                add(
+                    KeyValueCell(
+                        id = "${module.id}_dpi",
+                        key = "DPI",
+                        value = "${dm.densityDpi}"
                     )
                 )
             }
