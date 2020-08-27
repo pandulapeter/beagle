@@ -23,7 +23,6 @@ internal class ScreenshotWriter(
     val surface: Surface get() = imageReader.surface
 
     @SuppressLint("WrongConstant")
-    //TODO: private val imageReader = ImageReader.newInstance(width, height, if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ImageFormat.FLEX_RGBA_8888 else PixelFormat.RGBA_8888, 1)
     private val imageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 1)
     private var latestBitmap: Bitmap? = null
 

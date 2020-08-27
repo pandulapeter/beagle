@@ -13,7 +13,9 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
 
     override fun canExpand(module: DeviceInfoModule) = module.shouldShowManufacturer
             || module.shouldShowModel
-            || module.shouldShowDisplayMetrics
+            || module.shouldShowResolutionsPx
+            || module.shouldShowResolutionsDp
+            || module.shouldShowDensity
             || module.shouldShowAndroidVersion
 
     override fun MutableList<Cell<*>>.addItems(module: DeviceInfoModule) {
@@ -35,10 +37,9 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
                 )
             )
         }
-        if (module.shouldShowDisplayMetrics) {
-            val dm = DisplayMetrics()
-            //TODO: Deprecated API usage
-            BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
+        val dm = DisplayMetrics()
+        BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
+            if (module.shouldShowResolutionsPx) {
                 add(
                     KeyValueCell(
                         id = "${module.id}_resolution_px",
@@ -46,20 +47,24 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
                         value = "${dm.widthPixels} * ${dm.heightPixels}"
                     )
                 )
-                add(
-                    KeyValueCell(
-                        id = "${module.id}_resolution_dp",
-                        key = "Resolution (dp)",
-                        value = "${(dm.widthPixels / dm.density).roundToInt()} * ${(dm.heightPixels / dm.density).roundToInt()}"
+                if (module.shouldShowResolutionsDp) {
+                    add(
+                        KeyValueCell(
+                            id = "${module.id}_resolution_dp",
+                            key = "Resolution (dp)",
+                            value = "${(dm.widthPixels / dm.density).roundToInt()} * ${(dm.heightPixels / dm.density).roundToInt()}"
+                        )
                     )
-                )
-                add(
-                    KeyValueCell(
-                        id = "${module.id}_dpi",
-                        key = "DPI",
-                        value = "${dm.densityDpi}"
+                }
+                if (module.shouldShowDensity) {
+                    add(
+                        KeyValueCell(
+                            id = "${module.id}_density",
+                            key = "Density (dpi)",
+                            value = "${dm.densityDpi}"
+                        )
                     )
-                )
+                }
             }
         }
         if (module.shouldShowAndroidVersion) {

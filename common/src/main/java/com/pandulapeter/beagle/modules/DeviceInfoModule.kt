@@ -12,7 +12,9 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule.Companion.ID
  * @param title - The title of the module that will be displayed in the header of the list. "Device info" by default.
  * @param shouldShowManufacturer - Whether or not the device manufacturer should be part of the list. True by default.
  * @param shouldShowModel - Whether or not the device model should be part of the list. True by default.
- * @param shouldShowDisplayMetrics - Whether or not the device's screen resolution and density should be part of the list. True by default.
+ * @param shouldShowResolutionsPx - Whether or not the device's screen resolution (in pixels) should be part of the list. True by default.
+ * @param shouldShowResolutionsDp - Whether or not the device's screen resolution (in dp) should be part of the list. True by default.
+ * @param shouldShowDensity - Whether or not the device's screen density should be part of the list. True by default.
  * @param shouldShowAndroidVersion - Whether or not the device's Android SDK version should be part of the list. True by default.
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. Optional, false by default.
  */
@@ -20,7 +22,9 @@ data class DeviceInfoModule(
     override val title: CharSequence = "Device info",
     val shouldShowManufacturer: Boolean = true,
     val shouldShowModel: Boolean = true,
-    val shouldShowDisplayMetrics: Boolean = true,
+    val shouldShowResolutionsPx: Boolean = true,
+    val shouldShowResolutionsDp: Boolean = true,
+    val shouldShowDensity: Boolean = true,
     val shouldShowAndroidVersion: Boolean = true,
     override val isExpandedInitially: Boolean = false
 ) : ExpandableModule<DeviceInfoModule> {
