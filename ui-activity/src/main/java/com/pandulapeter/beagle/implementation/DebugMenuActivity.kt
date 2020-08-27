@@ -13,9 +13,9 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import com.google.android.material.appbar.MaterialToolbar
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.common.configuration.Insets
@@ -28,7 +28,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beagle_activity_debug_menu)
         supportActionBar?.hide()
-        findViewById<MaterialToolbar>(R.id.beagle_toolbar).apply {
+        findViewById<Toolbar>(R.id.beagle_toolbar).apply {
             setNavigationOnClickListener { onBackPressed() }
             navigationIcon = tintedDrawable(com.pandulapeter.beagle.core.R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
         }

@@ -18,7 +18,7 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
 
     override fun getContext() = super.getContext()?.applyTheme()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = InternalDebugMenuView(context!!).also {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = InternalDebugMenuView(requireContext()).also {
         if (savedInstanceState == null) {
             BeagleCore.implementation.notifyVisibilityListenersOnShow()
         }

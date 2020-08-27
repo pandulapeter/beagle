@@ -7,10 +7,10 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.MaterialToolbar
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
@@ -33,7 +33,7 @@ internal class GalleryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beagle_activity_gallery)
         supportActionBar?.hide()
-        findViewById<MaterialToolbar>(R.id.beagle_toolbar).apply {
+        findViewById<Toolbar>(R.id.beagle_toolbar).apply {
             setNavigationOnClickListener { onBackPressed() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
             title = BeagleCore.implementation.appearance.galleryTitle
