@@ -68,6 +68,7 @@ import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextInputModule
 import com.pandulapeter.beagle.modules.TextModule
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -130,7 +131,7 @@ internal class ListManager {
     }
 
     fun addModules(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?, onContentsChanged: () -> Unit) {
-        GlobalScope.launch { addModulesInternal(newModules, placement, lifecycleOwner, onContentsChanged) }
+        GlobalScope.launch(if (lifecycleOwner == null) Dispatchers.Default else Dispatchers.Main) { addModulesInternal(newModules, placement, lifecycleOwner, onContentsChanged) }
     }
 
     fun removeModules(ids: List<String>, onContentsChanged: () -> Unit) {
