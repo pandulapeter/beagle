@@ -96,6 +96,12 @@ enum class Dependency(
         type = Type.APACHE_V2,
         title = "Ktor",
         url = "https://github.com/ktorio/ktor"
+    ),
+    LEAK_CANARY(
+        type = Type.APACHE_V2,
+        title = "LeakCanary",
+        copyright = "Copyright 2015, Square Inc.",
+        url = "https://github.com/square/leakcanary"
     );
 
     enum class Type(@StringRes val titleResourceId: Int) {

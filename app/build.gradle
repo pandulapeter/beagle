@@ -125,6 +125,7 @@ dependencies {
     implementation "io.ktor:ktor-client-gson:$ktorVersion"
     implementation "com.android.billingclient:billing:3.0.0"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.2"
     activityDebugImplementation project(":ui-activity")
     activityDebugImplementation project(":log")
     activityDebugImplementation project(":log-okhttp")
