@@ -19,7 +19,7 @@ The tutorials in the app cover everything from this readme, but in more detail.
 ## Use it in your project
 ### Step 0: Check the requirements
 - Minimum SDK level: 16+
-- Target SDK level: 29+
+- Target SDK level: 30+
 - Language: Kotlin 1.4 (should work with Java as well but the API was not optimized for that)
 
 ### Step 1: Add the Jitpack repository
@@ -49,7 +49,7 @@ So for example if you prefer the Drawer UI, something like the following needs t
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.0.0-beta15"
+    def beagleVersion = "2.0.0-beta16"
     debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
