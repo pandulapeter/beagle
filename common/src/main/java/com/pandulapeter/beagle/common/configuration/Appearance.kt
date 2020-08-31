@@ -5,7 +5,7 @@ import androidx.annotation.StyleRes
 /**
  * Specifies the appearance customization options for the debug menu. All parameters are optional.
  *
- * @param themeResourceId - The theme resource ID the menu should use. If null, each menu will take their Activity's theme. Null by default.
+ * @param themeResourceId - The theme resource ID to be used for the debug menu as well as the Gallery screen. If null, the current Activity's theme will be used. Null by default.
  * @param applyButtonText - The text on the Apply button that appears when the user makes changes that are not handled in real-time (see the "shouldRequireConfirmation" parameter of some Modules). "Apply" by default.
  * @param resetButtonText - The text on the Reset button that appears when the user makes changes that are not handled in real-time (see the "shouldRequireConfirmation" parameter of some Modules). "Reset" by default.
  * @param screenRecordingToastText - A Toast message displayed every time a screen recording is started, or null for no Toast. "Recording in progress. Tap on the notification to stop it." by default.
