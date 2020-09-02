@@ -35,7 +35,7 @@ class AnalyticsFragment : ExamplesDetailFragment<AnalyticsViewModel, AnalyticsLi
             title = getText(R.string.case_study_analytics_module_title),
             isExpandedInitially = true,
             maxItemCount = 20,
-            tag = LOG_TAG
+            label = LOG_TAG
         )
     )
 

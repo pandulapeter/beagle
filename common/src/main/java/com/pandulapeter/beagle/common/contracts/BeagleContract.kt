@@ -258,17 +258,17 @@ interface BeagleContract {
      * Adds a new log message handled by instances of LogListModule and notifies the registered LogListeners.
      *
      * @param message - The message that will be displayed.
-     * @param tag - Optional tag that can be used to create filtered LogListModule instances, null by default.
+     * @param label - Optional tag that can be used to create filtered LogListModule instances, null by default.
      * @param payload - Extra message that will only be displayed when the user selects the log entry. Entries with payloads are marked with "*" at the end. Optional, null by default.
      */
-    fun log(message: CharSequence, tag: String? = null, payload: CharSequence? = null) = Unit
+    fun log(message: CharSequence, label: String? = null, payload: CharSequence? = null) = Unit
 
     /**
      * Clears all log messages for the specified tag.
      *
-     * @param tag - A specific tag to filter out, or null to delete all logs. Null by default.
+     * @param label - A specific tag to filter out, or null to delete all logs. Null by default.
      */
-    fun clearLogs(tag: String? = null) = Unit
+    fun clearLogs(label: String? = null) = Unit
 
     /**
      * Adds a new network log message handled by NetworkLogListModule and notifies the registered NetworkLogListeners.

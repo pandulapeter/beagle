@@ -147,9 +147,9 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun clearVisibilityListeners() = visibilityListenerManager.clearListeners()
 
-    override fun log(message: CharSequence, tag: String?, payload: CharSequence?) = logManager.log(tag, message, payload)
+    override fun log(message: CharSequence, label: String?, payload: CharSequence?) = logManager.log(label, message, payload)
 
-    override fun clearLogs(tag: String?) = logManager.clearLogs(tag)
+    override fun clearLogs(label: String?) = logManager.clearLogs(label)
 
     override fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) =
         networkLogManager.log(isOutgoing, url, payload, headers, duration, timestamp)

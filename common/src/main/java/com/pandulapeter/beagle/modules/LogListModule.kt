@@ -16,7 +16,7 @@ import java.util.Locale
  * @param title - The title of the module. "Logs" by default.
  * @param maxItemCount - The maximum number of messages that will appear when expanded. 10 by default.
  * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with "HH:mm:ss" by default.
- * @param tag - The tag for which the logs should be filtered, or null for no filtering. Null by default.
+ * @param label - The label for which the logs should be filtered, or null for no filtering. Null by default.
  * @param isHorizontalScrollEnabled - When true, the payload dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. False by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
@@ -24,12 +24,12 @@ data class LogListModule(
     override val title: CharSequence = "Logs",
     val maxItemCount: Int = 10,
     val timestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },
-    val tag: String? = null,
+    val label: String? = null,
     val isHorizontalScrollEnabled: Boolean = false,
     override val isExpandedInitially: Boolean = false
 ) : ExpandableModule<LogListModule> {
 
-    override val id = formatId(tag)
+    override val id = formatId(label)
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 

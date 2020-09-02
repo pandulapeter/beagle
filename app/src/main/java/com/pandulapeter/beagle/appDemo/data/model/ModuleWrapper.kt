@@ -123,11 +123,11 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_log_list_description,
         module = UUID.randomUUID().toString().let { tag ->
             LogListModule(
-                tag = tag
+                label = tag
             ).also {
-                Beagle.log(message = "Log message 3", tag = tag, payload = "Log payload")
-                Beagle.log(message = "Log message 2", tag = tag)
-                Beagle.log(message = "Log message 1", tag = tag)
+                Beagle.log(message = "Log message 3", label = tag, payload = "Log payload")
+                Beagle.log(message = "Log message 2", label = tag)
+                Beagle.log(message = "Log message 1", label = tag)
             }
         },
         codeSnippet = "LogListModule(tag = …)"

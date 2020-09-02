@@ -47,7 +47,7 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
             TextViewHolder.UiModel(R.string.case_study_analytics_text_2),
             CodeSnippetViewHolder.UiModel(
                 "Beagle.log(\n" +
-                        "    tag = LOG_TAG,\n" +
+                        "    label = LOG_TAG,\n" +
                         "    message = \"…\"\n" +
                         ")"
             ),
@@ -57,7 +57,7 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
                         "    title = \"Analytics events\"\n" +
                         "    isExpandedInitially = true,\n" +
                         "    maxItemCount = 20,\n" +
-                        "    tag = LOG_TAG\n" +
+                        "    label = LOG_TAG\n" +
                         ")"
             ),
             TextViewHolder.UiModel(R.string.case_study_analytics_text_4),
@@ -98,7 +98,7 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
             if (value != currentValue) {
                 currentValue = value
                 BeagleLogger.log(
-                    tag = AnalyticsFragment.LOG_TAG,
+                    label = AnalyticsFragment.LOG_TAG,
                     message = "Toggle $toggleIndex turned ${if (value) "on" else "off"}."
                 )
                 thisRef.refreshItems()
