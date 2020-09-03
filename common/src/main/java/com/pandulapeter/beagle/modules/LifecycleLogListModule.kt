@@ -11,6 +11,7 @@ import java.util.Locale
 
 /**
  * Logs Fragment and Activity lifecycle events. Useful for getting to know the navigational classes on a new project or debugging lifecycle / state restoration issues.
+ * Note: In case of obfuscated builds, Fragment names will only appear properly if you choose to keep them in your ProGuard configuration.
  *
  * This module can only be added once. It uses the value of [ID] as id.
  *
@@ -19,7 +20,7 @@ import java.util.Locale
  * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with "HH:mm:ss" by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
-//TODO: Add support for filtering by type.
+//TODO: Add support for filtering by type and displaying full package names.
 data class LifecycleLogListModule(
     override val title: CharSequence = "Lifecycle logs",
     val maxItemCount: Int = 10,
