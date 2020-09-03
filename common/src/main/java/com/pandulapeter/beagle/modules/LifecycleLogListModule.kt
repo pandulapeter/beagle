@@ -11,7 +11,8 @@ import java.util.Locale
 
 /**
  * Logs Fragment and Activity lifecycle events. Useful for getting to know the navigational classes on a new project or debugging lifecycle / state restoration issues.
- * Note: In case of obfuscated builds, Fragment names will only appear properly if you choose to keep them in your ProGuard configuration.
+ * Note: In case of obfuscated builds, Fragment names will only appear properly if you choose to keep them in your ProGuard configuration. Use the following line:
+ * -keepnames class * extends androidx.fragment.app.Fragment
  *
  * This module can only be added once. It uses the value of [ID] as id.
  *

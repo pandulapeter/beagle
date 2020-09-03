@@ -1,0 +1,1 @@
+-keepnames class * extends androidx.fragment.app.Fragment
