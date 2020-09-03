@@ -41,6 +41,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
             addScreenCaptureToolboxSection()
             addKeylineOverlaySwitchSection()
             addAnimationDurationSwitchSection()
+            addLifecycleLogListSection()
             addDeviceInfoSection()
         }
     }
@@ -59,6 +60,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
                         "    ScreenCaptureToolboxModule(),\n" +
                         "    KeylineOverlaySwitchModule(),\n" +
                         "    AnimationDurationSwitchModule()\n" +
+                        "    LifecycleLogListModule()\n" +
                         "    DeviceInformationModule()\n" +
                         ")"
             )
@@ -103,6 +105,10 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         add(LoadingIndicatorViewHolder.UiModel())
     }
 
+    private fun MutableList<SimpleSetupListItem>.addLifecycleLogListSection() = addSection(Section.LIFECYCLE_LOG_LIST) {
+        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_lifecycle_log_list_2))
+    }
+
     private fun MutableList<SimpleSetupListItem>.addDeviceInfoSection() = addSection(Section.DEVICE_INFO) {
         add(TextViewHolder.UiModel(R.string.case_study_simple_setup_device_info_2))
     }
@@ -125,6 +131,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         SCREEN_CAPTURE_TOOLBOX(R.string.case_study_simple_setup_screen_capture_toolbox_1),
         KEYLINE_OVERLAY_SWITCH(R.string.case_study_simple_setup_keyline_overlay_switch_1),
         ANIMATION_DURATION_SWITCH(R.string.case_study_simple_setup_animation_duration_switch_1),
+        LIFECYCLE_LOG_LIST(R.string.case_study_simple_setup_lifecycle_log_list_1),
         DEVICE_INFO(R.string.case_study_simple_setup_device_info_1);
 
         companion object {
