@@ -7,6 +7,5 @@ version = libraryVersion
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     api project(":common-base")
 }
