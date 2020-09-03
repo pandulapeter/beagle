@@ -4,7 +4,7 @@ import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import java.util.UUID
 
 internal data class LogEntry(
-    val tag: String?,
+    val label: String?,
     val message: CharSequence,
     val payload: CharSequence?,
     override val id: String = UUID.randomUUID().toString(),

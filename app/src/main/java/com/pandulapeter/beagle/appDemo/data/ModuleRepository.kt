@@ -14,12 +14,17 @@ class ModuleRepository {
         add(ModuleWrapper.Header)
         add(ModuleWrapper.AppInfoButton)
         add(ModuleWrapper.DeveloperOptionsButton)
+        add(ModuleWrapper.Label())
         add(ModuleWrapper.KeylineOverlaySwitch)
         add(ModuleWrapper.AnimationDurationSwitch)
-        add(ModuleWrapper.Divider())
         add(ModuleWrapper.ScreenCaptureToolbox)
+        add(ModuleWrapper.Divider())
+        add(ModuleWrapper.Label())
         add(ModuleWrapper.NetworkLogList)
         add(ModuleWrapper.LogList())
+        add(ModuleWrapper.LifecycleLogList)
+        add(ModuleWrapper.Divider())
+        add(ModuleWrapper.Label())
         add(ModuleWrapper.DeviceInfo)
     }
     val modules: List<ModuleWrapper> get() = _modules

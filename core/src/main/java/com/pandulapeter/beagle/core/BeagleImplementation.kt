@@ -22,6 +22,7 @@ import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
+import com.pandulapeter.beagle.core.manager.LifecycleLogManager
 import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.LocalStorageManager
 import com.pandulapeter.beagle.core.manager.LogManager
@@ -66,6 +67,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     private val updateListenerManager by lazy { UpdateListenerManager() }
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
     private val logManager by lazy { LogManager(logListenerManager, listManager, ::refresh) }
+    private val lifecycleLogManager by lazy { LifecycleLogManager(listManager, ::refresh) }
     private val networkLogManager by lazy { NetworkLogManager(networkLogListenerManager, listManager, ::refresh) }
     private val listManager by lazy { ListManager() }
     private val screenCaptureManager by lazy { ScreenCaptureManager() }
@@ -185,6 +187,10 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     internal fun resetPendingChanges() = listManager.resetPendingChanges()
 
     internal fun getLogEntries(tag: String?) = logManager.getEntries(tag)
+
+    internal fun getLifecycleLogEntries() = lifecycleLogManager.getEntries()
+
+    internal fun logLifecycle(classType: Class<*>, lifecycleEvent: String) = lifecycleLogManager.log(classType, lifecycleEvent)
 
     internal fun getNetworkLogEntries() = networkLogManager.getEntries()
 

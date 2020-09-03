@@ -98,11 +98,17 @@ Beagle.set(
     ),
     AppInfoButtonModule(),
     DeveloperOptionsButtonModule(),
+    LabelModule("General"),
     KeylineOverlaySwitchModule(),
     AnimationDurationSwitchModule(),
-    DividerModule(),
     ScreenCaptureToolboxModule(),
-    LogListModule(),
+    DividerModule(),
+    LabelModule("Logs"),
+    NetworkLogListModule(), // Requires setup, see below
+    LogListModule(), // Requires setup, see below
+    LifecycleLogListModule(),
+    DividerModule(),
+    LabelModule("Other"),
     DeviceInfoModule()
 )
 ```

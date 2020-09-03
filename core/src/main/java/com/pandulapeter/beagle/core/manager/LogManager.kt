@@ -11,42 +11,44 @@ internal class LogManager(
 ) {
     private val entries = mutableListOf<LogEntry>()
 
-    fun log(tag: String?, message: CharSequence, payload: CharSequence?) {
+    fun log(label: String?, message: CharSequence, payload: CharSequence?) {
         synchronized(entries) {
             entries.add(
                 0,
                 LogEntry(
-                    tag = tag,
+                    label = label,
                     message = message,
                     payload = payload
                 )
             )
             entries.sortByDescending { it.timestamp }
         }
-        logListenerManager.notifyListeners(tag, message, payload)
-        if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
-            refreshUi()
-        }
+        logListenerManager.notifyListeners(label, message, payload)
+        refreshUiIfNeeded(label)
     }
 
-    fun clearLogs(tag: String?) {
+    fun clearLogs(label: String?) {
         synchronized(entries) {
-            if (tag == null) {
+            if (label == null) {
                 entries.clear()
             } else {
-                entries.removeAll { it.tag == tag }
+                entries.removeAll { it.label == label }
             }
         }
-        if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(tag))) {
-            refreshUi()
+        refreshUiIfNeeded(label)
+    }
+
+    fun getEntries(label: String?): List<LogEntry> = synchronized(entries) {
+        if (label == null) {
+            entries.toList()
+        } else {
+            entries.filter { it.label == label }.toList()
         }
     }
 
-    fun getEntries(tag: String?): List<LogEntry> = synchronized(entries) {
-        if (tag == null) {
-            entries.toList()
-        } else {
-            entries.filter { it.tag == tag }.toList()
+    private fun refreshUiIfNeeded(label: String?) {
+        if (listManager.contains(LogListModule.formatId(null)) || listManager.contains(LogListModule.formatId(label))) {
+            refreshUi()
         }
     }
 }

@@ -22,6 +22,7 @@ import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
@@ -293,6 +294,13 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_keyline_overlay_switch_description,
         module = KeylineOverlaySwitchModule(),
         codeSnippet = "KeylineOverlaySwitchModule()"
+    )
+
+    object LifecycleLogList : ModuleWrapper(
+        titleResourceId = R.string.add_module_lifecycle_log_list,
+        descriptionResourceId = R.string.add_module_lifecycle_log_list_description,
+        module = LifecycleLogListModule(),
+        codeSnippet = "LifecycleLogListModule()"
     )
 
     class LoremIpsumGeneratorButton : ModuleWrapper(
