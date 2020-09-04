@@ -13,6 +13,8 @@ internal class SwitchDelegate : PersistableModuleDelegate.Boolean<SwitchModule>(
             id = module.id,
             text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text.append("*") else module.text,
             isChecked = getUiValue(module),
-            onValueChanged = { newValue -> setUiValue(module, newValue) })
+            isEnabled = module.isEnabled,
+            onValueChanged = { newValue -> setUiValue(module, newValue) }
+        )
     )
 }

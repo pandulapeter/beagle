@@ -235,7 +235,7 @@ If you're updating from a version older than 2.x.x, check out this [migration gu
 The library uses [semantic versioning](https://semver.org): **MAJOR.MINOR.PATCH** where **PATCH** changes only contain bug fixes, **MINOR** changes add new features and **MAJOR** changes introduce breaking modifications to the API.
 
 ## Known issues
-Check out the [Issues](https://github.com/pandulapeter/beagle/issues) page for the list of know problems.
+Check out the [Issues](https://github.com/pandulapeter/beagle/issues) page for the list of known problems and for the planned enhancements of the library.
 
 Don't hesitate to open a new issue if you find a bug or if you have any questions / feature requests!
 

@@ -13,7 +13,9 @@ internal class AnimationDurationSwitchDelegate : PersistableModuleDelegate.Boole
             id = module.id,
             text = module.text,
             isChecked = getCurrentValue(module),
-            onValueChanged = { newValue -> setCurrentValue(module, newValue) })
+            isEnabled = module.isEnabled,
+            onValueChanged = { newValue -> setCurrentValue(module, newValue) }
+        )
     )
 
     override fun callOnValueChanged(module: AnimationDurationSwitchModule, newValue: kotlin.Boolean) {

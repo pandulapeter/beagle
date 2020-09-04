@@ -11,6 +11,7 @@ internal data class SwitchCell(
     override val id: String,
     private val text: CharSequence,
     private val isChecked: Boolean,
+    private val isEnabled: Boolean,
     private val onValueChanged: (Boolean) -> Unit
 ) : Cell<SwitchCell> {
 
@@ -27,6 +28,7 @@ internal data class SwitchCell(
             text = model.text
             setOnCheckedChangeListener(null)
             isChecked = model.isChecked
+            isEnabled = model.isEnabled
             setOnCheckedChangeListener { _, isChecked -> model.onValueChanged(isChecked) }
         }
     }

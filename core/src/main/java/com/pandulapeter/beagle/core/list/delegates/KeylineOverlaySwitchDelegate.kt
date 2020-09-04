@@ -42,7 +42,9 @@ internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<
             id = module.id,
             text = module.text,
             isChecked = getCurrentValue(module),
-            onValueChanged = { newValue -> setCurrentValue(module, newValue) })
+            isEnabled = module.isEnabled,
+            onValueChanged = { newValue -> setCurrentValue(module, newValue) }
+        )
     )
 
     override fun callOnValueChanged(module: KeylineOverlaySwitchModule, newValue: kotlin.Boolean) {
