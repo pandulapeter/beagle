@@ -20,8 +20,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>(R.string.playground_title), ModuleRepository.Listener {
 
     override val viewModel by viewModel<PlaygroundViewModel>()
-    private val itemTouchHelper by lazy {
-        ItemTouchHelper(object : ItemTouchHelper.Callback() {
+    private var itemTouchHelper: ItemTouchHelper? = null
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) = if (viewHolder is ModuleViewHolder) makeMovementFlags(
                 ItemTouchHelper.UP or ItemTouchHelper.DOWN,
                 ItemTouchHelper.START or ItemTouchHelper.END
@@ -31,17 +34,17 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
                 if (viewHolder is ModuleViewHolder && target is ModuleViewHolder) consume { viewModel.onModulesSwapped(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition) } else false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = viewModel.onModuleRemoved(viewHolder.bindingAdapterPosition)
-        })
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+        }).apply { attachToRecyclerView(binding.recyclerView) }
         if (viewModel.modules.isEmpty()) {
             registerListener()
         } else {
             binding.root.postDelayed({ registerListener() }, 300)
         }
+    }
+
+    override fun onDestroyView() {
+        itemTouchHelper?.attachToRecyclerView(null)
+        super.onDestroyView()
     }
 
     override fun createAdapter() = PlaygroundAdapter(
@@ -63,7 +66,9 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
         newInstance = AddModuleFragment.Companion::newInstance
     ) ?: Unit
 
-    private fun onDragHandleTouched(viewHolder: RecyclerView.ViewHolder) = itemTouchHelper.startDrag(viewHolder)
+    private fun onDragHandleTouched(viewHolder: RecyclerView.ViewHolder) {
+        itemTouchHelper?.startDrag(viewHolder)
+    }
 
     private fun registerListener() {
         try {
