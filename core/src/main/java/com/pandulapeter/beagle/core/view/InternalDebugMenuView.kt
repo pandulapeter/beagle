@@ -69,7 +69,6 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
     }
     private val recyclerView = GestureBlockingRecyclerView(context.applyTheme(), attrs, defStyleAttr).apply {
         clipToPadding = false
-        BeagleCore.implementation.setupRecyclerView(this)
         minimumWidth = context.dimension(R.dimen.beagle_minimum_size)
         minimumHeight = context.dimension(R.dimen.beagle_minimum_size)
     }
@@ -86,11 +85,13 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         BeagleCore.implementation.addInternalUpdateListener(this)
+        BeagleCore.implementation.setupRecyclerView(recyclerView)
     }
 
     @CallSuper
     override fun onDetachedFromWindow() {
         BeagleCore.implementation.removeUpdateListener(this)
+        recyclerView.adapter = null
         super.onDetachedFromWindow()
     }
 
