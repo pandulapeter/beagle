@@ -107,6 +107,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
 
     private fun MutableList<SimpleSetupListItem>.addLifecycleLogListSection() = addSection(Section.LIFECYCLE_LOG_LIST) {
         add(TextViewHolder.UiModel(R.string.case_study_simple_setup_lifecycle_log_list_2))
+        add(CodeSnippetViewHolder.UiModel("-keepnames class * extends androidx.fragment.app.Fragment"))
     }
 
     private fun MutableList<SimpleSetupListItem>.addDeviceInfoSection() = addSection(Section.DEVICE_INFO) {

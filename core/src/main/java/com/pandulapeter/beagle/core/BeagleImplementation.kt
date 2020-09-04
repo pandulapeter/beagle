@@ -39,6 +39,7 @@ import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.view.AlertDialogFragment
 import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
+import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
@@ -188,9 +189,10 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal fun getLogEntries(tag: String?) = logManager.getEntries(tag)
 
-    internal fun getLifecycleLogEntries() = lifecycleLogManager.getEntries()
+    internal fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>) = lifecycleLogManager.getEntries(eventTypes)
 
-    internal fun logLifecycle(classType: Class<*>, lifecycleEvent: String) = lifecycleLogManager.log(classType, lifecycleEvent)
+    internal fun logLifecycle(classType: Class<*>, eventType: LifecycleLogListModule.EventType, hasSavedInstanceState: Boolean? = null) =
+        lifecycleLogManager.log(classType, eventType, hasSavedInstanceState)
 
     internal fun getNetworkLogEntries() = networkLogManager.getEntries()
 
