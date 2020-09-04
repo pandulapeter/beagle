@@ -21,6 +21,7 @@ internal class MultipleSelectionListDelegate<T : BeagleListItemContract> : Expan
                 id = "${module.id}_${item.id}",
                 text = item.title,
                 isChecked = getUiValue(module).contains(item.id),
+                isEnabled = module.isEnabled,
                 onValueChanged = { isChecked ->
                     if (isChecked) {
                         setUiValue(module, getUiValue(module) + item.id)

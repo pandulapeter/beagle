@@ -11,6 +11,7 @@ internal data class CheckBoxCell(
     override val id: String,
     private val text: CharSequence,
     private val isChecked: Boolean,
+    private val isEnabled: Boolean,
     private val onValueChanged: (Boolean) -> Unit
 ) : Cell<CheckBoxCell> {
 
@@ -28,6 +29,7 @@ internal data class CheckBoxCell(
                 text = model.text
                 setOnCheckedChangeListener(null)
                 isChecked = model.isChecked
+                isEnabled = model.isEnabled
                 setOnCheckedChangeListener { _, isChecked -> model.onValueChanged(isChecked) }
             }
         }

@@ -13,6 +13,7 @@ internal class CheckBoxDelegate : PersistableModuleDelegate.Boolean<CheckBoxModu
             id = module.id,
             text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text.append("*") else module.text,
             isChecked = getUiValue(module),
+            isEnabled = module.isEnabled,
             onValueChanged = { setUiValue(module, it) })
     )
 }
