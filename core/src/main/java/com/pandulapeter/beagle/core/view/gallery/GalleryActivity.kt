@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,6 +29,7 @@ internal class GalleryActivity : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(GalleryViewModel::class.java) }
     private val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
+    private lateinit var deleteButton: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
@@ -37,7 +40,17 @@ internal class GalleryActivity : AppCompatActivity() {
             setNavigationOnClickListener { onBackPressed() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
             title = BeagleCore.implementation.appearance.galleryTitle
+            deleteButton = menu.findItem(R.id.beagle_delete).also {
+                it.icon = tintedDrawable(R.drawable.beagle_ic_delete, AppCompatTextView(context).textColors.defaultColor) //TODO: How not to get the current theme's text color.
+            }
+            setOnMenuItemClickListener {
+                if (it.itemId == R.id.beagle_delete) {
+                    viewModel.deleteSelectedItems(this@GalleryActivity)
+                }
+                true
+            }
         }
+        viewModel.isInSelectionMode.observe(this) { deleteButton.isVisible = it }
         val emptyStateTextView = findViewById<TextView>(R.id.beagle_text_view)
         emptyStateTextView.text = BeagleCore.implementation.appearance.galleryNoMediaMessage
         val largePadding = dimension(R.dimen.beagle_large_content_padding)
@@ -56,7 +69,10 @@ internal class GalleryActivity : AppCompatActivity() {
                 requestApplyInsets()
             }
         }
-        val adapter = GalleryAdapter { position -> viewModel.items.value?.get(position)?.id?.let(::onItemSelected) }
+        val adapter = GalleryAdapter(
+            onMediaSelected = { position -> viewModel.items.value?.get(position)?.id?.let(::onItemSelected) },
+            onLongTap = { position -> viewModel.items.value?.get(position)?.id?.let { itemId -> viewModel.selectItem(this, itemId) } }
+        )
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(this, getSpanCount())
         recyclerView.adapter = adapter
@@ -72,6 +88,14 @@ internal class GalleryActivity : AppCompatActivity() {
         when {
             fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> shareFile(uri, ScreenCaptureManager.IMAGE_TYPE)
             fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> shareFile(uri, ScreenCaptureManager.VIDEO_TYPE)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (viewModel.isInSelectionMode.value == true) {
+            viewModel.exitSelectionMode(this@GalleryActivity)
+        } else {
+            super.onBackPressed()
         }
     }
 

@@ -12,7 +12,8 @@ import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 
 internal class ImageViewHolder private constructor(
     itemView: View,
-    onMediaSelected: (Int) -> Unit
+    onMediaSelected: (Int) -> Unit,
+    onLongTap: (Int) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
@@ -26,6 +27,15 @@ internal class ImageViewHolder private constructor(
                 }
             }
         }
+        itemView.setOnLongClickListener {
+            adapterPosition.let { adapterPosition ->
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onLongTap(adapterPosition)
+                }
+            }
+            //TODO: Only consume when needed
+            true
+        }
     }
 
     fun bind(uiModel: UiModel) {
@@ -33,10 +43,13 @@ internal class ImageViewHolder private constructor(
         imageView.run {
             load(context.getScreenCapturesFolder().resolve(uiModel.fileName))
         }
+        itemView.scaleX = if (uiModel.isSelected) 0.8f else 1f
+        itemView.scaleY = itemView.scaleX
     }
 
     data class UiModel(
         val fileName: String,
+        override val isSelected: Boolean,
         override val lastModified: Long
     ) : GalleryListItem {
         override val id = fileName
@@ -45,7 +58,12 @@ internal class ImageViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onMediaSelected: (Int) -> Unit
-        ) = ImageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_gallery_image, parent, false), onMediaSelected)
+            onMediaSelected: (Int) -> Unit,
+            onLongTap: (Int) -> Unit
+        ) = ImageViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_gallery_image, parent, false),
+            onMediaSelected,
+            onLongTap
+        )
     }
 }

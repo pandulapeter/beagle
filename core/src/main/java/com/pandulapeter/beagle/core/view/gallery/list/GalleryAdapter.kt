@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
 
 internal class GalleryAdapter(
-    private val onMediaSelected: (Int) -> Unit
+    private val onMediaSelected: (Int) -> Unit,
+    private val onLongTap: (Int) -> Unit
 ) : ListAdapter<GalleryListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<GalleryListItem>() {
 
     override fun areItemsTheSame(oldItem: GalleryListItem, newItem: GalleryListItem) = oldItem.id == newItem.id
@@ -21,8 +22,8 @@ internal class GalleryAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
-        R.layout.beagle_item_gallery_image -> ImageViewHolder.create(parent, onMediaSelected)
-        R.layout.beagle_item_gallery_video -> VideoViewHolder.create(parent, onMediaSelected)
+        R.layout.beagle_item_gallery_image -> ImageViewHolder.create(parent, onMediaSelected, onLongTap)
+        R.layout.beagle_item_gallery_video -> VideoViewHolder.create(parent, onMediaSelected, onLongTap)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/beagle_delete"
+        android:icon="@drawable/beagle_ic_delete"
+        android:title="@string/beagle_delete"
+        app:showAsAction="always" />
+</menu>
