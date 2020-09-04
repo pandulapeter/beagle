@@ -61,8 +61,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
                 title = getText(R.string.setup_debug_menu_radio_group),
                 items = radioGroupOptions,
                 isValuePersisted = true,
-                initiallySelectedItemId = radioGroupOptions.last().id,
-                onSelectionChanged = { }
+                initiallySelectedItemId = radioGroupOptions.last().id
             )
         },
         DeviceInfoModule(title = getText(R.string.setup_debug_menu_device_information)),

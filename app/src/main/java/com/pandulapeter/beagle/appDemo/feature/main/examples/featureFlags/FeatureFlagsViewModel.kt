@@ -8,6 +8,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.BeagleListItemContractImplementation
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.BulkApplySwitchViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.CurrentStateViewHolder
+import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.EnableAllModulesSwitchViewHolder
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.ResetButtonViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
@@ -36,6 +37,11 @@ class FeatureFlagsViewModel : ListViewModel<FeatureFlagsListItem>() {
     val slider get() = Beagle.find<SliderModule>(FeatureFlagsFragment.SLIDER)
     val textInput get() = Beagle.find<TextInputModule>(FeatureFlagsFragment.TEXT_INPUT)
     private var selectedSection by Delegates.observable<Section?>(null) { _, _, _ -> refreshItems() }
+    var areModulesEnabled = true
+        set(value) {
+            field = value
+            refreshItems()
+        }
     var isBulkApplyEnabled = false
         set(value) {
             field = value
@@ -71,6 +77,7 @@ class FeatureFlagsViewModel : ListViewModel<FeatureFlagsListItem>() {
             addTextInputSection()
             addQueryingAndChangingTheCurrentValueSection()
             addPersistingStateSection()
+            addDisablingInteractionsSection()
             addBulkApplySection()
         })
     }
@@ -206,6 +213,12 @@ class FeatureFlagsViewModel : ListViewModel<FeatureFlagsListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_feature_flags_persisting_state_description))
     }
 
+    private fun MutableList<FeatureFlagsListItem>.addDisablingInteractionsSection() = addSection(Section.DISABLING_INTERACTIONS) {
+        add(TextViewHolder.UiModel(R.string.case_study_feature_flags_disabling_interactions_description_1))
+        add(EnableAllModulesSwitchViewHolder.UiModel(areModulesEnabled))
+        add(TextViewHolder.UiModel(R.string.case_study_feature_flags_disabling_interactions_description_2))
+    }
+
     private fun MutableList<FeatureFlagsListItem>.addBulkApplySection() = addSection(Section.BULK_APPLY) {
         add(TextViewHolder.UiModel(if (isBulkApplyEnabled) R.string.case_study_feature_flags_bulk_apply_description_1_on else R.string.case_study_feature_flags_bulk_apply_description_1_off))
         add(BulkApplySwitchViewHolder.UiModel(isBulkApplyEnabled))
@@ -229,6 +242,7 @@ class FeatureFlagsViewModel : ListViewModel<FeatureFlagsListItem>() {
         TEXT_INPUT(R.string.case_study_feature_flags_text_input),
         QUERYING_AND_CHANGING_THE_CURRENT_VALUE(R.string.case_study_feature_flags_querying_and_changing_the_current_value),
         PERSISTING_STATE(R.string.case_study_feature_flags_persisting_state),
+        DISABLING_INTERACTIONS(R.string.case_study_feature_flags_disabling_interactions),
         BULK_APPLY(R.string.case_study_feature_flags_bulk_apply);
 
         companion object {

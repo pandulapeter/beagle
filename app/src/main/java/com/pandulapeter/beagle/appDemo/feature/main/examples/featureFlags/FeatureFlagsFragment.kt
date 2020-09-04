@@ -42,6 +42,10 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
         onSectionHeaderSelected = viewModel::onSectionHeaderSelected,
         onCurrentStateCardPressed = { Beagle.show() },
         onResetButtonPressed = ::resetAll,
+        onEnableAllModulesSwitchToggled = { isEnabled ->
+            viewModel.areModulesEnabled = isEnabled
+            refreshBeagle()
+        },
         onBulkApplySwitchToggled = { isEnabled ->
             viewModel.isBulkApplyEnabled = isEnabled
             refreshBeagle()
@@ -55,6 +59,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             text = getString(R.string.case_study_feature_flags_toggle_1),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
+            isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         SwitchModule(
@@ -62,6 +67,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             text = getString(R.string.case_study_feature_flags_toggle_2),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
+            isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         createLabelModule(R.string.case_study_feature_flags_check_boxes),
@@ -70,6 +76,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             text = getString(R.string.case_study_feature_flags_toggle_3),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
+            isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         CheckBoxModule(
@@ -77,6 +84,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             text = getString(R.string.case_study_feature_flags_toggle_4),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
+            isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         DividerModule("divider1"),
@@ -93,6 +101,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemIds = emptySet(),
+            isEnabled = viewModel.areModulesEnabled,
             onSelectionChanged = { viewModel.refreshItems() }
         ),
         DividerModule("divider2"),
@@ -109,6 +118,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             initiallySelectedItemId = getString(R.string.case_study_feature_flags_radio_button_1),
+            isEnabled = viewModel.areModulesEnabled,
             onSelectionChanged = { viewModel.refreshItems() }
         ),
         DividerModule("divider3"),
@@ -120,6 +130,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             isValuePersisted = true,
             initialValue = SLIDER_DEFAULT_VALUE,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
+            isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         createTextModule(R.string.case_study_feature_flags_hint_5),
@@ -130,6 +141,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             initialValue = TEXT_DEFAULT_VALUE,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isValuePersisted = true,
+            isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         )
     )
