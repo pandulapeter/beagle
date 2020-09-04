@@ -15,7 +15,7 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
         addAll(BeagleCore.implementation.getLogEntries(module.label).take(module.maxItemCount).map { entry ->
             TextCell(
                 id = "${module.id}_${entry.id}",
-                text = (module.timestampFormatter?.let { formatter -> "• [".append(formatter(entry.timestamp)).append("] ").append(entry.message) } ?: "• ".append(entry.message)).let {
+                text = (module.timestampFormatter?.let { formatter -> "• [".append(formatter(entry.timestamp)).append("] ").append(entry.title) } ?: "• ".append(entry.title)).let {
                     if (entry.payload == null) it else it.append("*")
                 },
                 onItemSelected = if (entry.payload != null) fun() {
