@@ -24,6 +24,12 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
                         id = "${module.id}_${entry.id}",
                         text = entry.url.replace(module.baseUrl, "").let { url ->
                             formattedTimestamp?.let { "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)
+                        }.let { text ->
+                            module.maxItemTitleLength?.let { maxItemTitleLength ->
+                                if (text.length > maxItemTitleLength) {
+                                    "${text.take(maxItemTitleLength)}…"
+                                } else text
+                            } ?: text
                         },
                         isEnabled = true,
                         onItemSelected = {
