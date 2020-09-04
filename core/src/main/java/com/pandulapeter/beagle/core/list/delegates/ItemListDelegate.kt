@@ -16,6 +16,7 @@ internal class ItemListDelegate<T : BeagleListItemContract> : ExpandableModuleDe
             TextCell(
                 id = "${module.id}_${item.id}",
                 text = "• ".append(item.title),
+                isEnabled = true,
                 onItemSelected = module.onItemSelected?.let { onItemSelected ->
                     {
                         module.items.firstOrNull { it.id == item.id }?.let { onItemSelected(it) }

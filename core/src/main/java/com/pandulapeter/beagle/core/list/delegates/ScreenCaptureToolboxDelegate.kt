@@ -18,6 +18,7 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
                 TextCell(
                     id = "${module.id}_image",
                     text = "• ".append(imageText),
+                    isEnabled = true,
                     onItemSelected = ScreenshotButtonDelegate.Companion::hideDebugMenuAndTakeScreenshot
                 )
             )
@@ -28,6 +29,7 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
                     TextCell(
                         id = "${module.id}_video",
                         text = "• ".append(videoText),
+                        isEnabled = true,
                         onItemSelected = ScreenRecordingButtonDelegate.Companion::hideDebugMenuAndRecordScreen
                     )
                 )
@@ -37,6 +39,7 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
             TextCell(
                 id = "${module.id}_gallery",
                 text = "• ".append(module.galleryText),
+                isEnabled = true,
                 onItemSelected = BeagleCore.implementation::openGallery
             )
         )

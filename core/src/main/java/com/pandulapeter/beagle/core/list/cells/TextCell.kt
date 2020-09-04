@@ -11,6 +11,7 @@ import com.pandulapeter.beagle.core.R
 internal data class TextCell(
     override val id: String,
     private val text: CharSequence,
+    private val isEnabled: Boolean,
     val onItemSelected: (() -> Unit)?
 ) : Cell<TextCell> {
 
@@ -25,6 +26,8 @@ internal data class TextCell(
 
         override fun bind(model: TextCell) = textView.run {
             text = model.text
+            isEnabled = model.isEnabled
+            alpha = if (model.isEnabled) 1f else 0.6f
             model.onItemSelected.let { onItemSelected ->
                 if (onItemSelected == null) {
                     setOnClickListener(null)
@@ -35,7 +38,7 @@ internal data class TextCell(
                         }
                     }
                 }
-                isClickable = onItemSelected != null
+                isClickable = onItemSelected != null && model.isEnabled
             }
         }
     }

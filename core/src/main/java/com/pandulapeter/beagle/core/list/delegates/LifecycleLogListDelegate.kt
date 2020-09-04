@@ -18,6 +18,7 @@ internal class LifecycleLogListDelegate : ExpandableModuleDelegate<LifecycleLogL
                 text = (module.timestampFormatter?.let { formatter ->
                     "• [".append(formatter(entry.timestamp)).append("] ").append(entry.getFormattedTitle(module.shouldDisplayFullNames))
                 } ?: "• ".append(entry.getFormattedTitle(module.shouldDisplayFullNames))),
+                isEnabled = true,
                 onItemSelected = null
             )
         })

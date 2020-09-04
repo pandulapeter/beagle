@@ -30,6 +30,7 @@ internal class TextInputDelegate : PersistableModuleDelegate.String<TextInputMod
             TextCell(
                 id = module.id,
                 text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text(getUiValue(module)).append("*") else module.text(getUiValue(module)),
+                isEnabled = module.isEnabled,
                 onItemSelected = {
                     BeagleCore.implementation.currentActivity?.applyTheme()?.run {
                         AlertDialog.Builder(this)

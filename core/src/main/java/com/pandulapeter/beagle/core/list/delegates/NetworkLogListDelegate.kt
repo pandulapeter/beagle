@@ -25,6 +25,7 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
                         text = entry.url.replace(module.baseUrl, "").let { url ->
                             formattedTimestamp?.let { "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)
                         },
+                        isEnabled = true,
                         onItemSelected = {
                             BeagleCore.implementation.showDialog(
                                 contents = "${prefix}${entry.url}"

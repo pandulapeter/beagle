@@ -15,6 +15,7 @@ internal class LongTextDelegate : ExpandableModuleDelegate<LongTextModule> {
             TextCell(
                 id = "text_${module.id}",
                 text = "• ".append(module.text),
+                isEnabled = true,
                 onItemSelected = null
             )
         )
