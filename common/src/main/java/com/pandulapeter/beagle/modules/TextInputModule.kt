@@ -8,6 +8,7 @@ import java.util.UUID
  *
  * @param text - A lambda that returns the name that should appear on the module in function of its current value.
  * @param initialValue - The initial value of the text. Optional, empty string by default. If [isValuePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
+ * @param isEnabled - Can be used to enable or disable all user interaction with the module. Optional, true by default.
  * @param areRealTimeUpdatesEnabled - If true, a new value will be set after every text change, otherwise this is only done when the user closes the dialog. True by default.
  * @param doneText - The text that appears on the positive button of the dialog. "Done" by default.
  * @param cancelText - The text that appears on the negative button of the dialog. This button is only displayed if the value of [areRealTimeUpdatesEnabled] is false. "Cancel" by default.
@@ -21,6 +22,7 @@ import java.util.UUID
 data class TextInputModule(
     val text: (String) -> CharSequence,
     override val initialValue: String = "",
+    override val isEnabled: Boolean = true,
     val areRealTimeUpdatesEnabled: Boolean = true,
     val doneText: CharSequence = "Done",
     val cancelText: CharSequence = "Cancel",

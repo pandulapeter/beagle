@@ -17,6 +17,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
  * @param keylineSecondary - The distance between the edge of the screen and the secondary keyline. 72dp by default (80dp on tablets).
  * @param color - The color to be used when drawing the grid. It defaults to the theme's text color.
  * @param initialValue - Whether or not the switch is checked initially. Optional, false by default. If [isValuePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
+ * @param isEnabled - Can be used to enable or disable all user interaction with the module. Optional, true by default.
  * @param isValuePersisted - Can be used to enable or disable persisting the value on the local storage. Optional, false by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. Null by default.
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
@@ -28,6 +29,7 @@ data class KeylineOverlaySwitchModule(
     @Dimension val keylineSecondary: Int? = null,
     @ColorInt val color: Int? = null,
     override val initialValue: Boolean = false,
+    override val isEnabled: Boolean = true,
     override val isValuePersisted: Boolean = false,
     val applyInsets: ((windowInsets: Insets) -> Insets)? = null,
     override val onValueChanged: (Boolean) -> Unit = {}

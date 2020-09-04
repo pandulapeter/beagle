@@ -104,8 +104,8 @@ Beagle.set(
     ScreenCaptureToolboxModule(),
     DividerModule(),
     LabelModule("Logs"),
-    NetworkLogListModule(), // Requires setup, see below
-    LogListModule(), // Requires setup, see below
+    NetworkLogListModule(), // Might require additional setup, see below
+    LogListModule(), // Might require additional setup, see below
     LifecycleLogListModule(),
     DividerModule(),
     LabelModule("Other"),

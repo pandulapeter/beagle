@@ -25,6 +25,11 @@ interface ValueWrapperModule<T, M : Module<M>> : Module<M> {
     val isValuePersisted: Boolean
 
     /**
+     * Can be used to enable / disable the module. Disabled modules are still visible on the UI but are static.
+     */
+    val isEnabled: Boolean
+
+    /**
      * Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step.
      */
     val shouldRequireConfirmation: Boolean
