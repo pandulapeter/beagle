@@ -15,6 +15,7 @@ internal data class SliderCell(
     private val value: Int,
     private val minimumValue: Int,
     private val maximumValue: Int,
+    private val isEnabled: Boolean,
     private val onValueChanged: (Int) -> Unit
 ) : Cell<SliderCell> {
 
@@ -39,10 +40,11 @@ internal data class SliderCell(
         override fun bind(model: SliderCell) {
             textView.text = model.text
             seekBar.run {
-                seekBar.setOnSeekBarChangeListener(null)
-                seekBar.max = model.maximumValue - model.minimumValue
-                seekBar.progress = model.value - model.minimumValue
-                seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                setOnSeekBarChangeListener(null)
+                max = model.maximumValue - model.minimumValue
+                progress = model.value - model.minimumValue
+                isEnabled = model.isEnabled
+                setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                         if (fromUser && progress != model.value + model.minimumValue) {
                             model.onValueChanged(progress + model.minimumValue)

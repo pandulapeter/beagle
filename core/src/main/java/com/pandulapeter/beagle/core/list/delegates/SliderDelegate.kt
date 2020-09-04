@@ -15,6 +15,7 @@ internal class SliderDelegate : PersistableModuleDelegate.Integer<SliderModule>(
             value = getUiValue(module),
             minimumValue = module.minimumValue,
             maximumValue = module.maximumValue,
+            isEnabled = module.isEnabled,
             onValueChanged = { setUiValue(module, it) })
     )
 }
