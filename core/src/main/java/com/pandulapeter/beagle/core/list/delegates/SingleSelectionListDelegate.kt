@@ -20,6 +20,7 @@ internal class SingleSelectionListDelegate<T : BeagleListItemContract> : Expanda
                 id = "${module.id}_${item.id}",
                 text = item.title,
                 isChecked = item.id == getUiValue(module),
+                isEnabled = module.isEnabled,
                 onValueChanged = { setUiValue(module, item.id) }
             )
         })
