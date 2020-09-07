@@ -33,7 +33,6 @@ internal class ImageViewHolder private constructor(
                     onLongTap(adapterPosition)
                 }
             }
-            //TODO: Only consume when needed
             true
         }
     }

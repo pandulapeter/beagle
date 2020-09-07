@@ -19,8 +19,8 @@ internal class GalleryViewModel : ViewModel() {
     val items: LiveData<List<GalleryListItem>> = _items
     private val _isInSelectionMode = MutableLiveData(false)
     val isInSelectionMode: LiveData<Boolean> = _isInSelectionMode
-    private var selectedItemIds = emptyList<String>()
-        set(value) {
+    var selectedItemIds = emptyList<String>()
+        private set(value) {
             if (field != value) {
                 field = value
                 _isInSelectionMode.value = value.isNotEmpty()

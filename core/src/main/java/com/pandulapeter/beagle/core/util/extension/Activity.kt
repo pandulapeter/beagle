@@ -35,6 +35,14 @@ internal fun Activity.shareFile(uri: Uri, fileType: String) {
     }, null))
 }
 
+internal fun Activity.shareFiles(uris: List<Uri>) {
+    startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+        type = "*/*"
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
+    }, null))
+}
+
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 internal fun Activity.takeScreenshotWithMediaProjectionManager(fileName: String) {
     (BeagleCore.implementation.uiManager.findOverlayFragment(this as? FragmentActivity?) as? OverlayFragment?).let { overlayFragment ->

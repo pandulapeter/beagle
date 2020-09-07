@@ -22,14 +22,17 @@ import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
+import com.pandulapeter.beagle.core.util.extension.shareFiles
 import com.pandulapeter.beagle.core.util.extension.tintedDrawable
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
+import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
 
 internal class GalleryActivity : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(GalleryViewModel::class.java) }
     private val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
+    private lateinit var shareButton: MenuItem
     private lateinit var deleteButton: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +44,21 @@ internal class GalleryActivity : AppCompatActivity() {
             setNavigationOnClickListener { onBackPressed() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
             title = BeagleCore.implementation.appearance.galleryTitle
+            val textColor = AppCompatTextView(context).textColors.defaultColor //TODO: How not to get the current theme's text color.
+            shareButton = menu.findItem(R.id.beagle_share).also {
+                //TODO: Menu item hint should be configurable.
+                it.icon = tintedDrawable(R.drawable.beagle_ic_share, textColor)
+            }
             deleteButton = menu.findItem(R.id.beagle_delete).also {
                 //TODO: Menu item hint should be configurable.
-                it.icon = tintedDrawable(R.drawable.beagle_ic_delete, AppCompatTextView(context).textColors.defaultColor) //TODO: How not to get the current theme's text color.
+                it.icon = tintedDrawable(R.drawable.beagle_ic_delete, textColor)
             }
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
-        viewModel.isInSelectionMode.observe(this) { deleteButton.isVisible = it }
+        viewModel.isInSelectionMode.observe(this) {
+            shareButton.isVisible = it
+            deleteButton.isVisible = it
+        }
         val emptyStateTextView = findViewById<TextView>(R.id.beagle_text_view)
         emptyStateTextView.text = BeagleCore.implementation.appearance.galleryNoMediaMessage
         val largePadding = dimension(R.dimen.beagle_large_content_padding)
@@ -81,15 +92,28 @@ internal class GalleryActivity : AppCompatActivity() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
+        R.id.beagle_share -> consume { shareItems(viewModel.selectedItemIds) }
         R.id.beagle_delete -> consume { viewModel.deleteSelectedItems() }
         else -> false
     }
 
     private fun onItemSelected(fileName: String) {
+        MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
+    }
+
+    private fun shareItem(fileName: String) {
         val uri = getUriForFile(getScreenCapturesFolder().resolve(fileName))
         when {
             fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> shareFile(uri, ScreenCaptureManager.IMAGE_TYPE)
             fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> shareFile(uri, ScreenCaptureManager.VIDEO_TYPE)
+        }
+    }
+
+    private fun shareItems(fileNames: List<String>) {
+        if (fileNames.size == 1) {
+            shareItem(fileNames.first())
+        } else {
+            shareFiles(fileNames.map { fileName -> getUriForFile(getScreenCapturesFolder().resolve(fileName)) })
         }
     }
 
