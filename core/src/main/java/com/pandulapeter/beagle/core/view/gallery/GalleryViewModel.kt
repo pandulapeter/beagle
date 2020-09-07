@@ -11,6 +11,7 @@ import com.pandulapeter.beagle.core.view.gallery.list.GalleryListItem
 import com.pandulapeter.beagle.core.view.gallery.list.ImageViewHolder
 import com.pandulapeter.beagle.core.view.gallery.list.VideoViewHolder
 import kotlinx.coroutines.launch
+import java.io.File
 
 internal class GalleryViewModel : ViewModel() {
 
@@ -25,6 +26,7 @@ internal class GalleryViewModel : ViewModel() {
                 _isInSelectionMode.value = value.isNotEmpty()
             }
         }
+    private var files = emptyList<File>()
 
     init {
         _isInSelectionMode.observeForever {
@@ -34,35 +36,50 @@ internal class GalleryViewModel : ViewModel() {
         }
     }
 
-    //TODO: Cache in memory
     fun loadMedia(context: Context) {
         if (_items.value.isNullOrEmpty()) {
             viewModelScope.launch {
-                _items.value = context.getScreenCapturesFolder().listFiles().orEmpty().mapNotNull { file ->
-                    file.name.let { fileName ->
-                        when {
-                            fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> ImageViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
-                            fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> VideoViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
-                            else -> null
-                        }
-                    }
-                }.sortedByDescending { it.lastModified }
+                files = context.getScreenCapturesFolder().listFiles().orEmpty().toList()
+                refresh()
             }
         }
     }
 
-    fun selectItem(context: Context, id: String) {
-        selectedItemIds = (selectedItemIds + id).distinct()
-        loadMedia(context)
+    private fun refresh() {
+        viewModelScope.launch {
+            _items.value = files.mapNotNull { file ->
+                file.name.let { fileName ->
+                    when {
+                        fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> ImageViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
+                        fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> VideoViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
+                        else -> null
+                    }
+                }
+            }.sortedByDescending { it.lastModified }
+        }
     }
 
-    fun exitSelectionMode(context: Context) {
+    fun selectItem(id: String) {
+        selectedItemIds = if (selectedItemIds.contains(id)) {
+            selectedItemIds.filterNot { it == id }
+        } else {
+            (selectedItemIds + id).distinct()
+        }
+        refresh()
+    }
+
+    fun exitSelectionMode() {
         _isInSelectionMode.value = false
-        loadMedia(context)
+        selectedItemIds = emptyList()
+        refresh()
     }
 
-    fun deleteSelectedItems(context: Context) {
-        //TODO: Confirmation dialog, delete logic
-        exitSelectionMode(context)
+    fun deleteSelectedItems() {
+        //TODO: Confirmation dialog
+        viewModelScope.launch {
+            files.filter { selectedItemIds.contains(it.name) }.forEach { it.delete() }
+            files = files.filterNot { selectedItemIds.contains(it.name) }
+        }
+        exitSelectionMode()
     }
 }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
+import com.pandulapeter.beagle.core.util.consume
 import com.pandulapeter.beagle.core.util.extension.colorResource
 import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
@@ -41,14 +42,10 @@ internal class GalleryActivity : AppCompatActivity() {
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
             title = BeagleCore.implementation.appearance.galleryTitle
             deleteButton = menu.findItem(R.id.beagle_delete).also {
+                //TODO: Menu item hint should be configurable.
                 it.icon = tintedDrawable(R.drawable.beagle_ic_delete, AppCompatTextView(context).textColors.defaultColor) //TODO: How not to get the current theme's text color.
             }
-            setOnMenuItemClickListener {
-                if (it.itemId == R.id.beagle_delete) {
-                    viewModel.deleteSelectedItems(this@GalleryActivity)
-                }
-                true
-            }
+            setOnMenuItemClickListener(::onMenuItemClicked)
         }
         viewModel.isInSelectionMode.observe(this) { deleteButton.isVisible = it }
         val emptyStateTextView = findViewById<TextView>(R.id.beagle_text_view)
@@ -71,7 +68,7 @@ internal class GalleryActivity : AppCompatActivity() {
         }
         val adapter = GalleryAdapter(
             onMediaSelected = { position -> viewModel.items.value?.get(position)?.id?.let(::onItemSelected) },
-            onLongTap = { position -> viewModel.items.value?.get(position)?.id?.let { itemId -> viewModel.selectItem(this, itemId) } }
+            onLongTap = { position -> viewModel.items.value?.get(position)?.id?.let(viewModel::selectItem) }
         )
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(this, getSpanCount())
@@ -81,6 +78,11 @@ internal class GalleryActivity : AppCompatActivity() {
             emptyStateTextView.visible = it.isEmpty()
         })
         viewModel.loadMedia(this)
+    }
+
+    private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
+        R.id.beagle_delete -> consume { viewModel.deleteSelectedItems() }
+        else -> false
     }
 
     private fun onItemSelected(fileName: String) {
@@ -93,7 +95,7 @@ internal class GalleryActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (viewModel.isInSelectionMode.value == true) {
-            viewModel.exitSelectionMode(this@GalleryActivity)
+            viewModel.exitSelectionMode()
         } else {
             super.onBackPressed()
         }

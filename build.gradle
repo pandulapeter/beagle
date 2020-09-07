@@ -12,7 +12,7 @@ buildscript {
         appCompatVersion = "1.2.0"
         recyclerViewVersion = "1.1.0"
         lifecycleVersion = "2.2.0"
-        materialVersion = "1.2.0"
+        materialVersion = "1.2.1"
         constraintLayoutVersion = "2.0.1"
         retrofitVersion = "2.9.0"
         moshiVersion = "1.9.3"
