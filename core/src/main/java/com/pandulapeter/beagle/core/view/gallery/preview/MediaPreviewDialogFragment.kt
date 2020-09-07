@@ -1,6 +1,8 @@
 package com.pandulapeter.beagle.core.view.gallery.preview
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +15,7 @@ import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,6 +26,11 @@ class MediaPreviewDialogFragment : DialogFragment() {
         AlertDialog.Builder(context).setView(R.layout.beagle_dialog_fragment_media_preview)
     }.create()
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
     override fun onResume() {
         super.onResume()
         val context = requireContext()
@@ -30,7 +38,7 @@ class MediaPreviewDialogFragment : DialogFragment() {
             arguments?.getString(FILE_NAME)?.let { fileName ->
                 if (fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION)) {
                     load(context.getScreenCapturesFolder().resolve(fileName)) {
-                        listener { _, _ -> refreshSize(this@apply) }
+                        listener { _, _ -> setDialogSizeFromImage(this@apply) }
                     }
                 } else {
                     GlobalScope.launch {
@@ -39,7 +47,7 @@ class MediaPreviewDialogFragment : DialogFragment() {
                             ImageRequest.Builder(context)
                                 .data(context.getScreenCapturesFolder().resolve(fileName))
                                 .target(this@apply)
-                                .listener { _, _ -> refreshSize(this@apply) }
+                                .listener { _, _ -> setDialogSizeFromImage(this@apply) }
                                 .build()
                         )
                     }
@@ -48,8 +56,13 @@ class MediaPreviewDialogFragment : DialogFragment() {
         }
     }
 
-    private fun refreshSize(imageView: ImageView) {
-        imageView.post { dialog?.window?.setLayout(imageView.width, imageView.height) }
+    private fun setDialogSizeFromImage(imageView: ImageView) {
+        imageView.run {
+            post {
+                dialog?.window?.setLayout(width, height)
+                post { visible = true }
+            }
+        }
     }
 
     companion object {
