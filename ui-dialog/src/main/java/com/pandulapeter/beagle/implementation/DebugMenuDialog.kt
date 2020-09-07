@@ -26,7 +26,7 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        view?.run {
+        dialog?.window?.run {
             val displayMetrics = DisplayMetrics()
             BeagleCore.implementation.currentActivity?.run {
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -46,10 +46,10 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
                     ?: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) window.decorView.rootWindowInsets?.let { it.systemWindowInsetTop + it.systemWindowInsetBottom } ?: 0 else 0
                 val horizontalInsets = output?.let { it.left + it.right }
                     ?: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) window.decorView.rootWindowInsets?.let { it.systemWindowInsetLeft + it.systemWindowInsetRight } ?: 0 else 0
-                layoutParams = layoutParams.apply {
-                    width = ((displayMetrics.widthPixels - horizontalInsets) * DIALOG_WIDTH_RATIO).roundToInt()
-                    height = ((displayMetrics.heightPixels - verticalInsets) * DIALOG_HEIGHT_RATIO).roundToInt()
-                }
+                setLayout(
+                    ((displayMetrics.widthPixels - horizontalInsets) * DIALOG_WIDTH_RATIO).roundToInt(),
+                    ((displayMetrics.heightPixels - verticalInsets) * DIALOG_HEIGHT_RATIO).roundToInt()
+                )
             }
         }
     }
