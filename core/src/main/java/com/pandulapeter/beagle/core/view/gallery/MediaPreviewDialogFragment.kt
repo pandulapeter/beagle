@@ -1,8 +1,6 @@
 package com.pandulapeter.beagle.core.view.gallery
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -25,10 +23,12 @@ import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
+import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 import com.pandulapeter.beagle.utils.extensions.waitForPreDraw
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.math.max
 import kotlin.math.roundToInt
 
 class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFragment.OnPositiveButtonClickedListener {
@@ -43,11 +43,6 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = requireContext().applyTheme().let { context ->
         AlertDialog.Builder(context).setView(R.layout.beagle_dialog_fragment_media_preview)
     }.create()
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    }
 
     override fun onResume() {
         super.onResume()
@@ -99,7 +94,10 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
     private fun setDialogSizeFromImage(imageView: ImageView) {
         imageView.run {
             waitForPreDraw {
-                dialog?.window?.setLayout((width * SIZE_MULTIPLIER).roundToInt(), (height * SIZE_MULTIPLIER).roundToInt() + (toolbar?.height ?: 0))
+                dialog?.window?.setLayout(
+                    max(context.dimension(R.dimen.beagle_gallery_preview_minimum_width), (width * SIZE_MULTIPLIER).roundToInt()),
+                    (height * SIZE_MULTIPLIER).roundToInt() + (toolbar?.height ?: 0)
+                )
                 waitForPreDraw {
                     visible = true
                     if (fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION)) {
