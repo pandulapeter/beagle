@@ -34,9 +34,10 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
-import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.LongTextModule
+import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.TextModule
+import com.pandulapeter.beagle.utils.consume
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)!!
@@ -120,15 +121,6 @@ fun View.setTransitionName(@StringRes stringResourceId: Int) = setTransitionName
 
 @BindingAdapter("transitionName")
 fun View.setTransitionNameCompat(transitionName: String) = ViewCompat.setTransitionName(this, transitionName)
-
-inline fun View.waitForPreDraw(crossinline block: () -> Unit) = with(viewTreeObserver) {
-    addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-        override fun onPreDraw() = consume {
-            block()
-            viewTreeObserver.removeOnPreDrawListener(this)
-        }
-    })
-}
 
 fun Activity.updateSystemBars() = window.run {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

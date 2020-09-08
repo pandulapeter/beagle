@@ -13,8 +13,8 @@ import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundAd
 import com.pandulapeter.beagle.appDemo.feature.main.playground.list.PlaygroundListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.TransitionType
-import com.pandulapeter.beagle.appDemo.utils.consume
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
+import com.pandulapeter.beagle.utils.consume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>(R.string.playground_title), ModuleRepository.Listener {

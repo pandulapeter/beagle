@@ -9,8 +9,8 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesContainerFr
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundContainerFragment
 import com.pandulapeter.beagle.appDemo.feature.main.setup.SetupContainerFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
-import com.pandulapeter.beagle.appDemo.utils.consume
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
+import com.pandulapeter.beagle.utils.consume
 
 class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 

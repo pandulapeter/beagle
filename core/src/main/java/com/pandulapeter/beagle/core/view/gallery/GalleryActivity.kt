@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
-import com.pandulapeter.beagle.core.util.consume
 import com.pandulapeter.beagle.core.util.extension.colorResource
 import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
@@ -27,6 +26,7 @@ import com.pandulapeter.beagle.core.util.extension.tintedDrawable
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
 import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
+import com.pandulapeter.beagle.utils.consume
 
 internal class GalleryActivity : AppCompatActivity() {
 

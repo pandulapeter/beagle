@@ -14,6 +14,7 @@ include ":log-okhttp-noop"
 include ":log-okhttp"
 include ":log-ktor-noop"
 include ":log-ktor"
+include ":utils"
 //TODO: Remove legacy implementation
 include ":beagle"
 include ":beagle-core"

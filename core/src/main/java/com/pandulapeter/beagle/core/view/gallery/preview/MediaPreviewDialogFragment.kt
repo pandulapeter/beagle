@@ -17,6 +17,7 @@ import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
+import com.pandulapeter.beagle.utils.extensions.waitForPreDraw
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -58,9 +59,9 @@ class MediaPreviewDialogFragment : DialogFragment() {
 
     private fun setDialogSizeFromImage(imageView: ImageView) {
         imageView.run {
-            post {
+            waitForPreDraw {
                 dialog?.window?.setLayout(width, height)
-                post { visible = true }
+                waitForPreDraw { visible = true }
             }
         }
     }

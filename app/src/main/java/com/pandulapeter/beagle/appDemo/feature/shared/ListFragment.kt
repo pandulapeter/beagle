@@ -15,8 +15,8 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.appDemo.utils.color
 import com.pandulapeter.beagle.appDemo.utils.observe
-import com.pandulapeter.beagle.appDemo.utils.waitForPreDraw
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.utils.extensions.waitForPreDraw
 
 abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     @StringRes protected val titleResourceId: Int,
@@ -33,7 +33,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
 
     fun blockGestures() {
         try {
-            binding.recyclerView.shouldBlockGestures = true
+            binding.recyclerView.shouldBlockGestures = { true }
         } catch (_: IllegalStateException) {
         }
     }
@@ -56,10 +56,10 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     }
 
     private fun setupRecyclerView() {
-        val listAdapter = createAdapter().also { it.blockGestures = { binding.recyclerView.shouldBlockGestures = true } }
+        val listAdapter = createAdapter().also { it.blockGestures = { binding.recyclerView.shouldBlockGestures = { true } } }
         viewModel.items.observe(owner = viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
         binding.recyclerView.run {
-            shouldBlockGestures = true
+            shouldBlockGestures = { true }
             adapter = listAdapter
             layoutManager = createLayoutManager()
             setHasFixedSize(true)
@@ -73,7 +73,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
                 postDelayed({
                     try {
                         setLifted(binding.recyclerView.computeVerticalScrollOffset() != 0)
-                        binding.recyclerView.shouldBlockGestures = false
+                        binding.recyclerView.shouldBlockGestures = { false }
                     } catch (_: IllegalStateException) {
                     }
                 }, 300)

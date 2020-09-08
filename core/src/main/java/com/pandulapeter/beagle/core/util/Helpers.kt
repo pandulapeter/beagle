@@ -3,8 +3,6 @@ package com.pandulapeter.beagle.core.util
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 
-fun consume(callback: () -> Unit) = true.also { callback() }
-
 internal fun performOnHide(action: () -> Unit) {
     val listener = object : VisibilityListener {
         override fun onHidden() {

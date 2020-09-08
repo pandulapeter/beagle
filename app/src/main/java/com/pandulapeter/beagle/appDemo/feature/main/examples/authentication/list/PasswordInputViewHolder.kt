@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemAuthenticationPasswordInputBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
-import com.pandulapeter.beagle.appDemo.utils.consume
+import com.pandulapeter.beagle.utils.consume
 
 class PasswordInputViewHolder private constructor(
     binding: ItemAuthenticationPasswordInputBinding,

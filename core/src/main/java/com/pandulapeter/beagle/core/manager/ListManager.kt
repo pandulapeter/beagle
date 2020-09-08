@@ -40,7 +40,7 @@ import com.pandulapeter.beagle.core.list.delegates.SliderDelegate
 import com.pandulapeter.beagle.core.list.delegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.delegates.TextDelegate
 import com.pandulapeter.beagle.core.list.delegates.TextInputDelegate
-import com.pandulapeter.beagle.core.view.GestureBlockingRecyclerView
+import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
