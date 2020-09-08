@@ -45,11 +45,11 @@ internal class GalleryActivity : AppCompatActivity() {
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
             title = BeagleCore.implementation.appearance.galleryTitle
             shareButton = menu.findItem(R.id.beagle_share).also {
-                //TODO: Menu item hint should be configurable.
+                it.title = BeagleCore.implementation.appearance.galleryShareHint
                 it.icon = tintedDrawable(R.drawable.beagle_ic_share, textColor)
             }
             deleteButton = menu.findItem(R.id.beagle_delete).also {
-                //TODO: Menu item hint should be configurable.
+                it.title = BeagleCore.implementation.appearance.galleryDeleteHint
                 it.icon = tintedDrawable(R.drawable.beagle_ic_delete, textColor)
             }
             setOnMenuItemClickListener(::onMenuItemClicked)

@@ -20,6 +20,8 @@ import java.util.Locale
  * @param galleryTitle - The title of the Gallery screen. "Gallery" by default.
  * @param galleryNoMediaMessage - The empty state text of the Gallery screen. "No media found" by default.
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with "yyyy-MM-dd" by default.
+ * @param galleryShareHint - The hint used for the Share icon of the Gallery screen. "Share" by default.
+ * @param galleryDeleteHint - The hint used for the Delete icon of the Gallery screen. "Delete" by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. Null by default.
  */
 data class Appearance(
@@ -35,6 +37,8 @@ data class Appearance(
     val galleryTitle: CharSequence = "Gallery",
     val galleryNoMediaMessage: CharSequence = "No media found",
     val galleryTimestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },
+    val galleryShareHint: CharSequence = "Share",
+    val galleryDeleteHint: CharSequence = "Delete",
     val applyInsets: ((windowInsets: Insets) -> Insets)? = null
 ) {
 

@@ -74,11 +74,11 @@ class MediaPreviewDialogFragment : DialogFragment() {
                 setNavigationOnClickListener { dismiss() }
                 navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
                 shareButton = menu.findItem(R.id.beagle_share).also {
-                    //TODO: Menu item hint should be configurable.
+                    it.title = BeagleCore.implementation.appearance.galleryShareHint
                     it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
                 }
                 deleteButton = menu.findItem(R.id.beagle_delete).also {
-                    //TODO: Menu item hint should be configurable.
+                    it.title = BeagleCore.implementation.appearance.galleryDeleteHint
                     it.icon = context.tintedDrawable(R.drawable.beagle_ic_delete, textColor)
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
