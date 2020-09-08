@@ -10,7 +10,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.ModuleWrapper
 import com.pandulapeter.beagle.appDemo.databinding.ItemPlaygroundModuleBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
-import com.pandulapeter.beagle.appDemo.utils.tintedDrawable
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 @SuppressLint("ClickableViewAccessibility")
 class ModuleViewHolder private constructor(

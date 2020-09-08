@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemAboutClickableItemBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
-import com.pandulapeter.beagle.appDemo.utils.tintedDrawable
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 class ClickableItemViewHolder private constructor(
     binding: ItemAboutClickableItemBinding,

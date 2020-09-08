@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.extension.tintedDrawable
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal data class ExpandableHeaderCell(
     override val id: String,

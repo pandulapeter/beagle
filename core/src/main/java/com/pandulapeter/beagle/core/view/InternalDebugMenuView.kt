@@ -17,9 +17,9 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
-import com.pandulapeter.beagle.core.util.extension.colorResource
-import com.pandulapeter.beagle.core.util.extension.dimension
-import com.pandulapeter.beagle.core.util.extension.drawable
+import com.pandulapeter.beagle.utils.extensions.colorResource
+import com.pandulapeter.beagle.utils.extensions.dimension
+import com.pandulapeter.beagle.utils.extensions.drawable
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 
 class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context.applyTheme(), attrs, defStyleAttr),

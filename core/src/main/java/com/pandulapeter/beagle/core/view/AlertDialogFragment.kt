@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
-import com.pandulapeter.beagle.core.util.extension.dimension
+import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.core.util.extension.withArguments
 
 internal class AlertDialogFragment : DialogFragment() {

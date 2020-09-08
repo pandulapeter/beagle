@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.extension.colorResource
+import com.pandulapeter.beagle.utils.extensions.colorResource
 
 
 internal data class DividerCell(

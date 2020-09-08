@@ -10,12 +10,12 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
-import com.pandulapeter.beagle.appDemo.utils.color
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.modules.SwitchModule
+import com.pandulapeter.beagle.utils.extensions.color
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.min
 

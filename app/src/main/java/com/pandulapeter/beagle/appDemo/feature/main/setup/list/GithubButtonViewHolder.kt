@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSetupGithubButtonBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
-import com.pandulapeter.beagle.appDemo.utils.drawable
+import com.pandulapeter.beagle.utils.extensions.drawable
 
 class GithubButtonViewHolder private constructor(
     binding: ItemSetupGithubButtonBinding,

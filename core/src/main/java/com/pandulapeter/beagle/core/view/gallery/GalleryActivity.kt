@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,17 +15,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
-import com.pandulapeter.beagle.core.util.extension.colorResource
-import com.pandulapeter.beagle.core.util.extension.dimension
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.shareFiles
-import com.pandulapeter.beagle.core.util.extension.tintedDrawable
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
 import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.utils.consume
+import com.pandulapeter.beagle.utils.extensions.colorResource
+import com.pandulapeter.beagle.utils.extensions.dimension
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class GalleryActivity : AppCompatActivity() {
 
@@ -41,10 +40,10 @@ internal class GalleryActivity : AppCompatActivity() {
         setContentView(R.layout.beagle_activity_gallery)
         supportActionBar?.hide()
         findViewById<Toolbar>(R.id.beagle_toolbar).apply {
+            val textColor = colorResource(android.R.attr.textColorPrimary)
             setNavigationOnClickListener { supportFinishAfterTransition() }
-            navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
+            navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
             title = BeagleCore.implementation.appearance.galleryTitle
-            val textColor = AppCompatTextView(context).textColors.defaultColor //TODO: How not to get the current theme's text color.
             shareButton = menu.findItem(R.id.beagle_share).also {
                 //TODO: Menu item hint should be configurable.
                 it.icon = tintedDrawable(R.drawable.beagle_ic_share, textColor)
@@ -93,6 +92,14 @@ internal class GalleryActivity : AppCompatActivity() {
             adapter.submitList(it)
             emptyStateTextView.visible = it.isEmpty()
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadMedia()
+    }
+
+    fun loadMedia() {
         viewModel.loadMedia(this)
     }
 

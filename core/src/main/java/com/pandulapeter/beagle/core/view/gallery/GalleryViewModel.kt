@@ -40,15 +40,17 @@ internal class GalleryViewModel : ViewModel() {
     }
 
     fun loadMedia(context: Context) {
-        if (_items.value.isNullOrEmpty()) {
-            viewModelScope.launch {
-                files = context.getScreenCapturesFolder().listFiles().orEmpty().toList()
-                refresh()
-            }
+        viewModelScope.launch {
+            files = context.getScreenCapturesFolder().listFiles().orEmpty().toList()
+            refresh()
         }
     }
 
-    fun isSectionHeader(position: Int) = _items.value?.get(position) is SectionHeaderViewHolder.UiModel
+    fun isSectionHeader(position: Int) = try {
+        _items.value?.get(position) is SectionHeaderViewHolder.UiModel
+    } catch (_: IndexOutOfBoundsException) {
+        false
+    }
 
     private fun refresh() {
         viewModelScope.launch {

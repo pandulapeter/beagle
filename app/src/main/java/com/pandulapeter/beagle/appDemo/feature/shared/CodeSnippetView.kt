@@ -9,8 +9,8 @@ import android.view.View
 import android.widget.HorizontalScrollView
 import androidx.appcompat.widget.AppCompatTextView
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.utils.color
-import com.pandulapeter.beagle.appDemo.utils.dimension
+import com.pandulapeter.beagle.utils.extensions.color
+import com.pandulapeter.beagle.utils.extensions.dimension
 
 class CodeSnippetView @JvmOverloads constructor(
     context: Context,

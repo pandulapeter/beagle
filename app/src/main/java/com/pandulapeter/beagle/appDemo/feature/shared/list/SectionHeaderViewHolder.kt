@@ -14,7 +14,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.Si
 import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.ValueWrappersListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.utils.animatedDrawable
-import com.pandulapeter.beagle.appDemo.utils.tintedDrawable
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 class SectionHeaderViewHolder private constructor(
     binding: ItemSectionHeaderBinding,

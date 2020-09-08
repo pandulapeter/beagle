@@ -3,23 +3,14 @@ package com.pandulapeter.beagle.appDemo.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
@@ -37,23 +28,9 @@ import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.TextModule
-import com.pandulapeter.beagle.utils.consume
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)!!
-
-fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
-
-fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensionPixelSize(dimensionResourceId)
-
-fun Context.drawable(@DrawableRes drawableResId: Int) = AppCompatResources.getDrawable(this, drawableResId)
-
-fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int): Drawable = drawable(drawableResourceId)!!.let { drawable ->
-    DrawableCompat.wrap(drawable.mutate()).apply {
-        DrawableCompat.setTint(this, tint)
-        DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)
-    }
-}
 
 fun View.hideKeyboard() {
     clearFocus()
