@@ -80,7 +80,7 @@ class MediaPreviewDialogFragment : DialogFragment() {
 
     companion object {
         private const val FILE_NAME = "fileName"
-        private const val TAG = "beagleMediaPreviewDialogFragment"
+        const val TAG = "beagleMediaPreviewDialogFragment"
 
         fun show(fragmentManager: FragmentManager, fileName: String) {
             if (fragmentManager.findFragmentByTag(TAG) == null) {

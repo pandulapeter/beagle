@@ -56,7 +56,7 @@ interface BeagleContract {
      * @return Whether or not the operation was successful. Possible causes of failure:
      *  - The library has not been initialized yet.
      *  - The library UI has explicitly been disabled by setting [isUiEnabled] to false.
-     *  - The debug menu is already visible.
+     *  - The debug menu or the media preview dialog is already visible.
      *  - The application does not have any visible activities at the moment (the lifecycle must be at least in STARTED state).
      *  - The currently visible Activity is not a subclass of [FragmentActivity].
      *  - The currently visible Activity does not support a debug menu (social login overlay, in-app-purchase overlay, etc).

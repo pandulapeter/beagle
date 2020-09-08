@@ -38,8 +38,9 @@ import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.view.AlertDialogFragment
-import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
+import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
+import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
@@ -97,7 +98,11 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
                 .build()
         }
 
-    override fun show() = (currentActivity?.let { if (it.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) uiManager.show(it) else false } ?: false)
+    override fun show() = (currentActivity?.let { currentActivity ->
+        if (currentActivity.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+            && currentActivity.supportFragmentManager.findFragmentByTag(MediaPreviewDialogFragment.TAG) == null
+        ) uiManager.show(currentActivity) else false
+    } ?: false)
 
     override fun hide() = uiManager.hide(currentActivity)
 
