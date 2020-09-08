@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@drawable/beagle_bg_gradient"
+            android:maxLines="3"
             android:paddingStart="@dimen/beagle_item_horizontal_margin"
             android:paddingLeft="@dimen/beagle_item_horizontal_margin"
             android:paddingTop="@dimen/beagle_item_vertical_margin"

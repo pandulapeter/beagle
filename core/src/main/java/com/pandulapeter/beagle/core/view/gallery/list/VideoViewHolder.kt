@@ -62,7 +62,7 @@ internal class VideoViewHolder private constructor(
 
     data class UiModel(
         val fileName: String,
-        override val isSelected: Boolean,
+        val isSelected: Boolean,
         override val lastModified: Long
     ) : GalleryListItem {
         override val id = fileName

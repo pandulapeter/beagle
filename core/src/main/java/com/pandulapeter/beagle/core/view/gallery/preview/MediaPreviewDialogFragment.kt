@@ -68,7 +68,7 @@ class MediaPreviewDialogFragment : DialogFragment() {
                     if (fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION)) {
                         videoView?.run {
                             visible = true
-                            setOnPreparedListener { mp -> mp.isLooping = true }
+                            setOnPreparedListener { it.isLooping = true }
                             setVideoPath(context.getScreenCapturesFolder().resolve(fileName).path)
                             start()
                         }

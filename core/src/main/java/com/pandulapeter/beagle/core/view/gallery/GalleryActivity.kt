@@ -82,7 +82,12 @@ internal class GalleryActivity : AppCompatActivity() {
             onLongTap = { position -> viewModel.items.value?.get(position)?.id?.let(viewModel::selectItem) }
         )
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(this, getSpanCount())
+        val spanCount = getSpanCount()
+        recyclerView.layoutManager = GridLayoutManager(this, spanCount).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int) = if (viewModel.isSectionHeader(position)) spanCount else 1
+            }
+        }
         recyclerView.adapter = adapter
         viewModel.items.observe(this, {
             adapter.submitList(it)

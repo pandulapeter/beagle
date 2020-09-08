@@ -5,13 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryListItem
 import com.pandulapeter.beagle.core.view.gallery.list.ImageViewHolder
+import com.pandulapeter.beagle.core.view.gallery.list.SectionHeaderViewHolder
 import com.pandulapeter.beagle.core.view.gallery.list.VideoViewHolder
 import kotlinx.coroutines.launch
 import java.io.File
+import java.util.Calendar
 
 internal class GalleryViewModel : ViewModel() {
 
@@ -45,9 +48,11 @@ internal class GalleryViewModel : ViewModel() {
         }
     }
 
+    fun isSectionHeader(position: Int) = _items.value?.get(position) is SectionHeaderViewHolder.UiModel
+
     private fun refresh() {
         viewModelScope.launch {
-            _items.value = files.mapNotNull { file ->
+            _items.value = files.sortedByDescending { it.lastModified() }.mapNotNull { file ->
                 file.name.let { fileName ->
                     when {
                         fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> ImageViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
@@ -55,9 +60,31 @@ internal class GalleryViewModel : ViewModel() {
                         else -> null
                     }
                 }
-            }.sortedByDescending { it.lastModified }
+            }.let { mediaUiModels ->
+                if (BeagleCore.implementation.appearance.galleryTimestampFormatter == null) {
+                    mediaUiModels
+                } else {
+                    mutableListOf<GalleryListItem>().apply {
+                        mediaUiModels.forEachIndexed { index, mediaUiModel ->
+                            val midnight = mediaUiModel.lastModified.midnightOfThatDay()
+                            if (index == 0 || mediaUiModels[index - 1].lastModified.midnightOfThatDay() != midnight) {
+                                add(SectionHeaderViewHolder.UiModel(midnight))
+                            }
+                            add(mediaUiModel)
+                        }
+                    }
+                }
+            }
         }
     }
+
+    private fun Long.midnightOfThatDay() = Calendar.getInstance().apply {
+        timeInMillis = this@midnightOfThatDay
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }.timeInMillis
 
     fun selectItem(id: String) {
         selectedItemIds = if (selectedItemIds.contains(id)) {

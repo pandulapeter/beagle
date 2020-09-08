@@ -18,12 +18,14 @@ internal class GalleryAdapter(
     override fun getItemViewType(position: Int): Int = when (getItem(position)) {
         is ImageViewHolder.UiModel -> R.layout.beagle_item_gallery_image
         is VideoViewHolder.UiModel -> R.layout.beagle_item_gallery_video
+        is SectionHeaderViewHolder.UiModel -> R.layout.beagle_item_gallery_section_header
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         R.layout.beagle_item_gallery_image -> ImageViewHolder.create(parent, onMediaSelected, onLongTap)
         R.layout.beagle_item_gallery_video -> VideoViewHolder.create(parent, onMediaSelected, onLongTap)
+        R.layout.beagle_item_gallery_section_header -> SectionHeaderViewHolder.create(parent)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
@@ -31,6 +33,7 @@ internal class GalleryAdapter(
         when (holder) {
             is ImageViewHolder -> holder.bind(getItem(position) as ImageViewHolder.UiModel)
             is VideoViewHolder -> holder.bind(getItem(position) as VideoViewHolder.UiModel)
+            is SectionHeaderViewHolder -> holder.bind(getItem(position) as SectionHeaderViewHolder.UiModel)
         }
     }
 }

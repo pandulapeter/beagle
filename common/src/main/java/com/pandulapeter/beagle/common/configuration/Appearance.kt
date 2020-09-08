@@ -1,6 +1,9 @@
 package com.pandulapeter.beagle.common.configuration
 
 import androidx.annotation.StyleRes
+import com.pandulapeter.beagle.common.contracts.BeagleContract
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 /**
  * Specifies the appearance customization options for the debug menu. All parameters are optional.
@@ -16,6 +19,7 @@ import androidx.annotation.StyleRes
  * @param screenCaptureServiceNotificationChannelName - The name for the notification channel that handles all notifications related to screen capture. "Screen capture notifications" by default.
  * @param galleryTitle - The title of the Gallery screen. "Gallery" by default.
  * @param galleryNoMediaMessage - The empty state text of the Gallery screen. "No media found" by default.
+ * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with "yyyy-MM-dd" by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. Null by default.
  */
 data class Appearance(
@@ -30,5 +34,11 @@ data class Appearance(
     val screenCaptureServiceNotificationChannelName: CharSequence = "Screen capture notifications",
     val galleryTitle: CharSequence = "Gallery",
     val galleryNoMediaMessage: CharSequence = "No media found",
+    val galleryTimestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },
     val applyInsets: ((windowInsets: Insets) -> Insets)? = null
-)
+) {
+
+    companion object {
+        private val defaultFormatter by lazy { SimpleDateFormat(BeagleContract.GALLERY_DATE_FORMAT, Locale.ENGLISH) }
+    }
+}
