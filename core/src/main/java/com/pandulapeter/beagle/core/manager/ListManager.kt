@@ -24,7 +24,7 @@ import com.pandulapeter.beagle.core.list.delegates.HeaderDelegate
 import com.pandulapeter.beagle.core.list.delegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.delegates.KeyValueListDelegate
 import com.pandulapeter.beagle.core.list.delegates.KeylineOverlaySwitchDelegate
-import com.pandulapeter.beagle.core.list.delegates.LabelDelegate
+import com.pandulapeter.beagle.core.list.delegates.SectionHeaderDelegate
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
 import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
 import com.pandulapeter.beagle.core.list.delegates.LongTextDelegate
@@ -54,7 +54,7 @@ import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
-import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
@@ -99,7 +99,6 @@ internal class ListManager {
         ForceCrashButtonModule::class to ForceCrashButtonDelegate(),
         GalleryButtonModule::class to GalleryButtonDelegate(),
         HeaderModule::class to HeaderDelegate(),
-        LabelModule::class to LabelDelegate(),
         LifecycleLogListModule::class to LifecycleLogListDelegate(),
         LogListModule::class to LogListDelegate(),
         LongTextModule::class to LongTextDelegate(),
@@ -113,6 +112,7 @@ internal class ListManager {
         ScreenCaptureToolboxModule::class to ScreenCaptureToolboxDelegate(),
         ScreenRecordingButtonModule::class to ScreenRecordingButtonDelegate(),
         ScreenshotButtonModule::class to ScreenshotButtonDelegate(),
+        SectionHeaderModule::class to SectionHeaderDelegate(),
         SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
         SliderModule::class to SliderDelegate(),
         SwitchModule::class to SwitchDelegate(),

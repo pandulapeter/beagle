@@ -6,7 +6,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
-import com.pandulapeter.beagle.appDemo.utils.createLabelModule
+import com.pandulapeter.beagle.appDemo.utils.createSectionHeaderModule
 import com.pandulapeter.beagle.appDemo.utils.createLongTextModule
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.common.contracts.module.Module
@@ -33,7 +33,7 @@ class StaticDataFragment : ExamplesDetailFragment<StaticDataViewModel, ListItem>
         ),
         createTextModule(R.string.case_study_static_data_module_text_1),
         createLongTextModule(R.string.case_study_static_data_module_text_4, R.string.case_study_static_data_module_text_5),
-        createLabelModule(R.string.case_study_static_data_module_label_1),
+        createSectionHeaderModule(R.string.case_study_static_data_module_label_1),
         PaddingModule(),
         PaddingModule(),
         PaddingModule(),

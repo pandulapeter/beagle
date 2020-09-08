@@ -34,7 +34,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
             addHeaderSection()
             addTextSection()
             addLongTextSection()
-            addLabelSection()
+            addSectionHeaderSection()
             addPaddingSection()
             addDividerSection()
             addKeyValueListSection()
@@ -56,7 +56,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
                         "        title = \"…\",\n" +
                         "        text = \"…\"\n" +
                         "    ),\n" +
-                        "    LabelModule(title = \"…\"),\n" +
+                        "    SectionHeaderModule(title = \"…\"),\n" +
                         "    PaddingModule(),\n" +
                         "    DividerModule()\n" +
                         "    KeyValueListModule(\n" +
@@ -105,8 +105,8 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_static_data_long_text_2))
     }
 
-    private fun MutableList<ListItem>.addLabelSection() = addSection(Section.LABEL) {
-        add(TextViewHolder.UiModel(R.string.case_study_static_data_label_2))
+    private fun MutableList<ListItem>.addSectionHeaderSection() = addSection(Section.LABEL) {
+        add(TextViewHolder.UiModel(R.string.case_study_static_data_section_header_2))
     }
 
     private fun MutableList<ListItem>.addPaddingSection() = addSection(Section.PADDING) {
@@ -133,7 +133,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
         HEADER(R.string.case_study_static_data_header_1),
         TEXT(R.string.case_study_static_data_text_1),
         LONG_TEXT(R.string.case_study_static_data_long_text_1),
-        LABEL(R.string.case_study_static_data_label_1),
+        LABEL(R.string.case_study_static_data_section_header_1),
         PADDING(R.string.case_study_static_data_padding_1),
         DIVIDER(R.string.case_study_static_data_divider_1),
         KEY_VALUE_LIST(R.string.case_study_static_data_key_value_list_1);

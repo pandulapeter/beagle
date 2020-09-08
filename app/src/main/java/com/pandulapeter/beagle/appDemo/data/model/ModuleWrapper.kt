@@ -21,7 +21,7 @@ import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
-import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
@@ -112,13 +112,6 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    class Label : ModuleWrapper(
-        titleResourceId = R.string.add_module_label,
-        descriptionResourceId = R.string.add_module_label_description,
-        module = LabelModule(title = "Label"),
-        codeSnippet = "LabelModule(title = \"Label\")"
-    )
-
     class LogList : ModuleWrapper(
         titleResourceId = R.string.add_module_log_list,
         descriptionResourceId = R.string.add_module_log_list_description,
@@ -178,6 +171,13 @@ sealed class ModuleWrapper(
         descriptionResourceId = R.string.add_module_padding_description,
         module = PaddingModule(),
         codeSnippet = "PaddingModule()"
+    )
+
+    class SectionHeader : ModuleWrapper(
+        titleResourceId = R.string.add_module_section_header,
+        descriptionResourceId = R.string.add_module_section_header_description,
+        module = SectionHeaderModule(title = "Section header"),
+        codeSnippet = "SectionHeaderModule(title = \"Section header\")"
     )
 
     class SingleSelectionList : ModuleWrapper(

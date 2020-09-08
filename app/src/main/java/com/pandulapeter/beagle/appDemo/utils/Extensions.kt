@@ -34,7 +34,7 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
-import com.pandulapeter.beagle.modules.LabelModule
+import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.TextModule
 
@@ -168,10 +168,10 @@ fun Fragment.createLongTextModule(
     text = getText(textResourceId)
 )
 
-fun Fragment.createLabelModule(
+fun Fragment.createSectionHeaderModule(
     @StringRes titleResourceId: Int,
-    id: String = "label_$titleResourceId"
-) = LabelModule(
+    id: String = "sectionHeader_$titleResourceId"
+) = SectionHeaderModule(
     id = id,
     title = getText(titleResourceId)
 )

@@ -22,7 +22,7 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.Divider()))
             add(createModuleUiModel(ModuleWrapper.ItemList()))
             add(createModuleUiModel(ModuleWrapper.KeyValueList()))
-            add(createModuleUiModel(ModuleWrapper.Label()))
+            add(createModuleUiModel(ModuleWrapper.SectionHeader()))
             add(createModuleUiModel(ModuleWrapper.LogList()))
             add(createModuleUiModel(ModuleWrapper.LongText()))
             add(createModuleUiModel(ModuleWrapper.MultipleSelectionList()))

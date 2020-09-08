@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.appDemo.data.model.BeagleListItemContractImplemen
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
-import com.pandulapeter.beagle.appDemo.utils.createLabelModule
+import com.pandulapeter.beagle.appDemo.utils.createSectionHeaderModule
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
@@ -53,7 +53,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         createTextModule(R.string.case_study_feature_flags_hint_1),
-        createLabelModule(R.string.case_study_feature_flags_switches),
+        createSectionHeaderModule(R.string.case_study_feature_flags_switches),
         SwitchModule(
             id = TOGGLE_1_ID,
             text = getString(R.string.case_study_feature_flags_toggle_1),
@@ -70,7 +70,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
-        createLabelModule(R.string.case_study_feature_flags_check_boxes),
+        createSectionHeaderModule(R.string.case_study_feature_flags_check_boxes),
         CheckBoxModule(
             id = TOGGLE_3_ID,
             text = getString(R.string.case_study_feature_flags_toggle_3),
@@ -123,7 +123,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
         ),
         DividerModule("divider3"),
         createTextModule(R.string.case_study_feature_flags_hint_4),
-        createLabelModule(R.string.case_study_feature_flags_slider_label),
+        createSectionHeaderModule(R.string.case_study_feature_flags_slider_label),
         SliderModule(
             id = SLIDER,
             text = { getString(R.string.case_study_feature_flags_slider_title, it) },
@@ -134,7 +134,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             onValueChanged = { viewModel.refreshItems() }
         ),
         createTextModule(R.string.case_study_feature_flags_hint_5),
-        createLabelModule(R.string.case_study_feature_flags_text_input_label),
+        createSectionHeaderModule(R.string.case_study_feature_flags_text_input_label),
         TextInputModule(
             id = TEXT_INPUT,
             text = { getString(R.string.case_study_feature_flags_text_input_title, it) },

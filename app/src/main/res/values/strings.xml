@@ -89,8 +89,8 @@
     <string name="case_study_static_data_text_2">One of the simplest modules, displaying just a piece of text. Please note that all modules that deal with text drawn on the UI expect <i>CharSequence</i> instead of <i>String</i>. As a result, while Strings are perfectly fine, spannables can also be used to spice things up with special formatting.</string>
     <string name="case_study_static_data_long_text_1"><b>LongText</b></string>
     <string name="case_study_static_data_long_text_2">Similar to TextModule, but the main content (<i>text</i> parameter) can be collapsed into a header (<i>title</i> parameter). The <i>isExpandedInitially</i> parameter can be used to specify whether or not the content should be expanded the first time the user opens the debug menu.</string>
-    <string name="case_study_static_data_label_1"><b>Label</b></string>
-    <string name="case_study_static_data_label_2">Basically a TextModule with bold formatting, where the <i>text</i> parameter has been renamed to <i>title</i>. Ideal for short section headers.</string>
+    <string name="case_study_static_data_section_header_1"><b>SectionHeader</b></string>
+    <string name="case_study_static_data_section_header_2">Basically a TextModule with bold formatting, where the <i>text</i> parameter has been renamed to <i>title</i>.</string>
     <string name="case_study_static_data_padding_1"><b>Padding</b></string>
     <string name="case_study_static_data_padding_2">Adds 8dp of empty space to the debug menu. Feel free to add more than one instances if more space is needed.</string>
     <string name="case_study_static_data_divider_1"><b>Divider</b></string>
@@ -98,7 +98,7 @@
     <string name="case_study_static_data_key_value_list_1"><b>KeyValueList</b></string>
     <string name="case_study_static_data_key_value_list_2">Similar to LongTextModule in its expand-collapse behavior, but instead of a single text parameter for its main content, this module expects a list of CharSequence Pairs. The keys for each entry will automatically become bold.</string>
     <string name="case_study_static_data_module_text_1">This <i>piece of text</i> <u><b>contains</b> parts</u> with <b><i>special</i></b> <i><u>formatting</u></i>.</string>
-    <string name="case_study_static_data_module_label_1">Labels can be used to separate content, but adding spaces…</string>
+    <string name="case_study_static_data_module_label_1">Section headers can be used to separate content, but adding spaces…</string>
     <string name="case_study_static_data_module_text_2">…or dividers…</string>
     <string name="case_study_static_data_module_text_3">…can also be useful.</string>
     <string name="case_study_static_data_module_text_4">Longer pieces of content can be made expandable.</string>
@@ -111,7 +111,7 @@
     <string name="case_study_static_data_module_key_3">Key 3</string>
     <string name="case_study_static_data_module_value_3">Value 3</string>
 
-    <!-- Case studies / Feature flags -->
+    <!-- Case studies / Value wrappers -->
     <string name="case_study_feature_flags_title">Feature flags</string>
     <string name="case_study_feature_flags_description">Test different implementations without creating new builds, and persist these settings across app launches with a single extra line of code.</string>
     <string name="case_study_feature_flags_text_1">Enabling / disabling some toggles or changing some specific part of the configuration at runtime is one of the most important use cases for a debug menu. This example showcases all the ways Beagle can help you achieve this.\n\nObserve how the values in the card below are updated in real-time as you modify the flags in the debug menu:</string>
@@ -287,8 +287,8 @@
     <string name="add_module_item_list_description">Displays a list of simple items represented by [BeagleListItemContract].</string>
     <string name="add_module_key_value_list">KeyValueList</string>
     <string name="add_module_key_value_list_description">Displays a list of key-value pairs that can be collapsed into a header.</string>
-    <string name="add_module_label">Label</string>
-    <string name="add_module_label_description">Displays a section header label.</string>
+    <string name="add_module_section_header">SectionHeader</string>
+    <string name="add_module_section_header_description">Displays a section header label.</string>
     <string name="add_module_lifecycle_log_list">LifecycleLogList</string>
     <string name="add_module_lifecycle_log_list_description">Logs Fragment and Activity lifecycle events. Useful for getting to know the navigational classes on a new project or debugging lifecycle / state restoration issues.</string>
     <string name="add_module_log_list">LogList</string>
