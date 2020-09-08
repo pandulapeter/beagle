@@ -6,14 +6,16 @@ package com.pandulapeter.beagle.common.contracts
 interface BeagleListItemContract {
 
     /**
-     * A unique identifier for the list item that is used in callbacks.
-     */
-    val id: String
-
-    /**
      * The text that should appear on the UI.
      */
     val title: CharSequence
+
+    /**
+     * A unique identifier for the list item that is used in callbacks.
+     *
+     * It defaults to the title as this is suitable for most use cases
+     */
+    val id: String get() = title.toString()
 
     /**
      * To simplify diff calculation, derived classes are encouraged to be data classes.
