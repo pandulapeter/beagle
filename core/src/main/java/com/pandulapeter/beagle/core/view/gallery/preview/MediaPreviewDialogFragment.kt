@@ -29,6 +29,7 @@ import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 import com.pandulapeter.beagle.utils.extensions.waitForPreDraw
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class MediaPreviewDialogFragment : DialogFragment() {
 
@@ -88,7 +89,7 @@ class MediaPreviewDialogFragment : DialogFragment() {
     private fun setDialogSizeFromImage(imageView: ImageView) {
         imageView.run {
             waitForPreDraw {
-                dialog?.window?.setLayout(width, height + (toolbar?.height ?: 0))
+                dialog?.window?.setLayout((width * SIZE_MULTIPLIER).roundToInt(), (height * SIZE_MULTIPLIER).roundToInt() + (toolbar?.height ?: 0))
                 waitForPreDraw {
                     visible = true
                     if (fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION)) {
@@ -134,6 +135,7 @@ class MediaPreviewDialogFragment : DialogFragment() {
 
     companion object {
         private const val FILE_NAME = "fileName"
+        private const val SIZE_MULTIPLIER = 0.9f
         const val TAG = "beagleMediaPreviewDialogFragment"
 
         fun show(fragmentManager: FragmentManager, fileName: String) {

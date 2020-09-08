@@ -77,6 +77,7 @@ internal class GalleryViewModel : ViewModel() {
                     }
                 }
             }
+            selectedItemIds = selectedItemIds.filterNot { id -> files.none { it.name == id } }
         }
     }
 

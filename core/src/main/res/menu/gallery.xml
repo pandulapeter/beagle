@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/beagle_share"
-        android:icon="@drawable/beagle_ic_share"
-        android:title="@string/beagle_share"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/beagle_delete"
         android:icon="@drawable/beagle_ic_delete"
         android:title="@string/beagle_delete"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/beagle_share"
+        android:icon="@drawable/beagle_ic_share"
+        android:title="@string/beagle_share"
         app:showAsAction="ifRoom" />
 
 </menu>
