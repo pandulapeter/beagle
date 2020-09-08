@@ -110,7 +110,11 @@ internal class GalleryActivity : AppCompatActivity() {
     }
 
     private fun onItemSelected(fileName: String) {
-        MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
+        if (viewModel.isInSelectionMode.value == true) {
+            viewModel.selectItem(fileName)
+        } else {
+            MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
+        }
     }
 
     private fun shareItem(fileName: String) {
