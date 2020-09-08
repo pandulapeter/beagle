@@ -14,6 +14,7 @@ class ModuleRepository {
         add(ModuleWrapper.Header)
         add(ModuleWrapper.AppInfoButton)
         add(ModuleWrapper.DeveloperOptionsButton)
+        add(ModuleWrapper.Padding())
         add(ModuleWrapper.SectionHeader())
         add(ModuleWrapper.KeylineOverlaySwitch)
         add(ModuleWrapper.AnimationDurationSwitch)

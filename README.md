@@ -89,6 +89,8 @@ Check out [the showcase app](https://play.google.com/store/apps/details?id=com.p
 
 Here is a minimal example that should work for most projects:
 
+<img align="right" width="30%" src="metadata/screenshot05.png">
+
 ```kotlin
 Beagle.set(
     HeaderModule(
@@ -98,6 +100,7 @@ Beagle.set(
     ),
     AppInfoButtonModule(),
     DeveloperOptionsButtonModule(),
+    PaddingModule(),
     SectionHeaderModule("General"),
     KeylineOverlaySwitchModule(),
     AnimationDurationSwitchModule(),
@@ -112,6 +115,7 @@ Beagle.set(
     DeviceInfoModule()
 )
 ```
+
 ## Logging and intercepting network events
 To add content to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt) or [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), you can simply call Beagle.log() and Beagle.logNetworkEvent() respectively. However, you might need to access this functionality from pure Java / Kotlin modules or, in the case of network events, you might want to use an Interceptor / Logger that works out of the box.
 
