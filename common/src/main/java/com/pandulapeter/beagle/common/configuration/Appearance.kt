@@ -22,6 +22,10 @@ import java.util.Locale
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with "yyyy-MM-dd" by default.
  * @param galleryShareHint - The hint used for the Share icon of the Gallery screen. "Share" by default.
  * @param galleryDeleteHint - The hint used for the Delete icon of the Gallery screen. "Delete" by default.
+ * @param galleryDeleteConfirmationMessageSingular - The message used for the Delete confirmation dialog of the Gallery screen when deleting one file. "Are you sure you want to delete this file?" by default.
+ * @param galleryDeleteConfirmationMessagePlural - The message used for the Delete confirmation dialog of the Gallery screen when deleting multiple files. "Are you sure you want to delete these files?" by default.
+ * @param galleryDeleteConfirmationPositive - The positive text used for the Delete confirmation dialog of the Gallery screen. "Delete" by default.
+ * @param galleryDeleteConfirmationNegative - The positive text used for the Delete confirmation dialog of the Gallery screen. "Cancel" by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. Null by default.
  */
 data class Appearance(
@@ -39,6 +43,10 @@ data class Appearance(
     val galleryTimestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },
     val galleryShareHint: CharSequence = "Share",
     val galleryDeleteHint: CharSequence = "Delete",
+    val galleryDeleteConfirmationMessageSingular: String = "Are you sure you want to delete this file?",
+    val galleryDeleteConfirmationMessagePlural: String = "Are you sure you want to delete these files?",
+    val galleryDeleteConfirmationPositive: String = "Delete",
+    val galleryDeleteConfirmationNegative: String = "Cancel",
     val applyInsets: ((windowInsets: Insets) -> Insets)? = null
 ) {
 

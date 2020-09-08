@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
-import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
+import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 
 internal class DebugMenuInjector(

@@ -10,14 +10,15 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
-import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.core.util.extension.withArguments
+import com.pandulapeter.beagle.utils.BundleArgumentDelegate
+import com.pandulapeter.beagle.utils.extensions.dimension
 
 internal class AlertDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = requireContext().applyTheme().let { context ->
         AlertDialog.Builder(context).apply {
-            if (arguments?.getBoolean(IS_HORIZONTAL_SCROLL_ENABLED) == true) {
+            if (arguments?.isHorizontalScrollEnabled == true) {
                 setView(TolerantScrollView(context).apply {
                     isVerticalScrollBarEnabled = false
                     overScrollMode = View.OVER_SCROLL_NEVER
@@ -27,25 +28,25 @@ internal class AlertDialogFragment : DialogFragment() {
                         overScrollMode = View.OVER_SCROLL_NEVER
                         clipToPadding = false
                         addView(AppCompatTextView(context).apply {
-                            text = arguments?.getCharSequence(CONTENT)
+                            text = arguments?.content
                             context.dimension(R.dimen.beagle_large_content_padding).let { padding -> setPadding(padding, padding, padding, padding) }
                             setTextIsSelectable(true)
                         }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
                 })
             } else {
-                setMessage(arguments?.getCharSequence(CONTENT))
+                setMessage(arguments?.content)
             }
         }.create()
     }
 
     companion object {
-        private const val CONTENT = "content"
-        private const val IS_HORIZONTAL_SCROLL_ENABLED = "isHorizontalScrollEnabled"
+        private var Bundle.content by BundleArgumentDelegate.CharSequence("content")
+        private var Bundle.isHorizontalScrollEnabled by BundleArgumentDelegate.Boolean("isHorizontalScrollEnabled")
 
         fun show(fragmentManager: FragmentManager, content: CharSequence, isHorizontalScrollEnabled: Boolean) = AlertDialogFragment().withArguments {
-            it.putCharSequence(CONTENT, content)
-            it.putBoolean(IS_HORIZONTAL_SCROLL_ENABLED, isHorizontalScrollEnabled)
+            it.content = content
+            it.isHorizontalScrollEnabled = isHorizontalScrollEnabled
         }.run { show(fragmentManager, tag) }
     }
 }

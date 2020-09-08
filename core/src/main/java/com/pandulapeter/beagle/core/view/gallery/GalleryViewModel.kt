@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.core.view.gallery.list.GalleryListItem
 import com.pandulapeter.beagle.core.view.gallery.list.ImageViewHolder
 import com.pandulapeter.beagle.core.view.gallery.list.SectionHeaderViewHolder
 import com.pandulapeter.beagle.core.view.gallery.list.VideoViewHolder
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Calendar
@@ -26,7 +27,7 @@ internal class GalleryViewModel : ViewModel() {
         private set(value) {
             if (field != value) {
                 field = value
-                _isInSelectionMode.value = value.isNotEmpty()
+                _isInSelectionMode.postValue(value.isNotEmpty())
             }
         }
     private var files = emptyList<File>()
@@ -99,17 +100,16 @@ internal class GalleryViewModel : ViewModel() {
     }
 
     fun exitSelectionMode() {
-        _isInSelectionMode.value = false
+        _isInSelectionMode.postValue(false)
         selectedItemIds = emptyList()
         refresh()
     }
 
     fun deleteSelectedItems() {
-        //TODO: Confirmation dialog
-        viewModelScope.launch {
+        GlobalScope.launch {
             files.filter { selectedItemIds.contains(it.name) }.forEach { it.delete() }
             files = files.filterNot { selectedItemIds.contains(it.name) }
+            exitSelectionMode()
         }
-        exitSelectionMode()
     }
 }

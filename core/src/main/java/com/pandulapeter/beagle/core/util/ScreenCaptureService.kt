@@ -32,7 +32,7 @@ import com.pandulapeter.beagle.core.util.extension.createFile
 import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
-import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
+import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

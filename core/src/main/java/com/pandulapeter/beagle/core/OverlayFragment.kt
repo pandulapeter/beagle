@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.ScreenCaptureService
+import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 
 
 internal class OverlayFragment : Fragment() {
@@ -21,7 +22,7 @@ internal class OverlayFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = BeagleCore.implementation.createOverlayLayout(requireActivity())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fileName = savedInstanceState?.getString(FILE_NAME, fileName) ?: fileName
+        fileName = savedInstanceState?.fileName ?: fileName
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -62,12 +63,12 @@ internal class OverlayFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(FILE_NAME, fileName)
+        outState.fileName = fileName
     }
 
     companion object {
         const val TAG = "beagleOverlayFragment"
-        private const val FILE_NAME = "fileName"
+        private var Bundle.fileName by BundleArgumentDelegate.String("fileName")
         private const val SCREENSHOT_REQUEST = 4246
         private const val SCREEN_RECORDING_REQUEST = 4247
 

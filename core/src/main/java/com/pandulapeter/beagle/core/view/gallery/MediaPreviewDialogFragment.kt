@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.view.gallery.preview
+package com.pandulapeter.beagle.core.view.gallery
 
 import android.app.Dialog
 import android.graphics.Color
@@ -22,7 +22,7 @@ import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
-import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
+import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
@@ -31,9 +31,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-class MediaPreviewDialogFragment : DialogFragment() {
+class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFragment.OnPositiveButtonClickedListener {
 
-    private val fileName by lazy { arguments?.getString(FILE_NAME).orEmpty() }
+    private val fileName by lazy { arguments?.fileName.orEmpty() }
     private val toolbar get() = dialog?.findViewById<Toolbar>(R.id.beagle_toolbar)
     private val imageView get() = dialog?.findViewById<ImageView>(R.id.beagle_image_view)
     private val videoView get() = dialog?.findViewById<VideoView>(R.id.beagle_video_view)
@@ -86,6 +86,16 @@ class MediaPreviewDialogFragment : DialogFragment() {
         }
     }
 
+    override fun onPositiveButtonClicked() {
+        GlobalScope.launch {
+            activity?.run {
+                getScreenCapturesFolder().resolve(fileName).delete()
+                (this as? GalleryActivity)?.loadMedia()
+            }
+        }
+        dismiss()
+    }
+
     private fun setDialogSizeFromImage(imageView: ImageView) {
         imageView.run {
             waitForPreDraw {
@@ -107,7 +117,7 @@ class MediaPreviewDialogFragment : DialogFragment() {
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
         R.id.beagle_share -> consume { shareItem() }
-        R.id.beagle_delete -> consume { deleteItem() }
+        R.id.beagle_delete -> consume { DeleteConfirmationDialogFragment.show(childFragmentManager, false) }
         else -> false
     }
 
@@ -122,26 +132,15 @@ class MediaPreviewDialogFragment : DialogFragment() {
         }
     }
 
-    private fun deleteItem() {
-        //TODO: Confirmation dialog
-        GlobalScope.launch {
-            activity?.run {
-                getScreenCapturesFolder().resolve(fileName).delete()
-                (this as? GalleryActivity)?.loadMedia()
-            }
-        }
-        dismiss()
-    }
-
     companion object {
-        private const val FILE_NAME = "fileName"
-        private const val SIZE_MULTIPLIER = 0.9f
         const val TAG = "beagleMediaPreviewDialogFragment"
+        private const val SIZE_MULTIPLIER = 0.9f
+        private var Bundle.fileName by BundleArgumentDelegate.String("fileName")
 
         fun show(fragmentManager: FragmentManager, fileName: String) {
             if (fragmentManager.findFragmentByTag(TAG) == null) {
                 MediaPreviewDialogFragment().withArguments {
-                    it.putString(FILE_NAME, fileName)
+                    it.fileName = fileName
                 }.run { show(fragmentManager, TAG) }
             }
         }

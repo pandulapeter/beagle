@@ -38,7 +38,7 @@ import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
 import com.pandulapeter.beagle.core.view.AlertDialogFragment
-import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
+import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 import kotlin.properties.Delegates

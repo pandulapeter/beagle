@@ -21,13 +21,12 @@ import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.shareFiles
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
-import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
-internal class GalleryActivity : AppCompatActivity() {
+internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFragment.OnPositiveButtonClickedListener {
 
     private val viewModel by lazy { ViewModelProvider(this).get(GalleryViewModel::class.java) }
     private val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
@@ -99,13 +98,13 @@ internal class GalleryActivity : AppCompatActivity() {
         loadMedia()
     }
 
-    fun loadMedia() {
-        viewModel.loadMedia(this)
-    }
+    override fun onPositiveButtonClicked() = viewModel.deleteSelectedItems()
+
+    fun loadMedia() = viewModel.loadMedia(this)
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
         R.id.beagle_share -> consume { shareItems(viewModel.selectedItemIds) }
-        R.id.beagle_delete -> consume { viewModel.deleteSelectedItems() }
+        R.id.beagle_delete -> consume { DeleteConfirmationDialogFragment.show(supportFragmentManager, viewModel.selectedItemIds.size > 1) }
         else -> false
     }
 
