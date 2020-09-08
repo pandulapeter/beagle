@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags
+package com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers
 
 import android.os.Bundle
 import android.view.View
@@ -7,8 +7,8 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.BeagleListItemContractImplementation
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
-import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsAdapter
-import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.ValueWrappersAdapter
+import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.ValueWrappersListItem
 import com.pandulapeter.beagle.appDemo.utils.createSectionHeaderModule
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
@@ -23,9 +23,9 @@ import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextInputModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, FeatureFlagsListItem>(R.string.case_study_feature_flags_title) {
+class ValueWrappersFragment : ExamplesDetailFragment<ValueWrappersViewModel, ValueWrappersListItem>(R.string.case_study_value_wrappers_title) {
 
-    override val viewModel by viewModel<FeatureFlagsViewModel>()
+    override val viewModel by viewModel<ValueWrappersViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +37,7 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
         )
     }
 
-    override fun createAdapter() = FeatureFlagsAdapter(
+    override fun createAdapter() = ValueWrappersAdapter(
         scope = viewModel.viewModelScope,
         onSectionHeaderSelected = viewModel::onSectionHeaderSelected,
         onCurrentStateCardPressed = { Beagle.show() },
@@ -52,11 +52,11 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
         })
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
-        createTextModule(R.string.case_study_feature_flags_hint_1),
-        createSectionHeaderModule(R.string.case_study_feature_flags_switches),
+        createTextModule(R.string.case_study_value_wrappers_hint_1),
+        createSectionHeaderModule(R.string.case_study_value_wrappers_switches),
         SwitchModule(
             id = TOGGLE_1_ID,
-            text = getString(R.string.case_study_feature_flags_toggle_1),
+            text = getString(R.string.case_study_value_wrappers_toggle_1),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isEnabled = viewModel.areModulesEnabled,
@@ -64,16 +64,16 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
         ),
         SwitchModule(
             id = TOGGLE_2_ID,
-            text = getString(R.string.case_study_feature_flags_toggle_2),
+            text = getString(R.string.case_study_value_wrappers_toggle_2),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
-        createSectionHeaderModule(R.string.case_study_feature_flags_check_boxes),
+        createSectionHeaderModule(R.string.case_study_value_wrappers_check_boxes),
         CheckBoxModule(
             id = TOGGLE_3_ID,
-            text = getString(R.string.case_study_feature_flags_toggle_3),
+            text = getString(R.string.case_study_value_wrappers_toggle_3),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isEnabled = viewModel.areModulesEnabled,
@@ -81,21 +81,21 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
         ),
         CheckBoxModule(
             id = TOGGLE_4_ID,
-            text = getString(R.string.case_study_feature_flags_toggle_4),
+            text = getString(R.string.case_study_value_wrappers_toggle_4),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
         DividerModule("divider1"),
-        createTextModule(R.string.case_study_feature_flags_hint_2),
+        createTextModule(R.string.case_study_value_wrappers_hint_2),
         MultipleSelectionListModule(
             id = CHECK_BOX_GROUP_ID,
-            title = getText(R.string.case_study_feature_flags_check_box_group),
+            title = getText(R.string.case_study_value_wrappers_check_box_group),
             items = listOf(
-                BeagleListItemContractImplementation(getString(R.string.case_study_feature_flags_check_box_1)),
-                BeagleListItemContractImplementation(getString(R.string.case_study_feature_flags_check_box_2)),
-                BeagleListItemContractImplementation(getString(R.string.case_study_feature_flags_check_box_3))
+                BeagleListItemContractImplementation(getString(R.string.case_study_value_wrappers_check_box_1)),
+                BeagleListItemContractImplementation(getString(R.string.case_study_value_wrappers_check_box_2)),
+                BeagleListItemContractImplementation(getString(R.string.case_study_value_wrappers_check_box_3))
             ),
             isExpandedInitially = true,
             isValuePersisted = true,
@@ -105,39 +105,39 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
             onSelectionChanged = { viewModel.refreshItems() }
         ),
         DividerModule("divider2"),
-        createTextModule(R.string.case_study_feature_flags_hint_3),
+        createTextModule(R.string.case_study_value_wrappers_hint_3),
         SingleSelectionListModule(
             id = RADIO_BUTTON_GROUP_ID,
-            title = getText(R.string.case_study_feature_flags_radio_button_group),
+            title = getText(R.string.case_study_value_wrappers_radio_button_group),
             items = listOf(
-                BeagleListItemContractImplementation(getString(R.string.case_study_feature_flags_radio_button_1)),
-                BeagleListItemContractImplementation(getString(R.string.case_study_feature_flags_radio_button_2)),
-                BeagleListItemContractImplementation(getString(R.string.case_study_feature_flags_radio_button_3))
+                BeagleListItemContractImplementation(getString(R.string.case_study_value_wrappers_radio_button_1)),
+                BeagleListItemContractImplementation(getString(R.string.case_study_value_wrappers_radio_button_2)),
+                BeagleListItemContractImplementation(getString(R.string.case_study_value_wrappers_radio_button_3))
             ),
             isExpandedInitially = true,
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
-            initiallySelectedItemId = getString(R.string.case_study_feature_flags_radio_button_1),
+            initiallySelectedItemId = getString(R.string.case_study_value_wrappers_radio_button_1),
             isEnabled = viewModel.areModulesEnabled,
             onSelectionChanged = { viewModel.refreshItems() }
         ),
         DividerModule("divider3"),
-        createTextModule(R.string.case_study_feature_flags_hint_4),
-        createSectionHeaderModule(R.string.case_study_feature_flags_slider_label),
+        createTextModule(R.string.case_study_value_wrappers_hint_4),
+        createSectionHeaderModule(R.string.case_study_value_wrappers_slider_label),
         SliderModule(
             id = SLIDER,
-            text = { getString(R.string.case_study_feature_flags_slider_title, it) },
+            text = { getString(R.string.case_study_value_wrappers_slider_title, it) },
             isValuePersisted = true,
             initialValue = SLIDER_DEFAULT_VALUE,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isEnabled = viewModel.areModulesEnabled,
             onValueChanged = { viewModel.refreshItems() }
         ),
-        createTextModule(R.string.case_study_feature_flags_hint_5),
-        createSectionHeaderModule(R.string.case_study_feature_flags_text_input_label),
+        createTextModule(R.string.case_study_value_wrappers_hint_5),
+        createSectionHeaderModule(R.string.case_study_value_wrappers_text_input_label),
         TextInputModule(
             id = TEXT_INPUT,
-            text = { getString(R.string.case_study_feature_flags_text_input_title, it) },
+            text = { getString(R.string.case_study_value_wrappers_text_input_title, it) },
             initialValue = TEXT_DEFAULT_VALUE,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isValuePersisted = true,
@@ -152,10 +152,10 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
         viewModel.toggle3?.setCurrentValue(Beagle, false)
         viewModel.toggle4?.setCurrentValue(Beagle, false)
         viewModel.multipleSelectionOptions?.setCurrentValue(Beagle, emptySet())
-        viewModel.singleSelectionOption?.setCurrentValue(Beagle, getString(R.string.case_study_feature_flags_radio_button_1))
+        viewModel.singleSelectionOption?.setCurrentValue(Beagle, getString(R.string.case_study_value_wrappers_radio_button_1))
         viewModel.slider?.setCurrentValue(Beagle, SLIDER_DEFAULT_VALUE)
         viewModel.textInput?.setCurrentValue(Beagle, TEXT_DEFAULT_VALUE)
-        binding.recyclerView.showSnackbar(R.string.case_study_feature_flags_state_reset)
+        binding.recyclerView.showSnackbar(R.string.case_study_value_wrappers_state_reset)
     }
 
     companion object {
@@ -170,6 +170,6 @@ class FeatureFlagsFragment : ExamplesDetailFragment<FeatureFlagsViewModel, Featu
         const val SLIDER_DEFAULT_VALUE = 5
         const val TEXT_DEFAULT_VALUE = "Hello world"
 
-        fun newInstance() = FeatureFlagsFragment()
+        fun newInstance() = ValueWrappersFragment()
     }
 }

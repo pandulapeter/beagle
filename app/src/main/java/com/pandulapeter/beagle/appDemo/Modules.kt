@@ -9,7 +9,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.about.licences.LicencesViewM
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.AnalyticsViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.AuthenticationViewModel
-import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.FeatureFlagsViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.ValueWrappersViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.MockDataGeneratorViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.NetworkRequestInterceptorViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.overlay.OverlayViewModel
@@ -34,7 +34,7 @@ private val featureModule = module {
     viewModel { ExamplesViewModel() }
     viewModel { SimpleSetupViewModel() }
     viewModel { StaticDataViewModel() }
-    viewModel { FeatureFlagsViewModel() }
+    viewModel { ValueWrappersViewModel() }
     viewModel { AuthenticationViewModel() }
     viewModel { NetworkRequestInterceptorViewModel(get()) }
     viewModel { AnalyticsViewModel() }

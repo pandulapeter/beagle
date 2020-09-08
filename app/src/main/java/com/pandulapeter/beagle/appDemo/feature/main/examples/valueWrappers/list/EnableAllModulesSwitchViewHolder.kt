@@ -1,17 +1,17 @@
-package com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list
+package com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.databinding.ItemFeatureFlagsEnableAllModulesSwitchBinding
+import com.pandulapeter.beagle.appDemo.databinding.ItemValueWrappersEnableAllModulesSwitchBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class EnableAllModulesSwitchViewHolder private constructor(
-    binding: ItemFeatureFlagsEnableAllModulesSwitchBinding,
+    binding: ItemValueWrappersEnableAllModulesSwitchBinding,
     onStateChanged: (Boolean) -> Unit
-) : BaseViewHolder<ItemFeatureFlagsEnableAllModulesSwitchBinding, EnableAllModulesSwitchViewHolder.UiModel>(binding) {
+) : BaseViewHolder<ItemValueWrappersEnableAllModulesSwitchBinding, EnableAllModulesSwitchViewHolder.UiModel>(binding) {
 
     init {
         binding.enableAllModulesSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -23,7 +23,7 @@ class EnableAllModulesSwitchViewHolder private constructor(
 
     data class UiModel(
         val isChecked: Boolean
-    ) : FeatureFlagsListItem {
+    ) : ValueWrappersListItem {
 
         override val id: String = "enableAllModulesSwitch"
     }
@@ -33,7 +33,7 @@ class EnableAllModulesSwitchViewHolder private constructor(
             parent: ViewGroup,
             onStateChanged: (Boolean) -> Unit
         ) = EnableAllModulesSwitchViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_feature_flags_enable_all_modules_switch, parent, false),
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_value_wrappers_enable_all_modules_switch, parent, false),
             onStateChanged = onStateChanged
         )
     }

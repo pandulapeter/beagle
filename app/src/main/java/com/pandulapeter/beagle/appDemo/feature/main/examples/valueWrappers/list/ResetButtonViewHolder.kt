@@ -1,17 +1,17 @@
-package com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list
+package com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.databinding.ItemFeatureFlagsResetButtonBinding
+import com.pandulapeter.beagle.appDemo.databinding.ItemValueWrappersResetButtonBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 
 class ResetButtonViewHolder private constructor(
-    binding: ItemFeatureFlagsResetButtonBinding,
+    binding: ItemValueWrappersResetButtonBinding,
     onButtonPressed: () -> Unit
-) : BaseViewHolder<ItemFeatureFlagsResetButtonBinding, ResetButtonViewHolder.UiModel>(binding) {
+) : BaseViewHolder<ItemValueWrappersResetButtonBinding, ResetButtonViewHolder.UiModel>(binding) {
 
     init {
         binding.root.setOnClickListener {
@@ -23,14 +23,14 @@ class ResetButtonViewHolder private constructor(
 
     data class UiModel(
         override val id: String = "resetButton"
-    ) : FeatureFlagsListItem
+    ) : ValueWrappersListItem
 
     companion object {
         fun create(
             parent: ViewGroup,
             onButtonPressed: () -> Unit
         ) = ResetButtonViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_feature_flags_reset_button, parent, false),
+            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_value_wrappers_reset_button, parent, false),
             onButtonPressed = onButtonPressed
         )
     }

@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSpaceBinding
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.SimpleSetupListItem
-import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.FeatureFlagsListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.ValueWrappersListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import java.util.UUID
@@ -18,7 +18,7 @@ class SpaceViewHolder private constructor(
 
     data class UiModel(
         override val id: String = "space_${UUID.randomUUID()}"
-    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, FeatureFlagsListItem, AuthenticationListItem
+    ) : ListItem, SetupListItem, ExamplesListItem, SimpleSetupListItem, ValueWrappersListItem, AuthenticationListItem
 
     companion object {
         fun create(

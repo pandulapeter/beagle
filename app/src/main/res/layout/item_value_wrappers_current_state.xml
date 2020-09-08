@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.CurrentStateViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.CurrentStateViewHolder.UiModel" />
 
     </data>
 
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/large_content_padding"
-            tools:text="@string/case_study_feature_flags_current_state_key_1" />
+            tools:text="@string/case_study_value_wrappers_current_state_key_1" />
 
     </com.google.android.material.card.MaterialCardView>
 

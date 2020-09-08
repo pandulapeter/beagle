@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.list.EnableAllModulesSwitchViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.EnableAllModulesSwitchViewHolder.UiModel" />
 
     </data>
 
@@ -21,7 +21,7 @@
         android:paddingLeft="@dimen/large_content_padding"
         android:paddingEnd="@dimen/large_content_padding"
         android:paddingRight="@dimen/large_content_padding"
-        android:text="@string/case_study_feature_flags_disabling_interactions_switch"
+        android:text="@string/case_study_value_wrappers_disabling_interactions_switch"
         app:switchPadding="@dimen/large_content_padding" />
 
 </layout>

@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.AnalyticsFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.AuthenticationFragment
-import com.pandulapeter.beagle.appDemo.feature.main.examples.featureFlags.FeatureFlagsFragment
+import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.ValueWrappersFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.MockDataGeneratorFragment
@@ -56,7 +56,7 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
     private fun onCaseStudySelected(caseStudy: CaseStudy) = when (caseStudy) {
         CaseStudy.SIMPLE_SETUP -> navigateTo(SimpleSetupFragment.Companion::newInstance)
         CaseStudy.STATIC_DATA -> navigateTo(StaticDataFragment.Companion::newInstance)
-        CaseStudy.FEATURE_FLAGS -> navigateTo(FeatureFlagsFragment.Companion::newInstance)
+        CaseStudy.VALUE_WRAPPERS -> navigateTo(ValueWrappersFragment.Companion::newInstance)
         CaseStudy.NETWORK_REQUEST_INTERCEPTOR -> navigateTo(NetworkRequestInterceptorFragment.Companion::newInstance)
         CaseStudy.ANALYTICS -> navigateTo(AnalyticsFragment.Companion::newInstance)
         CaseStudy.AUTHENTICATION -> navigateTo(AuthenticationFragment.Companion::newInstance)
