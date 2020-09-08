@@ -5,6 +5,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
 
 /**
  * Displays a switch that, when enabled, increases the duration of animations.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text to display on the switch. Optional, "Slow down animations" by default.

@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.modules.ForceCrashButtonModule.Companion.ID
 
 /**
  * Displays a button that throws an exception when pressed - useful for testing crash reporting.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text that should be displayed on the button. "Force crash" by default.

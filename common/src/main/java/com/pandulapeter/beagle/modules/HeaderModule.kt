@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.modules.HeaderModule.Companion.ID
 
 /**
  * Displays a configurable title, subtitle and text.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param title - The title that will be displayed with the largest font.

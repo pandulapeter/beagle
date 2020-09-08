@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule.Companion.ID
 
 /**
  * Displays information about the current device and the OS.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param title - The title of the module that will be displayed in the header of the list. "Device info" by default.

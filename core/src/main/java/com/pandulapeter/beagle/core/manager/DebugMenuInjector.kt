@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
+import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 
 internal class DebugMenuInjector(
@@ -22,73 +23,73 @@ internal class DebugMenuInjector(
     private val fragmentLifecycleCallbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
 
         override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.FRAGMENT_ON_ATTACH)
             }
         }
 
         override fun onFragmentActivityCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.FRAGMENT_ON_ACTIVITY_CREATED, savedInstanceState != null)
             }
         }
 
         override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.ON_CREATE, savedInstanceState != null)
             }
         }
 
         override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.FRAGMENT_ON_VIEW_CREATED, savedInstanceState != null)
             }
         }
 
         override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.ON_START)
             }
         }
 
         override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.ON_RESUME)
             }
         }
 
         override fun onFragmentSaveInstanceState(fm: FragmentManager, f: Fragment, outState: Bundle) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.ON_SAVE_INSTANCE_STATE)
             }
         }
 
         override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.ON_PAUSE)
             }
         }
 
         override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.ON_STOP)
             }
         }
 
         override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.FRAGMENT_ON_VIEW_DESTROYED)
             }
         }
 
         override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.ON_DESTROY)
             }
         }
 
         override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
-            if (f !is OverlayFragment) {
+            if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.FRAGMENT_ON_DETACH)
             }
         }
@@ -158,4 +159,6 @@ internal class DebugMenuInjector(
         unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks)
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
     }
+    
+    private fun Fragment.shouldLogFragment() = this !is OverlayFragment && this !is MediaPreviewDialogFragment
 }

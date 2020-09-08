@@ -293,6 +293,8 @@ interface BeagleContract {
      * Above Android Lollipop the entire screen will be captured, after the user agrees to the system prompt.
      * Check out the [Behavior] class to override the default file naming logic.
      *
+     * The app will show a media preview dialog when the recording is done, or a notification that opens to the gallery if it is no longer in the foreground.
+     *
      * @param callback - The lambda that gets invoked after the screenshot is done, with the [Uri] pointing to the PNG file. The argument will be null if anything goes wrong.
      */
     fun takeScreenshot(callback: (Uri?) -> Unit) = callback.invoke(null)
@@ -302,6 +304,8 @@ interface BeagleContract {
      * A notification will appear during the recording which contains the button to stop it. The recording will have at most 720p resolution.
      * This feature relies on API-s only present on Android Lollipop and above. Recording will only be started after the user agrees to the system prompt.
      * Check out the [Behavior] class to override the default file naming logic.
+     *
+     * The app will show a media preview dialog when the recording is done, or a notification that opens to the gallery if it is no longer in the foreground.
      *
      * @param callback - The lambda that gets invoked after the recording is done, with the [Uri] pointing to the MP4 file. The argument will be null if anything goes wrong.
      */

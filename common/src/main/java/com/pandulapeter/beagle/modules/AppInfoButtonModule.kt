@@ -6,6 +6,7 @@ import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 
 /**
  * Displays a button that links to the Android App Info page for your app.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text that should be displayed on the button. Optional, "Show app info" by default.

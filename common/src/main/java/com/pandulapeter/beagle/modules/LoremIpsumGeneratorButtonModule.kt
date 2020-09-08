@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule.Companion
 
 /**
  * Displays a button that generates a random text and returns it in a callback lambda.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text that should be displayed on the button. Optional, "Generate Lorem Ipsum" by default.

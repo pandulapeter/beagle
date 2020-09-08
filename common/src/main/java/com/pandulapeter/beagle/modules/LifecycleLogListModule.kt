@@ -15,6 +15,8 @@ import java.util.Locale
  * Note: In case of obfuscated builds, Fragment names will only appear properly if you choose to keep them in your ProGuard configuration. Use the following line:
  * -keepnames class * extends androidx.fragment.app.Fragment
  *
+ * Activities and Fragments coming from Beagle will not appear in the logs.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param title - The title of the module. "Lifecycle logs" by default.

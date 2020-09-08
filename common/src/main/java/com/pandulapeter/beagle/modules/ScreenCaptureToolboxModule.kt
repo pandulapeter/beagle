@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 /**
  * Functionality-wise this module adds a [ScreenshotButtonModule], a [ScreenRecordingButtonModule] (on Lollipop and above) and a [GalleryButtonModule] to the debug menu.
  * However, they will be displayed as list items. Check out the linked module descriptions for mode information.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param title - The title of the module that will be displayed in the header of the list. "Screen capture tools" by default.

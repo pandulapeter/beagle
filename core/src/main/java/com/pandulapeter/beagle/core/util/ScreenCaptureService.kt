@@ -25,12 +25,14 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.Lifecycle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.createFile
 import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
+import com.pandulapeter.beagle.core.view.gallery.preview.MediaPreviewDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -207,7 +209,15 @@ internal class ScreenCaptureService : Service() {
     }
 
     private fun onReady(uri: Uri?) {
-        showGalleryNotification()
+        if (uri != null) {
+            BeagleCore.implementation.currentActivity.let { currentActivity ->
+                if (currentActivity == null || !currentActivity.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                    showGalleryNotification()
+                } else {
+                    MediaPreviewDialogFragment.show(currentActivity.supportFragmentManager, uri.path.orEmpty().replace(Regex("(/.*/)"), ""))
+                }
+            }
+        }
         cleanUp()
         BeagleCore.implementation.onScreenCaptureReady?.invoke(uri)
         stopForeground(true)
@@ -217,11 +227,11 @@ internal class ScreenCaptureService : Service() {
     private fun showGalleryNotification() {
         (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(GALLERY_NOTIFICATION_ID,
             NotificationCompat.Builder(this, BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId)
-                .setAutoCancel(false)
                 .setSound(null)
                 .setSmallIcon(R.drawable.beagle_ic_recording)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_ALL)
+                .setAutoCancel(true)
                 .setContentTitle(BeagleCore.implementation.appearance.screenCaptureGalleryNotificationTitle)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .apply {

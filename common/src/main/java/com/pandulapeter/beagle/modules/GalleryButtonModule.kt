@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 /**
  * Displays a button that opens the gallery of captured screenshot images and screen recording videos.
  * Check out the [Appearance] class for customization options.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text that should be displayed on the button. "Open the gallery" by default.

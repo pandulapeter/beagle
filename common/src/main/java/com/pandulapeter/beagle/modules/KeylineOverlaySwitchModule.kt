@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
 
 /**
  * Displays a switch that, when enabled, draws a grid over your app with configurable dimensions that you can use to check the alignments of your Views.
+ *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text that appears near the switch. "Keyline overlay" by default.
