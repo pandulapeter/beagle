@@ -41,7 +41,7 @@ internal class GalleryActivity : AppCompatActivity() {
         setContentView(R.layout.beagle_activity_gallery)
         supportActionBar?.hide()
         findViewById<Toolbar>(R.id.beagle_toolbar).apply {
-            setNavigationOnClickListener { onBackPressed() }
+            setNavigationOnClickListener { supportFinishAfterTransition() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
             title = BeagleCore.implementation.appearance.galleryTitle
             val textColor = AppCompatTextView(context).textColors.defaultColor //TODO: How not to get the current theme's text color.
