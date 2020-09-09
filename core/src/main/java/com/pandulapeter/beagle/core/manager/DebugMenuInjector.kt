@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
 import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
+import com.pandulapeter.beagle.core.view.AlertDialogFragment
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 
@@ -160,5 +161,6 @@ internal class DebugMenuInjector(
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
     }
     
-    private fun Fragment.shouldLogFragment() = this !is OverlayFragment && this !is MediaPreviewDialogFragment
+    private fun Fragment.shouldLogFragment() =
+        this !is OverlayFragment && this !is MediaPreviewDialogFragment && this !is AlertDialogFragment
 }
