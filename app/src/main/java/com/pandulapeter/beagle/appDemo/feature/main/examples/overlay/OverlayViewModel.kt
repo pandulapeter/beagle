@@ -16,7 +16,7 @@ class OverlayViewModel : ListViewModel<ListItem>() {
             CodeSnippetViewHolder.UiModel(
                 "Beagle.addOverlayListener(\n" +
                         "    listener = object : OverlayListener {\n" +
-                        "        override fun onDrawOver(canvas: Canvas, leftInset: Int, topInset: Int, rightInset: Int, bottomInset: Int) {\n" +
+                        "        override fun onDrawOver(canvas: Canvas, insets: Insets) {\n" +
                         "            if (isOverlayEnabled) {\n" +
                         "                canvas.drawCircle(…)\n" +
                         "            }\n" +
