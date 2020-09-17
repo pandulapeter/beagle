@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
+import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.cells.TextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.core.util.extension.append
@@ -20,7 +21,7 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
         addAll(BeagleCore.implementation.getNetworkLogEntries().take(module.maxItemCount).map { entry ->
             (if (entry.isOutgoing) "↑ " else "↓ ").let { prefix ->
                 (module.timestampFormatter?.let { formatter -> formatter(entry.timestamp) }).let { formattedTimestamp ->
-                    TextCell(
+                    ExpandedItemTextCell(
                         id = "${module.id}_${entry.id}",
                         text = entry.url.replace(module.baseUrl, "").let { url ->
                             formattedTimestamp?.let { "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)

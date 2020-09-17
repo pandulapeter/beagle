@@ -2,9 +2,8 @@ package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Cell
-import com.pandulapeter.beagle.core.list.cells.TextCell
+import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
-import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.modules.ItemListModule
 
 internal class ItemListDelegate<T : BeagleListItemContract> : ExpandableModuleDelegate<ItemListModule<T>> {
@@ -13,9 +12,9 @@ internal class ItemListDelegate<T : BeagleListItemContract> : ExpandableModuleDe
 
     override fun MutableList<Cell<*>>.addItems(module: ItemListModule<T>) {
         addAll(module.items.map { item ->
-            TextCell(
+            ExpandedItemTextCell(
                 id = "${module.id}_${item.id}",
-                text = "• ".append(item.title),
+                text = item.title,
                 isEnabled = true,
                 onItemSelected = module.onItemSelected?.let { onItemSelected ->
                     {

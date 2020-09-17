@@ -23,14 +23,13 @@ internal data class KeyValueCell(
         override fun createViewHolder(parent: ViewGroup) = KeyValueViewHolder(parent)
     }
 
-    //TODO: Use a different layout
-    private class KeyValueViewHolder(parent: ViewGroup) : ViewHolder<KeyValueCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_text, parent, false)) {
+    private class KeyValueViewHolder(parent: ViewGroup) : ViewHolder<KeyValueCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_expanded_item_text, parent, false)) {
 
         private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
 
         override fun bind(model: KeyValueCell) = textView.run {
-            text = SpannableString("• ".append(model.key.append(": ")).append(model.value)).apply {
-                setSpan(StyleSpan(Typeface.BOLD), 2, model.key.length + 3, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+            text = SpannableString(model.key.append(": ").append(model.value)).apply {
+                setSpan(StyleSpan(Typeface.BOLD), 0, model.key.length + 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
             }
         }
     }

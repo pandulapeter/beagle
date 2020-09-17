@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Cell
-import com.pandulapeter.beagle.core.list.cells.RadioButtonCell
+import com.pandulapeter.beagle.core.list.cells.ExpandedItemRadioButtonCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.core.list.delegates.shared.PersistableModuleDelegate
 import com.pandulapeter.beagle.core.util.extension.append
@@ -16,7 +16,7 @@ internal class SingleSelectionListDelegate<T : BeagleListItemContract> : Expanda
 
     override fun MutableList<Cell<*>>.addItems(module: SingleSelectionListModule<T>) {
         addAll(module.items.map { item ->
-            RadioButtonCell(
+            ExpandedItemRadioButtonCell(
                 id = "${module.id}_${item.id}",
                 text = item.title,
                 isChecked = item.id == getUiValue(module),

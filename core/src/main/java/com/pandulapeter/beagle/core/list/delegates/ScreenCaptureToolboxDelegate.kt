@@ -3,9 +3,8 @@ package com.pandulapeter.beagle.core.list.delegates
 import android.os.Build
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
-import com.pandulapeter.beagle.core.list.cells.TextCell
+import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
-import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 
 internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCaptureToolboxModule> {
@@ -15,9 +14,9 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
     override fun MutableList<Cell<*>>.addItems(module: ScreenCaptureToolboxModule) {
         module.imageText?.let { imageText ->
             add(
-                TextCell(
+                ExpandedItemTextCell(
                     id = "${module.id}_image",
-                    text = "• ".append(imageText),
+                    text = imageText,
                     isEnabled = true,
                     onItemSelected = ScreenshotButtonDelegate.Companion::hideDebugMenuAndTakeScreenshot
                 )
@@ -26,9 +25,9 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             module.videoText?.let { videoText ->
                 add(
-                    TextCell(
+                    ExpandedItemTextCell(
                         id = "${module.id}_video",
-                        text = "• ".append(videoText),
+                        text = videoText,
                         isEnabled = true,
                         onItemSelected = ScreenRecordingButtonDelegate.Companion::hideDebugMenuAndRecordScreen
                     )
@@ -36,9 +35,9 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
             }
         }
         add(
-            TextCell(
+            ExpandedItemTextCell(
                 id = "${module.id}_gallery",
-                text = "• ".append(module.galleryText),
+                text = module.galleryText,
                 isEnabled = true,
                 onItemSelected = BeagleCore.implementation::openGallery
             )
