@@ -52,11 +52,9 @@ internal abstract class BaseListenerManager<T> {
     }
 
     @CallSuper
-    protected open fun addListener(listener: T) {
-        synchronized(listeners) {
-            if (!listeners.contains(listener)) {
-                listeners.add(listener)
-            }
+    protected open fun addListener(listener: T) = synchronized(listeners) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener)
         }
     }
 

@@ -30,11 +30,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
         )
     )
 
-    private fun MutableList<Cell<*>>.addFooter(module: M) = add(
-        PaddingCell(
-            id = "footer_${module.id}",
-        )
-    )
+    private fun MutableList<Cell<*>>.addFooter(module: M) = add(PaddingCell(id = "footer_${module.id}"))
 
     fun canExpand(module: M): Boolean
 
