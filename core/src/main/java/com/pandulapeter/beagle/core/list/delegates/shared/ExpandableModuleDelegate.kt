@@ -5,6 +5,7 @@ import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.cells.ExpandableHeaderCell
+import com.pandulapeter.beagle.core.list.cells.PaddingCell
 
 internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.Delegate<M> {
 
@@ -12,6 +13,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
         addHeader(module)
         if (module.isExpanded) {
             addItems(module)
+            addFooter(module)
         }
     }
 
@@ -28,11 +30,17 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
         )
     )
 
+    private fun MutableList<Cell<*>>.addFooter(module: M) = add(
+        PaddingCell(
+            id = "footer_${module.id}",
+        )
+    )
+
     fun canExpand(module: M): Boolean
 
     fun MutableList<Cell<*>>.addItems(module: M)
 
-    fun getTitle(module: M) : CharSequence = module.title
+    fun getTitle(module: M): CharSequence = module.title
 
     private var ExpandableModule<M>.isExpanded: Boolean
         get() = BeagleCore.implementation.memoryStorageManager.booleans[id] ?: isExpandedInitially
