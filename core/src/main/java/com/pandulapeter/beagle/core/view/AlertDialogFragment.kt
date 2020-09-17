@@ -2,42 +2,59 @@ package com.pandulapeter.beagle.core.view
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
+import com.pandulapeter.beagle.core.util.extension.shareText
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
-import com.pandulapeter.beagle.utils.extensions.dimension
+import com.pandulapeter.beagle.utils.consume
+import com.pandulapeter.beagle.utils.extensions.colorResource
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class AlertDialogFragment : DialogFragment() {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = requireContext().applyTheme().let { context ->
-        AlertDialog.Builder(context).apply {
-            if (arguments?.isHorizontalScrollEnabled == true) {
-                setView(TolerantScrollView(context).apply {
-                    isVerticalScrollBarEnabled = false
-                    overScrollMode = View.OVER_SCROLL_NEVER
-                    clipToPadding = false
-                    addView(ChildHorizontalScrollView(context).apply {
-                        isHorizontalScrollBarEnabled = false
-                        overScrollMode = View.OVER_SCROLL_NEVER
-                        clipToPadding = false
-                        addView(AppCompatTextView(context).apply {
-                            text = arguments?.content
-                            context.dimension(R.dimen.beagle_large_content_padding).let { padding -> setPadding(padding, padding, padding, padding) }
-                            setTextIsSelectable(true)
-                        }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    }, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
-                })
-            } else {
-                setMessage(arguments?.content)
+    private val toolbar get() = dialog?.findViewById<Toolbar>(R.id.beagle_toolbar)
+    private val textView get() = dialog?.findViewById<TextView>(R.id.beagle_text_view)
+    private lateinit var shareButton: MenuItem
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
+        .setView(if (arguments?.isHorizontalScrollEnabled == true) R.layout.beagle_dialog_fragment_alert_large else R.layout.beagle_dialog_fragment_alert_small)
+        .create()
+
+    override fun onResume() {
+        super.onResume()
+        textView?.text = arguments?.content
+        toolbar?.run {
+            val textColor = context.colorResource(android.R.attr.textColorPrimary)
+            setNavigationOnClickListener { dismiss() }
+            navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
+            shareButton = menu.findItem(R.id.beagle_share).also {
+                it.title = BeagleCore.implementation.appearance.galleryShareHint
+                it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
             }
-        }.create()
+            setOnMenuItemClickListener(::onMenuItemClicked)
+        }
+    }
+
+    private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
+        R.id.beagle_share -> consume { shareItem() }
+        else -> false
+    }
+
+    private fun shareItem() {
+        textView?.text?.let { text ->
+            activity?.shareText(text.toString())
+        }
     }
 
     companion object {

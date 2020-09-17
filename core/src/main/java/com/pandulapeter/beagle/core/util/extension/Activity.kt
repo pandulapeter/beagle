@@ -36,6 +36,13 @@ internal fun Activity.shareFile(uri: Uri, fileType: String) {
     }, null))
 }
 
+internal fun Activity.shareText(text: String) {
+    startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, text)
+    }, null))
+}
+
 internal fun Activity.shareFiles(uris: List<Uri>) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND_MULTIPLE).apply {
         type = "*/*"

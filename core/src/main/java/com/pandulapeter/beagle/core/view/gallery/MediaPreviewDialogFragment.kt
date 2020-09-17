@@ -39,9 +39,9 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
     private lateinit var shareButton: MenuItem
     private lateinit var deleteButton: MenuItem
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = requireContext().applyTheme().let { context ->
-        AlertDialog.Builder(context).setView(R.layout.beagle_dialog_fragment_media_preview)
-    }.create()
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
+        .setView(R.layout.beagle_dialog_fragment_media_preview)
+        .create()
 
     override fun onResume() {
         super.onResume()
