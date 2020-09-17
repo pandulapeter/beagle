@@ -130,7 +130,6 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
                 fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> shareFile(uri, ScreenCaptureManager.IMAGE_TYPE)
                 fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> shareFile(uri, ScreenCaptureManager.VIDEO_TYPE)
             }
-            dismiss()
         }
     }
 
