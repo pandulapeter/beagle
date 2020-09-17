@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.util.TypedValue
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.BeagleCore
@@ -37,10 +38,14 @@ internal fun Activity.shareFile(uri: Uri, fileType: String) {
 }
 
 internal fun Activity.shareText(text: String) {
-    startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TEXT, text)
-    }, null))
+    try {
+        startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }, null))
+    } catch (_: Exception) {
+        Toast.makeText(this, BeagleCore.implementation.appearance.shareErrorText, Toast.LENGTH_LONG).show()
+    }
 }
 
 internal fun Activity.shareFiles(uris: List<Uri>) {

@@ -26,6 +26,7 @@ import java.util.Locale
  * @param galleryDeleteConfirmationMessagePlural - The message used for the Delete confirmation dialog of the Gallery screen when deleting multiple files. "Are you sure you want to delete these files?" by default.
  * @param galleryDeleteConfirmationPositive - The positive text used for the Delete confirmation dialog of the Gallery screen. "Delete" by default.
  * @param galleryDeleteConfirmationNegative - The positive text used for the Delete confirmation dialog of the Gallery screen. "Cancel" by default.
+ * @param shareErrorText - The text on the toast that appears when trying to share a large payload throws an exception. "Payload too large" by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. Null by default.
  */
 data class Appearance(
@@ -47,6 +48,7 @@ data class Appearance(
     val galleryDeleteConfirmationMessagePlural: String = "Are you sure you want to delete these files?",
     val galleryDeleteConfirmationPositive: String = "Delete",
     val galleryDeleteConfirmationNegative: String = "Cancel",
+    val shareErrorText: CharSequence = "Payload too large",
     val applyInsets: ((windowInsets: Insets) -> Insets)? = null
 ) {
 

@@ -7,17 +7,40 @@
     android:layout_gravity="center"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/beagle_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/beagle_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/alert" />
+        android:background="?android:attr/windowBackground"
+        app:liftOnScroll="true">
 
-    <TextView
-        android:id="@+id/beagle_text_view"
-        android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/beagle_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/alert" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/beagle_scroll_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/beagle_large_content_padding"
-        android:textIsSelectable="true" />
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/beagle_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/beagle_large_content_padding"
+            android:paddingLeft="@dimen/beagle_large_content_padding"
+            android:paddingTop="@dimen/beagle_content_padding"
+            android:paddingEnd="@dimen/beagle_large_content_padding"
+            android:paddingRight="@dimen/beagle_large_content_padding"
+            android:paddingBottom="@dimen/beagle_large_content_padding"
+            android:textIsSelectable="true" />
+
+    </ScrollView>
 
 </LinearLayout>
