@@ -28,9 +28,7 @@ internal class AlertDialogFragment : DialogFragment() {
     private lateinit var textView: TextView
     private lateinit var scrollView: ScrollView
     private lateinit var shareButton: MenuItem
-    private val scrollListener = ViewTreeObserver.OnScrollChangedListener {
-        //TODO: appBar.setLifted(scrollView.scrollY != 0)
-    }
+    private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
         .setView(if (arguments?.isHorizontalScrollEnabled == true) R.layout.beagle_dialog_fragment_alert_large else R.layout.beagle_dialog_fragment_alert_small)
@@ -44,7 +42,10 @@ internal class AlertDialogFragment : DialogFragment() {
             textView = dialog.findViewById(R.id.beagle_text_view)
             scrollView = dialog.findViewById(R.id.beagle_scroll_view)
             textView.text = arguments?.content
-            appBar.setPadding(0, 0, 0, 0)
+            appBar.run {
+                setPadding(0, 0, 0, 0)
+                setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
+            }
             scrollView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
             toolbar.run {
                 val textColor = context.colorResource(android.R.attr.textColorPrimary)
