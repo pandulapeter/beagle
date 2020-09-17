@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -14,7 +15,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/beagle_content_padding"
+        android:paddingLeft="@dimen/beagle_content_padding"
+        android:paddingEnd="@dimen/beagle_content_padding"
+        android:paddingRight="@dimen/beagle_content_padding"
+        android:paddingBottom="@dimen/beagle_content_padding">
 
         <ImageView
             android:id="@+id/beagle_image_view"

@@ -29,7 +29,6 @@ import com.pandulapeter.beagle.utils.extensions.waitForPreDraw
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.math.max
-import kotlin.math.roundToInt
 
 class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFragment.OnPositiveButtonClickedListener {
 
@@ -94,10 +93,15 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
     private fun setDialogSizeFromImage(imageView: ImageView) {
         imageView.run {
             waitForPreDraw {
-                dialog?.window?.setLayout(
-                    max(context.dimension(R.dimen.beagle_gallery_preview_minimum_width), (width * SIZE_MULTIPLIER).roundToInt()),
-                    (height * SIZE_MULTIPLIER).roundToInt() + (toolbar?.height ?: 0)
-                )
+                dialog?.window?.let { window ->
+                    val padding = context.dimension(R.dimen.beagle_content_padding)
+                    if (window.decorView.width > width + padding * 8) {
+                        window.setLayout(
+                            max(width + padding * 4, context.dimension(R.dimen.beagle_gallery_preview_minimum_width)),
+                            height + (toolbar?.height ?: 0) + padding
+                        )
+                    }
+                }
                 waitForPreDraw {
                     visible = true
                     if (fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION)) {
@@ -132,7 +136,6 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
 
     companion object {
         const val TAG = "beagleMediaPreviewDialogFragment"
-        private const val SIZE_MULTIPLIER = 0.9f
         private var Bundle.fileName by BundleArgumentDelegate.String("fileName")
 
         fun show(fragmentManager: FragmentManager, fileName: String) {

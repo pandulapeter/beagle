@@ -168,7 +168,7 @@
     <string name="case_study_value_wrappers_check_boxes">Check boxes</string>
     <string name="case_study_value_wrappers_toggle_3">Toggle 3</string>
     <string name="case_study_value_wrappers_toggle_4">Toggle 4</string>
-    <string name="case_study_value_wrappers_hint_2"><i>Check boxes can also be grouped together, in this case a single callback is invoked every time one of the values changes:</i></string>
+    <string name="case_study_value_wrappers_hint_2"><i>Check boxes can also be grouped together, in this case a single callback is invoked every time the selection changes:</i></string>
     <string name="case_study_value_wrappers_check_box_group"><b>Check box group</b></string>
     <string name="case_study_value_wrappers_check_box_1">Option 1</string>
     <string name="case_study_value_wrappers_check_box_2">Option 2</string>
