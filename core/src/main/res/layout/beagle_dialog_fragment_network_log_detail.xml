@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/beagle_linear_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/beagle_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/beagle_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/log_detail" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/beagle_frame_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.pandulapeter.beagle.core.view.TolerantScrollView
+            android:id="@+id/beagle_scroll_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:scrollbars="none">
+
+            <com.pandulapeter.beagle.core.view.ChildHorizontalScrollView
+                android:id="@+id/beagle_tolerant_child_horizontal_scroll_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/beagle_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/beagle_large_content_padding"
+                    android:paddingLeft="@dimen/beagle_large_content_padding"
+                    android:paddingTop="@dimen/beagle_content_padding"
+                    android:paddingEnd="@dimen/beagle_large_content_padding"
+                    android:paddingRight="@dimen/beagle_large_content_padding"
+                    android:paddingBottom="@dimen/beagle_large_content_padding"
+                    android:textIsSelectable="true" />
+
+            </com.pandulapeter.beagle.core.view.ChildHorizontalScrollView>
+
+        </com.pandulapeter.beagle.core.view.TolerantScrollView>
+
+        <ProgressBar
+            android:id="@+id/beagle_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/beagle_large_content_padding" />
+
+    </FrameLayout>
+
+</LinearLayout>

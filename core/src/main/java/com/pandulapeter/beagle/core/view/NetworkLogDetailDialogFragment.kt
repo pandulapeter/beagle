@@ -1,9 +1,14 @@
 package com.pandulapeter.beagle.core.view
 
 import android.app.Dialog
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.view.MenuItem
 import android.view.ViewTreeObserver
+import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -16,6 +21,7 @@ import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.shareText
+import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
@@ -23,6 +29,7 @@ import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
@@ -30,19 +37,21 @@ import org.json.JSONObject
 import org.json.JSONTokener
 import kotlin.math.max
 
-//TODO: Implement async parsing, add UI controls
+//TODO: Add UI controls for showing / hiding event metadata
 internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
     private lateinit var appBar: AppBarLayout
     private lateinit var toolbar: Toolbar
     private lateinit var textView: TextView
     private lateinit var scrollView: ScrollView
+    private lateinit var progressBar: ProgressBar
     private lateinit var shareButton: MenuItem
     private var isJsonReady = false
+    private var job: Job? = null
     private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
-        .setView(R.layout.beagle_dialog_fragment_log_detail_scrolling)
+        .setView(R.layout.beagle_dialog_fragment_network_log_detail)
         .create()
 
     override fun onResume() {
@@ -52,7 +61,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             toolbar = dialog.findViewById(R.id.beagle_toolbar)
             textView = dialog.findViewById(R.id.beagle_text_view)
             scrollView = dialog.findViewById(R.id.beagle_scroll_view)
-            textView.text = "Loading…"
+            progressBar = dialog.findViewById(R.id.beagle_progress_bar)
             appBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
@@ -74,17 +83,23 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
     //TODO: Use ViewModelScope, remove isJsonReady flag
     private fun formatJson() {
-        if (!isJsonReady) {
-            GlobalScope.launch {
-                val prefix = if (arguments?.isOutgoing == true) "↑ " else "↓ "
-                val url = arguments?.url.orEmpty()
-                val text = "${prefix}${url}".append("\n• Headers:${arguments?.headers.orEmpty()}")
-                    //TODO: .let { text -> formattedTimestamp?.let { text.append("\n• Timestamp: $it") } ?: text }
-                    .let { text -> arguments?.duration?.let { text.append("\n• Duration: ${max(0, it)} ms") } ?: text }
-                    .append("\n\n${arguments?.payload?.formatToJson()}")
+        if (isJsonReady) {
+            progressBar.visible = false
+        } else {
+            job?.cancel()
+            job = GlobalScope.launch {
+                val title = "${if (arguments?.isOutgoing == true) "↑" else "↓"} ${arguments?.url.orEmpty()}"
+                val text = SpannableString(
+                    title.append("\n\n• Headers:${arguments?.headers.orEmpty()}")
+                        .let { text -> arguments?.timestamp?.let { text.append("\n• Timestamp: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
+                        .let { text -> arguments?.duration?.let { text.append("\n• Duration: ${max(0, it)} ms") } ?: text }
+                        .append("\n\n${arguments?.payload?.formatToJson()}")
+                ).apply { setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE) }
                 launch(Dispatchers.Main) {
+                    progressBar.visible = false
                     textView.text = text
                     isJsonReady = true
+                    job = null
                 }
             }
         }
@@ -92,6 +107,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
     override fun onPause() {
         super.onPause()
+        job?.cancel()
         scrollView.viewTreeObserver.removeOnScrollChangedListener(scrollListener)
     }
 
