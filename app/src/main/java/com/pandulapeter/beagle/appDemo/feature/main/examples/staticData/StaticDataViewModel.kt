@@ -38,6 +38,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
             addPaddingSection()
             addDividerSection()
             addKeyValueListSection()
+            addLoadingIndicatorSection()
         }
     }
 
@@ -67,6 +68,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
                         "            \"Key 3\" to \"Value 3\"\n" +
                         "        )\n" +
                         "    )\n" +
+                        "    LoadingIndicatorModule()\n" +
                         ")"
             )
         )
@@ -121,6 +123,10 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_static_data_key_value_list_2))
     }
 
+    private fun MutableList<ListItem>.addLoadingIndicatorSection() = addSection(Section.LOADING_INDICATOR) {
+        add(TextViewHolder.UiModel(R.string.case_study_static_data_loading_indicator_2))
+    }
+
     private fun MutableList<ListItem>.addSection(section: Section, action: MutableList<ListItem>.() -> Unit) = (selectedSection == section).also { isExpanded ->
         add(SectionHeaderViewHolder.UiModel(section.titleResourceId, isExpanded))
         if (isExpanded) {
@@ -136,7 +142,8 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
         LABEL(R.string.case_study_static_data_section_header_1),
         PADDING(R.string.case_study_static_data_padding_1),
         DIVIDER(R.string.case_study_static_data_divider_1),
-        KEY_VALUE_LIST(R.string.case_study_static_data_key_value_list_1);
+        KEY_VALUE_LIST(R.string.case_study_static_data_key_value_list_1),
+        LOADING_INDICATOR(R.string.case_study_static_data_loading_indicator_1);
 
         companion object {
             fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }

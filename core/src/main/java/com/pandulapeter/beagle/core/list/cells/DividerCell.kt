@@ -14,12 +14,11 @@ internal data class DividerCell(
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<DividerCell>() {
 
-        override fun createViewHolder(parent: ViewGroup) = PaddingViewHolder(parent)
+        override fun createViewHolder(parent: ViewGroup) = DividerViewHolder(parent)
     }
 
-    private class PaddingViewHolder(parent: ViewGroup) : ViewHolder<DividerCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_divider, parent, false)) {
+    private class DividerViewHolder(parent: ViewGroup) : ViewHolder<DividerCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_divider, parent, false)) {
 
         override fun bind(model: DividerCell) = itemView.setBackgroundColor(itemView.context.colorResource(android.R.attr.textColorPrimary))
     }
 }
-

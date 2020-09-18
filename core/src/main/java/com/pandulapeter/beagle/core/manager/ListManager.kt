@@ -29,6 +29,7 @@ import com.pandulapeter.beagle.core.list.delegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.delegates.KeyValueListDelegate
 import com.pandulapeter.beagle.core.list.delegates.KeylineOverlaySwitchDelegate
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
+import com.pandulapeter.beagle.core.list.delegates.LoadingIndicatorDelegate
 import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
 import com.pandulapeter.beagle.core.list.delegates.LongTextDelegate
 import com.pandulapeter.beagle.core.list.delegates.LoremIpsumGeneratorButtonDelegate
@@ -58,6 +59,7 @@ import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
+import com.pandulapeter.beagle.modules.LoadingIndicatorModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
@@ -104,6 +106,7 @@ internal class ListManager {
         GalleryButtonModule::class to GalleryButtonDelegate(),
         HeaderModule::class to HeaderDelegate(),
         LifecycleLogListModule::class to LifecycleLogListDelegate(),
+        LoadingIndicatorModule::class to LoadingIndicatorDelegate(),
         LogListModule::class to LogListDelegate(),
         LongTextModule::class to LongTextDelegate(),
         LoremIpsumGeneratorButtonModule::class to LoremIpsumGeneratorButtonDelegate(),

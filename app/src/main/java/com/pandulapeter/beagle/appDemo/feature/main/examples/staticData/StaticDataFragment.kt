@@ -13,6 +13,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
+import com.pandulapeter.beagle.modules.LoadingIndicatorModule
 import com.pandulapeter.beagle.modules.PaddingModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -49,7 +50,9 @@ class StaticDataFragment : ExamplesDetailFragment<StaticDataViewModel, ListItem>
                 getText(R.string.case_study_static_data_module_key_2) to getText(R.string.case_study_static_data_module_value_2),
                 getText(R.string.case_study_static_data_module_key_3) to getText(R.string.case_study_static_data_module_value_3)
             )
-        )
+        ),
+        createTextModule(R.string.case_study_static_data_module_text_6),
+        LoadingIndicatorModule()
     )
 
     companion object {
