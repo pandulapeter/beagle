@@ -41,7 +41,10 @@ internal class LogDetailDialogFragment : DialogFragment() {
             toolbar = dialog.findViewById(R.id.beagle_toolbar)
             textView = dialog.findViewById(R.id.beagle_text_view)
             scrollView = dialog.findViewById(R.id.beagle_scroll_view)
-            textView.text = arguments?.content
+            textView.run {
+                setTextIsSelectable(BeagleCore.implementation.behavior.shouldAllowSelectionInDialogs)
+                text = arguments?.content
+            }
             appBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))

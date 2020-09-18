@@ -27,6 +27,13 @@ sealed class BundleArgumentDelegate<T>(protected val key: kotlin.String, protect
         override fun setValue(thisRef: Bundle?, property: KProperty<*>, value: kotlin.String) = thisRef?.putString(key, value) ?: Unit
     }
 
+    class StringList(key: kotlin.String, defaultValue: List<kotlin.String> = emptyList()) : BundleArgumentDelegate<List<kotlin.String>>(key, defaultValue) {
+
+        override fun getValue(thisRef: Bundle?, property: KProperty<*>) = thisRef?.getStringArrayList(key) ?: defaultValue
+
+        override fun setValue(thisRef: Bundle?, property: KProperty<*>, value: List<kotlin.String>) = thisRef?.putStringArrayList(key, ArrayList(value)) ?: Unit
+    }
+
     class CharSequence(key: kotlin.String, defaultValue: kotlin.CharSequence = "") : BundleArgumentDelegate<kotlin.CharSequence>(key, defaultValue) {
 
         override fun getValue(thisRef: Bundle?, property: KProperty<*>) = thisRef?.getCharSequence(key, defaultValue) ?: defaultValue

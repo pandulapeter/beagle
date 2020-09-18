@@ -37,8 +37,7 @@
             android:paddingTop="@dimen/beagle_content_padding"
             android:paddingEnd="@dimen/beagle_large_content_padding"
             android:paddingRight="@dimen/beagle_large_content_padding"
-            android:paddingBottom="@dimen/beagle_large_content_padding"
-            android:textIsSelectable="true" />
+            android:paddingBottom="@dimen/beagle_large_content_padding" />
 
     </ScrollView>
 

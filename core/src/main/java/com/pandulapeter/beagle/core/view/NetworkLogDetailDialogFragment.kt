@@ -66,6 +66,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
             }
+            textView.setTextIsSelectable(BeagleCore.implementation.behavior.shouldAllowSelectionInDialogs)
             scrollView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
             toolbar.run {
                 val textColor = context.colorResource(android.R.attr.textColorPrimary)
@@ -90,7 +91,8 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             job = GlobalScope.launch {
                 val title = "${if (arguments?.isOutgoing == true) "↑" else "↓"} ${arguments?.url.orEmpty()}"
                 val text = SpannableString(
-                    title.append("\n\n• Headers:${arguments?.headers.orEmpty()}")
+                    title
+                        .append("\n\n• Headers:${arguments?.headers?.formatHeaders()}")
                         .let { text -> arguments?.timestamp?.let { text.append("\n• Timestamp: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
                         .let { text -> arguments?.duration?.let { text.append("\n• Duration: ${max(0, it)} ms") } ?: text }
                         .append("\n\n${arguments?.payload?.formatToJson()}")
@@ -115,6 +117,8 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
         R.id.beagle_share -> consume { shareText() }
         else -> false
     }
+
+    private fun List<String>?.formatHeaders() = if (isNullOrEmpty()) " [none]" else joinToString("") { header -> "\n    • $header" }
 
     private fun shareText() {
         textView.text?.let { text ->
@@ -148,7 +152,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
         private var Bundle.isOutgoing by BundleArgumentDelegate.Boolean("isOutgoing")
         private var Bundle.url by BundleArgumentDelegate.String("url")
         private var Bundle.payload by BundleArgumentDelegate.String("payload")
-        private var Bundle.headers by BundleArgumentDelegate.String("headers")
+        private var Bundle.headers by BundleArgumentDelegate.StringList("headers")
         private var Bundle.duration by BundleArgumentDelegate.Long("duration")
         private var Bundle.timestamp by BundleArgumentDelegate.Long("timestamp")
 
@@ -164,7 +168,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             it.isOutgoing = isOutgoing
             it.url = url
             it.payload = payload
-            it.headers = if (headers.isNullOrEmpty()) " [none]" else headers.joinToString("") { header -> "\n    • $header" }
+            it.headers = headers.orEmpty()
             it.duration = duration ?: -1L
             it.timestamp = timestamp
         }.run { show(fragmentManager, tag) }

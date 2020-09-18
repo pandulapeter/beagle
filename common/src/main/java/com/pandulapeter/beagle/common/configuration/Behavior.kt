@@ -14,6 +14,7 @@ import java.util.Locale
  * @param excludedPackageNames - The list of packages that contain Activities for which Beagle should not be triggered. Empty by default (however the library also contains a hardcoded list).
  * @param logger - The [BeagleLoggerContract] implementation in case logging is used in a pure Java / Kotlin module.
  * @param networkLoggers - The list of [BeagleNetworkLoggerContract] implementations for intercepting network events.
+ * @param shouldAllowSelectionInDialogs - Whether or not text in dialogs (logs or network event logs) should be selectable. False by default as selecting scrollable text is glitchy in most cases.
  * @param screenCaptureServiceNotificationChannelId - The ID for the notification channel that handles all notifications related to screen capture. By default it's "channel_beagle_screen_capture".
  * @param getImageFileName - The lambda used to generate screenshot image file names (without the extension). The default a name will be generated based on the current timestamp.
  * @param getVideoFileName - The lambda used to generate screen recording video file names (without the extension). The default a name will be generated based on the current timestamp.
@@ -24,6 +25,7 @@ data class Behavior(
     val excludedPackageNames: List<String> = emptyList(),
     val logger: BeagleLoggerContract? = null,
     val networkLoggers: List<BeagleNetworkLoggerContract> = emptyList(),
+    val shouldAllowSelectionInDialogs: Boolean = false,
     val screenCaptureServiceNotificationChannelId: String = "channel_beagle_screen_capture",
     val getImageFileName: () -> String = { "${simpleDateFormat.format(System.currentTimeMillis())}_image" },
     val getVideoFileName: () -> String = { "${simpleDateFormat.format(System.currentTimeMillis())}_video" }
