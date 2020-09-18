@@ -23,6 +23,7 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.ItemList()))
             add(createModuleUiModel(ModuleWrapper.KeyValueList()))
             add(createModuleUiModel(ModuleWrapper.SectionHeader()))
+            add(createModuleUiModel(ModuleWrapper.LoadingIndicator()))
             add(createModuleUiModel(ModuleWrapper.LogList()))
             add(createModuleUiModel(ModuleWrapper.LongText()))
             add(createModuleUiModel(ModuleWrapper.MultipleSelectionList()))

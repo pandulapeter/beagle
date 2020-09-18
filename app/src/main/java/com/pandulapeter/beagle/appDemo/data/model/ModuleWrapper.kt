@@ -23,6 +23,7 @@ import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
+import com.pandulapeter.beagle.modules.LoadingIndicatorModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
@@ -110,6 +111,13 @@ sealed class ModuleWrapper(
                 "        \"Key 3\" to \"Value 3\"\n" +
                 "    )\n" +
                 ")"
+    )
+
+    class LoadingIndicator : ModuleWrapper(
+        titleResourceId = R.string.add_module_loading_indicator,
+        descriptionResourceId = R.string.add_module_loading_indicator_description,
+        module = LoadingIndicatorModule(),
+        codeSnippet = "LoadingIndicatorModule()"
     )
 
     class LogList : ModuleWrapper(

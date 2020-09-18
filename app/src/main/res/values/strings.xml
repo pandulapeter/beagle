@@ -294,6 +294,8 @@
     <string name="add_module_section_header_description">Displays a section header label.</string>
     <string name="add_module_lifecycle_log_list">LifecycleLogList</string>
     <string name="add_module_lifecycle_log_list_description">Logs Fragment and Activity lifecycle events. Useful for getting to know the navigational classes on a new project or debugging lifecycle / state restoration issues.</string>
+    <string name="add_module_loading_indicator">LoadingIndicator</string>
+    <string name="add_module_loading_indicator_description">Displays circular progress bar.</string>
     <string name="add_module_log_list">LogList</string>
     <string name="add_module_log_list_description">Displays an expandable list of log messages. An example use case could be logging analytics events.</string>
     <string name="add_module_long_text">LongText</string>
