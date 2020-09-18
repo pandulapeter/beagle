@@ -1,5 +1,9 @@
 package com.pandulapeter.beagle.core.manager
 
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -24,7 +28,6 @@ import com.pandulapeter.beagle.core.list.delegates.HeaderDelegate
 import com.pandulapeter.beagle.core.list.delegates.ItemListDelegate
 import com.pandulapeter.beagle.core.list.delegates.KeyValueListDelegate
 import com.pandulapeter.beagle.core.list.delegates.KeylineOverlaySwitchDelegate
-import com.pandulapeter.beagle.core.list.delegates.SectionHeaderDelegate
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
 import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
 import com.pandulapeter.beagle.core.list.delegates.LongTextDelegate
@@ -35,12 +38,12 @@ import com.pandulapeter.beagle.core.list.delegates.PaddingDelegate
 import com.pandulapeter.beagle.core.list.delegates.ScreenCaptureToolboxDelegate
 import com.pandulapeter.beagle.core.list.delegates.ScreenRecordingButtonDelegate
 import com.pandulapeter.beagle.core.list.delegates.ScreenshotButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.SectionHeaderDelegate
 import com.pandulapeter.beagle.core.list.delegates.SingleSelectionListDelegate
 import com.pandulapeter.beagle.core.list.delegates.SliderDelegate
 import com.pandulapeter.beagle.core.list.delegates.SwitchDelegate
 import com.pandulapeter.beagle.core.list.delegates.TextDelegate
 import com.pandulapeter.beagle.core.list.delegates.TextInputDelegate
-import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
@@ -54,7 +57,6 @@ import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
-import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.modules.LogListModule
 import com.pandulapeter.beagle.modules.LongTextModule
@@ -65,11 +67,13 @@ import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
+import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextInputModule
 import com.pandulapeter.beagle.modules.TextModule
+import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -122,6 +126,20 @@ internal class ListManager {
 
     private val persistableModules get() = synchronized(modules) { modules.filterIsInstance<ValueWrapperModule<*, *>>().toList() }
 
+    fun addHintModule() = setModules(
+        newModules = listOf(
+            TextModule(
+                id = HINT_MODULE_ID,
+                text = SpannableString("Welcome to Beagle!\n\nUse Beagle.set() or Beagle.add() to add modules to the debug menu.").apply {
+                    setSpan(StyleSpan(Typeface.BOLD), 0, 18, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                    setSpan(StyleSpan(Typeface.ITALIC), 24, 36, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                    setSpan(StyleSpan(Typeface.ITALIC), 40, 52, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                }
+            )
+        ),
+        onContentsChanged = {}
+    )
+
     fun setupRecyclerView(recyclerView: GestureBlockingRecyclerView) = recyclerView.run {
         adapter = cellAdapter
         setHasFixedSize(true)
@@ -134,10 +152,13 @@ internal class ListManager {
     }
 
     fun addModules(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?, onContentsChanged: () -> Unit) {
-        GlobalScope.launch(if (lifecycleOwner == null) Dispatchers.Default else Dispatchers.Main) { addModulesInternal(newModules, placement, lifecycleOwner, onContentsChanged) }
+        GlobalScope.launch(if (lifecycleOwner == null) Dispatchers.Default else Dispatchers.Main) {
+            removeModulesInternal(listOf(HINT_MODULE_ID)) {}
+            addModulesInternal(newModules, placement, lifecycleOwner, onContentsChanged)
+        }
     }
 
-    fun removeModules(ids: List<String>, onContentsChanged: () -> Unit) {
+    fun removeModules(ids: List<String>, onContentsChanged: () -> Unit = {}) {
         GlobalScope.launch { removeModulesInternal(ids, onContentsChanged) }
     }
 
@@ -254,5 +275,9 @@ internal class ListManager {
                 shouldBlockGestures = false
             }
         }
+    }
+
+    companion object {
+        private const val HINT_MODULE_ID = "beagleHintModule"
     }
 }

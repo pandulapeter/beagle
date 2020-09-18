@@ -13,9 +13,9 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.FragmentListBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
-import com.pandulapeter.beagle.utils.extensions.color
 import com.pandulapeter.beagle.appDemo.utils.observe
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.utils.extensions.color
 import com.pandulapeter.beagle.utils.extensions.waitForPreDraw
 
 abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
