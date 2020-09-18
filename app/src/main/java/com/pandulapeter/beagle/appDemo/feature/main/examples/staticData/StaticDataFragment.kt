@@ -52,6 +52,7 @@ class StaticDataFragment : ExamplesDetailFragment<StaticDataViewModel, ListItem>
             )
         ),
         createTextModule(R.string.case_study_static_data_module_text_6),
+        PaddingModule(),
         LoadingIndicatorModule()
     )
 
