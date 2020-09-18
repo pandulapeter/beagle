@@ -13,6 +13,13 @@ sealed class BundleArgumentDelegate<T>(protected val key: kotlin.String, protect
         override fun setValue(thisRef: Bundle?, property: KProperty<*>, value: kotlin.Boolean) = thisRef?.putBoolean(key, value) ?: Unit
     }
 
+    class Long(key: kotlin.String, defaultValue: kotlin.Long = 0L) : BundleArgumentDelegate<kotlin.Long>(key, defaultValue) {
+
+        override fun getValue(thisRef: Bundle?, property: KProperty<*>) = thisRef?.getLong(key, defaultValue) ?: defaultValue
+
+        override fun setValue(thisRef: Bundle?, property: KProperty<*>, value: kotlin.Long) = thisRef?.putLong(key, value) ?: Unit
+    }
+
     class String(key: kotlin.String, defaultValue: kotlin.String = "") : BundleArgumentDelegate<kotlin.String>(key, defaultValue) {
 
         override fun getValue(thisRef: Bundle?, property: KProperty<*>) = thisRef?.getString(key, defaultValue) ?: defaultValue

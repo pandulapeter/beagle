@@ -21,7 +21,7 @@ import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
-internal class AlertDialogFragment : DialogFragment() {
+internal class LogDetailDialogFragment : DialogFragment() {
 
     private lateinit var appBar: AppBarLayout
     private lateinit var toolbar: Toolbar
@@ -31,7 +31,7 @@ internal class AlertDialogFragment : DialogFragment() {
     private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
-        .setView(if (arguments?.isHorizontalScrollEnabled == true) R.layout.beagle_dialog_fragment_alert_large else R.layout.beagle_dialog_fragment_alert_small)
+        .setView(if (arguments?.isHorizontalScrollEnabled == true) R.layout.beagle_dialog_fragment_log_detail_scrolling else R.layout.beagle_dialog_fragment_log_detail)
         .create()
 
     override fun onResume() {
@@ -66,11 +66,11 @@ internal class AlertDialogFragment : DialogFragment() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume { shareItem() }
+        R.id.beagle_share -> consume { shareText() }
         else -> false
     }
 
-    private fun shareItem() {
+    private fun shareText() {
         textView.text?.let { text ->
             activity?.shareText(text.toString())
         }
@@ -80,7 +80,7 @@ internal class AlertDialogFragment : DialogFragment() {
         private var Bundle.content by BundleArgumentDelegate.CharSequence("content")
         private var Bundle.isHorizontalScrollEnabled by BundleArgumentDelegate.Boolean("isHorizontalScrollEnabled")
 
-        fun show(fragmentManager: FragmentManager, content: CharSequence, isHorizontalScrollEnabled: Boolean) = AlertDialogFragment().withArguments {
+        fun show(fragmentManager: FragmentManager, content: CharSequence, isHorizontalScrollEnabled: Boolean) = LogDetailDialogFragment().withArguments {
             it.content = content
             it.isHorizontalScrollEnabled = isHorizontalScrollEnabled
         }.run { show(fragmentManager, tag) }

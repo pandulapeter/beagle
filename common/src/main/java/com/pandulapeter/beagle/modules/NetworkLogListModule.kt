@@ -18,7 +18,6 @@ import java.util.Locale
  *
  * @param title - The title of the module. "Network activity" by default.
  * @param baseUrl - When not empty, all URL-s will have the specified String filtered out to reduce the amount of redundant information. Empty by default.
- * @param shouldShowHeaders - Whether of not the detail dialog should also contain the request / response headers. False by default.
  * @param maxItemCount - The maximum number of messages that will appear when expanded. 10 by default.
  * @param maxItemTitleLength - The maximum number of characters displayed on a list item, or null for no limitation. Null by default.
  * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with "HH:mm:ss" by default.
@@ -27,7 +26,6 @@ import java.util.Locale
 data class NetworkLogListModule(
     override val title: CharSequence = "Network activity",
     val baseUrl: String = "",
-    val shouldShowHeaders: Boolean = false,
     val maxItemCount: Int = 10,
     val maxItemTitleLength: Int? = null,
     val timestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },

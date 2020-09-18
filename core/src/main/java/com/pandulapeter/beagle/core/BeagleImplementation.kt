@@ -37,7 +37,8 @@ import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
-import com.pandulapeter.beagle.core.view.AlertDialogFragment
+import com.pandulapeter.beagle.core.view.LogDetailDialogFragment
+import com.pandulapeter.beagle.core.view.NetworkLogDetailDialogFragment
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
@@ -178,10 +179,24 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun showDialog(contents: CharSequence, isHorizontalScrollEnabled: Boolean) {
         (uiManager.findHostFragmentManager() ?: currentActivity?.supportFragmentManager)?.let { fragmentManager ->
-            AlertDialogFragment.show(
+            LogDetailDialogFragment.show(
                 fragmentManager = fragmentManager,
                 content = contents,
                 isHorizontalScrollEnabled = isHorizontalScrollEnabled
+            )
+        }
+    }
+
+    override fun showNetworkEventDialog(isOutgoing: Boolean, url: String, payload: String, headers: List<String>?, duration: Long?, timestamp: Long) {
+        (uiManager.findHostFragmentManager() ?: currentActivity?.supportFragmentManager)?.let { fragmentManager ->
+            NetworkLogDetailDialogFragment.show(
+                fragmentManager = fragmentManager,
+                isOutgoing = isOutgoing,
+                url = url,
+                payload = payload,
+                headers = headers,
+                duration = duration,
+                timestamp = timestamp
             )
         }
     }

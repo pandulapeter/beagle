@@ -17,7 +17,7 @@
             android:id="@+id/beagle_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/alert" />
+            app:menu="@menu/log_detail" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

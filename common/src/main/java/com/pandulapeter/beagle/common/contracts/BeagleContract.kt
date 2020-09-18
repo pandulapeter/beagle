@@ -342,6 +342,18 @@ interface BeagleContract {
      * @param isHorizontalScrollEnabled - When true, the dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. False by default.
      */
     fun showDialog(contents: CharSequence, isHorizontalScrollEnabled: Boolean = false) = Unit
+
+    /**
+     * Displays a network event dialog in debug builds.
+     *
+     * @param isOutgoing - True for requests, false for responses.
+     * @param url - The complete URL of the endpoint.
+     * @param payload - The payload String of the request. JSON strings will automatically be formatted.
+     * @param headers - The request headers, or null if not applicable. Null by default
+     * @param duration - The duration of the event, or null if not applicable. Null by default
+     * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
+     */
+    fun showNetworkEventDialog(isOutgoing: Boolean, url: String, payload: String, headers: List<String>? = null, duration: Long? = null, timestamp: Long = System.currentTimeMillis()) = Unit
     //endregion
 
     companion object {
