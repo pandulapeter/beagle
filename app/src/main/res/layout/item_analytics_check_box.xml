@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -24,7 +23,6 @@
         android:paddingEnd="@dimen/large_content_padding"
         android:paddingRight="@dimen/large_content_padding"
         android:text="@{uiModel.text}"
-        app:switchPadding="@dimen/large_content_padding"
-        tools:text="Switch" />
+        tools:text="CheckBox" />
 
 </layout>

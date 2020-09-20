@@ -5,6 +5,8 @@
     android:id="@+id/beagle_switch"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/beagle_compound_button_height_fix"
+    android:layout_marginBottom="@dimen/beagle_compound_button_height_fix"
     android:paddingStart="@dimen/beagle_item_horizontal_margin"
     android:paddingLeft="@dimen/beagle_item_horizontal_margin"
     android:paddingEnd="@dimen/beagle_content_padding"
