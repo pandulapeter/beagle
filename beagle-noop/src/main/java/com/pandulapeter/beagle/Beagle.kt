@@ -6,7 +6,7 @@ import com.pandulapeter.beagleCore.contracts.BeagleContract
 /**
  * Fake implementation to be used in release builds.
  */
-@Suppress("unused")
+@Suppress("unused", "StaticFieldLeak")
 @Deprecated("https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md")
 object Beagle : BeagleContract {
 

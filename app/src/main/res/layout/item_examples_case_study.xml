@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -20,8 +19,7 @@
         android:layout_marginTop="@dimen/large_content_padding"
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding"
-        android:clickable="@{uiModel.caseStudy.isReady}"
-        app:transitionName="@{uiModel.caseStudy.title}">
+        android:clickable="@{uiModel.caseStudy.isReady}">
 
         <LinearLayout
             android:layout_width="match_parent"

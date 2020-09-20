@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.utils.extensions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -27,7 +28,7 @@ fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensi
 
 fun Context.drawable(@DrawableRes drawableResourceId: Int) = AppCompatResources.getDrawable(this, drawableResourceId)
 
-fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int) = drawable(drawableResourceId)!!.let { drawable ->
+fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int) : Drawable? = drawable(drawableResourceId)?.let { drawable ->
     DrawableCompat.wrap(drawable.mutate()).apply {
         DrawableCompat.setTint(this, tint)
         DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)

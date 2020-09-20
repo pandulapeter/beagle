@@ -13,4 +13,5 @@
     android:paddingRight="@dimen/beagle_item_horizontal_margin"
     android:paddingBottom="@dimen/beagle_item_vertical_margin"
     android:textColor="?android:attr/textColorPrimary"
+    tools:ignore="Overdraw"
     tools:text="Title" />

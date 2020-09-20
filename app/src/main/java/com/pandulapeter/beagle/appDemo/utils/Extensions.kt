@@ -93,12 +93,6 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
 
 //val isContainerTransformSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
-@BindingAdapter("transitionName")
-fun View.setTransitionName(@StringRes stringResourceId: Int) = setTransitionNameCompat(context.getString(stringResourceId))
-
-@BindingAdapter("transitionName")
-fun View.setTransitionNameCompat(transitionName: String) = ViewCompat.setTransitionName(this, transitionName)
-
 fun Activity.updateSystemBars() = window.run {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
