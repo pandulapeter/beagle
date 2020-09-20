@@ -57,7 +57,7 @@ class PlaygroundFragment : ListFragment<PlaygroundViewModel, PlaygroundListItem>
 
     override fun onModuleListChanged() {
         viewModel.refreshModules()
-        refreshBeagle()
+        refreshBeagle(true)
     }
 
     private fun navigateToAddModule() = parentFragment?.childFragmentManager?.handleReplace(

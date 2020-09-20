@@ -47,11 +47,9 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
         refreshBeagle()
     }
 
-    protected fun refreshBeagle() {
-        getBeagleModules().let { newModules ->
-            if (newModules.isNotEmpty()) {
-                Beagle.set(*newModules.toTypedArray())
-            }
+    protected fun refreshBeagle(clearIfEmpty: Boolean = false) = getBeagleModules().let { modules ->
+        if (modules.isNotEmpty() || clearIfEmpty) {
+            Beagle.set(*modules.toTypedArray())
         }
     }
 
