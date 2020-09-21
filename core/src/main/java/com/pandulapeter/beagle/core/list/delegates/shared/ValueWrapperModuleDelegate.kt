@@ -4,7 +4,7 @@ import androidx.annotation.CallSuper
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 
-internal abstract class PersistableModuleDelegate<T, M : ValueWrapperModule<T, M>> : ValueWrapperModule.Delegate<T, M> {
+internal abstract class ValueWrapperModuleDelegate<T, M : ValueWrapperModule<T, M>> : ValueWrapperModule.Delegate<T, M> {
 
     private var hasCalledListenerForTheFirstTime = false
     private val pendingUpdates = mutableListOf<PendingChangeEvent<T>>()
@@ -62,7 +62,7 @@ internal abstract class PersistableModuleDelegate<T, M : ValueWrapperModule<T, M
     @CallSuper
     protected open fun callOnValueChanged(module: M, newValue: T) = module.onValueChanged(newValue)
 
-    abstract class Boolean<M : ValueWrapperModule<kotlin.Boolean, M>> : PersistableModuleDelegate<kotlin.Boolean, M>() {
+    abstract class Boolean<M : ValueWrapperModule<kotlin.Boolean, M>> : ValueWrapperModuleDelegate<kotlin.Boolean, M>() {
 
         final override fun getCurrentValue(module: M) = if (module.isValuePersisted) {
             (BeagleCore.implementation.localStorageManager.booelans[module.id] ?: module.initialValue).also { value ->
@@ -85,7 +85,7 @@ internal abstract class PersistableModuleDelegate<T, M : ValueWrapperModule<T, M
         }
     }
 
-    abstract class Integer<M : ValueWrapperModule<Int, M>> : PersistableModuleDelegate<Int, M>() {
+    abstract class Integer<M : ValueWrapperModule<Int, M>> : ValueWrapperModuleDelegate<Int, M>() {
 
         final override fun getCurrentValue(module: M) = if (module.isValuePersisted) {
             (BeagleCore.implementation.localStorageManager.integers[module.id] ?: module.initialValue).also { value ->
@@ -108,7 +108,7 @@ internal abstract class PersistableModuleDelegate<T, M : ValueWrapperModule<T, M
         }
     }
 
-    abstract class String<M : ValueWrapperModule<kotlin.String, M>> : PersistableModuleDelegate<kotlin.String, M>() {
+    abstract class String<M : ValueWrapperModule<kotlin.String, M>> : ValueWrapperModuleDelegate<kotlin.String, M>() {
 
         final override fun getCurrentValue(module: M) = if (module.isValuePersisted) {
             (BeagleCore.implementation.localStorageManager.strings[module.id] ?: module.initialValue).also { value ->
@@ -131,7 +131,7 @@ internal abstract class PersistableModuleDelegate<T, M : ValueWrapperModule<T, M
         }
     }
 
-    abstract class StringSet<M : ValueWrapperModule<Set<kotlin.String>, M>> : PersistableModuleDelegate<Set<kotlin.String>, M>() {
+    abstract class StringSet<M : ValueWrapperModule<Set<kotlin.String>, M>> : ValueWrapperModuleDelegate<Set<kotlin.String>, M>() {
 
         final override fun getCurrentValue(module: M) = if (module.isValuePersisted) {
             (BeagleCore.implementation.localStorageManager.stringSets[module.id] ?: module.initialValue).also { value ->

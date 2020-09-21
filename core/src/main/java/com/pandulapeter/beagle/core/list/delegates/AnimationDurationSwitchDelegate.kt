@@ -3,10 +3,10 @@ package com.pandulapeter.beagle.core.list.delegates
 import android.animation.ValueAnimator
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.SwitchCell
-import com.pandulapeter.beagle.core.list.delegates.shared.PersistableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.ValueWrapperModuleDelegate
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 
-internal class AnimationDurationSwitchDelegate : PersistableModuleDelegate.Boolean<AnimationDurationSwitchModule>() {
+internal class AnimationDurationSwitchDelegate : ValueWrapperModuleDelegate.Boolean<AnimationDurationSwitchModule>() {
 
     override fun createCells(module: AnimationDurationSwitchModule): List<Cell<*>> = listOf(
         SwitchCell(

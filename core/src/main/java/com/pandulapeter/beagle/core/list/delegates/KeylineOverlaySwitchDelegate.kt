@@ -9,12 +9,12 @@ import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.cells.SwitchCell
-import com.pandulapeter.beagle.core.list.delegates.shared.PersistableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.ValueWrapperModuleDelegate
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
 
-internal class KeylineOverlaySwitchDelegate : PersistableModuleDelegate.Boolean<KeylineOverlaySwitchModule>() {
+internal class KeylineOverlaySwitchDelegate : ValueWrapperModuleDelegate.Boolean<KeylineOverlaySwitchModule>() {
 
     private var module: KeylineOverlaySwitchModule? = null
     private val gridPaint = Paint()

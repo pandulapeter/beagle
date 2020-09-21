@@ -2,11 +2,11 @@ package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.SwitchCell
-import com.pandulapeter.beagle.core.list.delegates.shared.PersistableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.ValueWrapperModuleDelegate
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.modules.SwitchModule
 
-internal class SwitchDelegate : PersistableModuleDelegate.Boolean<SwitchModule>() {
+internal class SwitchDelegate : ValueWrapperModuleDelegate.Boolean<SwitchModule>() {
 
     override fun createCells(module: SwitchModule): List<Cell<*>> = listOf(
         SwitchCell(

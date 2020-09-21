@@ -13,12 +13,12 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.cells.TextCell
-import com.pandulapeter.beagle.core.list.delegates.shared.PersistableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.ValueWrapperModuleDelegate
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.modules.TextInputModule
 
-internal class TextInputDelegate : PersistableModuleDelegate.String<TextInputModule>() {
+internal class TextInputDelegate : ValueWrapperModuleDelegate.String<TextInputModule>() {
 
     override fun createCells(module: TextInputModule): List<Cell<*>> = (DialogInterface.OnClickListener { dialog, button ->
         if (button == DialogInterface.BUTTON_POSITIVE && !module.areRealTimeUpdatesEnabled) {

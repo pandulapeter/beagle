@@ -2,11 +2,11 @@ package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.SliderCell
-import com.pandulapeter.beagle.core.list.delegates.shared.PersistableModuleDelegate
+import com.pandulapeter.beagle.core.list.delegates.shared.ValueWrapperModuleDelegate
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.modules.SliderModule
 
-internal class SliderDelegate : PersistableModuleDelegate.Integer<SliderModule>() {
+internal class SliderDelegate : ValueWrapperModuleDelegate.Integer<SliderModule>() {
 
     override fun createCells(module: SliderModule): List<Cell<*>> = listOf(
         SliderCell(
