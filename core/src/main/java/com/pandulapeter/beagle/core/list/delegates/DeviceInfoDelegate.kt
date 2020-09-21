@@ -4,7 +4,7 @@ import android.os.Build
 import android.util.DisplayMetrics
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
-import com.pandulapeter.beagle.core.list.cells.KeyValueCell
+import com.pandulapeter.beagle.core.list.cells.ExpandedItemKeyValueCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import kotlin.math.roundToInt
@@ -21,7 +21,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
     override fun MutableList<Cell<*>>.addItems(module: DeviceInfoModule) {
         if (module.shouldShowManufacturer) {
             add(
-                KeyValueCell(
+                ExpandedItemKeyValueCell(
                     id = "${module.id}_manufacturer",
                     key = "Manufacturer",
                     value = Build.MANUFACTURER
@@ -30,7 +30,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
         }
         if (module.shouldShowModel) {
             add(
-                KeyValueCell(
+                ExpandedItemKeyValueCell(
                     id = "${module.id}_model",
                     key = "Model",
                     value = Build.MODEL
@@ -41,7 +41,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
         BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
             if (module.shouldShowResolutionsPx) {
                 add(
-                    KeyValueCell(
+                    ExpandedItemKeyValueCell(
                         id = "${module.id}_resolution_px",
                         key = "Resolution (px)",
                         value = "${dm.widthPixels} * ${dm.heightPixels}"
@@ -49,7 +49,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
                 )
                 if (module.shouldShowResolutionsDp) {
                     add(
-                        KeyValueCell(
+                        ExpandedItemKeyValueCell(
                             id = "${module.id}_resolution_dp",
                             key = "Resolution (dp)",
                             value = "${(dm.widthPixels / dm.density).roundToInt()} * ${(dm.heightPixels / dm.density).roundToInt()}"
@@ -58,7 +58,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
                 }
                 if (module.shouldShowDensity) {
                     add(
-                        KeyValueCell(
+                        ExpandedItemKeyValueCell(
                             id = "${module.id}_density",
                             key = "Density (dpi)",
                             value = "${dm.densityDpi}"
@@ -69,7 +69,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
         }
         if (module.shouldShowAndroidVersion) {
             add(
-                KeyValueCell(
+                ExpandedItemKeyValueCell(
                     id = "${module.id}_sdkVersion",
                     key = "Android SDK version",
                     value = Build.VERSION.SDK_INT.toString()
