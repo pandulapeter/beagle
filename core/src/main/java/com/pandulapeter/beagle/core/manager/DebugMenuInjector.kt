@@ -100,10 +100,12 @@ internal class DebugMenuInjector(
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             if (activity.supportsDebugMenu) {
+                activity as FragmentActivity
                 if (savedInstanceState == null) {
-                    uiManager.addOverlayFragment(activity as FragmentActivity)
-                    activity.supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
+                    uiManager.addOverlayFragment(activity)
                 }
+                activity.supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentLifecycleCallbacks)
+                activity.supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
                 BeagleCore.implementation.logLifecycle(activity::class.java, LifecycleLogListModule.EventType.ON_CREATE, savedInstanceState != null)
             }
         }
@@ -160,7 +162,7 @@ internal class DebugMenuInjector(
         unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks)
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
     }
-    
+
     private fun Fragment.shouldLogFragment() =
         this !is OverlayFragment && this !is MediaPreviewDialogFragment && this !is LogDetailDialogFragment
 }
