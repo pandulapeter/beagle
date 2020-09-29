@@ -20,7 +20,8 @@ import kotlinx.coroutines.launch
 
 private val excludedPackageNames = listOf(
     "com.pandulapeter.beagle.core.view.gallery.GalleryActivity",
-    "com.pandulapeter.beagle.implementation.DebugMenuActivity"
+    "com.pandulapeter.beagle.implementation.DebugMenuActivity",
+    "com.markodevcic.peko.PekoActivity"
 )
 
 internal val Activity.supportsDebugMenu
