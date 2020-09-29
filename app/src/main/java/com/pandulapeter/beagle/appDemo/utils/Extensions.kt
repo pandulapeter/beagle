@@ -91,8 +91,6 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
     }
 }
 
-//val isContainerTransformSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-
 fun Activity.updateSystemBars() = window.run {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
