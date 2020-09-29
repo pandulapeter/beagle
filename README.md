@@ -73,7 +73,7 @@ Optionally you can add the following parameters to this function:
 * The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance.
 * The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance.
 
-By default you can fetch Beagle by shaking the device. If nothing happens, make sure you're not adding any Fragments to the container with the ID **android.R.id.content** (if that's the case, introducing another FrameLayout into the View hierarchy for debug builds is a simple fix to the problem).
+By default you can fetch Beagle by shaking the device.
 
 ### Step 4: Finish the setup by adding modules
 After this a number of modules should be provided, but this configuration can be changed at any time (from any thread) and the UI will automatically be updated. The simplest way of doing this is by calling:
