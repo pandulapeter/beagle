@@ -93,7 +93,14 @@ internal class ListManager {
     private var shouldBlockGestures = true
     private val cellAdapter = CellAdapter()
     private val moduleManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
-    private val modules = mutableListOf<Module<*>>()
+    private val modules = mutableListOf<Module<*>>(TextModule(
+        id = HINT_MODULE_ID,
+        text = SpannableString("Welcome to Beagle!\n\nUse Beagle.set() or Beagle.add() to add modules to the debug menu.").apply {
+            setSpan(StyleSpan(Typeface.BOLD), 0, 18, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+            setSpan(StyleSpan(Typeface.ITALIC), 24, 36, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+            setSpan(StyleSpan(Typeface.ITALIC), 40, 52, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+        }
+    ))
     private val moduleDelegates = mutableMapOf(
         AnimationDurationSwitchModule::class to AnimationDurationSwitchDelegate(),
         AppInfoButtonModule::class to AppInfoButtonDelegate(),
@@ -128,20 +135,6 @@ internal class ListManager {
     )
 
     private val persistableModules get() = synchronized(modules) { modules.filterIsInstance<ValueWrapperModule<*, *>>().toList() }
-
-    fun addHintModule() = setModules(
-        newModules = listOf(
-            TextModule(
-                id = HINT_MODULE_ID,
-                text = SpannableString("Welcome to Beagle!\n\nUse Beagle.set() or Beagle.add() to add modules to the debug menu.").apply {
-                    setSpan(StyleSpan(Typeface.BOLD), 0, 18, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                    setSpan(StyleSpan(Typeface.ITALIC), 24, 36, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                    setSpan(StyleSpan(Typeface.ITALIC), 40, 52, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                }
-            )
-        ),
-        onContentsChanged = {}
-    )
 
     fun setupRecyclerView(recyclerView: GestureBlockingRecyclerView) = recyclerView.run {
         adapter = cellAdapter

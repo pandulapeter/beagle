@@ -97,7 +97,6 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
                     add(VideoFrameFileFetcher(application))
                 }
                 .build()
-            listManager.addHintModule()
         }
 
     override fun show() = (currentActivity?.let { currentActivity ->
