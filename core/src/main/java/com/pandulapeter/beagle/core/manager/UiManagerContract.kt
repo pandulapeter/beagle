@@ -11,9 +11,16 @@ interface UiManagerContract {
 
     //TODO: Make sure this doesn't break the focus handling
     fun addOverlayFragment(activity: FragmentActivity) {
+        val overlayFragment = findOverlayFragment(activity) ?: OverlayFragment.newInstance()
         activity.supportFragmentManager
             .beginTransaction()
-            .add(android.R.id.content, findOverlayFragment(activity) ?: OverlayFragment.newInstance(), OverlayFragment.TAG)
+            .apply {
+                if (overlayFragment.isAdded) {
+                    show(overlayFragment)
+                } else {
+                    add(android.R.id.content, overlayFragment, OverlayFragment.TAG)
+                }
+            }
             .setReorderingAllowed(true)
             .commit()
     }
