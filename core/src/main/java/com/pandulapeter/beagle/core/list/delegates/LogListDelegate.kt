@@ -17,8 +17,8 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
             ExpandedItemTextCell(
                 id = "${module.id}_${entry.id}",
                 text = Text.CharSequence((module.timestampFormatter?.let { formatter ->
-                    "[".append(formatter(entry.timestamp)).append("] ").append(entry.title)
-                } ?: entry.title).let {
+                    "[".append(formatter(entry.timestamp)).append("] ").append(entry.title.charSequence)
+                } ?: entry.title.charSequence).let {
                     if (entry.payload == null) it else it.append("*")
                 }),
                 isEnabled = true,

@@ -3,13 +3,15 @@ package com.pandulapeter.beagle.core.list.cells
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioButton
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.setText
 
 internal data class ExpandedItemRadioButtonCell(
     override val id: String,
-    private val text: CharSequence,
+    private val text: Text,
     private val isChecked: Boolean,
     private val isEnabled: Boolean,
     private val onValueChanged: (Boolean) -> Unit
@@ -25,7 +27,7 @@ internal data class ExpandedItemRadioButtonCell(
         private val radioButton = itemView.findViewById<RadioButton>(R.id.beagle_radio_button)
 
         override fun bind(model: ExpandedItemRadioButtonCell) = radioButton.run {
-            text = model.text
+            setText(model.text)
             setOnCheckedChangeListener(null)
             isChecked = model.isChecked
             isEnabled = model.isEnabled

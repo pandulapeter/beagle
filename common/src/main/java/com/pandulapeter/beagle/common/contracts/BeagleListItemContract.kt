@@ -17,7 +17,11 @@ interface BeagleListItemContract {
      *
      * It defaults to the title as this is suitable for most use cases
      */
-    val id: String get() = title.toString()
+    val id: String
+        get() = when (val title = title) {
+            is Text.CharSequence -> title.charSequence.toString()
+            is Text.ResourceId -> title.resourceId.toString()
+        }
 
     /**
      * To simplify diff calculation, derived classes are encouraged to be data classes.
