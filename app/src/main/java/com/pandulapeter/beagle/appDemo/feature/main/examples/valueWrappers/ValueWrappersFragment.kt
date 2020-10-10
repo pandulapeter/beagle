@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.
 import com.pandulapeter.beagle.appDemo.utils.createSectionHeaderModule
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.modules.CheckBoxModule
@@ -137,7 +138,7 @@ class ValueWrappersFragment : ExamplesDetailFragment<ValueWrappersViewModel, Val
         createSectionHeaderModule(R.string.case_study_value_wrappers_text_input_label),
         TextInputModule(
             id = TEXT_INPUT,
-            text = { getString(R.string.case_study_value_wrappers_text_input_title, it) },
+            text = { Text.CharSequence(getString(R.string.case_study_value_wrappers_text_input_title, it)) },
             initialValue = TEXT_DEFAULT_VALUE,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isValuePersisted = true,

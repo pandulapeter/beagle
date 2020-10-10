@@ -45,7 +45,7 @@ internal fun Activity.shareText(text: String) {
             putExtra(Intent.EXTRA_TEXT, text)
         }, null))
     } catch (_: Exception) {
-        Toast.makeText(this, text(BeagleCore.implementation.appearance.shareErrorText), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, text(BeagleCore.implementation.appearance.generalTexts.shareErrorText), Toast.LENGTH_LONG).show()
     }
 }
 

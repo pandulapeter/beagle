@@ -21,7 +21,6 @@ import com.pandulapeter.beagle.modules.HeaderModule
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.KeyValueListModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
-import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.modules.LoadingIndicatorModule
 import com.pandulapeter.beagle.modules.LogListModule
@@ -33,6 +32,7 @@ import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
+import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -238,7 +238,7 @@ sealed class ModuleWrapper(
     class TextInput : ModuleWrapper(
         titleResourceId = R.string.add_module_text_input,
         descriptionResourceId = R.string.add_module_text_input_description,
-        module = TextInputModule(text = { "Text input ($it)" }, initialValue = "Hello!", onValueChanged = {}),
+        module = TextInputModule(text = { com.pandulapeter.beagle.common.configuration.Text.CharSequence("Text input ($it)") }, initialValue = "Hello!", onValueChanged = {}),
         codeSnippet = "TextInputModule(text = { \"Text input (\$it)\" }, initialValue = \"Hello!\", onValueChanged = {})"
     )
 

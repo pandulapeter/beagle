@@ -71,11 +71,11 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
                     setNavigationOnClickListener { dismiss() }
                     navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
                     shareButton = menu.findItem(R.id.beagle_share).also {
-                        it.title = context.text(BeagleCore.implementation.appearance.shareHint)
+                        it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
                         it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
                     }
                     deleteButton = menu.findItem(R.id.beagle_delete).also {
-                        it.title = context.text(BeagleCore.implementation.appearance.galleryDeleteHint)
+                        it.title = context.text(BeagleCore.implementation.appearance.galleryTexts.deleteHint)
                         it.icon = context.tintedDrawable(R.drawable.beagle_ic_delete, textColor)
                     }
                     setOnMenuItemClickListener(::onMenuItemClicked)

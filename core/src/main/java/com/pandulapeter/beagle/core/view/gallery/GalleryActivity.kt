@@ -43,13 +43,13 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             val textColor = colorResource(android.R.attr.textColorPrimary)
             setNavigationOnClickListener { supportFinishAfterTransition() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
-            title = text(BeagleCore.implementation.appearance.galleryTitle)
+            title = text(BeagleCore.implementation.appearance.galleryTexts.title)
             shareButton = menu.findItem(R.id.beagle_share).also {
-                it.title = text(BeagleCore.implementation.appearance.shareHint)
+                it.title = text(BeagleCore.implementation.appearance.generalTexts.shareHint)
                 it.icon = tintedDrawable(R.drawable.beagle_ic_share, textColor)
             }
             deleteButton = menu.findItem(R.id.beagle_delete).also {
-                it.title = text(BeagleCore.implementation.appearance.galleryDeleteHint)
+                it.title = text(BeagleCore.implementation.appearance.galleryTexts.deleteHint)
                 it.icon = tintedDrawable(R.drawable.beagle_ic_delete, textColor)
             }
             setOnMenuItemClickListener(::onMenuItemClicked)
@@ -59,7 +59,7 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             deleteButton.isVisible = it
         }
         val emptyStateTextView = findViewById<TextView>(R.id.beagle_text_view)
-        emptyStateTextView.text = text(BeagleCore.implementation.appearance.galleryNoMediaMessage)
+        emptyStateTextView.text = text(BeagleCore.implementation.appearance.galleryTexts.noMediaMessage)
         val largePadding = dimension(R.dimen.beagle_large_content_padding)
         val recyclerView = findViewById<RecyclerView>(R.id.beagle_recycler_view)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {

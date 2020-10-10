@@ -57,4 +57,4 @@ internal fun Context.createFile(fileName: String): File {
 internal fun Context.text(text: Text) = when (text) {
     is Text.CharSequence -> text.charSequence
     is Text.ResourceId -> getString(text.resourceId)
-}
+}.append(text.suffix)

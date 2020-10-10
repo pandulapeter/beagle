@@ -168,7 +168,7 @@ internal class ScreenCaptureService : Service() {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
                     BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId,
-                    text(BeagleCore.implementation.appearance.screenCaptureServiceNotificationChannelName),
+                    text(BeagleCore.implementation.appearance.screenCaptureTexts.notificationChannelName),
                     NotificationManager.IMPORTANCE_LOW
                 ).apply {
                     setSound(null, null)
@@ -176,7 +176,7 @@ internal class ScreenCaptureService : Service() {
             )
         }
         if (isForVideo) {
-            BeagleCore.implementation.appearance.screenRecordingToastText?.let { Toast.makeText(this, text(it), Toast.LENGTH_SHORT).show() }
+            BeagleCore.implementation.appearance.screenCaptureTexts.toastText?.let { Toast.makeText(this, text(it), Toast.LENGTH_SHORT).show() }
         }
         startForeground(
             RECORDING_NOTIFICATION_ID,
@@ -186,7 +186,7 @@ internal class ScreenCaptureService : Service() {
                 .setSmallIcon(R.drawable.beagle_ic_recording)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setContentTitle(text(BeagleCore.implementation.appearance.screenCaptureServiceNotificationTitle))
+                .setContentTitle(text(BeagleCore.implementation.appearance.screenCaptureTexts.inProgressNotificationTitle))
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .apply {
                     if (isForVideo) {
@@ -198,7 +198,7 @@ internal class ScreenCaptureService : Service() {
                                 0
                             )
                         )
-                        setStyle(NotificationCompat.BigTextStyle().bigText(text(BeagleCore.implementation.appearance.screenCaptureServiceNotificationContent)))
+                        setStyle(NotificationCompat.BigTextStyle().bigText(text(BeagleCore.implementation.appearance.screenCaptureTexts.inProgressNotificationContent)))
                     }
                 }
                 .build()
@@ -233,7 +233,7 @@ internal class ScreenCaptureService : Service() {
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true)
-                .setContentTitle(text(BeagleCore.implementation.appearance.screenCaptureGalleryNotificationTitle))
+                .setContentTitle(text(BeagleCore.implementation.appearance.screenCaptureTexts.readyNotificationTitle))
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .apply {
                     setContentIntent(
@@ -244,7 +244,7 @@ internal class ScreenCaptureService : Service() {
                             0
                         )
                     )
-                    setStyle(NotificationCompat.BigTextStyle().bigText(text(BeagleCore.implementation.appearance.screenCaptureGalleryNotificationContent)))
+                    setStyle(NotificationCompat.BigTextStyle().bigText(text(BeagleCore.implementation.appearance.screenCaptureTexts.readyNotificationContent)))
                 }
                 .build())
     }

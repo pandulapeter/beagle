@@ -14,8 +14,8 @@ import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.cells.TextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ValueWrapperModuleDelegate
-import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.applyTheme
+import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.modules.TextInputModule
 
 internal class TextInputDelegate : ValueWrapperModuleDelegate.String<TextInputModule>() {
@@ -29,16 +29,16 @@ internal class TextInputDelegate : ValueWrapperModuleDelegate.String<TextInputMo
         listOf(
             TextCell(
                 id = module.id,
-                text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text(getUiValue(module)).append("*") else module.text(getUiValue(module)),
+                text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text(getUiValue(module)).withSuffix("*") else module.text(getUiValue(module)),
                 isEnabled = module.isEnabled,
                 onItemSelected = {
                     BeagleCore.implementation.currentActivity?.applyTheme()?.run {
                         AlertDialog.Builder(this)
                             .setView(R.layout.beagle_view_text_input_dialog)
-                            .setPositiveButton(module.doneText, onDialogButtonPressed)
+                            .setPositiveButton(text(module.doneText), onDialogButtonPressed)
                             .apply {
                                 if (!module.areRealTimeUpdatesEnabled) {
-                                    setNegativeButton(module.cancelText, onDialogButtonPressed)
+                                    setNegativeButton(text(module.cancelText), onDialogButtonPressed)
                                 }
                             }
                             .create()

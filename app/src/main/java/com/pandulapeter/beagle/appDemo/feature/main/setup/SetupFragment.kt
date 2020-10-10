@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.appDemo.utils.openUrl
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
@@ -50,7 +51,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         DividerModule(id = "divider1"),
         AppInfoButtonModule(text = getText(R.string.setup_debug_menu_app_info_button)),
         ScreenshotButtonModule(text = getText(R.string.setup_debug_menu_screenshot_button)),
-        KeylineOverlaySwitchModule(text = getText(R.string.setup_debug_menu_keyline_overlay_switch)),
+        KeylineOverlaySwitchModule(text = Text.ResourceId(R.string.setup_debug_menu_keyline_overlay_switch)),
         listOf(
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_1)),
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_2)),

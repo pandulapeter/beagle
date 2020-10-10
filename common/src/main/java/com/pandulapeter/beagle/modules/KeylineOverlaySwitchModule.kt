@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.modules
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import com.pandulapeter.beagle.common.configuration.Insets
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
@@ -24,7 +25,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
  */
 data class KeylineOverlaySwitchModule(
-    val text: CharSequence = "Keyline overlay",
+    val text: Text = Text.CharSequence("Keyline overlay"),
     @Dimension val grid: Int? = null,
     @Dimension val keylinePrimary: Int? = null,
     @Dimension val keylineSecondary: Int? = null,

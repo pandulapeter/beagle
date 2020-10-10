@@ -37,13 +37,13 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
     private val largePadding = context.dimension(R.dimen.beagle_large_content_padding)
     private val applyButton = AppCompatButton(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
         isAllCaps = false
-        setText(BeagleCore.implementation.appearance.applyButtonText)
+        setText(BeagleCore.implementation.appearance.generalTexts.applyButtonText)
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.applyPendingChanges() }
     }
     private val resetButton = AppCompatButton(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
         isAllCaps = false
-        setText(BeagleCore.implementation.appearance.resetButtonText)
+        setText(BeagleCore.implementation.appearance.generalTexts.resetButtonText)
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.resetPendingChanges() }
     }

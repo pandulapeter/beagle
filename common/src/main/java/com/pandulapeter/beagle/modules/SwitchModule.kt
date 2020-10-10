@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import java.util.UUID
 
@@ -15,7 +16,7 @@ import java.util.UUID
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Empty implementation by default.
  */
 data class SwitchModule(
-    val text: CharSequence,
+    val text: Text,
     override val initialValue: Boolean = false,
     override val isEnabled: Boolean = true,
     override val isValuePersisted: Boolean = false,
@@ -23,6 +24,24 @@ data class SwitchModule(
     override val id: String = UUID.randomUUID().toString(),
     override val onValueChanged: (Boolean) -> Unit = {}
 ) : ValueWrapperModule<Boolean, SwitchModule> {
+
+    constructor(
+        text: CharSequence,
+        initialValue: Boolean = false,
+        isEnabled: Boolean = true,
+        isValuePersisted: Boolean = false,
+        shouldRequireConfirmation: Boolean = false,
+        id: String = UUID.randomUUID().toString(),
+        onValueChanged: (Boolean) -> Unit = {}
+    ) : this(
+        text = Text.CharSequence(text),
+        initialValue = initialValue,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        id = id,
+        onValueChanged = onValueChanged
+    )
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

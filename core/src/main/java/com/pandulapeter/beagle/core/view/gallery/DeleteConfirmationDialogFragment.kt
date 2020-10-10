@@ -20,12 +20,12 @@ internal class DeleteConfirmationDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = requireContext().applyTheme().let { context ->
         AlertDialog.Builder(context)
-            .setMessage(context.text(if (arguments?.isPlural == true) BeagleCore.implementation.appearance.galleryDeleteConfirmationMessagePlural else BeagleCore.implementation.appearance.galleryDeleteConfirmationMessageSingular))
-            .setPositiveButton(context.text(BeagleCore.implementation.appearance.galleryDeleteConfirmationPositive)) { _, _ ->
+            .setMessage(context.text(if (arguments?.isPlural == true) BeagleCore.implementation.appearance.galleryTexts.deleteConfirmationMessagePlural else BeagleCore.implementation.appearance.galleryTexts.deleteConfirmationMessageSingular))
+            .setPositiveButton(context.text(BeagleCore.implementation.appearance.galleryTexts.deleteConfirmationPositive)) { _, _ ->
                 ((parentFragment as? OnPositiveButtonClickedListener?) ?: (activity as? OnPositiveButtonClickedListener?))?.onPositiveButtonClicked()
                 dismiss()
             }
-            .setNegativeButton(context.text(BeagleCore.implementation.appearance.galleryDeleteConfirmationNegative)) { _, _ -> dismiss() }
+            .setNegativeButton(context.text(BeagleCore.implementation.appearance.galleryTexts.deleteConfirmationNegative)) { _, _ -> dismiss() }
             .create()
     }
 

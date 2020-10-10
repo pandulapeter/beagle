@@ -74,7 +74,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 setNavigationOnClickListener { dismiss() }
                 navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
                 shareButton = menu.findItem(R.id.beagle_share).also {
-                    it.title = context.text(BeagleCore.implementation.appearance.shareHint)
+                    it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
                     it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)

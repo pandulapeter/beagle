@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import java.util.UUID
 
@@ -20,12 +21,12 @@ import java.util.UUID
  */
 //TODO: Add parameters to customize EditText hint and input type.
 data class TextInputModule(
-    val text: (String) -> CharSequence,
+    val text: (String) -> Text,
     override val initialValue: String = "",
     override val isEnabled: Boolean = true,
     val areRealTimeUpdatesEnabled: Boolean = true,
-    val doneText: CharSequence = "Done",
-    val cancelText: CharSequence = "Cancel",
+    val doneText: Text = Text.CharSequence("Done"),
+    val cancelText: Text = Text.CharSequence("Cancel"),
     override val isValuePersisted: Boolean = false,
     override val shouldRequireConfirmation: Boolean = false,
     override val id: String = UUID.randomUUID().toString(),
