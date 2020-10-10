@@ -16,7 +16,7 @@ import java.util.UUID
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Empty implementation by default.
  */
 data class SwitchModule(
-    val text: Text,
+    override val text: (Boolean) -> Text,
     override val initialValue: Boolean = false,
     override val isEnabled: Boolean = true,
     override val isValuePersisted: Boolean = false,
@@ -34,7 +34,7 @@ data class SwitchModule(
         id: String = UUID.randomUUID().toString(),
         onValueChanged: (Boolean) -> Unit = {}
     ) : this(
-        text = Text.CharSequence(text),
+        text = { Text.CharSequence(text) },
         initialValue = initialValue,
         isEnabled = isEnabled,
         isValuePersisted = isValuePersisted,

@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import java.util.UUID
 
@@ -17,7 +18,7 @@ import java.util.UUID
  * @param onValueChanged - Callback triggered when the user changes the current value. In case of persisted values, this will also get called the first time the module is added. Empty implementation by default.
  */
 data class SliderModule(
-    val text: (Int) -> CharSequence,
+    override val text: (Int) -> Text,
     val minimumValue: Int = 0,
     val maximumValue: Int = 10,
     override val initialValue: Int = minimumValue,

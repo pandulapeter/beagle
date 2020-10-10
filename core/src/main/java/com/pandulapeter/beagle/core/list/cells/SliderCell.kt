@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.setText
 
 internal data class SliderCell(
     override val id: String,
-    private val text: CharSequence,
+    private val text: Text,
     private val value: Int,
     private val minimumValue: Int,
     private val maximumValue: Int,
@@ -38,7 +40,7 @@ internal data class SliderCell(
         }
 
         override fun bind(model: SliderCell) {
-            textView.text = model.text
+            textView.setText(model.text)
             seekBar.run {
                 setOnSeekBarChangeListener(null)
                 max = model.maximumValue - model.minimumValue

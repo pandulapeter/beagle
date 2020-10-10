@@ -21,7 +21,7 @@ import java.util.UUID
  */
 //TODO: Add parameters to customize EditText hint and input type.
 data class TextInputModule(
-    val text: (String) -> Text,
+    override val text: (String) -> Text,
     override val initialValue: String = "",
     override val isEnabled: Boolean = true,
     val areRealTimeUpdatesEnabled: Boolean = true,

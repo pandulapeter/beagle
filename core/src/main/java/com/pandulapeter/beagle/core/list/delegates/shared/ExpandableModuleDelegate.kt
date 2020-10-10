@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.core.list.delegates.shared
 
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.common.contracts.module.Module
@@ -36,7 +37,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
 
     fun MutableList<Cell<*>>.addItems(module: M)
 
-    fun getTitle(module: M): CharSequence = module.title
+    fun getTitle(module: M): Text = module.getInternalTitle(BeagleCore.implementation)
 
     private var ExpandableModule<M>.isExpanded: Boolean
         get() = BeagleCore.implementation.memoryStorageManager.booleans[id] ?: isExpandedInitially

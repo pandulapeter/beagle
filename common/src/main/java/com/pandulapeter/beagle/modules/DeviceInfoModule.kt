@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.DeviceInfoModule.Companion.ID
@@ -20,7 +22,7 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule.Companion.ID
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. Optional, false by default.
  */
 data class DeviceInfoModule(
-    override val title: CharSequence = "Device info",
+    val title: Text = Text.CharSequence("Device info"),
     val shouldShowManufacturer: Boolean = true,
     val shouldShowModel: Boolean = true,
     val shouldShowResolutionsPx: Boolean = true,
@@ -31,6 +33,8 @@ data class DeviceInfoModule(
 ) : ExpandableModule<DeviceInfoModule> {
 
     override val id: String = ID
+
+    override fun getInternalTitle(beagle: BeagleContract) = title
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 

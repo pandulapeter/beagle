@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
@@ -19,7 +21,7 @@ import java.util.UUID
  * @param onSelectionChanged - Callback called when the changes the selection. The parameter is a set with the currently selected items. Empty implementation by default.
  */
 data class MultipleSelectionListModule<T : BeagleListItemContract>(
-    override val title: CharSequence,
+    val title: (Set<T>) -> Text,
     val items: List<T>,
     val initiallySelectedItemIds: Set<String>,
     override val isEnabled: Boolean = true,
@@ -30,8 +32,13 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
     val onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
 ) : ExpandableModule<MultipleSelectionListModule<T>>, ValueWrapperModule<Set<String>, MultipleSelectionListModule<T>> {
 
-    override val onValueChanged: (newValue: Set<String>) -> Unit = { newValue -> onSelectionChanged(newValue.mapNotNull { itemId -> items.firstOrNull { it.id == itemId } }.toSet()) }
+    override val onValueChanged: (newValue: Set<String>) -> Unit = { newValue -> onSelectionChanged(newValue.toItems()) }
     override val initialValue: Set<String> = initiallySelectedItemIds
+    override val text: (Set<String>) -> Text = { title(it.toItems()) }
+
+    override fun getInternalTitle(beagle: BeagleContract) = title(getCurrentValue(beagle).toItems())
+
+    private fun Set<String>?.toItems() = orEmpty().mapNotNull { itemId -> items.firstOrNull { it.id == itemId } }.toSet()
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

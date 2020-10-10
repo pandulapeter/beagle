@@ -4,14 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal data class ExpandableHeaderCell(
     override val id: String,
-    private val text: CharSequence,
+    private val text: Text,
     val isExpanded: Boolean,
     val canExpand: Boolean,
     val onItemSelected: () -> Unit
@@ -22,7 +24,8 @@ internal data class ExpandableHeaderCell(
         override fun createViewHolder(parent: ViewGroup) = TextViewHolder(parent)
     }
 
-    private class TextViewHolder(parent: ViewGroup) : ViewHolder<ExpandableHeaderCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_expandable_header, parent, false)) {
+    private class TextViewHolder(parent: ViewGroup) :
+        ViewHolder<ExpandableHeaderCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_expandable_header, parent, false)) {
 
         private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
         private val drawableExpand by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_expand, textView.textColors.defaultColor) }
@@ -31,7 +34,7 @@ internal data class ExpandableHeaderCell(
 
         override fun bind(model: ExpandableHeaderCell) {
             textView.run {
-                text = model.text
+                setText(model.text)
                 setCompoundDrawablesWithIntrinsicBounds(null, null, if (model.canExpand) if (model.isExpanded) drawableCollapse else drawableExpand else drawableEmpty, null)
                 setOnClickListener {
                     if (adapterPosition != RecyclerView.NO_POSITION) {

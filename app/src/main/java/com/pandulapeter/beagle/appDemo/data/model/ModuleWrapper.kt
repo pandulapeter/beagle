@@ -58,7 +58,7 @@ sealed class ModuleWrapper(
     class CheckBox : ModuleWrapper(
         titleResourceId = R.string.add_module_check_box,
         descriptionResourceId = R.string.add_module_check_box_description,
-        module = CheckBoxModule(text = "CheckBox", initialValue = false, onValueChanged = {}),
+        module = CheckBoxModule(title = "CheckBox", initialValue = false, onValueChanged = {}),
         codeSnippet = "CheckBoxModule(text = \"CheckBox\", initialValue = false, onValueChanged = {})"
     )
 

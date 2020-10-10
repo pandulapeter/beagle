@@ -37,15 +37,17 @@ internal class KeylineOverlaySwitchDelegate : ValueWrapperModuleDelegate.Boolean
         })
     }
 
-    override fun createCells(module: KeylineOverlaySwitchModule): List<Cell<*>> = listOf(
-        SwitchCell(
-            id = module.id,
-            text = module.text,
-            isChecked = getCurrentValue(module),
-            isEnabled = module.isEnabled,
-            onValueChanged = { newValue -> setCurrentValue(module, newValue) }
+    override fun createCells(module: KeylineOverlaySwitchModule): List<Cell<*>> = getCurrentValue(module).let { currentValue ->
+        listOf(
+            SwitchCell(
+                id = module.id,
+                text = module.text(currentValue),
+                isChecked = currentValue,
+                isEnabled = module.isEnabled,
+                onValueChanged = { newValue -> setCurrentValue(module, newValue) }
+            )
         )
-    )
+    }
 
     override fun callOnValueChanged(module: KeylineOverlaySwitchModule, newValue: kotlin.Boolean) {
         BeagleCore.implementation.invalidateOverlay()

@@ -7,13 +7,17 @@ import com.pandulapeter.beagle.modules.SwitchModule
 
 internal class SwitchDelegate : ValueWrapperModuleDelegate.Boolean<SwitchModule>() {
 
-    override fun createCells(module: SwitchModule): List<Cell<*>> = listOf(
-        SwitchCell(
-            id = module.id,
-            text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text.withSuffix("*") else module.text,
-            isChecked = getUiValue(module),
-            isEnabled = module.isEnabled,
-            onValueChanged = { newValue -> setUiValue(module, newValue) }
+    override fun createCells(module: SwitchModule): List<Cell<*>> = getUiValue(module).let { uiValue ->
+        listOf(
+            SwitchCell(
+                id = module.id,
+                text = module.text(uiValue).let { text ->
+                    if (module.shouldRequireConfirmation && hasPendingChanges(module)) text.withSuffix("*") else text
+                },
+                isChecked = uiValue,
+                isEnabled = module.isEnabled,
+                onValueChanged = { newValue -> setUiValue(module, newValue) }
+            )
         )
-    )
+    }
 }

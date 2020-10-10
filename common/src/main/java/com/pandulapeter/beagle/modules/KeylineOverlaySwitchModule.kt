@@ -25,7 +25,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
  */
 data class KeylineOverlaySwitchModule(
-    val text: Text = Text.CharSequence("Keyline overlay"),
+    override val text: (Boolean) -> Text = { Text.CharSequence("Keyline overlay") },
     @Dimension val grid: Int? = null,
     @Dimension val keylinePrimary: Int? = null,
     @Dimension val keylineSecondary: Int? = null,

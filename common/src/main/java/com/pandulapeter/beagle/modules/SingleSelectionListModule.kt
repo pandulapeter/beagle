@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
@@ -19,7 +21,7 @@ import java.util.UUID
  * @param onSelectionChanged - Callback called when the changes the selection. The parameter is the currently selected item. Empty implementation by default.
  */
 data class SingleSelectionListModule<T : BeagleListItemContract>(
-    override val title: CharSequence,
+    val title: (T?) -> Text,
     val items: List<T>,
     val initiallySelectedItemId: String?,
     override val isEnabled: Boolean = true,
@@ -31,7 +33,12 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
 ) : ExpandableModule<SingleSelectionListModule<T>>, ValueWrapperModule<String, SingleSelectionListModule<T>> {
 
     override val initialValue = initiallySelectedItemId.orEmpty() //TODO: Using an empty string is not a great idea, this should be null
-    override val onValueChanged: (newValue: String) -> Unit = { newValue -> onSelectionChanged(items.firstOrNull { it.id == newValue }) }
+    override val onValueChanged: (newValue: String) -> Unit = { newValue -> onSelectionChanged(newValue.toItem()) }
+    override val text: (String) -> Text = { title(it.toItem()) }
+
+    override fun getInternalTitle(beagle: BeagleContract) = title(getCurrentValue(beagle).toItem())
+
+    private fun String?.toItem() = items.firstOrNull { it.id == this }
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

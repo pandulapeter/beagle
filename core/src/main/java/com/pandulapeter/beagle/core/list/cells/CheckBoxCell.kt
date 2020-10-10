@@ -3,13 +3,15 @@ package com.pandulapeter.beagle.core.list.cells
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.setText
 
 internal data class CheckBoxCell(
     override val id: String,
-    private val text: CharSequence,
+    private val text: Text,
     private val isChecked: Boolean,
     private val isEnabled: Boolean,
     private val onValueChanged: (Boolean) -> Unit
@@ -26,7 +28,7 @@ internal data class CheckBoxCell(
 
         override fun bind(model: CheckBoxCell) {
             checkBox.run {
-                text = model.text
+                setText(model.text)
                 setOnCheckedChangeListener(null)
                 isChecked = model.isChecked
                 isEnabled = model.isEnabled

@@ -17,7 +17,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
  */
 data class AnimationDurationSwitchModule(
-    val text: Text = Text.CharSequence("Slow down animations"),
+    override val text: (Boolean) -> Text = { Text.CharSequence("Slow down animations") },
     val multiplier: Float = 4f,
     override val initialValue: Boolean = false,
     override val isValuePersisted: Boolean = false,

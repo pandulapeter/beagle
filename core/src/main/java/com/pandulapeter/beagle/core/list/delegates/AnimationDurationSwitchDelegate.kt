@@ -8,15 +8,17 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 
 internal class AnimationDurationSwitchDelegate : ValueWrapperModuleDelegate.Boolean<AnimationDurationSwitchModule>() {
 
-    override fun createCells(module: AnimationDurationSwitchModule): List<Cell<*>> = listOf(
-        SwitchCell(
-            id = module.id,
-            text = module.text,
-            isChecked = getCurrentValue(module),
-            isEnabled = module.isEnabled,
-            onValueChanged = { newValue -> setCurrentValue(module, newValue) }
+    override fun createCells(module: AnimationDurationSwitchModule): List<Cell<*>> = getCurrentValue(module).let { currentValue ->
+        listOf(
+            SwitchCell(
+                id = module.id,
+                text = module.text(currentValue),
+                isChecked = currentValue,
+                isEnabled = module.isEnabled,
+                onValueChanged = { newValue -> setCurrentValue(module, newValue) }
+            )
         )
-    )
+    }
 
     override fun callOnValueChanged(module: AnimationDurationSwitchModule, newValue: kotlin.Boolean) {
         try {

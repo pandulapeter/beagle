@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import java.util.UUID
 
@@ -15,7 +16,7 @@ import java.util.UUID
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Empty implementation by default.
  */
 data class CheckBoxModule(
-    val text: CharSequence,
+    override val text: (Boolean) -> Text,
     override val id: String = UUID.randomUUID().toString(),
     override val initialValue: Boolean = false,
     override val isEnabled: Boolean = true,
@@ -23,6 +24,8 @@ data class CheckBoxModule(
     override val shouldRequireConfirmation: Boolean = false,
     override val onValueChanged: (Boolean) -> Unit = {}
 ) : ValueWrapperModule<Boolean, CheckBoxModule> {
+
+    //TODO: Add compatibility constructor.
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

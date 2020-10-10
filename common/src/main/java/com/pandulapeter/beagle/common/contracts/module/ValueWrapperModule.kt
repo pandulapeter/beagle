@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.common.contracts.module
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 
 /**
@@ -17,6 +18,11 @@ interface ValueWrapperModule<T, M : Module<M>> : Module<M> {
      * If [isValuePersisted] is true, the value coming from the local storage will override this field so it will only be used the first time the app is launched.
      */
     val initialValue: T
+
+    /**
+     * The title of the module that can change in function of the current value.
+     */
+    val text: (T) -> Text
 
     /**
      * Can be used to enable or disable persisting the value on the local storage.
