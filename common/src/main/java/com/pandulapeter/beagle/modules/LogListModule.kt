@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import java.text.SimpleDateFormat
@@ -21,7 +22,7 @@ import java.util.Locale
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
 data class LogListModule(
-    override val title: CharSequence = "Logs",
+    val title: Text = Text.CharSequence("Logs"),
     val maxItemCount: Int = 10,
     val timestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },
     val label: String? = null,
@@ -30,6 +31,8 @@ data class LogListModule(
 ) : ExpandableModule<LogListModule> {
 
     override val id = formatId(label)
+
+    override fun getInternalTitle(beagle: BeagleContract) = title
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 

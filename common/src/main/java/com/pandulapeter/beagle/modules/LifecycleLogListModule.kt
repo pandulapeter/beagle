@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
@@ -27,7 +28,7 @@ import java.util.Locale
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
 data class LifecycleLogListModule(
-    override val title: CharSequence = "Lifecycle logs",
+    val title: Text = Text.CharSequence("Lifecycle logs"),
     val eventTypes: List<EventType> = EventType.values().toList(),
     val shouldDisplayFullNames: Boolean = false,
     val maxItemCount: Int = 10,
@@ -36,6 +37,8 @@ data class LifecycleLogListModule(
 ) : ExpandableModule<LifecycleLogListModule> {
 
     override val id = ID
+
+    override fun getInternalTitle(beagle: BeagleContract) = title
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 

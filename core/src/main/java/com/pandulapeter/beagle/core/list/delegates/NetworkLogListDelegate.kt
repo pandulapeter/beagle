@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
@@ -17,7 +18,7 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
                 (module.timestampFormatter?.let { formatter -> formatter(entry.timestamp) }).let { formattedTimestamp ->
                     ExpandedItemTextCell(
                         id = "${module.id}_${entry.id}",
-                        text = entry.url.replace(module.baseUrl, "").let { url ->
+                        text = Text.CharSequence(entry.url.replace(module.baseUrl, "").let { url ->
                             formattedTimestamp?.let { "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)
                         }.let { text ->
                             module.maxItemTitleLength?.let { maxItemTitleLength ->
@@ -25,7 +26,7 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
                                     "${text.take(maxItemTitleLength)}…"
                                 } else text
                             } ?: text
-                        },
+                        }),
                         isEnabled = true,
                         onItemSelected = {
                             BeagleCore.implementation.showNetworkEventDialog(

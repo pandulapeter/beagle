@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
@@ -15,9 +16,11 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
         addAll(BeagleCore.implementation.getLogEntries(module.label).take(module.maxItemCount).map { entry ->
             ExpandedItemTextCell(
                 id = "${module.id}_${entry.id}",
-                text = (module.timestampFormatter?.let { formatter -> "[".append(formatter(entry.timestamp)).append("] ").append(entry.title) } ?: entry.title).let {
+                text = Text.CharSequence((module.timestampFormatter?.let { formatter ->
+                    "[".append(formatter(entry.timestamp)).append("] ").append(entry.title)
+                } ?: entry.title).let {
                     if (entry.payload == null) it else it.append("*")
-                },
+                }),
                 isEnabled = true,
                 onItemSelected = if (entry.payload != null) fun() {
                     BeagleCore.implementation.showDialog(

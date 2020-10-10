@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
@@ -24,7 +25,7 @@ import java.util.Locale
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
  */
 data class NetworkLogListModule(
-    override val title: CharSequence = "Network activity",
+    val title: Text = Text.CharSequence("Network activity"),
     val baseUrl: String = "",
     val maxItemCount: Int = 10,
     val maxItemTitleLength: Int? = null,
@@ -33,6 +34,8 @@ data class NetworkLogListModule(
 ) : ExpandableModule<NetworkLogListModule> {
 
     override val id: String = ID
+
+    override fun getInternalTitle(beagle: BeagleContract) = title
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 

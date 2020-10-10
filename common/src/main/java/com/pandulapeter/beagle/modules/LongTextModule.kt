@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import java.util.UUID
 
@@ -12,11 +14,13 @@ import java.util.UUID
  * @param id - A unique identifier for the module. Optional, random string by default.
  */
 data class LongTextModule(
-    override val title: CharSequence,
-    val text: CharSequence,
+    val title: Text,
+    val text: Text,
     override val isExpandedInitially: Boolean = false,
     override val id: String = UUID.randomUUID().toString()
 ) : ExpandableModule<LongTextModule> {
+
+    override fun getInternalTitle(beagle: BeagleContract) = title
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

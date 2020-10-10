@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import java.util.UUID
@@ -14,12 +16,14 @@ import java.util.UUID
  * @param onItemSelected - Callback called when the user selects one of the items. The parameter is the selected item. Optional, null by default.
  */
 data class ItemListModule<T : BeagleListItemContract>(
-    override val title: CharSequence,
+    val title: Text,
     val items: List<T>,
     override val isExpandedInitially: Boolean = false,
     override val id: String = UUID.randomUUID().toString(),
     val onItemSelected: ((item: T) -> Unit)? = null
 ) : ExpandableModule<ItemListModule<T>> {
+
+    override fun getInternalTitle(beagle: BeagleContract) = title
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 }

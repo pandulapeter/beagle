@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.common.contracts
 
+import com.pandulapeter.beagle.common.configuration.Text
+
 /**
  * Models used for representing items in the ItemListModule, SingleSelectionListModule or MultipleSelectionListModule must implement this interface.
  */
@@ -8,7 +10,7 @@ interface BeagleListItemContract {
     /**
      * The text that should appear on the UI.
      */
-    val title: CharSequence
+    val title: Text
 
     /**
      * A unique identifier for the list item that is used in callbacks.

@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.modules
 
+import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule.Companion.ID
@@ -20,14 +22,16 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. Optional, false by default.
  */
 data class ScreenCaptureToolboxModule(
-    override val title: CharSequence = "Screen capture tools",
-    val imageText: CharSequence? = "Take a screenshot",
-    val videoText: CharSequence? = "Record a video",
-    val galleryText: CharSequence = "Open the gallery",
+    val title: Text = Text.CharSequence("Screen capture tools"),
+    val imageText: Text? = Text.CharSequence("Take a screenshot"),
+    val videoText: Text? = Text.CharSequence("Record a video"),
+    val galleryText: Text = Text.CharSequence("Open the gallery"),
     override val isExpandedInitially: Boolean = false
 ) : ExpandableModule<ScreenCaptureToolboxModule> {
 
     override val id: String = ID
+
+    override fun getInternalTitle(beagle: BeagleContract) = title
 
     override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 
