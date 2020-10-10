@@ -18,10 +18,10 @@ import java.util.Locale
  * @param screenCaptureGalleryNotificationTitle - The title for the notification displayed after a screen capture is done, by default it's "Screen captured".
  * @param screenCaptureGalleryNotificationContent - The content for the notification described for the [screenCaptureGalleryNotificationTitle] parameter. "Tap on this notification to open the Gallery." by default.
  * @param screenCaptureServiceNotificationChannelName - The name for the notification channel that handles all notifications related to screen capture. "Screen capture notifications" by default.
+ * @param shareHint - The hint used for the Share icon of the Gallery screen and the Log detail dialog. "Share" by default.
  * @param galleryTitle - The title of the Gallery screen. "Gallery" by default.
  * @param galleryNoMediaMessage - The empty state text of the Gallery screen. "No media found" by default.
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with "yyyy-MM-dd" by default.
- * @param galleryShareHint - The hint used for the Share icon of the Gallery screen. "Share" by default.
  * @param galleryDeleteHint - The hint used for the Delete icon of the Gallery screen. "Delete" by default.
  * @param galleryDeleteConfirmationMessageSingular - The message used for the Delete confirmation dialog of the Gallery screen when deleting one file. "Are you sure you want to delete this file?" by default.
  * @param galleryDeleteConfirmationMessagePlural - The message used for the Delete confirmation dialog of the Gallery screen when deleting multiple files. "Are you sure you want to delete these files?" by default.
@@ -32,25 +32,25 @@ import java.util.Locale
  */
 data class Appearance(
     @StyleRes val themeResourceId: Int? = null,
-    val applyButtonText: CharSequence = "Apply",
-    val resetButtonText: CharSequence = "Reset",
+    val applyButtonText: Text = Text.CharSequence("Apply"),
+    val resetButtonText: Text = Text.CharSequence("Reset"),
     val networkEventTimestampFormatter: (Long) -> CharSequence = { defaultNetworkEventTimestampFormatter.format(it) },
-    val screenRecordingToastText: CharSequence? = "Recording in progress. Tap on the notification to stop it.",
-    val screenCaptureServiceNotificationTitle: CharSequence = "Recording…",
-    val screenCaptureServiceNotificationContent: CharSequence = "Tap on this notification when done.",
-    val screenCaptureGalleryNotificationTitle: CharSequence = "Screen captured",
-    val screenCaptureGalleryNotificationContent: CharSequence = "Tap on this notification to open the Gallery.",
-    val screenCaptureServiceNotificationChannelName: CharSequence = "Screen capture notifications",
-    val galleryTitle: CharSequence = "Gallery",
-    val galleryNoMediaMessage: CharSequence = "No media found",
+    val screenRecordingToastText: Text? = Text.CharSequence("Recording in progress. Tap on the notification to stop it."),
+    val screenCaptureServiceNotificationTitle: Text = Text.CharSequence("Recording…"),
+    val screenCaptureServiceNotificationContent: Text = Text.CharSequence("Tap on this notification when done."),
+    val screenCaptureGalleryNotificationTitle: Text = Text.CharSequence("Screen captured"),
+    val screenCaptureGalleryNotificationContent: Text = Text.CharSequence("Tap on this notification to open the Gallery."),
+    val screenCaptureServiceNotificationChannelName: Text = Text.CharSequence("Screen capture notifications"),
+    val shareHint: Text = Text.CharSequence("Share"),
+    val galleryTitle: Text = Text.CharSequence("Gallery"),
+    val galleryNoMediaMessage: Text = Text.CharSequence("No media found"),
     val galleryTimestampFormatter: ((Long) -> CharSequence)? = { defaultGalleryTimestampFormatter.format(it) },
-    val galleryShareHint: CharSequence = "Share",
-    val galleryDeleteHint: CharSequence = "Delete",
-    val galleryDeleteConfirmationMessageSingular: String = "Are you sure you want to delete this file?",
-    val galleryDeleteConfirmationMessagePlural: String = "Are you sure you want to delete these files?",
-    val galleryDeleteConfirmationPositive: String = "Delete",
-    val galleryDeleteConfirmationNegative: String = "Cancel",
-    val shareErrorText: CharSequence = "Payload too large",
+    val galleryDeleteHint: Text = Text.CharSequence("Delete"),
+    val galleryDeleteConfirmationMessageSingular: Text = Text.CharSequence("Are you sure you want to delete this file?"),
+    val galleryDeleteConfirmationMessagePlural: Text = Text.CharSequence("Are you sure you want to delete these files?"),
+    val galleryDeleteConfirmationPositive: Text = Text.CharSequence("Delete"),
+    val galleryDeleteConfirmationNegative: Text = Text.CharSequence("Cancel"),
+    val shareErrorText: Text = Text.CharSequence("Payload too large"),
     val applyInsets: ((windowInsets: Insets) -> Insets)? = null
 ) {
 

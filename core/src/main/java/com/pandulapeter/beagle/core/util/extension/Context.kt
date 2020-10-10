@@ -9,6 +9,7 @@ import android.net.Uri
 import android.view.ContextThemeWrapper
 import androidx.core.content.FileProvider
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Text
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -51,4 +52,9 @@ internal fun Context.getScreenCapturesFolder(): File {
 
 internal fun Context.createFile(fileName: String): File {
     return File(getScreenCapturesFolder(), fileName)
+}
+
+internal fun Context.text(text: Text) = when (text) {
+    is Text.CharSequence -> text.charSequence
+    is Text.ResourceId -> getString(text.resourceId)
 }

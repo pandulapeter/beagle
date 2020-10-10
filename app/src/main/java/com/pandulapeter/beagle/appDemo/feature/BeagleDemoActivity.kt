@@ -48,8 +48,8 @@ class BeagleDemoActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         ViewCompat.setOnApplyWindowInsetsListener(binding.beagleButton, null)
+        super.onDestroy()
     }
 
     private fun setupEdgeToEdge() {

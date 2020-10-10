@@ -7,6 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.applyTheme
+import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 
@@ -19,12 +20,12 @@ internal class DeleteConfirmationDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = requireContext().applyTheme().let { context ->
         AlertDialog.Builder(context)
-            .setMessage(if (arguments?.isPlural == true) BeagleCore.implementation.appearance.galleryDeleteConfirmationMessagePlural else BeagleCore.implementation.appearance.galleryDeleteConfirmationMessageSingular)
-            .setPositiveButton(BeagleCore.implementation.appearance.galleryDeleteConfirmationPositive) { _, _ ->
+            .setMessage(context.text(if (arguments?.isPlural == true) BeagleCore.implementation.appearance.galleryDeleteConfirmationMessagePlural else BeagleCore.implementation.appearance.galleryDeleteConfirmationMessageSingular))
+            .setPositiveButton(context.text(BeagleCore.implementation.appearance.galleryDeleteConfirmationPositive)) { _, _ ->
                 ((parentFragment as? OnPositiveButtonClickedListener?) ?: (activity as? OnPositiveButtonClickedListener?))?.onPositiveButtonClicked()
                 dismiss()
             }
-            .setNegativeButton(BeagleCore.implementation.appearance.galleryDeleteConfirmationNegative) { _, _ -> dismiss() }
+            .setNegativeButton(context.text(BeagleCore.implementation.appearance.galleryDeleteConfirmationNegative)) { _, _ -> dismiss() }
             .create()
     }
 

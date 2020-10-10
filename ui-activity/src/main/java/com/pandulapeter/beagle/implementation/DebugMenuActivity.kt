@@ -1,25 +1,17 @@
 package com.pandulapeter.beagle.implementation
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.View
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
-import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
+import com.pandulapeter.beagle.utils.extensions.colorResource
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class DebugMenuActivity : AppCompatActivity() {
 
@@ -30,7 +22,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
         supportActionBar?.hide()
         findViewById<Toolbar>(R.id.beagle_toolbar).apply {
             setNavigationOnClickListener { onBackPressed() }
-            navigationIcon = tintedDrawable(com.pandulapeter.beagle.core.R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
+            navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             val debugMenu = findViewById<InternalDebugMenuView>(R.id.beagle_debug_menu)
@@ -79,21 +71,4 @@ internal class DebugMenuActivity : AppCompatActivity() {
         }
         super.onStop()
     }
-
-
-    private fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int) = AppCompatResources.getDrawable(this, drawableResourceId)?.let { drawable ->
-        DrawableCompat.wrap(drawable.mutate()).apply {
-            DrawableCompat.setTint(this, tint)
-            DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)
-        }
-    }
-
-    @SuppressLint("ResourceAsColor")
-    @ColorInt
-    private fun Context.colorResource(@AttrRes id: Int): Int {
-        val resolvedAttr = TypedValue()
-        theme.resolveAttribute(id, resolvedAttr, true)
-        return ContextCompat.getColor(this, resolvedAttr.run { if (resourceId != 0) resourceId else data })
-    }
-
 }

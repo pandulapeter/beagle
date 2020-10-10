@@ -17,12 +17,14 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
+import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.drawable
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 
-class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context.applyTheme(), attrs, defStyleAttr),
+class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    FrameLayout(context.applyTheme(), attrs, defStyleAttr),
     UpdateListener {
 
     private val verticalMargin = context.dimension(R.dimen.beagle_item_vertical_margin)
@@ -35,13 +37,13 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
     private val largePadding = context.dimension(R.dimen.beagle_large_content_padding)
     private val applyButton = AppCompatButton(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
         isAllCaps = false
-        text = BeagleCore.implementation.appearance.applyButtonText
+        setText(BeagleCore.implementation.appearance.applyButtonText)
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.applyPendingChanges() }
     }
     private val resetButton = AppCompatButton(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
         isAllCaps = false
-        text = BeagleCore.implementation.appearance.resetButtonText
+        setText(BeagleCore.implementation.appearance.resetButtonText)
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.resetPendingChanges() }
     }

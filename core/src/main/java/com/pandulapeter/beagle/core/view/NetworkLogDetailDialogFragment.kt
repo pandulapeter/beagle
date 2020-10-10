@@ -21,6 +21,7 @@ import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.shareText
+import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -73,7 +74,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 setNavigationOnClickListener { dismiss() }
                 navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
                 shareButton = menu.findItem(R.id.beagle_share).also {
-                    it.title = BeagleCore.implementation.appearance.galleryShareHint
+                    it.title = context.text(BeagleCore.implementation.appearance.shareHint)
                     it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
@@ -93,7 +94,9 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 val text = SpannableString(
                     title
                         .append("\n\n• Headers:${arguments?.headers?.formatHeaders()}")
-                        .let { text -> arguments?.timestamp?.let { text.append("\n• Timestamp: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
+                        .let { text ->
+                            arguments?.timestamp?.let { text.append("\n• Timestamp: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text
+                        }
                         .let { text -> arguments?.duration?.let { text.append("\n• Duration: ${max(0, it)} ms") } ?: text }
                         .append("\n\n${arguments?.payload?.formatToJson()}")
                 ).apply { setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE) }

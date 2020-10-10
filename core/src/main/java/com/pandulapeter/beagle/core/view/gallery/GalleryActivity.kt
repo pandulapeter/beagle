@@ -19,6 +19,7 @@ import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.shareFiles
+import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
 import com.pandulapeter.beagle.utils.consume
@@ -42,13 +43,13 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             val textColor = colorResource(android.R.attr.textColorPrimary)
             setNavigationOnClickListener { supportFinishAfterTransition() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
-            title = BeagleCore.implementation.appearance.galleryTitle
+            title = text(BeagleCore.implementation.appearance.galleryTitle)
             shareButton = menu.findItem(R.id.beagle_share).also {
-                it.title = BeagleCore.implementation.appearance.galleryShareHint
+                it.title = text(BeagleCore.implementation.appearance.shareHint)
                 it.icon = tintedDrawable(R.drawable.beagle_ic_share, textColor)
             }
             deleteButton = menu.findItem(R.id.beagle_delete).also {
-                it.title = BeagleCore.implementation.appearance.galleryDeleteHint
+                it.title = text(BeagleCore.implementation.appearance.galleryDeleteHint)
                 it.icon = tintedDrawable(R.drawable.beagle_ic_delete, textColor)
             }
             setOnMenuItemClickListener(::onMenuItemClicked)
@@ -58,7 +59,7 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             deleteButton.isVisible = it
         }
         val emptyStateTextView = findViewById<TextView>(R.id.beagle_text_view)
-        emptyStateTextView.text = BeagleCore.implementation.appearance.galleryNoMediaMessage
+        emptyStateTextView.text = text(BeagleCore.implementation.appearance.galleryNoMediaMessage)
         val largePadding = dimension(R.dimen.beagle_large_content_padding)
         val recyclerView = findViewById<RecyclerView>(R.id.beagle_recycler_view)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
@@ -67,7 +68,12 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
-                        recyclerView.setPadding(it.systemWindowInsetLeft + contentPadding, contentPadding, it.systemWindowInsetRight + contentPadding, it.systemWindowInsetBottom + contentPadding)
+                        recyclerView.setPadding(
+                            it.systemWindowInsetLeft + contentPadding,
+                            contentPadding,
+                            it.systemWindowInsetRight + contentPadding,
+                            it.systemWindowInsetBottom + contentPadding
+                        )
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
                         emptyStateTextView.setPadding(largePadding, largePadding, largePadding, largePadding + it.systemWindowInsetBottom)
                     }

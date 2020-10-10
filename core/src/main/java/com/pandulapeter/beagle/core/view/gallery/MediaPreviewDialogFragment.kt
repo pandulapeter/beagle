@@ -18,6 +18,7 @@ import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
+import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -70,11 +71,11 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
                     setNavigationOnClickListener { dismiss() }
                     navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
                     shareButton = menu.findItem(R.id.beagle_share).also {
-                        it.title = BeagleCore.implementation.appearance.galleryShareHint
+                        it.title = context.text(BeagleCore.implementation.appearance.shareHint)
                         it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
                     }
                     deleteButton = menu.findItem(R.id.beagle_delete).also {
-                        it.title = BeagleCore.implementation.appearance.galleryDeleteHint
+                        it.title = context.text(BeagleCore.implementation.appearance.galleryDeleteHint)
                         it.icon = context.tintedDrawable(R.drawable.beagle_ic_delete, textColor)
                     }
                     setOnMenuItemClickListener(::onMenuItemClicked)
