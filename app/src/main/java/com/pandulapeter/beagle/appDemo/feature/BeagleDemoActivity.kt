@@ -1,8 +1,12 @@
 package com.pandulapeter.beagle.appDemo.feature
 
+import android.os.Build
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
@@ -10,8 +14,8 @@ import com.pandulapeter.beagle.appDemo.databinding.ActivityBeagleDemoBinding
 import com.pandulapeter.beagle.appDemo.feature.main.MainFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.BaseFragment
 import com.pandulapeter.beagle.appDemo.utils.handleReplace
-import com.pandulapeter.beagle.appDemo.utils.updateSystemBars
 import com.pandulapeter.beagle.appDemo.utils.visible
+import com.pandulapeter.beagle.utils.extensions.dimension
 
 class BeagleDemoActivity : AppCompatActivity() {
 
@@ -22,18 +26,17 @@ class BeagleDemoActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_beagle_demo)
+        setupEdgeToEdge()
         binding.beagleButton.setOnClickListener {
             Beagle.show()
             binding.debugMenu.visible = !binding.debugMenu.visible
         }
         if (savedInstanceState == null) {
-            supportFragmentManager.handleReplace(transitionType = null, newInstance = MainFragment.Companion::newInstance)
+            supportFragmentManager.handleReplace(
+                transitionType = null,
+                newInstance = MainFragment.Companion::newInstance
+            )
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        updateSystemBars()
     }
 
     override fun onBackPressed() {
@@ -41,6 +44,26 @@ class BeagleDemoActivity : AppCompatActivity() {
             binding.debugMenu.visible = false
         } else if (!Beagle.hide() && currentFragment?.onBackPressed() != true) {
             super.onBackPressed()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.beagleButton, null)
+    }
+
+    private fun setupEdgeToEdge() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.setDecorFitsSystemWindows(false)
+            binding.beagleButton.run {
+                val margin = dimension(R.dimen.beagle_button_margin)
+                ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
+                    layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
+                        bottomMargin = margin + insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+                    }
+                    insets
+                }
+            }
         }
     }
 }

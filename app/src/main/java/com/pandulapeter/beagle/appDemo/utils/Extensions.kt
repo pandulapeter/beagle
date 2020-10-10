@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.appDemo.utils
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -34,10 +33,14 @@ fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawa
 
 fun View.hideKeyboard() {
     clearFocus()
-    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+        windowToken,
+        0
+    )
 }
 
-fun View.showSnackbar(@StringRes messageResourceId: Int) = Snackbar.make(this, messageResourceId, Snackbar.LENGTH_SHORT).show()
+fun View.showSnackbar(@StringRes messageResourceId: Int) =
+    Snackbar.make(this, messageResourceId, Snackbar.LENGTH_SHORT).show()
 
 fun View.openUrl(url: String) = Intent(Intent.ACTION_VIEW, Uri.parse(url)).let { intent ->
     if (intent.resolveActivity(context.packageManager) != null) {
@@ -81,7 +84,9 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
             }
             null -> Unit
         }
-        sharedElements?.forEach { sharedElement -> ViewCompat.getTransitionName(sharedElement)?.let { addSharedElement(sharedElement, it) } }
+        sharedElements?.forEach { sharedElement ->
+            ViewCompat.getTransitionName(sharedElement)?.let { addSharedElement(sharedElement, it) }
+        }
         replace(containerId, newFragment, tag)
         if (addToBackStack) {
             addToBackStack(null)
@@ -91,18 +96,10 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
     }
 }
 
-fun Activity.updateSystemBars() = window.run {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_VISIBLE or
-                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+inline fun <T> LiveData<T>.observe(owner: LifecycleOwner, crossinline onChanged: (T) -> Unit) =
+    Observer<T> { t -> onChanged.invoke(t) }.also {
+        observe(owner, it)
     }
-}
-
-inline fun <T> LiveData<T>.observe(owner: LifecycleOwner, crossinline onChanged: (T) -> Unit) = Observer<T> { t -> onChanged.invoke(t) }.also {
-    observe(owner, it)
-}
 
 @set:BindingAdapter("android:visibility")
 var View.visible

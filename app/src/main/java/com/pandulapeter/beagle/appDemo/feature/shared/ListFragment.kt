@@ -1,10 +1,13 @@
 package com.pandulapeter.beagle.appDemo.feature.shared
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.Beagle
@@ -42,9 +45,19 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.setVariable(BR.viewModel, viewModel)
         binding.root.setBackgroundColor(requireContext().color(backgroundColorResourceId))
-        binding.appBar.setup(titleResourceId, parentFragment?.childFragmentManager?.backStackEntryCount ?: 0 <= 1, requireActivity())
+        binding.appBar.setup(
+            titleResourceId,
+            parentFragment?.childFragmentManager?.backStackEntryCount ?: 0 <= 1,
+            requireActivity()
+        )
         setupRecyclerView()
         refreshBeagle()
+        setupEdgeToEdge()
+    }
+
+    override fun onDestroyView() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.appBar, null)
+        super.onDestroyView()
     }
 
     protected fun refreshBeagle(clearIfEmpty: Boolean = false) = getBeagleModules().let { modules ->
@@ -54,7 +67,8 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     }
 
     private fun setupRecyclerView() {
-        val listAdapter = createAdapter().also { it.blockGestures = { binding.recyclerView.shouldBlockGestures = { true } } }
+        val listAdapter =
+            createAdapter().also { it.blockGestures = { binding.recyclerView.shouldBlockGestures = { true } } }
         viewModel.items.observe(owner = viewLifecycleOwner) { listAdapter.submitList(it, ::onListUpdated) }
         binding.recyclerView.run {
             shouldBlockGestures = { true }
@@ -62,6 +76,15 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
             layoutManager = createLayoutManager()
             setHasFixedSize(true)
             waitForPreDraw { postDelayed({ startPostponedEnterTransition() }, 100) }
+        }
+    }
+
+    private fun setupEdgeToEdge() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ViewCompat.setOnApplyWindowInsetsListener(binding.appBar) { _, insets ->
+                binding.appBar.updateTopInset(insets.getInsets(WindowInsetsCompat.Type.systemBars()).top)
+                insets
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.shared
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -19,6 +18,8 @@ class AppBarView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : AppBarLayout(context, attrs, defStyleAttr) {
 
+    private val toolbarContainer by lazy { findViewById<View>(R.id.toolbar_container) }
+
     init {
         LayoutInflater.from(context).inflate(R.layout.view_app_bar, this, true)
         isLiftOnScroll = true
@@ -26,12 +27,6 @@ class AppBarView @JvmOverloads constructor(
         context.theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
         if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
             setBackgroundColor(typedValue.data)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val toolbarContainer = findViewById<View>(R.id.toolbar_container)
-            setOnApplyWindowInsetsListener { _, insets ->
-                insets.also { toolbarContainer.run { setPadding(paddingLeft, insets.systemWindowInsetTop, paddingRight, paddingBottom) } }
-            }
         }
     }
 
@@ -41,5 +36,9 @@ class AppBarView @JvmOverloads constructor(
             visible = !isRoot
             setOnClickListener { activity.onBackPressed() }
         }
+    }
+
+    fun updateTopInset(topInset: Int) = toolbarContainer.run {
+        post { setPadding(paddingLeft, topInset, paddingRight, paddingBottom) }
     }
 }
