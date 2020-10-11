@@ -52,12 +52,12 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
                         "        subtitle = headerSubtitle,\n" +
                         "        text = headerText\n" +
                         "    ),\n" +
-                        "    TextModule(text = \"…\"),\n" +
+                        "    TextModule(\"…\"),\n" +
                         "    LongTextModule(\n" +
                         "        title = \"…\",\n" +
                         "        text = \"…\"\n" +
                         "    ),\n" +
-                        "    SectionHeaderModule(title = \"…\"),\n" +
+                        "    SectionHeaderModule(\"…\"),\n" +
                         "    PaddingModule(),\n" +
                         "    DividerModule()\n" +
                         "    KeyValueListModule(\n" +

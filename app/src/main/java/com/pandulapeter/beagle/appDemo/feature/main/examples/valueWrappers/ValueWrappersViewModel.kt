@@ -96,6 +96,7 @@ class ValueWrappersViewModel : ListViewModel<ValueWrappersListItem>() {
                 text = textInput?.getCurrentValue(Beagle).orEmpty()
             )
         )
+        add(TextViewHolder.UiModel(R.string.case_study_value_wrappers_text_2))
         add(SpaceViewHolder.UiModel())
     }
 

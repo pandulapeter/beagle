@@ -8,6 +8,5 @@ data class TestAccount(
     val password: String
 ) : BeagleListItemContract {
 
-    override val id = email
     override val title = Text.CharSequence(email)
 }

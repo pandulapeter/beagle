@@ -186,7 +186,7 @@ sealed class ModuleWrapper(
         titleResourceId = R.string.add_module_section_header,
         descriptionResourceId = R.string.add_module_section_header_description,
         module = SectionHeaderModule(title = "Section header"),
-        codeSnippet = "SectionHeaderModule(title = \"Section header\")"
+        codeSnippet = "SectionHeaderModule(\"Section header\")"
     )
 
     class SingleSelectionListWrapper : ModuleWrapper(
@@ -233,7 +233,7 @@ sealed class ModuleWrapper(
         titleResourceId = R.string.add_module_text,
         descriptionResourceId = R.string.add_module_text_description,
         module = TextModule(text = "Text"),
-        codeSnippet = "TextModule(text = \"Text\")"
+        codeSnippet = "TextModule(\"Text\")"
     )
 
     class TextInputWrapper : ModuleWrapper(

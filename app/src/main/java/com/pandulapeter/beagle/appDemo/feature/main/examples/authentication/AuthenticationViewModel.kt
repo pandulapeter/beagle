@@ -26,8 +26,7 @@ class AuthenticationViewModel : ListViewModel<AuthenticationListItem>() {
                 "    val password: String\n" +
                 ") : BeagleListItemContract {\n" +
                 "\n" +
-                "    override val id = email\n" +
-                "    override val title = email\n" +
+                "    override val title = Text.CharSequence(email)\n" +
                 "}"
     )
     private val text3 = TextViewHolder.UiModel(R.string.case_study_authentication_text_3)
