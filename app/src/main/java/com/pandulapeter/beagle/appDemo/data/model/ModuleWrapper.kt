@@ -51,7 +51,11 @@ sealed class ModuleWrapper(
         titleResourceId = R.string.add_module_check_box,
         descriptionResourceId = R.string.add_module_check_box_description,
         module = CheckBoxModule(text = "CheckBox", initialValue = false, onValueChanged = {}),
-        codeSnippet = "CheckBoxModule(text = \"CheckBox\", initialValue = false, onValueChanged = {})"
+        codeSnippet = "CheckBoxModule(\n" +
+                "    text = \"CheckBox\",\n" +
+                "    initialValue = false,\n" +
+                "    onValueChanged = { … }\n" +
+                ")"
     )
 
     class DividerWrapper : ModuleWrapper(
@@ -80,7 +84,7 @@ sealed class ModuleWrapper(
                 "        BeagleListItemContractImplementation(\"Item 2\"),\n" +
                 "        BeagleListItemContractImplementation(\"Item 3\")\n" +
                 "    ),\n" +
-                "    onItemSelected = {}\n" +
+                "    onItemSelected = { … }\n" +
                 ")"
     )
 
@@ -162,7 +166,7 @@ sealed class ModuleWrapper(
                 "        BeagleListItemContractImplementation(\"Checkbox 3\")\n" +
                 "    ),\n" +
                 "    initiallySelectedItemIds = emptySet(),\n" +
-                "    onSelectionChanged = {}\n" +
+                "    onSelectionChanged = { … }\n" +
                 ")"
     )
 
@@ -195,7 +199,7 @@ sealed class ModuleWrapper(
                 "        BeagleListItemContractImplementation(\"Radio button 3\")\n" +
                 "    ),\n" +
                 "    initiallySelectedItemId = null,\n" +
-                "    onSelectionChanged = {}\n" +
+                "    onSelectionChanged = { … }\n" +
                 ")"
     )
 
@@ -203,14 +207,20 @@ sealed class ModuleWrapper(
         titleResourceId = R.string.add_module_slider,
         descriptionResourceId = R.string.add_module_slider_description,
         module = SliderModule(text = { Text.CharSequence("Slider ($it)") }, onValueChanged = {}),
-        codeSnippet = "SliderModule(text = { Text.CharSequence(\"Slider (\$it)\") }, onValueChanged = {})"
+        codeSnippet = "SliderModule(\n" +
+                "    text = { Text.CharSequence(\"Slider (\$it)\") },\n" +
+                "    onValueChanged = { … }\n" +
+                ")"
     )
 
     class SwitchWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_switch,
         descriptionResourceId = R.string.add_module_switch_description,
         module = SwitchModule(text = "Switch", onValueChanged = {}),
-        codeSnippet = "SwitchModule(text = \"Switch\", onValueChanged = {})"
+        codeSnippet = "SwitchModule(\n" +
+                "    text = \"Switch\",\n" +
+                "    onValueChanged = { … }\n" +
+                ")"
     )
 
     class TextNormalWrapper : ModuleWrapper(
@@ -224,21 +234,32 @@ sealed class ModuleWrapper(
         titleResourceId = R.string.add_module_text_section_header,
         descriptionResourceId = R.string.add_module_text_section_header_description,
         module = TextModule(text = "Section header", type = TextModule.Type.SECTION_HEADER),
-        codeSnippet = "TextModule(text = \"Section header\", type = TextModule.Type.SECTION_HEADER)"
+        codeSnippet = "TextModule(\n" +
+                "    text = \"Section header\",\n" +
+                "    type = TextModule.Type.SECTION_HEADER\n" +
+                ")"
     )
 
     class TextButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_text_button,
         descriptionResourceId = R.string.add_module_text_button_description,
         module = TextModule(text = "Button", type = TextModule.Type.BUTTON, onItemSelected = {}),
-        codeSnippet = "TextModule(text = \"Button\", type = TextModule.Type.BUTTON, onItemSelected = {})"
+        codeSnippet = "TextModule(\n" +
+                "    text = \"Button\",\n" +
+                "    type = TextModule.Type.BUTTON,\n" +
+                "    onItemSelected = { … }\n" +
+                ")"
     )
 
     class TextInputWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_text_input,
         descriptionResourceId = R.string.add_module_text_input_description,
         module = TextInputModule(text = { Text.CharSequence("Text input ($it)") }, initialValue = "Hello!", onValueChanged = {}),
-        codeSnippet = "TextInputModule(text = { Text.CharSequence(\"Text input (\$it)\") }, initialValue = \"Hello!\", onValueChanged = {})"
+        codeSnippet = "TextInputModule(\n" +
+                "    text = { Text.CharSequence(\"Text input (\$it)\") },\n" +
+                "    initialValue = \"Hello!\",\n" +
+                "    onValueChanged = { … }\n" +
+                ")"
     )
 
     object AnimationDurationSwitchWrapper : ModuleWrapper(
@@ -314,7 +335,7 @@ sealed class ModuleWrapper(
         titleResourceId = R.string.add_module_lorem_ipsum_generator_button,
         descriptionResourceId = R.string.add_module_lorem_ipsum_generator_button_description,
         module = LoremIpsumGeneratorButtonModule { Beagle.currentActivity?.run { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() } },
-        codeSnippet = "LoremIpsumGeneratorButtonModule { generatedText -> TODO() }"
+        codeSnippet = "LoremIpsumGeneratorButtonModule { generatedText -> … }"
     )
 
     object NetworkLogListWrapper : ModuleWrapper(
