@@ -16,7 +16,7 @@ import com.pandulapeter.beagle.modules.ItemListModule.Companion.DEFAULT_IS_EXPAN
  * @param items - The list of items that should be displayed.
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  * @param id - A unique identifier for the module. [Module.randomId] by default.
- * @param onItemSelected - Callback called when the user selects one of the items, or null to disable selection. The parameter of the lambda function is the selected item. [DEFAULT_IN_ITEM_SELECTED] by default.
+ * @param onItemSelected - Callback invoked when the user selects one of the items, or null to disable selection. The parameter of the lambda function is the selected item. [DEFAULT_IN_ITEM_SELECTED] by default.
  */
 data class ItemListModule<T : BeagleListItemContract>(
     val title: Text,

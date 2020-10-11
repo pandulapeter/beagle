@@ -17,7 +17,7 @@ import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule.Companion
  * @param maximumWordCount - The maximum number of words that will be in the generated text. [DEFAULT_MAXIMUM_WORD_COUNT] by default.
  * @param shouldStartWithLoremIpsum - Whether or not the first two words of the text should be "Lorem Ipsum" (or just "Lorem" in case [maximumWordCount] is 1). [DEFAULT_SHOULD_START_WITH_LOREM_IPSUM] by default.
  * @param shouldGenerateSentence - Whether or not the generated text should be capitalized and end with a period. [DEFAULT_SHOULD_GENERATE_SENTENCE] by default.
- * @param onLoremIpsumReady - Callback called when the user presses the button. It is invoked with the generated String, as its argument.
+ * @param onLoremIpsumReady - Callback invoked when the user presses the button. It is invoked with the generated String, as its argument.
  */
 data class LoremIpsumGeneratorButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),

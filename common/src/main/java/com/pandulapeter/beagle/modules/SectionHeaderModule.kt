@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
  * @param title - The text to display on the label.
  * @param id - A unique identifier for the module. [Module.randomId] by default.
  */
+@Deprecated("Use a TextModule with the TextModule.Type.SECTION_HEADER type instead - this class will be removed.")
 data class SectionHeaderModule(
     val title: Text,
     override val id: String = Module.randomId

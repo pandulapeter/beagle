@@ -1,13 +1,17 @@
 package com.pandulapeter.beagle.modules
 
 import android.os.Build
+import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
+import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.DEFAULT_ICON
+import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.DEFAULT_IS_ENABLED
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.DEFAULT_ON_BUTTON_PRESSED
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.DEFAULT_TEXT
+import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.DEFAULT_TYPE
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 
@@ -23,11 +27,17 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text that should be displayed on the button. [DEFAULT_TEXT] by default.
- * @param onButtonPressed - Callback called when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
+ * @param type - Specify a [TextModule.Type] to apply a specific appearance. [DEFAULT_TYPE] by default.
+ * @param icon - A drawable resource ID that will be tinted and displayed before the text, or null to display no icon. [DEFAULT_ICON] by default.
+ * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
+ * @param onButtonPressed - Callback invoked when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 data class ScreenRecordingButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
+    val type: TextModule.Type = DEFAULT_TYPE, //TODO: Not handled
+    @DrawableRes val icon: Int? = DEFAULT_ICON, //TODO: Not handled
+    val isEnabled: Boolean = DEFAULT_IS_ENABLED, //TODO: Not handled
     val onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
 ) : Module<ScreenRecordingButtonModule> {
 
@@ -36,6 +46,9 @@ data class ScreenRecordingButtonModule(
     companion object {
         const val ID = "screenRecordingButton"
         private const val DEFAULT_TEXT = "Record a video"
+        private val DEFAULT_TYPE = TextModule.Type.BUTTON
+        private val DEFAULT_ICON: Int? = null
+        private const val DEFAULT_IS_ENABLED = true
         private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}
     }
 }
