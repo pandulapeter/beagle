@@ -16,6 +16,10 @@ import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Comp
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_RESET_BUTTON_TEXT
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_SHARE_ERROR_TEXT
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_SHARE_HINT
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_HEADERS
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_NONE
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TIMESTAMP
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE
@@ -34,6 +38,7 @@ import java.util.Locale
  * @param generalTexts - Customize general UI strings, see [GeneralTexts].
  * @param screenCaptureTexts - Customize UI strings related to screen capture, see [ScreenCaptureTexts].
  * @param galleryTexts - Customize UI strings related to the Gallery, see [GalleryTexts].
+ * @param networkLogTexts - Customize UI strings related to the network event detail dialog, see [NetworkLogTexts].
  * @param networkEventTimestampFormatter - The formatter used for displaying the timestamp of network events on the detail dialog. Formats with [BeagleContract.LOG_TIME_FORMAT] by default.
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with [BeagleContract.GALLERY_DATE_FORMAT] by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. [DEFAULT_APPLY_INSETS] by default.
@@ -43,6 +48,7 @@ data class Appearance(
     val generalTexts: GeneralTexts = GeneralTexts(),
     val screenCaptureTexts: ScreenCaptureTexts = ScreenCaptureTexts(),
     val galleryTexts: GalleryTexts = GalleryTexts(),
+    val networkLogTexts: NetworkLogTexts = NetworkLogTexts(),
     val networkEventTimestampFormatter: (Long) -> CharSequence = { DEFAULT_NETWORK_EVENT_DATE_FORMAT.format(it) },
     val galleryTimestampFormatter: ((Long) -> CharSequence)? = { DEFAULT_GALLERY_DATE_FORMAT.format(it) },
     val applyInsets: ((windowInsets: Insets) -> Insets)? = DEFAULT_APPLY_INSETS
@@ -126,6 +132,28 @@ data class Appearance(
             private const val DEFAULT_DELETE_CONFIRMATION_MESSAGE_PLURAL = "Are you sure you want to delete these files?"
             private const val DEFAULT_DELETE_CONFIRMATION_POSITIVE = "Delete"
             private const val DEFAULT_DELETE_CONFIRMATION_NEGATIVE = "Cancel"
+        }
+    }
+
+    /**
+     * Holder for copies related to the network event detail dialog.
+     *
+     * @param headers - The term used for request / response headers. [DEFAULT_HEADERS] by default.
+     * @param none - The term used when the list of headers is empty. [DEFAULT_NONE] by default.
+     * @param timestamp - The term used for the timestamp of the logged event. [DEFAULT_TIMESTAMP] by default.
+     * @param duration - The term used for the duration of the logged event. [DEFAULT_DURATION] by default.
+     */
+    data class NetworkLogTexts(
+        val headers: Text = Text.CharSequence(DEFAULT_HEADERS),
+        val none: Text = Text.CharSequence(DEFAULT_NONE),
+        val timestamp: Text = Text.CharSequence(DEFAULT_TIMESTAMP),
+        val duration: Text = Text.CharSequence(DEFAULT_DURATION)
+    ) {
+        companion object {
+            private const val DEFAULT_HEADERS = "Headers"
+            private const val DEFAULT_NONE = "none"
+            private const val DEFAULT_TIMESTAMP = "Timestamp"
+            private const val DEFAULT_DURATION = "Duration"
         }
     }
 

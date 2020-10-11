@@ -107,7 +107,7 @@
     <string name="case_study_static_data_module_section_header_1">Section headers can be used to separate content, but adding spaces…</string>
     <string name="case_study_static_data_module_text_3">…or dividers…</string>
     <string name="case_study_static_data_module_text_4">…can also be useful.</string>
-    <string name="case_study_static_data_module_text_5">Longer pieces of content can be made expandable.</string>
+    <string name="case_study_static_data_module_text_5">Longer content can be made expandable.</string>
     <string name="case_study_static_data_module_text_6">This helps reduce visual clutter and also acts as a way to organize the debug menu.</string>
     <string name="case_study_static_data_module_text_7">Buttons can be used for actions</string>
     <string name="case_study_static_data_module_text_8">Last but not least, you can display loading indicators as temporary placeholders for parts of the UI that are being loaded asynchronously:</string>

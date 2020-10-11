@@ -50,6 +50,10 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     private var isJsonReady = false
     private var job: Job? = null
     private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
+    private val textHeaders by lazy { context?.text(BeagleCore.implementation.appearance.networkLogTexts.headers) }
+    private val textNone by lazy { context?.text(BeagleCore.implementation.appearance.networkLogTexts.none) }
+    private val textTimestamp by lazy { context?.text(BeagleCore.implementation.appearance.networkLogTexts.timestamp) }
+    private val textDuration by lazy { context?.text(BeagleCore.implementation.appearance.networkLogTexts.duration) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
         .setView(R.layout.beagle_dialog_fragment_network_log_detail)
@@ -93,11 +97,11 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 val title = "${if (arguments?.isOutgoing == true) "↑" else "↓"} ${arguments?.url.orEmpty()}"
                 val text = SpannableString(
                     title
-                        .append("\n\n• Headers:${arguments?.headers?.formatHeaders()}")
+                        .append("\n\n• ${textHeaders}:${arguments?.headers?.formatHeaders()}")
                         .let { text ->
-                            arguments?.timestamp?.let { text.append("\n• Timestamp: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text
+                            arguments?.timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text
                         }
-                        .let { text -> arguments?.duration?.let { text.append("\n• Duration: ${max(0, it)} ms") } ?: text }
+                        .let { text -> arguments?.duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
                         .append("\n\n${arguments?.payload?.formatToJson()}")
                 ).apply { setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE) }
                 launch(Dispatchers.Main) {
@@ -121,7 +125,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
         else -> false
     }
 
-    private fun List<String>?.formatHeaders() = if (isNullOrEmpty()) " [none]" else joinToString("") { header -> "\n    • $header" }
+    private fun List<String>?.formatHeaders() = if (isNullOrEmpty()) " [${textNone}]" else joinToString("") { header -> "\n    • $header" }
 
     private fun shareText() {
         textView.text?.let { text ->
