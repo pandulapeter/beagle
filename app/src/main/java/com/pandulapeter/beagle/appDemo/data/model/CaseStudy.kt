@@ -41,6 +41,11 @@ enum class CaseStudy(
         title = R.string.case_study_overlay_title,
         description = R.string.case_study_overlay_description
     ),
+    NAVIGATION(
+        title = R.string.case_study_navigation_title,
+        description = R.string.case_study_navigation_description,
+        isReady = false
+    ),
     BUG_REPORTER(
         title = R.string.case_study_bug_reporting_tool_title,
         description = R.string.case_study_bug_reporting_tool_description,

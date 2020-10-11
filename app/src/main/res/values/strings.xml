@@ -273,9 +273,13 @@
     <string name="case_study_overlay_text_2">As you can see, the callback also contains information about the root system window insets, these numbers will be 0 on unsupported SDK levels.\n\nTo avoid memory leaks as well as the cumbersome business of manually removing the listener, this implementation is tied to the current Fragment\'s View lifecycle (which means that closing the screen automatically removes the listener).\n\nAny pending changes to this overlay will only take effect after invalidating the current canvas. This can be done using:</string>
     <string name="case_study_overlay_text_3">Multiple <i>OverlayListener</i> implementations can draw on the canvas: invalidating basically invokes all registered listeners in order.\n\nA more useful example of overlay listeners is implemented in the built-in <i>KeylineOverlaySwitch</i> module.</string>
 
+    <!-- Case studies / Navigation -->
+    <string name="case_study_navigation_title">Navigation within the menu</string>
+    <string name="case_study_navigation_description">Create submenus to better organize the modules.</string>
+
     <!-- Case studies / Bug reporting tool -->
     <string name="case_study_bug_reporting_tool_title">Bug reporting tool</string>
-    <string name="case_study_bug_reporting_tool_description">Fetch Beagle, take a screenshot, draw on it, provide additional details, add configurable build and device information and send them to an email address, or create a Jira ticket directly.</string>
+    <string name="case_study_bug_reporting_tool_description">Create useful issue reports with the powerful feature set of the debug menu: attach screenshots, logs, or specific reproduction steps.</string>
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
