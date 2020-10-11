@@ -256,7 +256,6 @@ internal class ListManager {
         refreshCellsInternal(onContentsChanged)
     }
 
-    //TODO: Throw custom exception if no handler is found
     private suspend fun refreshCellsInternal(onContentsChanged: () -> Unit) = withContext(moduleManagerContext) {
         val newCells = synchronized(modules) {
             modules.flatMap { module ->

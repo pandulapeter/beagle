@@ -31,9 +31,9 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  */
 data class ScreenshotButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
-    val type: TextModule.Type = DEFAULT_TYPE, //TODO: Not handled
-    @DrawableRes val icon: Int? = DEFAULT_ICON, //TODO: Not handled
-    val isEnabled: Boolean = DEFAULT_IS_ENABLED, //TODO: Not handled
+    val type: TextModule.Type = DEFAULT_TYPE,
+    @DrawableRes val icon: Int? = DEFAULT_ICON,
+    val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     val onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
 ) : Module<ScreenshotButtonModule> {
 

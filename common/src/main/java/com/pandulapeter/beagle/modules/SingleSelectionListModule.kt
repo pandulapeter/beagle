@@ -15,6 +15,8 @@ import com.pandulapeter.beagle.modules.SingleSelectionListModule.Companion.DEFAU
 /**
  * Displays a list of radio buttons represented by [BeagleListItemContract] instances. Only one item is selected at any given time.
  *
+ * Note: Make sure none of the item ID-s provided is an empty String, it could cause issues.
+ *
  * @param title - The title of the module that will be displayed in the header of the list.
  * @param items - The list of items that should be displayed.
  * @param initiallySelectedItemId - The ID of the item that should be selected initially, or null for no initial selection. If [isValuePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
@@ -81,7 +83,7 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
         onSelectionChanged = onSelectionChanged
     )
 
-    override val initialValue = initiallySelectedItemId.orEmpty() //TODO: Using an empty string is not a great idea, this should be null
+    override val initialValue = initiallySelectedItemId.orEmpty()
     override val onValueChanged: (newValue: String) -> Unit = { newValue -> onSelectionChanged(newValue.toItem()) }
     override val text: (String) -> Text = { title(it.toItem()) }
 

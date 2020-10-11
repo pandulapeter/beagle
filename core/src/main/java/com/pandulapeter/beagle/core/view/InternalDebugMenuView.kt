@@ -99,7 +99,6 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
     }
 
     override fun onContentsChanged() {
-        //TODO: Great job Peter, hope you're proud of yourself.
         val hasPendingChanges = try {
             BeagleCore.implementation.hasPendingUpdates
         } catch (_: ConcurrentModificationException) {

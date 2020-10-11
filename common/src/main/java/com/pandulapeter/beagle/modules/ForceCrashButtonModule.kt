@@ -28,9 +28,9 @@ import com.pandulapeter.beagle.modules.ForceCrashButtonModule.Companion.ID
 data class ForceCrashButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
     val exception: RuntimeException = RuntimeException(DEFAULT_EXCEPTION_MESSAGE),
-    val type: TextModule.Type = DEFAULT_TYPE, //TODO: Not handled
-    @DrawableRes val icon: Int? = DEFAULT_ICON, //TODO: Not handled
-    val isEnabled: Boolean = DEFAULT_IS_ENABLED, //TODO: Not handled
+    val type: TextModule.Type = DEFAULT_TYPE,
+    @DrawableRes val icon: Int? = DEFAULT_ICON,
+    val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     val onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
 ) : Module<ForceCrashButtonModule> {
 

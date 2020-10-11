@@ -9,7 +9,6 @@ import com.pandulapeter.beagle.core.view.OverlayFrameLayout
 
 interface UiManagerContract {
 
-    //TODO: Make sure this doesn't break the focus handling
     fun addOverlayFragment(activity: FragmentActivity) {
         val overlayFragment = findOverlayFragment(activity) ?: OverlayFragment.newInstance()
         activity.supportFragmentManager

@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.modules
 import androidx.annotation.DrawableRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.DEFAULT_ICON
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.DEFAULT_IS_ENABLED
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.DEFAULT_ON_BUTTON_PRESSED
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.DEFAULT_SHOULD_OPEN_IN_NEW_TASK
@@ -26,9 +27,9 @@ import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 data class AppInfoButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
     val shouldOpenInNewTask: Boolean = DEFAULT_SHOULD_OPEN_IN_NEW_TASK,
-    val type: TextModule.Type = DEFAULT_TYPE, //TODO: Not handled
-    @DrawableRes val icon: Int? = DEFAULT_ICON, //TODO: Not handled
-    val isEnabled: Boolean = DEFAULT_IS_ENABLED, //TODO: Not handled
+    val type: TextModule.Type = DEFAULT_TYPE,
+    @DrawableRes val icon: Int? = DEFAULT_ICON,
+    val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     val onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
 ) : Module<AppInfoButtonModule> {
 

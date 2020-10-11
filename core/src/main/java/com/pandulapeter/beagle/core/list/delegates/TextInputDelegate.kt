@@ -31,6 +31,8 @@ internal class TextInputDelegate : ValueWrapperModuleDelegate.String<TextInputMo
                 id = module.id,
                 text = if (module.shouldRequireConfirmation && hasPendingChanges(module)) module.text(getUiValue(module)).withSuffix("*") else module.text(getUiValue(module)),
                 isEnabled = module.isEnabled,
+                isSectionHeader = false,
+                icon = null,
                 onItemSelected = {
                     BeagleCore.implementation.currentActivity?.applyTheme()?.run {
                         AlertDialog.Builder(this)

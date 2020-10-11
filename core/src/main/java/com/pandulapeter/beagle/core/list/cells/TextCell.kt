@@ -1,8 +1,10 @@
 package com.pandulapeter.beagle.core.list.cells
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
@@ -14,6 +16,8 @@ internal data class TextCell(
     override val id: String,
     private val text: Text,
     private val isEnabled: Boolean,
+    private val isSectionHeader: Boolean,
+    @DrawableRes private val icon: Int?, //TODO: Not handled.
     val onItemSelected: (() -> Unit)?
 ) : Cell<TextCell> {
 
@@ -30,6 +34,7 @@ internal data class TextCell(
             setText(model.text)
             isEnabled = model.isEnabled
             alpha = if (model.isEnabled) 1f else 0.6f
+            setTypeface(null, if (model.isSectionHeader) Typeface.BOLD else Typeface.NORMAL)
             model.onItemSelected.let { onItemSelected ->
                 if (onItemSelected == null) {
                     setOnClickListener(null)

@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.list.cells
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
@@ -13,7 +14,9 @@ import com.pandulapeter.beagle.core.util.extension.setText
 internal data class ButtonCell(
     override val id: String,
     private val text: Text,
-    private val onButtonPressed: () -> Unit
+    private val isEnabled: Boolean,
+    @DrawableRes private val icon: Int?, //TODO: Not handled.
+    private val onButtonPressed: (() -> Unit)?
 ) : Cell<ButtonCell> {
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<ButtonCell>() {
@@ -27,13 +30,15 @@ internal data class ButtonCell(
 
         override fun bind(model: ButtonCell) = button.run {
             setText(model.text)
-            itemView.setOnClickListener {
+            setOnClickListener {
                 adapterPosition.let { bindingAdapterPosition ->
                     if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                        model.onButtonPressed()
+                        model.onButtonPressed?.invoke()
                     }
                 }
             }
+            isClickable = model.onButtonPressed != null
+            isEnabled = model.isEnabled
         }
     }
 }

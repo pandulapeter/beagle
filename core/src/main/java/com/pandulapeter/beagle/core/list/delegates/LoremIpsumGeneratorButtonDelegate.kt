@@ -3,17 +3,20 @@ package com.pandulapeter.beagle.core.list.delegates
 import android.annotation.SuppressLint
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.core.list.cells.ButtonCell
+import com.pandulapeter.beagle.core.util.createTextModuleFromType
 import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
 import kotlin.random.Random
 
 internal class LoremIpsumGeneratorButtonDelegate : Module.Delegate<LoremIpsumGeneratorButtonModule> {
 
-    override fun createCells(module: LoremIpsumGeneratorButtonModule): List<Cell<*>> = listOf<Cell<*>>(
-        ButtonCell(
+    override fun createCells(module: LoremIpsumGeneratorButtonModule): List<Cell<*>> = listOf(
+        createTextModuleFromType(
+            type = module.type,
             id = module.id,
             text = module.text,
-            onButtonPressed = {
+            isEnabled = module.isEnabled,
+            icon = module.icon,
+            onItemSelected = {
                 module.onLoremIpsumReady(
                     generateText(
                         minimumWordCount = module.minimumWordCount,

@@ -22,9 +22,9 @@ import com.pandulapeter.beagle.modules.TextModule.Type
  */
 data class TextModule(
     val text: Text,
-    val type: Type = DEFAULT_TYPE, //TODO: Not handled
-    @DrawableRes val icon: Int? = DEFAULT_ICON, //TODO: Not handled
-    val isEnabled: Boolean = DEFAULT_IS_ENABLED, //TODO: Not handled
+    val type: Type = DEFAULT_TYPE,
+    @DrawableRes val icon: Int? = DEFAULT_ICON,
+    val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     override val id: String = Module.randomId,
     val onItemSelected: (() -> Unit)? = DEFAULT_ON_ITEM_SELECTED
 ) : Module<TextModule> {
