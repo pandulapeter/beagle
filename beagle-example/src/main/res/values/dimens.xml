@@ -1,6 +1,0 @@
-<resources>
-
-    <dimen name="content_padding">8dp</dimen>
-    <dimen name="large_content_padding">16dp</dimen>
-
-</resources>

@@ -3,8 +3,6 @@
 
 <img src="metadata/logo.png" width="20%" />
 
-**WARNING! The library underwent a complete rewrite with version 2.0.0. [Click here](https://github.com/pandulapeter/beagle/blob/master/metadata/README_DEPRECATED.md) to see the readme file for the old version, or check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md) if you're ready to upgrade.**
-
 ## See it in action
 Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:
 
@@ -49,7 +47,7 @@ So for example if you prefer the Drawer UI, something like the following needs t
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.0.5"
+    def beagleVersion = "2.1.0"
     debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }

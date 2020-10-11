@@ -1,7 +1,7 @@
 buildscript {
     ext {
         libraryGroup = "com.github.pandulapeter.beagle"
-        libraryVersion = "2.0.6"
+        libraryVersion = "2.1.0"
         libraryMinimumSdkVersion = 16
         libraryCompileSdkVersion = 30
         libraryTargetSdkVersion = 30
@@ -18,7 +18,7 @@ buildscript {
         moshiVersion = "1.9.3"
         okHttpVersion = "4.8.1"
         ktorVersion = "1.4.0"
-        coilVersion = "1.0.0-rc1"
+        coilVersion = "1.0.0-rc3"
         leakCanaryVersion= "2.2"
     }
     repositories {

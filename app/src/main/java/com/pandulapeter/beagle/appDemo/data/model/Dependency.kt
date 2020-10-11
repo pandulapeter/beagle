@@ -74,7 +74,7 @@ enum class Dependency(
         copyright = "Copyright 2013, Square Inc.",
         url = "https://square.github.io/retrofit/"
     ),
-    OKHTTP(
+    OK_HTTP(
         type = Type.APACHE_V2,
         title = "OkHttp",
         copyright = "Copyright 2019, Square Inc.",
