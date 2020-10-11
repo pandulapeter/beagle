@@ -54,6 +54,10 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
                         "    TextModule(\"…\"),\n" +
                         "    TextModule(\n" +
                         "        text = \"…\",\n" +
+                        "        icon = R.drawable.…" +
+                        "    ),\n" +
+                        "    TextModule(\n" +
+                        "        text = \"…\",\n" +
                         "        type = TextModule.Type.SECTION_HEADER\n" +
                         "    ),\n" +
                         "    LongTextModule(\n" +

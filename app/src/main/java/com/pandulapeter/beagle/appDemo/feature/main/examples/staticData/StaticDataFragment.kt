@@ -35,15 +35,16 @@ class StaticDataFragment : ExamplesDetailFragment<StaticDataViewModel, ListItem>
             text = "Built on ${BuildConfig.BUILD_DATE}\n"
         ),
         createTextModule(R.string.case_study_static_data_module_text_1),
-        createLongTextModule(R.string.case_study_static_data_module_text_4, R.string.case_study_static_data_module_text_5),
-        createSectionHeaderModule(R.string.case_study_static_data_module_label_1),
+        createTextModule(R.string.case_study_static_data_module_text_2, icon = R.drawable.ic_examples),
+        createLongTextModule(R.string.case_study_static_data_module_text_5, R.string.case_study_static_data_module_text_6),
+        createSectionHeaderModule(R.string.case_study_static_data_module_section_header_1),
         PaddingModule(),
         PaddingModule(),
         PaddingModule(),
         PaddingModule(),
-        createTextModule(R.string.case_study_static_data_module_text_2),
-        DividerModule(id = "divider"),
         createTextModule(R.string.case_study_static_data_module_text_3),
+        DividerModule(id = "divider"),
+        createTextModule(R.string.case_study_static_data_module_text_4),
         KeyValueListModule(
             id = "keyValueList",
             title = getText(R.string.case_study_static_data_module_key_value_title),
@@ -53,8 +54,8 @@ class StaticDataFragment : ExamplesDetailFragment<StaticDataViewModel, ListItem>
                 getText(R.string.case_study_static_data_module_key_3) to getText(R.string.case_study_static_data_module_value_3)
             )
         ),
-        createButtonModule(R.string.case_study_static_data_module_text_6, ::onButtonClicked),
-        createTextModule(R.string.case_study_static_data_module_text_7),
+        createButtonModule(R.string.case_study_static_data_module_text_7, ::onButtonClicked),
+        createTextModule(R.string.case_study_static_data_module_text_8),
         PaddingModule(),
         LoadingIndicatorModule()
     )

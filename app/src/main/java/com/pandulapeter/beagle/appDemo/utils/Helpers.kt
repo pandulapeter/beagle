@@ -1,15 +1,18 @@
 package com.pandulapeter.beagle.appDemo.utils
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.modules.LongTextModule
 import com.pandulapeter.beagle.modules.TextModule
 
 fun createTextModule(
     @StringRes textResourceId: Int,
+    @DrawableRes icon: Int? = null,
     id: String = "text_$textResourceId"
 ) = TextModule(
     id = id,
-    text = textResourceId
+    text = textResourceId,
+    icon = icon
 )
 
 fun createSectionHeaderModule(
