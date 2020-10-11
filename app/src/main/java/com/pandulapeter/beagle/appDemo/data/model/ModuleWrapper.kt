@@ -11,7 +11,6 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
-import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
@@ -33,7 +32,6 @@ import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
-import com.pandulapeter.beagle.modules.SectionHeaderModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
 import com.pandulapeter.beagle.modules.SliderModule
 import com.pandulapeter.beagle.modules.SwitchModule
@@ -48,13 +46,6 @@ sealed class ModuleWrapper(
     val codeSnippet: String
 ) {
     val id get() = module.id
-
-    class ButtonWrapper : ModuleWrapper(
-        titleResourceId = R.string.add_module_button,
-        descriptionResourceId = R.string.add_module_button_description,
-        module = ButtonModule(text = "Button", onButtonPressed = {}),
-        codeSnippet = "ButtonModule(text = \"Button\", onButtonPressed = {})"
-    )
 
     class CheckBoxWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_check_box,
@@ -182,13 +173,6 @@ sealed class ModuleWrapper(
         codeSnippet = "PaddingModule()"
     )
 
-    class SectionHeaderWrapper : ModuleWrapper(
-        titleResourceId = R.string.add_module_section_header,
-        descriptionResourceId = R.string.add_module_section_header_description,
-        module = SectionHeaderModule(title = "Section header"),
-        codeSnippet = "SectionHeaderModule(\"Section header\")"
-    )
-
     class SingleSelectionListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_single_selection_list,
         descriptionResourceId = R.string.add_module_single_selection_list_description,
@@ -229,11 +213,25 @@ sealed class ModuleWrapper(
         codeSnippet = "SwitchModule(text = \"Switch\", onValueChanged = {})"
     )
 
-    class TextWrapper : ModuleWrapper(
+    class TextNormalWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_text,
         descriptionResourceId = R.string.add_module_text_description,
         module = TextModule(text = "Text"),
         codeSnippet = "TextModule(\"Text\")"
+    )
+
+    class TextSectionHeaderWrapper : ModuleWrapper(
+        titleResourceId = R.string.add_module_text_section_header,
+        descriptionResourceId = R.string.add_module_text_section_header_description,
+        module = TextModule(text = "Section header", type = TextModule.Type.SECTION_HEADER),
+        codeSnippet = "TextModule(text = \"Section header\", type = TextModule.Type.SECTION_HEADER)"
+    )
+
+    class TextButtonWrapper : ModuleWrapper(
+        titleResourceId = R.string.add_module_text_button,
+        descriptionResourceId = R.string.add_module_text_button_description,
+        module = TextModule(text = "Button", type = TextModule.Type.BUTTON, onItemSelected = {}),
+        codeSnippet = "TextModule(text = \"Button\", type = TextModule.Type.BUTTON, onItemSelected = {})"
     )
 
     class TextInputWrapper : ModuleWrapper(

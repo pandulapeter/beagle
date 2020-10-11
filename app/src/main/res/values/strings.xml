@@ -286,8 +286,6 @@
     <!-- Add module -->
     <string name="add_module_title">Add new module</string>
     <string name="add_module_generic_modules"><b>Generic modules</b>\nAny number of instances can be added</string>
-    <string name="add_module_button">Button</string>
-    <string name="add_module_button_description">Displays a simple button.</string>
     <string name="add_module_check_box">CheckBox</string>
     <string name="add_module_check_box_description">Displays a simple check box.</string>
     <string name="add_module_divider">Divider</string>
@@ -296,8 +294,6 @@
     <string name="add_module_item_list_description">Displays a list of simple items represented by [BeagleListItemContract].</string>
     <string name="add_module_key_value_list">KeyValueList</string>
     <string name="add_module_key_value_list_description">Displays a list of key-value pairs that can be collapsed into a header.</string>
-    <string name="add_module_section_header">SectionHeader</string>
-    <string name="add_module_section_header_description">Displays a section header label.</string>
     <string name="add_module_lifecycle_log_list">LifecycleLogList</string>
     <string name="add_module_lifecycle_log_list_description">Logs Fragment and Activity lifecycle events. Useful for getting to know the navigational classes on a new project or debugging lifecycle / state restoration issues.</string>
     <string name="add_module_loading_indicator">LoadingIndicator</string>
@@ -318,8 +314,12 @@
     <string name="add_module_slider_description">Allows the user to adjust a numeric value.</string>
     <string name="add_module_switch">Switch</string>
     <string name="add_module_switch_description">Displays a simple switch.</string>
-    <string name="add_module_text">Text</string>
+    <string name="add_module_text">Text (normal)</string>
     <string name="add_module_text_description">Displays a piece of text. Can be used for click handling as well.</string>
+    <string name="add_module_text_section_header">Text (section header)</string>
+    <string name="add_module_text_section_header_description">Displays a section header label.</string>
+    <string name="add_module_text_button">Text (button)</string>
+    <string name="add_module_text_button_description">Displays a simple button.</string>
     <string name="add_module_text_input">TextInput</string>
     <string name="add_module_text_input_description">Allows the user to enter a text value.</string>
     <string name="add_module_unique_modules"><b>Unique modules</b>\nOnly a single instance can be added</string>

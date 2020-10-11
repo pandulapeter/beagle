@@ -17,12 +17,10 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
     override val items: LiveData<List<AddModuleListItem>> = MutableLiveData(
         mutableListOf<AddModuleListItem>().apply {
             add(TextViewHolder.UiModel(R.string.add_module_generic_modules))
-            add(createModuleUiModel(ModuleWrapper.ButtonWrapper()))
             add(createModuleUiModel(ModuleWrapper.CheckBoxWrapper()))
             add(createModuleUiModel(ModuleWrapper.DividerWrapper()))
             add(createModuleUiModel(ModuleWrapper.ItemListWrapper()))
             add(createModuleUiModel(ModuleWrapper.KeyValueListWrapper()))
-            add(createModuleUiModel(ModuleWrapper.SectionHeaderWrapper()))
             add(createModuleUiModel(ModuleWrapper.LoadingIndicatorWrapper()))
             add(createModuleUiModel(ModuleWrapper.LogListWrapper()))
             add(createModuleUiModel(ModuleWrapper.LongTextWrapper()))
@@ -31,7 +29,9 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.SingleSelectionListWrapper()))
             add(createModuleUiModel(ModuleWrapper.SliderWrapper()))
             add(createModuleUiModel(ModuleWrapper.SwitchWrapper()))
-            add(createModuleUiModel(ModuleWrapper.TextWrapper()))
+            add(createModuleUiModel(ModuleWrapper.TextNormalWrapper()))
+            add(createModuleUiModel(ModuleWrapper.TextSectionHeaderWrapper()))
+            add(createModuleUiModel(ModuleWrapper.TextButtonWrapper()))
             add(createModuleUiModel(ModuleWrapper.TextInputWrapper()))
             add(TextViewHolder.UiModel(R.string.add_module_unique_modules))
             add(createModuleUiModel(ModuleWrapper.AnimationDurationSwitchWrapper))
