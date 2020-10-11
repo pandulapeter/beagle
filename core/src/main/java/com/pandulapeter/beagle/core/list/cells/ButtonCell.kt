@@ -10,6 +10,8 @@ import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.setText
+import com.pandulapeter.beagle.utils.extensions.dimension
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal data class ButtonCell(
     override val id: String,
@@ -27,9 +29,20 @@ internal data class ButtonCell(
     private class ButtonViewHolder(parent: ViewGroup) : ViewHolder<ButtonCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_button, parent, false)) {
 
         private val button = itemView.findViewById<Button>(R.id.beagle_button)
+        private val normalHorizontalPadding = itemView.context.dimension(R.dimen.beagle_item_horizontal_margin)
+        private val iconHorizontalPadding = itemView.context.dimension(R.dimen.beagle_content_padding_small)
+        private val drawablePadding = itemView.context.dimension(R.dimen.beagle_medium_content_padding)
 
         override fun bind(model: ButtonCell) = button.run {
             setText(model.text)
+            setCompoundDrawablesWithIntrinsicBounds(model.icon?.let { icon -> context.tintedDrawable(icon, textColors.defaultColor) }, null, null, null)
+            setPadding(
+                if (model.icon == null) normalHorizontalPadding else iconHorizontalPadding,
+                paddingTop,
+                normalHorizontalPadding,
+                paddingBottom
+            )
+            compoundDrawablePadding = drawablePadding
             setOnClickListener {
                 adapterPosition.let { bindingAdapterPosition ->
                     if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
