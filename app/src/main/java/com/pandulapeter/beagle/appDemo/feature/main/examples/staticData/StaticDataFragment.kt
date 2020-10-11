@@ -1,13 +1,15 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.staticData
 
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
-import com.pandulapeter.beagle.appDemo.utils.createSectionHeaderModule
+import com.pandulapeter.beagle.appDemo.utils.createButtonModule
 import com.pandulapeter.beagle.appDemo.utils.createLongTextModule
+import com.pandulapeter.beagle.appDemo.utils.createSectionHeaderModule
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.DividerModule
@@ -51,10 +53,13 @@ class StaticDataFragment : ExamplesDetailFragment<StaticDataViewModel, ListItem>
                 getText(R.string.case_study_static_data_module_key_3) to getText(R.string.case_study_static_data_module_value_3)
             )
         ),
-        createTextModule(R.string.case_study_static_data_module_text_6),
+        createButtonModule(R.string.case_study_static_data_module_text_6, ::onButtonClicked),
+        createTextModule(R.string.case_study_static_data_module_text_7),
         PaddingModule(),
         LoadingIndicatorModule()
     )
+
+    private fun onButtonClicked() = Toast.makeText(requireContext(), R.string.case_study_static_data_button_clicked, Toast.LENGTH_SHORT).show()
 
     companion object {
         fun newInstance() = StaticDataFragment()

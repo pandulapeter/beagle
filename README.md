@@ -99,17 +99,17 @@ Beagle.set(
     AppInfoButtonModule(),
     DeveloperOptionsButtonModule(),
     PaddingModule(),
-    SectionHeaderModule("General"),
+    TextModule("General", TextModule.Type.SECTION_HEADER),
     KeylineOverlaySwitchModule(),
     AnimationDurationSwitchModule(),
     ScreenCaptureToolboxModule(),
     DividerModule(),
-    SectionHeaderModule("Logs"),
+    TextModule("Logs", TextModule.Type.SECTION_HEADER),
     NetworkLogListModule(), // Might require additional setup, see below
     LogListModule(), // Might require additional setup, see below
     LifecycleLogListModule(),
     DividerModule(),
-    SectionHeaderModule("Other"),
+    TextModule("Other", TextModule.Type.SECTION_HEADER),
     DeviceInfoModule()
 )
 ```

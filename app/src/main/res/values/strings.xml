@@ -91,11 +91,9 @@
     <string name="case_study_static_data_header_3">The last line uses a custom build config field:</string>
     <string name="case_study_static_data_header_4">A setup like this is usually a good candidate for the first item of the debug menu as it displays all the important metadata about the build at a glance.</string>
     <string name="case_study_static_data_text_1"><b>Text</b></string>
-    <string name="case_study_static_data_text_2">One of the simplest modules, displaying just a piece of text. Please note that all modules that deal with text drawn on the UI expect <i>CharSequence</i> instead of <i>String</i>. As a result, while Strings are perfectly fine, spannables can also be used to spice things up with special formatting.\n\nResource ID integers are also accepted for all modules, as they have the advantage of being translatable if needed.</string>
+    <string name="case_study_static_data_text_2">The <i>TextModule</i> can be used to display normal texts, section headers, or buttons, by setting the <i>type</i> parameter (which defaults to normal: no special formatting). It also supports disabled state (through the <i>isEnabled</i> parameter), optional icons (<i>icon</i> parameter) and click handling (via <i>onItemSelected</i> - if this lambda function is null, the module is not clickable).\n\nPlease note that all modules that deal with text drawn on the UI expect <i>CharSequence</i> instead of <i>String</i>. As a result, while Strings are perfectly fine, Spannables can also be used to spice things up with special formatting.\n\nResource ID integers are also accepted for all modules, as they have the advantage of being translatable if needed.</string>
     <string name="case_study_static_data_long_text_1"><b>LongText</b></string>
-    <string name="case_study_static_data_long_text_2">Similar to TextModule, but the main content (<i>text</i> parameter) can be collapsed into a header (<i>title</i> parameter). The <i>isExpandedInitially</i> parameter can be used to specify whether or not the content should be expanded the first time the user opens the debug menu.</string>
-    <string name="case_study_static_data_section_header_1"><b>SectionHeader</b></string>
-    <string name="case_study_static_data_section_header_2">Basically a TextModule with bold formatting, where the <i>text</i> parameter has been renamed to <i>title</i>.</string>
+    <string name="case_study_static_data_long_text_2">Similar to TextModule, but the main content (<i>text</i> parameter) can be collapsed into a header (<i>title</i> parameter), and no special formatting types are available in this case. The <i>isExpandedInitially</i> parameter can be used to specify whether or not the content should be expanded the first time the user opens the debug menu.</string>
     <string name="case_study_static_data_padding_1"><b>Padding</b></string>
     <string name="case_study_static_data_padding_2">Adds 8dp of empty space to the debug menu. Feel free to add more than one instances if more space is needed.</string>
     <string name="case_study_static_data_divider_1"><b>Divider</b></string>
@@ -110,7 +108,8 @@
     <string name="case_study_static_data_module_text_3">…can also be useful.</string>
     <string name="case_study_static_data_module_text_4">Longer pieces of content can be made expandable.</string>
     <string name="case_study_static_data_module_text_5">This helps reduce visual clutter and also acts as a way to organize the debug menu.</string>
-    <string name="case_study_static_data_module_text_6">Last but not least, you can display loading indicators as temporary placeholders for parts of the UI that are being loaded asynchronously:</string>
+    <string name="case_study_static_data_module_text_6">Buttons can be used for actions</string>
+    <string name="case_study_static_data_module_text_7">Last but not least, you can display loading indicators as temporary placeholders for parts of the UI that are being loaded asynchronously:</string>
     <string name="case_study_static_data_module_key_value_title">Another way to display information is to group it into key-value pairs.</string>
     <string name="case_study_static_data_module_key_1">Key 1</string>
     <string name="case_study_static_data_module_value_1">Value 1</string>
@@ -118,6 +117,7 @@
     <string name="case_study_static_data_module_value_2">Value 2</string>
     <string name="case_study_static_data_module_key_3">Key 3</string>
     <string name="case_study_static_data_module_value_3">Value 3</string>
+    <string name="case_study_static_data_button_clicked">Button clicked</string>
 
     <!-- Case studies / Value wrappers -->
     <string name="case_study_value_wrappers_title">Value wrappers</string>

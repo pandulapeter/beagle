@@ -24,9 +24,6 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
-import com.pandulapeter.beagle.modules.LongTextModule
-import com.pandulapeter.beagle.modules.SectionHeaderModule
-import com.pandulapeter.beagle.modules.TextModule
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)!!
@@ -107,29 +104,3 @@ var View.visible
     set(value) {
         visibility = if (value) View.VISIBLE else View.GONE
     }
-
-fun Fragment.createTextModule(
-    @StringRes textResourceId: Int,
-    id: String = "text_$textResourceId"
-) = TextModule(
-    id = id,
-    text = getText(textResourceId)
-)
-
-fun Fragment.createLongTextModule(
-    @StringRes titleResourceId: Int,
-    @StringRes textResourceId: Int,
-    id: String = "text_$textResourceId"
-) = LongTextModule(
-    id = id,
-    title = getText(titleResourceId),
-    text = getText(textResourceId)
-)
-
-fun Fragment.createSectionHeaderModule(
-    @StringRes titleResourceId: Int,
-    id: String = "sectionHeader_$titleResourceId"
-) = SectionHeaderModule(
-    id = id,
-    title = getText(titleResourceId)
-)
