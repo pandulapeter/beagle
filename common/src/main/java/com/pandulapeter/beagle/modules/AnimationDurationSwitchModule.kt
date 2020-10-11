@@ -2,6 +2,12 @@ package com.pandulapeter.beagle.modules
 
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
+import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.DEFAULT_INITIAL_VALUE
+import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.DEFAULT_IS_ENABLED
+import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.DEFAULT_IS_VALUE_PERSISTED
+import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.DEFAULT_MULTIPLIER
+import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.DEFAULT_ON_VALUE_CHANGED
+import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.DEFAULT_TEXT
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 
 /**
@@ -9,28 +15,32 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
  *
  * This module can only be added once. It uses the value of [ID] as id.
  *
- * @param text - The text to display on the switch. Optional, "Slow down animations" by default.
- * @param multiplier - The multiplier that should be applied for all animation durations. Optional, 4f by default.
- * @param initialValue - Whether or not the switch is checked initially. Optional, false by default. If [isValuePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched.
- * @param isEnabled - Can be used to enable or disable all user interaction with the module. Optional, true by default.
- * @param isValuePersisted - Can be used to enable or disable persisting the value on the local storage. Optional, false by default.
- * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. Optional, empty implementation by default.
+ * @param text - The text to display on the switch. The argument of the lambda function is the current value. [DEFAULT_TEXT] by default.
+ * @param multiplier - The multiplier that should be applied for all animation durations. [DEFAULT_MULTIPLIER] by default.
+ * @param initialValue - Whether or not the switch is checked initially. If [isValuePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched. [DEFAULT_INITIAL_VALUE] by default.
+ * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
+ * @param isValuePersisted - Can be used to enable or disable persisting the value on the local storage. [DEFAULT_IS_VALUE_PERSISTED] by default.
+ * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. [DEFAULT_ON_VALUE_CHANGED] by default.
  */
 data class AnimationDurationSwitchModule(
-    override val text: (Boolean) -> Text = { Text.CharSequence("Slow down animations") },
-    val multiplier: Float = 4f,
-    override val initialValue: Boolean = false,
-    override val isValuePersisted: Boolean = false,
-    override val isEnabled: Boolean = true,
-    override val onValueChanged: (Boolean) -> Unit = {}
+    override val text: (Boolean) -> Text = { Text.CharSequence(DEFAULT_TEXT) },
+    val multiplier: Float = DEFAULT_MULTIPLIER,
+    override val initialValue: Boolean = DEFAULT_INITIAL_VALUE,
+    override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
+    override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+    override val onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<Boolean, AnimationDurationSwitchModule> {
 
     override val id: String = ID
     override val shouldRequireConfirmation = false
 
-    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
-
     companion object {
         const val ID = "animationDurationSwitch"
+        private const val DEFAULT_TEXT = "Slow down animations"
+        private const val DEFAULT_MULTIPLIER = 4f
+        private const val DEFAULT_INITIAL_VALUE = false
+        private const val DEFAULT_IS_ENABLED = true
+        private const val DEFAULT_IS_VALUE_PERSISTED = false
+        private val DEFAULT_ON_VALUE_CHANGED: (Boolean) -> Unit = {}
     }
 }

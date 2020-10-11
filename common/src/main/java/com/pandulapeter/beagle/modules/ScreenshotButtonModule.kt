@@ -3,6 +3,8 @@ package com.pandulapeter.beagle.modules
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
+import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.DEFAULT_ON_BUTTON_PRESSED
+import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.DEFAULT_TEXT
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 
 
@@ -16,19 +18,19 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  *
  * This module can only be added once. It uses the value of [ID] as id.
  *
- * @param text - The text that should be displayed on the button. "Take a screenshot" by default.
- * @param onButtonPressed - Callback called when the user presses the button. Optional, empty implementation by default.
+ * @param text - The text that should be displayed on the button. [DEFAULT_TEXT] by default.
+ * @param onButtonPressed - Callback called when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
  */
 data class ScreenshotButtonModule(
-    val text: CharSequence = "Take a screenshot",
-    val onButtonPressed: () -> Unit = {}
+    val text: CharSequence = DEFAULT_TEXT,
+    val onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
 ) : Module<ScreenshotButtonModule> {
 
     override val id: String = ID
 
-    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
-
     companion object {
         const val ID = "screenshotButton"
+        private const val DEFAULT_TEXT = "Take a screenshot"
+        private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}
     }
 }

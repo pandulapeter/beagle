@@ -4,26 +4,31 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
-import java.util.UUID
+import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.modules.ItemListModule.Companion.DEFAULT_IN_ITEM_SELECTED
+import com.pandulapeter.beagle.modules.ItemListModule.Companion.DEFAULT_IS_EXPANDED_INITIALLY
 
 /**
  * Displays a list of simple items represented by [BeagleListItemContract].
  *
  * @param title - The title of the module that will be displayed in the header of the list.
  * @param items - The list of items that should be displayed.
- * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. Optional, false by default.
- * @param id - A unique identifier for the module. Optional, random string by default.
- * @param onItemSelected - Callback called when the user selects one of the items. The parameter is the selected item. Optional, null by default.
+ * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
+ * @param id - A unique identifier for the module. [Module.randomId] by default.
+ * @param onItemSelected - Callback called when the user selects one of the items, or null to disable selection. The parameter of the lambda function is the selected item. [DEFAULT_IN_ITEM_SELECTED] by default.
  */
 data class ItemListModule<T : BeagleListItemContract>(
     val title: Text,
     val items: List<T>,
-    override val isExpandedInitially: Boolean = false,
-    override val id: String = UUID.randomUUID().toString(),
-    val onItemSelected: ((item: T) -> Unit)? = null
+    override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
+    override val id: String = Module.randomId,
+    val onItemSelected: ((item: T) -> Unit)? = DEFAULT_IN_ITEM_SELECTED
 ) : ExpandableModule<ItemListModule<T>> {
 
-    override fun getInternalTitle(beagle: BeagleContract) = title
+    override fun getHeaderTitle(beagle: BeagleContract) = title
 
-    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
+    companion object {
+        private const val DEFAULT_IS_EXPANDED_INITIALLY = false
+        private val DEFAULT_IN_ITEM_SELECTED = null
+    }
 }

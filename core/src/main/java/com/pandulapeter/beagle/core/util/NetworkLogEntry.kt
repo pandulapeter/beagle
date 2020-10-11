@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.core.util
 
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
-import java.util.UUID
+import com.pandulapeter.beagle.common.contracts.module.Module
 
 internal data class NetworkLogEntry(
     val isOutgoing: Boolean,
@@ -14,5 +14,5 @@ internal data class NetworkLogEntry(
 ) : BeagleListItemContract {
 
     override val title = Text.CharSequence(url)
-    override val id: String = UUID.randomUUID().toString()
+    override val id: String = Module.randomId
 }

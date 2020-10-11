@@ -3,8 +3,11 @@ package com.pandulapeter.beagle.modules
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
+import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.DEFAULT_ON_BUTTON_PRESSED
+import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.DEFAULT_TEXT
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 
@@ -19,20 +22,20 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  *
  * This module can only be added once. It uses the value of [ID] as id.
  *
- * @param text - The text that should be displayed on the button. "Record a video" by default.
- * @param onButtonPressed - Callback called when the user presses the button. Optional, empty implementation by default.
+ * @param text - The text that should be displayed on the button. [DEFAULT_TEXT] by default.
+ * @param onButtonPressed - Callback called when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 data class ScreenRecordingButtonModule(
-    val text: CharSequence = "Record a video",
-    val onButtonPressed: () -> Unit = {}
+    val text: Text = Text.CharSequence(DEFAULT_TEXT),
+    val onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
 ) : Module<ScreenRecordingButtonModule> {
 
     override val id: String = ID
 
-    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
-
     companion object {
         const val ID = "screenRecordingButton"
+        private const val DEFAULT_TEXT = "Record a video"
+        private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}
     }
 }

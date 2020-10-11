@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.common.contracts.module
 
 import androidx.annotation.RestrictTo
+import java.util.UUID
 
 /**
  * All Beagle modules must implement this interface. Modules are lightweight classes containing the parameters needed from the consumer.
@@ -16,8 +17,10 @@ interface Module<M : Module<M>> {
 
     /**
      * For every custom module a custom [Delegate] needs to be registered. Built-in modules use a different mechanism to achieve an empty implementation in the noop variant.
+     *
+     * This should always be overridden for custom modules.
      */
-    fun createModuleDelegate(): Delegate<M>
+    fun createModuleDelegate(): Delegate<M> = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 
     /**
      * Derived classes are encouraged to be data classes.
@@ -48,5 +51,9 @@ interface Module<M : Module<M>> {
         @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
         @Suppress("UNCHECKED_CAST")
         fun forceCreateCells(module: Module<*>) = createCells(module as M)
+    }
+
+    companion object {
+        val randomId get() = UUID.randomUUID().toString()
     }
 }

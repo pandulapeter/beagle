@@ -37,7 +37,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
 
     fun MutableList<Cell<*>>.addItems(module: M)
 
-    fun getTitle(module: M): Text = module.getInternalTitle(BeagleCore.implementation)
+    fun getTitle(module: M): Text = module.getHeaderTitle(BeagleCore.implementation)
 
     private var ExpandableModule<M>.isExpanded: Boolean
         get() = BeagleCore.implementation.memoryStorageManager.booleans[id] ?: isExpandedInitially

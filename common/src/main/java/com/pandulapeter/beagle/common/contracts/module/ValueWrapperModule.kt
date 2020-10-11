@@ -47,10 +47,11 @@ interface ValueWrapperModule<T, M : Module<M>> : Module<M> {
 
     /**
      * For every custom module a custom [Delegate] needs to be registered. Built-in modules use a different mechanism to achieve an empty implementation in the noop variant.
+     *
+     * This should always be overridden for custom modules.
      */
-    override fun createModuleDelegate(): Delegate<T, M>
+    override fun createModuleDelegate(): Delegate<T, M> = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
 
-    //TODO: Reduce code duplication in the functions below.
     /**
      * Returns whether or not the module has any pending changes at the moment.
      * Not designed to be overridden.

@@ -2,19 +2,20 @@ package com.pandulapeter.beagle.modules
 
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.modules.TextModule.Companion.DEFAULT_ON_ITEM_SELECTED
 import java.util.UUID
 
 /**
  * Displays a piece of text. Can be used for click handling as well.
  *
  * @param text - The text to display.
- * @param id - A unique identifier for the module. Optional, random string by default.
- * @param onItemSelected - Callback called when the user clicks on the text. Optional, null by default.
+ * @param id - A unique identifier for the module. [Module.randomId] by default.
+ * @param onItemSelected - Callback called when the user clicks on the text, or null to disable selection. [DEFAULT_ON_ITEM_SELECTED] by default.
  */
 data class TextModule(
     val text: Text,
-    override val id: String = UUID.randomUUID().toString(),
-    val onItemSelected: (() -> Unit)? = null
+    override val id: String = Module.randomId,
+    val onItemSelected: (() -> Unit)? = DEFAULT_ON_ITEM_SELECTED
 ) : Module<TextModule> {
 
     constructor(
@@ -27,5 +28,7 @@ data class TextModule(
         onItemSelected = onItemSelected
     )
 
-    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
+    companion object {
+        private val DEFAULT_ON_ITEM_SELECTED: (() -> Unit)? = null
+    }
 }

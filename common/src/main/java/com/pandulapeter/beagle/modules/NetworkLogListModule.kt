@@ -5,6 +5,11 @@ import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
+import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_BASE_URL
+import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_IS_EXPANDED_INITIALLY
+import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_MAX_ITEM_COUNT
+import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_MAX_ITEM_TITLE_LENGTH
+import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_TITLE
 import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.ID
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -17,31 +22,33 @@ import java.util.Locale
  *
  * This module can only be added once. It uses the value of [ID] as id.
  *
- * @param title - The title of the module. "Network activity" by default.
- * @param baseUrl - When not empty, all URL-s will have the specified String filtered out to reduce the amount of redundant information. Empty by default.
- * @param maxItemCount - The maximum number of messages that will appear when expanded. 10 by default.
- * @param maxItemTitleLength - The maximum number of characters displayed on a list item, or null for no limitation. Null by default.
- * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with "HH:mm:ss" by default.
- * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
+ * @param title - The title of the module. [DEFAULT_TITLE] by default.
+ * @param baseUrl - When not empty, all URL-s will have the specified String filtered out to reduce the amount of redundant information. [DEFAULT_BASE_URL] by default.
+ * @param maxItemCount - The maximum number of messages that will appear when expanded. [DEFAULT_MAX_ITEM_COUNT] by default.
+ * @param maxItemTitleLength - The maximum number of characters displayed on a list item, or null for no limitation. [DEFAULT_MAX_ITEM_TITLE_LENGTH] by default.
+ * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [BeagleContract.LOG_TIME_FORMAT] by default.
+ * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
 data class NetworkLogListModule(
-    val title: Text = Text.CharSequence("Network activity"),
-    val baseUrl: String = "",
-    val maxItemCount: Int = 10,
-    val maxItemTitleLength: Int? = null,
-    val timestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },
-    override val isExpandedInitially: Boolean = false
+    val title: Text = Text.CharSequence(DEFAULT_TITLE),
+    val baseUrl: String = DEFAULT_BASE_URL,
+    val maxItemCount: Int = DEFAULT_MAX_ITEM_COUNT,
+    val maxItemTitleLength: Int? = DEFAULT_MAX_ITEM_TITLE_LENGTH,
+    val timestampFormatter: ((Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
+    override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY
 ) : ExpandableModule<NetworkLogListModule> {
 
     override val id: String = ID
 
-    override fun getInternalTitle(beagle: BeagleContract) = title
-
-    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
+    override fun getHeaderTitle(beagle: BeagleContract) = title
 
     companion object {
-        private val defaultFormatter by lazy { SimpleDateFormat(BeagleContract.LOG_TIME_FORMAT, Locale.ENGLISH) }
-
         const val ID = "networkLogList"
+        private const val DEFAULT_TITLE = "Network activity"
+        private const val DEFAULT_BASE_URL = ""
+        private const val DEFAULT_MAX_ITEM_COUNT = 10
+        private val DEFAULT_MAX_ITEM_TITLE_LENGTH: Int? = null
+        private val DEFAULT_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.LOG_TIME_FORMAT, Locale.ENGLISH) }
+        private const val DEFAULT_IS_EXPANDED_INITIALLY = false
     }
 }

@@ -5,6 +5,11 @@ import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
+import com.pandulapeter.beagle.modules.LifecycleLogListModule.Companion.DEFAULT_EVENT_TYPES
+import com.pandulapeter.beagle.modules.LifecycleLogListModule.Companion.DEFAULT_IS_EXPANDED_INITIALLY
+import com.pandulapeter.beagle.modules.LifecycleLogListModule.Companion.DEFAULT_MAX_ITEM_COUNT
+import com.pandulapeter.beagle.modules.LifecycleLogListModule.Companion.DEFAULT_SHOULD_DISPLAY_FULL_NAMES
+import com.pandulapeter.beagle.modules.LifecycleLogListModule.Companion.DEFAULT_TITLE
 import com.pandulapeter.beagle.modules.LifecycleLogListModule.Companion.ID
 import com.pandulapeter.beagle.modules.LifecycleLogListModule.EventType
 import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.ID
@@ -20,27 +25,25 @@ import java.util.Locale
  *
  * This module can only be added once. It uses the value of [ID] as id.
  *
- * @param title - The title of the module. "Lifecycle logs" by default.
- * @param eventTypes - The list of [EventType] values that the module should track. By default all event types are displayed.
- * @param shouldDisplayFullNames - Whether or not displayed class names should include full package names. False by default.
- * @param maxItemCount - The maximum number of messages that will appear when expanded. 10 by default.
- * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with "HH:mm:ss" by default.
- * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. False by default.
+ * @param title - The title of the module. [DEFAULT_TITLE] by default.
+ * @param eventTypes - The list of [EventType] values that the module should track. [DEFAULT_EVENT_TYPES] by default.
+ * @param shouldDisplayFullNames - Whether or not displayed class names should include full package names. [DEFAULT_SHOULD_DISPLAY_FULL_NAMES] by default.
+ * @param maxItemCount - The maximum number of messages that will appear when expanded. [DEFAULT_MAX_ITEM_COUNT] by default.
+ * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [BeagleContract.LOG_TIME_FORMAT] by default.
+ * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
 data class LifecycleLogListModule(
-    val title: Text = Text.CharSequence("Lifecycle logs"),
-    val eventTypes: List<EventType> = EventType.values().toList(),
-    val shouldDisplayFullNames: Boolean = false,
-    val maxItemCount: Int = 10,
-    val timestampFormatter: ((Long) -> CharSequence)? = { defaultFormatter.format(it) },
-    override val isExpandedInitially: Boolean = false
+    val title: Text = Text.CharSequence(DEFAULT_TITLE),
+    val eventTypes: List<EventType> = DEFAULT_EVENT_TYPES,
+    val shouldDisplayFullNames: Boolean = DEFAULT_SHOULD_DISPLAY_FULL_NAMES,
+    val maxItemCount: Int = DEFAULT_MAX_ITEM_COUNT,
+    val timestampFormatter: ((Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
+    override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY
 ) : ExpandableModule<LifecycleLogListModule> {
 
     override val id = ID
 
-    override fun getInternalTitle(beagle: BeagleContract) = title
-
-    override fun createModuleDelegate(): Nothing = throw IllegalStateException("Built-in Modules should never create their own Delegates.")
+    override fun getHeaderTitle(beagle: BeagleContract) = title
 
     /**
      * Contains all event types for Fragments and Activities that can be tracked.
@@ -61,8 +64,12 @@ data class LifecycleLogListModule(
     }
 
     companion object {
-        private val defaultFormatter by lazy { SimpleDateFormat(BeagleContract.LOG_TIME_FORMAT, Locale.ENGLISH) }
-
         const val ID = "lifecycleLogList"
+        private const val DEFAULT_TITLE = "Lifecycle logs"
+        private val DEFAULT_EVENT_TYPES = EventType.values().toList()
+        private const val DEFAULT_SHOULD_DISPLAY_FULL_NAMES = false
+        private const val DEFAULT_MAX_ITEM_COUNT = 20
+        private const val DEFAULT_IS_EXPANDED_INITIALLY = false
+        private val DEFAULT_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.LOG_TIME_FORMAT, Locale.ENGLISH) }
     }
 }

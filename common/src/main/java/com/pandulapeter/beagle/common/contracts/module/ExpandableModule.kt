@@ -18,5 +18,5 @@ interface ExpandableModule<M : Module<M>> : Module<M> {
     /**
      * The title of the module that will be displayed in the header of the list.
      */
-    fun getInternalTitle(beagle: BeagleContract): Text
+    fun getHeaderTitle(beagle: BeagleContract): Text
 }
