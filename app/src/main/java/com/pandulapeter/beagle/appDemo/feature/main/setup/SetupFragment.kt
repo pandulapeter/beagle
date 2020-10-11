@@ -49,9 +49,9 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     override fun getBeagleModules() = listOf(
         createTextModule(R.string.setup_debug_menu_text_1),
         DividerModule(id = "divider1"),
-        AppInfoButtonModule(text = getText(R.string.setup_debug_menu_app_info_button)),
-        ScreenshotButtonModule(text = getText(R.string.setup_debug_menu_screenshot_button)),
-        KeylineOverlaySwitchModule(text = Text.ResourceId(R.string.setup_debug_menu_keyline_overlay_switch)),
+        AppInfoButtonModule(text = Text.ResourceId(R.string.setup_debug_menu_app_info_button)),
+        ScreenshotButtonModule(text = Text.ResourceId(R.string.setup_debug_menu_screenshot_button)),
+        KeylineOverlaySwitchModule(text = { Text.ResourceId(R.string.setup_debug_menu_keyline_overlay_switch) }),
         listOf(
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_1)),
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_2)),
@@ -65,7 +65,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
                 initiallySelectedItemId = radioGroupOptions.last().id
             )
         },
-        DeviceInfoModule(title = getText(R.string.setup_debug_menu_device_information)),
+        DeviceInfoModule(title = Text.ResourceId(R.string.setup_debug_menu_device_information)),
         DividerModule(id = "divider2"),
         createTextModule(R.string.setup_debug_menu_text_2)
     )
@@ -73,9 +73,11 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     private fun onGitHubButtonClicked() = binding.recyclerView.openUrl(AboutFragment.GITHUB_URL)
 
     private data class RadioGroupOption(
-        override val title: String,
-        override val id: String = title
-    ) : BeagleListItemContract
+        val name: String,
+    ) : BeagleListItemContract {
+
+        override val title = Text.CharSequence(name)
+    }
 
     companion object {
         fun newInstance() = SetupFragment()

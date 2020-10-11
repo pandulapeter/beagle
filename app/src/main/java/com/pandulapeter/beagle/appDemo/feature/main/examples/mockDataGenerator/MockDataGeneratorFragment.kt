@@ -6,6 +6,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.list.MockDataGeneratorAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.list.MockDataGeneratorListItem
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
@@ -18,7 +19,7 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
     override val viewModel by viewModel<MockDataGeneratorViewModel>()
     private val minimumWordCountSlider by lazy {
         SliderModule(
-            text = { getString(R.string.case_study_mock_data_generator_minimum_word_count, it) },
+            text = { Text.CharSequence(getString(R.string.case_study_mock_data_generator_minimum_word_count, it)) },
             minimumValue = 1,
             maximumValue = 5,
             initialValue = 3,
@@ -28,7 +29,7 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
     private val minimumWordCount get() = minimumWordCountSlider.getCurrentValue(Beagle) ?: 1
     private val maximumWordCountSlider by lazy {
         SliderModule(
-            text = { getString(R.string.case_study_mock_data_generator_maximum_word_count, it) },
+            text = { Text.CharSequence(getString(R.string.case_study_mock_data_generator_maximum_word_count, it)) },
             minimumValue = 6,
             maximumValue = 20,
             initialValue = 8,
@@ -38,7 +39,7 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
     private val maximumWordCount get() = maximumWordCountSlider.getCurrentValue(Beagle) ?: 20
     private val shouldStartWithLoremIpsumCheckBox by lazy {
         CheckBoxModule(
-            title = getText(R.string.case_study_mock_data_generator_start_with_lorem_ipsum),
+            text = { Text.ResourceId(R.string.case_study_mock_data_generator_start_with_lorem_ipsum) },
             initialValue = true,
             onValueChanged = { refreshBeagle() }
         )
@@ -46,7 +47,7 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
     private val shouldStartWithLoremIpsum get() = shouldStartWithLoremIpsumCheckBox.getCurrentValue(Beagle) == true
     private val shouldGenerateSentenceCheckBox by lazy {
         CheckBoxModule(
-            title = getText(R.string.case_study_mock_data_generator_generate_sentence),
+            text = { Text.ResourceId(R.string.case_study_mock_data_generator_generate_sentence) },
             initialValue = true,
             onValueChanged = { refreshBeagle() }
         )
@@ -62,7 +63,7 @@ class MockDataGeneratorFragment : ExamplesDetailFragment<MockDataGeneratorViewMo
         shouldGenerateSentenceCheckBox,
         PaddingModule(),
         LoremIpsumGeneratorButtonModule(
-            text = getText(R.string.case_study_mock_data_generator_generate_text),
+            text = Text.ResourceId(R.string.case_study_mock_data_generator_generate_text),
             minimumWordCount = minimumWordCount,
             maximumWordCount = maximumWordCount,
             shouldStartWithLoremIpsum = shouldStartWithLoremIpsum,

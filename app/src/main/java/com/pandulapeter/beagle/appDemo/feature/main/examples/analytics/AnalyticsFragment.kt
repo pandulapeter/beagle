@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragm
 import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.AnalyticsAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list.AnalyticsListItem
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.LogListModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,7 +33,7 @@ class AnalyticsFragment : ExamplesDetailFragment<AnalyticsViewModel, AnalyticsLi
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         LogListModule(
-            title = getText(R.string.case_study_analytics_module_title),
+            title = Text.ResourceId(R.string.case_study_analytics_module_title),
             isExpandedInitially = true,
             maxItemCount = 20,
             label = LOG_TAG

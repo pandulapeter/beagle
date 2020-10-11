@@ -15,7 +15,8 @@ internal data class PaddingCell(
         override fun createViewHolder(parent: ViewGroup) = PaddingViewHolder(parent)
     }
 
-    private class PaddingViewHolder(parent: ViewGroup) : ViewHolder<PaddingCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_padding, parent, false)) {
+    private class PaddingViewHolder(parent: ViewGroup) :
+        ViewHolder<PaddingCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_padding, parent, false)) {
 
         override fun bind(model: PaddingCell) = Unit
     }

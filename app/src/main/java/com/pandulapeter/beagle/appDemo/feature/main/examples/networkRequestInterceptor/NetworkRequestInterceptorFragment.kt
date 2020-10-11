@@ -8,11 +8,13 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragm
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NetworkRequestInterceptorFragment : ExamplesDetailFragment<NetworkRequestInterceptorViewModel, NetworkRequestInterceptorListItem>(R.string.case_study_network_request_interceptor_title) {
+class NetworkRequestInterceptorFragment :
+    ExamplesDetailFragment<NetworkRequestInterceptorViewModel, NetworkRequestInterceptorListItem>(R.string.case_study_network_request_interceptor_title) {
 
     override val viewModel by viewModel<NetworkRequestInterceptorViewModel>()
 
@@ -26,7 +28,7 @@ class NetworkRequestInterceptorFragment : ExamplesDetailFragment<NetworkRequestI
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         NetworkLogListModule(
-            title = getText(R.string.case_study_network_request_interceptor_network_activity),
+            title = Text.ResourceId(R.string.case_study_network_request_interceptor_network_activity),
             isExpandedInitially = true,
             baseUrl = Constants.BASE_URL
         )

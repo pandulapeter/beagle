@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.authentication
 
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 
 data class TestAccount(
@@ -8,5 +9,5 @@ data class TestAccount(
 ) : BeagleListItemContract {
 
     override val id = email
-    override val title = email
+    override val title = Text.CharSequence(email)
 }

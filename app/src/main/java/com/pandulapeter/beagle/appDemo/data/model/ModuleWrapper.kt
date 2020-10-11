@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.networking.Constants
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
@@ -48,28 +49,28 @@ sealed class ModuleWrapper(
 ) {
     val id get() = module.id
 
-    class Button : ModuleWrapper(
+    class ButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_button,
         descriptionResourceId = R.string.add_module_button_description,
         module = ButtonModule(text = "Button", onButtonPressed = {}),
         codeSnippet = "ButtonModule(text = \"Button\", onButtonPressed = {})"
     )
 
-    class CheckBox : ModuleWrapper(
+    class CheckBoxWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_check_box,
         descriptionResourceId = R.string.add_module_check_box_description,
-        module = CheckBoxModule(text = { com.pandulapeter.beagle.common.configuration.Text.CharSequence("CheckBox") }, initialValue = false, onValueChanged = {}),
+        module = CheckBoxModule(text = "CheckBox", initialValue = false, onValueChanged = {}),
         codeSnippet = "CheckBoxModule(text = \"CheckBox\", initialValue = false, onValueChanged = {})"
     )
 
-    class Divider : ModuleWrapper(
+    class DividerWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_divider,
         descriptionResourceId = R.string.add_module_divider_description,
         module = DividerModule(),
         codeSnippet = "DividerModule()"
     )
 
-    class ItemList : ModuleWrapper(
+    class ItemListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_item_list,
         descriptionResourceId = R.string.add_module_item_list_description,
         module = ItemListModule(
@@ -92,7 +93,7 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    class KeyValueList : ModuleWrapper(
+    class KeyValueListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_key_value_list,
         descriptionResourceId = R.string.add_module_key_value_list_description,
         module = KeyValueListModule(
@@ -113,14 +114,14 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    class LoadingIndicator : ModuleWrapper(
+    class LoadingIndicatorWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_loading_indicator,
         descriptionResourceId = R.string.add_module_loading_indicator_description,
         module = LoadingIndicatorModule(),
         codeSnippet = "LoadingIndicatorModule()"
     )
 
-    class LogList : ModuleWrapper(
+    class LogListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_log_list,
         descriptionResourceId = R.string.add_module_log_list_description,
         module = UUID.randomUUID().toString().let { label ->
@@ -135,7 +136,7 @@ sealed class ModuleWrapper(
         codeSnippet = "LogListModule(tag = …)"
     )
 
-    class LongText : ModuleWrapper(
+    class LongTextWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_long_text,
         descriptionResourceId = R.string.add_module_long_text_description,
         module = LongTextModule(
@@ -148,7 +149,7 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    class MultipleSelectionList : ModuleWrapper(
+    class MultipleSelectionListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_multiple_selection_list,
         descriptionResourceId = R.string.add_module_multiple_selection_list_description,
         module =
@@ -174,21 +175,21 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    class Padding : ModuleWrapper(
+    class PaddingWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_padding,
         descriptionResourceId = R.string.add_module_padding_description,
         module = PaddingModule(),
         codeSnippet = "PaddingModule()"
     )
 
-    class SectionHeader : ModuleWrapper(
+    class SectionHeaderWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_section_header,
         descriptionResourceId = R.string.add_module_section_header_description,
         module = SectionHeaderModule(title = "Section header"),
         codeSnippet = "SectionHeaderModule(title = \"Section header\")"
     )
 
-    class SingleSelectionList : ModuleWrapper(
+    class SingleSelectionListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_single_selection_list,
         descriptionResourceId = R.string.add_module_single_selection_list_description,
         module =
@@ -214,77 +215,77 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    class Slider : ModuleWrapper(
+    class SliderWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_slider,
         descriptionResourceId = R.string.add_module_slider_description,
-        module = SliderModule(text = { "Slider ($it)" }, onValueChanged = {}),
-        codeSnippet = "SliderModule(text = { \"Slider (\$it)\" }, onValueChanged = {})"
+        module = SliderModule(text = { Text.CharSequence("Slider ($it)") }, onValueChanged = {}),
+        codeSnippet = "SliderModule(text = { Text.CharSequence(\"Slider (\$it)\") }, onValueChanged = {})"
     )
 
-    class Switch : ModuleWrapper(
+    class SwitchWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_switch,
         descriptionResourceId = R.string.add_module_switch_description,
         module = SwitchModule(text = "Switch", onValueChanged = {}),
         codeSnippet = "SwitchModule(text = \"Switch\", onValueChanged = {})"
     )
 
-    class Text : ModuleWrapper(
+    class TextWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_text,
         descriptionResourceId = R.string.add_module_text_description,
         module = TextModule(text = "Text"),
         codeSnippet = "TextModule(text = \"Text\")"
     )
 
-    class TextInput : ModuleWrapper(
+    class TextInputWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_text_input,
         descriptionResourceId = R.string.add_module_text_input_description,
-        module = TextInputModule(text = { com.pandulapeter.beagle.common.configuration.Text.CharSequence("Text input ($it)") }, initialValue = "Hello!", onValueChanged = {}),
-        codeSnippet = "TextInputModule(text = { \"Text input (\$it)\" }, initialValue = \"Hello!\", onValueChanged = {})"
+        module = TextInputModule(text = { Text.CharSequence("Text input ($it)") }, initialValue = "Hello!", onValueChanged = {}),
+        codeSnippet = "TextInputModule(text = { Text.CharSequence(\"Text input (\$it)\") }, initialValue = \"Hello!\", onValueChanged = {})"
     )
 
-    object AnimationDurationSwitch : ModuleWrapper(
+    object AnimationDurationSwitchWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_animation_duration_switch,
         descriptionResourceId = R.string.add_module_animation_duration_switch_description,
         module = AnimationDurationSwitchModule(),
         codeSnippet = "AnimationDurationSwitchModule()"
     )
 
-    object AppInfoButton : ModuleWrapper(
+    object AppInfoButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_app_info_button,
         descriptionResourceId = R.string.add_module_app_info_button_description,
         module = AppInfoButtonModule(),
         codeSnippet = "AppInfoButtonModule()"
     )
 
-    object DeveloperOptionsButton : ModuleWrapper(
+    object DeveloperOptionsButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_developer_options_button,
         descriptionResourceId = R.string.add_module_developer_options_button_description,
         module = DeveloperOptionsButtonModule(),
         codeSnippet = "DeveloperOptionsButtonModule()"
     )
 
-    object DeviceInfo : ModuleWrapper(
+    object DeviceInfoWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_device_info,
         descriptionResourceId = R.string.add_module_device_info_description,
         module = DeviceInfoModule(),
         codeSnippet = "DeviceInfoModule()"
     )
 
-    object ForceCrashButton : ModuleWrapper(
+    object ForceCrashButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_force_crash_button,
         descriptionResourceId = R.string.add_module_force_crash_button_description,
         module = ForceCrashButtonModule(),
         codeSnippet = "ForceCrashButtonModule()"
     )
 
-    object GalleryButton : ModuleWrapper(
+    object GalleryButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_gallery_button,
         descriptionResourceId = R.string.add_module_gallery_button_description,
         module = GalleryButtonModule(),
         codeSnippet = "GalleryButtonModule()"
     )
 
-    object Header : ModuleWrapper(
+    object HeaderWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_header,
         descriptionResourceId = R.string.add_module_header_description,
         module = HeaderModule(
@@ -297,35 +298,35 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    object KeylineOverlaySwitch : ModuleWrapper(
+    object KeylineOverlaySwitchWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_keyline_overlay_switch,
         descriptionResourceId = R.string.add_module_keyline_overlay_switch_description,
         module = KeylineOverlaySwitchModule(),
         codeSnippet = "KeylineOverlaySwitchModule()"
     )
 
-    object LifecycleLogList : ModuleWrapper(
+    object LifecycleLogListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_lifecycle_log_list,
         descriptionResourceId = R.string.add_module_lifecycle_log_list_description,
         module = LifecycleLogListModule(),
         codeSnippet = "LifecycleLogListModule()"
     )
 
-    class LoremIpsumGeneratorButton : ModuleWrapper(
+    class LoremIpsumGeneratorButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_lorem_ipsum_generator_button,
         descriptionResourceId = R.string.add_module_lorem_ipsum_generator_button_description,
         module = LoremIpsumGeneratorButtonModule { Beagle.currentActivity?.run { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() } },
         codeSnippet = "LoremIpsumGeneratorButtonModule { generatedText -> TODO() }"
     )
 
-    object NetworkLogList : ModuleWrapper(
+    object NetworkLogListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_log_list,
         descriptionResourceId = R.string.add_module_network_log_list_description,
         module = NetworkLogListModule(baseUrl = Constants.BASE_URL),
         codeSnippet = "NetworkLogListModule()"
     )
 
-    object ScreenCaptureToolbox : ModuleWrapper(
+    object ScreenCaptureToolboxWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_screen_capture_toolbox,
         descriptionResourceId = R.string.add_module_network_screen_capture_toolbox_description,
         module = ScreenCaptureToolboxModule(),
@@ -333,14 +334,14 @@ sealed class ModuleWrapper(
     )
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    object ScreenRecordingButton : ModuleWrapper(
+    object ScreenRecordingButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_screen_recording_button,
         descriptionResourceId = R.string.add_module_network_screen_recording_button_description,
         module = ScreenRecordingButtonModule(),
         codeSnippet = "ScreenRecordingButtonModule()"
     )
 
-    object ScreenshotButton : ModuleWrapper(
+    object ScreenshotButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_screenshot_button,
         descriptionResourceId = R.string.add_module_network_screenshot_button_description,
         module = ScreenshotButtonModule(),

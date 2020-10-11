@@ -74,7 +74,7 @@ class ValueWrappersFragment : ExamplesDetailFragment<ValueWrappersViewModel, Val
         createSectionHeaderModule(R.string.case_study_value_wrappers_check_boxes),
         CheckBoxModule(
             id = TOGGLE_3_ID,
-            title = getString(R.string.case_study_value_wrappers_toggle_3),
+            text = getString(R.string.case_study_value_wrappers_toggle_3),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isEnabled = viewModel.areModulesEnabled,
@@ -82,7 +82,7 @@ class ValueWrappersFragment : ExamplesDetailFragment<ValueWrappersViewModel, Val
         ),
         CheckBoxModule(
             id = TOGGLE_4_ID,
-            title = getString(R.string.case_study_value_wrappers_toggle_4),
+            text = getString(R.string.case_study_value_wrappers_toggle_4),
             isValuePersisted = true,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
             isEnabled = viewModel.areModulesEnabled,
@@ -127,7 +127,7 @@ class ValueWrappersFragment : ExamplesDetailFragment<ValueWrappersViewModel, Val
         createSectionHeaderModule(R.string.case_study_value_wrappers_slider_label),
         SliderModule(
             id = SLIDER,
-            text = { getString(R.string.case_study_value_wrappers_slider_title, it) },
+            text = { Text.CharSequence(getString(R.string.case_study_value_wrappers_slider_title, it)) },
             isValuePersisted = true,
             initialValue = SLIDER_DEFAULT_VALUE,
             shouldRequireConfirmation = viewModel.isBulkApplyEnabled,
