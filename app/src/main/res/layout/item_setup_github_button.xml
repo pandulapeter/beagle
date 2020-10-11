@@ -22,7 +22,7 @@
         android:drawablePadding="@dimen/large_content_padding"
         android:paddingTop="@dimen/content_padding"
         android:paddingBottom="@dimen/content_padding"
-        android:text="@string/setup_github_button"
+        android:text="@string/setup_welcome_github_button"
         tools:drawableEnd="@drawable/ic_github"
         tools:drawableRight="@drawable/ic_github" />
 

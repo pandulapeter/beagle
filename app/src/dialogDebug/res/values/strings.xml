@@ -1,6 +1,6 @@
 <resources>
 
     <string name="app_name">Beagle (dialog, debug)</string>
-    <string name="setup_text_3">The library offers five variants that display the debug menu in different ways. The next step is selecting the one that fits your application\'s needs the most (the current build uses Dialog)…</string>
+    <string name="setup_initialization_3">The library offers five variants that display the debug menu in different ways. The next step is selecting the one that fits your application\'s needs the most (the current build uses Dialog)…</string>
 
 </resources>

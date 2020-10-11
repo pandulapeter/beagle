@@ -1,6 +1,6 @@
 <resources>
 
     <string name="app_name">Beagle (release)</string>
-    <string name="setup_hint">In this demo application you cannot trigger the debug menu, as it uses the noop implementation.\n\nThe following sections provide some guidance with setting up the library while the rest of the app serves as a demo / showcase for the built-in feature set.\n</string>
+    <string name="setup_welcome_2">In this demo application you cannot trigger the debug menu, as it uses the noop implementation.\n\nThe following sections provide some guidance with setting up the library while the rest of the app serves as a demo / showcase for the built-in feature set.\n</string>
 
 </resources>

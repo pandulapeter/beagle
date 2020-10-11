@@ -65,7 +65,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
                         ")"
             )
         )
-        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_text_2))
+        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_initialization_2))
     }
 
     private fun MutableList<SimpleSetupListItem>.addAppInfoButtonSection() = addSection(Section.APP_INFO_BUTTON) {
