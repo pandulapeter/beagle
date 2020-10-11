@@ -54,7 +54,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
                         "    TextModule(\"…\"),\n" +
                         "    TextModule(\n" +
                         "        text = \"…\",\n" +
-                        "        icon = R.drawable.…" +
+                        "        icon = R.drawable.…\n" +
                         "    ),\n" +
                         "    TextModule(\n" +
                         "        text = \"…\",\n" +
