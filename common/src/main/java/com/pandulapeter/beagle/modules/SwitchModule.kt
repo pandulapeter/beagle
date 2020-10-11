@@ -8,7 +8,6 @@ import com.pandulapeter.beagle.modules.SwitchModule.Companion.DEFAULT_IS_ENABLED
 import com.pandulapeter.beagle.modules.SwitchModule.Companion.DEFAULT_IS_VALUE_PERSISTED
 import com.pandulapeter.beagle.modules.SwitchModule.Companion.DEFAULT_ON_VALUE_CHANGED
 import com.pandulapeter.beagle.modules.SwitchModule.Companion.DEFAULT_SHOULD_REQUIRE_CONFIRMATION
-import java.util.UUID
 
 /**
  * Displays a simple switch.
@@ -33,12 +32,12 @@ data class SwitchModule(
 
     constructor(
         text: CharSequence,
-        initialValue: Boolean = false,
-        isEnabled: Boolean = true,
-        isValuePersisted: Boolean = false,
-        shouldRequireConfirmation: Boolean = false,
-        id: String = UUID.randomUUID().toString(),
-        onValueChanged: (Boolean) -> Unit = {}
+        initialValue: Boolean = DEFAULT_INITIAL_VALUE,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        id: String = Module.randomId,
+        onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
         text = { Text.CharSequence(text) },
         initialValue = initialValue,

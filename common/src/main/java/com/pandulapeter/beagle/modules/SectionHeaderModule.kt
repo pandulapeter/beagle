@@ -12,4 +12,13 @@ import com.pandulapeter.beagle.common.contracts.module.Module
 data class SectionHeaderModule(
     val title: Text,
     override val id: String = Module.randomId
-) : Module<SectionHeaderModule>
+) : Module<SectionHeaderModule> {
+
+    constructor(
+        title: CharSequence,
+        id: String = Module.randomId
+    ) : this(
+        title = Text.CharSequence(title),
+        id = id
+    )
+}

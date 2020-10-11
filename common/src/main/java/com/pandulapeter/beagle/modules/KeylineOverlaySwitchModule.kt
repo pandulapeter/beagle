@@ -47,6 +47,30 @@ data class KeylineOverlaySwitchModule(
     override val onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<Boolean, KeylineOverlaySwitchModule> {
 
+    constructor(
+        text: CharSequence = DEFAULT_TEXT,
+        @Dimension grid: Int? = DEFAULT_GRID,
+        @Dimension keylinePrimary: Int? = DEFAULT_KEYLINE_PRIMARY,
+        @Dimension keylineSecondary: Int? = DEFAULT_KEYLINE_SECONDARY,
+        @ColorInt color: Int? = DEFAULT_COLOR,
+        initialValue: Boolean = DEFAULT_INITIAL_VALUE,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        applyInsets: ((windowInsets: Insets) -> Insets)? = DEFAULT_APPLY_INSETS,
+        onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    ) : this(
+        text = { Text.CharSequence(text) },
+        grid = grid,
+        keylinePrimary = keylinePrimary,
+        keylineSecondary = keylineSecondary,
+        color = color,
+        initialValue = initialValue,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        applyInsets = applyInsets,
+        onValueChanged = onValueChanged
+    )
+
     override val id: String = ID
     override val shouldRequireConfirmation = false
 

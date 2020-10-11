@@ -25,6 +25,20 @@ data class ItemListModule<T : BeagleListItemContract>(
     val onItemSelected: ((item: T) -> Unit)? = DEFAULT_IN_ITEM_SELECTED
 ) : ExpandableModule<ItemListModule<T>> {
 
+    constructor(
+        title: CharSequence,
+        items: List<T>,
+        isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
+        id: String = Module.randomId,
+        onItemSelected: ((item: T) -> Unit)? = DEFAULT_IN_ITEM_SELECTED
+    ) : this(
+        title = Text.CharSequence(title),
+        items = items,
+        isExpandedInitially = isExpandedInitially,
+        id = id,
+        onItemSelected = onItemSelected
+    )
+
     override fun getHeaderTitle(beagle: BeagleContract) = title
 
     companion object {

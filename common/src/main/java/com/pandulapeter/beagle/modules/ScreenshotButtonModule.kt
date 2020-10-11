@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.modules
 
 import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.DEFAULT_ON_BUTTON_PRESSED
@@ -22,7 +23,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * @param onButtonPressed - Callback called when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
  */
 data class ScreenshotButtonModule(
-    val text: CharSequence = DEFAULT_TEXT,
+    val text: Text = Text.CharSequence(DEFAULT_TEXT),
     val onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
 ) : Module<ScreenshotButtonModule> {
 

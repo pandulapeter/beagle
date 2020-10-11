@@ -36,6 +36,28 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
     val onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
 ) : ExpandableModule<MultipleSelectionListModule<T>>, ValueWrapperModule<Set<String>, MultipleSelectionListModule<T>> {
 
+    constructor(
+        title: CharSequence,
+        items: List<T>,
+        initiallySelectedItemIds: Set<String>,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
+        id: String = Module.randomId,
+        onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
+    ) : this(
+        title = { Text.CharSequence(title) },
+        items = items,
+        initiallySelectedItemIds = initiallySelectedItemIds,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        isExpandedInitially = isExpandedInitially,
+        id = id,
+        onSelectionChanged = onSelectionChanged
+    )
+
     override val onValueChanged: (newValue: Set<String>) -> Unit = { newValue -> onSelectionChanged(newValue.toItems()) }
     override val initialValue: Set<String> = initiallySelectedItemIds
     override val text: (Set<String>) -> Text = { title(it.toItems()) }

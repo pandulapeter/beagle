@@ -21,6 +21,18 @@ data class LongTextModule(
     override val id: String = Module.randomId
 ) : ExpandableModule<LongTextModule> {
 
+    constructor(
+        title: CharSequence,
+        text: CharSequence,
+        isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
+        id: String = Module.randomId
+    ) : this(
+        title = Text.CharSequence(title),
+        text = Text.CharSequence(text),
+        isExpandedInitially = isExpandedInitially,
+        id = id
+    )
+
     override fun getHeaderTitle(beagle: BeagleContract) = title
 
     companion object {

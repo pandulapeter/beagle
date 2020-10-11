@@ -3,7 +3,6 @@ package com.pandulapeter.beagle.modules
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.TextModule.Companion.DEFAULT_ON_ITEM_SELECTED
-import java.util.UUID
 
 /**
  * Displays a piece of text. Can be used for click handling as well.
@@ -20,8 +19,8 @@ data class TextModule(
 
     constructor(
         text: CharSequence,
-        id: String = UUID.randomUUID().toString(),
-        onItemSelected: (() -> Unit)? = null
+        id: String = Module.randomId,
+        onItemSelected: (() -> Unit)? = DEFAULT_ON_ITEM_SELECTED
     ) : this(
         text = Text.CharSequence(text),
         id = id,

@@ -22,7 +22,7 @@ import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule.Companion
 data class LoremIpsumGeneratorButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
     val minimumWordCount: Int = DEFAULT_MINIMUM_WORD_COUNT,
-    val maximumWordCount: Int = 20,
+    val maximumWordCount: Int = DEFAULT_MAXIMUM_WORD_COUNT,
     val shouldStartWithLoremIpsum: Boolean = DEFAULT_SHOULD_START_WITH_LOREM_IPSUM,
     val shouldGenerateSentence: Boolean = DEFAULT_SHOULD_GENERATE_SENTENCE,
     val onLoremIpsumReady: (generatedText: String) -> Unit

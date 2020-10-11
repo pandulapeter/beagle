@@ -16,10 +16,22 @@ import com.pandulapeter.beagle.modules.KeyValueListModule.Companion.DEFAULT_IS_E
  */
 data class KeyValueListModule(
     val title: Text,
-    val pairs: List<Pair<CharSequence, CharSequence>>,
+    val pairs: List<Pair<Text, Text>>,
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
     override val id: String = Module.randomId
 ) : ExpandableModule<KeyValueListModule> {
+
+    constructor(
+        title: CharSequence,
+        pairs: List<Pair<CharSequence, CharSequence>>,
+        isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
+        id: String = Module.randomId
+    ) : this(
+        title = Text.CharSequence(title),
+        pairs = pairs.map { Text.CharSequence(it.first) to Text.CharSequence(it.second) },
+        isExpandedInitially = isExpandedInitially,
+        id = id
+    )
 
     override fun getHeaderTitle(beagle: BeagleContract) = title
 

@@ -35,6 +35,28 @@ data class SliderModule(
     override val onValueChanged: (Int) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<Int, SliderModule> {
 
+    constructor(
+        text: CharSequence,
+        minimumValue: Int = DEFAULT_MINIMUM_VALUE,
+        maximumValue: Int = DEFAULT_MAXIMUM_VALUE,
+        initialValue: Int = minimumValue,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        id: String = Module.randomId,
+        onValueChanged: (Int) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    ) : this(
+        text = { Text.CharSequence(text) },
+        minimumValue = minimumValue,
+        maximumValue = maximumValue,
+        initialValue = initialValue,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        id = id,
+        onValueChanged = onValueChanged
+    )
+
     companion object {
         private const val DEFAULT_MINIMUM_VALUE = 0
         private const val DEFAULT_MAXIMUM_VALUE = 10

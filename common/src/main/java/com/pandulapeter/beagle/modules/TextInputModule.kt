@@ -34,13 +34,39 @@ data class TextInputModule(
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     val areRealTimeUpdatesEnabled: Boolean = DEFAULT_ARE_REAL_TIME_UPDATES_ENABLED,
     val doneText: Text = Text.CharSequence(DEFAULT_DONE_TEXT),
-    val cancelText: Text = Text.CharSequence("Cancel"),
+    val cancelText: Text = Text.CharSequence(DEFAULT_CANCEL_TEXT),
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val id: String = Module.randomId,
     val validator: (String) -> Boolean = DEFAULT_VALIDATOR,
     override val onValueChanged: (String) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<String, TextInputModule> {
+
+    constructor(
+        text: CharSequence,
+        initialValue: String = DEFAULT_INITIAL_VALUE,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        areRealTimeUpdatesEnabled: Boolean = DEFAULT_ARE_REAL_TIME_UPDATES_ENABLED,
+        doneText: Text = Text.CharSequence(DEFAULT_DONE_TEXT),
+        cancelText: Text = Text.CharSequence(DEFAULT_CANCEL_TEXT),
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        id: String = Module.randomId,
+        validator: (String) -> Boolean = DEFAULT_VALIDATOR,
+        onValueChanged: (String) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    ) : this(
+        text = { Text.CharSequence(text) },
+        initialValue = initialValue,
+        isEnabled = isEnabled,
+        areRealTimeUpdatesEnabled = areRealTimeUpdatesEnabled,
+        doneText = doneText,
+        cancelText = cancelText,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        id = id,
+        validator = validator,
+        onValueChanged = onValueChanged
+    )
 
     companion object {
         private const val DEFAULT_INITIAL_VALUE = ""

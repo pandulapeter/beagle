@@ -24,16 +24,6 @@ data class DeveloperOptionsButtonModule(
     val onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
 ) : Module<DeveloperOptionsButtonModule> {
 
-    constructor(
-        text: CharSequence = DEFAULT_TEXT,
-        shouldOpenInNewTask: Boolean = DEFAULT_SHOULD_OPEN_IN_NEW_TASK,
-        onButtonPressed: () -> Unit = DEFAULT_ON_BUTTON_PRESSED
-    ) : this(
-        text = Text.CharSequence(text),
-        shouldOpenInNewTask = shouldOpenInNewTask,
-        onButtonPressed = onButtonPressed
-    )
-
     override val id: String = ID
 
     companion object {

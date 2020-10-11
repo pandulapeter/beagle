@@ -36,6 +36,28 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
     val onSelectionChanged: (selectedItem: T?) -> Unit = {}
 ) : ExpandableModule<SingleSelectionListModule<T>>, ValueWrapperModule<String, SingleSelectionListModule<T>> {
 
+    constructor(
+        title: CharSequence,
+        items: List<T>,
+        initiallySelectedItemId: String?,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
+        id: String = Module.randomId,
+        onSelectionChanged: (selectedItem: T?) -> Unit = {}
+    ) : this(
+        title = { Text.CharSequence(title) },
+        items = items,
+        initiallySelectedItemId = initiallySelectedItemId,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        isExpandedInitially = isExpandedInitially,
+        id = id,
+        onSelectionChanged = onSelectionChanged
+    )
+
     override val initialValue = initiallySelectedItemId.orEmpty() //TODO: Using an empty string is not a great idea, this should be null
     override val onValueChanged: (newValue: String) -> Unit = { newValue -> onSelectionChanged(newValue.toItem()) }
     override val text: (String) -> Text = { title(it.toItem()) }
