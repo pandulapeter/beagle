@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 
@@ -19,6 +20,14 @@ data class SectionHeaderModule(
         id: String = Module.randomId
     ) : this(
         title = Text.CharSequence(title),
+        id = id
+    )
+
+    constructor(
+        @StringRes title: Int,
+        id: String = Module.randomId
+    ) : this(
+        title = Text.ResourceId(title),
         id = id
     )
 }

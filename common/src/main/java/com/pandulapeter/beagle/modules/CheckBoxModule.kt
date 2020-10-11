@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
@@ -40,6 +41,24 @@ data class CheckBoxModule(
         onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
         text = { Text.CharSequence(text) },
+        id = id,
+        initialValue = initialValue,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        onValueChanged = onValueChanged
+    )
+
+    constructor(
+        @StringRes text: Int,
+        id: String = Module.randomId,
+        initialValue: Boolean = DEFAULT_INITIAL_VALUE,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    ) : this(
+        text = { Text.ResourceId(text) },
         id = id,
         initialValue = initialValue,
         isEnabled = isEnabled,

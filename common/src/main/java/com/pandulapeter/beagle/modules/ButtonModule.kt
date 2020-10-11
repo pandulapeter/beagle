@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 
@@ -23,6 +24,16 @@ data class ButtonModule(
         onButtonPressed: () -> Unit
     ) : this(
         text = Text.CharSequence(text),
+        id = id,
+        onButtonPressed = onButtonPressed
+    )
+
+    constructor(
+        @StringRes text: Int,
+        id: String = Module.randomId,
+        onButtonPressed: () -> Unit
+    ) : this(
+        text = Text.ResourceId(text),
         id = id,
         onButtonPressed = onButtonPressed
     )

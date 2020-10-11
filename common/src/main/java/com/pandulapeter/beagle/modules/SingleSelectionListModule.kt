@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
@@ -48,6 +49,28 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
         onSelectionChanged: (selectedItem: T?) -> Unit = {}
     ) : this(
         title = { Text.CharSequence(title) },
+        items = items,
+        initiallySelectedItemId = initiallySelectedItemId,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        isExpandedInitially = isExpandedInitially,
+        id = id,
+        onSelectionChanged = onSelectionChanged
+    )
+
+    constructor(
+        @StringRes title: Int,
+        items: List<T>,
+        initiallySelectedItemId: String?,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
+        id: String = Module.randomId,
+        onSelectionChanged: (selectedItem: T?) -> Unit = {}
+    ) : this(
+        title = { Text.ResourceId(title) },
         items = items,
         initiallySelectedItemId = initiallySelectedItemId,
         isEnabled = isEnabled,

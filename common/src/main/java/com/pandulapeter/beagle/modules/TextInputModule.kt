@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
@@ -56,6 +57,32 @@ data class TextInputModule(
         onValueChanged: (String) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
         text = { Text.CharSequence(text) },
+        initialValue = initialValue,
+        isEnabled = isEnabled,
+        areRealTimeUpdatesEnabled = areRealTimeUpdatesEnabled,
+        doneText = doneText,
+        cancelText = cancelText,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        id = id,
+        validator = validator,
+        onValueChanged = onValueChanged
+    )
+
+    constructor(
+        @StringRes text: Int,
+        initialValue: String = DEFAULT_INITIAL_VALUE,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        areRealTimeUpdatesEnabled: Boolean = DEFAULT_ARE_REAL_TIME_UPDATES_ENABLED,
+        doneText: Text = Text.CharSequence(DEFAULT_DONE_TEXT),
+        cancelText: Text = Text.CharSequence(DEFAULT_CANCEL_TEXT),
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        id: String = Module.randomId,
+        validator: (String) -> Boolean = DEFAULT_VALIDATOR,
+        onValueChanged: (String) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    ) : this(
+        text = { Text.ResourceId(text) },
         initialValue = initialValue,
         isEnabled = isEnabled,
         areRealTimeUpdatesEnabled = areRealTimeUpdatesEnabled,

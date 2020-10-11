@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
@@ -29,6 +30,18 @@ data class LongTextModule(
     ) : this(
         title = Text.CharSequence(title),
         text = Text.CharSequence(text),
+        isExpandedInitially = isExpandedInitially,
+        id = id
+    )
+
+    constructor(
+        @StringRes title: Int,
+        @StringRes text: Int,
+        isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
+        id: String = Module.randomId
+    ) : this(
+        title = Text.ResourceId(title),
+        text = Text.ResourceId(text),
         isExpandedInitially = isExpandedInitially,
         id = id
     )

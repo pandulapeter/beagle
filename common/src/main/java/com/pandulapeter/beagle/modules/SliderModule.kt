@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
@@ -47,6 +48,28 @@ data class SliderModule(
         onValueChanged: (Int) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
         text = { Text.CharSequence(text) },
+        minimumValue = minimumValue,
+        maximumValue = maximumValue,
+        initialValue = initialValue,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        id = id,
+        onValueChanged = onValueChanged
+    )
+
+    constructor(
+        @StringRes text: Int,
+        minimumValue: Int = DEFAULT_MINIMUM_VALUE,
+        maximumValue: Int = DEFAULT_MAXIMUM_VALUE,
+        initialValue: Int = minimumValue,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        id: String = Module.randomId,
+        onValueChanged: (Int) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    ) : this(
+        text = { Text.ResourceId(text) },
         minimumValue = minimumValue,
         maximumValue = maximumValue,
         initialValue = initialValue,

@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
@@ -40,6 +41,24 @@ data class SwitchModule(
         onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
         text = { Text.CharSequence(text) },
+        initialValue = initialValue,
+        isEnabled = isEnabled,
+        isValuePersisted = isValuePersisted,
+        shouldRequireConfirmation = shouldRequireConfirmation,
+        id = id,
+        onValueChanged = onValueChanged
+    )
+
+    constructor(
+        @StringRes text: Int,
+        initialValue: Boolean = DEFAULT_INITIAL_VALUE,
+        isEnabled: Boolean = DEFAULT_IS_ENABLED,
+        isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
+        shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
+        id: String = Module.randomId,
+        onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    ) : this(
+        text = { Text.ResourceId(text) },
         initialValue = initialValue,
         isEnabled = isEnabled,
         isValuePersisted = isValuePersisted,

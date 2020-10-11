@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.TextModule.Companion.DEFAULT_ON_ITEM_SELECTED
@@ -23,6 +24,16 @@ data class TextModule(
         onItemSelected: (() -> Unit)? = DEFAULT_ON_ITEM_SELECTED
     ) : this(
         text = Text.CharSequence(text),
+        id = id,
+        onItemSelected = onItemSelected
+    )
+
+    constructor(
+        @StringRes text: Int,
+        id: String = Module.randomId,
+        onItemSelected: (() -> Unit)? = DEFAULT_ON_ITEM_SELECTED
+    ) : this(
+        text = Text.ResourceId(text),
         id = id,
         onItemSelected = onItemSelected
     )
