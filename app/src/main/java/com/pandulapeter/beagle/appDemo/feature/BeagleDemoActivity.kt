@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.pandulapeter.beagle.Beagle
@@ -54,7 +55,7 @@ class BeagleDemoActivity : AppCompatActivity() {
 
     private fun setupEdgeToEdge() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.setDecorFitsSystemWindows(false)
+            WindowCompat.setDecorFitsSystemWindows(window, false)
             binding.beagleButton.run {
                 val margin = dimension(R.dimen.beagle_button_margin)
                 ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
