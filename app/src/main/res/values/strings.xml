@@ -278,8 +278,19 @@
     <string name="case_study_overlay_text_3">Multiple <i>OverlayListener</i> implementations can draw on the canvas: invalidating basically invokes all registered listeners in order.\n\nA more useful example of overlay listeners is implemented in the built-in <i>KeylineOverlaySwitch</i> module.</string>
 
     <!-- Case studies / Navigation -->
-    <string name="case_study_navigation_title">Navigation within the menu</string>
+    <string name="case_study_navigation_title">Navigating within the menu</string>
     <string name="case_study_navigation_description">Create submenus to better organize the modules.</string>
+    <string name="case_study_navigation_text_1">Coming soon</string>
+    <string name="case_study_navigation_header_title">Debug menu</string>
+    <string name="case_study_navigation_header_subtitle">Navigation example</string>
+    <string name="case_study_navigation_header_text">You can navigate within this debug menu!</string>
+    <string name="case_study_navigation_header_section_1">Section 1</string>
+    <string name="case_study_navigation_header_section_1_detail">Welcome to Section 1!</string>
+    <string name="case_study_navigation_header_section_2">Section 2</string>
+    <string name="case_study_navigation_header_section_2_detail">Welcome to Section 2!</string>
+    <string name="case_study_navigation_header_section_3">Section 3</string>
+    <string name="case_study_navigation_header_section_3_detail">Welcome to Section 3!</string>
+    <string name="case_study_navigation_close_section">Close section</string>
 
     <!-- Case studies / Bug reporting tool -->
     <string name="case_study_bug_reporting_tool_title">Bug reporting tool</string>

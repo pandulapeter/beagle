@@ -10,6 +10,8 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
 
 class OverlayViewModel : ListViewModel<ListItem>() {
 
+    var isSwitchEnabled = false
+
     override val items: LiveData<List<ListItem>> = MutableLiveData(
         listOf(
             TextViewHolder.UiModel(R.string.case_study_overlay_text_1),

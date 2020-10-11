@@ -8,11 +8,13 @@ import com.pandulapeter.beagle.modules.TextModule
 fun createTextModule(
     @StringRes textResourceId: Int,
     @DrawableRes icon: Int? = null,
-    id: String = "text_$textResourceId"
+    id: String = "text_$textResourceId",
+    onItemSelected: (() -> Unit)? = null
 ) = TextModule(
     id = id,
     text = textResourceId,
-    icon = icon
+    icon = icon,
+    onItemSelected = onItemSelected
 )
 
 fun createSectionHeaderModule(

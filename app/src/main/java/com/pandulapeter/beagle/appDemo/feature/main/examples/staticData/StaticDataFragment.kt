@@ -43,7 +43,7 @@ class StaticDataFragment : ExamplesDetailFragment<StaticDataViewModel, ListItem>
         PaddingModule(),
         PaddingModule(),
         createTextModule(R.string.case_study_static_data_module_text_3),
-        DividerModule(id = "divider"),
+        DividerModule("divider"),
         createTextModule(R.string.case_study_static_data_module_text_4),
         KeyValueListModule(
             id = "keyValueList",

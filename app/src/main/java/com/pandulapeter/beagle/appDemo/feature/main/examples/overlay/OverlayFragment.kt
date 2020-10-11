@@ -29,10 +29,8 @@ class OverlayFragment : ExamplesDetailFragment<OverlayViewModel, ListItem>(R.str
             alpha = 192
         }
     }
-    private var isSwitchEnabled = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        isSwitchEnabled = savedInstanceState?.getBoolean(IS_SWITCH_ENABLED) ?: isSwitchEnabled
         super.onViewCreated(view, savedInstanceState)
         Beagle.addOverlayListener(
             listener = this,
@@ -48,21 +46,16 @@ class OverlayFragment : ExamplesDetailFragment<OverlayViewModel, ListItem>(R.str
         createTextModule(R.string.case_study_overlay_hint),
         SwitchModule(
             text = getText(R.string.case_study_overlay_enable),
-            initialValue = isSwitchEnabled,
+            initialValue = viewModel.isSwitchEnabled,
             onValueChanged = {
-                isSwitchEnabled = it
+                viewModel.isSwitchEnabled = it
                 Beagle.invalidateOverlay()
             }
         )
     )
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean(IS_SWITCH_ENABLED, isSwitchEnabled)
-    }
-
     override fun onDrawOver(canvas: Canvas, insets: Insets) {
-        if (isSwitchEnabled) {
+        if (viewModel.isSwitchEnabled) {
             val usableWidth = canvas.width - insets.left - insets.right
             val usableHeight = canvas.height - insets.top - insets.bottom
             canvas.drawCircle(
@@ -75,8 +68,6 @@ class OverlayFragment : ExamplesDetailFragment<OverlayViewModel, ListItem>(R.str
     }
 
     companion object {
-        private const val IS_SWITCH_ENABLED = "isSwitchEnabled"
-
         fun newInstance() = OverlayFragment()
     }
 }
