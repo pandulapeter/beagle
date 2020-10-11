@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class RetrofitRemoteSongSource : RemoteSongSource {
+class OkHttpRemoteSongSource : RemoteSongSource {
 
     private val songService: SongService = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)

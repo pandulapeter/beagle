@@ -35,14 +35,20 @@ class NetworkRequestInterceptorViewModel(
     private var job: Job? = null
     private val _items = MutableLiveData(listOf<NetworkRequestInterceptorListItem>())
     override val items: LiveData<List<NetworkRequestInterceptorListItem>> = _items
+    private var selectedEngine: SongRepository.Engine = SongRepository.Engine.values().first()
+        set(value) {
+            field = value
+            refreshItems()
+        }
 
     init {
         loadSong()
         refreshItems()
     }
 
-    fun onSongSelected(selectedItem: RadioButtonViewHolder.UiModel) {
+    fun onRadioButtonSelected(selectedItem: RadioButtonViewHolder.UiModel) {
         SongTitle.fromResourceId(selectedItem.titleResourceId)?.let { selectedSong = it }
+        SongRepository.Engine.fromResourceId(selectedItem.titleResourceId)?.let { selectedEngine = it }
     }
 
     fun loadSong() {
@@ -51,7 +57,7 @@ class NetworkRequestInterceptorViewModel(
             isLoading = true
             refreshItems()
             job = viewModelScope.launch {
-                loadedSong = songRepository.getSong(selectedSong.id)
+                loadedSong = songRepository.getSong(selectedSong.id, selectedEngine)
                 isLoading = false
                 refreshItems()
             }
@@ -61,6 +67,8 @@ class NetworkRequestInterceptorViewModel(
     private fun refreshItems() {
         _items.value = mutableListOf<NetworkRequestInterceptorListItem>().apply {
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_1))
+            addAll(SongRepository.Engine.values().map { engine -> RadioButtonViewHolder.UiModel(engine.nameResourceId, selectedEngine == engine) })
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_2))
             addAll(SongTitle.values().map { songTitle -> RadioButtonViewHolder.UiModel(songTitle.titleResourceId, selectedSong == songTitle) })
             if (isLoading) {
                 add(LoadingIndicatorViewHolder.UiModel())
@@ -71,9 +79,9 @@ class NetworkRequestInterceptorViewModel(
                     add(ErrorViewHolder.UiModel())
                 }
             }
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_2))
-            add(CodeSnippetViewHolder.UiModel("NetworkLogListModule()"))
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_3))
+            add(CodeSnippetViewHolder.UiModel("NetworkLogListModule()"))
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_4))
             add(
                 CodeSnippetViewHolder.UiModel(
                     "dependencies {\n" +
@@ -86,7 +94,7 @@ class NetworkRequestInterceptorViewModel(
                             "}"
                 )
             )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_4))
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_5))
             add(
                 CodeSnippetViewHolder.UiModel(
                     "Beagle.initialize(\n" +
@@ -98,7 +106,7 @@ class NetworkRequestInterceptorViewModel(
                             ")"
                 )
             )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_5))
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_6))
             add(
                 CodeSnippetViewHolder.UiModel(
                     "val client = OkHttpClient.Builder()\n" +
@@ -107,7 +115,7 @@ class NetworkRequestInterceptorViewModel(
                             "    .build()"
                 )
             )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_6))
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_7))
             add(
                 CodeSnippetViewHolder.UiModel(
                     "dependencies {\n" +
@@ -120,7 +128,7 @@ class NetworkRequestInterceptorViewModel(
                             "}"
                 )
             )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_7))
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_8))
             add(
                 CodeSnippetViewHolder.UiModel(
                     "Beagle.initialize(\n" +
@@ -132,7 +140,7 @@ class NetworkRequestInterceptorViewModel(
                             ")"
                 )
             )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_8))
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_9))
             add(
                 CodeSnippetViewHolder.UiModel(
                     "val client = HttpClient(engine) {\n" +
@@ -141,9 +149,9 @@ class NetworkRequestInterceptorViewModel(
                             "}"
                 )
             )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_9))
-            add(ClearButtonViewHolder.UiModel())
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_10))
+            add(ClearButtonViewHolder.UiModel())
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_11))
         }
     }
 

@@ -21,7 +21,7 @@ class NetworkRequestInterceptorFragment :
     override fun createAdapter() = NetworkRequestInterceptorAdapter(
         scope = viewModel.viewModelScope,
         onSongCardPressed = { Beagle.show() },
-        onSongSelected = viewModel::onSongSelected,
+        onSongSelected = viewModel::onRadioButtonSelected,
         onTryAgainButtonPressed = viewModel::loadSong,
         onClearLogsButtonPressed = ::clearNetworkLogs
     )
