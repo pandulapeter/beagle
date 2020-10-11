@@ -46,6 +46,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
             addInitializationSection()
             addModuleConfigurationSection()
             addCustomizationSection()
+            addLocalizationSection()
             addTroubleshootingSection()
         }
     }
@@ -80,13 +81,14 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                 codeSnippet = "dependencies {\n" +
                         "    …\n" +
                         "    def beagleVersion = \"${BuildConfig.BEAGLE_VERSION}\" // Check the GitHub repository for the latest version\n" +
-                        "    debugImplementation \"com.github.pandulapeter.beagle:ui-${when (selectedUiVariant) {
-                            UiVariant.ACTIVITY -> "activity"
-                            UiVariant.BOTTOM_SHEET -> "bottom-sheet"
-                            UiVariant.DIALOG -> "dialog"
-                            UiVariant.DRAWER -> "drawer"
-                            UiVariant.VIEW -> "view"
-                        }
+                        "    debugImplementation \"com.github.pandulapeter.beagle:ui-${
+                            when (selectedUiVariant) {
+                                UiVariant.ACTIVITY -> "activity"
+                                UiVariant.BOTTOM_SHEET -> "bottom-sheet"
+                                UiVariant.DIALOG -> "dialog"
+                                UiVariant.DRAWER -> "drawer"
+                                UiVariant.VIEW -> "view"
+                            }
                         }:\$beagleVersion\"\n" +
                         "    releaseImplementation \"com.github.pandulapeter.beagle:noop:\$beagleVersion\"\n" +
                         "}"
@@ -131,6 +133,10 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         add(TextViewHolder.UiModel(R.string.setup_customization_3))
     }
 
+    private fun MutableList<SetupListItem>.addLocalizationSection() = addSection(Section.LOCALIZATION) {
+        add(TextViewHolder.UiModel(R.string.setup_localization_2))
+    }
+
     private fun MutableList<SetupListItem>.addTroubleshootingSection() = addSection(Section.TROUBLESHOOTING) {
         add(TextViewHolder.UiModel(R.string.setup_troubleshooting_2))
         add(
@@ -169,6 +175,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         INITIALIZATION(R.string.setup_initialization_1),
         MODULE_CONFIGURATION(R.string.setup_module_configuration_1),
         CUSTOMIZATION(R.string.setup_customization_1),
+        LOCALIZATION(R.string.setup_localization_1),
         TROUBLESHOOTING(R.string.setup_troubleshooting_1);
 
         companion object {
