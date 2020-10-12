@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
@@ -20,6 +19,7 @@ import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.shareFiles
 import com.pandulapeter.beagle.core.util.extension.text
+import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
 import com.pandulapeter.beagle.utils.consume
@@ -29,7 +29,7 @@ import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFragment.OnPositiveButtonClickedListener {
 
-    private val viewModel by lazy { ViewModelProvider(this).get(GalleryViewModel::class.java) }
+    private val viewModel by viewModel<GalleryViewModel>()
     private val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
     private lateinit var shareButton: MenuItem
     private lateinit var deleteButton: MenuItem

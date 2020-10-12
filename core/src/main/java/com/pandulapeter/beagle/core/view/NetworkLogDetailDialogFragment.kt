@@ -1,11 +1,7 @@
 package com.pandulapeter.beagle.core.view
 
 import android.app.Dialog
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.StyleSpan
 import android.view.MenuItem
 import android.view.ViewTreeObserver
 import android.widget.ProgressBar
@@ -18,42 +14,28 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.shareText
 import com.pandulapeter.beagle.core.util.extension.text
+import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
-import org.json.JSONTokener
-import kotlin.math.max
 
 //TODO: Add UI controls for showing / hiding event metadata
 internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
+    private val viewModel by viewModel<NetworkLogDetailDialogViewModel>()
     private lateinit var appBar: AppBarLayout
     private lateinit var toolbar: Toolbar
     private lateinit var textView: TextView
     private lateinit var scrollView: ScrollView
     private lateinit var progressBar: ProgressBar
     private lateinit var shareButton: MenuItem
-    private var isJsonReady = false
-    private var job: Job? = null
     private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
-    private val textHeaders by lazy { context?.text(BeagleCore.implementation.appearance.networkLogTexts.headers) }
-    private val textNone by lazy { context?.text(BeagleCore.implementation.appearance.networkLogTexts.none) }
-    private val textTimestamp by lazy { context?.text(BeagleCore.implementation.appearance.networkLogTexts.timestamp) }
-    private val textDuration by lazy { context?.text(BeagleCore.implementation.appearance.networkLogTexts.duration) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
         .setView(R.layout.beagle_dialog_fragment_network_log_detail)
@@ -83,40 +65,23 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
             }
-            formatJson()
-        }
-    }
-
-    //TODO: Use ViewModelScope, remove isJsonReady flag
-    private fun formatJson() {
-        if (isJsonReady) {
-            progressBar.visible = false
-        } else {
-            job?.cancel()
-            job = GlobalScope.launch {
-                val title = "${if (arguments?.isOutgoing == true) "↑" else "↓"} ${arguments?.url.orEmpty()}"
-                val text = SpannableString(
-                    title
-                        .append("\n\n• ${textHeaders}:${arguments?.headers?.formatHeaders()}")
-                        .let { text ->
-                            arguments?.timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text
-                        }
-                        .let { text -> arguments?.duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
-                        .append("\n\n${arguments?.payload?.formatToJson()}")
-                ).apply { setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE) }
-                launch(Dispatchers.Main) {
-                    progressBar.visible = false
-                    textView.text = text
-                    isJsonReady = true
-                    job = null
-                }
+            viewModel.isProgressBarVisible.observe(this, { progressBar.visible = it })
+            viewModel.formattedJson.observe(this, { textView.text = it })
+            if (viewModel.isProgressBarVisible.value == true) {
+                viewModel.formatJson(
+                    isOutgoing = arguments?.isOutgoing == true,
+                    url = arguments?.url.orEmpty(),
+                    headers = arguments?.headers.orEmpty(),
+                    timestamp = arguments?.timestamp,
+                    duration = arguments?.duration,
+                    payload = arguments?.payload.orEmpty()
+                )
             }
         }
     }
 
     override fun onPause() {
         super.onPause()
-        job?.cancel()
         scrollView.viewTreeObserver.removeOnScrollChangedListener(scrollListener)
     }
 
@@ -125,34 +90,10 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
         else -> false
     }
 
-    private fun List<String>?.formatHeaders() = if (isNullOrEmpty()) " [${textNone}]" else joinToString("") { header -> "\n    • $header" }
-
     private fun shareText() {
         textView.text?.let { text ->
             activity?.shareText(text.toString())
         }
-    }
-
-    private fun String.formatToJson() = try {
-        if (isJson()) {
-            val obj = JSONTokener(this).nextValue()
-            if (obj is JSONObject) obj.toString(4) else (obj as? JSONArray)?.toString(4) ?: (obj as String)
-        } else this
-    } catch (e: JSONException) {
-        this
-    }
-
-    private fun String.isJson(): Boolean {
-        try {
-            JSONObject(this)
-        } catch (_: JSONException) {
-            try {
-                JSONArray(this)
-            } catch (_: JSONException) {
-                return false
-            }
-        }
-        return true
     }
 
     companion object {
