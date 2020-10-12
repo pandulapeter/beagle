@@ -17,9 +17,11 @@ import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Comp
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_SHARE_ERROR_TEXT
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_SHARE_HINT
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_DURATION
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_HEADERS
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_NONE
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TIMESTAMP
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TOGGLE_DETAILS_HINT
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE
@@ -142,18 +144,21 @@ data class Appearance(
      * @param none - The term used when the list of headers is empty. [DEFAULT_NONE] by default.
      * @param timestamp - The term used for the timestamp of the logged event. [DEFAULT_TIMESTAMP] by default.
      * @param duration - The term used for the duration of the logged event. [DEFAULT_DURATION] by default.
+     * @param toggleDetailsHint - The hint for the on / off toggle that hides or shows network event metadata. [DEFAULT_TOGGLE_DETAILS_HINT] by default.
      */
     data class NetworkLogTexts(
         val headers: Text = Text.CharSequence(DEFAULT_HEADERS),
         val none: Text = Text.CharSequence(DEFAULT_NONE),
         val timestamp: Text = Text.CharSequence(DEFAULT_TIMESTAMP),
-        val duration: Text = Text.CharSequence(DEFAULT_DURATION)
+        val duration: Text = Text.CharSequence(DEFAULT_DURATION),
+        val toggleDetailsHint: Text = Text.CharSequence(DEFAULT_TOGGLE_DETAILS_HINT)
     ) {
         companion object {
             private const val DEFAULT_HEADERS = "Headers"
             private const val DEFAULT_NONE = "none"
             private const val DEFAULT_TIMESTAMP = "Timestamp"
             private const val DEFAULT_DURATION = "Duration"
+            private const val DEFAULT_TOGGLE_DETAILS_HINT = "Toggle details"
         }
     }
 
