@@ -25,6 +25,7 @@ import com.pandulapeter.beagle.modules.ForceCrashButtonModule.Companion.ID
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
  * @param onButtonPressed - Callback invoked when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
  */
+@Suppress("unused")
 data class ForceCrashButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
     val exception: RuntimeException = RuntimeException(DEFAULT_EXCEPTION_MESSAGE),

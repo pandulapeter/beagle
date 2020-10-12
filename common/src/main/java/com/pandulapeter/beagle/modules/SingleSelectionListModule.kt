@@ -27,6 +27,7 @@ import com.pandulapeter.beagle.modules.SingleSelectionListModule.Companion.DEFAU
  * @param id - A unique identifier for the module. [Module.randomId] by default.
  * @param onSelectionChanged - Callback invoked when the changes the selection. The parameter is the currently selected item. Empty implementation by default.
  */
+@Suppress("unused")
 data class SingleSelectionListModule<T : BeagleListItemContract>(
     val title: (T?) -> Text,
     val items: List<T>,

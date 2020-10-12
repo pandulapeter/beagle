@@ -29,6 +29,7 @@ import com.pandulapeter.beagle.modules.TextInputModule.Companion.DEFAULT_VALIDAT
  * @param validator - A lambda that returns whether or not its argument is a valid value for this module. [DEFAULT_VALIDATOR] by default.
  * @param onValueChanged - Callback triggered when the user changes the current value. In case of persisted values, this will also get called the first time the module is added. [DEFAULT_ON_VALUE_CHANGED] by default.
  */
+@Suppress("unused")
 data class TextInputModule(
     override val text: (String) -> Text,
     override val initialValue: String = DEFAULT_INITIAL_VALUE,

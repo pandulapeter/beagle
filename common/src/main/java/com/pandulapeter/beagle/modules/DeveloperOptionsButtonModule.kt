@@ -25,6 +25,7 @@ import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule.Companion.ID
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
  * @param onButtonPressed - Callback invoked when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
  */
+@Suppress("unused")
 data class DeveloperOptionsButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
     val shouldOpenInNewTask: Boolean = DEFAULT_SHOULD_OPEN_IN_NEW_TASK,

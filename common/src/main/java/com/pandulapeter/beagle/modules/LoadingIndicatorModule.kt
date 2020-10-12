@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
  *
  * @param id - A unique identifier for the module. [Module.randomId] by default.
  */
+@Suppress("unused")
 data class LoadingIndicatorModule(
     override val id: String = Module.randomId
 ) : Module<LoadingIndicatorModule>

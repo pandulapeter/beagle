@@ -21,6 +21,7 @@ import com.pandulapeter.beagle.modules.CheckBoxModule.Companion.DEFAULT_SHOULD_R
  * @param shouldRequireConfirmation - Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step. [DEFAULT_SHOULD_REQUIRE_CONFIRMATION] by default.
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. [DEFAULT_ON_VALUE_CHANGED] by default.
  */
+@Suppress("unused")
 data class CheckBoxModule(
     override val text: (Boolean) -> Text,
     override val id: String = Module.randomId,

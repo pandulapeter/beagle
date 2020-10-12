@@ -15,6 +15,7 @@ import com.pandulapeter.beagle.modules.KeyValueListModule.Companion.DEFAULT_IS_E
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  * @param id - A unique identifier for the module. [Module.randomId] by default.
  */
+@Suppress("unused")
 data class KeyValueListModule(
     val title: Text,
     val pairs: List<Pair<Text, Text>>,

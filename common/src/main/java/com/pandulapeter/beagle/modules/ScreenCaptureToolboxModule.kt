@@ -26,6 +26,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * @param galleryText - The text that should be displayed on the gallery button. [DEFAULT_GALLERY_TEXT] by default.
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
+@Suppress("unused")
 data class ScreenCaptureToolboxModule(
     val title: Text = Text.CharSequence(DEFAULT_TITLE),
     val imageText: Text? = Text.CharSequence(DEFAULT_IMAGE_TEXT),

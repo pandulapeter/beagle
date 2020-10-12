@@ -29,6 +29,7 @@ import java.util.Locale
  * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [BeagleContract.LOG_TIME_FORMAT] by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
+@Suppress("unused")
 data class NetworkLogListModule(
     val title: Text = Text.CharSequence(DEFAULT_TITLE),
     val baseUrl: String = DEFAULT_BASE_URL,
