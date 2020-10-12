@@ -11,6 +11,7 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
+import com.pandulapeter.beagle.modules.BugReportButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
@@ -276,6 +277,13 @@ sealed class ModuleWrapper(
         codeSnippet = "AppInfoButtonModule()"
     )
 
+    object BugReportButtonWrapper : ModuleWrapper(
+        titleResourceId = R.string.add_module_bug_report_button,
+        descriptionResourceId = R.string.add_module_bug_report_button_description,
+        module = BugReportButtonModule(),
+        codeSnippet = "BugReportButtonModule()"
+    )
+
     object DeveloperOptionsButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_developer_options_button,
         descriptionResourceId = R.string.add_module_developer_options_button_description,
@@ -293,8 +301,8 @@ sealed class ModuleWrapper(
     object ForceCrashButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_force_crash_button,
         descriptionResourceId = R.string.add_module_force_crash_button_description,
-        module = ForceCrashButtonModule(),
-        codeSnippet = "ForceCrashButtonModule()"
+        module = ForceCrashButtonModule(isEnabled = false),
+        codeSnippet = "ForceCrashButtonModule(isEnabled = false)"
     )
 
     object GalleryButtonWrapper : ModuleWrapper(

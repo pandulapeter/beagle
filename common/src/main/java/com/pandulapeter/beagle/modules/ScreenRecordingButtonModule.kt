@@ -46,7 +46,7 @@ data class ScreenRecordingButtonModule(
     companion object {
         const val ID = "screenRecordingButton"
         private const val DEFAULT_TEXT = "Record a video"
-        private val DEFAULT_TYPE = TextModule.Type.BUTTON
+        private val DEFAULT_TYPE = TextModule.Type.NORMAL
         private val DEFAULT_ICON: Int? = null
         private const val DEFAULT_IS_ENABLED = true
         private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}

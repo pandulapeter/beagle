@@ -40,7 +40,7 @@ data class ForceCrashButtonModule(
         const val ID = "forceCrashButton"
         private const val DEFAULT_TEXT = "Force crash"
         private const val DEFAULT_EXCEPTION_MESSAGE = "Test crash"
-        private val DEFAULT_TYPE = TextModule.Type.BUTTON
+        private val DEFAULT_TYPE = TextModule.Type.NORMAL
         private val DEFAULT_ICON: Int? = null
         private const val DEFAULT_IS_ENABLED = true
         private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}

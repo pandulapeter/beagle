@@ -10,6 +10,10 @@
             android:name=".view.gallery.GalleryActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".view.bugReport.BugReportActivity"
+            android:launchMode="singleTop" />
+
         <service
             android:name=".util.ScreenCaptureService"
             android:exported="false"

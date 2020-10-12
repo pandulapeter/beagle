@@ -43,6 +43,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
             addAnimationDurationSwitchSection()
             addLifecycleLogListSection()
             addDeviceInfoSection()
+            addBugReportSection()
         }
     }
 
@@ -53,7 +54,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
                 "Beagle.set(\n" +
                         "    AppInfoButtonModule(),\n" +
                         "    DeveloperOptionsButtonModule(),\n" +
-                        "    ForceCrashButtonModule(),\n" +
+                        "    ForceCrashButtonModule(isEnabled = false),\n" +
                         "    ScreenshotButtonModule(),\n" +
                         "    ScreenRecordingButtonModule(), // Only available on API 21 and above\n" +
                         "    GalleryButtonModule(),\n" +
@@ -62,6 +63,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
                         "    AnimationDurationSwitchModule()\n" +
                         "    LifecycleLogListModule()\n" +
                         "    DeviceInformationModule()\n" +
+                        "    BugReportButtonModule()\n" +
                         ")"
             )
         )
@@ -114,13 +116,18 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_simple_setup_device_info_2))
     }
 
-    private fun MutableList<SimpleSetupListItem>.addSection(section: Section, action: MutableList<SimpleSetupListItem>.() -> Unit) = (selectedSection == section).also { isExpanded ->
-        add(SectionHeaderViewHolder.UiModel(section.titleResourceId, isExpanded))
-        if (isExpanded) {
-            action()
-            add(SpaceViewHolder.UiModel())
-        }
+    private fun MutableList<SimpleSetupListItem>.addBugReportSection() = addSection(Section.BUG_REPORT) {
+        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_bug_report_2))
     }
+
+    private fun MutableList<SimpleSetupListItem>.addSection(section: Section, action: MutableList<SimpleSetupListItem>.() -> Unit) =
+        (selectedSection == section).also { isExpanded ->
+            add(SectionHeaderViewHolder.UiModel(section.titleResourceId, isExpanded))
+            if (isExpanded) {
+                action()
+                add(SpaceViewHolder.UiModel())
+            }
+        }
 
     private enum class Section(@StringRes val titleResourceId: Int) {
         APP_INFO_BUTTON(R.string.case_study_simple_setup_app_info_button_1),
@@ -133,7 +140,8 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         KEYLINE_OVERLAY_SWITCH(R.string.case_study_simple_setup_keyline_overlay_switch_1),
         ANIMATION_DURATION_SWITCH(R.string.case_study_simple_setup_animation_duration_switch_1),
         LIFECYCLE_LOG_LIST(R.string.case_study_simple_setup_lifecycle_log_list_1),
-        DEVICE_INFO(R.string.case_study_simple_setup_device_info_1);
+        DEVICE_INFO(R.string.case_study_simple_setup_device_info_1),
+        BUG_REPORT(R.string.case_study_simple_setup_bug_report_1);
 
         companion object {
             fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }

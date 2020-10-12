@@ -20,6 +20,7 @@ import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 import com.pandulapeter.beagle.modules.SingleSelectionListModule
+import com.pandulapeter.beagle.modules.TextModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup_title) {
@@ -50,7 +51,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         createTextModule(R.string.setup_debug_menu_text_1),
         DividerModule(id = "divider1"),
         AppInfoButtonModule(text = Text.ResourceId(R.string.setup_debug_menu_app_info_button)),
-        ScreenshotButtonModule(text = Text.ResourceId(R.string.setup_debug_menu_screenshot_button)),
+        ScreenshotButtonModule(text = Text.ResourceId(R.string.setup_debug_menu_screenshot_button), type = TextModule.Type.BUTTON),
         KeylineOverlaySwitchModule(text = { Text.ResourceId(R.string.setup_debug_menu_keyline_overlay_switch) }),
         listOf(
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_1)),

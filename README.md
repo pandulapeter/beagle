@@ -110,7 +110,8 @@ Beagle.set(
     LifecycleLogListModule(),
     DividerModule(),
     TextModule("Other", TextModule.Type.SECTION_HEADER),
-    DeviceInfoModule()
+    DeviceInfoModule(),
+    BugReportButtonModule()
 )
 ```
 

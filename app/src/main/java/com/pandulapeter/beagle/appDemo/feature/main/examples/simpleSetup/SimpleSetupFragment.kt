@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.Si
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
+import com.pandulapeter.beagle.modules.BugReportButtonModule
 import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule
@@ -32,7 +33,7 @@ class SimpleSetupFragment : ExamplesDetailFragment<SimpleSetupViewModel, SimpleS
     override fun getBeagleModules(): List<Module<*>> = mutableListOf<Module<*>>().apply {
         add(AppInfoButtonModule())
         add(DeveloperOptionsButtonModule())
-        add(ForceCrashButtonModule())
+        add(ForceCrashButtonModule(isEnabled = false))
         add(ScreenshotButtonModule())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             add(ScreenRecordingButtonModule())
@@ -43,6 +44,7 @@ class SimpleSetupFragment : ExamplesDetailFragment<SimpleSetupViewModel, SimpleS
         add(AnimationDurationSwitchModule(onValueChanged = { viewModel.refreshItems() }))
         add(LifecycleLogListModule())
         add(DeviceInfoModule())
+        add(BugReportButtonModule())
     }
 
     companion object {

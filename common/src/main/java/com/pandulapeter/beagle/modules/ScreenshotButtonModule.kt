@@ -42,7 +42,7 @@ data class ScreenshotButtonModule(
     companion object {
         const val ID = "screenshotButton"
         private const val DEFAULT_TEXT = "Take a screenshot"
-        private val DEFAULT_TYPE = TextModule.Type.BUTTON
+        private val DEFAULT_TYPE = TextModule.Type.NORMAL
         private val DEFAULT_ICON: Int? = null
         private const val DEFAULT_IS_ENABLED = true
         private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}

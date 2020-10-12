@@ -5,17 +5,18 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
-import com.pandulapeter.beagle.modules.GalleryButtonModule.Companion.DEFAULT_ICON
-import com.pandulapeter.beagle.modules.GalleryButtonModule.Companion.DEFAULT_IS_ENABLED
-import com.pandulapeter.beagle.modules.GalleryButtonModule.Companion.DEFAULT_ON_BUTTON_PRESSED
-import com.pandulapeter.beagle.modules.GalleryButtonModule.Companion.DEFAULT_TEXT
-import com.pandulapeter.beagle.modules.GalleryButtonModule.Companion.DEFAULT_TYPE
+import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_ICON
+import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_IS_ENABLED
+import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_ON_BUTTON_PRESSED
+import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_TEXT
+import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_TYPE
+import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.GalleryButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 
 
 /**
- * Displays a button that opens the gallery of captured screenshot images and screen recording videos.
+ * Displays a button that opens the bug reporting screen.
  * Check out the [Appearance] class for customization options.
  *
  * This module can only be added once. It uses the value of [ID] as id.
@@ -26,19 +27,19 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
  * @param onButtonPressed - Callback invoked when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
  */
-data class GalleryButtonModule(
+data class BugReportButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
     val type: TextModule.Type = DEFAULT_TYPE,
     @DrawableRes val icon: Int? = DEFAULT_ICON,
     val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     val onButtonPressed: () -> Unit = {}
-) : Module<GalleryButtonModule> {
+) : Module<BugReportButtonModule> {
 
     override val id: String = ID
 
     companion object {
-        const val ID = "galleryButton"
-        private const val DEFAULT_TEXT = "Open the gallery"
+        const val ID = "bugReportButton"
+        private const val DEFAULT_TEXT = "Report a bug"
         private val DEFAULT_TYPE = TextModule.Type.NORMAL
         private val DEFAULT_ICON: Int? = null
         private const val DEFAULT_IS_ENABLED = true

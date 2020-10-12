@@ -323,6 +323,12 @@ interface BeagleContract {
     fun openGallery() = Unit
 
     /**
+     * Opens the bug reporting screen.
+     * Check out the [Appearance] class for customization options.
+     */
+    fun openBugReportingScreen() = Unit
+
+    /**
      * Call this function to trigger recreating every cell model for every module.
      * Due to the underlying RecyclerView implementation this will only result in UI update events where differences are found.
      *

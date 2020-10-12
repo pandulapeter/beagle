@@ -10,24 +10,25 @@ import java.util.Collections
 class ModuleRepository {
 
     private val listeners = mutableListOf<Listener>()
-    private val _modules = mutableListOf<ModuleWrapper>().apply {
-        add(ModuleWrapper.HeaderWrapper)
-        add(ModuleWrapper.AppInfoButtonWrapper)
-        add(ModuleWrapper.DeveloperOptionsButtonWrapper)
-        add(ModuleWrapper.PaddingWrapper())
-        add(ModuleWrapper.TextSectionHeaderWrapper())
-        add(ModuleWrapper.KeylineOverlaySwitchWrapper)
-        add(ModuleWrapper.AnimationDurationSwitchWrapper)
-        add(ModuleWrapper.ScreenCaptureToolboxWrapper)
-        add(ModuleWrapper.DividerWrapper())
-        add(ModuleWrapper.TextSectionHeaderWrapper())
-        add(ModuleWrapper.NetworkLogListWrapper)
-        add(ModuleWrapper.LogListWrapper())
-        add(ModuleWrapper.LifecycleLogListWrapper)
-        add(ModuleWrapper.DividerWrapper())
-        add(ModuleWrapper.TextSectionHeaderWrapper())
-        add(ModuleWrapper.DeviceInfoWrapper)
-    }
+    private val _modules = mutableListOf(
+        ModuleWrapper.HeaderWrapper,
+        ModuleWrapper.AppInfoButtonWrapper,
+        ModuleWrapper.DeveloperOptionsButtonWrapper,
+        ModuleWrapper.PaddingWrapper(),
+        ModuleWrapper.TextSectionHeaderWrapper(),
+        ModuleWrapper.KeylineOverlaySwitchWrapper,
+        ModuleWrapper.AnimationDurationSwitchWrapper,
+        ModuleWrapper.ScreenCaptureToolboxWrapper,
+        ModuleWrapper.DividerWrapper(),
+        ModuleWrapper.TextSectionHeaderWrapper(),
+        ModuleWrapper.NetworkLogListWrapper,
+        ModuleWrapper.LogListWrapper(),
+        ModuleWrapper.LifecycleLogListWrapper,
+        ModuleWrapper.DividerWrapper(),
+        ModuleWrapper.TextSectionHeaderWrapper(),
+        ModuleWrapper.DeviceInfoWrapper,
+        ModuleWrapper.BugReportButtonWrapper
+    )
     val modules: List<ModuleWrapper> get() = _modules
 
     @Suppress("unused")

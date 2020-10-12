@@ -18,6 +18,7 @@ import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.core.list.CellAdapter
 import com.pandulapeter.beagle.core.list.delegates.AnimationDurationSwitchDelegate
 import com.pandulapeter.beagle.core.list.delegates.AppInfoButtonDelegate
+import com.pandulapeter.beagle.core.list.delegates.BugReportButtonDelegate
 import com.pandulapeter.beagle.core.list.delegates.ButtonDelegate
 import com.pandulapeter.beagle.core.list.delegates.CheckBoxDelegate
 import com.pandulapeter.beagle.core.list.delegates.DeveloperOptionsButtonDelegate
@@ -48,6 +49,7 @@ import com.pandulapeter.beagle.core.list.delegates.TextDelegate
 import com.pandulapeter.beagle.core.list.delegates.TextInputDelegate
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
+import com.pandulapeter.beagle.modules.BugReportButtonModule
 import com.pandulapeter.beagle.modules.ButtonModule
 import com.pandulapeter.beagle.modules.CheckBoxModule
 import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
@@ -109,6 +111,7 @@ internal class ListManager {
     private val moduleDelegates = mutableMapOf(
         AnimationDurationSwitchModule::class to AnimationDurationSwitchDelegate(),
         AppInfoButtonModule::class to AppInfoButtonDelegate(),
+        BugReportButtonModule::class to BugReportButtonDelegate(),
         ButtonModule::class to ButtonDelegate(),
         CheckBoxModule::class to CheckBoxDelegate(),
         DeveloperOptionsButtonModule::class to DeveloperOptionsButtonDelegate(),

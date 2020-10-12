@@ -38,6 +38,7 @@ import java.util.Locale
  * @param generalTexts - Customize general UI strings, see [GeneralTexts].
  * @param screenCaptureTexts - Customize UI strings related to screen capture, see [ScreenCaptureTexts].
  * @param galleryTexts - Customize UI strings related to the Gallery, see [GalleryTexts].
+ * @param bugReportTexts - Customize UI strings related to the bug reporting screen, see [BugReportTexts].
  * @param networkLogTexts - Customize UI strings related to the network event detail dialog, see [NetworkLogTexts].
  * @param networkEventTimestampFormatter - The formatter used for displaying the timestamp of network events on the detail dialog. Formats with [BeagleContract.LOG_TIME_FORMAT] by default.
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with [BeagleContract.GALLERY_DATE_FORMAT] by default.
@@ -48,6 +49,7 @@ data class Appearance(
     val generalTexts: GeneralTexts = GeneralTexts(),
     val screenCaptureTexts: ScreenCaptureTexts = ScreenCaptureTexts(),
     val galleryTexts: GalleryTexts = GalleryTexts(),
+    val bugReportTexts: BugReportTexts = BugReportTexts(),
     val networkLogTexts: NetworkLogTexts = NetworkLogTexts(),
     val networkEventTimestampFormatter: (Long) -> CharSequence = { DEFAULT_NETWORK_EVENT_DATE_FORMAT.format(it) },
     val galleryTimestampFormatter: ((Long) -> CharSequence)? = { DEFAULT_GALLERY_DATE_FORMAT.format(it) },
@@ -132,6 +134,19 @@ data class Appearance(
             private const val DEFAULT_DELETE_CONFIRMATION_MESSAGE_PLURAL = "Are you sure you want to delete these files?"
             private const val DEFAULT_DELETE_CONFIRMATION_POSITIVE = "Delete"
             private const val DEFAULT_DELETE_CONFIRMATION_NEGATIVE = "Cancel"
+        }
+    }
+
+    /**
+     * Holder for copies related to the bug reporting screen.
+     *
+     * @param title - The title of the bug reporting screen. [DEFAULT_TITLE] by default.
+     */
+    data class BugReportTexts(
+        val title: Text = Text.CharSequence(DEFAULT_TITLE),
+    ) {
+        companion object {
+            private const val DEFAULT_TITLE = "Report a bug"
         }
     }
 

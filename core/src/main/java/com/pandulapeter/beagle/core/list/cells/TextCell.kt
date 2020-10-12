@@ -37,7 +37,6 @@ internal data class TextCell(
         override fun bind(model: TextCell) = textView.run {
             setText(model.text)
             isEnabled = model.isEnabled
-            alpha = if (model.isEnabled) 1f else 0.6f
             setTypeface(null, if (model.isSectionHeader) Typeface.BOLD else Typeface.NORMAL)
             setCompoundDrawablesWithIntrinsicBounds(model.icon?.let { icon -> context.tintedDrawable(icon, textColors.defaultColor) }, null, null, null)
             setPadding(

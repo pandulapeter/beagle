@@ -21,6 +21,7 @@ import com.pandulapeter.beagle.common.listeners.NetworkLogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
+import com.pandulapeter.beagle.core.manager.BugReportManager
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.LifecycleLogManager
 import com.pandulapeter.beagle.core.manager.ListManager
@@ -74,6 +75,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     private val networkLogManager by lazy { NetworkLogManager(networkLogListenerManager, listManager, ::refresh) }
     private val listManager by lazy { ListManager() }
     private val screenCaptureManager by lazy { ScreenCaptureManager() }
+    private val bugReportManager by lazy { BugReportManager() }
     internal var onScreenCaptureReady: ((Uri?) -> Unit)?
         get() = screenCaptureManager.onScreenCaptureReady
         set(value) {
@@ -171,6 +173,8 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun recordScreen(callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(callback)
 
     override fun openGallery() = screenCaptureManager.openGallery()
+
+    override fun openBugReportingScreen() = bugReportManager.openBugReportingScreen()
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)
 
