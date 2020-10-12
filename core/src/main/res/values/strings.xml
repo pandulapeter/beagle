@@ -3,5 +3,6 @@
 
     <string name="beagle_share">Share</string>
     <string name="beagle_delete">Delete</string>
+    <string name="beagle_toggle_details">Toggle details</string>
 
 </resources>

@@ -25,6 +25,7 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule.Companion.DEF
  * @param id - A unique identifier for the module. [Module.randomId] by default.
  * @param onSelectionChanged - Callback invoked when the selection is changed. The parameter is a set containing the currently selected items. Empty implementation by default.
  */
+@Suppress("unused")
 data class MultipleSelectionListModule<T : BeagleListItemContract>(
     val title: (Set<T>) -> Text,
     val items: List<T>,

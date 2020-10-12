@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.common.contracts.module.Module
  * @param id - A unique identifier for the module. [Module.randomId] by default.
  * @param onButtonPressed - Callback invoked when the user presses the button.
  */
+@Suppress("unused")
 @Deprecated("Use a TextModule with the TextModule.Type.BUTTON type instead - this class will be removed.")
 data class ButtonModule(
     val text: Text,

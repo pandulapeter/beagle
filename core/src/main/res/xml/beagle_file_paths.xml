@@ -7,6 +7,10 @@
             name="beagle_screen_captures"
             path="beagleScreenCaptures/" />
 
+        <cache-path
+            name="beagle_logs"
+            path="beagleLogs/" />
+
     </paths>
 
 </resources>

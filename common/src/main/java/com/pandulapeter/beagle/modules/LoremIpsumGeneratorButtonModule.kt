@@ -30,6 +30,7 @@ import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule.Companion
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
  * @param onLoremIpsumReady - Callback invoked when the user presses the button. It is invoked with the generated String, as its argument.
  */
+@Suppress("unused")
 data class LoremIpsumGeneratorButtonModule(
     val text: Text = Text.CharSequence(DEFAULT_TEXT),
     val minimumWordCount: Int = DEFAULT_MINIMUM_WORD_COUNT,

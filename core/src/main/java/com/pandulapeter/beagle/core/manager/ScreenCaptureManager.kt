@@ -26,7 +26,7 @@ internal class ScreenCaptureManager {
                 onScreenCaptureReady = null
             }
             currentActivity?.run {
-                val fileName = "${behavior.getImageFileName()}$IMAGE_EXTENSION"
+                val fileName = "${behavior.getImageFileName(System.currentTimeMillis())}$IMAGE_EXTENSION"
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     takeScreenshotWithMediaProjectionManager(fileName)
                 } else {
@@ -45,7 +45,7 @@ internal class ScreenCaptureManager {
                 callback(uri)
                 onScreenCaptureReady = null
             }
-            currentActivity?.recordScreenWithMediaProjectionManager("${behavior.getVideoFileName()}$VIDEO_EXTENSION")
+            currentActivity?.recordScreenWithMediaProjectionManager("${behavior.getVideoFileName(System.currentTimeMillis())}$VIDEO_EXTENSION")
         }
     }
 

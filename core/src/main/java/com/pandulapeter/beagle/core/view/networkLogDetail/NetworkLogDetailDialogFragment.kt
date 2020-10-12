@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.view
+package com.pandulapeter.beagle.core.view.networkLogDetail
 
 import android.app.Dialog
 import android.os.Bundle
@@ -15,7 +15,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
-import com.pandulapeter.beagle.core.util.extension.shareText
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.visible
@@ -25,7 +24,7 @@ import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
-//TODO: Add UI controls for showing / hiding event metadata
+
 internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
     private val viewModel by viewModel<NetworkLogDetailDialogViewModel>()
@@ -34,6 +33,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     private lateinit var textView: TextView
     private lateinit var scrollView: ScrollView
     private lateinit var progressBar: ProgressBar
+    private lateinit var toggleDetailsButton: MenuItem
     private lateinit var shareButton: MenuItem
     private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
 
@@ -53,20 +53,30 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
             }
-            textView.setTextIsSelectable(BeagleCore.implementation.behavior.shouldAllowSelectionInDialogs)
             scrollView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
+            val textColor = dialog.context.colorResource(android.R.attr.textColorPrimary)
             toolbar.run {
-                val textColor = context.colorResource(android.R.attr.textColorPrimary)
                 setNavigationOnClickListener { dismiss() }
                 navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
+                toggleDetailsButton = menu.findItem(R.id.beagle_toggle_details).also {
+                    it.isVisible = true
+                    it.title = context.text(BeagleCore.implementation.appearance.networkLogTexts.toggleDetailsHint)
+                }
                 shareButton = menu.findItem(R.id.beagle_share).also {
                     it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
                     it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
             }
-            viewModel.isProgressBarVisible.observe(this, { progressBar.visible = it })
-            viewModel.formattedJson.observe(this, { textView.text = it })
+            viewModel.isProgressBarVisible.observe(this, {
+                progressBar.visible = it
+                textView.visible = !it
+            })
+            viewModel.areDetailsEnabled.observe(this, {
+                toggleDetailsButton.icon = context?.tintedDrawable(if (it) R.drawable.beagle_ic_toggle_details_on else R.drawable.beagle_ic_toggle_details_off, textColor)
+            })
+            viewModel.isShareButtonEnabled.observe(this, { shareButton.isEnabled = it })
+            viewModel.formattedContents.observe(this, { textView.text = it })
             if (viewModel.isProgressBarVisible.value == true) {
                 viewModel.formatJson(
                     isOutgoing = arguments?.isOutgoing == true,
@@ -86,14 +96,9 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume { shareText() }
+        R.id.beagle_share -> consume { viewModel.shareLogs(activity, arguments?.timestamp) }
+        R.id.beagle_toggle_details -> consume(viewModel::onToggleDetailsButtonPressed)
         else -> false
-    }
-
-    private fun shareText() {
-        textView.text?.let { text ->
-            activity?.shareText(text.toString())
-        }
     }
 
     companion object {

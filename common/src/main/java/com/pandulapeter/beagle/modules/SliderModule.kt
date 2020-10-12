@@ -24,6 +24,7 @@ import com.pandulapeter.beagle.modules.SliderModule.Companion.DEFAULT_SHOULD_REQ
  * @param id - A unique identifier for the module. Must be a unique constant for the save / load feature to work (see [isValuePersisted]]). [Module.randomId] by default.
  * @param onValueChanged - Callback triggered when the user changes the current value. In case of persisted values, this will also get called the first time the module is added. [DEFAULT_ON_VALUE_CHANGED] by default.
  */
+@Suppress("unused")
 data class SliderModule(
     override val text: (Int) -> Text,
     val minimumValue: Int = DEFAULT_MINIMUM_VALUE,

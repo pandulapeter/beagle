@@ -22,6 +22,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
  * @param isValuePersisted - Can be used to enable or disable persisting the value on the local storage. [DEFAULT_IS_VALUE_PERSISTED] by default.
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. [DEFAULT_ON_VALUE_CHANGED] by default.
  */
+@Suppress("unused")
 data class AnimationDurationSwitchModule(
     override val text: (Boolean) -> Text = { Text.CharSequence(DEFAULT_TEXT) },
     val multiplier: Float = DEFAULT_MULTIPLIER,

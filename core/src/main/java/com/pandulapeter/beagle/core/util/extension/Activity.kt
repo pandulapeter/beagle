@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.util.TypedValue
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.BeagleCore
@@ -17,6 +16,9 @@ import com.pandulapeter.beagle.utils.extensions.drawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.FileWriter
+import java.io.IOException
 
 private val excludedPackageNames = listOf(
     "com.pandulapeter.beagle.core.view.gallery.GalleryActivity",
@@ -30,7 +32,6 @@ internal val Activity.supportsDebugMenu
             && excludedPackageNames.none { componentName.className.startsWith(it) }
             && BeagleCore.implementation.behavior.excludedPackageNames.none { componentName.className.startsWith(it) }
 
-
 internal fun Activity.shareFile(uri: Uri, fileType: String) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
         type = fileType
@@ -39,23 +40,26 @@ internal fun Activity.shareFile(uri: Uri, fileType: String) {
     }, null))
 }
 
-internal fun Activity.shareText(text: String) {
-    try {
-        startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
-        }, null))
-    } catch (_: Exception) {
-        Toast.makeText(this, text(BeagleCore.implementation.appearance.generalTexts.shareErrorText), Toast.LENGTH_LONG).show()
-    }
-}
-
 internal fun Activity.shareFiles(uris: List<Uri>) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND_MULTIPLE).apply {
         type = "*/*"
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
     }, null))
+}
+
+@Suppress("BlockingMethodInNonBlockingContext")
+internal suspend fun Activity.createAndShareFile(fileName: String, content: String) = withContext(Dispatchers.IO) {
+    val file = createLogFile(fileName)
+    try {
+        FileWriter(file).run {
+            write(content)
+            flush()
+            close()
+        }
+        shareFile(getUriForFile(file), "text/plain")
+    } catch (e: IOException) {
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

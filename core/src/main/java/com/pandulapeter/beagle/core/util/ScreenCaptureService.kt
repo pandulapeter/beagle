@@ -28,7 +28,7 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Lifecycle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.extension.createFile
+import com.pandulapeter.beagle.core.util.extension.createScreenCaptureFile
 import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.text
@@ -119,7 +119,7 @@ internal class ScreenCaptureService : Service() {
                     setVideoEncodingBitRate(profile.videoBitRate)
                     setVideoEncoder(profile.videoCodec)
                 }
-                file = createFile(fileName)
+                file = createScreenCaptureFile(fileName)
                 setOutputFile(file.absolutePath)
                 try {
                     prepare()

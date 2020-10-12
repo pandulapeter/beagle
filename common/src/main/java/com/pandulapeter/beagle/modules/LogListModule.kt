@@ -25,6 +25,7 @@ import java.util.Locale
  * @param isHorizontalScrollEnabled - When true, the payload dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. [DEFAULT_IS_HORIZONTAL_SCROLL_ENABLED] by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
+@Suppress("unused")
 data class LogListModule(
     val title: Text = Text.CharSequence(DEFAULT_TITLE),
     val maxItemCount: Int = DEFAULT_MAX_ITEM_COUNT,

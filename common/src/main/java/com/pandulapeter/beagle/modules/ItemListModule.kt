@@ -18,6 +18,7 @@ import com.pandulapeter.beagle.modules.ItemListModule.Companion.DEFAULT_IS_EXPAN
  * @param id - A unique identifier for the module. [Module.randomId] by default.
  * @param onItemSelected - Callback invoked when the user selects one of the items, or null to disable selection. The parameter of the lambda function is the selected item. [DEFAULT_IN_ITEM_SELECTED] by default.
  */
+@Suppress("unused")
 data class ItemListModule<T : BeagleListItemContract>(
     val title: Text,
     val items: List<T>,

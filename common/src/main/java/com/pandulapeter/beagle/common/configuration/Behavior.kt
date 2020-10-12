@@ -6,7 +6,6 @@ import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_L
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_NETWORK_LOGGERS
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SHAKE_THRESHOLD
-import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SHOULD_ALLOW_SELECTION_IN_DIALOGS
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.commonBase.BeagleLoggerContract
 import com.pandulapeter.beagle.commonBase.BeagleNetworkLoggerContract
@@ -21,10 +20,11 @@ import java.util.Locale
  * @param excludedPackageNames - The list of packages that contain Activities for which Beagle should not be triggered. [DEFAULT_EXCLUDED_PACKAGE_NAMES] by default (and the library also contains a hardcoded list, unrelated to this parameter).
  * @param logger - The [BeagleLoggerContract] implementation in case logging is used in a pure Java / Kotlin module. [DEFAULT_LOGGER] by default.
  * @param networkLoggers - The list of [BeagleNetworkLoggerContract] implementations for intercepting network events. [DEFAULT_NETWORK_LOGGERS] by default.
- * @param shouldAllowSelectionInDialogs - Whether or not text in dialogs (logs or network event logs) should be selectable. [DEFAULT_SHOULD_ALLOW_SELECTION_IN_DIALOGS] by default as selecting scrollable text is glitchy in most cases.
  * @param screenCaptureServiceNotificationChannelId - The ID for the notification channel that handles all notifications related to screen capture. [DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID] by default.
- * @param getImageFileName - The lambda used to generate screenshot image file names (without the extension). By default a name will be generated based on the current timestamp with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format.
- * @param getVideoFileName - The lambda used to generate screen recording video file names (without the extension). By default a name will be generated based on the current timestamp with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format.
+ * @param getLogFileName - The lambda used to generate log file names (without the extension) when sharing them. The argument is the timestamp of the log. By default a name will be generated with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format.
+ * @param getNetworkLogFileName - The lambda used to generate network log file names (without the extension) when sharing them. The argument is the timestamp of the log. By default a name will be generated with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format.
+ * @param getImageFileName - The lambda used to generate screenshot image file names (without the extension). The argument is the timestamp when the file was created. By default a name will be generated with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format.
+ * @param getVideoFileName - The lambda used to generate screen recording video file names (without the extension). The argument is the timestamp when the file was created. By default a name will be generated with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format.
  */
 data class Behavior(
     val shakeThreshold: Int? = DEFAULT_SHAKE_THRESHOLD,
@@ -32,10 +32,11 @@ data class Behavior(
     val excludedPackageNames: List<String> = DEFAULT_EXCLUDED_PACKAGE_NAMES,
     val logger: BeagleLoggerContract? = DEFAULT_LOGGER,
     val networkLoggers: List<BeagleNetworkLoggerContract> = DEFAULT_NETWORK_LOGGERS,
-    val shouldAllowSelectionInDialogs: Boolean = DEFAULT_SHOULD_ALLOW_SELECTION_IN_DIALOGS,
     val screenCaptureServiceNotificationChannelId: String = DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID,
-    val getImageFileName: () -> String = { "${DEFAULT_FILE_NAME_DATE_FORMAT.format(System.currentTimeMillis())}_image" },
-    val getVideoFileName: () -> String = { "${DEFAULT_FILE_NAME_DATE_FORMAT.format(System.currentTimeMillis())}_video" }
+    val getLogFileName: (Long) -> String = { "log_${DEFAULT_FILE_NAME_DATE_FORMAT.format(it)}" },
+    val getNetworkLogFileName: (Long) -> String = { "networkLog_${DEFAULT_FILE_NAME_DATE_FORMAT.format(it)}" },
+    val getImageFileName: (Long) -> String = { "${DEFAULT_FILE_NAME_DATE_FORMAT.format(it)}_image" },
+    val getVideoFileName: (Long) -> String = { "${DEFAULT_FILE_NAME_DATE_FORMAT.format(it)}_video" }
 ) {
     companion object {
         private const val DEFAULT_SHAKE_THRESHOLD = 13
@@ -43,7 +44,6 @@ data class Behavior(
         private val DEFAULT_EXCLUDED_PACKAGE_NAMES = emptyList<String>()
         private val DEFAULT_LOGGER: BeagleLoggerContract? = null
         private val DEFAULT_NETWORK_LOGGERS = emptyList<BeagleNetworkLoggerContract>()
-        private const val DEFAULT_SHOULD_ALLOW_SELECTION_IN_DIALOGS = false
         private const val DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID = "channel_beagle_screen_capture"
         private val DEFAULT_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
     }

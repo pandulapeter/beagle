@@ -14,12 +14,13 @@ import com.pandulapeter.beagle.common.configuration.Appearance.GalleryTexts.Comp
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_APPLY_BUTTON_TEXT
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_RESET_BUTTON_TEXT
-import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_SHARE_ERROR_TEXT
 import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Companion.DEFAULT_SHARE_HINT
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_DURATION
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_HEADERS
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_NONE
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TIMESTAMP
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TOGGLE_DETAILS_HINT
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE
@@ -62,19 +63,16 @@ data class Appearance(
      * @param applyButtonText - The text on the Apply button that appears when the user makes changes that are not handled in real-time (see the "shouldRequireConfirmation" parameter of some Modules). [DEFAULT_APPLY_BUTTON_TEXT] by default.
      * @param resetButtonText - The text on the Reset button that appears when the user makes changes that are not handled in real-time (see the "shouldRequireConfirmation" parameter of some Modules). [DEFAULT_RESET_BUTTON_TEXT] by default.
      * @param shareHint - The hint used for the Share icon of the Gallery screen and the Log detail dialog. [DEFAULT_SHARE_HINT] by default.
-     * @param shareErrorText - The text on the toast that appears when trying to share a large payload throws an exception. [DEFAULT_SHARE_ERROR_TEXT] by default.
      */
     data class GeneralTexts(
         val applyButtonText: Text = Text.CharSequence(DEFAULT_APPLY_BUTTON_TEXT),
         val resetButtonText: Text = Text.CharSequence(DEFAULT_RESET_BUTTON_TEXT),
-        val shareHint: Text = Text.CharSequence(DEFAULT_SHARE_HINT),
-        val shareErrorText: Text = Text.CharSequence(DEFAULT_SHARE_ERROR_TEXT)
+        val shareHint: Text = Text.CharSequence(DEFAULT_SHARE_HINT)
     ) {
         companion object {
             private const val DEFAULT_APPLY_BUTTON_TEXT = "Apply"
             private const val DEFAULT_RESET_BUTTON_TEXT = "Reset"
             private const val DEFAULT_SHARE_HINT = "Share"
-            private const val DEFAULT_SHARE_ERROR_TEXT = "Payload too large"
         }
     }
 
@@ -157,18 +155,21 @@ data class Appearance(
      * @param none - The term used when the list of headers is empty. [DEFAULT_NONE] by default.
      * @param timestamp - The term used for the timestamp of the logged event. [DEFAULT_TIMESTAMP] by default.
      * @param duration - The term used for the duration of the logged event. [DEFAULT_DURATION] by default.
+     * @param toggleDetailsHint - The hint for the on / off toggle that hides or shows network event metadata. [DEFAULT_TOGGLE_DETAILS_HINT] by default.
      */
     data class NetworkLogTexts(
         val headers: Text = Text.CharSequence(DEFAULT_HEADERS),
         val none: Text = Text.CharSequence(DEFAULT_NONE),
         val timestamp: Text = Text.CharSequence(DEFAULT_TIMESTAMP),
-        val duration: Text = Text.CharSequence(DEFAULT_DURATION)
+        val duration: Text = Text.CharSequence(DEFAULT_DURATION),
+        val toggleDetailsHint: Text = Text.CharSequence(DEFAULT_TOGGLE_DETAILS_HINT)
     ) {
         companion object {
             private const val DEFAULT_HEADERS = "Headers"
             private const val DEFAULT_NONE = "none"
             private const val DEFAULT_TIMESTAMP = "Timestamp"
             private const val DEFAULT_DURATION = "Duration"
+            private const val DEFAULT_TOGGLE_DETAILS_HINT = "Toggle details"
         }
     }
 

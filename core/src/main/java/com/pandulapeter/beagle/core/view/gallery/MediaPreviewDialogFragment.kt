@@ -123,7 +123,7 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume { shareItem() }
+        R.id.beagle_share -> consume(::shareItem)
         R.id.beagle_delete -> consume { DeleteConfirmationDialogFragment.show(childFragmentManager, false) }
         else -> false
     }

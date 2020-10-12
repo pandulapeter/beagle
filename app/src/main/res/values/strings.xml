@@ -3,7 +3,6 @@
     <!-- Main -->
     <string name="open_debug_menu">Open debug menu</string>
     <string name="back">Back</string>
-    <string name="coming_soon">Coming soon…</string>
     <string name="app_not_found">No application can handle this link</string>
 
     <!-- Setup -->
