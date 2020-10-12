@@ -63,7 +63,7 @@ internal fun Activity.createAndShareFile(fileName: String, content: String) = Gl
     val file = createLogFile(fileName)
     try {
         FileWriter(file).run {
-            append(content)
+            write(content)
             flush()
             close()
         }
