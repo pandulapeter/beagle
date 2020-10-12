@@ -16,6 +16,7 @@ import com.pandulapeter.beagle.utils.extensions.drawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.FileWriter
 import java.io.IOException
 
@@ -46,7 +47,8 @@ internal fun Activity.shareFiles(uris: List<Uri>) {
     }, null))
 }
 
-internal fun Activity.createAndShareFile(fileName: String, content: String) = GlobalScope.launch(Dispatchers.IO) {
+@Suppress("BlockingMethodInNonBlockingContext")
+internal suspend fun Activity.createAndShareFile(fileName: String, content: String) = withContext(Dispatchers.IO) {
     val file = createLogFile(fileName)
     try {
         FileWriter(file).run {

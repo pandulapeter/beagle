@@ -1,5 +1,6 @@
-package com.pandulapeter.beagle.core.view
+package com.pandulapeter.beagle.core.view.networkLogDetail
 
+import android.app.Activity
 import android.app.Application
 import android.graphics.Typeface
 import android.text.SpannableString
@@ -11,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.append
+import com.pandulapeter.beagle.core.util.extension.createAndShareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -29,6 +31,8 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     val isProgressBarVisible: LiveData<Boolean> = _isProgressBarVisible
     private val _areDetailsEnabled = MutableLiveData(false)
     val areDetailsEnabled: LiveData<Boolean> = _areDetailsEnabled
+    private val _isShareButtonEnabled = MutableLiveData(false)
+    val isShareButtonEnabled: LiveData<Boolean> = _isShareButtonEnabled
     private val _formattedContents = MutableLiveData<CharSequence>("")
     val formattedContents: LiveData<CharSequence> = _formattedContents
     private var title: CharSequence = ""
@@ -54,10 +58,23 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         formattedJson = payload.formatToJson()
         refreshUi()
         _isProgressBarVisible.postValue(false)
+        _isShareButtonEnabled.postValue(true)
     }
 
     fun onToggleDetailsButtonPressed() {
         _areDetailsEnabled.value = !(areDetailsEnabled.value ?: true)
+    }
+
+    fun shareLogs(activity: Activity?, timestamp: Long?) {
+        if (_isShareButtonEnabled.value == true) {
+            _formattedContents.value?.let { text ->
+                viewModelScope.launch {
+                    _isShareButtonEnabled.postValue(false)
+                    activity?.createAndShareFile("${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp ?: 0L)}.txt", text.toString())
+                    _isShareButtonEnabled.postValue(true)
+                }
+            }
+        }
     }
 
     private fun refreshUi() = _formattedContents.postValue(SpannableString(

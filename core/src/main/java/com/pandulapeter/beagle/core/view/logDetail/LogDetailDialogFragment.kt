@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.view
+package com.pandulapeter.beagle.core.view.logDetail
 
 import android.app.Dialog
 import android.os.Bundle
@@ -14,8 +14,8 @@ import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
-import com.pandulapeter.beagle.core.util.extension.createAndShareFile
 import com.pandulapeter.beagle.core.util.extension.text
+import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
@@ -30,6 +30,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
     private lateinit var scrollView: ScrollView
     private lateinit var shareButton: MenuItem
     private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
+    private val viewModel by viewModel<LogDetailDialogViewModel>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
         .setView(if (arguments?.isHorizontalScrollEnabled == true) R.layout.beagle_dialog_fragment_log_detail_scrolling else R.layout.beagle_dialog_fragment_log_detail)
@@ -58,6 +59,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
             }
+            viewModel.isShareButtonEnabled.observe(this, { shareButton.isEnabled = it })
         }
     }
 
@@ -67,14 +69,8 @@ internal class LogDetailDialogFragment : DialogFragment() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume(::shareLogs)
+        R.id.beagle_share -> consume { viewModel.shareLogs(activity, textView.text, arguments?.timestamp) }
         else -> false
-    }
-
-    private fun shareLogs() {
-        textView.text?.let { text ->
-            activity?.createAndShareFile("${BeagleCore.implementation.behavior.getLogFileName(arguments?.timestamp ?: 0L)}.txt", text.toString())
-        }
     }
 
     companion object {

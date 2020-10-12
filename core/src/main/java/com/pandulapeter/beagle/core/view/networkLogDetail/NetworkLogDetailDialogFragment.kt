@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.view
+package com.pandulapeter.beagle.core.view.networkLogDetail
 
 import android.app.Dialog
 import android.os.Bundle
@@ -15,7 +15,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
-import com.pandulapeter.beagle.core.util.extension.createAndShareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.visible
@@ -34,8 +33,8 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     private lateinit var textView: TextView
     private lateinit var scrollView: ScrollView
     private lateinit var progressBar: ProgressBar
-    private lateinit var shareButton: MenuItem
     private lateinit var toggleDetailsButton: MenuItem
+    private lateinit var shareButton: MenuItem
     private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
@@ -59,13 +58,13 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             toolbar.run {
                 setNavigationOnClickListener { dismiss() }
                 navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
-                shareButton = menu.findItem(R.id.beagle_share).also {
-                    it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
-                    it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
-                }
                 toggleDetailsButton = menu.findItem(R.id.beagle_toggle_details).also {
                     it.isVisible = true
                     it.title = context.text(BeagleCore.implementation.appearance.networkLogTexts.toggleDetailsHint)
+                }
+                shareButton = menu.findItem(R.id.beagle_share).also {
+                    it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
+                    it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
             }
@@ -76,6 +75,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             viewModel.areDetailsEnabled.observe(this, {
                 toggleDetailsButton.icon = context?.tintedDrawable(if (it) R.drawable.beagle_ic_toggle_details_on else R.drawable.beagle_ic_toggle_details_off, textColor)
             })
+            viewModel.isShareButtonEnabled.observe(this, { shareButton.isEnabled = it })
             viewModel.formattedContents.observe(this, { textView.text = it })
             if (viewModel.isProgressBarVisible.value == true) {
                 viewModel.formatJson(
@@ -96,15 +96,9 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume(::shareLogs)
+        R.id.beagle_share -> consume { viewModel.shareLogs(activity, arguments?.timestamp) }
         R.id.beagle_toggle_details -> consume(viewModel::onToggleDetailsButtonPressed)
         else -> false
-    }
-
-    private fun shareLogs() {
-        textView.text?.let { text ->
-            activity?.createAndShareFile("${BeagleCore.implementation.behavior.getNetworkLogFileName(arguments?.timestamp ?: 0L)}.txt", text.toString())
-        }
     }
 
     companion object {
