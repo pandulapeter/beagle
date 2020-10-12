@@ -14,7 +14,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
-import com.pandulapeter.beagle.core.util.extension.shareText
+import com.pandulapeter.beagle.core.util.extension.createAndShareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.withArguments
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -42,10 +42,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
             toolbar = dialog.findViewById(R.id.beagle_toolbar)
             textView = dialog.findViewById(R.id.beagle_text_view)
             scrollView = dialog.findViewById(R.id.beagle_scroll_view)
-            textView.run {
-                setTextIsSelectable(BeagleCore.implementation.behavior.shouldAllowSelectionInDialogs)
-                text = arguments?.content
-            }
+            textView.text = arguments?.content
             appBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
@@ -70,22 +67,29 @@ internal class LogDetailDialogFragment : DialogFragment() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume { shareText() }
+        R.id.beagle_share -> consume(::shareLogs)
         else -> false
     }
 
-    private fun shareText() {
+    private fun shareLogs() {
         textView.text?.let { text ->
-            activity?.shareText(text.toString())
+            activity?.createAndShareFile("${BeagleCore.implementation.behavior.getLogFileName(arguments?.timestamp ?: 0L)}.txt", text.toString())
         }
     }
 
     companion object {
         private var Bundle.content by BundleArgumentDelegate.CharSequence("content")
+        private var Bundle.timestamp by BundleArgumentDelegate.Long("timestamp")
         private var Bundle.isHorizontalScrollEnabled by BundleArgumentDelegate.Boolean("isHorizontalScrollEnabled")
 
-        fun show(fragmentManager: FragmentManager, content: CharSequence, isHorizontalScrollEnabled: Boolean) = LogDetailDialogFragment().withArguments {
+        fun show(
+            fragmentManager: FragmentManager,
+            content: CharSequence,
+            timestamp: Long,
+            isHorizontalScrollEnabled: Boolean
+        ) = LogDetailDialogFragment().withArguments {
             it.content = content
+            it.timestamp = timestamp
             it.isHorizontalScrollEnabled = isHorizontalScrollEnabled
         }.run { show(fragmentManager, tag) }
     }

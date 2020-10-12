@@ -17,6 +17,8 @@ import com.pandulapeter.beagle.utils.extensions.drawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.FileWriter
+import java.io.IOException
 
 private val excludedPackageNames = listOf(
     "com.pandulapeter.beagle.core.view.gallery.GalleryActivity",
@@ -30,14 +32,6 @@ internal val Activity.supportsDebugMenu
             && BeagleCore.implementation.behavior.excludedPackageNames.none { componentName.className.startsWith(it) }
 
 
-internal fun Activity.shareFile(uri: Uri, fileType: String) {
-    startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
-        type = fileType
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        putExtra(Intent.EXTRA_STREAM, uri)
-    }, null))
-}
-
 internal fun Activity.shareText(text: String) {
     try {
         startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
@@ -49,12 +43,33 @@ internal fun Activity.shareText(text: String) {
     }
 }
 
+internal fun Activity.shareFile(uri: Uri, fileType: String) {
+    startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+        type = fileType
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        putExtra(Intent.EXTRA_STREAM, uri)
+    }, null))
+}
+
 internal fun Activity.shareFiles(uris: List<Uri>) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND_MULTIPLE).apply {
         type = "*/*"
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
     }, null))
+}
+
+internal fun Activity.createAndShareFile(fileName: String, content: String) = GlobalScope.launch(Dispatchers.IO) {
+    val file = createLogFile(fileName)
+    try {
+        FileWriter(file).run {
+            append(content)
+            flush()
+            close()
+        }
+        shareFile(getUriForFile(file), "text/plain")
+    } catch (e: IOException) {
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

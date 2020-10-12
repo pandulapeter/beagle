@@ -30,7 +30,7 @@ internal fun Context.getUriForFile(file: File) = FileProvider.getUriForFile(appl
 
 @Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Context.createScreenshotFromBitmap(bitmap: Bitmap, fileName: String): Uri? = withContext(Dispatchers.IO) {
-    val file = createFile(fileName)
+    val file = createScreenCaptureFile(fileName)
     try {
         val stream = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
@@ -44,14 +44,20 @@ internal suspend fun Context.createScreenshotFromBitmap(bitmap: Bitmap, fileName
 
 private const val SCREEN_CAPTURES_FOLDER_NAME = "beagleScreenCaptures"
 
-internal fun Context.getScreenCapturesFolder(): File {
-    val folder = File(cacheDir, SCREEN_CAPTURES_FOLDER_NAME)
+internal fun Context.getScreenCapturesFolder() = getFolder(SCREEN_CAPTURES_FOLDER_NAME)
+
+internal fun Context.createScreenCaptureFile(fileName: String) = File(getScreenCapturesFolder(), fileName)
+
+private const val LOGS_FOLDER_NAME = "beagleLogs"
+
+internal fun Context.getLogsFolder() = getFolder(LOGS_FOLDER_NAME)
+
+internal fun Context.createLogFile(fileName: String) = File(getLogsFolder(), fileName)
+
+private fun Context.getFolder(name: String): File {
+    val folder = File(cacheDir, name)
     folder.mkdirs()
     return folder
-}
-
-internal fun Context.createFile(fileName: String): File {
-    return File(getScreenCapturesFolder(), fileName)
 }
 
 internal fun Context.text(text: Text) = when (text) {

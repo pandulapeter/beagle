@@ -176,11 +176,12 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
-    override fun showDialog(contents: CharSequence, isHorizontalScrollEnabled: Boolean) {
+    override fun showDialog(contents: CharSequence, timestamp: Long, isHorizontalScrollEnabled: Boolean) {
         (uiManager.findHostFragmentManager() ?: currentActivity?.supportFragmentManager)?.let { fragmentManager ->
             LogDetailDialogFragment.show(
                 fragmentManager = fragmentManager,
                 content = contents,
+                timestamp = timestamp,
                 isHorizontalScrollEnabled = isHorizontalScrollEnabled
             )
         }

@@ -284,7 +284,8 @@ interface BeagleContract {
      * @param duration - The duration of the event, or null if not applicable. Null by default
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
      */
-    fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>? = null, duration: Long? = null, timestamp: Long = System.currentTimeMillis()) = Unit
+    fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>? = null, duration: Long? = null, timestamp: Long = System.currentTimeMillis()) =
+        Unit
 
     /**
      * Clears all network log messages.
@@ -339,9 +340,10 @@ interface BeagleContract {
      * Displays a dialog in debug builds.
      *
      * @param contents - The text that appears in the dialog.
+     * @param timestamp - The moment the contents of the dialog are relevant to. This value is used for generating the file name when sharing. By default it is the moment of the function call.
      * @param isHorizontalScrollEnabled - When true, the dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. False by default.
      */
-    fun showDialog(contents: CharSequence, isHorizontalScrollEnabled: Boolean = false) = Unit
+    fun showDialog(contents: CharSequence, timestamp: Long = System.currentTimeMillis(), isHorizontalScrollEnabled: Boolean = false) = Unit
 
     /**
      * Displays a network event dialog in debug builds.
@@ -353,7 +355,14 @@ interface BeagleContract {
      * @param duration - The duration of the event, or null if not applicable. Null by default
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
      */
-    fun showNetworkEventDialog(isOutgoing: Boolean, url: String, payload: String, headers: List<String>? = null, duration: Long? = null, timestamp: Long = System.currentTimeMillis()) = Unit
+    fun showNetworkEventDialog(
+        isOutgoing: Boolean,
+        url: String,
+        payload: String,
+        headers: List<String>? = null,
+        duration: Long? = null,
+        timestamp: Long = System.currentTimeMillis()
+    ) = Unit
     //endregion
 
     companion object {

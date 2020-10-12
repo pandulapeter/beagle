@@ -15,7 +15,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
-import com.pandulapeter.beagle.core.util.extension.shareText
+import com.pandulapeter.beagle.core.util.extension.createAndShareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.visible
@@ -24,6 +24,7 @@ import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
+
 
 //TODO: Add UI controls for showing / hiding event metadata
 internal class NetworkLogDetailDialogFragment : DialogFragment() {
@@ -53,7 +54,6 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
             }
-            textView.setTextIsSelectable(BeagleCore.implementation.behavior.shouldAllowSelectionInDialogs)
             scrollView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
             toolbar.run {
                 val textColor = context.colorResource(android.R.attr.textColorPrimary)
@@ -86,13 +86,13 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume { shareText() }
+        R.id.beagle_share -> consume(::shareLogs)
         else -> false
     }
 
-    private fun shareText() {
+    private fun shareLogs() {
         textView.text?.let { text ->
-            activity?.shareText(text.toString())
+            activity?.createAndShareFile("${BeagleCore.implementation.behavior.getNetworkLogFileName(arguments?.timestamp ?: 0L)}.txt", text.toString())
         }
     }
 
