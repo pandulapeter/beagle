@@ -44,7 +44,7 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
         if (!requireContext().packageName.contains("activity", ignoreCase = true)) {
             add(createTextModule(R.string.examples_beagle_text_2))
             add(PaddingModule())
-            addAll(CaseStudy.values().filter { it.isReady }.map { caseStudy ->
+            addAll(CaseStudy.values().map { caseStudy ->
                 TextModule(
                     id = caseStudy.id,
                     text = "• ${getString(caseStudy.title)}",

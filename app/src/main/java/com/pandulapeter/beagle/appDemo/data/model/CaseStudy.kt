@@ -6,7 +6,6 @@ import com.pandulapeter.beagle.appDemo.R
 enum class CaseStudy(
     @StringRes val title: Int,
     @StringRes val description: Int,
-    val isReady: Boolean = true,
     val id: String = "caseStudy_$title"
 ) {
     SIMPLE_SETUP(
@@ -43,12 +42,6 @@ enum class CaseStudy(
     ),
     NAVIGATION(
         title = R.string.case_study_navigation_title,
-        description = R.string.case_study_navigation_description,
-        isReady = false
-    ),
-    BUG_REPORTER(
-        title = R.string.case_study_bug_reporting_tool_title,
-        description = R.string.case_study_bug_reporting_tool_description,
-        isReady = false
-    )
+        description = R.string.case_study_navigation_description
+    );
 }

@@ -3,7 +3,6 @@
     <!-- Main -->
     <string name="open_debug_menu">Open debug menu</string>
     <string name="back">Back</string>
-    <string name="coming_soon">Coming soon…</string>
     <string name="app_not_found">No application can handle this link</string>
 
     <!-- Setup -->
@@ -291,10 +290,6 @@
     <string name="case_study_navigation_header_section_3">Section 3</string>
     <string name="case_study_navigation_header_section_3_detail">Welcome to Section 3!</string>
     <string name="case_study_navigation_close_section">Close section</string>
-
-    <!-- Case studies / Bug reporting tool -->
-    <string name="case_study_bug_reporting_tool_title">Bug reporting tool</string>
-    <string name="case_study_bug_reporting_tool_description">Create useful issue reports with the powerful feature set of the debug menu: attach screenshots, logs, or specific reproduction steps.</string>
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>
