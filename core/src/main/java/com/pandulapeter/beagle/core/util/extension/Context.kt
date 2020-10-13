@@ -10,6 +10,7 @@ import android.view.ContextThemeWrapper
 import androidx.core.content.FileProvider
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.core.util.getFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -44,21 +45,19 @@ internal suspend fun Context.createScreenshotFromBitmap(bitmap: Bitmap, fileName
 
 private const val SCREEN_CAPTURES_FOLDER_NAME = "beagleScreenCaptures"
 
-internal fun Context.getScreenCapturesFolder() = getFolder(SCREEN_CAPTURES_FOLDER_NAME)
+internal fun Context.getScreenCapturesFolder() = getFilesFolder(SCREEN_CAPTURES_FOLDER_NAME)
 
 internal fun Context.createScreenCaptureFile(fileName: String) = File(getScreenCapturesFolder(), fileName)
 
+private fun Context.getFilesFolder(name: String) = getFolder(filesDir, name)
+
 private const val LOGS_FOLDER_NAME = "beagleLogs"
 
-internal fun Context.getLogsFolder() = getFolder(LOGS_FOLDER_NAME)
+internal fun Context.getLogsFolder() = getCacheFolder(LOGS_FOLDER_NAME)
 
 internal fun Context.createLogFile(fileName: String) = File(getLogsFolder(), fileName)
 
-private fun Context.getFolder(name: String): File {
-    val folder = File(cacheDir, name)
-    folder.mkdirs()
-    return folder
-}
+private fun Context.getCacheFolder(name: String) = getFolder(cacheDir, name)
 
 internal fun Context.text(text: Text) = when (text) {
     is Text.CharSequence -> text.charSequence
