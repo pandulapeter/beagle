@@ -9,7 +9,7 @@ internal data class LifecycleLogEntry(
     val classType: Class<*>,
     val eventType: LifecycleLogListModule.EventType,
     val hasSavedInstanceState: Boolean?,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = currentTimestamp
 ) : BeagleListItemContract {
 
     override val title = Text.CharSequence(UUID.randomUUID().toString())

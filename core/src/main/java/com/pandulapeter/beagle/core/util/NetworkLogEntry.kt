@@ -10,7 +10,7 @@ internal data class NetworkLogEntry(
     val headers: List<String> = emptyList(),
     val url: String,
     val duration: Long? = null,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = currentTimestamp
 ) : BeagleListItemContract {
 
     override val title = Text.CharSequence(url)

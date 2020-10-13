@@ -1,14 +1,14 @@
 package com.pandulapeter.beagle.modules
 
-import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.commonBase.randomId
 
 /**
  * Displays a simple horizontal line.
  *
- * @param id - A unique identifier for the module. [BeagleContract.randomId] by default.
+ * @param id - A unique identifier for the module. [randomId] by default.
  */
 @Suppress("unused")
 data class DividerModule(
-    override val id: String = BeagleContract.randomId
+    override val id: String = randomId
 ) : Module<DividerModule>

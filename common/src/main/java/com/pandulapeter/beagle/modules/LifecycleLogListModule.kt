@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.modules
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
+import com.pandulapeter.beagle.commonBase.LOG_TIME_FORMAT
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.LifecycleLogListModule.Companion.DEFAULT_EVENT_TYPES
@@ -29,7 +30,7 @@ import java.util.Locale
  * @param eventTypes - The list of [EventType] values that the module should track. [DEFAULT_EVENT_TYPES] by default.
  * @param shouldDisplayFullNames - Whether or not displayed class names should include full package names. [DEFAULT_SHOULD_DISPLAY_FULL_NAMES] by default.
  * @param maxItemCount - The maximum number of messages that will appear when expanded. [DEFAULT_MAX_ITEM_COUNT] by default.
- * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [BeagleContract.LOG_TIME_FORMAT] by default.
+ * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [LOG_TIME_FORMAT] by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
 @Suppress("unused")
@@ -71,6 +72,6 @@ data class LifecycleLogListModule(
         private const val DEFAULT_SHOULD_DISPLAY_FULL_NAMES = false
         private const val DEFAULT_MAX_ITEM_COUNT = 20
         private const val DEFAULT_IS_EXPANDED_INITIALLY = false
-        private val DEFAULT_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.LOG_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
     }
 }

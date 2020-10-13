@@ -16,7 +16,8 @@ import com.pandulapeter.beagle.common.listeners.NetworkLogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
-import java.util.UUID
+import com.pandulapeter.beagle.commonBase.currentTimestamp
+import com.pandulapeter.beagle.commonBase.randomId
 import kotlin.reflect.KClass
 
 /**
@@ -295,7 +296,7 @@ interface BeagleContract {
         message: CharSequence,
         label: String? = null,
         payload: CharSequence? = null,
-        timestamp: Long = System.currentTimeMillis(),
+        timestamp: Long = currentTimestamp,
         id: String = randomId
     ) = Unit
 
@@ -319,11 +320,11 @@ interface BeagleContract {
      */
     fun logNetworkEvent(
         isOutgoing: Boolean,
-        url: String, payload:
-        String?,
+        url: String,
+        payload: String?,
         headers: List<String>? = null,
         duration: Long? = null,
-        timestamp: Long = System.currentTimeMillis(),
+        timestamp: Long = currentTimestamp,
         id: String = randomId
     ) = Unit
 
@@ -387,7 +388,7 @@ interface BeagleContract {
     fun showDialog(
         content: CharSequence,
         isHorizontalScrollEnabled: Boolean = false,
-        timestamp: Long = System.currentTimeMillis(),
+        timestamp: Long = currentTimestamp,
         id: String = randomId
     ) = Unit
 
@@ -408,15 +409,8 @@ interface BeagleContract {
         payload: String,
         headers: List<String>? = null,
         duration: Long? = null,
-        timestamp: Long = System.currentTimeMillis(),
+        timestamp: Long = currentTimestamp,
         id: String = randomId
     ) = Unit
     //endregion
-
-    companion object {
-        const val FILE_NAME_DATE_TIME_FORMAT = "yyyy-MM-dd_HH-mm-ss_SSS"
-        const val GALLERY_DATE_FORMAT = "yyyy-MM-dd"
-        const val LOG_TIME_FORMAT = "HH:mm:ss"
-        val randomId get() = UUID.randomUUID().toString()
-    }
 }

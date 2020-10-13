@@ -2,8 +2,8 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
-import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
+import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.CheckBoxModule.Companion.DEFAULT_INITIAL_VALUE
 import com.pandulapeter.beagle.modules.CheckBoxModule.Companion.DEFAULT_IS_ENABLED
 import com.pandulapeter.beagle.modules.CheckBoxModule.Companion.DEFAULT_IS_VALUE_PERSISTED
@@ -14,7 +14,7 @@ import com.pandulapeter.beagle.modules.CheckBoxModule.Companion.DEFAULT_SHOULD_R
  * Displays a simple check box.
  *
  * @param text - The text to display on the check box. The argument of the lambda function is the current value.
- * @param id - A unique identifier for the module. Must be a unique constant for the save / load feature to work (see [isValuePersisted]]). [BeagleContract.randomId] by default.
+ * @param id - A unique identifier for the module. Must be a unique constant for the save / load feature to work (see [isValuePersisted]]). [randomId] by default.
  * @param initialValue - Whether or not the checkbox is checked initially. If [isValuePersisted] is true, the value coming from the local storage will override this parameter so it will only be used the first time the app is launched. [DEFAULT_INITIAL_VALUE] by default.
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
  * @param isValuePersisted - Can be used to enable or disable persisting the value on the local storage. This will only work if the module has a unique, constant ID. [DEFAULT_IS_VALUE_PERSISTED] by default.
@@ -24,7 +24,7 @@ import com.pandulapeter.beagle.modules.CheckBoxModule.Companion.DEFAULT_SHOULD_R
 @Suppress("unused")
 data class CheckBoxModule(
     override val text: (Boolean) -> Text,
-    override val id: String = BeagleContract.randomId,
+    override val id: String = randomId,
     override val initialValue: Boolean = DEFAULT_INITIAL_VALUE,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
@@ -34,7 +34,7 @@ data class CheckBoxModule(
 
     constructor(
         text: CharSequence,
-        id: String = BeagleContract.randomId,
+        id: String = randomId,
         initialValue: Boolean = DEFAULT_INITIAL_VALUE,
         isEnabled: Boolean = DEFAULT_IS_ENABLED,
         isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
@@ -52,7 +52,7 @@ data class CheckBoxModule(
 
     constructor(
         @StringRes text: Int,
-        id: String = BeagleContract.randomId,
+        id: String = randomId,
         initialValue: Boolean = DEFAULT_INITIAL_VALUE,
         isEnabled: Boolean = DEFAULT_IS_ENABLED,
         isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,

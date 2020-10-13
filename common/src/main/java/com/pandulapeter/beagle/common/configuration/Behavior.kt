@@ -6,9 +6,9 @@ import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_L
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_NETWORK_LOGGERS
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SHAKE_THRESHOLD
-import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.commonBase.BeagleLoggerContract
 import com.pandulapeter.beagle.commonBase.BeagleNetworkLoggerContract
+import com.pandulapeter.beagle.commonBase.FILE_NAME_DATE_TIME_FORMAT
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -21,10 +21,10 @@ import java.util.Locale
  * @param logger - The [BeagleLoggerContract] implementation in case logging is used in a pure Java / Kotlin module. [DEFAULT_LOGGER] by default.
  * @param networkLoggers - The list of [BeagleNetworkLoggerContract] implementations for intercepting network events. [DEFAULT_NETWORK_LOGGERS] by default.
  * @param screenCaptureServiceNotificationChannelId - The ID for the notification channel that handles all notifications related to screen capture. [DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID] by default.
- * @param getLogFileName - The lambda used to generate log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format and the ID.
- * @param getNetworkLogFileName - The lambda used to generate network log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format and the ID.
- * @param getImageFileName - The lambda used to generate screenshot image file names (without the extension). The argument is the timestamp when the file was created. By default a name will be generated with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format.
- * @param getVideoFileName - The lambda used to generate screen recording video file names (without the extension). The argument is the timestamp when the file was created. By default a name will be generated with the [BeagleContract.FILE_NAME_DATE_TIME_FORMAT] format.
+ * @param getLogFileName - The lambda used to generate log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format and the ID.
+ * @param getNetworkLogFileName - The lambda used to generate network log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format and the ID.
+ * @param getImageFileName - The lambda used to generate screenshot image file names (without the extension). The argument is the timestamp when the file was created. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format.
+ * @param getVideoFileName - The lambda used to generate screen recording video file names (without the extension). The argument is the timestamp when the file was created. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format.
  */
 data class Behavior(
     val shakeThreshold: Int? = DEFAULT_SHAKE_THRESHOLD,
@@ -45,7 +45,7 @@ data class Behavior(
         private val DEFAULT_LOGGER: BeagleLoggerContract? = null
         private val DEFAULT_NETWORK_LOGGERS = emptyList<BeagleNetworkLoggerContract>()
         private const val DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID = "channel_beagle_screen_capture"
-        private val DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
-        private val DEFAULT_LOG_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_LOG_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
     }
 }

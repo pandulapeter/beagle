@@ -50,7 +50,7 @@ internal class ShakeDetector : SensorEventListener, DefaultLifecycleObserver {
         if (BeagleCore.implementation.currentActivity?.lifecycle?.currentState?.isAtLeast(Lifecycle.State.STARTED) == true) {
             BeagleCore.implementation.behavior.shakeThreshold?.let { threshold ->
                 if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-                    val currentTime = System.currentTimeMillis()
+                    val currentTime = currentTimestamp
                     if (currentTime - lastSensorUpdate > SHAKE_DETECTION_DELAY) {
                         if (abs(event.x + event.y + event.z - previousEvent.x - previousEvent.y - previousEvent.z) / (currentTime - lastSensorUpdate) * 100 > threshold) {
                             showDebugMenuAndVibrateIfNeeded()

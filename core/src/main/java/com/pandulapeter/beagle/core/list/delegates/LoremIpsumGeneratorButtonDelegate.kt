@@ -55,7 +55,7 @@ internal class LoremIpsumGeneratorButtonDelegate : Module.Delegate<LoremIpsumGen
     }
 
     companion object {
-        private val RANDOM_GENERATOR by lazy { Random(System.currentTimeMillis()) }
+        private val RANDOM_GENERATOR by lazy { Random(currentTimestamp) }
         private val WORDS by lazy {
             listOf(
                 "a",

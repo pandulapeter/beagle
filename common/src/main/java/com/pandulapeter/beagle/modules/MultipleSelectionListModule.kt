@@ -6,6 +6,7 @@ import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
+import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule.Companion.DEFAULT_IS_ENABLED
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule.Companion.DEFAULT_IS_EXPANDED_INITIALLY
 import com.pandulapeter.beagle.modules.MultipleSelectionListModule.Companion.DEFAULT_IS_VALUE_PERSISTED
@@ -21,7 +22,7 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule.Companion.DEF
  * @param isValuePersisted - Can be used to enable or disable persisting the selected value on the local storage. This will only work if the module has a unique, constant ID. [DEFAULT_IS_VALUE_PERSISTED] by default.
  * @param shouldRequireConfirmation - Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step. [DEFAULT_SHOULD_REQUIRE_CONFIRMATION] by default.
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
- * @param id - A unique identifier for the module. [BeagleContract.randomId] by default.
+ * @param id - A unique identifier for the module. [randomId] by default.
  * @param onSelectionChanged - Callback invoked when the selection is changed. The parameter is a set containing the currently selected items. Empty implementation by default.
  */
 @Suppress("unused")
@@ -33,7 +34,7 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
-    override val id: String = BeagleContract.randomId,
+    override val id: String = randomId,
     val onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
 ) : ExpandableModule<MultipleSelectionListModule<T>>, ValueWrapperModule<Set<String>, MultipleSelectionListModule<T>> {
 
@@ -45,7 +46,7 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
         isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
         shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
         isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
-        id: String = BeagleContract.randomId,
+        id: String = randomId,
         onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
     ) : this(
         title = { Text.CharSequence(title) },
@@ -67,7 +68,7 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
         isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
         shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
         isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
-        id: String = BeagleContract.randomId,
+        id: String = randomId,
         onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
     ) : this(
         title = { Text.ResourceId(title) },
