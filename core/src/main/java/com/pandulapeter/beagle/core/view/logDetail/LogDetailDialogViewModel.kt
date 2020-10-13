@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.util.extension.createAndShareFile
+import com.pandulapeter.beagle.core.util.extension.createAndShareLogFile
 import kotlinx.coroutines.launch
 
 internal class LogDetailDialogViewModel : ViewModel() {
@@ -18,7 +18,7 @@ internal class LogDetailDialogViewModel : ViewModel() {
         if (_isShareButtonEnabled.value == true) {
             viewModelScope.launch {
                 _isShareButtonEnabled.postValue(false)
-                activity?.createAndShareFile("${BeagleCore.implementation.behavior.getLogFileName(timestamp ?: 0L)}.txt", text.toString())
+                activity?.createAndShareLogFile("${BeagleCore.implementation.behavior.getLogFileName(timestamp ?: 0L)}.txt", text.toString())
                 _isShareButtonEnabled.postValue(true)
             }
         }

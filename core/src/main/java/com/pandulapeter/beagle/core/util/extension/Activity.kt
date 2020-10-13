@@ -48,7 +48,7 @@ internal fun Activity.shareFiles(uris: List<Uri>) {
 }
 
 @Suppress("BlockingMethodInNonBlockingContext")
-internal suspend fun Activity.createAndShareFile(fileName: String, content: String) = withContext(Dispatchers.IO) {
+internal suspend fun Activity.createAndShareLogFile(fileName: String, content: String) = withContext(Dispatchers.IO) {
     val file = createLogFile(fileName)
     try {
         FileWriter(file).run {
