@@ -289,14 +289,14 @@ interface BeagleContract {
      * @param label - Optional tag that can be used to create filtered LogListModule instances, null by default.
      * @param payload - Extra message that will only be displayed when the user selects the log entry. Entries with payloads are marked with "*" at the end. Optional, null by default.
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
-     * @param id - The unique identifier of the event. Random string by default.
+     * @param id - The unique identifier of the event. [randomId] by default.
      */
     fun log(
         message: CharSequence,
         label: String? = null,
         payload: CharSequence? = null,
         timestamp: Long = System.currentTimeMillis(),
-        id: String = UUID.randomUUID().toString()
+        id: String = randomId
     ) = Unit
 
     /**
@@ -315,7 +315,7 @@ interface BeagleContract {
      * @param headers - The request headers, or null if not applicable. Null by default.
      * @param duration - The duration of the event, or null if not applicable. Null by default.
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
-     * @param id - The unique identifier of the event. Random string by default.
+     * @param id - The unique identifier of the event. [randomId] by default.
      */
     fun logNetworkEvent(
         isOutgoing: Boolean,
@@ -324,7 +324,7 @@ interface BeagleContract {
         headers: List<String>? = null,
         duration: Long? = null,
         timestamp: Long = System.currentTimeMillis(),
-        id: String = UUID.randomUUID().toString()
+        id: String = randomId
     ) = Unit
 
     /**
@@ -382,13 +382,13 @@ interface BeagleContract {
      * @param content - The text that appears in the dialog.
      * @param isHorizontalScrollEnabled - When true, the dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. False by default.
      * @param timestamp - The moment the contents of the dialog are relevant to. This value is used for generating the file name when sharing. By default it is the moment of the function call.
-     * @param id - The unique identifier of the event. Random string by default.
+     * @param id - The unique identifier of the event. [randomId] by default.
      */
     fun showDialog(
         content: CharSequence,
         isHorizontalScrollEnabled: Boolean = false,
         timestamp: Long = System.currentTimeMillis(),
-        id: String = UUID.randomUUID().toString()
+        id: String = randomId
     ) = Unit
 
     /**
@@ -400,7 +400,7 @@ interface BeagleContract {
      * @param headers - The request headers, or null if not applicable. Null by default
      * @param duration - The duration of the event, or null if not applicable. Null by default
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
-     * @param id - The unique identifier of the event. Random string by default.
+     * @param id - The unique identifier of the event. [randomId] by default.
      */
     fun showNetworkEventDialog(
         isOutgoing: Boolean,
@@ -409,7 +409,7 @@ interface BeagleContract {
         headers: List<String>? = null,
         duration: Long? = null,
         timestamp: Long = System.currentTimeMillis(),
-        id: String = UUID.randomUUID().toString()
+        id: String = randomId
     ) = Unit
     //endregion
 
@@ -417,5 +417,6 @@ interface BeagleContract {
         const val FILE_NAME_DATE_TIME_FORMAT = "yyyy-MM-dd_HH-mm-ss_SSS"
         const val GALLERY_DATE_FORMAT = "yyyy-MM-dd"
         const val LOG_TIME_FORMAT = "HH:mm:ss"
+        val randomId get() = UUID.randomUUID().toString()
     }
 }

@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.common.contracts.module
 
 import androidx.annotation.RestrictTo
-import java.util.UUID
 
 /**
  * All Beagle modules must implement this interface. Modules are lightweight classes containing the parameters needed from the consumer.
@@ -51,9 +50,5 @@ interface Module<M : Module<M>> {
         @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
         @Suppress("UNCHECKED_CAST")
         fun forceCreateCells(module: Module<*>) = createCells(module as M)
-    }
-
-    companion object {
-        val randomId get() = UUID.randomUUID().toString()
     }
 }
