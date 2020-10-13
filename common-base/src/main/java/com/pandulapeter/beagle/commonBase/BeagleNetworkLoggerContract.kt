@@ -14,11 +14,20 @@ interface BeagleNetworkLoggerContract {
      * @param isOutgoing - True for requests, false for responses.
      * @param url - The complete URL of the endpoint. This will appear in the log list as the title of the entry.
      * @param payload - The payload String of the request or null if not applicable. This will appear in the dialog when the user selects the entry. JSON strings will automatically be formatted.
-     * @param headers - The request headers, or null if not applicable. Null by default
-     * @param duration - The duration of the event, or null if not applicable. Null by default
+     * @param headers - The request headers, or null if not applicable. Null by default.
+     * @param duration - The duration of the event, or null if not applicable. Null by default.
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
+     * @param id - The unique identifier of the event. [randomId] by default.
      */
-    fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>? = null, duration: Long? = null, timestamp: Long = System.currentTimeMillis()) = Unit
+    fun logNetworkEvent(
+        isOutgoing: Boolean,
+        url: String,
+        payload: String?,
+        headers: List<String>? = null,
+        duration: Long? = null,
+        timestamp: Long = currentTimestamp,
+        id: String = randomId
+    ) = Unit
 
     /**
      * Clears all network log messages.
@@ -28,5 +37,8 @@ interface BeagleNetworkLoggerContract {
     /**
      * For internal use only.
      */
-    fun register(onNewLog: (isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) -> Unit, clearLogs: () -> Unit) = Unit
+    fun register(
+        onNewLog: (isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long, id: String) -> Unit,
+        clearLogs: () -> Unit
+    ) = Unit
 }

@@ -28,7 +28,8 @@ import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureText
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_READY_NOTIFICATION_CONTENT
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_READY_NOTIFICATION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_TOAST_TEXT
-import com.pandulapeter.beagle.common.contracts.BeagleContract
+import com.pandulapeter.beagle.commonBase.GALLERY_DATE_FORMAT
+import com.pandulapeter.beagle.commonBase.LOG_TIME_FORMAT
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -41,8 +42,8 @@ import java.util.Locale
  * @param galleryTexts - Customize UI strings related to the Gallery, see [GalleryTexts].
  * @param bugReportTexts - Customize UI strings related to the bug reporting screen, see [BugReportTexts].
  * @param networkLogTexts - Customize UI strings related to the network event detail dialog, see [NetworkLogTexts].
- * @param networkEventTimestampFormatter - The formatter used for displaying the timestamp of network events on the detail dialog. Formats with [BeagleContract.LOG_TIME_FORMAT] by default.
- * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with [BeagleContract.GALLERY_DATE_FORMAT] by default.
+ * @param networkEventTimestampFormatter - The formatter used for displaying the timestamp of network events on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
+ * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with [GALLERY_DATE_FORMAT] by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. [DEFAULT_APPLY_INSETS] by default.
  */
 data class Appearance(
@@ -175,8 +176,8 @@ data class Appearance(
 
     companion object {
         private val DEFAULT_THEME_RESOURCE_ID: Int? = null
-        private val DEFAULT_NETWORK_EVENT_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.LOG_TIME_FORMAT, Locale.ENGLISH) }
-        private val DEFAULT_GALLERY_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.GALLERY_DATE_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_NETWORK_EVENT_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_GALLERY_DATE_FORMAT by lazy { SimpleDateFormat(GALLERY_DATE_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_APPLY_INSETS: ((windowInsets: Insets) -> Insets)? = null
     }
 }

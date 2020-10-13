@@ -5,8 +5,8 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
-import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
+import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.SingleSelectionListModule.Companion.DEFAULT_IS_ENABLED
 import com.pandulapeter.beagle.modules.SingleSelectionListModule.Companion.DEFAULT_IS_EXPANDED_INITIALLY
 import com.pandulapeter.beagle.modules.SingleSelectionListModule.Companion.DEFAULT_IS_VALUE_PERSISTED
@@ -24,7 +24,7 @@ import com.pandulapeter.beagle.modules.SingleSelectionListModule.Companion.DEFAU
  * @param isValuePersisted - Can be used to enable or disable persisting the selected value on the local storage. This will only work if the module has a unique, constant ID. [DEFAULT_IS_VALUE_PERSISTED] by default.
  * @param shouldRequireConfirmation - Can be used to enable or disable bulk apply. When enabled, changes made to the module by the user only take effect after a confirmation step. [DEFAULT_SHOULD_REQUIRE_CONFIRMATION] by default.
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
- * @param id - A unique identifier for the module. [Module.randomId] by default.
+ * @param id - A unique identifier for the module. [randomId] by default.
  * @param onSelectionChanged - Callback invoked when the changes the selection. The parameter is the currently selected item. Empty implementation by default.
  */
 @Suppress("unused")
@@ -36,7 +36,7 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
-    override val id: String = Module.randomId,
+    override val id: String = randomId,
     val onSelectionChanged: (selectedItem: T?) -> Unit = {}
 ) : ExpandableModule<SingleSelectionListModule<T>>, ValueWrapperModule<String, SingleSelectionListModule<T>> {
 
@@ -48,7 +48,7 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
         isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
         shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
         isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
-        id: String = Module.randomId,
+        id: String = randomId,
         onSelectionChanged: (selectedItem: T?) -> Unit = {}
     ) : this(
         title = { Text.CharSequence(title) },
@@ -70,7 +70,7 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
         isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
         shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
         isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
-        id: String = Module.randomId,
+        id: String = randomId,
         onSelectionChanged: (selectedItem: T?) -> Unit = {}
     ) : this(
         title = { Text.ResourceId(title) },

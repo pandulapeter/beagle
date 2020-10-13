@@ -16,8 +16,9 @@ internal class NetworkLogManager(
      */
     private val entries = mutableListOf<NetworkLogEntry>()
 
-    fun log(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) {
+    fun log(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long, id: String) {
         val entry = NetworkLogEntry(
+            id = id,
             isOutgoing = isOutgoing,
             payload = payload.orEmpty(),
             headers = headers.orEmpty(),

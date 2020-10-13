@@ -24,9 +24,10 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
                 isEnabled = true,
                 onItemSelected = if (entry.payload != null) fun() {
                     BeagleCore.implementation.showDialog(
-                        contents = entry.payload,
+                        content = entry.payload,
+                        isHorizontalScrollEnabled = module.isHorizontalScrollEnabled,
                         timestamp = entry.timestamp,
-                        isHorizontalScrollEnabled = module.isHorizontalScrollEnabled
+                        id = entry.id
                     )
                 } else null
             )

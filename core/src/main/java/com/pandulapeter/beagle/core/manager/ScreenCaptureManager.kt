@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.extension.recordScreenWithMediaProjectionManager
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithDrawingCache
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithMediaProjectionManager
@@ -26,7 +27,7 @@ internal class ScreenCaptureManager {
                 onScreenCaptureReady = null
             }
             currentActivity?.run {
-                val fileName = "${behavior.getImageFileName(System.currentTimeMillis())}$IMAGE_EXTENSION"
+                val fileName = "${behavior.getImageFileName(currentTimestamp)}$IMAGE_EXTENSION"
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     takeScreenshotWithMediaProjectionManager(fileName)
                 } else {
@@ -45,7 +46,7 @@ internal class ScreenCaptureManager {
                 callback(uri)
                 onScreenCaptureReady = null
             }
-            currentActivity?.recordScreenWithMediaProjectionManager("${behavior.getVideoFileName(System.currentTimeMillis())}$VIDEO_EXTENSION")
+            currentActivity?.recordScreenWithMediaProjectionManager("${behavior.getVideoFileName(currentTimestamp)}$VIDEO_EXTENSION")
         }
     }
 

@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.append
-import com.pandulapeter.beagle.core.util.extension.createAndShareFile
+import com.pandulapeter.beagle.core.util.extension.createAndShareLogFile
 import com.pandulapeter.beagle.core.util.extension.text
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -65,12 +65,12 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         _areDetailsEnabled.value = !(areDetailsEnabled.value ?: true)
     }
 
-    fun shareLogs(activity: Activity?, timestamp: Long?) {
+    fun shareLogs(activity: Activity?, timestamp: Long, id: String) {
         if (_isShareButtonEnabled.value == true) {
             _formattedContents.value?.let { text ->
                 viewModelScope.launch {
                     _isShareButtonEnabled.postValue(false)
-                    activity?.createAndShareFile("${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp ?: 0L)}.txt", text.toString())
+                    activity?.createAndShareLogFile("${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt", text.toString())
                     _isShareButtonEnabled.postValue(true)
                 }
             }

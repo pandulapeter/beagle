@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.modules
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
+import com.pandulapeter.beagle.commonBase.LOG_TIME_FORMAT
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_BASE_URL
@@ -26,7 +27,7 @@ import java.util.Locale
  * @param baseUrl - When not empty, all URL-s will have the specified String filtered out to reduce the amount of redundant information. [DEFAULT_BASE_URL] by default.
  * @param maxItemCount - The maximum number of messages that will appear when expanded. [DEFAULT_MAX_ITEM_COUNT] by default.
  * @param maxItemTitleLength - The maximum number of characters displayed on a list item, or null for no limitation. [DEFAULT_MAX_ITEM_TITLE_LENGTH] by default.
- * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [BeagleContract.LOG_TIME_FORMAT] by default.
+ * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [LOG_TIME_FORMAT] by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
 @Suppress("unused")
@@ -49,7 +50,7 @@ data class NetworkLogListModule(
         private const val DEFAULT_BASE_URL = ""
         private const val DEFAULT_MAX_ITEM_COUNT = 10
         private val DEFAULT_MAX_ITEM_TITLE_LENGTH: Int? = null
-        private val DEFAULT_DATE_FORMAT by lazy { SimpleDateFormat(BeagleContract.LOG_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
         private const val DEFAULT_IS_EXPANDED_INITIALLY = false
     }
 }
