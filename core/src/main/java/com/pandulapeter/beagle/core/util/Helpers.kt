@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 
 internal fun performOnHide(action: () -> Unit) {
     val listener = object : VisibilityListener {
@@ -53,4 +54,10 @@ internal fun createTextModuleFromType(
         icon = icon,
         onButtonPressed = onItemSelected
     )
+}
+
+internal fun getFolder(rootFolder: File, name: String): File {
+    val folder = File(rootFolder, name)
+    folder.mkdirs()
+    return folder
 }

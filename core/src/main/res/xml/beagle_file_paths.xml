@@ -3,7 +3,7 @@
 
     <paths>
 
-        <cache-path
+        <files-path
             name="beagle_screen_captures"
             path="beagleScreenCaptures/" />
 
