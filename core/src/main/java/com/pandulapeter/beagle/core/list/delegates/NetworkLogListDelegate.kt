@@ -35,7 +35,8 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
                                 payload = entry.payload,
                                 headers = entry.headers,
                                 duration = entry.duration,
-                                timestamp = entry.timestamp
+                                timestamp = entry.timestamp,
+                                id = entry.id
                             )
                         }
                     )

@@ -16,6 +16,7 @@ import com.pandulapeter.beagle.common.listeners.NetworkLogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
+import java.util.UUID
 import kotlin.reflect.KClass
 
 /**
@@ -48,7 +49,11 @@ interface BeagleContract {
      *  - The behavior specified the shake to open trigger gesture but the device does not have an accelerometer sensor.
      *  - The application depends on the noop variant.
      */
-    fun initialize(application: Application, appearance: Appearance = Appearance(), behavior: Behavior = Behavior()): Boolean = false
+    fun initialize(
+        application: Application,
+        appearance: Appearance = Appearance(),
+        behavior: Behavior = Behavior()
+    ): Boolean = false
 
     /**
      * Call this to show the debug menu.
@@ -97,7 +102,11 @@ interface BeagleContract {
      * @param placement - The positioning of the new trick. Optional, [Placement.Bottom] by default.
      * @param lifecycleOwner - The [LifecycleOwner] which should manage for how long the module should remain added. Null if the module should not be removed automatically. Null by default.
      */
-    fun add(vararg modules: Module<*>, placement: Placement = Placement.Bottom, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun add(
+        vararg modules: Module<*>,
+        placement: Placement = Placement.Bottom,
+        lifecycleOwner: LifecycleOwner? = null
+    ) = Unit
 
     /**
      * Remove one or more modules with the specified ID-s from the debug menu.
@@ -145,7 +154,10 @@ interface BeagleContract {
      * @param listener - The [LogListener] implementation to add.
      * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
      */
-    fun addLogListener(listener: LogListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun addLogListener(
+        listener: LogListener,
+        lifecycleOwner: LifecycleOwner? = null
+    ) = Unit
 
     /**
      * Removes the [LogListener] implementation, if it was added to the list of listeners.
@@ -166,7 +178,10 @@ interface BeagleContract {
      * @param listener - The [NetworkLogListener] implementation to add.
      * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
      */
-    fun addNetworkLogListener(listener: NetworkLogListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun addNetworkLogListener(
+        listener: NetworkLogListener,
+        lifecycleOwner: LifecycleOwner? = null
+    ) = Unit
 
     /**
      * Removes the [NetworkLogListener] implementation, if it was added to the list of listeners.
@@ -187,7 +202,10 @@ interface BeagleContract {
      * @param listener - The [OverlayListener] implementation to add.
      * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
      */
-    fun addOverlayListener(listener: OverlayListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun addOverlayListener(
+        listener: OverlayListener,
+        lifecycleOwner: LifecycleOwner? = null
+    ) = Unit
 
     /**
      * Removes the [OverlayListener] implementation, if it was added to the list of listeners.
@@ -208,7 +226,10 @@ interface BeagleContract {
      * @param listener - The [UpdateListener] implementation to add.
      * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
      */
-    fun addUpdateListener(listener: UpdateListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun addUpdateListener(
+        listener: UpdateListener,
+        lifecycleOwner: LifecycleOwner? = null
+    ) = Unit
 
     /**
      * Removes the [UpdateListener] implementation, if it was added to the list of listeners.
@@ -229,7 +250,10 @@ interface BeagleContract {
      * @param listener - The [VisibilityListener] implementation to add.
      * @param lifecycleOwner - The [LifecycleOwner] to use for automatically adding or removing the listener. Null by default.
      */
-    fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner? = null) = Unit
+    fun addVisibilityListener(
+        listener: VisibilityListener,
+        lifecycleOwner: LifecycleOwner? = null
+    ) = Unit
 
     /**
      * Removes the [VisibilityListener] implementation, if it was added to the list of listeners.
@@ -264,8 +288,16 @@ interface BeagleContract {
      * @param message - The message that will be displayed.
      * @param label - Optional tag that can be used to create filtered LogListModule instances, null by default.
      * @param payload - Extra message that will only be displayed when the user selects the log entry. Entries with payloads are marked with "*" at the end. Optional, null by default.
+     * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
+     * @param id - The unique identifier of the event. Random string by default.
      */
-    fun log(message: CharSequence, label: String? = null, payload: CharSequence? = null) = Unit
+    fun log(
+        message: CharSequence,
+        label: String? = null,
+        payload: CharSequence? = null,
+        timestamp: Long = System.currentTimeMillis(),
+        id: String = UUID.randomUUID().toString()
+    ) = Unit
 
     /**
      * Clears all log messages for the specified tag.
@@ -280,12 +312,20 @@ interface BeagleContract {
      * @param isOutgoing - True for requests, false for responses.
      * @param url - The complete URL of the endpoint. This will appear in the log list as the title of the entry.
      * @param payload - The payload String of the request or null if not applicable. This will appear in the dialog when the user selects the entry. JSON strings will automatically be formatted.
-     * @param headers - The request headers, or null if not applicable. Null by default
-     * @param duration - The duration of the event, or null if not applicable. Null by default
+     * @param headers - The request headers, or null if not applicable. Null by default.
+     * @param duration - The duration of the event, or null if not applicable. Null by default.
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
+     * @param id - The unique identifier of the event. Random string by default.
      */
-    fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>? = null, duration: Long? = null, timestamp: Long = System.currentTimeMillis()) =
-        Unit
+    fun logNetworkEvent(
+        isOutgoing: Boolean,
+        url: String, payload:
+        String?,
+        headers: List<String>? = null,
+        duration: Long? = null,
+        timestamp: Long = System.currentTimeMillis(),
+        id: String = UUID.randomUUID().toString()
+    ) = Unit
 
     /**
      * Clears all network log messages.
@@ -339,11 +379,17 @@ interface BeagleContract {
     /**
      * Displays a dialog in debug builds.
      *
-     * @param contents - The text that appears in the dialog.
-     * @param timestamp - The moment the contents of the dialog are relevant to. This value is used for generating the file name when sharing. By default it is the moment of the function call.
+     * @param content - The text that appears in the dialog.
      * @param isHorizontalScrollEnabled - When true, the dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. False by default.
+     * @param timestamp - The moment the contents of the dialog are relevant to. This value is used for generating the file name when sharing. By default it is the moment of the function call.
+     * @param id - The unique identifier of the event. Random string by default.
      */
-    fun showDialog(contents: CharSequence, timestamp: Long = System.currentTimeMillis(), isHorizontalScrollEnabled: Boolean = false) = Unit
+    fun showDialog(
+        content: CharSequence,
+        isHorizontalScrollEnabled: Boolean = false,
+        timestamp: Long = System.currentTimeMillis(),
+        id: String = UUID.randomUUID().toString()
+    ) = Unit
 
     /**
      * Displays a network event dialog in debug builds.
@@ -354,6 +400,7 @@ interface BeagleContract {
      * @param headers - The request headers, or null if not applicable. Null by default
      * @param duration - The duration of the event, or null if not applicable. Null by default
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
+     * @param id - The unique identifier of the event. Random string by default.
      */
     fun showNetworkEventDialog(
         isOutgoing: Boolean,
@@ -361,12 +408,13 @@ interface BeagleContract {
         payload: String,
         headers: List<String>? = null,
         duration: Long? = null,
-        timestamp: Long = System.currentTimeMillis()
+        timestamp: Long = System.currentTimeMillis(),
+        id: String = UUID.randomUUID().toString()
     ) = Unit
     //endregion
 
     companion object {
-        const val FILE_NAME_DATE_TIME_FORMAT = "yyyy-MM-dd_HH-mm-ss.SSS"
+        const val FILE_NAME_DATE_TIME_FORMAT = "yyyy-MM-dd_HH-mm-ss_SSS"
         const val GALLERY_DATE_FORMAT = "yyyy-MM-dd"
         const val LOG_TIME_FORMAT = "HH:mm:ss"
     }

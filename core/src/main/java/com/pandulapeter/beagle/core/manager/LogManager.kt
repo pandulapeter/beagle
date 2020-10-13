@@ -11,14 +11,22 @@ internal class LogManager(
 ) {
     private val entries = mutableListOf<LogEntry>()
 
-    fun log(label: String?, message: CharSequence, payload: CharSequence?) {
+    fun log(
+        label: String?,
+        message: CharSequence,
+        payload: CharSequence?,
+        timestamp: Long,
+        id: String
+    ) {
         synchronized(entries) {
             entries.add(
                 0,
                 LogEntry(
+                    id = id,
                     label = label,
                     message = message,
-                    payload = payload
+                    payload = payload,
+                    timestamp = timestamp
                 )
             )
             entries.sortByDescending { it.timestamp }

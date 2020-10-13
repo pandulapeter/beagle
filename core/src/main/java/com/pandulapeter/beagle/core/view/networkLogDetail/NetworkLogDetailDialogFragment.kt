@@ -96,7 +96,13 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume { viewModel.shareLogs(activity, arguments?.timestamp) }
+        R.id.beagle_share -> consume {
+            viewModel.shareLogs(
+                activity = activity,
+                timestamp = arguments?.timestamp ?: 0L,
+                id = arguments?.id.orEmpty()
+            )
+        }
         R.id.beagle_toggle_details -> consume(viewModel::onToggleDetailsButtonPressed)
         else -> false
     }
@@ -108,6 +114,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
         private var Bundle.headers by BundleArgumentDelegate.StringList("headers")
         private var Bundle.duration by BundleArgumentDelegate.Long("duration")
         private var Bundle.timestamp by BundleArgumentDelegate.Long("timestamp")
+        private var Bundle.id by BundleArgumentDelegate.String("id")
 
         fun show(
             fragmentManager: FragmentManager,
@@ -116,7 +123,8 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             payload: String,
             headers: List<String>?,
             duration: Long?,
-            timestamp: Long
+            timestamp: Long,
+            id: String
         ) = NetworkLogDetailDialogFragment().withArguments {
             it.isOutgoing = isOutgoing
             it.url = url
@@ -124,6 +132,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             it.headers = headers.orEmpty()
             it.duration = duration ?: -1L
             it.timestamp = timestamp
+            it.id = id
         }.run { show(fragmentManager, tag) }
     }
 }

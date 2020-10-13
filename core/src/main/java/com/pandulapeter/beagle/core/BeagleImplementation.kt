@@ -37,9 +37,9 @@ import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
 import com.pandulapeter.beagle.core.util.extension.hideKeyboard
+import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.core.view.logDetail.LogDetailDialogFragment
 import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogFragment
-import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 import kotlin.properties.Delegates
@@ -84,20 +84,23 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         BeagleCore.implementation = this
     }
 
-    override fun initialize(application: Application, appearance: Appearance, behavior: Behavior) =
-        (behavior.shakeThreshold == null || shakeDetector.initialize(application)).also {
-            this.appearance = appearance
-            this.behavior = behavior
-            this.localStorageManager = LocalStorageManager(application)
-            debugMenuInjector.register(application)
-            behavior.logger?.register(::log, ::clearLogs)
-            behavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }
-            videoThumbnailLoader = ImageLoader.Builder(application)
-                .componentRegistry {
-                    add(VideoFrameFileFetcher(application))
-                }
-                .build()
-        }
+    override fun initialize(
+        application: Application,
+        appearance: Appearance,
+        behavior: Behavior
+    ) = (behavior.shakeThreshold == null || shakeDetector.initialize(application)).also {
+        this.appearance = appearance
+        this.behavior = behavior
+        this.localStorageManager = LocalStorageManager(application)
+        debugMenuInjector.register(application)
+        behavior.logger?.register(::log, ::clearLogs)
+        behavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }
+        videoThumbnailLoader = ImageLoader.Builder(application)
+            .componentRegistry {
+                add(VideoFrameFileFetcher(application))
+            }
+            .build()
+    }
 
     override fun show() = (currentActivity?.let { currentActivity ->
         if (currentActivity.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
@@ -107,12 +110,26 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun hide() = uiManager.hide(currentActivity)
 
-    override fun set(vararg modules: Module<*>) = listManager.setModules(modules.toList(), updateListenerManager::notifyListenersOnContentsChanged)
+    override fun set(vararg modules: Module<*>) = listManager.setModules(
+        newModules = modules.toList(),
+        onContentsChanged = updateListenerManager::notifyListenersOnContentsChanged
+    )
 
-    override fun add(vararg modules: Module<*>, placement: Placement, lifecycleOwner: LifecycleOwner?) =
-        listManager.addModules(modules.toList(), placement, lifecycleOwner, updateListenerManager::notifyListenersOnContentsChanged)
+    override fun add(
+        vararg modules: Module<*>,
+        placement: Placement,
+        lifecycleOwner: LifecycleOwner?
+    ) = listManager.addModules(
+        newModules = modules.toList(),
+        placement = placement,
+        lifecycleOwner = lifecycleOwner,
+        onContentsChanged = updateListenerManager::notifyListenersOnContentsChanged
+    )
 
-    override fun remove(vararg ids: String) = listManager.removeModules(ids.toList(), updateListenerManager::notifyListenersOnContentsChanged)
+    override fun remove(vararg ids: String) = listManager.removeModules(
+        ids = ids.toList(),
+        onContentsChanged = updateListenerManager::notifyListenersOnContentsChanged
+    )
 
     override fun contains(id: String) = listManager.contains(id)
 
@@ -120,13 +137,25 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun <M : Module<M>> delegateFor(type: KClass<out M>) = listManager.findModuleDelegate(type)
 
-    override fun addLogListener(listener: LogListener, lifecycleOwner: LifecycleOwner?) = logListenerManager.addListener(listener, lifecycleOwner)
+    override fun addLogListener(
+        listener: LogListener,
+        lifecycleOwner: LifecycleOwner?
+    ) = logListenerManager.addListener(
+        listener = listener,
+        lifecycleOwner = lifecycleOwner
+    )
 
     override fun removeLogListener(listener: LogListener) = logListenerManager.removeListener(listener)
 
     override fun clearLogListeners() = logListenerManager.clearListeners()
 
-    override fun addNetworkLogListener(listener: NetworkLogListener, lifecycleOwner: LifecycleOwner?) = networkLogListenerManager.addListener(listener, lifecycleOwner)
+    override fun addNetworkLogListener(
+        listener: NetworkLogListener,
+        lifecycleOwner: LifecycleOwner?
+    ) = networkLogListenerManager.addListener(
+        listener = listener,
+        lifecycleOwner = lifecycleOwner
+    )
 
     override fun removeNetworkLogListener(listener: NetworkLogListener) = networkLogListenerManager.removeListener(listener)
 
@@ -134,13 +163,25 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal fun addInternalOverlayListener(listener: OverlayListener) = overlayListenerManager.addInternalListener(listener)
 
-    override fun addOverlayListener(listener: OverlayListener, lifecycleOwner: LifecycleOwner?) = overlayListenerManager.addListener(listener, lifecycleOwner)
+    override fun addOverlayListener(
+        listener: OverlayListener,
+        lifecycleOwner: LifecycleOwner?
+    ) = overlayListenerManager.addListener(
+        listener = listener,
+        lifecycleOwner = lifecycleOwner
+    )
 
     override fun removeOverlayListener(listener: OverlayListener) = overlayListenerManager.removeListener(listener)
 
     fun addInternalUpdateListener(listener: UpdateListener) = updateListenerManager.addInternalListener(listener)
 
-    override fun addUpdateListener(listener: UpdateListener, lifecycleOwner: LifecycleOwner?) = updateListenerManager.addListener(listener, lifecycleOwner)
+    override fun addUpdateListener(
+        listener: UpdateListener,
+        lifecycleOwner: LifecycleOwner?
+    ) = updateListenerManager.addListener(
+        listener = listener,
+        lifecycleOwner = lifecycleOwner
+    )
 
     override fun removeUpdateListener(listener: UpdateListener) = updateListenerManager.removeListener(listener)
 
@@ -150,18 +191,51 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal fun addInternalVisibilityListener(listener: VisibilityListener) = visibilityListenerManager.addInternalListener(listener)
 
-    override fun addVisibilityListener(listener: VisibilityListener, lifecycleOwner: LifecycleOwner?) = visibilityListenerManager.addListener(listener, lifecycleOwner)
+    override fun addVisibilityListener(
+        listener: VisibilityListener,
+        lifecycleOwner: LifecycleOwner?
+    ) = visibilityListenerManager.addListener(
+        listener = listener,
+        lifecycleOwner = lifecycleOwner
+    )
 
     override fun removeVisibilityListener(listener: VisibilityListener) = visibilityListenerManager.removeListener(listener)
 
     override fun clearVisibilityListeners() = visibilityListenerManager.clearListeners()
 
-    override fun log(message: CharSequence, label: String?, payload: CharSequence?) = logManager.log(label, message, payload)
+    override fun log(
+        message: CharSequence,
+        label: String?,
+        payload: CharSequence?,
+        timestamp: Long,
+        id: String
+    ) = logManager.log(
+        label = label,
+        message = message,
+        payload = payload,
+        timestamp = timestamp,
+        id = id
+    )
 
     override fun clearLogs(label: String?) = logManager.clearLogs(label)
 
-    override fun logNetworkEvent(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long) =
-        networkLogManager.log(isOutgoing, url, payload, headers, duration, timestamp)
+    override fun logNetworkEvent(
+        isOutgoing: Boolean,
+        url: String,
+        payload: String?,
+        headers: List<String>?,
+        duration: Long?,
+        timestamp: Long,
+        id: String
+    ) = networkLogManager.log(
+        isOutgoing = isOutgoing,
+        url = url,
+        payload = payload,
+        headers = headers,
+        duration = duration,
+        timestamp = timestamp,
+        id = id
+    )
 
     override fun clearNetworkLogs() = networkLogManager.clearLogs()
 
@@ -176,18 +250,32 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
-    override fun showDialog(contents: CharSequence, timestamp: Long, isHorizontalScrollEnabled: Boolean) {
+    override fun showDialog(
+        content: CharSequence,
+        isHorizontalScrollEnabled: Boolean,
+        timestamp: Long,
+        id: String
+    ) {
         (uiManager.findHostFragmentManager() ?: currentActivity?.supportFragmentManager)?.let { fragmentManager ->
             LogDetailDialogFragment.show(
                 fragmentManager = fragmentManager,
-                content = contents,
+                content = content,
+                isHorizontalScrollEnabled = isHorizontalScrollEnabled,
                 timestamp = timestamp,
-                isHorizontalScrollEnabled = isHorizontalScrollEnabled
+                id = id
             )
         }
     }
 
-    override fun showNetworkEventDialog(isOutgoing: Boolean, url: String, payload: String, headers: List<String>?, duration: Long?, timestamp: Long) {
+    override fun showNetworkEventDialog(
+        isOutgoing: Boolean,
+        url: String,
+        payload: String,
+        headers: List<String>?,
+        duration: Long?,
+        timestamp: Long,
+        id: String
+    ) {
         (uiManager.findHostFragmentManager() ?: currentActivity?.supportFragmentManager)?.let { fragmentManager ->
             NetworkLogDetailDialogFragment.show(
                 fragmentManager = fragmentManager,
@@ -196,7 +284,8 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
                 payload = payload,
                 headers = headers,
                 duration = duration,
-                timestamp = timestamp
+                timestamp = timestamp,
+                id = id
             )
         }
     }
@@ -212,8 +301,15 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>) = lifecycleLogManager.getEntries(eventTypes)
 
-    internal fun logLifecycle(classType: Class<*>, eventType: LifecycleLogListModule.EventType, hasSavedInstanceState: Boolean? = null) =
-        lifecycleLogManager.log(classType, eventType, hasSavedInstanceState)
+    internal fun logLifecycle(
+        classType: Class<*>,
+        eventType: LifecycleLogListModule.EventType,
+        hasSavedInstanceState: Boolean? = null
+    ) = lifecycleLogManager.log(
+        classType = classType,
+        eventType = eventType,
+        hasSavedInstanceState = hasSavedInstanceState
+    )
 
     internal fun getNetworkLogEntries() = networkLogManager.getEntries()
 

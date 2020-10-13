@@ -69,24 +69,34 @@ internal class LogDetailDialogFragment : DialogFragment() {
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
-        R.id.beagle_share -> consume { viewModel.shareLogs(activity, textView.text, arguments?.timestamp) }
+        R.id.beagle_share -> consume {
+            viewModel.shareLogs(
+                activity = activity,
+                text = textView.text,
+                timestamp = arguments?.timestamp ?: 0L,
+                id = arguments?.id.orEmpty()
+            )
+        }
         else -> false
     }
 
     companion object {
         private var Bundle.content by BundleArgumentDelegate.CharSequence("content")
-        private var Bundle.timestamp by BundleArgumentDelegate.Long("timestamp")
         private var Bundle.isHorizontalScrollEnabled by BundleArgumentDelegate.Boolean("isHorizontalScrollEnabled")
+        private var Bundle.timestamp by BundleArgumentDelegate.Long("timestamp")
+        private var Bundle.id by BundleArgumentDelegate.String("id")
 
         fun show(
             fragmentManager: FragmentManager,
             content: CharSequence,
+            isHorizontalScrollEnabled: Boolean,
             timestamp: Long,
-            isHorizontalScrollEnabled: Boolean
+            id: String
         ) = LogDetailDialogFragment().withArguments {
             it.content = content
-            it.timestamp = timestamp
             it.isHorizontalScrollEnabled = isHorizontalScrollEnabled
+            it.timestamp = timestamp
+            it.id = id
         }.run { show(fragmentManager, tag) }
     }
 }
