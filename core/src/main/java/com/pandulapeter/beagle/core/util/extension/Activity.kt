@@ -20,12 +20,16 @@ import kotlinx.coroutines.withContext
 import java.io.FileWriter
 import java.io.IOException
 
+private const val BEAGLE_DEBUG_MENU_ACTIVITY_PACKAGE_NAME = "com.pandulapeter.beagle.implementation.DebugMenuActivity"
+
 private val excludedPackageNames = listOf(
+    BEAGLE_DEBUG_MENU_ACTIVITY_PACKAGE_NAME,
     "com.pandulapeter.beagle.core.view.gallery.GalleryActivity",
     "com.pandulapeter.beagle.core.view.bugReport.BugReportActivity",
-    "com.pandulapeter.beagle.implementation.DebugMenuActivity",
     "com.markodevcic.peko.PekoActivity"
 )
+
+internal val Activity.isDebugMenu get() = componentName.className.startsWith(BEAGLE_DEBUG_MENU_ACTIVITY_PACKAGE_NAME)
 
 internal val Activity.supportsDebugMenu
     get() = this is FragmentActivity

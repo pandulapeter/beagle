@@ -23,9 +23,9 @@ internal fun performOnHide(action: () -> Unit) {
             }
         }
     }
-    if (BeagleCore.implementation.hide()) {
-        BeagleCore.implementation.addInternalVisibilityListener(listener)
-    } else {
+    BeagleCore.implementation.addInternalVisibilityListener(listener)
+    if (!BeagleCore.implementation.hide()) {
+        BeagleCore.implementation.removeVisibilityListener(listener)
         listener.onHidden()
     }
 }

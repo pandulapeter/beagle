@@ -21,7 +21,7 @@ import com.pandulapeter.beagle.commonBase.randomId
 import kotlin.reflect.KClass
 
 /**
- * This interface ensures that the real implementation and the noop variant have the same public API.
+ * This interface ensures that the real implementations and the noop variant have the same public API.
  */
 interface BeagleContract {
 
