@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.list.delegates
 import android.annotation.SuppressLint
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
+import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.createTextModuleFromType
 import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
 import kotlin.random.Random

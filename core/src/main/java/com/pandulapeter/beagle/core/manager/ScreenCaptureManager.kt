@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.extension.recordScreenWithMediaProjectionManager
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithDrawingCache
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithMediaProjectionManager

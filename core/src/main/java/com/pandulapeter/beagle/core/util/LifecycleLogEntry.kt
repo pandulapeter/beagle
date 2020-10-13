@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.core.util
 
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
+import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import java.util.UUID
 

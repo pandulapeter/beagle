@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
 import com.pandulapeter.beagle.core.util.extension.unregisterSensorEventListener
 import kotlin.math.abs
