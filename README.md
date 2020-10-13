@@ -42,7 +42,7 @@ The following versions exist:
 * **ui-view** - Displaying DebugMenuView is your responsibility (not recommended: shake to open, Beagle.show(), Beagle.hide(), the related VisibilityListener as well as the inset handling logic won't work out of the box).
 * **noop** - No UI, no logic. It has the same public API as all other variants, but it does nothing (this is intended for production builds).
 
-So for example if you prefer the Drawer UI, something like the following needs to be added to your module-level build.gradle file (check the widget below the code snippet for the latest version):
+So, for example, if you prefer the Drawer UI, something like the following needs to be added to your app-level build.gradle file (check the widget below the code snippet for the latest version):
 
 ```groovy
 dependencies {
@@ -231,8 +231,6 @@ If you're interested in what's under the hood, [this document](https://github.co
 
 ## Changelog
 Check out the [Releases](https://github.com/pandulapeter/beagle/releases) page for the changes in every version.
-
-If you're updating from a version older than 2.x.x, check out this [migration guide](https://github.com/pandulapeter/beagle/blob/master/metadata/MIGRATION_GUIDE.md).
 
 The library uses [semantic versioning](https://semver.org): **MAJOR.MINOR.PATCH** where **PATCH** changes only contain bug fixes, **MINOR** changes add new features and **MAJOR** changes introduce breaking modifications to the API.
 
