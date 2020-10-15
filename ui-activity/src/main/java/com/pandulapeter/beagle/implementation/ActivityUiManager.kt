@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.implementation
 
+import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.Beagle
@@ -24,4 +25,6 @@ internal class ActivityUiManager : UiManagerContract {
     }
 
     override fun findHostFragmentManager() = debugMenuActivity?.supportFragmentManager ?: super.findHostFragmentManager()
+
+    override fun isActivityDebugMenu(activity: Activity) = activity is DebugMenuActivity
 }

@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
 import com.pandulapeter.beagle.core.util.SimpleActivityLifecycleCallbacks
-import com.pandulapeter.beagle.core.util.extension.isDebugMenu
 import com.pandulapeter.beagle.core.util.extension.supportsDebugMenu
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.core.view.logDetail.LogDetailDialogFragment
@@ -132,7 +131,7 @@ internal class DebugMenuInjector(
 
         override fun onActivityResumed(activity: Activity) {
             if (currentActivity != activity) {
-                currentActivity = if (activity.supportsDebugMenu || activity.isDebugMenu) activity as FragmentActivity else null
+                currentActivity = if (activity.supportsDebugMenu || BeagleCore.implementation.uiManager.isActivityDebugMenu(activity)) activity as FragmentActivity else null
                 BeagleCore.implementation.refresh()
             }
             if (activity.supportsDebugMenu) {
@@ -178,6 +177,9 @@ internal class DebugMenuInjector(
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
     }
 
-    private fun Fragment.shouldLogFragment() =
-        this !is OverlayFragment && this !is MediaPreviewDialogFragment && this !is LogDetailDialogFragment && this !is NetworkLogDetailDialogFragment
+    private fun Fragment.shouldLogFragment() = this !is OverlayFragment
+            && this !is MediaPreviewDialogFragment
+            && this !is LogDetailDialogFragment
+            && this !is NetworkLogDetailDialogFragment
+            && !BeagleCore.implementation.uiManager.isFragmentDebugMenu(this)
 }

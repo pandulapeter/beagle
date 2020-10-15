@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.implementation
 
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.core.manager.UiManagerContract
@@ -19,4 +20,6 @@ internal class BottomSheetUiManager : UiManagerContract {
         it.dismiss()
         true
     } ?: false
+
+    override fun isFragmentDebugMenu(fragment: Fragment) = fragment is DebugMenuBottomSheet
 }

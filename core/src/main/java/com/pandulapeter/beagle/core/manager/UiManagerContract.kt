@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.core.manager
 
+import android.app.Activity
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -35,4 +36,8 @@ interface UiManagerContract {
     fun show(activity: FragmentActivity): Boolean = false
 
     fun hide(activity: FragmentActivity?): Boolean = false
+
+    fun isActivityDebugMenu(activity: Activity) = false
+
+    fun isFragmentDebugMenu(fragment: Fragment) = false
 }
