@@ -118,6 +118,9 @@ Beagle.set(
 To add content to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt) or [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), you can simply call Beagle.log() and Beagle.logNetworkEvent() respectively. However, you might need to access this functionality from pure Java / Kotlin modules or, in the case of network events, you might want to use an Interceptor / Logger that works out of the box.
 
 ### Logging
+While calling Beagle.log() is the simplest way to add items to the log list, a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
+
+#### Logging from pure Kotlin modules
 To access the same functionality that Beagle.log() provides from a pure Kotlin / Java module, first you need to add the following to the module in question:
 
 ```groovy
@@ -150,6 +153,20 @@ BeagleLogger.log(…)
 ```
 
 The messages list will be merged with the ones logged using the regular Beagle.log() function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use BeagleLogger.clearLogs() if you cannot access Beagle.clearLogs().
+
+#### Logging with Timber
+To automatically add events logged with [Timber](https://github.com/JakeWharton/timber) to the debug menu, planting a special tree is the simplest solution:
+
+```kotlin
+Timber.plant(
+    object : Timber.Tree() {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) =
+            Beagle.log("[$tag] $message", "Timber", t?.stackTraceToString())
+    }
+)
+```
+
+To create a special LogListModule that only displays these logs, simply set the **label** constructor parameter of the module to "Timber".
 
 ### Intercepting network events
 Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment, out of the box, Beagle can hook into two networking libraries (but manually calling Beagle.logNetworkEvent() is always an option).
