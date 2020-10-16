@@ -15,9 +15,18 @@ class SongRepository(
         Engine.KTOR -> getSongUsingKtor(id)
     }
 
+    suspend fun getLibrary(engine: Engine) = when (engine) {
+        Engine.OK_HTTP -> getLibraryUsingOkHttp()
+        Engine.KTOR -> getLibraryUsingKtor()
+    }
+
     private suspend fun getSongUsingOkHttp(id: String) = okHttpRemoteSongSource.getSong(id)
 
     private suspend fun getSongUsingKtor(id: String) = ktorRemoteSongSource.getSong(id)
+
+    private suspend fun getLibraryUsingOkHttp() = okHttpRemoteSongSource.getLibrary()
+
+    private suspend fun getLibraryUsingKtor() = ktorRemoteSongSource.getLibrary()
 
     enum class Engine(@StringRes val nameResourceId: Int) {
         OK_HTTP(R.string.case_study_network_request_interceptor_engine_ok_http),

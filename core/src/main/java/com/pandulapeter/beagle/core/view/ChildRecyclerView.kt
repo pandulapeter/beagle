@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.widget.HorizontalScrollView
+import androidx.recyclerview.widget.RecyclerView
 
-internal class ChildHorizontalScrollView @JvmOverloads constructor(
+internal class ChildRecyclerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : HorizontalScrollView(context, attrs, defStyleAttr) {
+) : RecyclerView(context, attrs, defStyleAttr) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent?) = super.onTouchEvent(ev).also {

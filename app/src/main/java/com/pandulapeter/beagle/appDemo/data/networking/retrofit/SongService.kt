@@ -9,4 +9,7 @@ interface SongService {
 
     @GET(Constants.SONGS_ENDPOINT)
     suspend fun getSongAsync(@Query(Constants.PARAMETER_SONG_ID) songId: String): Song
+
+    @GET(Constants.LIBRARY_ENDPOINT)
+    suspend fun getLibraryAsync()
 }
