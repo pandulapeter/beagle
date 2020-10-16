@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class LineViewHolder private constructor(
     itemView: View,
@@ -13,6 +14,9 @@ internal class LineViewHolder private constructor(
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
+    private val drawableExpand by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_expand, textView.textColors.defaultColor) }
+    private val drawableCollapse by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_collapse, textView.textColors.defaultColor) }
+    private val drawableEmpty by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_empty, textView.textColors.defaultColor) }
 
     init {
         itemView.setOnClickListener {
@@ -28,12 +32,19 @@ internal class LineViewHolder private constructor(
         textView.tag = uiModel.lineIndex
         textView.text = uiModel.line
         textView.isClickable = uiModel.isClickable
+        textView.setCompoundDrawablesWithIntrinsicBounds(
+            if (uiModel.isClickable) {
+                if (uiModel.isCollapsed) drawableExpand else drawableCollapse
+            } else drawableEmpty,
+            null, null, null
+        )
     }
 
     data class UiModel(
         override val lineIndex: Int,
         val line: CharSequence,
-        val isClickable: Boolean
+        val isClickable: Boolean,
+        val isCollapsed: Boolean
     ) : NetworkLogDetailListItem
 
     companion object {

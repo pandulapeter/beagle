@@ -124,7 +124,8 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 LineViewHolder.UiModel(
                     lineIndex = line.second,
                     line = line.first,
-                    isClickable = line.second != jsonLines.lastIndex && level < jsonLines[line.second + 1].second
+                    isClickable = line.second != jsonLines.lastIndex && level < jsonLines[line.second + 1].second,
+                    isCollapsed = collapsedLineIndices.contains(line.second)
                 )
             })
         })
