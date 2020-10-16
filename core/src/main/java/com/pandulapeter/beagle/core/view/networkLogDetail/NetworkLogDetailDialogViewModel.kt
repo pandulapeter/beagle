@@ -40,12 +40,13 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     val isShareButtonEnabled: LiveData<Boolean> = _isShareButtonEnabled
     private val _items = MutableLiveData(emptyList<NetworkLogDetailListItem>())
     val items: LiveData<List<NetworkLogDetailListItem>> = _items
+    private val _longestLine = MutableLiveData("")
+    val longestLine: LiveData<String> = _longestLine
     private var title = ""
     private var details = ""
     private var jsonLines = emptyList<Line>()
     private var collapsedLineIndices = mutableListOf<Int>()
     private var hasCollapsingContent = false
-    private var longestLine = ""
     private var shouldShowMetadata = false
     private val metadataText = BeagleCore.implementation.appearance.networkLogTexts.metadata
 
@@ -75,6 +76,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
             .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
             .toString()
+        var longestLine = ""
         jsonLines = payload.formatToJson().split("\n").mapIndexed { index, line ->
             Line(index, line).also {
                 if (line.length > longestLine.length) {
@@ -85,6 +87,15 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 }
             }
         }
+        details.split("\n").forEach { line ->
+            if (line.length > longestLine.length) {
+                longestLine = line
+            }
+        }
+        if (title.length > longestLine.length) {
+            longestLine = title
+        }
+        _longestLine.postValue(longestLine)
         refreshUi()
         _isProgressBarVisible.postValue(false)
         _isShareButtonEnabled.postValue(true)
@@ -143,12 +154,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
 
     private suspend fun refreshUi() = withContext(Dispatchers.Default) {
         _items.postValue(mutableListOf<NetworkLogDetailListItem>().apply {
-            add(
-                TitleViewHolder.UiModel(
-                    title = title,
-                    longestLine = longestLine
-                )
-            )
+            add(TitleViewHolder.UiModel(title = title))
             add(
                 HeaderViewHolder.UiModel(
                     lineIndex = -300,
