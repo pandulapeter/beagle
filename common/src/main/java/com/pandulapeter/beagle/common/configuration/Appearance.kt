@@ -18,9 +18,10 @@ import com.pandulapeter.beagle.common.configuration.Appearance.GeneralTexts.Comp
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_DURATION
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_HEADERS
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_METADATA
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_NONE
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TIMESTAMP
-import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TOGGLE_DETAILS_HINT
+import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TOGGLE_EXPAND_COLLAPSE
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE
@@ -137,25 +138,28 @@ data class Appearance(
     /**
      * Holder for copies related to the network event detail dialog.
      *
+     * @param metadata - The term used for the request / response metadata. [DEFAULT_METADATA] by default.
      * @param headers - The term used for request / response headers. [DEFAULT_HEADERS] by default.
      * @param none - The term used when the list of headers is empty. [DEFAULT_NONE] by default.
      * @param timestamp - The term used for the timestamp of the logged event. [DEFAULT_TIMESTAMP] by default.
      * @param duration - The term used for the duration of the logged event. [DEFAULT_DURATION] by default.
-     * @param toggleDetailsHint - The hint for the on / off toggle that hides or shows network event metadata. [DEFAULT_TOGGLE_DETAILS_HINT] by default.
+     * @param toggleExpandCollapseHint - The hint for the toggle that expands or collapses all JSON tags. [DEFAULT_TOGGLE_EXPAND_COLLAPSE] by default.
      */
     data class NetworkLogTexts(
+        val metadata: Text = Text.CharSequence(DEFAULT_METADATA),
         val headers: Text = Text.CharSequence(DEFAULT_HEADERS),
         val none: Text = Text.CharSequence(DEFAULT_NONE),
         val timestamp: Text = Text.CharSequence(DEFAULT_TIMESTAMP),
         val duration: Text = Text.CharSequence(DEFAULT_DURATION),
-        val toggleDetailsHint: Text = Text.CharSequence(DEFAULT_TOGGLE_DETAILS_HINT)
+        val toggleExpandCollapseHint: Text = Text.CharSequence(DEFAULT_TOGGLE_EXPAND_COLLAPSE)
     ) {
         companion object {
+            private const val DEFAULT_METADATA = "Metadata"
             private const val DEFAULT_HEADERS = "Headers"
             private const val DEFAULT_NONE = "none"
             private const val DEFAULT_TIMESTAMP = "Timestamp"
             private const val DEFAULT_DURATION = "Duration"
-            private const val DEFAULT_TOGGLE_DETAILS_HINT = "Toggle details"
+            private const val DEFAULT_TOGGLE_EXPAND_COLLAPSE = "Expand / collapse all"
         }
     }
 

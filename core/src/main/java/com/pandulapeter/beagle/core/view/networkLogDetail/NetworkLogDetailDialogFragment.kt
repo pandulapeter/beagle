@@ -63,7 +63,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
                 toggleDetailsButton = menu.findItem(R.id.beagle_toggle_details).also {
                     it.isVisible = true
-                    it.title = context.text(BeagleCore.implementation.appearance.networkLogTexts.toggleDetailsHint)
+                    it.title = context.text(BeagleCore.implementation.appearance.networkLogTexts.toggleExpandCollapseHint)
                 }
                 shareButton = menu.findItem(R.id.beagle_share).also {
                     it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
@@ -74,10 +74,13 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             viewModel.isProgressBarVisible.observe(this, {
                 progressBar.visible = it
             })
-            viewModel.areDetailsEnabled.observe(this, {
+            viewModel.areTagsExpanded.observe(this, {
                 toggleDetailsButton.icon = context?.tintedDrawable(if (it) R.drawable.beagle_ic_toggle_details_on else R.drawable.beagle_ic_toggle_details_off, textColor)
             })
-            val networkLogDetailAdapter = NetworkLogDetailAdapter(viewModel::onItemClicked)
+            val networkLogDetailAdapter = NetworkLogDetailAdapter(
+                onHeaderClicked = viewModel::onHeaderClicked,
+                onItemClicked = viewModel::onItemClicked
+            )
             recyclerView.run {
                 layoutManager = LinearLayoutManager(context)
                 adapter = networkLogDetailAdapter

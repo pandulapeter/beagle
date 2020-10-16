@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.core.util.extension.createAndShareLogFile
 import com.pandulapeter.beagle.core.util.extension.jsonLevel
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.DetailsViewHolder
+import com.pandulapeter.beagle.core.view.networkLogDetail.list.HeaderViewHolder
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.LineViewHolder
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.NetworkLogDetailListItem
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.TitleViewHolder
@@ -33,8 +34,8 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private val textDuration = application.text(BeagleCore.implementation.appearance.networkLogTexts.duration)
     private val _isProgressBarVisible = MutableLiveData(true)
     val isProgressBarVisible: LiveData<Boolean> = _isProgressBarVisible
-    private val _areDetailsEnabled = MutableLiveData(false)
-    val areDetailsEnabled: LiveData<Boolean> = _areDetailsEnabled
+    private val _areTagsExpanded = MutableLiveData(true)
+    val areTagsExpanded: LiveData<Boolean> = _areTagsExpanded
     private val _isShareButtonEnabled = MutableLiveData(false)
     val isShareButtonEnabled: LiveData<Boolean> = _isShareButtonEnabled
     private val _items = MutableLiveData(emptyList<NetworkLogDetailListItem>())
@@ -45,10 +46,19 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private var collapsedLineIndices = mutableListOf<Int>()
     private var hasCollapsingContent = false
     private var longestLine = ""
+    private var shouldShowMetadata = false
+    private val metadataText = BeagleCore.implementation.appearance.networkLogTexts.metadata
 
     init {
-        areDetailsEnabled.observeForever {
-            viewModelScope.launch { refreshUi() }
+        areTagsExpanded.observeForever { areDetailsEnabled ->
+            viewModelScope.launch {
+                shouldShowMetadata = areDetailsEnabled
+                collapsedLineIndices.clear()
+                if (!areDetailsEnabled) {
+                    collapsedLineIndices.addAll(items.value?.filter { it is LineViewHolder.UiModel && it.isClickable }?.map { it.lineIndex }.orEmpty())
+                }
+                refreshUi()
+            }
         }
     }
 
@@ -81,16 +91,18 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     }
 
     fun onToggleDetailsButtonPressed() {
-        _areDetailsEnabled.value = !(areDetailsEnabled.value ?: true)
+        if (_isProgressBarVisible.value == false) {
+            _areTagsExpanded.value = !(areTagsExpanded.value ?: true)
+        }
     }
 
     fun shareLogs(activity: Activity?, timestamp: Long, id: String) {
-        if (_isShareButtonEnabled.value == true) {
+        if (_isProgressBarVisible.value == false && _isShareButtonEnabled.value == true) {
             viewModelScope.launch {
                 _isShareButtonEnabled.postValue(false)
                 activity?.createAndShareLogFile(
                     fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt",
-                    content = title.run { if (_areDetailsEnabled.value == true) append(details) else this }
+                    content = title.run { if (shouldShowMetadata) append(details) else this }
                         .append(
                             "\n\n${
                                 jsonLines.joinToString("\n") { line ->
@@ -105,6 +117,15 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                         .toString()
                 )
                 _isShareButtonEnabled.postValue(true)
+            }
+        }
+    }
+
+    fun onHeaderClicked() {
+        viewModelScope.launch {
+            if (_isProgressBarVisible.value == false) {
+                shouldShowMetadata = !shouldShowMetadata
+                refreshUi()
             }
         }
     }
@@ -128,7 +149,14 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                     longestLine = longestLine
                 )
             )
-            if (_areDetailsEnabled.value == true) {
+            add(
+                HeaderViewHolder.UiModel(
+                    lineIndex = -300,
+                    content = metadataText,
+                    isCollapsed = !shouldShowMetadata
+                )
+            )
+            if (shouldShowMetadata) {
                 add(DetailsViewHolder.UiModel(details.trim()))
             }
             var levelToSkip = Int.MAX_VALUE

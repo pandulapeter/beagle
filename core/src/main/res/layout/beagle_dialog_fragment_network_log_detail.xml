@@ -29,7 +29,7 @@
         <com.pandulapeter.beagle.core.view.TolerantHorizontalScrollView
             android:id="@+id/beagle_child_horizontal_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:clipToPadding="false"
             android:fillViewport="true"
             android:scrollbars="none">
