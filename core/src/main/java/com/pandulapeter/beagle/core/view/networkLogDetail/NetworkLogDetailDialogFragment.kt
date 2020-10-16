@@ -3,7 +3,6 @@ package com.pandulapeter.beagle.core.view.networkLogDetail
 import android.app.Dialog
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.ViewTreeObserver
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -35,7 +34,12 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var toggleDetailsButton: MenuItem
     private lateinit var shareButton: MenuItem
-    private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(recyclerView.scrollY != 0) }
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            appBar.setLifted(recyclerView.computeVerticalScrollOffset() != 0)
+        }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
         .setView(R.layout.beagle_dialog_fragment_network_log_detail)
@@ -52,7 +56,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
             }
-            recyclerView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
+            recyclerView.addOnScrollListener(scrollListener)
             val textColor = dialog.context.colorResource(android.R.attr.textColorPrimary)
             toolbar.run {
                 setNavigationOnClickListener { dismiss() }
@@ -96,7 +100,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
     override fun onPause() {
         super.onPause()
-        recyclerView.viewTreeObserver.removeOnScrollChangedListener(scrollListener)
+        recyclerView.removeOnScrollListener(scrollListener)
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.createAndShareLogFile
+import com.pandulapeter.beagle.core.util.extension.jsonLevel
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.DetailsViewHolder
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.LineViewHolder
@@ -42,6 +43,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private var details = ""
     private var jsonLines = emptyList<Line>()
     private var collapsedLineIndices = mutableListOf<Int>()
+    private var longestLine = ""
 
     init {
         areDetailsEnabled.observeForever {
@@ -62,7 +64,13 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
             .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
             .toString()
-        jsonLines = payload.formatToJson().split("\n").mapIndexed { index, line -> Line(index, line) }
+        jsonLines = payload.formatToJson().split("\n").mapIndexed { index, line ->
+            Line(index, line).also {
+                if (line.length > longestLine.length) {
+                    longestLine = line
+                }
+            }
+        }
         refreshUi()
         _isProgressBarVisible.postValue(false)
         _isShareButtonEnabled.postValue(true)
@@ -110,7 +118,12 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
 
     private suspend fun refreshUi() = withContext(Dispatchers.Default) {
         _items.postValue(mutableListOf<NetworkLogDetailListItem>().apply {
-            add(TitleViewHolder.UiModel(title))
+            add(
+                TitleViewHolder.UiModel(
+                    title = title,
+                    longestLine = longestLine
+                )
+            )
             if (_areDetailsEnabled.value == true) {
                 add(DetailsViewHolder.UiModel(details.trim()))
             }
@@ -178,7 +191,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         ) : this(
             index = index,
             content = formattedContent.trim(),
-            level = if (formattedContent.isEmpty() || formattedContent[0] != ' ') 0 else formattedContent.indexOfFirst { it != ' ' }
+            level = formattedContent.jsonLevel
         )
     }
 }
