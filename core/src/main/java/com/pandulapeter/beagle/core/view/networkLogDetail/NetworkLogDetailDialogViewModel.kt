@@ -124,7 +124,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                         if (!collapsedLineIndices.contains(line.index)) {
                             levelToSkip = Int.MAX_VALUE
                         }
-                        if (line.level == levelToSkip) line.copy(content = "${line.content} ...") else line
+                        if (line.level == levelToSkip) line.copy(content = "${line.content} …") else line
                     }
                     line.level < levelToSkip -> line
                     else -> null

@@ -40,7 +40,7 @@ internal class LineViewHolder private constructor(
             } else drawableEmpty,
             null, null, null
         )
-        setPadding(contentPadding * uiModel.level, paddingTop, paddingRight, paddingBottom)
+        setPadding(contentPadding * uiModel.level, paddingTop, if (uiModel.isClickable) contentPadding else 0, paddingBottom)
     }
 
     data class UiModel(
