@@ -148,7 +148,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                     lineIndex = line.index,
                     content = line.content,
                     level = line.level,
-                    isClickable = line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
+                    isClickable = line.level != 0 && line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
                     isCollapsed = collapsedLineIndices.contains(line.index)
                 )
             })

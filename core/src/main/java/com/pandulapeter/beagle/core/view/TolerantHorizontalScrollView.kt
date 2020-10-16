@@ -4,14 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewConfiguration
-import android.widget.ScrollView
+import android.widget.HorizontalScrollView
 import kotlin.math.abs
 
-internal class TolerantScrollView @JvmOverloads constructor(
+internal class TolerantHorizontalScrollView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ScrollView(context, attrs, defStyleAttr) {
+) : HorizontalScrollView(context, attrs, defStyleAttr) {
 
     private var lastX: Int = 0
     private var lastY: Int = 0

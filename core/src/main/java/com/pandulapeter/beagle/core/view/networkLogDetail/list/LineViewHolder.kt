@@ -37,7 +37,7 @@ internal class LineViewHolder private constructor(
         setCompoundDrawablesWithIntrinsicBounds(
             if (uiModel.isClickable) {
                 if (uiModel.isCollapsed) drawableExpand else drawableCollapse
-            } else drawableEmpty,
+            } else if (uiModel.level == 0) null else drawableEmpty,
             null, null, null
         )
         setPadding(contentPadding * uiModel.level, paddingTop, if (uiModel.isClickable) contentPadding else 0, paddingBottom)
