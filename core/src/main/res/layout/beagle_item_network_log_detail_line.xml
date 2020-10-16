@@ -7,6 +7,7 @@
     android:background="?attr/selectableItemBackground"
     android:drawablePadding="@dimen/beagle_medium_content_padding"
     android:gravity="center_vertical"
+    android:maxLines="1"
     android:textColor="?android:attr/textColorPrimary"
     tools:ignore="Overdraw"
     tools:text="Text" />

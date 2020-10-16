@@ -3,7 +3,9 @@ package com.pandulapeter.beagle.core.view.networkLogDetail
 import android.app.Dialog
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
@@ -14,6 +16,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
+import com.pandulapeter.beagle.core.util.extension.jsonLevel
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.visible
@@ -22,6 +25,7 @@ import com.pandulapeter.beagle.core.view.networkLogDetail.list.NetworkLogDetailA
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
+import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 
@@ -30,8 +34,10 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     private val viewModel by viewModel<NetworkLogDetailDialogViewModel>()
     private lateinit var appBar: AppBarLayout
     private lateinit var toolbar: Toolbar
+    private lateinit var longestLineText: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
+    private lateinit var horizontalScrollView: View
     private lateinit var toggleDetailsButton: MenuItem
     private lateinit var shareButton: MenuItem
     private val scrollListener = object : RecyclerView.OnScrollListener() {
@@ -50,8 +56,10 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
         dialog?.let { dialog ->
             appBar = dialog.findViewById(R.id.beagle_app_bar)
             toolbar = dialog.findViewById(R.id.beagle_toolbar)
+            longestLineText = dialog.findViewById(R.id.beagle_longest_text_view)
             recyclerView = dialog.findViewById(R.id.beagle_recycler_view)
             progressBar = dialog.findViewById(R.id.beagle_progress_bar)
+            horizontalScrollView = dialog.findViewById(R.id.beagle_child_horizontal_scroll_view)
             appBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
@@ -73,6 +81,16 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             }
             viewModel.isProgressBarVisible.observe(this, {
                 progressBar.visible = it
+                horizontalScrollView.visible = !it
+            })
+            viewModel.longestLine.observe(this, { line ->
+                context?.let { context ->
+                    val contentPadding = context.dimension(R.dimen.beagle_large_content_padding)
+                    longestLineText.run {
+                        text = line.trim()
+                        setPadding(contentPadding * (line.jsonLevel + 1), paddingTop, contentPadding, paddingBottom)
+                    }
+                }
             })
             viewModel.areTagsExpanded.observe(this, {
                 toggleDetailsButton.icon = context?.tintedDrawable(if (it) R.drawable.beagle_ic_toggle_details_on else R.drawable.beagle_ic_toggle_details_off, textColor)
