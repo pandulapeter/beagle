@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
+import kotlin.math.max
 
 internal class LineViewHolder private constructor(
     itemView: View,
@@ -37,16 +38,22 @@ internal class LineViewHolder private constructor(
         setCompoundDrawablesWithIntrinsicBounds(
             if (uiModel.isClickable) {
                 if (uiModel.isCollapsed) drawableExpand else drawableCollapse
-            } else if (uiModel.level == 0) null else drawableEmpty,
+            } else if (uiModel.level == 0 || !uiModel.hasCollapsingContent) null else drawableEmpty,
             null, null, null
         )
-        setPadding(contentPadding * uiModel.level, paddingTop, if (uiModel.isClickable) contentPadding else 0, paddingBottom)
+        setPadding(
+            if (uiModel.hasCollapsingContent) max(contentPadding * (uiModel.level - 1), 0) else contentPadding * uiModel.level,
+            paddingTop,
+            if (uiModel.isClickable) contentPadding else 0,
+            paddingBottom
+        )
     }
 
     data class UiModel(
         override val lineIndex: Int,
         val content: CharSequence,
         val level: Int,
+        val hasCollapsingContent: Boolean,
         val isClickable: Boolean,
         val isCollapsed: Boolean
     ) : NetworkLogDetailListItem

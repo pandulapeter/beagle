@@ -43,6 +43,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private var details = ""
     private var jsonLines = emptyList<Line>()
     private var collapsedLineIndices = mutableListOf<Int>()
+    private var hasCollapsingContent = false
     private var longestLine = ""
 
     init {
@@ -68,6 +69,9 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             Line(index, line).also {
                 if (line.length > longestLine.length) {
                     longestLine = line
+                }
+                if (it.level > 1) {
+                    hasCollapsingContent = true
                 }
             }
         }
@@ -148,6 +152,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                     lineIndex = line.index,
                     content = line.content,
                     level = line.level,
+                    hasCollapsingContent = hasCollapsingContent,
                     isClickable = line.level != 0 && line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
                     isCollapsed = collapsedLineIndices.contains(line.index)
                 )
@@ -160,7 +165,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private fun String.formatToJson() = try {
         if (isJson()) {
             val obj = JSONTokener(this).nextValue()
-            if (obj is JSONObject) obj.toString(4) else (obj as? JSONArray)?.toString(1) ?: (obj as String)
+            if (obj is JSONObject) obj.toString(1) else (obj as? JSONArray)?.toString(1) ?: (obj as String)
         } else this
     } catch (e: JSONException) {
         this
