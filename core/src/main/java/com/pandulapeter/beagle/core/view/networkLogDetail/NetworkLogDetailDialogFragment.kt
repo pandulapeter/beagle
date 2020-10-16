@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.ViewTreeObserver
 import android.widget.ProgressBar
-import android.widget.ScrollView
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
@@ -19,6 +19,7 @@ import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
+import com.pandulapeter.beagle.core.view.networkLogDetail.list.NetworkLogDetailAdapter
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
@@ -30,12 +31,11 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     private val viewModel by viewModel<NetworkLogDetailDialogViewModel>()
     private lateinit var appBar: AppBarLayout
     private lateinit var toolbar: Toolbar
-    private lateinit var textView: TextView
-    private lateinit var scrollView: ScrollView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var toggleDetailsButton: MenuItem
     private lateinit var shareButton: MenuItem
-    private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(scrollView.scrollY != 0) }
+    private val scrollListener = ViewTreeObserver.OnScrollChangedListener { appBar.setLifted(recyclerView.scrollY != 0) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
         .setView(R.layout.beagle_dialog_fragment_network_log_detail)
@@ -46,14 +46,13 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
         dialog?.let { dialog ->
             appBar = dialog.findViewById(R.id.beagle_app_bar)
             toolbar = dialog.findViewById(R.id.beagle_toolbar)
-            textView = dialog.findViewById(R.id.beagle_text_view)
-            scrollView = dialog.findViewById(R.id.beagle_scroll_view)
+            recyclerView = dialog.findViewById(R.id.beagle_recycler_view)
             progressBar = dialog.findViewById(R.id.beagle_progress_bar)
             appBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
             }
-            scrollView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
+            recyclerView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
             val textColor = dialog.context.colorResource(android.R.attr.textColorPrimary)
             toolbar.run {
                 setNavigationOnClickListener { dismiss() }
@@ -70,13 +69,18 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             }
             viewModel.isProgressBarVisible.observe(this, {
                 progressBar.visible = it
-                textView.visible = !it
             })
             viewModel.areDetailsEnabled.observe(this, {
                 toggleDetailsButton.icon = context?.tintedDrawable(if (it) R.drawable.beagle_ic_toggle_details_on else R.drawable.beagle_ic_toggle_details_off, textColor)
             })
+            val networkLogDetailAdapter = NetworkLogDetailAdapter(viewModel::onItemClicked)
+            recyclerView.run {
+                layoutManager = LinearLayoutManager(context)
+                adapter = networkLogDetailAdapter
+            }
+            //TODO: Multiple observers are set
+            viewModel.items.observe(this, networkLogDetailAdapter::submitList)
             viewModel.isShareButtonEnabled.observe(this, { shareButton.isEnabled = it })
-            viewModel.formattedContents.observe(this, { textView.text = it })
             if (viewModel.isProgressBarVisible.value == true) {
                 viewModel.formatJson(
                     isOutgoing = arguments?.isOutgoing == true,
@@ -92,7 +96,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
     override fun onPause() {
         super.onPause()
-        scrollView.viewTreeObserver.removeOnScrollChangedListener(scrollListener)
+        recyclerView.viewTreeObserver.removeOnScrollChangedListener(scrollListener)
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
