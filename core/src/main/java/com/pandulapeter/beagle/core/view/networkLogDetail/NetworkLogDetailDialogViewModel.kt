@@ -40,7 +40,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     val items: LiveData<List<NetworkLogDetailListItem>> = _items
     private var title = ""
     private var details = ""
-    private var jsonLines = mutableListOf<Pair<String, Int>>()
+    private var jsonLines = emptyList<Line>()
     private var collapsedLineIndices = mutableListOf<Int>()
 
     init {
@@ -62,7 +62,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
             .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
             .toString()
-        jsonLines.addAll(payload.formatToJson().split("\n").map { line -> line to line.level })
+        jsonLines = payload.formatToJson().split("\n").mapIndexed { index, line -> Line(index, line) }
         refreshUi()
         _isProgressBarVisible.postValue(false)
         _isShareButtonEnabled.postValue(true)
@@ -79,7 +79,17 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 activity?.createAndShareLogFile(
                     fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt",
                     content = title.run { if (_areDetailsEnabled.value == true) append(details) else this }
-                        .append("\n\n${jsonLines.joinToString("\n")}")
+                        .append(
+                            "\n\n${
+                                jsonLines.joinToString("\n") { line ->
+                                    var prefix = ""
+                                    repeat(line.level) {
+                                        prefix = "    $prefix"
+                                    }
+                                    "$prefix${line.content}"
+                                }
+                            }"
+                        )
                         .toString()
                 )
                 _isShareButtonEnabled.postValue(true)
@@ -105,27 +115,28 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 add(DetailsViewHolder.UiModel(details.trim()))
             }
             var levelToSkip = Int.MAX_VALUE
-            val linesToAdd = jsonLines.mapIndexedNotNull { index, (line, level) ->
-                if (collapsedLineIndices.contains(index)) {
-                    levelToSkip = min(levelToSkip, level)
+            val linesToAdd = jsonLines.mapNotNull { line ->
+                if (collapsedLineIndices.contains(line.index)) {
+                    levelToSkip = min(levelToSkip, line.level)
                 }
                 when {
                     line.level == levelToSkip -> {
-                        if (!collapsedLineIndices.contains(index)) {
+                        if (!collapsedLineIndices.contains(line.index)) {
                             levelToSkip = Int.MAX_VALUE
                         }
-                        ((if (line.level == levelToSkip) "$line ..." else line) to index to level)
+                        if (line.level == levelToSkip) line.copy(content = "${line.content} ...") else line
                     }
-                    line.level < levelToSkip -> line to index to level
+                    line.level < levelToSkip -> line
                     else -> null
                 }
             }
-            addAll(linesToAdd.map { (line, level) ->
+            addAll(linesToAdd.map { line ->
                 LineViewHolder.UiModel(
-                    lineIndex = line.second,
-                    line = line.first,
-                    isClickable = line.second != jsonLines.lastIndex && level < jsonLines[line.second + 1].second,
-                    isCollapsed = collapsedLineIndices.contains(line.second)
+                    lineIndex = line.index,
+                    content = line.content,
+                    level = line.level,
+                    isClickable = line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
+                    isCollapsed = collapsedLineIndices.contains(line.index)
                 )
             })
         })
@@ -136,7 +147,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private fun String.formatToJson() = try {
         if (isJson()) {
             val obj = JSONTokener(this).nextValue()
-            if (obj is JSONObject) obj.toString(4) else (obj as? JSONArray)?.toString(4) ?: (obj as String)
+            if (obj is JSONObject) obj.toString(4) else (obj as? JSONArray)?.toString(1) ?: (obj as String)
         } else this
     } catch (e: JSONException) {
         this
@@ -155,6 +166,19 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         return true
     }
 
-    private val String.level get() = if (isEmpty() || get(0) != ' ') 0 else indexOfFirst { it != ' ' }
+    private data class Line(
+        val index: Int,
+        val content: String,
+        val level: Int
+    ) {
 
+        constructor(
+            index: Int,
+            formattedContent: String
+        ) : this(
+            index = index,
+            content = formattedContent.trim(),
+            level = if (formattedContent.isEmpty() || formattedContent[0] != ' ') 0 else formattedContent.indexOfFirst { it != ' ' }
+        )
+    }
 }

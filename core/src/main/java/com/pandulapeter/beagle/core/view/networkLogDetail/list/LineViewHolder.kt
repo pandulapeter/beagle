@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class LineViewHolder private constructor(
@@ -17,6 +18,7 @@ internal class LineViewHolder private constructor(
     private val drawableExpand by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_expand, textView.textColors.defaultColor) }
     private val drawableCollapse by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_collapse, textView.textColors.defaultColor) }
     private val drawableEmpty by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_empty, textView.textColors.defaultColor) }
+    private val contentPadding = itemView.context.dimension(R.dimen.beagle_large_content_padding)
 
     init {
         itemView.setOnClickListener {
@@ -28,21 +30,23 @@ internal class LineViewHolder private constructor(
         }
     }
 
-    fun bind(uiModel: UiModel) {
-        textView.tag = uiModel.lineIndex
-        textView.text = uiModel.line
-        textView.isClickable = uiModel.isClickable
-        textView.setCompoundDrawablesWithIntrinsicBounds(
+    fun bind(uiModel: UiModel) = textView.run {
+        tag = uiModel.lineIndex
+        text = uiModel.content
+        isClickable = uiModel.isClickable
+        setCompoundDrawablesWithIntrinsicBounds(
             if (uiModel.isClickable) {
                 if (uiModel.isCollapsed) drawableExpand else drawableCollapse
             } else drawableEmpty,
             null, null, null
         )
+        setPadding(contentPadding * uiModel.level, paddingTop, paddingRight, paddingBottom)
     }
 
     data class UiModel(
         override val lineIndex: Int,
-        val line: CharSequence,
+        val content: CharSequence,
+        val level: Int,
         val isClickable: Boolean,
         val isCollapsed: Boolean
     ) : NetworkLogDetailListItem
