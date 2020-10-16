@@ -22,6 +22,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONTokener
 import kotlin.math.max
+import kotlin.math.min
 
 internal class NetworkLogDetailDialogViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -39,8 +40,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     val items: LiveData<List<NetworkLogDetailListItem>> = _items
     private var title = ""
     private var details = ""
-    private var formattedJson = ""
-    private var formattedContents = ""
+    private var jsonLines = mutableListOf<Pair<String, Int>>()
     private var collapsedLineIndices = mutableListOf<Int>()
 
     init {
@@ -62,7 +62,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
             .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
             .toString()
-        formattedJson = payload.formatToJson()
+        jsonLines.addAll(payload.formatToJson().split("\n").map { line -> line to line.level })
         refreshUi()
         _isProgressBarVisible.postValue(false)
         _isShareButtonEnabled.postValue(true)
@@ -76,7 +76,12 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         if (_isShareButtonEnabled.value == true) {
             viewModelScope.launch {
                 _isShareButtonEnabled.postValue(false)
-                activity?.createAndShareLogFile("${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt", formattedContents)
+                activity?.createAndShareLogFile(
+                    fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt",
+                    content = title.run { if (_areDetailsEnabled.value == true) append(details) else this }
+                        .append("\n\n${jsonLines.joinToString("\n")}")
+                        .toString()
+                )
                 _isShareButtonEnabled.postValue(true)
             }
         }
@@ -94,40 +99,34 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     }
 
     private suspend fun refreshUi() = withContext(Dispatchers.Default) {
-        formattedContents = title.run { if (_areDetailsEnabled.value == true) append(details) else this }
-            .append("\n\n${formattedJson}")
-            .toString()
         _items.postValue(mutableListOf<NetworkLogDetailListItem>().apply {
             add(TitleViewHolder.UiModel(title))
             if (_areDetailsEnabled.value == true) {
                 add(DetailsViewHolder.UiModel(details.trim()))
             }
-            val lines = formattedJson.split("\n")
             var levelToSkip = Int.MAX_VALUE
-            var flag = false
-            var level = 0
-            lines.forEachIndexed { index, line ->
-                level = line.level
+            val linesToAdd = jsonLines.mapIndexedNotNull { index, (line, level) ->
                 if (collapsedLineIndices.contains(index)) {
-                    levelToSkip = level
-                    flag = true
+                    levelToSkip = min(levelToSkip, level)
                 }
-                if (level <= levelToSkip) {
-                    add(
-                        LineViewHolder.UiModel(
-                            lineIndex = index,
-                            line = line,
-                            isClickable = index != lines.lastIndex && level < lines[index + 1].level
-                        )
-                    )
-                    //TODO: Buggy
-                    if (flag) {
-                        flag = false
-                    } else {
-                        levelToSkip = Int.MAX_VALUE
+                when {
+                    line.level == levelToSkip -> {
+                        if (!collapsedLineIndices.contains(index)) {
+                            levelToSkip = Int.MAX_VALUE
+                        }
+                        ((if (line.level == levelToSkip) "$line ..." else line) to index to level)
                     }
+                    line.level < levelToSkip -> line to index to level
+                    else -> null
                 }
             }
+            addAll(linesToAdd.map { (line, level) ->
+                LineViewHolder.UiModel(
+                    lineIndex = line.second,
+                    line = line.first,
+                    isClickable = line.second != jsonLines.lastIndex && level < jsonLines[line.second + 1].second
+                )
+            })
         })
     }
 
