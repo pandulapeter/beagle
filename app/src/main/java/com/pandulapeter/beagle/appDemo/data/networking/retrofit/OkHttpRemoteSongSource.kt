@@ -28,4 +28,10 @@ class OkHttpRemoteSongSource : RemoteSongSource {
     } catch (_: Exception) {
         null
     }
+
+    override suspend fun getLibrary() = try {
+        songService.getLibraryAsync()
+    } catch (_: Exception) {
+        null
+    }
 }

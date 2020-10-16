@@ -31,6 +31,14 @@ class KtorRemoteSongSource : RemoteSongSource {
         null
     }
 
+    override suspend fun getLibrary(): Unit? = try {
+        client.get<Unit> {
+            apiUrl(Constants.LIBRARY_ENDPOINT)
+        }
+    } catch (_: Exception) {
+        null
+    }
+
     private fun HttpRequestBuilder.apiUrl(path: String) {
         url {
             takeFrom(Constants.BASE_URL)

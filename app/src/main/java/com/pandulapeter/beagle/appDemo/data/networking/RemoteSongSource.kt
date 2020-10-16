@@ -5,4 +5,6 @@ import com.pandulapeter.beagle.appDemo.data.model.Song
 interface RemoteSongSource {
 
     suspend fun getSong(id: String): Song?
+
+    suspend fun getLibrary(): Unit?
 }

@@ -58,6 +58,7 @@ class NetworkRequestInterceptorViewModel(
             refreshItems()
             job = viewModelScope.launch {
                 loadedSong = songRepository.getSong(selectedSong.id, selectedEngine)
+                songRepository.getLibrary(selectedEngine) //TODO: Remove this
                 isLoading = false
                 refreshItems()
             }

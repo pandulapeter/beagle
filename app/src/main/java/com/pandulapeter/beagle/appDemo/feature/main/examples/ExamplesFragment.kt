@@ -64,7 +64,6 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
         CaseStudy.MOCK_DATA_GENERATOR -> navigateTo(MockDataGeneratorFragment.Companion::newInstance)
         CaseStudy.OVERLAY -> navigateTo(OverlayFragment.Companion::newInstance)
         CaseStudy.NAVIGATION -> navigateTo(NavigationFragment.Companion::newInstance)
-        else -> binding.root.showSnackbar(caseStudy.title)
     }
 
     private inline fun <reified T : ExamplesDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T) = parentFragment?.childFragmentManager?.handleReplace(
