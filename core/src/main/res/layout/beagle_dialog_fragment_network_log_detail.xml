@@ -25,7 +25,6 @@
     <FrameLayout
         android:id="@+id/beagle_frame_layout"
         android:layout_width="match_parent"
-        android:animateLayoutChanges="true"
         android:layout_height="match_parent">
 
         <com.pandulapeter.beagle.core.view.TolerantHorizontalScrollView
