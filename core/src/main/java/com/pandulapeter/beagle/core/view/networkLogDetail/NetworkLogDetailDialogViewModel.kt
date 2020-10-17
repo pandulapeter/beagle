@@ -53,12 +53,14 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     init {
         areTagsExpanded.observeForever { areDetailsEnabled ->
             viewModelScope.launch {
+                _isProgressBarVisible.postValue(true)
                 shouldShowMetadata = areDetailsEnabled
                 collapsedLineIndices.clear()
                 if (!areDetailsEnabled) {
                     collapsedLineIndices.addAll(items.value?.filter { it is LineViewHolder.UiModel && it.isClickable }?.map { it.lineIndex }.orEmpty())
                 }
                 refreshUi()
+                _isProgressBarVisible.postValue(false)
             }
         }
     }
@@ -153,45 +155,55 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     }
 
     private suspend fun refreshUi() = withContext(Dispatchers.Default) {
-        _items.postValue(mutableListOf<NetworkLogDetailListItem>().apply {
-            add(TitleViewHolder.UiModel(title = title))
-            add(
-                HeaderViewHolder.UiModel(
-                    lineIndex = -300,
-                    content = metadataText,
-                    isCollapsed = !shouldShowMetadata
+        if (jsonLines.isNotEmpty()) {
+            _items.postValue(mutableListOf<NetworkLogDetailListItem>().apply {
+                add(TitleViewHolder.UiModel(title = title))
+                add(
+                    HeaderViewHolder.UiModel(
+                        lineIndex = -300,
+                        content = metadataText,
+                        isCollapsed = !shouldShowMetadata
+                    )
                 )
-            )
-            if (shouldShowMetadata) {
-                add(DetailsViewHolder.UiModel(details.trim()))
-            }
-            var levelToSkip = Int.MAX_VALUE
-            val linesToAdd = jsonLines.mapNotNull { line ->
-                if (collapsedLineIndices.contains(line.index)) {
-                    levelToSkip = min(levelToSkip, line.level)
+                if (shouldShowMetadata) {
+                    add(DetailsViewHolder.UiModel(details.trim()))
                 }
-                when {
-                    line.level == levelToSkip -> {
-                        if (!collapsedLineIndices.contains(line.index)) {
-                            levelToSkip = Int.MAX_VALUE
-                        }
-                        if (line.level == levelToSkip) line.copy(content = "${line.content} …") else line
+                var levelToSkip = Int.MAX_VALUE
+                lateinit var lastCollapsedLine: Line
+                val linesToAdd = jsonLines.mapNotNull { line ->
+                    if (collapsedLineIndices.contains(line.index)) {
+                        levelToSkip = min(levelToSkip, line.level)
                     }
-                    line.level < levelToSkip -> line
-                    else -> null
+                    when {
+                        line.level == levelToSkip -> {
+                            if (!collapsedLineIndices.contains(line.index)) {
+                                levelToSkip = Int.MAX_VALUE
+                            }
+                            if (line.level == levelToSkip) {
+                                line.copy(content = "${line.content} … ").also {
+                                    lastCollapsedLine = it
+                                }
+                            } else {
+                                lastCollapsedLine.content += line.content
+                                null
+                            }
+                        }
+                        line.level < levelToSkip -> line
+                        else -> null
+                    }
                 }
-            }
-            addAll(linesToAdd.map { line ->
-                LineViewHolder.UiModel(
-                    lineIndex = line.index,
-                    content = line.content,
-                    level = line.level,
-                    hasCollapsingContent = hasCollapsingContent,
-                    isClickable = line.level != 0 && line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
-                    isCollapsed = collapsedLineIndices.contains(line.index)
-                )
+                addAll(linesToAdd.map { line ->
+                    LineViewHolder.UiModel(
+                        lineIndex = line.index,
+                        content = line.content,
+                        level = line.level,
+                        hasCollapsingContent = hasCollapsingContent,
+                        isClickable = line.level != 0 && line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
+                        isCollapsed = collapsedLineIndices.contains(line.index)
+                    )
+                })
             })
-        })
+        }
     }
 
     private fun List<String>.formatHeaders() = if (isNullOrEmpty()) " [${textNone}]" else joinToString("") { header -> "\n    • $header" }
@@ -220,7 +232,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
 
     private data class Line(
         val index: Int,
-        val content: String,
+        var content: String,
         val level: Int
     ) {
 

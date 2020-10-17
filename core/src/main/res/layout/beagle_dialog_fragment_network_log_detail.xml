@@ -25,6 +25,7 @@
     <FrameLayout
         android:id="@+id/beagle_frame_layout"
         android:layout_width="match_parent"
+        android:animateLayoutChanges="true"
         android:layout_height="match_parent">
 
         <com.pandulapeter.beagle.core.view.TolerantHorizontalScrollView
@@ -57,11 +58,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:paddingStart="@dimen/beagle_large_content_padding"
-                    android:paddingLeft="@dimen/beagle_large_content_padding"
                     android:paddingTop="@dimen/beagle_content_padding"
-                    android:paddingEnd="@dimen/beagle_large_content_padding"
-                    android:paddingRight="@dimen/beagle_large_content_padding"
                     android:paddingBottom="@dimen/beagle_large_content_padding"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/beagle_longest_text_view"

@@ -81,7 +81,9 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
             }
             viewModel.isProgressBarVisible.observe(this, {
                 progressBar.visible = it
-                horizontalScrollView.visible = !it
+                if (!it) {
+                    horizontalScrollView.visible = true
+                }
             })
             viewModel.longestLine.observe(this, { line ->
                 context?.let { context ->

@@ -19,7 +19,7 @@ internal class LineViewHolder private constructor(
     private val drawableExpand by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_expand, textView.textColors.defaultColor) }
     private val drawableCollapse by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_collapse, textView.textColors.defaultColor) }
     private val drawableEmpty by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_empty, textView.textColors.defaultColor) }
-    private val contentPadding = itemView.context.dimension(R.dimen.beagle_large_content_padding)
+    private val largeContentPadding = itemView.context.dimension(R.dimen.beagle_large_content_padding)
 
     init {
         itemView.setOnClickListener {
@@ -42,9 +42,9 @@ internal class LineViewHolder private constructor(
             null, null, null
         )
         setPadding(
-            if (uiModel.hasCollapsingContent) max(contentPadding * (uiModel.level - 1), 0) else contentPadding * uiModel.level,
+            largeContentPadding + if (uiModel.hasCollapsingContent) max(largeContentPadding * (uiModel.level - 1), 0) else largeContentPadding * uiModel.level,
             paddingTop,
-            if (uiModel.isClickable) contentPadding else 0,
+            largeContentPadding * if (uiModel.isClickable) 2 else 1,
             paddingBottom
         )
     }
