@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 import java.io.FileWriter
 import java.io.IOException
 
+@Suppress("SpellCheckingInspection")
 private val excludedPackageNames = listOf(
     "com.pandulapeter.beagle.implementation.DebugMenuActivity",
     "com.pandulapeter.beagle.core.view.gallery.GalleryActivity",

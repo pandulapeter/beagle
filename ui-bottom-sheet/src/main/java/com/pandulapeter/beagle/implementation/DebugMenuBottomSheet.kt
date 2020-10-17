@@ -119,7 +119,7 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
         }
     }
 
-    //TODO: Needs to be improved, it's glitchy
+    //TODO: Needs to be improved, it glitches
     private fun updateApplyResetBlockPosition() {
         view?.let { debugMenu ->
             (debugMenu as ViewGroup).getChildAt(1).run {
