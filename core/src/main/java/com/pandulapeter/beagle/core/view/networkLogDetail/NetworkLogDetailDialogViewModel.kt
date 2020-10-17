@@ -73,7 +73,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         duration: Long?,
         payload: String
     ) = viewModelScope.launch {
-        title = "${if (isOutgoing) "↑" else "↓"} $url"
+        title = "${if (isOutgoing) "↑" else "↓"} ${url.replace("?", "$TITLE_NEW_LINE_PREFIX?").replace("&", "$TITLE_NEW_LINE_PREFIX&")}"
         details = "\n\n• ${textHeaders}:${headers.formatHeaders()}"
             .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
             .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
@@ -94,8 +94,10 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 longestLine = line
             }
         }
-        if (title.length > longestLine.length) {
-            longestLine = title
+        title.split("\n").first().let { firstTitleLine ->
+            if (firstTitleLine.length > longestLine.length) {
+                longestLine = firstTitleLine
+            }
         }
         _longestLine.postValue(longestLine)
         refreshUi()
@@ -115,7 +117,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 _isShareButtonEnabled.postValue(false)
                 activity?.createAndShareLogFile(
                     fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt",
-                    content = title.run { if (shouldShowMetadata) append(details) else this }
+                    content = title.replace(TITLE_NEW_LINE_PREFIX, "").run { if (shouldShowMetadata) append(details) else this }
                         .append(
                             "\n\n${
                                 jsonLines.joinToString("\n") { line ->
@@ -244,5 +246,9 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             content = formattedContent.trim(),
             level = formattedContent.jsonLevel
         )
+    }
+
+    companion object{
+        private const val TITLE_NEW_LINE_PREFIX = "\n        "
     }
 }
