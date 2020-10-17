@@ -29,7 +29,7 @@ internal class HeaderViewHolder private constructor(
 
     fun bind(uiModel: UiModel) = textView.run {
         setText(uiModel.content)
-        setCompoundDrawablesWithIntrinsicBounds(null, null, if (uiModel.isCollapsed) drawableExpand else drawableCollapse, null)
+        setCompoundDrawablesWithIntrinsicBounds(if (uiModel.isCollapsed) drawableExpand else drawableCollapse, null, null, null)
     }
 
     data class UiModel(

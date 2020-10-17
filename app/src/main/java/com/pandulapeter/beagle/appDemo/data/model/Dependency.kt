@@ -21,7 +21,7 @@ enum class Dependency(
         copyright = "Copyright 2010-2020, JetBrains s.r.o.",
         url = "https://github.com/JetBrains/kotlin/tree/master/license"
     ),
-    ANDROID_X_MULTIDEX(
+    ANDROID_X_MULTI_DEX(
         type = Type.APACHE_V2,
         title = "AndroidX MultiDex",
         copyright = "Copyright 2020, The Android Open Source Project",
