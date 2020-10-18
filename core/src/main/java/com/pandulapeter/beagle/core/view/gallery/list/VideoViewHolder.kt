@@ -5,11 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import coil.request.ImageRequest
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.isScaledDown
 import com.pandulapeter.beagle.utils.consume
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -23,6 +25,7 @@ internal class VideoViewHolder private constructor(
 
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
     private val imageView = itemView.findViewById<ImageView>(R.id.beagle_image_view)
+    private val constraintLayout = itemView.findViewById<ConstraintLayout>(R.id.beagle_constraint_layout)
     private var job: Job? = null
 
     init {
@@ -57,8 +60,7 @@ internal class VideoViewHolder private constructor(
                 )
             }
         }
-        itemView.scaleX = if (uiModel.isSelected) 0.8f else 1f
-        itemView.scaleY = itemView.scaleX
+        constraintLayout.isScaledDown = uiModel.isSelected
     }
 
     data class UiModel(

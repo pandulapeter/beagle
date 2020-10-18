@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/beagle_content_padding">
+    android:layout_margin="@dimen/beagle_content_padding"
+    app:cardBackgroundColor="?android:attr/textColorPrimary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/beagle_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

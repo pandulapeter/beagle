@@ -5,10 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.isScaledDown
 import com.pandulapeter.beagle.utils.consume
 
 internal class ImageViewHolder private constructor(
@@ -19,6 +21,7 @@ internal class ImageViewHolder private constructor(
 
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
     private val imageView = itemView.findViewById<ImageView>(R.id.beagle_image_view)
+    private val constraintLayout = itemView.findViewById<ConstraintLayout>(R.id.beagle_constraint_layout)
 
     init {
         itemView.setOnClickListener {
@@ -41,11 +44,8 @@ internal class ImageViewHolder private constructor(
 
     fun bind(uiModel: UiModel) {
         textView.text = uiModel.fileName
-        imageView.run {
-            load(context.getScreenCapturesFolder().resolve(uiModel.fileName))
-        }
-        itemView.scaleX = if (uiModel.isSelected) 0.8f else 1f
-        itemView.scaleY = itemView.scaleX
+        imageView.run { load(context.getScreenCapturesFolder().resolve(uiModel.fileName)) }
+        constraintLayout.isScaledDown = uiModel.isSelected
     }
 
     data class UiModel(
