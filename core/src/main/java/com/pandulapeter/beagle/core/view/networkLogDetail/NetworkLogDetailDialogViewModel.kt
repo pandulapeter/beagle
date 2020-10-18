@@ -11,18 +11,19 @@ import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.createAndShareLogFile
 import com.pandulapeter.beagle.core.util.extension.jsonLevel
 import com.pandulapeter.beagle.core.util.extension.text
-import com.pandulapeter.beagle.core.view.networkLogDetail.list.DetailsViewHolder
-import com.pandulapeter.beagle.core.view.networkLogDetail.list.HeaderViewHolder
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.LineViewHolder
+import com.pandulapeter.beagle.core.view.networkLogDetail.list.MetadataDetailsViewHolder
+import com.pandulapeter.beagle.core.view.networkLogDetail.list.MetadataHeaderViewHolder
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.NetworkLogDetailListItem
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.TitleViewHolder
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONTokener
+import java.util.concurrent.Executors
 import kotlin.math.max
 import kotlin.math.min
 
@@ -48,11 +49,11 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private var collapsedLineIndices = mutableListOf<Int>()
     private var hasCollapsingContent = false
     private var shouldShowMetadata = false
-    private val metadataText = BeagleCore.implementation.appearance.networkLogTexts.metadata
+    private val tagManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
 
     init {
         areTagsExpanded.observeForever { areDetailsEnabled ->
-            viewModelScope.launch {
+            viewModelScope.launch(tagManagerContext) {
                 _isProgressBarVisible.postValue(true)
                 shouldShowMetadata = areDetailsEnabled
                 collapsedLineIndices.clear()
@@ -72,8 +73,8 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         timestamp: Long?,
         duration: Long?,
         payload: String
-    ) = viewModelScope.launch {
-        title = "${if (isOutgoing) "↑" else "↓"} $url"
+    ) = viewModelScope.launch(tagManagerContext) {
+        title = "${if (isOutgoing) "↑" else "↓"} ${url.replace("?", "$TITLE_NEW_LINE_PREFIX?").replace("&", "$TITLE_NEW_LINE_PREFIX&")}"
         details = "\n\n• ${textHeaders}:${headers.formatHeaders()}"
             .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
             .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
@@ -94,8 +95,10 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 longestLine = line
             }
         }
-        if (title.length > longestLine.length) {
-            longestLine = title
+        title.split("\n").first().let { firstTitleLine ->
+            if (firstTitleLine.length > longestLine.length) {
+                longestLine = firstTitleLine
+            }
         }
         _longestLine.postValue(longestLine)
         refreshUi()
@@ -115,7 +118,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 _isShareButtonEnabled.postValue(false)
                 activity?.createAndShareLogFile(
                     fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt",
-                    content = title.run { if (shouldShowMetadata) append(details) else this }
+                    content = title.replace(TITLE_NEW_LINE_PREFIX, "").run { if (shouldShowMetadata) append(details) else this }
                         .append(
                             "\n\n${
                                 jsonLines.joinToString("\n") { line ->
@@ -135,7 +138,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     }
 
     fun onHeaderClicked() {
-        viewModelScope.launch {
+        viewModelScope.launch(tagManagerContext) {
             if (_isProgressBarVisible.value == false) {
                 shouldShowMetadata = !shouldShowMetadata
                 refreshUi()
@@ -144,7 +147,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     }
 
     fun onItemClicked(lineIndex: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(tagManagerContext) {
             if (collapsedLineIndices.contains(lineIndex)) {
                 collapsedLineIndices.remove(lineIndex)
             } else {
@@ -154,19 +157,13 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         }
     }
 
-    private suspend fun refreshUi() = withContext(Dispatchers.Default) {
+    private suspend fun refreshUi() = withContext(tagManagerContext) {
         if (jsonLines.isNotEmpty()) {
             _items.postValue(mutableListOf<NetworkLogDetailListItem>().apply {
                 add(TitleViewHolder.UiModel(title = title))
-                add(
-                    HeaderViewHolder.UiModel(
-                        lineIndex = -300,
-                        content = metadataText,
-                        isCollapsed = !shouldShowMetadata
-                    )
-                )
+                add(MetadataHeaderViewHolder.UiModel(isCollapsed = !shouldShowMetadata))
                 if (shouldShowMetadata) {
-                    add(DetailsViewHolder.UiModel(details.trim()))
+                    add(MetadataDetailsViewHolder.UiModel(details.trim()))
                 }
                 var levelToSkip = Int.MAX_VALUE
                 lateinit var lastCollapsedLine: Line
@@ -244,5 +241,9 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             content = formattedContent.trim(),
             level = formattedContent.jsonLevel
         )
+    }
+
+    companion object {
+        private const val TITLE_NEW_LINE_PREFIX = "\n        "
     }
 }
