@@ -21,6 +21,7 @@ import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.util.extension.withArguments
+import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
@@ -89,6 +90,7 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
             activity?.run {
                 getScreenCapturesFolder().resolve(fileName).delete()
                 (this as? GalleryActivity)?.loadMedia()
+                (this as? BugReportActivity)?.refresh()
             }
         }
         dismiss()

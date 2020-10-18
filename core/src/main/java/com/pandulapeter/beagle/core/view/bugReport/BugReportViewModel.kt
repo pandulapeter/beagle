@@ -26,7 +26,7 @@ internal class BugReportViewModel(
     private val shouldShowGallerySection: Boolean,
     private val shouldShowNetworkLogsSection: Boolean,
     private val logLabelSectionsToShow: List<String?>,
-    private val descriptionTemplate: String
+    descriptionTemplate: String
 ) : ViewModel() {
 
     private val _items = MutableLiveData(emptyList<BugReportListItem>())
@@ -55,7 +55,7 @@ internal class BugReportViewModel(
     private var isSendButtonEnabled = true
         set(value) {
             field = value
-            viewModelScope.launch(listManagerContext) { refreshContents() }
+            viewModelScope.launch(listManagerContext) { refreshContent() }
         }
     private val isDataValid
         get() = selectedMediaFileIds.isNotEmpty() ||
@@ -64,9 +64,15 @@ internal class BugReportViewModel(
                 description.value?.trim()?.isNotEmpty() == true
 
     init {
+        refresh()
+    }
+
+    fun refresh() {
         viewModelScope.launch(listManagerContext) {
+            _shouldShowLoadingIndicator.postValue(true)
             mediaFiles = context.getScreenCapturesFolder().listFiles().orEmpty().toList().sortedByDescending { it.lastModified() }
-            refreshContents()
+            selectedMediaFileIds = selectedMediaFileIds.filter { id -> mediaFiles.any { it.name == id } }
+            refreshContent()
         }
     }
 
@@ -77,7 +83,7 @@ internal class BugReportViewModel(
     fun onShowMoreNetworkLogsTapped() {
         viewModelScope.launch(listManagerContext) {
             lastNetworkLogIndex += LOG_INDEX_INCREMENT
-            refreshContents()
+            refreshContent()
         }
     }
 
@@ -86,7 +92,7 @@ internal class BugReportViewModel(
     fun onShowMoreLogsTapped(label: String?) {
         viewModelScope.launch(listManagerContext) {
             lastLogIndex[label] = (lastLogIndex[label] ?: 0) + LOG_INDEX_INCREMENT
-            refreshContents()
+            refreshContent()
         }
     }
 
@@ -105,7 +111,7 @@ internal class BugReportViewModel(
             } else {
                 (selectedMediaFileIds + id)
             }.distinct()
-            refreshContents()
+            refreshContent()
         }
     }
 
@@ -116,7 +122,7 @@ internal class BugReportViewModel(
             } else {
                 (selectedNetworkLogIds + id)
             }.distinct()
-            refreshContents()
+            refreshContent()
         }
     }
 
@@ -128,11 +134,11 @@ internal class BugReportViewModel(
             } else {
                 (selectedLogIds[label].orEmpty() + id)
             }.distinct()
-            refreshContents()
+            refreshContent()
         }
     }
 
-    private suspend fun refreshContents() = withContext(listManagerContext) {
+    private suspend fun refreshContent() = withContext(listManagerContext) {
         _items.postValue(mutableListOf<BugReportListItem>().apply {
             if (shouldShowGallerySection && mediaFiles.isNotEmpty()) {
                 add(
@@ -141,7 +147,7 @@ internal class BugReportViewModel(
                         text = BeagleCore.implementation.appearance.bugReportTexts.gallerySectionTitle(selectedMediaFileIds.size)
                     )
                 )
-                add(GalleryViewHolder.UiModel(mediaFiles, selectedMediaFileIds))
+                add(GalleryViewHolder.UiModel(mediaFiles.map { it.name to it.lastModified() }, selectedMediaFileIds))
             }
             getNetworkLogEntries().let { networkLogEntries ->
                 if (shouldShowNetworkLogsSection && networkLogEntries.isNotEmpty()) {

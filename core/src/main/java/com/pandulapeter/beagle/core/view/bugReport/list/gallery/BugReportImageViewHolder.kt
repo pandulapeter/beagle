@@ -3,12 +3,14 @@ package com.pandulapeter.beagle.core.view.bugReport.list.gallery
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.isScaledDown
 import com.pandulapeter.beagle.utils.consume
 
 internal class BugReportImageViewHolder private constructor(
@@ -20,6 +22,7 @@ internal class BugReportImageViewHolder private constructor(
     private val fileName get() = itemView.tag as String
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
     private val imageView = itemView.findViewById<ImageView>(R.id.beagle_image_view)
+    private val frameLayout = itemView.findViewById<FrameLayout>(R.id.beagle_frame_layout)
 
     init {
         itemView.setOnClickListener {
@@ -39,11 +42,8 @@ internal class BugReportImageViewHolder private constructor(
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.fileName
         textView.text = uiModel.fileName
-        imageView.run {
-            load(context.getScreenCapturesFolder().resolve(uiModel.fileName))
-        }
-        itemView.scaleX = if (uiModel.isSelected) 0.8f else 1f
-        itemView.scaleY = itemView.scaleX
+        imageView.run { load(context.getScreenCapturesFolder().resolve(uiModel.fileName)) }
+        frameLayout.isScaledDown = uiModel.isSelected
     }
 
     data class UiModel(

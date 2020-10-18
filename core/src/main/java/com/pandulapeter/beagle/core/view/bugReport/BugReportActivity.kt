@@ -96,6 +96,8 @@ internal class BugReportActivity : AppCompatActivity() {
         }
     }
 
+    fun refresh() = viewModel.refresh()
+
     private fun showMediaPreviewDialog(fileName: String) = MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
 
     private fun showNetworkLogDetailDialog(entry: NetworkLogEntry) = BeagleCore.implementation.showNetworkEventDialog(

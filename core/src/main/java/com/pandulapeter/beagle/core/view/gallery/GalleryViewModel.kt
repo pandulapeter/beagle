@@ -43,11 +43,11 @@ internal class GalleryViewModel : ViewModel() {
     }
 
     fun loadMedia(context: Context) {
-        _shouldShowLoadingIndicator.value = true
         viewModelScope.launch {
+            _shouldShowLoadingIndicator.postValue(true)
             files = context.getScreenCapturesFolder().listFiles().orEmpty().toList()
             refresh()
-            _shouldShowLoadingIndicator.value = false
+            _shouldShowLoadingIndicator.postValue(false)
         }
     }
 

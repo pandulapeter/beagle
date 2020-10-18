@@ -10,7 +10,6 @@ import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
 import com.pandulapeter.beagle.core.view.bugReport.list.gallery.BugReportGalleryAdapter
 import com.pandulapeter.beagle.core.view.bugReport.list.gallery.BugReportImageViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.gallery.BugReportVideoViewHolder
-import java.io.File
 
 internal class GalleryViewHolder private constructor(
     itemView: View,
@@ -31,27 +30,25 @@ internal class GalleryViewHolder private constructor(
         }
     }
 
-    fun bind(uiModel: UiModel) = galleryAdapter.submitList(uiModel.mediaFiles.mapNotNull { file ->
-        file.name.let { fileName ->
-            when {
-                fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> BugReportImageViewHolder.UiModel(
-                    fileName,
-                    uiModel.selectedItemIds.contains(fileName),
-                    file.lastModified()
-                )
-                fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> BugReportVideoViewHolder.UiModel(
-                    fileName,
-                    uiModel.selectedItemIds.contains(fileName),
-                    file.lastModified()
-                )
-                else -> null
-            }
+    fun bind(uiModel: UiModel) = galleryAdapter.submitList(uiModel.mediaFileNames.mapNotNull { (fileName, lastModified) ->
+        when {
+            fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> BugReportImageViewHolder.UiModel(
+                fileName,
+                uiModel.selectedItemIds.contains(fileName),
+                lastModified
+            )
+            fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> BugReportVideoViewHolder.UiModel(
+                fileName,
+                uiModel.selectedItemIds.contains(fileName),
+                lastModified
+            )
+            else -> null
         }
-        //TODO: Append an item that opens the device Gallery.
+        //TODO: Append items from the device Gallery.
     })
 
     data class UiModel(
-        val mediaFiles: List<File>,
+        val mediaFileNames: List<Pair<String, Long>>,
         val selectedItemIds: List<String>
     ) : BugReportListItem {
 

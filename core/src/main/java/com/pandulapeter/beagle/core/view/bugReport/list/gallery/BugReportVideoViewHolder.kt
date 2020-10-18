@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.view.bugReport.list.gallery
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import coil.request.ImageRequest
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.isScaledDown
 import com.pandulapeter.beagle.utils.consume
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -24,6 +26,7 @@ internal class BugReportVideoViewHolder private constructor(
     private val fileName get() = itemView.tag as String
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
     private val imageView = itemView.findViewById<ImageView>(R.id.beagle_image_view)
+    private val frameLayout = itemView.findViewById<FrameLayout>(R.id.beagle_frame_layout)
     private var job: Job? = null
 
     init {
@@ -55,8 +58,7 @@ internal class BugReportVideoViewHolder private constructor(
                 )
             }
         }
-        itemView.scaleX = if (uiModel.isSelected) 0.8f else 1f
-        itemView.scaleY = itemView.scaleX
+        frameLayout.isScaledDown = uiModel.isSelected
     }
 
     data class UiModel(
