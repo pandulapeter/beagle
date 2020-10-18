@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
 
 internal class BugReportGalleryAdapter(
-    private val onMediaSelected: (Int) -> Unit,
-    private val onLongTap: (Int) -> Unit
+    private val onMediaSelected: (String) -> Unit,
+    private val onLongTap: (String) -> Unit
 ) : ListAdapter<BugReportGalleryListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportGalleryListItem>() {
 
     override fun areItemsTheSame(oldItem: BugReportGalleryListItem, newItem: BugReportGalleryListItem) = oldItem.id == newItem.id

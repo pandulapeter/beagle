@@ -251,12 +251,12 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun openBugReportingScreen(
         shouldShowGallerySection: Boolean,
         shouldShowNetworkLogsSection: Boolean,
-        logTagSectionsToShow: List<String?>,
+        logLabelSectionsToShow: List<String?>,
         descriptionTemplate: String
     ) = bugReportManager.openBugReportingScreen(
         shouldShowGallerySection = shouldShowGallerySection,
         shouldShowNetworkLogsSection = shouldShowNetworkLogsSection,
-        logTagSectionsToShow = logTagSectionsToShow,
+        logLabelSectionsToShow = logLabelSectionsToShow,
         descriptionTemplate = descriptionTemplate
     )
 
@@ -311,7 +311,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal fun resetPendingChanges() = listManager.resetPendingChanges()
 
-    internal fun getLogEntries(tag: String?) = logManager.getEntries(tag)
+    internal fun getLogEntries(label: String?) = logManager.getEntries(label)
 
     internal fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>) = lifecycleLogManager.getEntries(eventTypes)
 

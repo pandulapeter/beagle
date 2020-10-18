@@ -11,7 +11,7 @@ internal class BugReportManager {
     fun openBugReportingScreen(
         shouldShowGallerySection: Boolean,
         shouldShowNetworkLogsSection: Boolean,
-        logTagSectionsToShow: List<String?>,
+        logLabelSectionsToShow: List<String?>,
         descriptionTemplate: String
     ) = performOnHide {
         currentActivity?.run {
@@ -20,7 +20,7 @@ internal class BugReportManager {
                     context = this,
                     shouldShowGallerySection = shouldShowGallerySection,
                     shouldShowNetworkLogsSection = shouldShowNetworkLogsSection,
-                    logTagSectionsToShow = logTagSectionsToShow,
+                    logLabelSectionsToShow = logLabelSectionsToShow,
                     descriptionTemplate = descriptionTemplate
                 )
             )

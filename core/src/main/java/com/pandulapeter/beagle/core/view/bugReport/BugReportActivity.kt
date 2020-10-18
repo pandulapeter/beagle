@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
@@ -35,7 +36,7 @@ internal class BugReportActivity : AppCompatActivity() {
                     context = applicationContext,
                     shouldShowGallerySection = arguments.shouldShowGallerySection,
                     shouldShowNetworkLogsSection = arguments.shouldShowNetworkLogsSection,
-                    logTagSectionsToShow = arguments.logTagSectionsToShow,
+                    logLabelSectionsToShow = arguments.logLabelSectionsToShow,
                     descriptionTemplate = arguments.descriptionTemplate
                 ) as T
             }
@@ -75,10 +76,12 @@ internal class BugReportActivity : AppCompatActivity() {
         }
         val bugReportAdapter = BugReportAdapter(
             onSendButtonPressed = viewModel::onSendButtonPressed,
-            onMediaFileSelected = { showMediaPreviewDialog(viewModel.getMediaFileName(it)) },
+            onMediaFileSelected = ::showMediaPreviewDialog,
             onMediaFileLongTapped = viewModel::onMediaFileLongTapped,
-            onNetworkLogSelected = { showNetworkLogDetailDialog(viewModel.getNetworkLogEntry(it)) },
+            onNetworkLogSelected = { id -> BeagleCore.implementation.getNetworkLogEntries().firstOrNull { it.id == id }?.let(::showNetworkLogDetailDialog) },
             onNetworkLogLongTapped = viewModel::onNetworkLogLongTapped,
+            onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
+            onLogLongTapped = viewModel::onLogLongTapped,
         )
         recyclerView.run {
             setHasFixedSize(true)
@@ -103,23 +106,29 @@ internal class BugReportActivity : AppCompatActivity() {
         id = entry.id
     )
 
+    private fun showLogDetailDialog(entry: LogEntry) = BeagleCore.implementation.showDialog(
+        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter),
+        timestamp = entry.timestamp,
+        id = entry.id
+    )
+
     companion object {
         private const val ARGUMENTS = "arguments"
         private var Bundle.shouldShowGallerySection by BundleArgumentDelegate.Boolean("shouldShowGallerySection")
         private var Bundle.shouldShowNetworkLogsSection by BundleArgumentDelegate.Boolean("shouldShowNetworkLogsSection")
-        private var Bundle.logTagSectionsToShow by BundleArgumentDelegate.StringList("logTagSectionsToShow")
+        private var Bundle.logLabelSectionsToShow by BundleArgumentDelegate.StringList("logLabelSectionsToShow")
         private var Bundle.descriptionTemplate by BundleArgumentDelegate.String("descriptionTemplate")
 
         fun newIntent(
             context: Context,
             shouldShowGallerySection: Boolean,
             shouldShowNetworkLogsSection: Boolean,
-            logTagSectionsToShow: List<String?>,
+            logLabelSectionsToShow: List<String?>,
             descriptionTemplate: String
         ) = Intent(context, BugReportActivity::class.java).putExtra(ARGUMENTS, Bundle().also {
             it.shouldShowGallerySection = shouldShowGallerySection
             it.shouldShowNetworkLogsSection = shouldShowNetworkLogsSection
-            it.logTagSectionsToShow = logTagSectionsToShow
+            it.logLabelSectionsToShow = logLabelSectionsToShow
             it.descriptionTemplate = descriptionTemplate
         })
     }

@@ -8,10 +8,12 @@ import com.pandulapeter.beagle.core.R
 
 internal class BugReportAdapter(
     private val onSendButtonPressed: () -> Unit,
-    private val onMediaFileSelected: (Int) -> Unit,
-    private val onMediaFileLongTapped: (Int) -> Unit,
-    private val onNetworkLogSelected: (Int) -> Unit,
-    private val onNetworkLogLongTapped: (Int) -> Unit
+    private val onMediaFileSelected: (String) -> Unit,
+    private val onMediaFileLongTapped: (String) -> Unit,
+    private val onNetworkLogSelected: (String) -> Unit,
+    private val onNetworkLogLongTapped: (String) -> Unit,
+    private val onLogSelected: (String, String?) -> Unit,
+    private val onLogLongTapped: (String, String?) -> Unit
 ) : ListAdapter<BugReportListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportListItem>() {
 
     override fun areItemsTheSame(oldItem: BugReportListItem, newItem: BugReportListItem) = oldItem.id == newItem.id
@@ -25,6 +27,7 @@ internal class BugReportAdapter(
         is SendButtonViewHolder.UiModel -> R.layout.beagle_item_bug_report_send_button
         is GalleryViewHolder.UiModel -> R.layout.beagle_item_bug_report_gallery
         is NetworkLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_network_log_item
+        is LogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_log_item
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
@@ -44,6 +47,11 @@ internal class BugReportAdapter(
             onItemSelected = onNetworkLogSelected,
             onItemLongTapped = onNetworkLogLongTapped
         )
+        R.layout.beagle_item_bug_report_log_item -> LogItemViewHolder.create(
+            parent = parent,
+            onItemSelected = onLogSelected,
+            onItemLongTapped = onLogLongTapped
+        )
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
@@ -52,6 +60,7 @@ internal class BugReportAdapter(
         is SendButtonViewHolder -> holder.bind(getItem(position) as SendButtonViewHolder.UiModel)
         is GalleryViewHolder -> holder.bind(getItem(position) as GalleryViewHolder.UiModel)
         is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewHolder.UiModel)
+        is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewHolder.UiModel)
         else -> throw IllegalArgumentException("Unsupported view holder type at position $position.")
     }
 }

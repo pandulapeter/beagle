@@ -14,8 +14,8 @@ import java.io.File
 
 internal class GalleryViewHolder private constructor(
     itemView: View,
-    onMediaSelected: (Int) -> Unit,
-    onMediaLongTapped: (Int) -> Unit
+    onMediaSelected: (String) -> Unit,
+    onMediaLongTapped: (String) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val galleryAdapter = BugReportGalleryAdapter(
@@ -61,8 +61,8 @@ internal class GalleryViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onMediaSelected: (Int) -> Unit,
-            onMediaLongTapped: (Int) -> Unit
+            onMediaSelected: (String) -> Unit,
+            onMediaLongTapped: (String) -> Unit
         ) = GalleryViewHolder(
             itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_gallery, parent, false),
             onMediaSelected = onMediaSelected,

@@ -22,7 +22,7 @@ internal class BugReportButtonDelegate : Module.Delegate<BugReportButtonModule> 
                     BeagleCore.implementation.openBugReportingScreen(
                         shouldShowGallerySection = module.shouldShowGallerySection,
                         shouldShowNetworkLogsSection = module.shouldShowNetworkLogsSection,
-                        logTagSectionsToShow = module.logTagSectionsToShow,
+                        logLabelSectionsToShow = module.logLabelSectionsToShow,
                         descriptionTemplate = module.descriptionTemplate
                     )
                 }

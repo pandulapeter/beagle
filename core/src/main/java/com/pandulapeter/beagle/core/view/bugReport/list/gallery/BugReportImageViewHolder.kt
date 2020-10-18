@@ -13,33 +13,31 @@ import com.pandulapeter.beagle.utils.consume
 
 internal class BugReportImageViewHolder private constructor(
     itemView: View,
-    onMediaSelected: (Int) -> Unit,
-    onLongTap: (Int) -> Unit
+    onMediaSelected: (String) -> Unit,
+    onLongTap: (String) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
+    private val fileName get() = itemView.tag as String
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
     private val imageView = itemView.findViewById<ImageView>(R.id.beagle_image_view)
 
     init {
         itemView.setOnClickListener {
-            adapterPosition.let { adapterPosition ->
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onMediaSelected(adapterPosition)
-                }
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                onMediaSelected(fileName)
             }
         }
         itemView.setOnLongClickListener {
             consume {
-                adapterPosition.let { adapterPosition ->
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
-                        onLongTap(adapterPosition)
-                    }
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onLongTap(fileName)
                 }
             }
         }
     }
 
     fun bind(uiModel: UiModel) {
+        itemView.tag = uiModel.fileName
         textView.text = uiModel.fileName
         imageView.run {
             load(context.getScreenCapturesFolder().resolve(uiModel.fileName))
@@ -59,8 +57,8 @@ internal class BugReportImageViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onMediaSelected: (Int) -> Unit,
-            onLongTap: (Int) -> Unit
+            onMediaSelected: (String) -> Unit,
+            onLongTap: (String) -> Unit
         ) = BugReportImageViewHolder(
             itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_gallery_image, parent, false),
             onMediaSelected = onMediaSelected,

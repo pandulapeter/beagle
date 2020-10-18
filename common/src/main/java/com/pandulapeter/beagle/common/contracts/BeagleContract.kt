@@ -370,13 +370,13 @@ interface BeagleContract {
      *
      * @param shouldShowGallerySection - Whether or not the Gallery section should be added. True by default.
      * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. True by default.
-     * @param logTagSectionsToShow - The list of log tags for which sections should be added. By default it adds a section for all logs, without filtering.
+     * @param logLabelSectionsToShow - The list of log labels for which sections should be added. By default it adds a section for all logs, without filtering.
      * @param descriptionTemplate - The default value of the free-text input. Empty string by default.
      */
     fun openBugReportingScreen(
         shouldShowGallerySection: Boolean = true,
         shouldShowNetworkLogsSection: Boolean = true,
-        logTagSectionsToShow: List<String?> = listOf(null),
+        logLabelSectionsToShow: List<String?> = listOf(null),
         descriptionTemplate: String = ""
     ) = Unit
 
