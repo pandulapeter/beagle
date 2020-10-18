@@ -75,7 +75,6 @@ internal class BugReportActivity : AppCompatActivity() {
             }
         }
         val bugReportAdapter = BugReportAdapter(
-            onSendButtonPressed = viewModel::onSendButtonPressed,
             onMediaFileSelected = ::showMediaPreviewDialog,
             onMediaFileLongTapped = viewModel::onMediaFileLongTapped,
             onNetworkLogSelected = { id -> BeagleCore.implementation.getNetworkLogEntries().firstOrNull { it.id == id }?.let(::showNetworkLogDetailDialog) },
@@ -83,7 +82,9 @@ internal class BugReportActivity : AppCompatActivity() {
             onShowMoreNetworkLogsTapped = viewModel::onShowMoreNetworkLogsTapped,
             onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
             onLogLongTapped = viewModel::onLogLongTapped,
-            onShowMoreLogsTapped = viewModel::onShowMoreLogsTapped
+            onShowMoreLogsTapped = viewModel::onShowMoreLogsTapped,
+            onDescriptionChanged = viewModel::onDescriptionChanged,
+            onSendButtonPressed = viewModel::onSendButtonPressed
         )
         recyclerView.run {
             setHasFixedSize(true)

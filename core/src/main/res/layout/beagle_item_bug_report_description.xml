@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/beagle_large_content_padding"
+    android:layout_marginLeft="@dimen/beagle_large_content_padding"
+    android:layout_marginTop="@dimen/beagle_content_padding"
+    android:layout_marginEnd="@dimen/beagle_large_content_padding"
+    android:layout_marginRight="@dimen/beagle_large_content_padding">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/beagle_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:importantForAutofill="no"
+        android:inputType="text|textCapSentences|textMultiLine"
+        android:padding="@dimen/beagle_content_padding"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:ignore="LabelFor"
+        tools:text="Text" />
+
+</androidx.cardview.widget.CardView>

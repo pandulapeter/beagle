@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
+import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.GalleryViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.HeaderViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.LogItemViewHolder
@@ -49,7 +50,17 @@ internal class BugReportViewModel(
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
 
-    private val description = MutableLiveData(descriptionTemplate)
+    private var description: CharSequence = descriptionTemplate
+        set(value) {
+            if (field != value) {
+                //TODO: Selection is lost
+                val shouldRefresh = (field.trim().isEmpty() && value.trim().isNotEmpty()) || (field.trim().isNotEmpty() && value.trim().isEmpty())
+                field = value
+                if (shouldRefresh) {
+                    viewModelScope.launch(listManagerContext) { refreshContent() }
+                }
+            }
+        }
 
     private val listManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
     private var isSendButtonEnabled = true
@@ -61,7 +72,7 @@ internal class BugReportViewModel(
         get() = selectedMediaFileIds.isNotEmpty() ||
                 selectedNetworkLogIds.isNotEmpty() ||
                 selectedLogIds.keys.any { label -> selectedLogIds[label]?.isNotEmpty() == true } ||
-                description.value?.trim()?.isNotEmpty() == true
+                description.trim().isNotEmpty()
 
     init {
         refresh()
@@ -96,10 +107,15 @@ internal class BugReportViewModel(
         }
     }
 
+    fun onDescriptionChanged(newValue: CharSequence) {
+        description = newValue
+    }
+
     fun onSendButtonPressed() {
         if (isSendButtonEnabled) {
             isSendButtonEnabled = false
             //TODO: Generate and share zip file
+            //TODO: Attach device info
             isSendButtonEnabled = true
         }
     }
@@ -195,7 +211,7 @@ internal class BugReportViewModel(
                     text = BeagleCore.implementation.appearance.bugReportTexts.descriptionSectionTitle
                 )
             )
-            //TODO: Add text input field
+            add(DescriptionViewHolder.UiModel(description))
             add(SendButtonViewHolder.UiModel(isSendButtonEnabled && isDataValid))
         })
         _shouldShowLoadingIndicator.postValue(false)
