@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.text
+import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.extensions.colorResource
@@ -76,6 +78,9 @@ internal class BugReportActivity : AppCompatActivity() {
             adapter = bugReportAdapter
         }
         viewModel.items.observe(this, bugReportAdapter::submitList)
+        findViewById<ProgressBar>(R.id.beagle_progress_bar).let { progressBar ->
+            viewModel.shouldShowLoadingIndicator.observe(this) { progressBar.visible = it }
+        }
     }
 
     companion object {

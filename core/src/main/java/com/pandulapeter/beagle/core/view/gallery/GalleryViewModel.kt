@@ -21,6 +21,8 @@ internal class GalleryViewModel : ViewModel() {
 
     private val _items = MutableLiveData<List<GalleryListItem>>()
     val items: LiveData<List<GalleryListItem>> = _items
+    private val _shouldShowLoadingIndicator = MutableLiveData(true)
+    val shouldShowLoadingIndicator: LiveData<Boolean> = _shouldShowLoadingIndicator
     private val _isInSelectionMode = MutableLiveData(false)
     val isInSelectionMode: LiveData<Boolean> = _isInSelectionMode
     var selectedItemIds = emptyList<String>()
@@ -41,9 +43,11 @@ internal class GalleryViewModel : ViewModel() {
     }
 
     fun loadMedia(context: Context) {
+        _shouldShowLoadingIndicator.value = true
         viewModelScope.launch {
             files = context.getScreenCapturesFolder().listFiles().orEmpty().toList()
             refresh()
+            _shouldShowLoadingIndicator.value = false
         }
     }
 

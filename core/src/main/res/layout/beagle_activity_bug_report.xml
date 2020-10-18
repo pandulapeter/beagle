@@ -28,6 +28,12 @@
         android:paddingTop="@dimen/beagle_content_padding"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
+    <ProgressBar
+        android:id="@+id/beagle_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
     <!--TODO: Hacky - why do we need this? -->
     <View
         android:id="@+id/beagle_bottom_navigation_overlay"

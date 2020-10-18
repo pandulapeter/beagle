@@ -105,7 +105,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 layoutManager = LinearLayoutManager(context)
                 adapter = networkLogDetailAdapter
             }
-            //TODO: Multiple observers are set
+            //TODO: Multiple observers are set, viewLifecycleOwner should be used instead (but it is null...)
             viewModel.items.observe(this, networkLogDetailAdapter::submitList)
             viewModel.isShareButtonEnabled.observe(this, { shareButton.isEnabled = it })
             if (viewModel.isProgressBarVisible.value == true) {

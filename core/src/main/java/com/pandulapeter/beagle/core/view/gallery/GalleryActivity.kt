@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -97,6 +98,9 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             adapter.submitList(it)
             emptyStateTextView.visible = it.isEmpty()
         })
+        findViewById<ProgressBar>(R.id.beagle_progress_bar).let { progressBar ->
+            viewModel.shouldShowLoadingIndicator.observe(this) { progressBar.visible = it }
+        }
     }
 
     override fun onResume() {

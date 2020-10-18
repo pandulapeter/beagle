@@ -156,13 +156,9 @@ data class Appearance(
      */
     data class BugReportTexts(
         val title: Text = Text.CharSequence(DEFAULT_TITLE),
-        val gallerySectionTitle: Text = Text.CharSequence(DEFAULT_GALLERY_SECTION_TITLE),
-        val networkLogsSectionTitle: Text = Text.CharSequence(DEFAULT_NETWORK_LOGS_SECTION_TITLE),
-        val logsSectionTitle: (tag: String?) -> Text = { tag ->
-            Text.CharSequence(DEFAULT_LOGS_SECTION_TITLE.let { title ->
-                if (tag != null) "$title: $tag" else title
-            })
-        },
+        val gallerySectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_GALLERY_SECTION_TITLE ($selectedItemCount $SELECTED)") },
+        val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)") },
+        val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> Text.CharSequence("${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)") },
         val descriptionSectionTitle: Text = Text.CharSequence(DEFAULT_DESCRIPTION_SECTION_TITLE),
         val sendButtonText: Text = Text.CharSequence(DEFAULT_SEND_BUTTON_TEXT)
     ) {
@@ -173,6 +169,7 @@ data class Appearance(
             private const val DEFAULT_LOGS_SECTION_TITLE = "Attach logs"
             private const val DEFAULT_DESCRIPTION_SECTION_TITLE = "Describe the issue"
             private const val DEFAULT_SEND_BUTTON_TEXT = "Send bug report"
+            private const val SELECTED = "selected"
         }
     }
 
