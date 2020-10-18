@@ -1,6 +1,13 @@
 package com.pandulapeter.beagle.common.configuration
 
 import androidx.annotation.StyleRes
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_DESCRIPTION_SECTION_TITLE
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_GALLERY_SECTION_TITLE
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_LOGS_SECTION_TITLE
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_NETWORK_LOGS_SECTION_TITLE
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_SEND_BUTTON_TEXT
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.Companion.DEFAULT_APPLY_INSETS
 import com.pandulapeter.beagle.common.configuration.Appearance.Companion.DEFAULT_THEME_RESOURCE_ID
 import com.pandulapeter.beagle.common.configuration.Appearance.GalleryTexts
@@ -54,8 +61,8 @@ data class Appearance(
     val galleryTexts: GalleryTexts = GalleryTexts(),
     val bugReportTexts: BugReportTexts = BugReportTexts(),
     val networkLogTexts: NetworkLogTexts = NetworkLogTexts(),
-    val networkEventTimestampFormatter: (Long) -> CharSequence = { DEFAULT_NETWORK_EVENT_DATE_FORMAT.format(it) },
-    val galleryTimestampFormatter: ((Long) -> CharSequence)? = { DEFAULT_GALLERY_DATE_FORMAT.format(it) },
+    val networkEventTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_NETWORK_EVENT_DATE_FORMAT.format(it) },
+    val galleryTimestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_GALLERY_DATE_FORMAT.format(it) },
     val applyInsets: ((windowInsets: Insets) -> Insets)? = DEFAULT_APPLY_INSETS
 ) {
 
@@ -141,12 +148,31 @@ data class Appearance(
      * Holder for copies related to the bug reporting screen.
      *
      * @param title - The title of the bug reporting screen. [DEFAULT_TITLE] by default.
+     * @param gallerySectionTitle - The title of the Gallery section. [DEFAULT_GALLERY_SECTION_TITLE] by default.
+     * @param networkLogsSectionTitle - The title of the Network logs section. [DEFAULT_NETWORK_LOGS_SECTION_TITLE] by default.
+     * @param logsSectionTitle - The title of the Logs section. Multiple such sections can be added filtered by tags (the parameter of the lambda function). [DEFAULT_LOGS_SECTION_TITLE] by default, suffixed with the tag name if it is not null.
+     * @param descriptionSectionTitle - The title of the Description section. [DEFAULT_DESCRIPTION_SECTION_TITLE] by default.
+     * @param sendButtonText - The text that appears on the Send button. [DEFAULT_SEND_BUTTON_TEXT] by default.
      */
     data class BugReportTexts(
         val title: Text = Text.CharSequence(DEFAULT_TITLE),
+        val gallerySectionTitle: Text = Text.CharSequence(DEFAULT_GALLERY_SECTION_TITLE),
+        val networkLogsSectionTitle: Text = Text.CharSequence(DEFAULT_NETWORK_LOGS_SECTION_TITLE),
+        val logsSectionTitle: (tag: String?) -> Text = { tag ->
+            Text.CharSequence(DEFAULT_LOGS_SECTION_TITLE.let { title ->
+                if (tag != null) "$title: $tag" else title
+            })
+        },
+        val descriptionSectionTitle: Text = Text.CharSequence(DEFAULT_DESCRIPTION_SECTION_TITLE),
+        val sendButtonText: Text = Text.CharSequence(DEFAULT_SEND_BUTTON_TEXT)
     ) {
         companion object {
             private const val DEFAULT_TITLE = "Report a bug"
+            private const val DEFAULT_GALLERY_SECTION_TITLE = "Attach media items from the Gallery"
+            private const val DEFAULT_NETWORK_LOGS_SECTION_TITLE = "Attach network logs"
+            private const val DEFAULT_LOGS_SECTION_TITLE = "Attach logs"
+            private const val DEFAULT_DESCRIPTION_SECTION_TITLE = "Describe the issue"
+            private const val DEFAULT_SEND_BUTTON_TEXT = "Send bug report"
         }
     }
 

@@ -33,10 +33,10 @@ data class Behavior(
     val logger: BeagleLoggerContract? = DEFAULT_LOGGER,
     val networkLoggers: List<BeagleNetworkLoggerContract> = DEFAULT_NETWORK_LOGGERS,
     val screenCaptureServiceNotificationChannelId: String = DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID,
-    val getLogFileName: (Long, String) -> String = { timestamp, id -> "log_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" },
-    val getNetworkLogFileName: (Long, String) -> String = { timestamp, id -> "networkLog_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" },
-    val getImageFileName: (Long) -> String = { "${DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT.format(it)}_image" },
-    val getVideoFileName: (Long) -> String = { "${DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT.format(it)}_video" }
+    val getLogFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "log_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" },
+    val getNetworkLogFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "networkLog_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" },
+    val getImageFileName: (timestamp: Long) -> String = { timestamp -> "${DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT.format(timestamp)}_image" },
+    val getVideoFileName: (timestamp: Long) -> String = { timestamp -> "${DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT.format(timestamp)}_video" }
 ) {
     companion object {
         private const val DEFAULT_SHAKE_THRESHOLD = 13

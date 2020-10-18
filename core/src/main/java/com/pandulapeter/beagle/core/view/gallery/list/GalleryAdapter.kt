@@ -14,6 +14,8 @@ internal class GalleryAdapter(
     override fun areItemsTheSame(oldItem: GalleryListItem, newItem: GalleryListItem) = oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: GalleryListItem, newItem: GalleryListItem) = oldItem == newItem
+
+    override fun getChangePayload(oldItem: GalleryListItem, newItem: GalleryListItem) = ""
 }) {
     override fun getItemViewType(position: Int): Int = when (getItem(position)) {
         is ImageViewHolder.UiModel -> R.layout.beagle_item_gallery_image

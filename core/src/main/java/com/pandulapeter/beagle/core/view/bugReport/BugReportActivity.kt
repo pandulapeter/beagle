@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.viewModel
+import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
@@ -50,6 +52,14 @@ internal class BugReportActivity : AppCompatActivity() {
                 requestApplyInsets()
             }
         }
-        recyclerView.setHasFixedSize(true)
+        val bugReportAdapter = BugReportAdapter(
+            onSendButtonPressed = viewModel::onSendButtonPressed
+        )
+        recyclerView.run {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = bugReportAdapter
+        }
+        viewModel.items.observe(this, bugReportAdapter::submitList)
     }
 }
