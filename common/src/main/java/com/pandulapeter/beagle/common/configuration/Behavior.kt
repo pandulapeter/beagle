@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 /**
- * Specifies the behavior customization options for the debug menu. All parameters are optional.
+ * Specifies the behavior customization options for the debug menu. Used as an optional argument of Beagle.initialize(). All parameters are optional.
  *
  * @param shakeThreshold - The threshold value above which the debug menu will be opened when the user shakes the device. Values between 5 - 25 work best (smaller values result in more sensitive detection). Set to null to disable shake detection. [DEFAULT_SHAKE_THRESHOLD] by default.
  * @param shakeHapticFeedbackDuration - The length of the vibration triggered when a shake is detected, in milliseconds. Set to 0 to disable haptic feedback. [DEFAULT_HAPTIC_FEEDBACK_DURATION] by default.

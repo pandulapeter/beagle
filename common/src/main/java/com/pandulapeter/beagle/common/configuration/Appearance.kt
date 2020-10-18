@@ -42,7 +42,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 /**
- * Specifies the appearance customization options for the debug menu. All parameters are optional.
+ * Specifies the appearance customization options for the debug menu. Used as an optional argument of Beagle.initialize(). All parameters are optional.
  *
  * @param themeResourceId - The theme resource ID to be used for the debug menu as well as the Gallery screen. If null, the current Activity's theme will be used. [DEFAULT_THEME_RESOURCE_ID] by default.
  * @param generalTexts - Customize general UI strings, see [GeneralTexts].
