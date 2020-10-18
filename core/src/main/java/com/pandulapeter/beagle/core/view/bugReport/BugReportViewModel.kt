@@ -13,6 +13,7 @@ import com.pandulapeter.beagle.core.view.bugReport.list.HeaderViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.LogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.NetworkLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.SendButtonViewHolder
+import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreLogsViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreNetworkLogsViewHolder
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -81,6 +82,13 @@ internal class BugReportViewModel(
     }
 
     fun onLogLongTapped(id: String, label: String?) = onLogSelectionChanged(id, label)
+
+    fun onShowMoreLogsTapped(label: String?) {
+        viewModelScope.launch(listManagerContext) {
+            lastLogIndex[label] = (lastLogIndex[label] ?: 0) + LOG_INDEX_INCREMENT
+            refreshContents()
+        }
+    }
 
     fun onSendButtonPressed() {
         if (isSendButtonEnabled) {
@@ -170,7 +178,7 @@ internal class BugReportViewModel(
                             )
                         })
                         if (areThereMoreLogEntries(label)) {
-                            //TODO: Add load more item
+                            add(ShowMoreLogsViewHolder.UiModel(label))
                         }
                     }
                 }

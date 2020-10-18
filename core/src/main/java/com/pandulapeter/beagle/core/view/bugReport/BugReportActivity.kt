@@ -83,6 +83,7 @@ internal class BugReportActivity : AppCompatActivity() {
             onShowMoreNetworkLogsTapped = viewModel::onShowMoreNetworkLogsTapped,
             onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
             onLogLongTapped = viewModel::onLogLongTapped,
+            onShowMoreLogsTapped = viewModel::onShowMoreLogsTapped
         )
         recyclerView.run {
             setHasFixedSize(true)
