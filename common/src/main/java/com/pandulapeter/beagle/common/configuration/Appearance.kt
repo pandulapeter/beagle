@@ -50,7 +50,8 @@ import java.util.Locale
  * @param galleryTexts - Customize UI strings related to the Gallery, see [GalleryTexts].
  * @param bugReportTexts - Customize UI strings related to the bug reporting screen, see [BugReportTexts].
  * @param networkLogTexts - Customize UI strings related to the network event detail dialog, see [NetworkLogTexts].
- * @param networkEventTimestampFormatter - The formatter used for displaying the timestamp of network events on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
+ * @param networkLogTimestampFormatter - The formatter used for displaying the timestamp of network events on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
+ * @param logTimestampFormatter - The formatter used for displaying the timestamp of logs on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with [GALLERY_DATE_FORMAT] by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. [DEFAULT_APPLY_INSETS] by default.
  */
@@ -61,7 +62,8 @@ data class Appearance(
     val galleryTexts: GalleryTexts = GalleryTexts(),
     val bugReportTexts: BugReportTexts = BugReportTexts(),
     val networkLogTexts: NetworkLogTexts = NetworkLogTexts(),
-    val networkEventTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_NETWORK_EVENT_DATE_FORMAT.format(it) },
+    val networkLogTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_NETWORK_LOG_DATE_FORMAT.format(it) },
+    val logTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_LOG_DATE_FORMAT.format(it) },
     val galleryTimestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_GALLERY_DATE_FORMAT.format(it) },
     val applyInsets: ((windowInsets: Insets) -> Insets)? = DEFAULT_APPLY_INSETS
 ) {
@@ -203,7 +205,8 @@ data class Appearance(
 
     companion object {
         private val DEFAULT_THEME_RESOURCE_ID: Int? = null
-        private val DEFAULT_NETWORK_EVENT_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_NETWORK_LOG_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_LOG_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_GALLERY_DATE_FORMAT by lazy { SimpleDateFormat(GALLERY_DATE_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_APPLY_INSETS: ((windowInsets: Insets) -> Insets)? = null
     }

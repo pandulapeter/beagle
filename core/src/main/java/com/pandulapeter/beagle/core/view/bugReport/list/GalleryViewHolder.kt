@@ -47,6 +47,7 @@ internal class GalleryViewHolder private constructor(
                 else -> null
             }
         }
+        //TODO: Append an item that opens the device Gallery.
     })
 
     data class UiModel(

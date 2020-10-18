@@ -14,11 +14,14 @@ internal class LogDetailDialogViewModel : ViewModel() {
     private val _isShareButtonEnabled = MutableLiveData(true)
     val isShareButtonEnabled: LiveData<Boolean> = _isShareButtonEnabled
 
-    fun shareLogs(activity: Activity?, text: CharSequence, timestamp: Long, id: String) {
+    fun shareLogs(activity: Activity?, content: String, timestamp: Long, id: String) {
         if (_isShareButtonEnabled.value == true) {
             viewModelScope.launch {
                 _isShareButtonEnabled.postValue(false)
-                activity?.createAndShareLogFile("${BeagleCore.implementation.behavior.getLogFileName(timestamp, id)}.txt", text.toString())
+                activity?.createAndShareLogFile(
+                    fileName = "${BeagleCore.implementation.behavior.getLogFileName(timestamp, id)}.txt",
+                    content = content
+                )
                 _isShareButtonEnabled.postValue(true)
             }
         }

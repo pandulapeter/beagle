@@ -72,7 +72,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
         R.id.beagle_share -> consume {
             viewModel.shareLogs(
                 activity = activity,
-                text = textView.text,
+                content = textView.text.toString(),
                 timestamp = arguments?.timestamp ?: 0L,
                 id = arguments?.id.orEmpty()
             )

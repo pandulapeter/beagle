@@ -76,7 +76,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     ) = viewModelScope.launch(tagManagerContext) {
         title = "${if (isOutgoing) "↑" else "↓"} ${url.replace("?", "$TITLE_NEW_LINE_PREFIX?").replace("&", "$TITLE_NEW_LINE_PREFIX&")}"
         details = "\n\n• ${textHeaders}:${headers.formatHeaders()}"
-            .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkEventTimestampFormatter(it)}") } ?: text }
+            .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkLogTimestampFormatter(it)}") } ?: text }
             .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
             .toString()
         var longestLine = ""
