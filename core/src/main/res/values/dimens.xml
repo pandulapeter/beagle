@@ -16,4 +16,5 @@
     <dimen name="beagle_default_keyline_secondary">72dp</dimen>
     <dimen name="beagle_gallery_item_minimum_size">128dp</dimen>
     <dimen name="beagle_gallery_preview_minimum_width">200dp</dimen>
+    <dimen name="beagle_bug_report_gallery_item">200dp</dimen>
 </resources>

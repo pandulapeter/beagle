@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/beagle_bug_report_gallery_item"
+    android:layout_height="@dimen/beagle_bug_report_gallery_item"
+    android:layout_margin="@dimen/beagle_content_padding">
+
+    <ImageView
+        android:id="@+id/beagle_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/beagle_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/beagle_bg_gradient"
+        android:maxLines="3"
+        android:paddingStart="@dimen/beagle_item_horizontal_margin"
+        android:paddingLeft="@dimen/beagle_item_horizontal_margin"
+        android:paddingTop="@dimen/beagle_item_vertical_margin"
+        android:paddingEnd="@dimen/beagle_item_horizontal_margin"
+        android:paddingRight="@dimen/beagle_item_horizontal_margin"
+        android:paddingBottom="@dimen/beagle_item_vertical_margin"
+        android:textColor="@android:color/white"
+        tools:text="Text" />
+
+</androidx.cardview.widget.CardView>

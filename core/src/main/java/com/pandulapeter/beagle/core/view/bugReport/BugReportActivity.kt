@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.extension.getGallerySpanCount
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
@@ -61,9 +60,9 @@ internal class BugReportActivity : AppCompatActivity() {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
                         recyclerView.setPadding(
-                            it.systemWindowInsetLeft + contentPadding,
+                            0,
                             contentPadding,
-                            it.systemWindowInsetRight + contentPadding,
+                            0,
                             it.systemWindowInsetBottom + contentPadding
                         )
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
@@ -73,7 +72,6 @@ internal class BugReportActivity : AppCompatActivity() {
             }
         }
         val bugReportAdapter = BugReportAdapter(
-            spanCount = getGallerySpanCount(),
             onSendButtonPressed = viewModel::onSendButtonPressed,
             onMediaFileSelected = { showPreviewDialog(viewModel.getFileName(it)) },
             onMediaFileLongTapped = viewModel::onMediaFileLongTapped

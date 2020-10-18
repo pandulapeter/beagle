@@ -27,7 +27,6 @@
             android:id="@+id/beagle_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:background="@drawable/beagle_bg_gradient"
             android:maxLines="3"
             android:paddingStart="@dimen/beagle_item_horizontal_margin"

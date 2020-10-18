@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:paddingStart="@dimen/beagle_large_content_padding"
-    android:paddingLeft="@dimen/beagle_large_content_padding"
-    android:paddingTop="@dimen/beagle_item_vertical_margin"
-    android:paddingEnd="@dimen/beagle_large_content_padding"
-    android:paddingRight="@dimen/beagle_large_content_padding"
-    android:paddingBottom="@dimen/beagle_item_vertical_margin" />
+    android:paddingStart="@dimen/beagle_content_padding"
+    android:paddingLeft="@dimen/beagle_content_padding"
+    android:paddingEnd="@dimen/beagle_content_padding"
+    android:paddingRight="@dimen/beagle_content_padding" />

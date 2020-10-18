@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
 
 internal class BugReportAdapter(
-    private val spanCount: Int,
     private val onSendButtonPressed: () -> Unit,
     private val onMediaFileSelected: (Int) -> Unit,
     private val onMediaFileLongTapped: (Int) -> Unit
@@ -34,7 +33,6 @@ internal class BugReportAdapter(
         )
         R.layout.beagle_item_bug_report_gallery -> GalleryViewHolder.create(
             parent = parent,
-            spanCount = spanCount,
             onMediaSelected = onMediaFileSelected,
             onMediaLongTapped = onMediaFileLongTapped
         )
