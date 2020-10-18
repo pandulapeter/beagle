@@ -251,11 +251,13 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun openBugReportingScreen(
         shouldShowGallerySection: Boolean,
         shouldShowNetworkLogsSection: Boolean,
-        logTagSectionsToShow: List<String?>
+        logTagSectionsToShow: List<String?>,
+        descriptionTemplate: String
     ) = bugReportManager.openBugReportingScreen(
         shouldShowGallerySection = shouldShowGallerySection,
         shouldShowNetworkLogsSection = shouldShowNetworkLogsSection,
-        logTagSectionsToShow = logTagSectionsToShow
+        logTagSectionsToShow = logTagSectionsToShow,
+        descriptionTemplate = descriptionTemplate
     )
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)

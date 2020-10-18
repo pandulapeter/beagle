@@ -23,7 +23,8 @@ internal class BugReportViewModel(
     private val context: Context,
     private val shouldShowGallerySection: Boolean,
     private val shouldShowNetworkLogsSection: Boolean,
-    private val logTagSectionsToShow: List<String?>
+    private val logTagSectionsToShow: List<String?>,
+    private val descriptionTemplate: String
 ) : ViewModel() {
 
     private val _items = MutableLiveData(emptyList<BugReportListItem>())

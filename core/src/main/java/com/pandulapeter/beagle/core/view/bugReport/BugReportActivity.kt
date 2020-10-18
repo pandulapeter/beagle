@@ -34,7 +34,8 @@ internal class BugReportActivity : AppCompatActivity() {
                     context = applicationContext,
                     shouldShowGallerySection = arguments.shouldShowGallerySection,
                     shouldShowNetworkLogsSection = arguments.shouldShowNetworkLogsSection,
-                    logTagSectionsToShow = arguments.logTagSectionsToShow
+                    logTagSectionsToShow = arguments.logTagSectionsToShow,
+                    descriptionTemplate = arguments.descriptionTemplate
                 ) as T
             }
         }).get(BugReportViewModel::class.java)
@@ -94,16 +95,19 @@ internal class BugReportActivity : AppCompatActivity() {
         private var Bundle.shouldShowGallerySection by BundleArgumentDelegate.Boolean("shouldShowGallerySection")
         private var Bundle.shouldShowNetworkLogsSection by BundleArgumentDelegate.Boolean("shouldShowNetworkLogsSection")
         private var Bundle.logTagSectionsToShow by BundleArgumentDelegate.StringList("logTagSectionsToShow")
+        private var Bundle.descriptionTemplate by BundleArgumentDelegate.String("descriptionTemplate")
 
         fun newIntent(
             context: Context,
             shouldShowGallerySection: Boolean,
             shouldShowNetworkLogsSection: Boolean,
-            logTagSectionsToShow: List<String?>
+            logTagSectionsToShow: List<String?>,
+            descriptionTemplate: String
         ) = Intent(context, BugReportActivity::class.java).putExtra(ARGUMENTS, Bundle().also {
             it.shouldShowGallerySection = shouldShowGallerySection
             it.shouldShowNetworkLogsSection = shouldShowNetworkLogsSection
             it.logTagSectionsToShow = logTagSectionsToShow
+            it.descriptionTemplate = descriptionTemplate
         })
     }
 }

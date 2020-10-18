@@ -25,6 +25,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * @param shouldShowGallerySection - Whether or not the Gallery section should be added. True by default.
  * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. True by default.
  * @param logTagSectionsToShow - The list of log tags for which sections should be added. By default it adds a section for all logs, without filtering.
+ * @param descriptionTemplate - The default value of the free-text input. Empty string by default.
  * @param type - Specify a [TextModule.Type] to apply a specific appearance. [DEFAULT_TYPE] by default.
  * @param icon - A drawable resource ID that will be tinted and displayed before the text, or null to display no icon. [DEFAULT_ICON] by default.
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
@@ -36,6 +37,7 @@ data class BugReportButtonModule(
     val shouldShowGallerySection: Boolean = true,
     val shouldShowNetworkLogsSection: Boolean = true,
     val logTagSectionsToShow: List<String?> = listOf(null),
+    val descriptionTemplate: String = "",
     val type: TextModule.Type = DEFAULT_TYPE,
     @DrawableRes val icon: Int? = DEFAULT_ICON,
     val isEnabled: Boolean = DEFAULT_IS_ENABLED,
