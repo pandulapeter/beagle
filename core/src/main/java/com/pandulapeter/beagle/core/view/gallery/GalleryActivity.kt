@@ -3,7 +3,6 @@ package com.pandulapeter.beagle.core.view.gallery
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
+import com.pandulapeter.beagle.core.util.extension.getGallerySpanCount
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.shareFile
@@ -87,7 +87,7 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             onLongTap = { position -> viewModel.items.value?.get(position)?.id?.let(viewModel::selectItem) }
         )
         recyclerView.setHasFixedSize(true)
-        val spanCount = getSpanCount()
+        val spanCount = getGallerySpanCount()
         recyclerView.layoutManager = GridLayoutManager(this, spanCount).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int) = if (viewModel.isSectionHeader(position)) spanCount else 1
@@ -148,11 +148,5 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
         } else {
             super.onBackPressed()
         }
-    }
-
-    private fun getSpanCount(): Int {
-        val displayMetrics = DisplayMetrics()
-        windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-        return displayMetrics.widthPixels / dimension(R.dimen.beagle_gallery_item_minimum_size)
     }
 }

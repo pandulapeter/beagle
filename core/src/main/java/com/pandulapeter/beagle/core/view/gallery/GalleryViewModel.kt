@@ -6,12 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.toGalleryModels
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryListItem
-import com.pandulapeter.beagle.core.view.gallery.list.ImageViewHolder
 import com.pandulapeter.beagle.core.view.gallery.list.SectionHeaderViewHolder
-import com.pandulapeter.beagle.core.view.gallery.list.VideoViewHolder
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -59,15 +57,7 @@ internal class GalleryViewModel : ViewModel() {
 
     private fun refresh() {
         viewModelScope.launch {
-            _items.value = files.sortedByDescending { it.lastModified() }.mapNotNull { file ->
-                file.name.let { fileName ->
-                    when {
-                        fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> ImageViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
-                        fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> VideoViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
-                        else -> null
-                    }
-                }
-            }.let { mediaUiModels ->
+            _items.value = files.sortedByDescending { it.lastModified() }.toGalleryModels(selectedItemIds).let { mediaUiModels ->
                 if (BeagleCore.implementation.appearance.galleryTimestampFormatter == null) {
                     mediaUiModels
                 } else {

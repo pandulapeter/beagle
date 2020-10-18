@@ -6,12 +6,15 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
+import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.drawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -104,3 +107,9 @@ internal fun Activity.takeScreenshotWithDrawingCache(fileName: String) {
 }
 
 private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)
+
+internal fun Activity.getGallerySpanCount(): Int {
+    val displayMetrics = DisplayMetrics()
+    windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+    return displayMetrics.widthPixels / dimension(R.dimen.beagle_gallery_item_minimum_size)
+}

@@ -8,7 +8,7 @@ import com.pandulapeter.beagle.core.R
 
 internal class GalleryAdapter(
     private val onMediaSelected: (Int) -> Unit,
-    private val onLongTap: ((Int) -> Unit)? = null
+    private val onLongTap: (Int) -> Unit
 ) : ListAdapter<GalleryListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<GalleryListItem>() {
 
     override fun areItemsTheSame(oldItem: GalleryListItem, newItem: GalleryListItem) = oldItem.id == newItem.id

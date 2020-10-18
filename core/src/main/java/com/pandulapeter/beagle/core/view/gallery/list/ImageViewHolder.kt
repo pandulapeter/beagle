@@ -13,7 +13,7 @@ import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 internal class ImageViewHolder private constructor(
     itemView: View,
     onMediaSelected: (Int) -> Unit,
-    onLongTap: ((Int) -> Unit)?
+    onLongTap: (Int) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
@@ -27,15 +27,13 @@ internal class ImageViewHolder private constructor(
                 }
             }
         }
-        if (onLongTap != null) {
-            itemView.setOnLongClickListener {
-                adapterPosition.let { adapterPosition ->
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
-                        onLongTap(adapterPosition)
-                    }
+        itemView.setOnLongClickListener {
+            adapterPosition.let { adapterPosition ->
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onLongTap(adapterPosition)
                 }
-                true
             }
+            true
         }
     }
 
@@ -60,7 +58,7 @@ internal class ImageViewHolder private constructor(
         fun create(
             parent: ViewGroup,
             onMediaSelected: (Int) -> Unit,
-            onLongTap: ((Int) -> Unit)?
+            onLongTap: (Int) -> Unit
         ) = ImageViewHolder(
             itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_gallery_image, parent, false),
             onMediaSelected = onMediaSelected,

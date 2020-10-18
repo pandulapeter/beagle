@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.extension.getGallerySpanCount
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
+import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
@@ -30,6 +32,7 @@ internal class BugReportActivity : AppCompatActivity() {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T = intent.getBundleExtra(ARGUMENTS)!!.let { arguments ->
                 BugReportViewModel(
+                    context = applicationContext,
                     shouldShowGallerySection = arguments.shouldShowGallerySection,
                     shouldShowNetworkLogsSection = arguments.shouldShowNetworkLogsSection,
                     logTagSectionsToShow = arguments.logTagSectionsToShow
@@ -70,7 +73,10 @@ internal class BugReportActivity : AppCompatActivity() {
             }
         }
         val bugReportAdapter = BugReportAdapter(
-            onSendButtonPressed = viewModel::onSendButtonPressed
+            spanCount = getGallerySpanCount(),
+            onSendButtonPressed = viewModel::onSendButtonPressed,
+            onMediaFileSelected = { showPreviewDialog(viewModel.getFileName(it)) },
+            onMediaFileLongTapped = viewModel::onMediaFileLongTapped
         )
         recyclerView.run {
             setHasFixedSize(true)
@@ -82,6 +88,8 @@ internal class BugReportActivity : AppCompatActivity() {
             viewModel.shouldShowLoadingIndicator.observe(this) { progressBar.visible = it }
         }
     }
+
+    private fun showPreviewDialog(fileName: String) = MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
 
     companion object {
         private const val ARGUMENTS = "arguments"

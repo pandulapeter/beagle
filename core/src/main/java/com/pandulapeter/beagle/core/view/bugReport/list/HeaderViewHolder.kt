@@ -18,16 +18,9 @@ internal class HeaderViewHolder private constructor(
     fun bind(uiModel: UiModel) = textView.setText(uiModel.text)
 
     data class UiModel(
+        override val id: String,
         val text: Text
-    ) : BugReportListItem {
-
-        override val id = "header_${
-            when (text) {
-                is Text.CharSequence -> text.charSequence.toString()
-                is Text.ResourceId -> text.resourceId.toString()
-            }
-        }"
-    }
+    ) : BugReportListItem
 
     companion object {
         fun create(parent: ViewGroup) = HeaderViewHolder(

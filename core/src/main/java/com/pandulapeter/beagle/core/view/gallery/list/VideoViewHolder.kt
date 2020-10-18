@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 internal class VideoViewHolder private constructor(
     itemView: View,
     onMediaSelected: (Int) -> Unit,
-    onLongTap: ((Int) -> Unit)?
+    onLongTap: (Int) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
@@ -32,15 +32,13 @@ internal class VideoViewHolder private constructor(
                 }
             }
         }
-        if (onLongTap != null) {
-            itemView.setOnLongClickListener {
-                adapterPosition.let { adapterPosition ->
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
-                        onLongTap(adapterPosition)
-                    }
+        itemView.setOnLongClickListener {
+            adapterPosition.let { adapterPosition ->
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onLongTap(adapterPosition)
                 }
-                true
             }
+            true
         }
     }
 
@@ -73,7 +71,7 @@ internal class VideoViewHolder private constructor(
         fun create(
             parent: ViewGroup,
             onMediaSelected: (Int) -> Unit,
-            onLongTap: ((Int) -> Unit)?
+            onLongTap: (Int) -> Unit
         ) = VideoViewHolder(
             itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_gallery_video, parent, false),
             onMediaSelected = onMediaSelected,
