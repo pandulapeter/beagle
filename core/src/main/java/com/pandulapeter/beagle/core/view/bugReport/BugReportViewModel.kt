@@ -33,8 +33,11 @@ internal class BugReportViewModel(
     val shouldShowLoadingIndicator: LiveData<Boolean> = _shouldShowLoadingIndicator
     private var mediaFiles = emptyList<File>()
     private var selectedMediaFileIds = emptyList<String>()
-    private val networkLogEntries = BeagleCore.implementation.getNetworkLogEntries()
+    private val allNetworkLogEntries = BeagleCore.implementation.getNetworkLogEntries()
+    private val networkLogEntries get() = allNetworkLogEntries.take(lastNetworkLogIndex)
+    private val areThereMoreNetworkLogEntries get() = allNetworkLogEntries.size > networkLogEntries.size
     private val firstNetworkLogIndex get() = _items.value?.indexOfFirst { it is NetworkLogItemViewHolder.UiModel } ?: 0
+    private var lastNetworkLogIndex = LOG_INDEX_INCREMENT - 1
     private var selectedNetworkLogIds = emptyList<String>()
     private val selectedLogIds = logTagSectionsToShow.map { tag -> tag to mutableListOf<LogEntry>() }.toMap()
     private var isSendButtonEnabled = true
@@ -72,8 +75,8 @@ internal class BugReportViewModel(
             selectedNetworkLogIds = if (selectedNetworkLogIds.contains(id)) {
                 selectedNetworkLogIds.filterNot { it == id }
             } else {
-                (selectedNetworkLogIds + id).distinct()
-            }
+                (selectedNetworkLogIds + id)
+            }.distinct()
             refreshContents()
         }
     }
@@ -83,8 +86,8 @@ internal class BugReportViewModel(
             selectedMediaFileIds = if (selectedMediaFileIds.contains(id)) {
                 selectedMediaFileIds.filterNot { it == id }
             } else {
-                (selectedMediaFileIds + id).distinct()
-            }
+                (selectedMediaFileIds + id)
+            }.distinct()
             refreshContents()
         }
     }
@@ -111,11 +114,12 @@ internal class BugReportViewModel(
                 addAll(networkLogEntries.map { entry ->
                     NetworkLogItemViewHolder.UiModel(
                         entry = entry,
-                        isSelected = selectedNetworkLogIds.contains(entry.id),
-                        onValueChanged = ::onNetworkLogSelectionChanged
+                        isSelected = selectedNetworkLogIds.contains(entry.id)
                     )
                 })
-                //TODO: Add empty state if needed
+                if (areThereMoreNetworkLogEntries) {
+                    //TODO: Add empty state
+                }
             }
             logTagSectionsToShow.distinct().forEach { tag ->
                 add(
@@ -136,5 +140,9 @@ internal class BugReportViewModel(
             add(SendButtonViewHolder.UiModel(isSendButtonEnabled))
         })
         _shouldShowLoadingIndicator.postValue(false)
+    }
+
+    companion object {
+        private const val LOG_INDEX_INCREMENT = 10
     }
 }

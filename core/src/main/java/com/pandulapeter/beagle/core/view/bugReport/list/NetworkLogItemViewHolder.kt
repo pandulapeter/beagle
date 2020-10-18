@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
@@ -18,6 +19,13 @@ internal class NetworkLogItemViewHolder private constructor(
 
     private val checkBox = itemView.findViewById<CheckBox>(R.id.beagle_check_box)
     private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
+    private val checkedChangedListener = CompoundButton.OnCheckedChangeListener { _, _ ->
+        adapterPosition.let { adapterPosition ->
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                onItemLongTapped(adapterPosition)
+            }
+        }
+    }
 
     init {
         itemView.setOnClickListener {
@@ -43,14 +51,13 @@ internal class NetworkLogItemViewHolder private constructor(
         checkBox.run {
             setOnCheckedChangeListener(null)
             isChecked = uiModel.isSelected
-            setOnCheckedChangeListener { _, _ -> uiModel.onValueChanged(uiModel.id) }
+            setOnCheckedChangeListener(checkedChangedListener)
         }
     }
 
     data class UiModel(
         val entry: NetworkLogEntry,
-        val isSelected: Boolean,
-        val onValueChanged: (String) -> Unit
+        val isSelected: Boolean
     ) : BugReportListItem {
 
         override val id: String = "networkLog_${entry.id}"
