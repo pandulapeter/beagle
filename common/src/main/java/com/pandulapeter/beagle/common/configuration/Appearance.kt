@@ -2,9 +2,12 @@ package com.pandulapeter.beagle.common.configuration
 
 import androidx.annotation.StyleRes
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_BUILD_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_DESCRIPTION_SECTION_TITLE
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_DEVICE_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_GALLERY_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_LOGS_SECTION_TITLE
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_METADATA_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_NETWORK_LOGS_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_SEND_BUTTON_HINT
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_SHOW_MORE_TEXT
@@ -155,6 +158,9 @@ data class Appearance(
      * @param gallerySectionTitle - The title of the Gallery section. [DEFAULT_GALLERY_SECTION_TITLE] by default.
      * @param networkLogsSectionTitle - The title of the Network logs section. [DEFAULT_NETWORK_LOGS_SECTION_TITLE] by default.
      * @param logsSectionTitle - The title of the Logs section. Multiple such sections can be added filtered by tags (the parameter of the lambda function). [DEFAULT_LOGS_SECTION_TITLE] by default, suffixed with the tag name if it is not null.
+     * @param metadataSectionTitle - The title of the Metadata section. [DEFAULT_METADATA_SECTION_TITLE] by default.
+     * @param buildInformation - The text on the build information check box. [DEFAULT_BUILD_INFORMATION] by default.
+     * @param deviceInformation - The text on the device information check box. [DEFAULT_DEVICE_INFORMATION] by default.
      * @param descriptionSectionTitle - The title of the Description section. [DEFAULT_DESCRIPTION_SECTION_TITLE] by default.
      * @param showMoreText - The text that appears below lists that have more content. [DEFAULT_SHOW_MORE_TEXT] by default.
      */
@@ -164,6 +170,9 @@ data class Appearance(
         val gallerySectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_GALLERY_SECTION_TITLE ($selectedItemCount $SELECTED)") },
         val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)") },
         val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> Text.CharSequence("${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)") },
+        val metadataSectionTitle: Text = Text.CharSequence(DEFAULT_METADATA_SECTION_TITLE),
+        val buildInformation: Text = Text.CharSequence(DEFAULT_BUILD_INFORMATION),
+        val deviceInformation: Text = Text.CharSequence(DEFAULT_DEVICE_INFORMATION),
         val descriptionSectionTitle: Text = Text.CharSequence(DEFAULT_DESCRIPTION_SECTION_TITLE),
         val showMoreText: Text = Text.CharSequence(DEFAULT_SHOW_MORE_TEXT)
     ) {
@@ -173,6 +182,9 @@ data class Appearance(
             private const val DEFAULT_GALLERY_SECTION_TITLE = "Attach media items from the Gallery"
             private const val DEFAULT_NETWORK_LOGS_SECTION_TITLE = "Attach network logs"
             private const val DEFAULT_LOGS_SECTION_TITLE = "Attach logs"
+            private const val DEFAULT_METADATA_SECTION_TITLE = "Attach additional details"
+            private const val DEFAULT_BUILD_INFORMATION = "Build information"
+            private const val DEFAULT_DEVICE_INFORMATION = "Device information"
             private const val DEFAULT_DESCRIPTION_SECTION_TITLE = "Describe the issue"
             private const val DEFAULT_SHOW_MORE_TEXT = "Show more…"
             private const val SELECTED = "selected"

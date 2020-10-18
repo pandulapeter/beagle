@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.GalleryViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.HeaderViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.LogItemViewHolder
+import com.pandulapeter.beagle.core.view.bugReport.list.MetadataItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.NetworkLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreLogsViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreNetworkLogsViewHolder
@@ -26,6 +27,7 @@ internal class BugReportViewModel(
     private val shouldShowGallerySection: Boolean,
     private val shouldShowNetworkLogsSection: Boolean,
     private val logLabelSectionsToShow: List<String?>,
+    private val shouldShowMetadataSection: Boolean,
     descriptionTemplate: String
 ) : ViewModel() {
 
@@ -66,6 +68,8 @@ internal class BugReportViewModel(
             field = value
             refreshSendButton()
         }
+    private var shouldAttachBuildInfo = true
+    private var shouldAttachDeviceInfo = true
 
     init {
         refresh()
@@ -104,6 +108,16 @@ internal class BugReportViewModel(
         description = newValue
     }
 
+    fun onMetadataItemSelectionChanged(type: MetadataType) {
+        viewModelScope.launch(listManagerContext) {
+            when (type) {
+                MetadataType.BUILD_INFO -> shouldAttachBuildInfo = !shouldAttachBuildInfo
+                MetadataType.DEVICE_INFO -> shouldAttachDeviceInfo = !shouldAttachDeviceInfo
+            }
+            refreshContent()
+        }
+    }
+
     fun onSendButtonPressed() {
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
             isPreparingData = true
@@ -112,8 +126,8 @@ internal class BugReportViewModel(
             // - selectedNetworkLogIds (mapped to allNetworkLogEntries)
             // - flatMap selectedLogIds (mapped to allLogEntries)
             // - description
-            // - DeviceInfo - TODO
-            // - BuildInfo - TODO
+            // - shouldAttachBuildInfo
+            // - shouldAttachDeviceInfo
             isPreparingData = false
         }
     }
@@ -212,6 +226,26 @@ internal class BugReportViewModel(
                     }
                 }
             }
+            if (shouldShowMetadataSection) {
+                add(
+                    HeaderViewHolder.UiModel(
+                        id = "headerMetadata",
+                        text = BeagleCore.implementation.appearance.bugReportTexts.metadataSectionTitle
+                    )
+                )
+                add(
+                    MetadataItemViewHolder.UiModel(
+                        type = MetadataType.BUILD_INFO,
+                        isSelected = shouldAttachBuildInfo
+                    )
+                )
+                add(
+                    MetadataItemViewHolder.UiModel(
+                        type = MetadataType.DEVICE_INFO,
+                        isSelected = shouldAttachDeviceInfo
+                    )
+                )
+            }
             add(
                 HeaderViewHolder.UiModel(
                     id = "headerDescription",
@@ -222,6 +256,11 @@ internal class BugReportViewModel(
         })
         refreshSendButton()
         _shouldShowLoadingIndicator.postValue(false)
+    }
+
+    enum class MetadataType {
+        BUILD_INFO,
+        DEVICE_INFO
     }
 
     companion object {

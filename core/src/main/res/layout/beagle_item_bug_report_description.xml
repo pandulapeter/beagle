@@ -7,7 +7,8 @@
     android:layout_marginLeft="@dimen/beagle_large_content_padding"
     android:layout_marginTop="@dimen/beagle_content_padding"
     android:layout_marginEnd="@dimen/beagle_large_content_padding"
-    android:layout_marginRight="@dimen/beagle_large_content_padding">
+    android:layout_marginRight="@dimen/beagle_large_content_padding"
+    android:layout_marginBottom="@dimen/beagle_content_padding">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/beagle_edit_text"

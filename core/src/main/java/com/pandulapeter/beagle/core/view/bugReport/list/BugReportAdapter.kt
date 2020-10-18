@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.view.bugReport.BugReportViewModel
 
 internal class BugReportAdapter(
     private val onMediaFileSelected: (String) -> Unit,
@@ -15,7 +16,8 @@ internal class BugReportAdapter(
     private val onLogSelected: (String, String?) -> Unit,
     private val onLogLongTapped: (String, String?) -> Unit,
     private val onShowMoreLogsTapped: (String?) -> Unit,
-    private val onDescriptionChanged: (CharSequence) -> Unit
+    private val onDescriptionChanged: (CharSequence) -> Unit,
+    private val onMetadataItemSelectionChanged: (BugReportViewModel.MetadataType) -> Unit
 ) : ListAdapter<BugReportListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportListItem>() {
 
     override fun areItemsTheSame(oldItem: BugReportListItem, newItem: BugReportListItem) = oldItem.id == newItem.id
@@ -32,6 +34,7 @@ internal class BugReportAdapter(
         is ShowMoreNetworkLogsViewHolder.UiModel -> R.layout.beagle_item_bug_report_show_more_network_logs
         is ShowMoreLogsViewHolder.UiModel -> R.layout.beagle_item_bug_report_show_more_logs
         is DescriptionViewHolder.UiModel -> R.layout.beagle_item_bug_report_description
+        is MetadataItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_metadata_item
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
@@ -64,6 +67,10 @@ internal class BugReportAdapter(
             parent = parent,
             onTextChanged = onDescriptionChanged
         )
+        R.layout.beagle_item_bug_report_metadata_item -> MetadataItemViewHolder.create(
+            parent = parent,
+            onItemSelectionChanged = onMetadataItemSelectionChanged
+        )
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
@@ -75,6 +82,7 @@ internal class BugReportAdapter(
         is ShowMoreNetworkLogsViewHolder -> Unit
         is ShowMoreLogsViewHolder -> holder.bind(getItem(position) as ShowMoreLogsViewHolder.UiModel)
         is DescriptionViewHolder -> holder.bind(getItem(position) as DescriptionViewHolder.UiModel)
+        is MetadataItemViewHolder -> holder.bind(getItem(position) as MetadataItemViewHolder.UiModel)
         else -> throw IllegalArgumentException("Unsupported view holder type at position $position.")
     }
 }

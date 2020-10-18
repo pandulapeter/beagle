@@ -41,6 +41,7 @@ internal class BugReportActivity : AppCompatActivity() {
                     shouldShowGallerySection = arguments.shouldShowGallerySection,
                     shouldShowNetworkLogsSection = arguments.shouldShowNetworkLogsSection,
                     logLabelSectionsToShow = arguments.logLabelSectionsToShow,
+                    shouldShowMetadataSection = arguments.shouldShowMetadataSection,
                     descriptionTemplate = arguments.descriptionTemplate
                 ) as T
             }
@@ -95,7 +96,8 @@ internal class BugReportActivity : AppCompatActivity() {
             onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
             onLogLongTapped = viewModel::onLogLongTapped,
             onShowMoreLogsTapped = viewModel::onShowMoreLogsTapped,
-            onDescriptionChanged = viewModel::onDescriptionChanged
+            onDescriptionChanged = viewModel::onDescriptionChanged,
+            onMetadataItemSelectionChanged = viewModel::onMetadataItemSelectionChanged
         )
         recyclerView.run {
             setHasFixedSize(true)
@@ -152,6 +154,7 @@ internal class BugReportActivity : AppCompatActivity() {
         private var Bundle.shouldShowGallerySection by BundleArgumentDelegate.Boolean("shouldShowGallerySection")
         private var Bundle.shouldShowNetworkLogsSection by BundleArgumentDelegate.Boolean("shouldShowNetworkLogsSection")
         private var Bundle.logLabelSectionsToShow by BundleArgumentDelegate.StringList("logLabelSectionsToShow")
+        private var Bundle.shouldShowMetadataSection by BundleArgumentDelegate.Boolean("shouldShowMetadataSection")
         private var Bundle.descriptionTemplate by BundleArgumentDelegate.String("descriptionTemplate")
 
         fun newIntent(
@@ -159,11 +162,13 @@ internal class BugReportActivity : AppCompatActivity() {
             shouldShowGallerySection: Boolean,
             shouldShowNetworkLogsSection: Boolean,
             logLabelSectionsToShow: List<String?>,
+            shouldShowMetadataSection: Boolean,
             descriptionTemplate: String
         ) = Intent(context, BugReportActivity::class.java).putExtra(ARGUMENTS, Bundle().also {
             it.shouldShowGallerySection = shouldShowGallerySection
             it.shouldShowNetworkLogsSection = shouldShowNetworkLogsSection
             it.logLabelSectionsToShow = logLabelSectionsToShow
+            it.shouldShowMetadataSection = shouldShowMetadataSection
             it.descriptionTemplate = descriptionTemplate
         })
     }

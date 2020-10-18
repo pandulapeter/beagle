@@ -23,7 +23,9 @@ internal class BugReportButtonDelegate : Module.Delegate<BugReportButtonModule> 
                         shouldShowGallerySection = module.shouldShowGallerySection,
                         shouldShowNetworkLogsSection = module.shouldShowNetworkLogsSection,
                         logLabelSectionsToShow = module.logLabelSectionsToShow,
-                        descriptionTemplate = module.descriptionTemplate
+                        shouldShowMetadataSection = module.shouldShowMetadataSection,
+                        descriptionTemplate = module.descriptionTemplate,
+                        onBugReportReady = module.onBugReportReady
                     )
                 }
             }

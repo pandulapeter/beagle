@@ -343,7 +343,7 @@ interface BeagleContract {
      *
      * @param callback - The lambda that gets invoked after the screenshot is done, with the [Uri] pointing to the PNG file. The argument will be null if anything goes wrong.
      */
-    fun takeScreenshot(callback: (Uri?) -> Unit) = callback.invoke(null)
+    fun takeScreenshot(callback: (image: Uri?) -> Unit) = callback.invoke(null)
 
     /**
      * Captures a screen recording video and saves it in the application's private directory (exposing it through a FileProvider).
@@ -356,7 +356,7 @@ interface BeagleContract {
      * @param callback - The lambda that gets invoked after the recording is done, with the [Uri] pointing to the MP4 file. The argument will be null if anything goes wrong.
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun recordScreen(callback: (Uri?) -> Unit) = callback.invoke(null)
+    fun recordScreen(callback: (video: Uri?) -> Unit) = callback.invoke(null)
 
     /**
      * Opens the gallery of captured screenshot images and screen recording videos.
@@ -368,16 +368,20 @@ interface BeagleContract {
      * Opens the bug reporting screen. Empty sections will not be displayed.
      * Check out the [Appearance] class for customization options.
      *
-     * @param shouldShowGallerySection - Whether or not the Gallery section should be added. True by default.
+     * @param shouldShowGallerySection - Whether or not the gallery section should be added. True by default.
      * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. True by default.
      * @param logLabelSectionsToShow - The list of log labels for which sections should be added. By default it adds a section for all logs, without filtering.
+     * @param shouldShowMetadataSection - Whether or not the metadata section should be added. True by default.
      * @param descriptionTemplate - The default value of the free-text input. Empty string by default.
+     * @param onBugReportReady - The lambda that gets invoked after the bug report is ready, with the [Uri] pointing to the ZIP file, or null for the default implementation that uses the system share sheet. Null by default.
      */
     fun openBugReportingScreen(
         shouldShowGallerySection: Boolean = true,
         shouldShowNetworkLogsSection: Boolean = true,
         logLabelSectionsToShow: List<String?> = listOf(null),
-        descriptionTemplate: String = ""
+        shouldShowMetadataSection: Boolean = true,
+        descriptionTemplate: String = "",
+        onBugReportReady: ((bugReport: Uri) -> Unit)? = null
     ) = Unit
 
     /**
