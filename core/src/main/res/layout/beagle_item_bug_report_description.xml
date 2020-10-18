@@ -16,7 +16,7 @@
         android:background="@null"
         android:importantForAutofill="no"
         android:inputType="text|textCapSentences|textMultiLine"
-        android:padding="@dimen/beagle_content_padding"
+        android:padding="@dimen/beagle_large_content_padding"
         android:textColor="?android:attr/textColorPrimary"
         tools:ignore="LabelFor"
         tools:text="Text" />

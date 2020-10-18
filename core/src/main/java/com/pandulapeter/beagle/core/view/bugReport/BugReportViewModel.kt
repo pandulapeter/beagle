@@ -107,8 +107,13 @@ internal class BugReportViewModel(
     fun onSendButtonPressed() {
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
             isPreparingData = true
-            //TODO: Generate and share zip file
-            //TODO: Attach device info
+            //TODO: Generate and share zip file:
+            // - selectedMediaFileIds (mapped to mediaFiles)
+            // - selectedNetworkLogIds (mapped to allNetworkLogEntries)
+            // - flatMap selectedLogIds (mapped to allLogEntries)
+            // - description
+            // - DeviceInfo - TODO
+            // - BuildInfo - TODO
             isPreparingData = false
         }
     }

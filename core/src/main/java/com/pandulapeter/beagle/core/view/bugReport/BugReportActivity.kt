@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.LogEntry
@@ -45,6 +47,9 @@ internal class BugReportActivity : AppCompatActivity() {
         }).get(BugReportViewModel::class.java)
     }
     private lateinit var sendButton: MenuItem
+    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.beagle_recycler_view) }
+    private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.beagle_app_bar) }
+    private val onGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener { recyclerView.run { post { appBarLayout.setLifted(computeVerticalScrollOffset() != 0) } } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
@@ -62,7 +67,6 @@ internal class BugReportActivity : AppCompatActivity() {
             }
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
-        val recyclerView = findViewById<RecyclerView>(R.id.beagle_recycler_view)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
             val bottomNavigationOverlay = findViewById<View>(R.id.beagle_bottom_navigation_overlay)
@@ -106,6 +110,16 @@ internal class BugReportActivity : AppCompatActivity() {
             sendButton.isEnabled = it
             sendButton.icon.alpha = if (it) 255 else 63
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        recyclerView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        recyclerView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
     }
 
     fun refresh() = viewModel.refresh()
