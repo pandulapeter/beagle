@@ -75,28 +75,6 @@ internal class BugReportViewModel(
         }
     }
 
-    private fun onNetworkLogSelectionChanged(id: String) {
-        viewModelScope.launch(listManagerContext) {
-            selectedNetworkLogIds = if (selectedNetworkLogIds.contains(id)) {
-                selectedNetworkLogIds.filterNot { it == id }
-            } else {
-                (selectedNetworkLogIds + id)
-            }.distinct()
-            refreshContents()
-        }
-    }
-
-    private fun onLogSelectionChanged(id: String, label: String?) {
-        viewModelScope.launch(listManagerContext) {
-            selectedLogIds[label] = if (selectedLogIds[label]?.contains(id) == true) {
-                selectedLogIds[label].orEmpty().filterNot { it == id }
-            } else {
-                (selectedLogIds[label].orEmpty() + id)
-            }.distinct()
-            refreshContents()
-        }
-    }
-
     private fun onMediaFileSelectionChanged(id: String) {
         viewModelScope.launch(listManagerContext) {
             selectedMediaFileIds = if (selectedMediaFileIds.contains(id)) {
@@ -108,9 +86,32 @@ internal class BugReportViewModel(
         }
     }
 
+    private fun onNetworkLogSelectionChanged(id: String) {
+        viewModelScope.launch(listManagerContext) {
+            selectedNetworkLogIds = if (selectedNetworkLogIds.contains(id)) {
+                selectedNetworkLogIds.filterNot { it == id }
+            } else {
+                (selectedNetworkLogIds + id)
+            }.distinct()
+            refreshContents()
+        }
+    }
+
+    //TODO: Does not work when label = null
+    private fun onLogSelectionChanged(id: String, label: String?) {
+        viewModelScope.launch(listManagerContext) {
+            selectedLogIds[label] = if (selectedLogIds[label]?.contains(id) == true) {
+                selectedLogIds[label].orEmpty().filterNot { it == id }
+            } else {
+                (selectedLogIds[label].orEmpty() + id)
+            }.distinct()
+            refreshContents()
+        }
+    }
+
     private suspend fun refreshContents() = withContext(listManagerContext) {
         _items.postValue(mutableListOf<BugReportListItem>().apply {
-            if (shouldShowGallerySection) {
+            if (shouldShowGallerySection && mediaFiles.isNotEmpty()) {
                 add(
                     HeaderViewHolder.UiModel(
                         id = "headerGallery",

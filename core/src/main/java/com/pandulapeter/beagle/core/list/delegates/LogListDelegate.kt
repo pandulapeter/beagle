@@ -5,6 +5,7 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
+import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.modules.LogListModule
 
@@ -16,21 +17,26 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
         addAll(BeagleCore.implementation.getLogEntries(module.label).take(module.maxItemCount).map { entry ->
             ExpandedItemTextCell(
                 id = "${module.id}_${entry.id}",
-                text = Text.CharSequence((module.timestampFormatter?.let { formatter ->
-                    "[".append(formatter(entry.timestamp)).append("] ").append(entry.title.charSequence)
-                } ?: entry.title.charSequence).let {
-                    if (entry.payload == null) it else it.append("*")
-                }),
+                text = format(entry, module.timestampFormatter),
                 isEnabled = true,
-                onItemSelected = if (entry.payload != null) fun() {
+                shouldEllipsize = true,
+                onItemSelected = {
                     BeagleCore.implementation.showDialog(
                         content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter),
                         isHorizontalScrollEnabled = module.isHorizontalScrollEnabled,
                         timestamp = entry.timestamp,
                         id = entry.id
                     )
-                } else null
+                }
             )
+        })
+    }
+
+    companion object {
+        fun format(entry: LogEntry, timestampFormatter: ((Long) -> CharSequence)?) = Text.CharSequence((timestampFormatter?.let { formatter ->
+            "[".append(formatter(entry.timestamp)).append("] ").append(entry.title.charSequence)
+        } ?: entry.title.charSequence).let {
+            if (entry.payload == null) it else it.append("*")
         })
     }
 }

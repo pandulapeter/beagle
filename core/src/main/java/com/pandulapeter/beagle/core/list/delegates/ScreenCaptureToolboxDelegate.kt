@@ -18,6 +18,7 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
                     id = "${module.id}_image",
                     text = imageText,
                     isEnabled = true,
+                    shouldEllipsize = false,
                     onItemSelected = ScreenshotButtonDelegate.Companion::hideDebugMenuAndTakeScreenshot
                 )
             )
@@ -29,6 +30,7 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
                         id = "${module.id}_video",
                         text = videoText,
                         isEnabled = true,
+                        shouldEllipsize = false,
                         onItemSelected = ScreenRecordingButtonDelegate.Companion::hideDebugMenuAndRecordScreen
                     )
                 )
@@ -39,6 +41,7 @@ internal class ScreenCaptureToolboxDelegate : ExpandableModuleDelegate<ScreenCap
                 id = "${module.id}_gallery",
                 text = module.galleryText,
                 isEnabled = true,
+                shouldEllipsize = false,
                 onItemSelected = BeagleCore.implementation::openGallery
             )
         )

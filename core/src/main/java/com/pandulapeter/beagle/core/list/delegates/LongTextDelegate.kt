@@ -19,6 +19,7 @@ internal class LongTextDelegate : ExpandableModuleDelegate<LongTextModule> {
                 id = "text_${module.id}",
                 text = module.text,
                 isEnabled = true,
+                shouldEllipsize = false,
                 onItemSelected = null
             )
         )

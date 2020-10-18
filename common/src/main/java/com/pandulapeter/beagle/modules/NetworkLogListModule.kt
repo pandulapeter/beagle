@@ -26,7 +26,6 @@ import java.util.Locale
  * @param title - The title of the module. [DEFAULT_TITLE] by default.
  * @param baseUrl - When not empty, all URL-s will have the specified String filtered out to reduce the amount of redundant information. [DEFAULT_BASE_URL] by default.
  * @param maxItemCount - The maximum number of messages that will appear when expanded. [DEFAULT_MAX_ITEM_COUNT] by default.
- * @param maxItemTitleLength - The maximum number of characters displayed on a list item, or null for no limitation. [DEFAULT_MAX_ITEM_TITLE_LENGTH] by default.
  * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [LOG_TIME_FORMAT] by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
@@ -35,7 +34,6 @@ data class NetworkLogListModule(
     val title: Text = Text.CharSequence(DEFAULT_TITLE),
     val baseUrl: String = DEFAULT_BASE_URL,
     val maxItemCount: Int = DEFAULT_MAX_ITEM_COUNT,
-    val maxItemTitleLength: Int? = DEFAULT_MAX_ITEM_TITLE_LENGTH,
     val timestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY
 ) : ExpandableModule<NetworkLogListModule> {

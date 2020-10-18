@@ -7,8 +7,11 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.list.delegates.NetworkLogListDelegate
 import com.pandulapeter.beagle.core.util.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.consume
 
 internal class NetworkLogItemViewHolder private constructor(
@@ -43,7 +46,7 @@ internal class NetworkLogItemViewHolder private constructor(
 
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.entry.id
-        textView.text = uiModel.entry.url
+        textView.setText(NetworkLogListDelegate.format(uiModel.entry, BeagleCore.implementation.appearance.networkLogTimestampFormatter))
         checkBox.run {
             setOnCheckedChangeListener(null)
             isChecked = uiModel.isSelected

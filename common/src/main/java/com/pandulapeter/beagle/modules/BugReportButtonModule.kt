@@ -16,7 +16,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 
 
 /**
- * Displays a button that opens the bug reporting screen.
+ * Displays a button that opens the bug reporting screen. Empty sections will not be displayed.
  * Check out the [Appearance] class for customization options.
  *
  * This module can only be added once. It uses the value of [ID] as id.

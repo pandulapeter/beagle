@@ -20,6 +20,7 @@ internal class LifecycleLogListDelegate : ExpandableModuleDelegate<LifecycleLogL
                     "[".append(formatter(entry.timestamp)).append("] ").append(entry.getFormattedTitle(module.shouldDisplayFullNames))
                 } ?: entry.getFormattedTitle(module.shouldDisplayFullNames))),
                 isEnabled = true,
+                shouldEllipsize = false,
                 onItemSelected = null
             )
         })

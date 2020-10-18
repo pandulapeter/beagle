@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.core.list.cells
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -15,6 +16,7 @@ internal data class ExpandedItemTextCell(
     override val id: String,
     private val text: Text,
     private val isEnabled: Boolean,
+    private val shouldEllipsize: Boolean,
     val onItemSelected: (() -> Unit)?
 ) : Cell<ExpandedItemTextCell> {
 
@@ -31,6 +33,8 @@ internal data class ExpandedItemTextCell(
 
         override fun bind(model: ExpandedItemTextCell) = textView.run {
             setText(model.text)
+            maxLines = if (model.shouldEllipsize) 4 else Int.MAX_VALUE
+            ellipsize = TextUtils.TruncateAt.END
             isEnabled = model.isEnabled
             alpha = if (model.isEnabled) 1f else 0.6f
             setCompoundDrawablesWithIntrinsicBounds(bulletPointDrawable, null, null, null)

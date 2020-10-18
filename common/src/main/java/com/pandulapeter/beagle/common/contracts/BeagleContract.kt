@@ -365,7 +365,7 @@ interface BeagleContract {
     fun openGallery() = Unit
 
     /**
-     * Opens the bug reporting screen.
+     * Opens the bug reporting screen. Empty sections will not be displayed.
      * Check out the [Appearance] class for customization options.
      *
      * @param shouldShowGallerySection - Whether or not the Gallery section should be added. True by default.

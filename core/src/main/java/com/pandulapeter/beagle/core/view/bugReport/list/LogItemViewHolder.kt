@@ -7,8 +7,11 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
 import com.pandulapeter.beagle.core.util.LogEntry
+import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.consume
 
 internal class LogItemViewHolder private constructor(
@@ -43,7 +46,7 @@ internal class LogItemViewHolder private constructor(
 
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.entry
-        textView.text = uiModel.entry.message
+        textView.setText(LogListDelegate.format(uiModel.entry, BeagleCore.implementation.appearance.logTimestampFormatter))
         checkBox.run {
             setOnCheckedChangeListener(null)
             isChecked = uiModel.isSelected
