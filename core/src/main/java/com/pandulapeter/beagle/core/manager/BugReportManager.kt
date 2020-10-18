@@ -9,5 +9,9 @@ internal class BugReportManager {
 
     private val currentActivity get() = BeagleCore.implementation.currentActivity
 
-    fun openBugReportingScreen() = performOnHide { currentActivity?.run { startActivity(Intent(this, BugReportActivity::class.java)) } }
+    fun openBugReportingScreen(
+        shouldShowGallerySection: Boolean,
+        shouldShowNetworkLogsSection: Boolean,
+        logTagSectionsToShow: List<String?>
+    ) = performOnHide { currentActivity?.run { startActivity(Intent(this, BugReportActivity::class.java)) } }
 }

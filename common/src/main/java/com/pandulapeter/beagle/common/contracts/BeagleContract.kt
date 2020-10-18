@@ -367,8 +367,16 @@ interface BeagleContract {
     /**
      * Opens the bug reporting screen.
      * Check out the [Appearance] class for customization options.
+     *
+     * @param shouldShowGallerySection - Whether or not the Gallery section should be added. True by default.
+     * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. True by default.
+     * @param logTagSectionsToShow - The list of log tags for which sections should be added. By default it adds a section for all logs, without filtering.
      */
-    fun openBugReportingScreen() = Unit
+    fun openBugReportingScreen(
+        shouldShowGallerySection: Boolean = true,
+        shouldShowNetworkLogsSection: Boolean = true,
+        logTagSectionsToShow: List<String?> = listOf(null)
+    ) = Unit
 
     /**
      * Call this function to trigger recreating every cell model for every module.

@@ -18,7 +18,13 @@ internal class BugReportButtonDelegate : Module.Delegate<BugReportButtonModule> 
             icon = module.icon,
             onItemSelected = {
                 module.onButtonPressed()
-                performOnHide(BeagleCore.implementation::openBugReportingScreen)
+                performOnHide {
+                    BeagleCore.implementation.openBugReportingScreen(
+                        shouldShowGallerySection = module.shouldShowGallerySection,
+                        shouldShowNetworkLogsSection = module.shouldShowNetworkLogsSection,
+                        logTagSectionsToShow = module.logTagSectionsToShow
+                    )
+                }
             }
         )
     )
