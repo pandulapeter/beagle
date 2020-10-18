@@ -47,12 +47,19 @@ internal class BugReportViewModel(
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
 
+    private val description = MutableLiveData(descriptionTemplate)
+
     private val listManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
     private var isSendButtonEnabled = true
         set(value) {
             field = value
             viewModelScope.launch(listManagerContext) { refreshContents() }
         }
+    private val isDataValid
+        get() = selectedMediaFileIds.isNotEmpty() ||
+                selectedNetworkLogIds.isNotEmpty() ||
+                selectedLogIds.keys.any { label -> selectedLogIds[label]?.isNotEmpty() == true } ||
+                description.value?.trim()?.isNotEmpty() == true
 
     init {
         viewModelScope.launch(listManagerContext) {
@@ -167,7 +174,7 @@ internal class BugReportViewModel(
                 )
             )
             //TODO: Add text input field
-            add(SendButtonViewHolder.UiModel(isSendButtonEnabled))
+            add(SendButtonViewHolder.UiModel(isSendButtonEnabled && isDataValid))
         })
         _shouldShowLoadingIndicator.postValue(false)
     }
