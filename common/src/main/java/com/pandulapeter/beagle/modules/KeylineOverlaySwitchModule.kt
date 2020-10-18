@@ -36,7 +36,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
  */
 @Suppress("unused")
 data class KeylineOverlaySwitchModule(
-    override val text: (Boolean) -> Text = { Text.CharSequence(DEFAULT_TEXT) },
+    override val text: (currentValue: Boolean) -> Text = { Text.CharSequence(DEFAULT_TEXT) },
     @Dimension val grid: Int? = DEFAULT_GRID,
     @Dimension val keylinePrimary: Int? = DEFAULT_KEYLINE_PRIMARY,
     @Dimension val keylineSecondary: Int? = DEFAULT_KEYLINE_SECONDARY,
@@ -45,7 +45,7 @@ data class KeylineOverlaySwitchModule(
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     val applyInsets: ((windowInsets: Insets) -> Insets)? = DEFAULT_APPLY_INSETS,
-    override val onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    override val onValueChanged: (newValue: Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<Boolean, KeylineOverlaySwitchModule> {
 
     override val id: String = ID

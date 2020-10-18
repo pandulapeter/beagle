@@ -24,12 +24,12 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
  */
 @Suppress("unused")
 data class AnimationDurationSwitchModule(
-    override val text: (Boolean) -> Text = { Text.CharSequence(DEFAULT_TEXT) },
+    override val text: (currentValue: Boolean) -> Text = { Text.CharSequence(DEFAULT_TEXT) },
     val multiplier: Float = DEFAULT_MULTIPLIER,
     override val initialValue: Boolean = DEFAULT_INITIAL_VALUE,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
-    override val onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    override val onValueChanged: (newValue: Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<Boolean, AnimationDurationSwitchModule> {
 
     override val id: String = ID

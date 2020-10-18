@@ -36,7 +36,7 @@ data class NetworkLogListModule(
     val baseUrl: String = DEFAULT_BASE_URL,
     val maxItemCount: Int = DEFAULT_MAX_ITEM_COUNT,
     val maxItemTitleLength: Int? = DEFAULT_MAX_ITEM_TITLE_LENGTH,
-    val timestampFormatter: ((Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
+    val timestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY
 ) : ExpandableModule<NetworkLogListModule> {
 

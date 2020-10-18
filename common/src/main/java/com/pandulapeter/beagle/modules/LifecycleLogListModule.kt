@@ -39,7 +39,7 @@ data class LifecycleLogListModule(
     val eventTypes: List<EventType> = DEFAULT_EVENT_TYPES,
     val shouldDisplayFullNames: Boolean = DEFAULT_SHOULD_DISPLAY_FULL_NAMES,
     val maxItemCount: Int = DEFAULT_MAX_ITEM_COUNT,
-    val timestampFormatter: ((Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
+    val timestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY
 ) : ExpandableModule<LifecycleLogListModule> {
 

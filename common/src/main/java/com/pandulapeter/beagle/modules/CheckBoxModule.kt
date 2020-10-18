@@ -23,13 +23,13 @@ import com.pandulapeter.beagle.modules.CheckBoxModule.Companion.DEFAULT_SHOULD_R
  */
 @Suppress("unused")
 data class CheckBoxModule(
-    override val text: (Boolean) -> Text,
+    override val text: (currentValue: Boolean) -> Text,
     override val id: String = randomId,
     override val initialValue: Boolean = DEFAULT_INITIAL_VALUE,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
-    override val onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    override val onValueChanged: (newValue: Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<Boolean, CheckBoxModule> {
 
     constructor(

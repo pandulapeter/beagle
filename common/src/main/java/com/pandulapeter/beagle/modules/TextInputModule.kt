@@ -31,7 +31,7 @@ import com.pandulapeter.beagle.modules.TextInputModule.Companion.DEFAULT_VALIDAT
  */
 @Suppress("unused")
 data class TextInputModule(
-    override val text: (String) -> Text,
+    override val text: (currentValue: String) -> Text,
     override val initialValue: String = DEFAULT_INITIAL_VALUE,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     val areRealTimeUpdatesEnabled: Boolean = DEFAULT_ARE_REAL_TIME_UPDATES_ENABLED,
@@ -40,8 +40,8 @@ data class TextInputModule(
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val id: String = randomId,
-    val validator: (String) -> Boolean = DEFAULT_VALIDATOR,
-    override val onValueChanged: (String) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    val validator: (value: String) -> Boolean = DEFAULT_VALIDATOR,
+    override val onValueChanged: (newValue: String) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<String, TextInputModule> {
 
     constructor(

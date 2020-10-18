@@ -27,7 +27,7 @@ import com.pandulapeter.beagle.modules.MultipleSelectionListModule.Companion.DEF
  */
 @Suppress("unused")
 data class MultipleSelectionListModule<T : BeagleListItemContract>(
-    val title: (Set<T>) -> Text,
+    val title: (currentSelectedItems: Set<T>) -> Text,
     val items: List<T>,
     val initiallySelectedItemIds: Set<String>,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
@@ -35,7 +35,7 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
     override val id: String = randomId,
-    val onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
+    val onSelectionChanged: (newSelectedItems: Set<T>) -> Unit = {}
 ) : ExpandableModule<MultipleSelectionListModule<T>>, ValueWrapperModule<Set<String>, MultipleSelectionListModule<T>> {
 
     constructor(

@@ -29,7 +29,7 @@ import com.pandulapeter.beagle.modules.SingleSelectionListModule.Companion.DEFAU
  */
 @Suppress("unused")
 data class SingleSelectionListModule<T : BeagleListItemContract>(
-    val title: (T?) -> Text,
+    val title: (currentSelectedItem: T?) -> Text,
     val items: List<T>,
     val initiallySelectedItemId: String?,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
@@ -37,7 +37,7 @@ data class SingleSelectionListModule<T : BeagleListItemContract>(
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
     override val id: String = randomId,
-    val onSelectionChanged: (selectedItem: T?) -> Unit = {}
+    val onSelectionChanged: (newSelectedItem: T?) -> Unit = {}
 ) : ExpandableModule<SingleSelectionListModule<T>>, ValueWrapperModule<String, SingleSelectionListModule<T>> {
 
     constructor(

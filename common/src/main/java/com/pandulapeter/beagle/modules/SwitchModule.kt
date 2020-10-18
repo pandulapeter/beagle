@@ -23,13 +23,13 @@ import com.pandulapeter.beagle.modules.SwitchModule.Companion.DEFAULT_SHOULD_REQ
  */
 @Suppress("unused")
 data class SwitchModule(
-    override val text: (Boolean) -> Text,
+    override val text: (currentValue: Boolean) -> Text,
     override val initialValue: Boolean = DEFAULT_INITIAL_VALUE,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val id: String = randomId,
-    override val onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    override val onValueChanged: (newValue: Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<Boolean, SwitchModule> {
 
     constructor(

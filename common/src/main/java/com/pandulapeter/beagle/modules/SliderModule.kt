@@ -26,7 +26,7 @@ import com.pandulapeter.beagle.modules.SliderModule.Companion.DEFAULT_SHOULD_REQ
  */
 @Suppress("unused")
 data class SliderModule(
-    override val text: (Int) -> Text,
+    override val text: (currentValue: Int) -> Text,
     val minimumValue: Int = DEFAULT_MINIMUM_VALUE,
     val maximumValue: Int = DEFAULT_MAXIMUM_VALUE,
     override val initialValue: Int = minimumValue,
@@ -34,7 +34,7 @@ data class SliderModule(
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val id: String = randomId,
-    override val onValueChanged: (Int) -> Unit = DEFAULT_ON_VALUE_CHANGED
+    override val onValueChanged: (newValue: Int) -> Unit = DEFAULT_ON_VALUE_CHANGED
 ) : ValueWrapperModule<Int, SliderModule> {
 
     constructor(

@@ -32,7 +32,7 @@ import java.util.Locale
 data class LogListModule(
     val title: Text = Text.CharSequence(DEFAULT_TITLE),
     val maxItemCount: Int = DEFAULT_MAX_ITEM_COUNT,
-    val timestampFormatter: ((Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
+    val timestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_DATE_FORMAT.format(it) },
     val label: String? = DEFAULT_LABEL,
     val isHorizontalScrollEnabled: Boolean = DEFAULT_IS_HORIZONTAL_SCROLL_ENABLED,
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY
