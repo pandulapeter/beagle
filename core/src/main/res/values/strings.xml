@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="beagle_send">Send</string>
     <string name="beagle_share">Share</string>
     <string name="beagle_delete">Delete</string>
     <string name="beagle_toggle_details">Toggle details</string>

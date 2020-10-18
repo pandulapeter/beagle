@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
+import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
@@ -42,6 +44,7 @@ internal class BugReportActivity : AppCompatActivity() {
             }
         }).get(BugReportViewModel::class.java)
     }
+    private lateinit var sendButton: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
@@ -53,6 +56,11 @@ internal class BugReportActivity : AppCompatActivity() {
             setNavigationOnClickListener { supportFinishAfterTransition() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
             title = text(BeagleCore.implementation.appearance.bugReportTexts.title)
+            sendButton = menu.findItem(R.id.beagle_send).also {
+                it.title = text(BeagleCore.implementation.appearance.bugReportTexts.sendButtonHint)
+                it.icon = tintedDrawable(R.drawable.beagle_ic_send, textColor)
+            }
+            setOnMenuItemClickListener(::onMenuItemClicked)
         }
         val recyclerView = findViewById<RecyclerView>(R.id.beagle_recycler_view)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
@@ -83,8 +91,7 @@ internal class BugReportActivity : AppCompatActivity() {
             onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
             onLogLongTapped = viewModel::onLogLongTapped,
             onShowMoreLogsTapped = viewModel::onShowMoreLogsTapped,
-            onDescriptionChanged = viewModel::onDescriptionChanged,
-            onSendButtonPressed = viewModel::onSendButtonPressed
+            onDescriptionChanged = viewModel::onDescriptionChanged
         )
         recyclerView.run {
             setHasFixedSize(true)
@@ -95,9 +102,18 @@ internal class BugReportActivity : AppCompatActivity() {
         findViewById<ProgressBar>(R.id.beagle_progress_bar).let { progressBar ->
             viewModel.shouldShowLoadingIndicator.observe(this) { progressBar.visible = it }
         }
+        viewModel.isSendButtonEnabled.observe(this) {
+            sendButton.isEnabled = it
+            sendButton.icon.alpha = if (it) 255 else 63
+        }
     }
 
     fun refresh() = viewModel.refresh()
+
+    private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
+        R.id.beagle_send -> consume(viewModel::onSendButtonPressed)
+        else -> false
+    }
 
     private fun showMediaPreviewDialog(fileName: String) = MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
 

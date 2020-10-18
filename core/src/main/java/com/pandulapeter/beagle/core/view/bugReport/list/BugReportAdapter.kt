@@ -15,8 +15,7 @@ internal class BugReportAdapter(
     private val onLogSelected: (String, String?) -> Unit,
     private val onLogLongTapped: (String, String?) -> Unit,
     private val onShowMoreLogsTapped: (String?) -> Unit,
-    private val onDescriptionChanged: (CharSequence) -> Unit,
-    private val onSendButtonPressed: () -> Unit
+    private val onDescriptionChanged: (CharSequence) -> Unit
 ) : ListAdapter<BugReportListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportListItem>() {
 
     override fun areItemsTheSame(oldItem: BugReportListItem, newItem: BugReportListItem) = oldItem.id == newItem.id
@@ -27,7 +26,6 @@ internal class BugReportAdapter(
 }) {
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is HeaderViewHolder.UiModel -> R.layout.beagle_item_bug_report_header
-        is SendButtonViewHolder.UiModel -> R.layout.beagle_item_bug_report_send_button
         is GalleryViewHolder.UiModel -> R.layout.beagle_item_bug_report_gallery
         is NetworkLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_network_log_item
         is LogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_log_item
@@ -39,10 +37,6 @@ internal class BugReportAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         R.layout.beagle_item_bug_report_header -> HeaderViewHolder.create(parent)
-        R.layout.beagle_item_bug_report_send_button -> SendButtonViewHolder.create(
-            parent = parent,
-            onSendButtonPressed = onSendButtonPressed
-        )
         R.layout.beagle_item_bug_report_gallery -> GalleryViewHolder.create(
             parent = parent,
             onMediaSelected = onMediaFileSelected,
@@ -75,7 +69,6 @@ internal class BugReportAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewHolder.UiModel)
-        is SendButtonViewHolder -> holder.bind(getItem(position) as SendButtonViewHolder.UiModel)
         is GalleryViewHolder -> holder.bind(getItem(position) as GalleryViewHolder.UiModel)
         is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewHolder.UiModel)
         is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewHolder.UiModel)

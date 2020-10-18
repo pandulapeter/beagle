@@ -13,7 +13,6 @@ import com.pandulapeter.beagle.core.view.bugReport.list.GalleryViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.HeaderViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.LogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.NetworkLogItemViewHolder
-import com.pandulapeter.beagle.core.view.bugReport.list.SendButtonViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreLogsViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreNetworkLogsViewHolder
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -54,25 +53,19 @@ internal class BugReportViewModel(
         set(value) {
             if (field != value) {
                 //TODO: Selection is lost
-                val shouldRefresh = (field.trim().isEmpty() && value.trim().isNotEmpty()) || (field.trim().isNotEmpty() && value.trim().isEmpty())
                 field = value
-                if (shouldRefresh) {
-                    viewModelScope.launch(listManagerContext) { refreshContent() }
-                }
+                refreshSendButton()
             }
         }
 
     private val listManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
-    private var isSendButtonEnabled = true
+    private val _isSendButtonEnabled = MutableLiveData(false)
+    val isSendButtonEnabled: LiveData<Boolean> = _isSendButtonEnabled
+    private var isPreparingData = false
         set(value) {
             field = value
-            viewModelScope.launch(listManagerContext) { refreshContent() }
+            refreshSendButton()
         }
-    private val isDataValid
-        get() = selectedMediaFileIds.isNotEmpty() ||
-                selectedNetworkLogIds.isNotEmpty() ||
-                selectedLogIds.keys.any { label -> selectedLogIds[label]?.isNotEmpty() == true } ||
-                description.trim().isNotEmpty()
 
     init {
         refresh()
@@ -112,12 +105,21 @@ internal class BugReportViewModel(
     }
 
     fun onSendButtonPressed() {
-        if (isSendButtonEnabled) {
-            isSendButtonEnabled = false
+        if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
+            isPreparingData = true
             //TODO: Generate and share zip file
             //TODO: Attach device info
-            isSendButtonEnabled = true
+            isPreparingData = false
         }
+    }
+
+    private fun refreshSendButton() {
+        _isSendButtonEnabled.postValue(
+            !isPreparingData && (selectedMediaFileIds.isNotEmpty() ||
+                    selectedNetworkLogIds.isNotEmpty() ||
+                    selectedLogIds.keys.any { label -> selectedLogIds[label]?.isNotEmpty() == true } ||
+                    description.trim().isNotEmpty())
+        )
     }
 
     private fun onMediaFileSelectionChanged(id: String) {
@@ -212,8 +214,8 @@ internal class BugReportViewModel(
                 )
             )
             add(DescriptionViewHolder.UiModel(description))
-            add(SendButtonViewHolder.UiModel(isSendButtonEnabled && isDataValid))
         })
+        refreshSendButton()
         _shouldShowLoadingIndicator.postValue(false)
     }
 

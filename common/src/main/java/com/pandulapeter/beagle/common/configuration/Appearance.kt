@@ -6,7 +6,8 @@ import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Co
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_GALLERY_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_LOGS_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_NETWORK_LOGS_SECTION_TITLE
-import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_SEND_BUTTON_TEXT
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_SEND_BUTTON_HINT
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_SHOW_MORE_TEXT
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.Companion.DEFAULT_APPLY_INSETS
 import com.pandulapeter.beagle.common.configuration.Appearance.Companion.DEFAULT_THEME_RESOURCE_ID
@@ -150,29 +151,29 @@ data class Appearance(
      * Holder for copies related to the bug reporting screen.
      *
      * @param title - The title of the bug reporting screen. [DEFAULT_TITLE] by default.
+     * @param sendButtonHint - The hint that appears on the Send button. [DEFAULT_SEND_BUTTON_HINT] by default.
      * @param gallerySectionTitle - The title of the Gallery section. [DEFAULT_GALLERY_SECTION_TITLE] by default.
      * @param networkLogsSectionTitle - The title of the Network logs section. [DEFAULT_NETWORK_LOGS_SECTION_TITLE] by default.
      * @param logsSectionTitle - The title of the Logs section. Multiple such sections can be added filtered by tags (the parameter of the lambda function). [DEFAULT_LOGS_SECTION_TITLE] by default, suffixed with the tag name if it is not null.
      * @param descriptionSectionTitle - The title of the Description section. [DEFAULT_DESCRIPTION_SECTION_TITLE] by default.
-     * @param sendButtonText - The text that appears on the Send button. [DEFAULT_SEND_BUTTON_TEXT] by default.
      * @param showMoreText - The text that appears below lists that have more content. [DEFAULT_SHOW_MORE_TEXT] by default.
      */
     data class BugReportTexts(
         val title: Text = Text.CharSequence(DEFAULT_TITLE),
+        val sendButtonHint: Text = Text.CharSequence(DEFAULT_SEND_BUTTON_HINT),
         val gallerySectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_GALLERY_SECTION_TITLE ($selectedItemCount $SELECTED)") },
         val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)") },
         val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> Text.CharSequence("${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)") },
         val descriptionSectionTitle: Text = Text.CharSequence(DEFAULT_DESCRIPTION_SECTION_TITLE),
-        val sendButtonText: Text = Text.CharSequence(DEFAULT_SEND_BUTTON_TEXT),
         val showMoreText: Text = Text.CharSequence(DEFAULT_SHOW_MORE_TEXT)
     ) {
         companion object {
             private const val DEFAULT_TITLE = "Report a bug"
+            private const val DEFAULT_SEND_BUTTON_HINT = "Send bug report"
             private const val DEFAULT_GALLERY_SECTION_TITLE = "Attach media items from the Gallery"
             private const val DEFAULT_NETWORK_LOGS_SECTION_TITLE = "Attach network logs"
             private const val DEFAULT_LOGS_SECTION_TITLE = "Attach logs"
             private const val DEFAULT_DESCRIPTION_SECTION_TITLE = "Describe the issue"
-            private const val DEFAULT_SEND_BUTTON_TEXT = "Send bug report"
             private const val DEFAULT_SHOW_MORE_TEXT = "Show more…"
             private const val SELECTED = "selected"
         }
