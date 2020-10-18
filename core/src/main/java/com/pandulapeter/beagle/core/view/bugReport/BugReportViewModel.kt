@@ -13,6 +13,7 @@ import com.pandulapeter.beagle.core.view.bugReport.list.HeaderViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.LogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.NetworkLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.SendButtonViewHolder
+import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreNetworkLogsViewHolder
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -71,6 +72,13 @@ internal class BugReportViewModel(
     fun onMediaFileLongTapped(fileName: String) = onMediaFileSelectionChanged(fileName)
 
     fun onNetworkLogLongTapped(id: String) = onNetworkLogSelectionChanged(id)
+
+    fun onShowMoreNetworkLogsTapped() {
+        viewModelScope.launch(listManagerContext) {
+            lastNetworkLogIndex += LOG_INDEX_INCREMENT
+            refreshContents()
+        }
+    }
 
     fun onLogLongTapped(id: String, label: String?) = onLogSelectionChanged(id, label)
 
@@ -142,7 +150,7 @@ internal class BugReportViewModel(
                         )
                     })
                     if (areThereMoreNetworkLogEntries()) {
-                        //TODO: Add load more item
+                        add(ShowMoreNetworkLogsViewHolder.UiModel())
                     }
                 }
             }

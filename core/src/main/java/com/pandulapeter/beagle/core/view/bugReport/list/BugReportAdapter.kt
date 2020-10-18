@@ -12,8 +12,9 @@ internal class BugReportAdapter(
     private val onMediaFileLongTapped: (String) -> Unit,
     private val onNetworkLogSelected: (String) -> Unit,
     private val onNetworkLogLongTapped: (String) -> Unit,
+    private val onShowMoreNetworkLogsTapped: () -> Unit,
     private val onLogSelected: (String, String?) -> Unit,
-    private val onLogLongTapped: (String, String?) -> Unit
+    private val onLogLongTapped: (String, String?) -> Unit,
 ) : ListAdapter<BugReportListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportListItem>() {
 
     override fun areItemsTheSame(oldItem: BugReportListItem, newItem: BugReportListItem) = oldItem.id == newItem.id
@@ -28,6 +29,7 @@ internal class BugReportAdapter(
         is GalleryViewHolder.UiModel -> R.layout.beagle_item_bug_report_gallery
         is NetworkLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_network_log_item
         is LogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_log_item
+        is ShowMoreNetworkLogsViewHolder.UiModel -> R.layout.beagle_item_bug_report_show_more_network_logs
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
@@ -52,6 +54,10 @@ internal class BugReportAdapter(
             onItemSelected = onLogSelected,
             onItemLongTapped = onLogLongTapped
         )
+        R.layout.beagle_item_bug_report_show_more_network_logs -> ShowMoreNetworkLogsViewHolder.create(
+            parent = parent,
+            onButtonPressed = onShowMoreNetworkLogsTapped
+        )
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
@@ -61,6 +67,7 @@ internal class BugReportAdapter(
         is GalleryViewHolder -> holder.bind(getItem(position) as GalleryViewHolder.UiModel)
         is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewHolder.UiModel)
         is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewHolder.UiModel)
+        is ShowMoreNetworkLogsViewHolder -> Unit
         else -> throw IllegalArgumentException("Unsupported view holder type at position $position.")
     }
 }

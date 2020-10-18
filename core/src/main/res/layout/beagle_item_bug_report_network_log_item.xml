@@ -10,7 +10,8 @@
     android:paddingStart="0dp"
     android:paddingLeft="0dp"
     android:paddingEnd="@dimen/beagle_item_horizontal_margin"
-    android:paddingRight="@dimen/beagle_item_horizontal_margin">
+    android:paddingRight="@dimen/beagle_item_horizontal_margin"
+    tools:ignore="Overdraw">
 
     <CheckBox
         android:id="@+id/beagle_check_box"
@@ -19,8 +20,8 @@
         android:layout_marginStart="@dimen/beagle_content_padding"
         android:layout_marginLeft="@dimen/beagle_content_padding"
         android:layout_marginTop="@dimen/beagle_compound_button_height_fix"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginEnd="@dimen/beagle_bug_report_checkbox_width_fix"
+        android:layout_marginRight="@dimen/beagle_bug_report_checkbox_width_fix"
         android:layout_marginBottom="@dimen/beagle_compound_button_height_fix"
         android:textColor="?android:attr/textColorPrimary"
         tools:text="Text" />

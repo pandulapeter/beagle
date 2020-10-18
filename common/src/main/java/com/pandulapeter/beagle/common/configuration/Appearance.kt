@@ -155,6 +155,7 @@ data class Appearance(
      * @param logsSectionTitle - The title of the Logs section. Multiple such sections can be added filtered by tags (the parameter of the lambda function). [DEFAULT_LOGS_SECTION_TITLE] by default, suffixed with the tag name if it is not null.
      * @param descriptionSectionTitle - The title of the Description section. [DEFAULT_DESCRIPTION_SECTION_TITLE] by default.
      * @param sendButtonText - The text that appears on the Send button. [DEFAULT_SEND_BUTTON_TEXT] by default.
+     * @param showMoreText - The text that appears below lists that have more content. [DEFAULT_SHOW_MORE_TEXT] by default.
      */
     data class BugReportTexts(
         val title: Text = Text.CharSequence(DEFAULT_TITLE),
@@ -162,7 +163,8 @@ data class Appearance(
         val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)") },
         val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> Text.CharSequence("${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)") },
         val descriptionSectionTitle: Text = Text.CharSequence(DEFAULT_DESCRIPTION_SECTION_TITLE),
-        val sendButtonText: Text = Text.CharSequence(DEFAULT_SEND_BUTTON_TEXT)
+        val sendButtonText: Text = Text.CharSequence(DEFAULT_SEND_BUTTON_TEXT),
+        val showMoreText: Text = Text.CharSequence(DEFAULT_SHOW_MORE_TEXT)
     ) {
         companion object {
             private const val DEFAULT_TITLE = "Report a bug"
@@ -171,6 +173,7 @@ data class Appearance(
             private const val DEFAULT_LOGS_SECTION_TITLE = "Attach logs"
             private const val DEFAULT_DESCRIPTION_SECTION_TITLE = "Describe the issue"
             private const val DEFAULT_SEND_BUTTON_TEXT = "Send bug report"
+            private const val DEFAULT_SHOW_MORE_TEXT = "Show more…"
             private const val SELECTED = "selected"
         }
     }

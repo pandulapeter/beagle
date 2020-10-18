@@ -80,6 +80,7 @@ internal class BugReportActivity : AppCompatActivity() {
             onMediaFileLongTapped = viewModel::onMediaFileLongTapped,
             onNetworkLogSelected = { id -> BeagleCore.implementation.getNetworkLogEntries().firstOrNull { it.id == id }?.let(::showNetworkLogDetailDialog) },
             onNetworkLogLongTapped = viewModel::onNetworkLogLongTapped,
+            onShowMoreNetworkLogsTapped = viewModel::onShowMoreNetworkLogsTapped,
             onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
             onLogLongTapped = viewModel::onLogLongTapped,
         )

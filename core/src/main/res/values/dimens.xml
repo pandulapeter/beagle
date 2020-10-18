@@ -17,4 +17,6 @@
     <dimen name="beagle_gallery_item_minimum_size">128dp</dimen>
     <dimen name="beagle_gallery_preview_minimum_width">200dp</dimen>
     <dimen name="beagle_bug_report_gallery_item">160dp</dimen>
+    <dimen name="beagle_bug_report_checkbox_offset">48dp</dimen>
+    <dimen name="beagle_bug_report_checkbox_width_fix">-8dp</dimen>
 </resources>
