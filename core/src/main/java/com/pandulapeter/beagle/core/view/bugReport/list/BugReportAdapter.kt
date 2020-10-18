@@ -9,7 +9,9 @@ import com.pandulapeter.beagle.core.R
 internal class BugReportAdapter(
     private val onSendButtonPressed: () -> Unit,
     private val onMediaFileSelected: (Int) -> Unit,
-    private val onMediaFileLongTapped: (Int) -> Unit
+    private val onMediaFileLongTapped: (Int) -> Unit,
+    private val onNetworkLogSelected: (Int) -> Unit,
+    private val onNetworkLogLongTapped: (Int) -> Unit
 ) : ListAdapter<BugReportListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportListItem>() {
 
     override fun areItemsTheSame(oldItem: BugReportListItem, newItem: BugReportListItem) = oldItem.id == newItem.id
@@ -22,6 +24,7 @@ internal class BugReportAdapter(
         is HeaderViewHolder.UiModel -> R.layout.beagle_item_bug_report_header
         is SendButtonViewHolder.UiModel -> R.layout.beagle_item_bug_report_send_button
         is GalleryViewHolder.UiModel -> R.layout.beagle_item_bug_report_gallery
+        is NetworkLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_network_log_item
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
@@ -36,6 +39,11 @@ internal class BugReportAdapter(
             onMediaSelected = onMediaFileSelected,
             onMediaLongTapped = onMediaFileLongTapped
         )
+        R.layout.beagle_item_bug_report_network_log_item -> NetworkLogItemViewHolder.create(
+            parent = parent,
+            onItemSelected = onNetworkLogSelected,
+            onItemLongTapped = onNetworkLogLongTapped
+        )
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
@@ -43,6 +51,7 @@ internal class BugReportAdapter(
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewHolder.UiModel)
         is SendButtonViewHolder -> holder.bind(getItem(position) as SendButtonViewHolder.UiModel)
         is GalleryViewHolder -> holder.bind(getItem(position) as GalleryViewHolder.UiModel)
+        is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewHolder.UiModel)
         else -> throw IllegalArgumentException("Unsupported view holder type at position $position.")
     }
 }

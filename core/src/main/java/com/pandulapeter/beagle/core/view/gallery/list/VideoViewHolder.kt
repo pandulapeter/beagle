@@ -10,6 +10,7 @@ import coil.request.ImageRequest
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.utils.consume
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -33,12 +34,13 @@ internal class VideoViewHolder private constructor(
             }
         }
         itemView.setOnLongClickListener {
-            adapterPosition.let { adapterPosition ->
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onLongTap(adapterPosition)
+            consume {
+                adapterPosition.let { adapterPosition ->
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        onLongTap(adapterPosition)
+                    }
                 }
             }
-            true
         }
     }
 

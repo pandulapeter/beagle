@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.utils.consume
 
 internal class ImageViewHolder private constructor(
     itemView: View,
@@ -28,12 +29,13 @@ internal class ImageViewHolder private constructor(
             }
         }
         itemView.setOnLongClickListener {
-            adapterPosition.let { adapterPosition ->
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onLongTap(adapterPosition)
+            consume {
+                adapterPosition.let { adapterPosition ->
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        onLongTap(adapterPosition)
+                    }
                 }
             }
-            true
         }
     }
 

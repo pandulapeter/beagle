@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
@@ -74,8 +75,10 @@ internal class BugReportActivity : AppCompatActivity() {
         }
         val bugReportAdapter = BugReportAdapter(
             onSendButtonPressed = viewModel::onSendButtonPressed,
-            onMediaFileSelected = { showPreviewDialog(viewModel.getFileName(it)) },
-            onMediaFileLongTapped = viewModel::onMediaFileLongTapped
+            onMediaFileSelected = { showMediaPreviewDialog(viewModel.getMediaFileName(it)) },
+            onMediaFileLongTapped = viewModel::onMediaFileLongTapped,
+            onNetworkLogSelected = { showNetworkLogDetailDialog(viewModel.getNetworkLogEntry(it)) },
+            onNetworkLogLongTapped = viewModel::onNetworkLogLongTapped,
         )
         recyclerView.run {
             setHasFixedSize(true)
@@ -88,7 +91,17 @@ internal class BugReportActivity : AppCompatActivity() {
         }
     }
 
-    private fun showPreviewDialog(fileName: String) = MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
+    private fun showMediaPreviewDialog(fileName: String) = MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
+
+    private fun showNetworkLogDetailDialog(entry: NetworkLogEntry) = BeagleCore.implementation.showNetworkEventDialog(
+        isOutgoing = entry.isOutgoing,
+        url = entry.url,
+        payload = entry.payload,
+        headers = entry.headers,
+        duration = entry.duration,
+        timestamp = entry.timestamp,
+        id = entry.id
+    )
 
     companion object {
         private const val ARGUMENTS = "arguments"

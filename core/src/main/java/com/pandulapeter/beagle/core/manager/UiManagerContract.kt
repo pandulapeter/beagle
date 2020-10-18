@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.pandulapeter.beagle.core.OverlayFragment
 import com.pandulapeter.beagle.core.view.OverlayFrameLayout
+import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
+import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
 
 interface UiManagerContract {
 
@@ -37,7 +39,7 @@ interface UiManagerContract {
 
     fun hide(activity: FragmentActivity?): Boolean = false
 
-    fun isActivityDebugMenu(activity: Activity) = false
+    fun isActivityDebugMenu(activity: Activity) = activity is GalleryActivity || activity is BugReportActivity
 
     fun isFragmentDebugMenu(fragment: Fragment) = false
 }

@@ -26,5 +26,5 @@ internal class ActivityUiManager : UiManagerContract {
 
     override fun findHostFragmentManager() = debugMenuActivity?.supportFragmentManager ?: super.findHostFragmentManager()
 
-    override fun isActivityDebugMenu(activity: Activity) = activity is DebugMenuActivity
+    override fun isActivityDebugMenu(activity: Activity) = activity is DebugMenuActivity || super.isActivityDebugMenu(activity)
 }
