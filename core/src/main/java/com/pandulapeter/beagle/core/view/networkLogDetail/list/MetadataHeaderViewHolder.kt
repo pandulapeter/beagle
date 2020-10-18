@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
-internal class HeaderViewHolder private constructor(
+internal class MetadataHeaderViewHolder private constructor(
     itemView: View,
     onItemClicked: () -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
@@ -28,22 +28,23 @@ internal class HeaderViewHolder private constructor(
     }
 
     fun bind(uiModel: UiModel) = textView.run {
-        setText(uiModel.content)
+        setText(BeagleCore.implementation.appearance.networkLogTexts.metadata)
         setCompoundDrawablesWithIntrinsicBounds(if (uiModel.isCollapsed) drawableExpand else drawableCollapse, null, null, null)
     }
 
     data class UiModel(
-        override val lineIndex: Int,
-        val content: Text,
         val isCollapsed: Boolean
-    ) : NetworkLogDetailListItem
+    ) : NetworkLogDetailListItem {
+
+        override val lineIndex = -300
+    }
 
     companion object {
         fun create(
             parent: ViewGroup,
             onItemClicked: () -> Unit
-        ) = HeaderViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log_detail_header, parent, false),
+        ) = MetadataHeaderViewHolder(
+            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log_detail_metadata_header, parent, false),
             onItemClicked = onItemClicked
         )
     }

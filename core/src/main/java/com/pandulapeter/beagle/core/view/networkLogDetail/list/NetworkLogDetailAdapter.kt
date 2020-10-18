@@ -18,24 +18,24 @@ internal class NetworkLogDetailAdapter(
     override fun getChangePayload(oldItem: NetworkLogDetailListItem, newItem: NetworkLogDetailListItem) = ""
 }) {
     override fun getItemViewType(position: Int) = when (getItem(position)) {
-        is DetailsViewHolder.UiModel -> R.layout.beagle_item_network_log_detail_details
-        is HeaderViewHolder.UiModel -> R.layout.beagle_item_network_log_detail_header
+        is MetadataDetailsViewHolder.UiModel -> R.layout.beagle_item_network_log_detail_metadata_details
+        is MetadataHeaderViewHolder.UiModel -> R.layout.beagle_item_network_log_detail_metadata_header
         is LineViewHolder.UiModel -> R.layout.beagle_item_network_log_detail_line
         is TitleViewHolder.UiModel -> R.layout.beagle_item_network_log_detail_title
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
-        R.layout.beagle_item_network_log_detail_details -> DetailsViewHolder.create(parent)
-        R.layout.beagle_item_network_log_detail_header -> HeaderViewHolder.create(parent, onHeaderClicked)
+        R.layout.beagle_item_network_log_detail_metadata_details -> MetadataDetailsViewHolder.create(parent)
+        R.layout.beagle_item_network_log_detail_metadata_header -> MetadataHeaderViewHolder.create(parent, onHeaderClicked)
         R.layout.beagle_item_network_log_detail_line -> LineViewHolder.create(parent, onItemClicked)
         R.layout.beagle_item_network_log_detail_title -> TitleViewHolder.create(parent)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
-        is DetailsViewHolder -> holder.bind(getItem(position) as DetailsViewHolder.UiModel)
-        is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewHolder.UiModel)
+        is MetadataDetailsViewHolder -> holder.bind(getItem(position) as MetadataDetailsViewHolder.UiModel)
+        is MetadataHeaderViewHolder -> holder.bind(getItem(position) as MetadataHeaderViewHolder.UiModel)
         is LineViewHolder -> holder.bind(getItem(position) as LineViewHolder.UiModel)
         is TitleViewHolder -> holder.bind(getItem(position) as TitleViewHolder.UiModel)
         else -> throw IllegalArgumentException("Unsupported view holder type at position $position.")

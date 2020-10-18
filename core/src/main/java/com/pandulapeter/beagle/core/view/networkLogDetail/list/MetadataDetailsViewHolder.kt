@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
 
-internal class DetailsViewHolder private constructor(
+internal class MetadataDetailsViewHolder private constructor(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -21,14 +21,14 @@ internal class DetailsViewHolder private constructor(
         val metadata: CharSequence,
     ) : NetworkLogDetailListItem {
 
-        override val lineIndex = -200
+        override val lineIndex = -301
     }
 
     companion object {
         fun create(
             parent: ViewGroup
-        ) = DetailsViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log_detail_details, parent, false)
+        ) = MetadataDetailsViewHolder(
+            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log_detail_metadata_details, parent, false)
         )
     }
 }
