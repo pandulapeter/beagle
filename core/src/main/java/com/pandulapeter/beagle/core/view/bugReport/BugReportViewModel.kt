@@ -206,10 +206,11 @@ internal class BugReportViewModel(
                         content = content
                     )?.let { uri -> filePaths.add(uri.toPath(context.getBugReportsFolder())) }
                 }
-                //TODO: Share the Uri
-                context.createZipFile(
-                    filePaths = filePaths,
-                    zipFileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.zip",
+                zipFileUri.postValue(
+                    context.createZipFile(
+                        filePaths = filePaths,
+                        zipFileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.zip",
+                    )
                 )
                 isPreparingData = false
             }

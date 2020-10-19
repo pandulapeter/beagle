@@ -131,6 +131,7 @@ internal class BugReportActivity : AppCompatActivity() {
         }
         viewModel.zipFileUri.observe(this) { uri ->
             if (uri != null) {
+                //TODO: Handle custom callbacks
                 shareFile(uri, "application/zip")
                 viewModel.zipFileUri.value = null
             }

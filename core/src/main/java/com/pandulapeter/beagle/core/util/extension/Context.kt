@@ -103,25 +103,26 @@ private fun Context.getCacheFolder(name: String) = getFolder(cacheDir, name)
 
 private const val BUFFER = 1024
 
-internal fun Context.createZipFile(filePaths: List<String>, zipFileName: String) {
-    try {
-        var origin: BufferedInputStream?
-        val output = ZipOutputStream(BufferedOutputStream(FileOutputStream(createBugReportsFile(zipFileName))))
-        val data = ByteArray(BUFFER)
-        filePaths.forEach { path ->
-            val input = FileInputStream(File(path))
-            origin = BufferedInputStream(input, BUFFER)
-            val entry = ZipEntry(path.substring(path.lastIndexOf("/") + 1))
-            output.putNextEntry(entry)
-            var count: Int? = null
-            while (origin?.read(data, 0, BUFFER)?.also { count = it } != -1) {
-                count?.let { output.write(data, 0, it) }
-            }
-            origin?.close()
+internal fun Context.createZipFile(filePaths: List<String>, zipFileName: String): Uri? = try {
+    var origin: BufferedInputStream?
+    val zipFile = createBugReportsFile(zipFileName)
+    val output = ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile)))
+    val data = ByteArray(BUFFER)
+    filePaths.forEach { path ->
+        val input = FileInputStream(File(path))
+        origin = BufferedInputStream(input, BUFFER)
+        val entry = ZipEntry(path.substring(path.lastIndexOf("/") + 1))
+        output.putNextEntry(entry)
+        var count: Int? = null
+        while (origin?.read(data, 0, BUFFER)?.also { count = it } != -1) {
+            count?.let { output.write(data, 0, it) }
         }
-        output.close()
-    } catch (e: Exception) {
+        origin?.close()
     }
+    output.close()
+    getUriForFile(zipFile)
+} catch (e: Exception) {
+    null
 }
 
 internal fun Context.text(text: Text) = when (text) {
