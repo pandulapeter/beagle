@@ -9,7 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
+import com.pandulapeter.beagle.core.util.extension.createLogFile
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.GalleryViewHolder
@@ -19,6 +21,7 @@ import com.pandulapeter.beagle.core.view.bugReport.list.MetadataItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.NetworkLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreLogsViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreNetworkLogsViewHolder
+import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogViewModel
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -73,6 +76,7 @@ internal class BugReportViewModel(
     private var isPreparingData = false
         set(value) {
             field = value
+            _shouldShowLoadingIndicator.postValue(value)
             refreshSendButton()
         }
 
@@ -128,17 +132,49 @@ internal class BugReportViewModel(
             viewModelScope.launch {
                 isPreparingData = true
                 val uris = mutableListOf<Uri>()
-                //TODO - selectedMediaFileIds (mapped to mediaFiles)
-                //TODO - selectedNetworkLogIds (mapped to allNetworkLogEntries)
+                // Media files
+                uris.addAll(selectedMediaFileIds.map { fileName -> context.getUriForFile(context.getScreenCapturesFolder().resolve(fileName)) })
+
+                // Network log files
+                uris.addAll(selectedNetworkLogIds.mapNotNull { id ->
+                    allNetworkLogEntries.firstOrNull { it.id == id }?.let { entry ->
+                        context.createLogFile(
+                            fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(currentTimestamp, entry.id)}.txt",
+                            content = NetworkLogDetailDialogViewModel.createLogFileContents(
+                                title = NetworkLogDetailDialogViewModel.createTitle(
+                                    isOutgoing = entry.isOutgoing,
+                                    url = entry.url
+                                ),
+                                metadata = NetworkLogDetailDialogViewModel.createMetadata(
+                                    context = context,
+                                    headers = entry.headers,
+                                    timestamp = entry.timestamp,
+                                    duration = entry.duration
+                                ),
+                                formattedJson = NetworkLogDetailDialogViewModel.formatJson(
+                                    json = entry.payload,
+                                    indentation = 4
+                                )
+                            )
+                        )
+                    }
+                })
+
+                // Log files
                 //TODO - flatMap selectedLogIds (mapped to allLogEntries)
 
+                // Build information
                 var content = ""
                 if (shouldShowMetadataSection && shouldAttachBuildInformation && buildInformation.isNotBlank()) {
                     content = buildInformation.toString()
                 }
+
+                // Device information
                 if (shouldShowMetadataSection && shouldAttachDeviceInformation) {
                     content = if (content.isBlank()) deviceInformation.toString() else "$content\n\n$deviceInformation"
                 }
+
+                // Description
                 if (description.trim().isNotBlank()) {
                     content = if (content.isBlank()) description.trim().toString() else "$content\n\n${description.trim()}"
                 }

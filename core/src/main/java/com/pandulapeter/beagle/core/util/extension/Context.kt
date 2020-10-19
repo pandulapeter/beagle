@@ -58,6 +58,21 @@ internal fun Context.getLogsFolder() = getCacheFolder(LOGS_FOLDER_NAME)
 
 internal fun Context.createLogFile(fileName: String) = File(getLogsFolder(), fileName)
 
+@Suppress("BlockingMethodInNonBlockingContext")
+internal suspend fun Context.createLogFile(fileName: String, content: String): Uri? = withContext(Dispatchers.IO) {
+    val file = createLogFile(fileName)
+    try {
+        FileWriter(file).run {
+            write(content)
+            flush()
+            close()
+        }
+        getUriForFile(file)
+    } catch (e: IOException) {
+        null
+    }
+}
+
 private const val BUG_REPORTS_FOLDER_NAME = "beagleBugReports"
 
 internal fun Context.getBugReportsFolder() = getCacheFolder(BUG_REPORTS_FOLDER_NAME)

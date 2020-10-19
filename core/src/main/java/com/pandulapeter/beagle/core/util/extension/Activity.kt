@@ -17,8 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.FileWriter
-import java.io.IOException
 
 @Suppress("SpellCheckingInspection")
 private val excludedPackageNames = listOf(
@@ -49,18 +47,8 @@ internal fun Activity.shareFiles(uris: List<Uri>) {
     }, null))
 }
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Activity.createAndShareLogFile(fileName: String, content: String) = withContext(Dispatchers.IO) {
-    val file = createLogFile(fileName)
-    try {
-        FileWriter(file).run {
-            write(content)
-            flush()
-            close()
-        }
-        shareFile(getUriForFile(file), "text/plain")
-    } catch (e: IOException) {
-    }
+    createLogFile(fileName, content)?.let { uri -> shareFile(uri, "text/plain") }
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

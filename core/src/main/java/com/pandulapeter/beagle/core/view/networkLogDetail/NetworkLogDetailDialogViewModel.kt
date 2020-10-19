@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.core.view.networkLogDetail
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,10 +30,6 @@ import kotlin.math.min
 
 internal class NetworkLogDetailDialogViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val textHeaders = application.text(BeagleCore.implementation.appearance.networkLogTexts.headers)
-    private val textNone = application.text(BeagleCore.implementation.appearance.networkLogTexts.none)
-    private val textTimestamp = application.text(BeagleCore.implementation.appearance.networkLogTexts.timestamp)
-    private val textDuration = application.text(BeagleCore.implementation.appearance.networkLogTexts.duration)
     private val _isProgressBarVisible = MutableLiveData(true)
     val isProgressBarVisible: LiveData<Boolean> = _isProgressBarVisible
     private val _areTagsExpanded = MutableLiveData(true)
@@ -44,7 +41,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private val _longestLine = MutableLiveData("")
     val longestLine: LiveData<String> = _longestLine
     private var title = ""
-    private var details = ""
+    private var metadata = ""
     private var jsonLines = emptyList<Line>()
     private var collapsedLineIndices = mutableListOf<Int>()
     private var hasCollapsingContent = false
@@ -74,13 +71,10 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         duration: Long?,
         payload: String
     ) = viewModelScope.launch(tagManagerContext) {
-        title = "${if (isOutgoing) "↑" else "↓"} ${url.replace("?", "$TITLE_NEW_LINE_PREFIX?").replace("&", "$TITLE_NEW_LINE_PREFIX&")}"
-        details = "\n\n• ${textHeaders}:${headers.formatHeaders()}"
-            .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkLogTimestampFormatter(it)}") } ?: text }
-            .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
-            .toString()
+        title = createTitle(isOutgoing, url)
+        metadata = createMetadata(getApplication(), headers, timestamp, duration)
         var longestLine = ""
-        jsonLines = payload.formatToJson().split("\n").mapIndexed { index, line ->
+        jsonLines = formatJson(payload, 1).split("\n").mapIndexed { index, line ->
             Line(index, line).also {
                 if (line.length > longestLine.length) {
                     longestLine = line
@@ -90,7 +84,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 }
             }
         }
-        details.split("\n").forEach { line ->
+        metadata.split("\n").forEach { line ->
             if (line.length > longestLine.length) {
                 longestLine = line
             }
@@ -118,19 +112,16 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 _isShareButtonEnabled.postValue(false)
                 activity?.createAndShareLogFile(
                     fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt",
-                    content = title.replace(TITLE_NEW_LINE_PREFIX, "").run { if (shouldShowMetadata) append(details) else this }
-                        .append(
-                            "\n\n${
-                                jsonLines.joinToString("\n") { line ->
-                                    var prefix = ""
-                                    repeat(line.level) {
-                                        prefix = "    $prefix"
-                                    }
-                                    "$prefix${line.content}"
-                                }
-                            }"
-                        )
-                        .toString()
+                    content = createLogFileContents(
+                        title = title,
+                        metadata = metadata,
+                        formattedJson = jsonLines.joinToString("\n") { line ->
+                            var prefix = ""
+                            repeat(line.level) {
+                                prefix = "    $prefix"
+                            }
+                            "$prefix${line.content}"
+                        })
                 )
                 _isShareButtonEnabled.postValue(true)
             }
@@ -163,7 +154,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 add(TitleViewHolder.UiModel(title = title))
                 add(MetadataHeaderViewHolder.UiModel(isCollapsed = !shouldShowMetadata))
                 if (shouldShowMetadata) {
-                    add(MetadataDetailsViewHolder.UiModel(details.trim()))
+                    add(MetadataDetailsViewHolder.UiModel(metadata.trim()))
                 }
                 var levelToSkip = Int.MAX_VALUE
                 lateinit var lastCollapsedLine: Line
@@ -203,30 +194,6 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         }
     }
 
-    private fun List<String>.formatHeaders() = if (isNullOrEmpty()) " [${textNone}]" else joinToString("") { header -> "\n    • $header" }
-
-    private fun String.formatToJson() = try {
-        if (isJson()) {
-            val obj = JSONTokener(this).nextValue()
-            if (obj is JSONObject) obj.toString(1) else (obj as? JSONArray)?.toString(1) ?: (obj as String)
-        } else this
-    } catch (e: JSONException) {
-        this
-    }
-
-    private fun String.isJson(): Boolean {
-        try {
-            JSONObject(this)
-        } catch (_: JSONException) {
-            try {
-                JSONArray(this)
-            } catch (_: JSONException) {
-                return false
-            }
-        }
-        return true
-    }
-
     private data class Line(
         val index: Int,
         var content: String,
@@ -245,5 +212,59 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
 
     companion object {
         private const val TITLE_NEW_LINE_PREFIX = "\n        "
+
+        fun createTitle(
+            isOutgoing: Boolean,
+            url: String
+        ) = "${if (isOutgoing) "↑" else "↓"} ${url.replace("?", "$TITLE_NEW_LINE_PREFIX?").replace("&", "$TITLE_NEW_LINE_PREFIX&")}"
+
+        fun createMetadata(
+            context: Context,
+            headers: List<String>,
+            timestamp: Long?,
+            duration: Long?
+        ): String {
+            val textHeaders = context.text(BeagleCore.implementation.appearance.networkLogTexts.headers)
+            val textTimestamp = context.text(BeagleCore.implementation.appearance.networkLogTexts.timestamp)
+            val textDuration = context.text(BeagleCore.implementation.appearance.networkLogTexts.duration)
+            return "\n\n• ${textHeaders}:${headers.formatHeaders(context)}"
+                .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.networkLogTimestampFormatter(it)}") } ?: text }
+                .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
+                .toString()
+        }
+
+        fun formatJson(json: String, indentation: Int) = try {
+            if (json.isJson()) {
+                val obj = JSONTokener(json).nextValue()
+                if (obj is JSONObject) obj.toString(indentation) else (obj as? JSONArray)?.toString(indentation) ?: (obj as String)
+            } else json
+        } catch (e: JSONException) {
+            json
+        }
+
+        fun createLogFileContents(
+            title: String,
+            metadata: String,
+            formattedJson: String
+        ) = title.replace(TITLE_NEW_LINE_PREFIX, "")
+            .append(metadata)
+            .append("\n\n$formattedJson")
+            .toString()
+
+        private fun List<String>.formatHeaders(context: Context) =
+            if (isNullOrEmpty()) " [${context.text(BeagleCore.implementation.appearance.networkLogTexts.none)}]" else joinToString("") { header -> "\n    • $header" }
+
+        private fun String.isJson(): Boolean {
+            try {
+                JSONObject(this)
+            } catch (_: JSONException) {
+                try {
+                    JSONArray(this)
+                } catch (_: JSONException) {
+                    return false
+                }
+            }
+            return true
+        }
     }
 }
