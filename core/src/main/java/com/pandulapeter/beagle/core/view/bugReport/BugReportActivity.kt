@@ -27,6 +27,7 @@ import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.append
+import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
@@ -35,6 +36,7 @@ import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
+import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class BugReportActivity : AppCompatActivity() {
@@ -116,11 +118,22 @@ internal class BugReportActivity : AppCompatActivity() {
         }
         viewModel.items.observe(this, bugReportAdapter::submitList)
         findViewById<ProgressBar>(R.id.beagle_progress_bar).let { progressBar ->
-            viewModel.shouldShowLoadingIndicator.observe(this) { progressBar.visible = it }
+            viewModel.shouldShowLoadingIndicator.observe(this) {
+                progressBar.visible = it
+                if (it) {
+                    currentFocus?.hideKeyboard()
+                }
+            }
         }
         viewModel.isSendButtonEnabled.observe(this) {
             sendButton.isEnabled = it
             sendButton.icon.alpha = if (it) 255 else 63
+        }
+        viewModel.zipFileUri.observe(this) { uri ->
+            if (uri != null) {
+                shareFile(uri, "application/zip")
+                viewModel.zipFileUri.value = null
+            }
         }
     }
 

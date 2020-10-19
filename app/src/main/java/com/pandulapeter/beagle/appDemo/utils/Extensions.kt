@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
@@ -27,14 +26,6 @@ import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)!!
-
-fun View.hideKeyboard() {
-    clearFocus()
-    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-        windowToken,
-        0
-    )
-}
 
 fun View.showSnackbar(@StringRes messageResourceId: Int) =
     Snackbar.make(this, messageResourceId, Snackbar.LENGTH_SHORT).show()

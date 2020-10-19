@@ -38,7 +38,7 @@ import com.pandulapeter.beagle.core.manager.listener.NetworkLogListenerManager
 import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
-import com.pandulapeter.beagle.core.util.extension.hideKeyboard
+import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.core.view.logDetail.LogDetailDialogFragment
 import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogFragment

@@ -13,10 +13,15 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.core.util.getFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.BufferedInputStream
+import java.io.BufferedOutputStream
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.FileWriter
 import java.io.IOException
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 internal fun Context.registerSensorEventListener(sensorEventListener: SensorEventListener) = (getSystemService(Context.SENSOR_SERVICE) as? SensorManager?)?.run {
     registerListener(sensorEventListener, getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
@@ -95,6 +100,29 @@ internal suspend fun Context.createBugReportTextFile(fileName: String, content: 
 }
 
 private fun Context.getCacheFolder(name: String) = getFolder(cacheDir, name)
+
+private const val BUFFER = 1024
+
+internal fun Context.createZipFile(filePaths: List<String>, zipFileName: String) {
+    try {
+        var origin: BufferedInputStream?
+        val output = ZipOutputStream(BufferedOutputStream(FileOutputStream(createBugReportsFile(zipFileName))))
+        val data = ByteArray(BUFFER)
+        filePaths.forEach { path ->
+            val input = FileInputStream(File(path))
+            origin = BufferedInputStream(input, BUFFER)
+            val entry = ZipEntry(path.substring(path.lastIndexOf("/") + 1))
+            output.putNextEntry(entry)
+            var count: Int? = null
+            while (origin?.read(data, 0, BUFFER)?.also { count = it } != -1) {
+                count?.let { output.write(data, 0, it) }
+            }
+            origin?.close()
+        }
+        output.close()
+    } catch (e: Exception) {
+    }
+}
 
 internal fun Context.text(text: Text) = when (text) {
     is Text.CharSequence -> text.charSequence

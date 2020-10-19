@@ -10,6 +10,9 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
 import com.pandulapeter.beagle.core.util.extension.createLogFile
+import com.pandulapeter.beagle.core.util.extension.createZipFile
+import com.pandulapeter.beagle.core.util.extension.getBugReportsFolder
+import com.pandulapeter.beagle.core.util.extension.getLogsFolder
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
@@ -79,6 +82,7 @@ internal class BugReportViewModel(
             _shouldShowLoadingIndicator.postValue(value)
             refreshSendButton()
         }
+    val zipFileUri = MutableLiveData<Uri?>()
 
     init {
         refresh()
@@ -131,44 +135,55 @@ internal class BugReportViewModel(
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
             viewModelScope.launch {
                 isPreparingData = true
-                val uris = mutableListOf<Uri>()
+                val filePaths = mutableListOf<String>()
+
                 // Media files
-                uris.addAll(selectedMediaFileIds.map { fileName -> context.getUriForFile(context.getScreenCapturesFolder().resolve(fileName)) })
+                filePaths.addAll(
+                    selectedMediaFileIds
+                        .map { fileName -> context.getUriForFile(context.getScreenCapturesFolder().resolve(fileName)) }
+                        .toPaths(context.getScreenCapturesFolder())
+                )
 
                 // Network log files
-                uris.addAll(selectedNetworkLogIds.mapNotNull { id ->
-                    allNetworkLogEntries.firstOrNull { it.id == id }?.let { entry ->
-                        context.createLogFile(
-                            fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(currentTimestamp, entry.id)}.txt",
-                            content = NetworkLogDetailDialogViewModel.createLogFileContents(
-                                title = NetworkLogDetailDialogViewModel.createTitle(
-                                    isOutgoing = entry.isOutgoing,
-                                    url = entry.url
-                                ),
-                                metadata = NetworkLogDetailDialogViewModel.createMetadata(
-                                    context = context,
-                                    headers = entry.headers,
-                                    timestamp = entry.timestamp,
-                                    duration = entry.duration
-                                ),
-                                formattedJson = NetworkLogDetailDialogViewModel.formatJson(
-                                    json = entry.payload,
-                                    indentation = 4
+                filePaths.addAll(
+                    selectedNetworkLogIds
+                        .mapNotNull { id ->
+                            allNetworkLogEntries.firstOrNull { it.id == id }?.let { entry ->
+                                context.createLogFile(
+                                    fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(currentTimestamp, entry.id)}.txt",
+                                    content = NetworkLogDetailDialogViewModel.createLogFileContents(
+                                        title = NetworkLogDetailDialogViewModel.createTitle(
+                                            isOutgoing = entry.isOutgoing,
+                                            url = entry.url
+                                        ),
+                                        metadata = NetworkLogDetailDialogViewModel.createMetadata(
+                                            context = context,
+                                            headers = entry.headers,
+                                            timestamp = entry.timestamp,
+                                            duration = entry.duration
+                                        ),
+                                        formattedJson = NetworkLogDetailDialogViewModel.formatJson(
+                                            json = entry.payload,
+                                            indentation = 4
+                                        )
+                                    )
                                 )
-                            )
-                        )
-                    }
-                })
+                            }
+                        }
+                        .toPaths(context.getLogsFolder())
+                )
 
                 // Log files
-                uris.addAll(allLogEntries[null]?.let { allLogEntries ->
-                    selectedLogIds.flatMap { it.value }.distinct().mapNotNull { id -> allLogEntries.firstOrNull { it.id == id } }
-                }.orEmpty().mapNotNull { entry ->
-                    context.createLogFile(
-                        fileName = "${BeagleCore.implementation.behavior.getLogFileName(currentTimestamp, entry.id)}.txt",
-                        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toString()
-                    )
-                })
+                filePaths.addAll(
+                    allLogEntries[null]?.let { allLogEntries ->
+                        selectedLogIds.flatMap { it.value }.distinct().mapNotNull { id -> allLogEntries.firstOrNull { it.id == id } }
+                    }.orEmpty().mapNotNull { entry ->
+                        context.createLogFile(
+                            fileName = "${BeagleCore.implementation.behavior.getLogFileName(currentTimestamp, entry.id)}.txt",
+                            content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toString()
+                        )
+                    }.toPaths(context.getLogsFolder())
+                )
 
                 // Build information
                 var content = ""
@@ -189,9 +204,13 @@ internal class BugReportViewModel(
                     context.createBugReportTextFile(
                         fileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.txt",
                         content = content
-                    )?.let(uris::add)
+                    )?.let { uri -> filePaths.add(uri.toPath(context.getBugReportsFolder())) }
                 }
-                //TODO: Create a zip from the "uris" list and share it.
+                //TODO: Share the Uri
+                context.createZipFile(
+                    filePaths = filePaths,
+                    zipFileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.zip",
+                )
                 isPreparingData = false
             }
         }
@@ -330,6 +349,12 @@ internal class BugReportViewModel(
         refreshSendButton()
         _shouldShowLoadingIndicator.postValue(false)
     }
+
+    private fun Uri.toPath(folder: File): String = "${folder.canonicalPath}/$realPath"
+
+    private fun List<Uri>.toPaths(folder: File): List<String> = folder.canonicalPath.let { path -> map { "$path/${it.realPath}" } }
+
+    private val Uri.realPath get() = path?.split("/")?.lastOrNull()
 
     enum class MetadataType {
         BUILD_INFORMATION,

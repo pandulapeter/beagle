@@ -9,11 +9,11 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationListItem
-import com.pandulapeter.beagle.appDemo.utils.hideKeyboard
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.ItemListModule
 import com.pandulapeter.beagle.modules.SwitchModule
+import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuthenticationFragment : ExamplesDetailFragment<AuthenticationViewModel, AuthenticationListItem>(R.string.case_study_authentication_title) {
