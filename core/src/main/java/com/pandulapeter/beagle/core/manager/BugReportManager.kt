@@ -15,6 +15,7 @@ import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
 
 internal class BugReportManager {
 
+    var onBugReportReady: ((Uri?) -> Unit)? = null
     private val currentActivity get() = BeagleCore.implementation.currentActivity
 
     fun openBugReportingScreen(
@@ -24,9 +25,9 @@ internal class BugReportManager {
         shouldShowMetadataSection: Boolean,
         buildInformation: (Application?) -> List<Pair<Text, String>>,
         descriptionTemplate: Text,
-        onBugReportReady: ((Uri) -> Unit)?
+        onBugReportReady: ((Uri?) -> Unit)?
     ) = performOnHide {
-        //TODO: Handle onBugReportReady
+        this.onBugReportReady = onBugReportReady
         currentActivity?.run {
             startActivity(
                 BugReportActivity.newIntent(

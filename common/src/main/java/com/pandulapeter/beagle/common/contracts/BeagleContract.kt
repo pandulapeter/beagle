@@ -385,7 +385,7 @@ interface BeagleContract {
         shouldShowMetadataSection: Boolean = true,
         buildInformation: (activity: Application?) -> List<Pair<Text, String>> = BugReportButtonModule.DEFAULT_BUILD_INFORMATION,
         descriptionTemplate: Text = Text.CharSequence(""),
-        onBugReportReady: ((bugReport: Uri) -> Unit)? = null
+        onBugReportReady: ((bugReport: Uri?) -> Unit)? = null
     ) = Unit
 
     /**

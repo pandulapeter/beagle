@@ -82,7 +82,8 @@ internal class BugReportViewModel(
             _shouldShowLoadingIndicator.postValue(value)
             refreshSendButton()
         }
-    val zipFileUri = MutableLiveData<Uri?>()
+    val zipFileUriToShare = MutableLiveData<Uri?>()
+    val compressionError = MutableLiveData(false)
 
     init {
         refresh()
@@ -206,12 +207,17 @@ internal class BugReportViewModel(
                         content = content
                     )?.let { uri -> filePaths.add(uri.toPath(context.getBugReportsFolder())) }
                 }
-                zipFileUri.postValue(
-                    context.createZipFile(
-                        filePaths = filePaths,
-                        zipFileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.zip",
-                    )
+                val uri = context.createZipFile(
+                    filePaths = filePaths,
+                    zipFileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.zip",
                 )
+                val onBugReportReady = BeagleCore.implementation.onBugReportReady
+                if (onBugReportReady == null) {
+                    zipFileUriToShare.postValue(uri)
+                } else {
+                    onBugReportReady(uri)
+                    BeagleCore.implementation.onBugReportReady = null
+                }
                 isPreparingData = false
             }
         }

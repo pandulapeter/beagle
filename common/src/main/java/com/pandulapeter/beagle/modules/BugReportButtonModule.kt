@@ -56,7 +56,7 @@ data class BugReportButtonModule(
     @DrawableRes val icon: Int? = DEFAULT_ICON,
     val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     val onButtonPressed: () -> Unit = {},
-    val onBugReportReady: ((bugReport: Uri) -> Unit)? = DEFAULT_ON_BUG_REPORT_READY
+    val onBugReportReady: ((bugReport: Uri?) -> Unit)? = DEFAULT_ON_BUG_REPORT_READY
 ) : Module<BugReportButtonModule> {
 
     override val id: String = ID
@@ -75,11 +75,11 @@ data class BugReportButtonModule(
                 }
             }
         }
-        private val DEFAULT_DESCRIPTION_TEMPLATE = ""
+        private const val DEFAULT_DESCRIPTION_TEMPLATE = ""
         private val DEFAULT_TYPE = TextModule.Type.NORMAL
         private val DEFAULT_ICON: Int? = null
         private const val DEFAULT_IS_ENABLED = true
         private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}
-        private val DEFAULT_ON_BUG_REPORT_READY: ((Uri) -> Unit)? = null
+        private val DEFAULT_ON_BUG_REPORT_READY: ((Uri?) -> Unit)? = null
     }
 }

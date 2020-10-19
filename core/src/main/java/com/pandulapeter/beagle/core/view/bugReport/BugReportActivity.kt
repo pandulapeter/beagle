@@ -129,11 +129,10 @@ internal class BugReportActivity : AppCompatActivity() {
             sendButton.isEnabled = it
             sendButton.icon.alpha = if (it) 255 else 63
         }
-        viewModel.zipFileUri.observe(this) { uri ->
+        viewModel.zipFileUriToShare.observe(this) { uri ->
             if (uri != null) {
-                //TODO: Handle custom callbacks
                 shareFile(uri, "application/zip")
-                viewModel.zipFileUri.value = null
+                viewModel.zipFileUriToShare.value = null
             }
         }
     }
