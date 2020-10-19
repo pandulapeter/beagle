@@ -71,7 +71,7 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
                     onApplyWindowInsets(insets).also {
                         recyclerView.setPadding(
                             it.systemWindowInsetLeft + contentPadding,
-                            contentPadding,
+                            0,
                             it.systemWindowInsetRight + contentPadding,
                             it.systemWindowInsetBottom + contentPadding
                         )

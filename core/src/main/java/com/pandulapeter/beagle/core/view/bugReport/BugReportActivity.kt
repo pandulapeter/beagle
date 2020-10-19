@@ -85,7 +85,7 @@ internal class BugReportActivity : AppCompatActivity() {
                     onApplyWindowInsets(insets).also {
                         recyclerView.setPadding(
                             0,
-                            contentPadding,
+                            0,
                             0,
                             it.systemWindowInsetBottom + contentPadding
                         )
