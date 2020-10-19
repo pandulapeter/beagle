@@ -3,8 +3,12 @@ package com.pandulapeter.beagle.core.view.bugReport
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver
@@ -18,8 +22,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
@@ -131,7 +137,26 @@ internal class BugReportActivity : AppCompatActivity() {
 
     private fun generateBuildInformation(): CharSequence = "Build information (WIP)" //TODO
 
-    private fun generateDeviceInformation(): CharSequence = "Device information (WIP)" //TODO
+    private fun generateDeviceInformation(): CharSequence {
+        var text: CharSequence = ""
+        //TODO: Should be configurable
+        DeviceInfoDelegate.getDeviceInfo(
+            shouldShowManufacturer = true,
+            shouldShowModel = true,
+            shouldShowResolutionsPx = true,
+            shouldShowResolutionsDp = true,
+            shouldShowDensity = true,
+            shouldShowAndroidVersion = true
+        ).also { sections ->
+            val lastIndex = sections.lastIndex
+            sections.forEachIndexed { index, (key, value) ->
+                text = text.append(SpannableString("$key: $value".let { if (index == lastIndex) it else "$it\n" }).apply {
+                    setSpan(StyleSpan(Typeface.BOLD), 0, key.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                })
+            }
+        }
+        return text
+    }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
         R.id.beagle_send -> consume(viewModel::onSendButtonPressed)

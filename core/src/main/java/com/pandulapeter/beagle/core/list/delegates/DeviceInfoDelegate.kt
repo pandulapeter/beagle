@@ -18,63 +18,54 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
             || module.shouldShowDensity
             || module.shouldShowAndroidVersion
 
-    override fun MutableList<Cell<*>>.addItems(module: DeviceInfoModule) {
-        if (module.shouldShowManufacturer) {
-            add(
-                ExpandedItemKeyValueCell(
-                    id = "${module.id}_manufacturer",
-                    key = "Manufacturer",
-                    value = Build.MANUFACTURER
-                )
+    override fun MutableList<Cell<*>>.addItems(module: DeviceInfoModule) = getDeviceInfo(
+        shouldShowManufacturer = module.shouldShowManufacturer,
+        shouldShowModel = module.shouldShowModel,
+        shouldShowResolutionsPx = module.shouldShowResolutionsPx,
+        shouldShowResolutionsDp = module.shouldShowResolutionsDp,
+        shouldShowDensity = module.shouldShowDensity,
+        shouldShowAndroidVersion = module.shouldShowAndroidVersion
+    ).forEach { (key, value) ->
+        add(
+            ExpandedItemKeyValueCell(
+                id = "${module.id}_$key",
+                key = key,
+                value = value
             )
-        }
-        if (module.shouldShowModel) {
-            add(
-                ExpandedItemKeyValueCell(
-                    id = "${module.id}_model",
-                    key = "Model",
-                    value = Build.MODEL
-                )
-            )
-        }
-        val dm = DisplayMetrics()
-        BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
-            if (module.shouldShowResolutionsPx) {
-                add(
-                    ExpandedItemKeyValueCell(
-                        id = "${module.id}_resolution_px",
-                        key = "Resolution (px)",
-                        value = "${dm.widthPixels} * ${dm.heightPixels}"
-                    )
-                )
-                if (module.shouldShowResolutionsDp) {
-                    add(
-                        ExpandedItemKeyValueCell(
-                            id = "${module.id}_resolution_dp",
-                            key = "Resolution (dp)",
-                            value = "${(dm.widthPixels / dm.density).roundToInt()} * ${(dm.heightPixels / dm.density).roundToInt()}"
-                        )
-                    )
-                }
-                if (module.shouldShowDensity) {
-                    add(
-                        ExpandedItemKeyValueCell(
-                            id = "${module.id}_density",
-                            key = "Density (dpi)",
-                            value = "${dm.densityDpi}"
-                        )
-                    )
+        )
+    }
+
+    //TODO: Keys should come from Appearance.
+    companion object {
+        fun getDeviceInfo(
+            shouldShowManufacturer: Boolean,
+            shouldShowModel: Boolean,
+            shouldShowResolutionsPx: Boolean,
+            shouldShowResolutionsDp: Boolean,
+            shouldShowDensity: Boolean,
+            shouldShowAndroidVersion: Boolean
+        ): List<Pair<String, String>> = mutableListOf<Pair<String, String>>().apply {
+            if (shouldShowManufacturer) {
+                add("Manufacturer" to Build.MANUFACTURER)
+            }
+            if (shouldShowModel) {
+                add("Model" to Build.MODEL)
+            }
+            val dm = DisplayMetrics()
+            BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
+                if (shouldShowResolutionsPx) {
+                    add("Resolution (px)" to "${dm.widthPixels} * ${dm.heightPixels}")
+                    if (shouldShowResolutionsDp) {
+                        add("Resolution (dp)" to "${(dm.widthPixels / dm.density).roundToInt()} * ${(dm.heightPixels / dm.density).roundToInt()}")
+                    }
+                    if (shouldShowDensity) {
+                        add("Density (dpi)" to "${dm.densityDpi}")
+                    }
                 }
             }
-        }
-        if (module.shouldShowAndroidVersion) {
-            add(
-                ExpandedItemKeyValueCell(
-                    id = "${module.id}_sdkVersion",
-                    key = "Android SDK version",
-                    value = Build.VERSION.SDK_INT.toString()
-                )
-            )
+            if (shouldShowAndroidVersion) {
+                add("Android SDK version" to Build.VERSION.SDK_INT.toString())
+            }
         }
     }
 }
