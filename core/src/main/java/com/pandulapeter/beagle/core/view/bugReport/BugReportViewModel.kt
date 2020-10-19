@@ -83,7 +83,6 @@ internal class BugReportViewModel(
             refreshSendButton()
         }
     val zipFileUriToShare = MutableLiveData<Uri?>()
-    val compressionError = MutableLiveData(false)
 
     init {
         refresh()
@@ -261,7 +260,7 @@ internal class BugReportViewModel(
             } else {
                 (selectedLogIds[label].orEmpty() + id)
             }.distinct()
-            if (logLabelSectionsToShow.contains(null)) {
+            if (label != null && logLabelSectionsToShow.contains(null)) {
                 selectedLogIds[null] = if (selectedLogIds[null]?.contains(id) == true) {
                     selectedLogIds[null].orEmpty().filterNot { it == id }
                 } else {
