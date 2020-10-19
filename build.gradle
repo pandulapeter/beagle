@@ -17,7 +17,7 @@ buildscript {
         retrofitVersion = "2.9.0"
         moshiVersion = "1.9.3"
         okHttpVersion = "4.8.1"
-        ktorVersion = "1.4.0"
+        ktorVersion = "1.4.1"
         coilVersion = "1.0.0-rc3"
         leakCanaryVersion = "2.2"
     }
