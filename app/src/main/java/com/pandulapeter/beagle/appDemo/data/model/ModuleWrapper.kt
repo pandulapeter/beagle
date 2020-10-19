@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.Beagle
+import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.networking.Constants
 import com.pandulapeter.beagle.common.configuration.Text
@@ -280,8 +281,24 @@ sealed class ModuleWrapper(
     object BugReportButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_bug_report_button,
         descriptionResourceId = R.string.add_module_bug_report_button_description,
-        module = BugReportButtonModule(),
-        codeSnippet = "BugReportButtonModule()"
+        module = BugReportButtonModule(
+            buildInformation = {
+                listOf(
+                    Text.CharSequence("Version name") to BuildConfig.VERSION_NAME,
+                    Text.CharSequence("Version code") to BuildConfig.VERSION_CODE.toString(),
+                    Text.CharSequence("Application ID") to BuildConfig.APPLICATION_ID
+                )
+            }
+        ),
+        codeSnippet = "BugReportButtonModule(\n" +
+                "    buildInformation = {\n" +
+                "        listOf(\n" +
+                "            Text.CharSequence(\"Version name\") to BuildConfig.VERSION_NAME,\n" +
+                "            Text.CharSequence(\"Version code\") to BuildConfig.VERSION_CODE.toString(),\n" +
+                "            Text.CharSequence(\"Application ID\") to BuildConfig.APPLICATION_ID\n" +
+                "        )\n" +
+                "    }\n" +
+                ")"
     )
 
     object DeveloperOptionsButtonWrapper : ModuleWrapper(

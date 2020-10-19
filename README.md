@@ -111,7 +111,15 @@ Beagle.set(
     DividerModule(),
     TextModule("Other", TextModule.Type.SECTION_HEADER),
     DeviceInfoModule(),
-    BugReportButtonModule()
+    BugReportButtonModule(
+        buildInformation = {
+            listOf(
+                Text.CharSequence("Version name") to BuildConfig.VERSION_NAME,
+                Text.CharSequence("Version code") to BuildConfig.VERSION_CODE.toString(),
+                Text.CharSequence("Application ID") to BuildConfig.APPLICATION_ID
+            )
+        }
+    )
 )
 ```
 
