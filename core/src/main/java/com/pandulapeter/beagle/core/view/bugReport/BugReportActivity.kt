@@ -176,16 +176,18 @@ internal class BugReportActivity : AppCompatActivity() {
     )
 
     private fun showLogDetailDialog(entry: LogEntry) = BeagleCore.implementation.showDialog(
-        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter),
+        content = Text.CharSequence(entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter)),
         timestamp = entry.timestamp,
         id = entry.id
     )
 
     private fun showMetadataDetailDialog(type: BugReportViewModel.MetadataType) = BeagleCore.implementation.showDialog(
-        content = when (type) {
-            BugReportViewModel.MetadataType.BUILD_INFORMATION -> viewModel.buildInformation
-            BugReportViewModel.MetadataType.DEVICE_INFORMATION -> viewModel.deviceInformation
-        },
+        content = Text.CharSequence(
+            when (type) {
+                BugReportViewModel.MetadataType.BUILD_INFORMATION -> viewModel.buildInformation
+                BugReportViewModel.MetadataType.DEVICE_INFORMATION -> viewModel.deviceInformation
+            }
+        ),
         shouldShowShareButton = false
     )
 

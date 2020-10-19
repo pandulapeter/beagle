@@ -161,7 +161,14 @@ internal class BugReportViewModel(
                 })
 
                 // Log files
-                //TODO - flatMap selectedLogIds (mapped to allLogEntries)
+                uris.addAll(allLogEntries[null]?.let { allLogEntries ->
+                    selectedLogIds.flatMap { it.value }.distinct().mapNotNull { id -> allLogEntries.firstOrNull { it.id == id } }
+                }.orEmpty().mapNotNull { entry ->
+                    context.createLogFile(
+                        fileName = "${BeagleCore.implementation.behavior.getLogFileName(currentTimestamp, entry.id)}.txt",
+                        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toString()
+                    )
+                })
 
                 // Build information
                 var content = ""

@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.text
@@ -43,7 +44,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
             toolbar = dialog.findViewById(R.id.beagle_toolbar)
             textView = dialog.findViewById(R.id.beagle_text_view)
             scrollView = dialog.findViewById(R.id.beagle_scroll_view)
-            textView.text = arguments?.content
+            textView.text = arguments?.content?.let { context?.text(it) }
             appBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
@@ -82,7 +83,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
     }
 
     companion object {
-        private var Bundle.content by BundleArgumentDelegate.CharSequence("content")
+        private var Bundle.content by BundleArgumentDelegate.Parcelable<Text>("content")
         private var Bundle.isHorizontalScrollEnabled by BundleArgumentDelegate.Boolean("isHorizontalScrollEnabled")
         private var Bundle.shouldShowShareButton by BundleArgumentDelegate.Boolean("shouldShowShareButton")
         private var Bundle.timestamp by BundleArgumentDelegate.Long("timestamp")
@@ -90,7 +91,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
 
         fun show(
             fragmentManager: FragmentManager,
-            content: CharSequence,
+            content: Text,
             isHorizontalScrollEnabled: Boolean,
             shouldShowShareButton: Boolean,
             timestamp: Long,

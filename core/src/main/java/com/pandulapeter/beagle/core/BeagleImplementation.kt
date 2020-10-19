@@ -272,7 +272,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun invalidateOverlay() = debugMenuInjector.invalidateOverlay()
 
     override fun showDialog(
-        content: CharSequence,
+        content: Text,
         isHorizontalScrollEnabled: Boolean,
         shouldShowShareButton: Boolean,
         timestamp: Long,

@@ -411,7 +411,7 @@ interface BeagleContract {
      * @param id - The unique identifier of the event. [randomId] by default.
      */
     fun showDialog(
-        content: CharSequence,
+        content: Text,
         isHorizontalScrollEnabled: Boolean = false,
         shouldShowShareButton: Boolean = true,
         timestamp: Long = currentTimestamp,
