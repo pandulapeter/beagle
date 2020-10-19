@@ -28,7 +28,6 @@ import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
-import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity.Companion.shouldShowMetadataSection
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -148,7 +147,8 @@ internal class BugReportActivity : AppCompatActivity() {
             shouldShowAndroidVersion = true
         ).also { sections ->
             val lastIndex = sections.lastIndex
-            sections.forEachIndexed { index, (key, value) ->
+            sections.forEachIndexed { index, (keyText, value) ->
+                val key = text(keyText)
                 text = text.append(SpannableString("$key: $value".let { if (index == lastIndex) it else "$it\n" }).apply {
                     setSpan(StyleSpan(Typeface.BOLD), 0, key.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
                 })

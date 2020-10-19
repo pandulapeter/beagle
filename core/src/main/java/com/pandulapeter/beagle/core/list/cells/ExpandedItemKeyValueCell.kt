@@ -21,16 +21,6 @@ internal data class ExpandedItemKeyValueCell(
     private val value: Text
 ) : Cell<ExpandedItemKeyValueCell> {
 
-    constructor(
-        id: String,
-        key: CharSequence,
-        value: CharSequence
-    ) : this(
-        id = id,
-        key = Text.CharSequence(key),
-        value = Text.CharSequence(value)
-    )
-
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<ExpandedItemKeyValueCell>() {
 
         override fun createViewHolder(parent: ViewGroup) = KeyValueViewHolder(parent)

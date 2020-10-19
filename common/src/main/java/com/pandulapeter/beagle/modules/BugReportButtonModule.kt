@@ -33,7 +33,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * @param shouldShowGallerySection - Whether or not the gallery section should be added. [DEFAULT_SHOULD_SHOW_GALLERY_SECTION] by default.
  * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. [DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION] by default.
  * @param logLabelSectionsToShow - The list of log tags for which sections should be added. [DEFAULT_LABEL_SECTIONS_TO_SHOW] by default, which adds a section for all logs, without filtering.
- * @param shouldShowMetadataSection - Whether or not the metadata section should be added. [DEFAULT_SHOULD_SHOW_METADATA_SECTION] by default.
+ * @param shouldShowMetadataSection - Whether or not the metadata section (build information and device information) should be added. [DEFAULT_SHOULD_SHOW_METADATA_SECTION] by default.
  * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [DEFAULT_BUILD_INFORMATION] by default.
  * @param descriptionTemplate - The default value of the free-text input. Empty string by default.
  * @param type - Specify a [TextModule.Type] to apply a specific appearance. [DEFAULT_TYPE] by default.

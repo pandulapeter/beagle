@@ -14,6 +14,12 @@ import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Co
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.Companion.DEFAULT_APPLY_INSETS
 import com.pandulapeter.beagle.common.configuration.Appearance.Companion.DEFAULT_THEME_RESOURCE_ID
+import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts
+import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_DENSITY
+import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_MANUFACTURER
+import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_MODEL
+import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_RESOLUTION_DP
+import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_RESOLUTION_PX
 import com.pandulapeter.beagle.common.configuration.Appearance.GalleryTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.GalleryTexts.Companion.DEFAULT_DELETE_CONFIRMATION_MESSAGE_PLURAL
 import com.pandulapeter.beagle.common.configuration.Appearance.GalleryTexts.Companion.DEFAULT_DELETE_CONFIRMATION_MESSAGE_SINGULAR
@@ -54,6 +60,7 @@ import java.util.Locale
  * @param galleryTexts - Customize UI strings related to the Gallery, see [GalleryTexts].
  * @param bugReportTexts - Customize UI strings related to the bug reporting screen, see [BugReportTexts].
  * @param networkLogTexts - Customize UI strings related to the network event detail dialog, see [NetworkLogTexts].
+ * @param deviceInfoTexts - Customize UI strings related to the device info module (also used when reporting bugs), see [DeviceInfoTexts].
  * @param networkLogTimestampFormatter - The formatter used for displaying the timestamp of network events on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
  * @param logTimestampFormatter - The formatter used for displaying the timestamp of logs on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with [GALLERY_DATE_FORMAT] by default.
@@ -66,6 +73,7 @@ data class Appearance(
     val galleryTexts: GalleryTexts = GalleryTexts(),
     val bugReportTexts: BugReportTexts = BugReportTexts(),
     val networkLogTexts: NetworkLogTexts = NetworkLogTexts(),
+    val deviceInfoTexts: DeviceInfoTexts = DeviceInfoTexts(),
     val networkLogTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_NETWORK_LOG_DATE_FORMAT.format(it) },
     val logTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_LOG_DATE_FORMAT.format(it) },
     val galleryTimestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_GALLERY_DATE_FORMAT.format(it) },
@@ -216,6 +224,34 @@ data class Appearance(
             private const val DEFAULT_TIMESTAMP = "Timestamp"
             private const val DEFAULT_DURATION = "Duration"
             private const val DEFAULT_TOGGLE_EXPAND_COLLAPSE = "Expand / collapse all"
+        }
+    }
+
+    /**
+     * Holder for copies related to the device info module (also used when reporting bugs).
+     *
+     * @param manufacturer - The term used for the device manufacturer. [DEFAULT_MANUFACTURER] by default.
+     * @param model - The term used for the device model. [DEFAULT_MODEL] by default.
+     * @param resolutionPx - The term used for the screen resolution in pixels. [DEFAULT_RESOLUTION_PX] by default.
+     * @param resolutionDp - The term used for the screen resolution in dps. [DEFAULT_RESOLUTION_DP] by default.
+     * @param density - The term used for the screen density. [DEFAULT_DENSITY] by default.
+     * @param androidVersion - The term used for the Android OS version code. [DEFAULT_ANDROID_VERSION] by default.
+     */
+    data class DeviceInfoTexts(
+        val manufacturer: Text = Text.CharSequence(DEFAULT_MANUFACTURER),
+        val model: Text = Text.CharSequence(DEFAULT_MODEL),
+        val resolutionPx: Text = Text.CharSequence(DEFAULT_RESOLUTION_PX),
+        val resolutionDp: Text = Text.CharSequence(DEFAULT_RESOLUTION_DP),
+        val density: Text = Text.CharSequence(DEFAULT_DENSITY),
+        val androidVersion: Text = Text.CharSequence(DEFAULT_ANDROID_VERSION)
+    ) {
+        companion object {
+            private const val DEFAULT_MANUFACTURER = "Manufacturer"
+            private const val DEFAULT_MODEL = "Model"
+            private const val DEFAULT_RESOLUTION_PX = "Resolution (px)"
+            private const val DEFAULT_RESOLUTION_DP = "Resolution (dp)"
+            private const val DEFAULT_DENSITY = "Density (dpi)"
+            private const val DEFAULT_ANDROID_VERSION = "Android SDK version"
         }
     }
 

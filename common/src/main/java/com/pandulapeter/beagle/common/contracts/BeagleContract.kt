@@ -373,7 +373,7 @@ interface BeagleContract {
      * @param shouldShowGallerySection - Whether or not the gallery section should be added. True by default.
      * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. True by default.
      * @param logLabelSectionsToShow - The list of log labels for which sections should be added. By default it adds a section for all logs, without filtering.
-     * @param shouldShowMetadataSection - Whether or not the metadata section should be added. True by default.
+     * @param shouldShowMetadataSection - Whether or not the metadata section (build information and device information) should be added. True by default.
      * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [BugReportButtonModule.DEFAULT_BUILD_INFORMATION] by default.
      * @param descriptionTemplate - The default value of the free-text input. Empty string by default.
      * @param onBugReportReady - The lambda that gets invoked after the bug report is ready, with the [Uri] pointing to the ZIP file, or null for the default implementation that uses the system share sheet. Null by default.

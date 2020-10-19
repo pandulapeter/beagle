@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.list.delegates
 import android.os.Build
 import android.util.DisplayMetrics
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemKeyValueCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
@@ -28,14 +29,18 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
     ).forEach { (key, value) ->
         add(
             ExpandedItemKeyValueCell(
-                id = "${module.id}_$key",
+                id = "${module.id}_${
+                    when (key) {
+                        is Text.CharSequence -> key.charSequence.toString()
+                        is Text.ResourceId -> key.resourceId.toString()
+                    }
+                }",
                 key = key,
-                value = value
+                value = Text.CharSequence(value)
             )
         )
     }
 
-    //TODO: Keys should come from Appearance.
     companion object {
         fun getDeviceInfo(
             shouldShowManufacturer: Boolean,
@@ -44,27 +49,27 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
             shouldShowResolutionsDp: Boolean,
             shouldShowDensity: Boolean,
             shouldShowAndroidVersion: Boolean
-        ): List<Pair<String, String>> = mutableListOf<Pair<String, String>>().apply {
+        ): List<Pair<Text, String>> = mutableListOf<Pair<Text, String>>().apply {
             if (shouldShowManufacturer) {
-                add("Manufacturer" to Build.MANUFACTURER)
+                add(BeagleCore.implementation.appearance.deviceInfoTexts.manufacturer to Build.MANUFACTURER)
             }
             if (shouldShowModel) {
-                add("Model" to Build.MODEL)
+                add(BeagleCore.implementation.appearance.deviceInfoTexts.model to Build.MODEL)
             }
             val dm = DisplayMetrics()
             BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(dm)?.let {
                 if (shouldShowResolutionsPx) {
-                    add("Resolution (px)" to "${dm.widthPixels} * ${dm.heightPixels}")
+                    add(BeagleCore.implementation.appearance.deviceInfoTexts.resolutionPx to "${dm.widthPixels} * ${dm.heightPixels}")
                     if (shouldShowResolutionsDp) {
-                        add("Resolution (dp)" to "${(dm.widthPixels / dm.density).roundToInt()} * ${(dm.heightPixels / dm.density).roundToInt()}")
+                        add(BeagleCore.implementation.appearance.deviceInfoTexts.resolutionDp to "${(dm.widthPixels / dm.density).roundToInt()} * ${(dm.heightPixels / dm.density).roundToInt()}")
                     }
                     if (shouldShowDensity) {
-                        add("Density (dpi)" to "${dm.densityDpi}")
+                        add(BeagleCore.implementation.appearance.deviceInfoTexts.density to "${dm.densityDpi}")
                     }
                 }
             }
             if (shouldShowAndroidVersion) {
-                add("Android SDK version" to Build.VERSION.SDK_INT.toString())
+                add(BeagleCore.implementation.appearance.deviceInfoTexts.androidVersion to Build.VERSION.SDK_INT.toString())
             }
         }
     }

@@ -122,15 +122,17 @@ internal class BugReportViewModel(
 
     fun onSendButtonPressed() {
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
-            isPreparingData = true
-            //TODO: Generate and share zip file. File name: Behavior.getButReportFileName. Contents:
-            // - selectedMediaFileIds (mapped to mediaFiles)
-            // - selectedNetworkLogIds (mapped to allNetworkLogEntries)
-            // - flatMap selectedLogIds (mapped to allLogEntries)
-            // - if (shouldShowMetadataSection && shouldAttachBuildInformation) buildInformation
-            // - if (shouldShowMetadataSection && shouldAttachDeviceInformation) deviceInformation
-            // - description
-            isPreparingData = false
+            viewModelScope.launch {
+                isPreparingData = true
+                //TODO: Generate and share zip file. File name: Behavior.getButReportFileName. Contents:
+                // - selectedMediaFileIds (mapped to mediaFiles)
+                // - selectedNetworkLogIds (mapped to allNetworkLogEntries)
+                // - flatMap selectedLogIds (mapped to allLogEntries)
+                // - if (shouldShowMetadataSection && shouldAttachBuildInformation) buildInformation
+                // - if (shouldShowMetadataSection && shouldAttachDeviceInformation) deviceInformation
+                // - description
+                isPreparingData = false
+            }
         }
     }
 
