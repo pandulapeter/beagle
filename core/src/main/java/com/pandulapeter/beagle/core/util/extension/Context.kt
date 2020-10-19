@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
+import java.io.FileWriter
 import java.io.IOException
 
 internal fun Context.registerSensorEventListener(sensorEventListener: SensorEventListener) = (getSystemService(Context.SENSOR_SERVICE) as? SensorManager?)?.run {
@@ -56,6 +57,27 @@ private const val LOGS_FOLDER_NAME = "beagleLogs"
 internal fun Context.getLogsFolder() = getCacheFolder(LOGS_FOLDER_NAME)
 
 internal fun Context.createLogFile(fileName: String) = File(getLogsFolder(), fileName)
+
+private const val BUG_REPORTS_FOLDER_NAME = "beagleBugReports"
+
+internal fun Context.getBugReportsFolder() = getCacheFolder(BUG_REPORTS_FOLDER_NAME)
+
+internal fun Context.createBugReportsFile(fileName: String) = File(getBugReportsFolder(), fileName)
+
+@Suppress("BlockingMethodInNonBlockingContext")
+internal suspend fun Context.createBugReportTextFile(fileName: String, content: String): Uri? = withContext(Dispatchers.IO) {
+    val file = createBugReportsFile(fileName)
+    try {
+        FileWriter(file).run {
+            write(content)
+            flush()
+            close()
+        }
+        getUriForFile(file)
+    } catch (e: IOException) {
+        null
+    }
+}
 
 private fun Context.getCacheFolder(name: String) = getFolder(cacheDir, name)
 

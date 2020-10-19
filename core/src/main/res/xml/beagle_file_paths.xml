@@ -11,6 +11,10 @@
             name="beagle_logs"
             path="beagleLogs/" />
 
+        <cache-path
+            name="beagle_bug_reports"
+            path="beagleBugReports/" />
+
     </paths>
 
 </resources>

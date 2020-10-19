@@ -1,11 +1,14 @@
 package com.pandulapeter.beagle.core.view.bugReport
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.commonBase.currentTimestamp
+import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
@@ -124,13 +127,28 @@ internal class BugReportViewModel(
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
             viewModelScope.launch {
                 isPreparingData = true
-                //TODO: Generate and share zip file. File name: Behavior.getButReportFileName. Contents:
-                // - selectedMediaFileIds (mapped to mediaFiles)
-                // - selectedNetworkLogIds (mapped to allNetworkLogEntries)
-                // - flatMap selectedLogIds (mapped to allLogEntries)
-                // - if (shouldShowMetadataSection && shouldAttachBuildInformation) buildInformation
-                // - if (shouldShowMetadataSection && shouldAttachDeviceInformation) deviceInformation
-                // - description
+                val uris = mutableListOf<Uri>()
+                //TODO - selectedMediaFileIds (mapped to mediaFiles)
+                //TODO - selectedNetworkLogIds (mapped to allNetworkLogEntries)
+                //TODO - flatMap selectedLogIds (mapped to allLogEntries)
+
+                var content = ""
+                if (shouldShowMetadataSection && shouldAttachBuildInformation && buildInformation.isNotBlank()) {
+                    content = buildInformation.toString()
+                }
+                if (shouldShowMetadataSection && shouldAttachDeviceInformation) {
+                    content = if (content.isBlank()) deviceInformation.toString() else "$content\n\n$deviceInformation"
+                }
+                if (description.trim().isNotBlank()) {
+                    content = if (content.isBlank()) description.trim().toString() else "$content\n\n${description.trim()}"
+                }
+                if (content.isNotBlank()) {
+                    context.createBugReportTextFile(
+                        fileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.txt",
+                        content = content
+                    )?.let(uris::add)
+                }
+                //TODO: Create a zip from the "uris" list and share it.
                 isPreparingData = false
             }
         }
