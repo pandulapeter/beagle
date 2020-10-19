@@ -29,7 +29,7 @@ internal class DebugMenuInjector(
         }
     private val onBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
         currentActivity?.let { currentActivity ->
-            if (currentActivity.supportFragmentManager.fragments.lastOrNull() !is OverlayFragment) {
+            if (!BeagleCore.implementation.uiManager.isActivityDebugMenu(currentActivity) && currentActivity.supportFragmentManager.fragments.lastOrNull() !is OverlayFragment) {
                 uiManager.addOverlayFragment(currentActivity)
             }
         }
