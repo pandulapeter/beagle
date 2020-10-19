@@ -165,7 +165,6 @@ internal class BugReportViewModel(
         }
     }
 
-    //TODO: Does not work when label = null
     private fun onLogSelectionChanged(id: String, label: String?) {
         viewModelScope.launch(listManagerContext) {
             selectedLogIds[label] = if (selectedLogIds[label]?.contains(id) == true) {
@@ -173,6 +172,13 @@ internal class BugReportViewModel(
             } else {
                 (selectedLogIds[label].orEmpty() + id)
             }.distinct()
+            if (logLabelSectionsToShow.contains(null)) {
+                selectedLogIds[null] = if (selectedLogIds[null]?.contains(id) == true) {
+                    selectedLogIds[null].orEmpty().filterNot { it == id }
+                } else {
+                    (selectedLogIds[null].orEmpty() + id)
+                }.distinct()
+            }
             refreshContent()
         }
     }
