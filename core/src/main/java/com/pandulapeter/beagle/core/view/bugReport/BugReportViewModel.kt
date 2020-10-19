@@ -28,6 +28,8 @@ internal class BugReportViewModel(
     private val shouldShowNetworkLogsSection: Boolean,
     private val logLabelSectionsToShow: List<String?>,
     private val shouldShowMetadataSection: Boolean,
+    val buildInformation: CharSequence,
+    val deviceInformation: CharSequence,
     descriptionTemplate: String
 ) : ViewModel() {
 
@@ -51,10 +53,12 @@ internal class BugReportViewModel(
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
 
+    private var shouldAttachBuildInformation = true
+    private var shouldAttachDeviceInformation = true
+
     private var description: CharSequence = descriptionTemplate
         set(value) {
             if (field != value) {
-                //TODO: Selection is lost
                 field = value
                 refreshSendButton()
             }
@@ -68,8 +72,6 @@ internal class BugReportViewModel(
             field = value
             refreshSendButton()
         }
-    private var shouldAttachBuildInfo = true
-    private var shouldAttachDeviceInfo = true
 
     init {
         refresh()
@@ -111,8 +113,8 @@ internal class BugReportViewModel(
     fun onMetadataItemSelectionChanged(type: MetadataType) {
         viewModelScope.launch(listManagerContext) {
             when (type) {
-                MetadataType.BUILD_INFO -> shouldAttachBuildInfo = !shouldAttachBuildInfo
-                MetadataType.DEVICE_INFO -> shouldAttachDeviceInfo = !shouldAttachDeviceInfo
+                MetadataType.BUILD_INFORMATION -> shouldAttachBuildInformation = !shouldAttachBuildInformation
+                MetadataType.DEVICE_INFORMATION -> shouldAttachDeviceInformation = !shouldAttachDeviceInformation
             }
             refreshContent()
         }
@@ -121,13 +123,13 @@ internal class BugReportViewModel(
     fun onSendButtonPressed() {
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
             isPreparingData = true
-            //TODO: Generate and share zip file:
+            //TODO: Generate and share zip file. File name: Behavior.getButReportFileName. Contents:
             // - selectedMediaFileIds (mapped to mediaFiles)
             // - selectedNetworkLogIds (mapped to allNetworkLogEntries)
             // - flatMap selectedLogIds (mapped to allLogEntries)
+            // - if (shouldShowMetadataSection && shouldAttachBuildInformation) buildInformation
+            // - if (shouldShowMetadataSection && shouldAttachDeviceInformation) deviceInformation
             // - description
-            // - shouldAttachBuildInfo
-            // - shouldAttachDeviceInfo
             isPreparingData = false
         }
     }
@@ -235,14 +237,14 @@ internal class BugReportViewModel(
                 )
                 add(
                     MetadataItemViewHolder.UiModel(
-                        type = MetadataType.BUILD_INFO,
-                        isSelected = shouldAttachBuildInfo
+                        type = MetadataType.BUILD_INFORMATION,
+                        isSelected = shouldAttachBuildInformation
                     )
                 )
                 add(
                     MetadataItemViewHolder.UiModel(
-                        type = MetadataType.DEVICE_INFO,
-                        isSelected = shouldAttachDeviceInfo
+                        type = MetadataType.DEVICE_INFORMATION,
+                        isSelected = shouldAttachDeviceInformation
                     )
                 )
             }
@@ -259,8 +261,8 @@ internal class BugReportViewModel(
     }
 
     enum class MetadataType {
-        BUILD_INFO,
-        DEVICE_INFO
+        BUILD_INFORMATION,
+        DEVICE_INFORMATION
     }
 
     companion object {

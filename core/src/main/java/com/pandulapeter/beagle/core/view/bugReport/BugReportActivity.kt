@@ -42,6 +42,8 @@ internal class BugReportActivity : AppCompatActivity() {
                     shouldShowNetworkLogsSection = arguments.shouldShowNetworkLogsSection,
                     logLabelSectionsToShow = arguments.logLabelSectionsToShow,
                     shouldShowMetadataSection = arguments.shouldShowMetadataSection,
+                    buildInformation = generateBuildInformation(),
+                    deviceInformation = generateDeviceInformation(),
                     descriptionTemplate = arguments.descriptionTemplate
                 ) as T
             }
@@ -97,6 +99,7 @@ internal class BugReportActivity : AppCompatActivity() {
             onLogLongTapped = viewModel::onLogLongTapped,
             onShowMoreLogsTapped = viewModel::onShowMoreLogsTapped,
             onDescriptionChanged = viewModel::onDescriptionChanged,
+            onMetadataItemClicked = ::showMetadataDetailDialog,
             onMetadataItemSelectionChanged = viewModel::onMetadataItemSelectionChanged
         )
         recyclerView.run {
@@ -126,6 +129,10 @@ internal class BugReportActivity : AppCompatActivity() {
 
     fun refresh() = viewModel.refresh()
 
+    private fun generateBuildInformation(): CharSequence = "Build information (WIP)" //TODO
+
+    private fun generateDeviceInformation(): CharSequence = "Device information (WIP)" //TODO
+
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
         R.id.beagle_send -> consume(viewModel::onSendButtonPressed)
         else -> false
@@ -147,6 +154,14 @@ internal class BugReportActivity : AppCompatActivity() {
         content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter),
         timestamp = entry.timestamp,
         id = entry.id
+    )
+
+    private fun showMetadataDetailDialog(type: BugReportViewModel.MetadataType) = BeagleCore.implementation.showDialog(
+        content = when (type) {
+            BugReportViewModel.MetadataType.BUILD_INFORMATION -> viewModel.buildInformation
+            BugReportViewModel.MetadataType.DEVICE_INFORMATION -> viewModel.deviceInformation
+        },
+        shouldShowShareButton = false
     )
 
     companion object {

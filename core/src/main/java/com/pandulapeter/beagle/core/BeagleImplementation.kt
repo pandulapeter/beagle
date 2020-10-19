@@ -271,6 +271,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun showDialog(
         content: CharSequence,
         isHorizontalScrollEnabled: Boolean,
+        shouldShowShareButton: Boolean,
         timestamp: Long,
         id: String
     ) {
@@ -279,6 +280,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
                 fragmentManager = fragmentManager,
                 content = content,
                 isHorizontalScrollEnabled = isHorizontalScrollEnabled,
+                shouldShowShareButton = shouldShowShareButton,
                 timestamp = timestamp,
                 id = id
             )

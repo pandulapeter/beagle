@@ -402,12 +402,14 @@ interface BeagleContract {
      *
      * @param content - The text that appears in the dialog.
      * @param isHorizontalScrollEnabled - When true, the dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. False by default.
+     * @param shouldShowShareButton - Whether or not the Share functionality should be enabled. True by default.
      * @param timestamp - The moment the contents of the dialog are relevant to. This value is used for generating the file name when sharing. By default it is the moment of the function call.
      * @param id - The unique identifier of the event. [randomId] by default.
      */
     fun showDialog(
         content: CharSequence,
         isHorizontalScrollEnabled: Boolean = false,
+        shouldShowShareButton: Boolean = true,
         timestamp: Long = currentTimestamp,
         id: String = randomId
     ) = Unit

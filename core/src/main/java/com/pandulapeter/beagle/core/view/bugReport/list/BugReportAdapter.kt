@@ -17,6 +17,7 @@ internal class BugReportAdapter(
     private val onLogLongTapped: (String, String?) -> Unit,
     private val onShowMoreLogsTapped: (String?) -> Unit,
     private val onDescriptionChanged: (CharSequence) -> Unit,
+    private val onMetadataItemClicked: (BugReportViewModel.MetadataType) -> Unit,
     private val onMetadataItemSelectionChanged: (BugReportViewModel.MetadataType) -> Unit
 ) : ListAdapter<BugReportListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportListItem>() {
 
@@ -69,6 +70,7 @@ internal class BugReportAdapter(
         )
         R.layout.beagle_item_bug_report_metadata_item -> MetadataItemViewHolder.create(
             parent = parent,
+            onItemClicked = onMetadataItemClicked,
             onItemSelectionChanged = onMetadataItemSelectionChanged
         )
         else -> throw IllegalArgumentException("Unsupported view type: $viewType.")

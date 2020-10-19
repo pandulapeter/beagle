@@ -11,9 +11,11 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.core.view.bugReport.BugReportViewModel
+import com.pandulapeter.beagle.utils.consume
 
 internal class MetadataItemViewHolder private constructor(
     itemView: View,
+    onItemClicked: (BugReportViewModel.MetadataType) -> Unit,
     onItemSelectionChanged: (BugReportViewModel.MetadataType) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -29,7 +31,14 @@ internal class MetadataItemViewHolder private constructor(
     init {
         itemView.setOnClickListener {
             if (adapterPosition != RecyclerView.NO_POSITION) {
-                onItemSelectionChanged(type)
+                onItemClicked(type)
+            }
+        }
+        itemView.setOnLongClickListener {
+            consume {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    onItemSelectionChanged(type)
+                }
             }
         }
     }
@@ -38,8 +47,8 @@ internal class MetadataItemViewHolder private constructor(
         itemView.tag = uiModel.type
         textView.setText(
             when (uiModel.type) {
-                BugReportViewModel.MetadataType.BUILD_INFO -> BeagleCore.implementation.appearance.bugReportTexts.buildInformation
-                BugReportViewModel.MetadataType.DEVICE_INFO -> BeagleCore.implementation.appearance.bugReportTexts.deviceInformation
+                BugReportViewModel.MetadataType.BUILD_INFORMATION -> BeagleCore.implementation.appearance.bugReportTexts.buildInformation
+                BugReportViewModel.MetadataType.DEVICE_INFORMATION -> BeagleCore.implementation.appearance.bugReportTexts.deviceInformation
             }
         )
         checkBox.run {
@@ -60,9 +69,11 @@ internal class MetadataItemViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
+            onItemClicked: (BugReportViewModel.MetadataType) -> Unit,
             onItemSelectionChanged: (BugReportViewModel.MetadataType) -> Unit
         ) = MetadataItemViewHolder(
             itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_metadata_item, parent, false),
+            onItemClicked = onItemClicked,
             onItemSelectionChanged = onItemSelectionChanged
         )
     }

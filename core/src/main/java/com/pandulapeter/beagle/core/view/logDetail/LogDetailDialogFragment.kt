@@ -56,6 +56,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
                 shareButton = menu.findItem(R.id.beagle_share).also {
                     it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
                     it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
+                    it.isVisible = arguments?.shouldShowShareButton == true
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
             }
@@ -83,6 +84,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
     companion object {
         private var Bundle.content by BundleArgumentDelegate.CharSequence("content")
         private var Bundle.isHorizontalScrollEnabled by BundleArgumentDelegate.Boolean("isHorizontalScrollEnabled")
+        private var Bundle.shouldShowShareButton by BundleArgumentDelegate.Boolean("shouldShowShareButton")
         private var Bundle.timestamp by BundleArgumentDelegate.Long("timestamp")
         private var Bundle.id by BundleArgumentDelegate.String("id")
 
@@ -90,11 +92,13 @@ internal class LogDetailDialogFragment : DialogFragment() {
             fragmentManager: FragmentManager,
             content: CharSequence,
             isHorizontalScrollEnabled: Boolean,
+            shouldShowShareButton: Boolean,
             timestamp: Long,
             id: String
         ) = LogDetailDialogFragment().withArguments {
             it.content = content
             it.isHorizontalScrollEnabled = isHorizontalScrollEnabled
+            it.shouldShowShareButton = shouldShowShareButton
             it.timestamp = timestamp
             it.id = id
         }.run { show(fragmentManager, tag) }
