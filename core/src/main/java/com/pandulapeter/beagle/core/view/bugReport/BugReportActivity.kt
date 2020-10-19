@@ -28,6 +28,7 @@ import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
+import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity.Companion.shouldShowMetadataSection
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
@@ -48,7 +49,7 @@ internal class BugReportActivity : AppCompatActivity() {
                     shouldShowNetworkLogsSection = arguments.shouldShowNetworkLogsSection,
                     logLabelSectionsToShow = arguments.logLabelSectionsToShow,
                     shouldShowMetadataSection = arguments.shouldShowMetadataSection,
-                    buildInformation = generateBuildInformation(),
+                    buildInformation = arguments.buildInformation,
                     deviceInformation = generateDeviceInformation(),
                     descriptionTemplate = arguments.descriptionTemplate
                 ) as T
@@ -135,8 +136,6 @@ internal class BugReportActivity : AppCompatActivity() {
 
     fun refresh() = viewModel.refresh()
 
-    private fun generateBuildInformation(): CharSequence = "Build information (WIP)" //TODO
-
     private fun generateDeviceInformation(): CharSequence {
         var text: CharSequence = ""
         //TODO: Should be configurable
@@ -195,6 +194,7 @@ internal class BugReportActivity : AppCompatActivity() {
         private var Bundle.shouldShowNetworkLogsSection by BundleArgumentDelegate.Boolean("shouldShowNetworkLogsSection")
         private var Bundle.logLabelSectionsToShow by BundleArgumentDelegate.StringList("logLabelSectionsToShow")
         private var Bundle.shouldShowMetadataSection by BundleArgumentDelegate.Boolean("shouldShowMetadataSection")
+        private var Bundle.buildInformation by BundleArgumentDelegate.CharSequence("buildInformation")
         private var Bundle.descriptionTemplate by BundleArgumentDelegate.String("descriptionTemplate")
 
         fun newIntent(
@@ -203,12 +203,14 @@ internal class BugReportActivity : AppCompatActivity() {
             shouldShowNetworkLogsSection: Boolean,
             logLabelSectionsToShow: List<String?>,
             shouldShowMetadataSection: Boolean,
+            buildInformation: CharSequence,
             descriptionTemplate: String
         ) = Intent(context, BugReportActivity::class.java).putExtra(ARGUMENTS, Bundle().also {
             it.shouldShowGallerySection = shouldShowGallerySection
             it.shouldShowNetworkLogsSection = shouldShowNetworkLogsSection
             it.logLabelSectionsToShow = logLabelSectionsToShow
             it.shouldShowMetadataSection = shouldShowMetadataSection
+            it.buildInformation = buildInformation
             it.descriptionTemplate = descriptionTemplate
         })
     }

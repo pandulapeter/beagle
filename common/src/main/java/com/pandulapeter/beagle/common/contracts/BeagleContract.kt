@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Placement
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.NetworkLogListener
@@ -18,6 +19,7 @@ import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.commonBase.randomId
+import com.pandulapeter.beagle.modules.BugReportButtonModule
 import kotlin.reflect.KClass
 
 /**
@@ -372,6 +374,7 @@ interface BeagleContract {
      * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. True by default.
      * @param logLabelSectionsToShow - The list of log labels for which sections should be added. By default it adds a section for all logs, without filtering.
      * @param shouldShowMetadataSection - Whether or not the metadata section should be added. True by default.
+     * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [BugReportButtonModule.DEFAULT_BUILD_INFORMATION] by default.
      * @param descriptionTemplate - The default value of the free-text input. Empty string by default.
      * @param onBugReportReady - The lambda that gets invoked after the bug report is ready, with the [Uri] pointing to the ZIP file, or null for the default implementation that uses the system share sheet. Null by default.
      */
@@ -380,6 +383,7 @@ interface BeagleContract {
         shouldShowNetworkLogsSection: Boolean = true,
         logLabelSectionsToShow: List<String?> = listOf(null),
         shouldShowMetadataSection: Boolean = true,
+        buildInformation: (activity: Application?) -> List<Pair<Text, String>> = BugReportButtonModule.DEFAULT_BUILD_INFORMATION,
         descriptionTemplate: String = "",
         onBugReportReady: ((bugReport: Uri) -> Unit)? = null
     ) = Unit

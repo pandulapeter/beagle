@@ -14,6 +14,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Placement
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
@@ -253,6 +254,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         shouldShowNetworkLogsSection: Boolean,
         logLabelSectionsToShow: List<String?>,
         shouldShowMetadataSection: Boolean,
+        buildInformation: (Application?) -> List<Pair<Text, String>>,
         descriptionTemplate: String,
         onBugReportReady: ((Uri) -> Unit)?
     ) = bugReportManager.openBugReportingScreen(
@@ -260,6 +262,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         shouldShowNetworkLogsSection = shouldShowNetworkLogsSection,
         logLabelSectionsToShow = logLabelSectionsToShow,
         shouldShowMetadataSection = shouldShowMetadataSection,
+        buildInformation = buildInformation,
         descriptionTemplate = descriptionTemplate,
         onBugReportReady = onBugReportReady
     )

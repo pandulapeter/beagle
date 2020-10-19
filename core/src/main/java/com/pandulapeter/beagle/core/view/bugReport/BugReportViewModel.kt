@@ -235,12 +235,14 @@ internal class BugReportViewModel(
                         text = BeagleCore.implementation.appearance.bugReportTexts.metadataSectionTitle
                     )
                 )
-                add(
-                    MetadataItemViewHolder.UiModel(
-                        type = MetadataType.BUILD_INFORMATION,
-                        isSelected = shouldAttachBuildInformation
+                if (buildInformation.isNotBlank()) {
+                    add(
+                        MetadataItemViewHolder.UiModel(
+                            type = MetadataType.BUILD_INFORMATION,
+                            isSelected = shouldAttachBuildInformation
+                        )
                     )
-                )
+                }
                 add(
                     MetadataItemViewHolder.UiModel(
                         type = MetadataType.DEVICE_INFORMATION,
