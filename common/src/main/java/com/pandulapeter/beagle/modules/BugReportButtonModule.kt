@@ -8,6 +8,7 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_BUILD_INFORMATION
+import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_DESCRIPTION_TEMPLATE
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_ICON
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_IS_ENABLED
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_LABEL_SECTIONS_TO_SHOW
@@ -35,7 +36,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * @param logLabelSectionsToShow - The list of log tags for which sections should be added. [DEFAULT_LABEL_SECTIONS_TO_SHOW] by default, which adds a section for all logs, without filtering.
  * @param shouldShowMetadataSection - Whether or not the metadata section (build information and device information) should be added. [DEFAULT_SHOULD_SHOW_METADATA_SECTION] by default.
  * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [DEFAULT_BUILD_INFORMATION] by default.
- * @param descriptionTemplate - The default value of the free-text input. Empty string by default.
+ * @param descriptionTemplate - The default value of the free-text input. [DEFAULT_DESCRIPTION_TEMPLATE] by default.
  * @param type - Specify a [TextModule.Type] to apply a specific appearance. [DEFAULT_TYPE] by default.
  * @param icon - A drawable resource ID that will be tinted and displayed before the text, or null to display no icon. [DEFAULT_ICON] by default.
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
@@ -50,7 +51,7 @@ data class BugReportButtonModule(
     val logLabelSectionsToShow: List<String?> = DEFAULT_LABEL_SECTIONS_TO_SHOW,
     val shouldShowMetadataSection: Boolean = DEFAULT_SHOULD_SHOW_METADATA_SECTION,
     val buildInformation: (activity: Application?) -> List<Pair<Text, String>> = DEFAULT_BUILD_INFORMATION,
-    val descriptionTemplate: String = "",
+    val descriptionTemplate: Text = Text.CharSequence(DEFAULT_DESCRIPTION_TEMPLATE),
     val type: TextModule.Type = DEFAULT_TYPE,
     @DrawableRes val icon: Int? = DEFAULT_ICON,
     val isEnabled: Boolean = DEFAULT_IS_ENABLED,
@@ -67,11 +68,6 @@ data class BugReportButtonModule(
         private const val DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION = true
         private val DEFAULT_LABEL_SECTIONS_TO_SHOW = listOf<String?>(null)
         private const val DEFAULT_SHOULD_SHOW_METADATA_SECTION = true
-        private val DEFAULT_TYPE = TextModule.Type.NORMAL
-        private val DEFAULT_ICON: Int? = null
-        private const val DEFAULT_IS_ENABLED = true
-        private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}
-        private val DEFAULT_ON_BUG_REPORT_READY: ((Uri) -> Unit)? = null
         val DEFAULT_BUILD_INFORMATION: (Application?) -> List<Pair<Text, String>> = { application ->
             mutableListOf<Pair<Text, String>>().apply {
                 if (application != null) {
@@ -79,5 +75,11 @@ data class BugReportButtonModule(
                 }
             }
         }
+        private val DEFAULT_DESCRIPTION_TEMPLATE = ""
+        private val DEFAULT_TYPE = TextModule.Type.NORMAL
+        private val DEFAULT_ICON: Int? = null
+        private const val DEFAULT_IS_ENABLED = true
+        private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}
+        private val DEFAULT_ON_BUG_REPORT_READY: ((Uri) -> Unit)? = null
     }
 }

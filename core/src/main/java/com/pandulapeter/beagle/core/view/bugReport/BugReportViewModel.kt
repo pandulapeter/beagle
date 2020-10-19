@@ -33,7 +33,7 @@ internal class BugReportViewModel(
     private val shouldShowMetadataSection: Boolean,
     val buildInformation: CharSequence,
     val deviceInformation: CharSequence,
-    descriptionTemplate: String
+    descriptionTemplate: CharSequence
 ) : ViewModel() {
 
     private val _items = MutableLiveData(emptyList<BugReportListItem>())

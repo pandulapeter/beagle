@@ -384,7 +384,7 @@ interface BeagleContract {
         logLabelSectionsToShow: List<String?> = listOf(null),
         shouldShowMetadataSection: Boolean = true,
         buildInformation: (activity: Application?) -> List<Pair<Text, String>> = BugReportButtonModule.DEFAULT_BUILD_INFORMATION,
-        descriptionTemplate: String = "",
+        descriptionTemplate: Text = Text.CharSequence(""),
         onBugReportReady: ((bugReport: Uri) -> Unit)? = null
     ) = Unit
 

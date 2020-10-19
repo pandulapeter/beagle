@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.util.LogEntry
@@ -50,7 +51,7 @@ internal class BugReportActivity : AppCompatActivity() {
                     shouldShowMetadataSection = arguments.shouldShowMetadataSection,
                     buildInformation = arguments.buildInformation,
                     deviceInformation = generateDeviceInformation(),
-                    descriptionTemplate = arguments.descriptionTemplate
+                    descriptionTemplate = arguments.descriptionTemplate?.let(::text) ?: ""
                 ) as T
             }
         }).get(BugReportViewModel::class.java)
@@ -195,7 +196,7 @@ internal class BugReportActivity : AppCompatActivity() {
         private var Bundle.logLabelSectionsToShow by BundleArgumentDelegate.StringList("logLabelSectionsToShow")
         private var Bundle.shouldShowMetadataSection by BundleArgumentDelegate.Boolean("shouldShowMetadataSection")
         private var Bundle.buildInformation by BundleArgumentDelegate.CharSequence("buildInformation")
-        private var Bundle.descriptionTemplate by BundleArgumentDelegate.String("descriptionTemplate")
+        private var Bundle.descriptionTemplate by BundleArgumentDelegate.Parcelable<Text>("descriptionTemplate")
 
         fun newIntent(
             context: Context,
@@ -204,7 +205,7 @@ internal class BugReportActivity : AppCompatActivity() {
             logLabelSectionsToShow: List<String?>,
             shouldShowMetadataSection: Boolean,
             buildInformation: CharSequence,
-            descriptionTemplate: String
+            descriptionTemplate: Text
         ) = Intent(context, BugReportActivity::class.java).putExtra(ARGUMENTS, Bundle().also {
             it.shouldShowGallerySection = shouldShowGallerySection
             it.shouldShowNetworkLogsSection = shouldShowNetworkLogsSection

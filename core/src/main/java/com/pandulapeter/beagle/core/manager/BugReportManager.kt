@@ -23,7 +23,7 @@ internal class BugReportManager {
         logLabelSectionsToShow: List<String?>,
         shouldShowMetadataSection: Boolean,
         buildInformation: (Application?) -> List<Pair<Text, String>>,
-        descriptionTemplate: String,
+        descriptionTemplate: Text,
         onBugReportReady: ((Uri) -> Unit)?
     ) = performOnHide {
         //TODO: Handle onBugReportReady

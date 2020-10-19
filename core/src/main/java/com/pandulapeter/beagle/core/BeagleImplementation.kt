@@ -255,7 +255,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         logLabelSectionsToShow: List<String?>,
         shouldShowMetadataSection: Boolean,
         buildInformation: (Application?) -> List<Pair<Text, String>>,
-        descriptionTemplate: String,
+        descriptionTemplate: Text,
         onBugReportReady: ((Uri) -> Unit)?
     ) = bugReportManager.openBugReportingScreen(
         shouldShowGallerySection = shouldShowGallerySection,
