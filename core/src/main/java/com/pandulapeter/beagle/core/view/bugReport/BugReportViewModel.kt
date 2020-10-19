@@ -1,10 +1,10 @@
 package com.pandulapeter.beagle.core.view.bugReport
 
-import android.content.Context
+import android.app.Application
 import android.net.Uri
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
@@ -32,7 +32,7 @@ import java.io.File
 import java.util.concurrent.Executors
 
 internal class BugReportViewModel(
-    private val context: Context,
+    application: Application,
     private val shouldShowGallerySection: Boolean,
     private val shouldShowNetworkLogsSection: Boolean,
     private val logLabelSectionsToShow: List<String?>,
@@ -40,7 +40,7 @@ internal class BugReportViewModel(
     val buildInformation: CharSequence,
     val deviceInformation: CharSequence,
     descriptionTemplate: CharSequence
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val _items = MutableLiveData(emptyList<BugReportListItem>())
     val items: LiveData<List<BugReportListItem>> = _items
@@ -73,6 +73,7 @@ internal class BugReportViewModel(
             }
         }
 
+    private val context = getApplication<Application>()
     private val listManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
     private val _isSendButtonEnabled = MutableLiveData(false)
     val isSendButtonEnabled: LiveData<Boolean> = _isSendButtonEnabled

@@ -46,7 +46,7 @@ internal class BugReportActivity : AppCompatActivity() {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T = intent.getBundleExtra(ARGUMENTS)!!.let { arguments ->
                 BugReportViewModel(
-                    context = applicationContext,
+                    application = application,
                     shouldShowGallerySection = arguments.shouldShowGallerySection,
                     shouldShowNetworkLogsSection = arguments.shouldShowNetworkLogsSection,
                     logLabelSectionsToShow = arguments.logLabelSectionsToShow,

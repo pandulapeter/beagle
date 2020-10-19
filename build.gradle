@@ -19,7 +19,7 @@ buildscript {
         okHttpVersion = "4.8.1"
         ktorVersion = "1.4.0"
         coilVersion = "1.0.0-rc3"
-        leakCanaryVersion= "2.2"
+        leakCanaryVersion = "2.2"
     }
     repositories {
         google()

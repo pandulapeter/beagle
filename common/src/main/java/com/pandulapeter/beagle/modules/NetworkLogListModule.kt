@@ -9,7 +9,6 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_BASE_URL
 import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_IS_EXPANDED_INITIALLY
 import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_MAX_ITEM_COUNT
-import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_MAX_ITEM_TITLE_LENGTH
 import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.DEFAULT_TITLE
 import com.pandulapeter.beagle.modules.NetworkLogListModule.Companion.ID
 import java.text.SimpleDateFormat

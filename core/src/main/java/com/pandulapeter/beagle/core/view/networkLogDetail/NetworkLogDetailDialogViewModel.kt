@@ -240,7 +240,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             } else json
         } catch (e: JSONException) {
             json
-        }
+        } ?: json
 
         fun createLogFileContents(
             title: String,
