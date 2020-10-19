@@ -1,5 +1,5 @@
 # Beagle (Android library)
-*A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, and many other useful features.*
+*A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, generating bug reports, and many other useful features.*
 
 <img src="metadata/logo.png" width="20%" />
 
@@ -47,7 +47,7 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.1.4"
+    def beagleVersion = "2.2.0"
     debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
