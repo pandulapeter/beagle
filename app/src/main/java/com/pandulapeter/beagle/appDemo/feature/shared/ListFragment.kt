@@ -93,7 +93,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
             binding.appBar.run {
                 postDelayed({
                     try {
-                        isLifted = binding.recyclerView.computeVerticalScrollOffset() != 0
+                        setLifted(binding.recyclerView.computeVerticalScrollOffset() != 0)
                         binding.recyclerView.shouldBlockGestures = { false }
                     } catch (_: IllegalStateException) {
                     }
