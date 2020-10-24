@@ -15,6 +15,7 @@ import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Co
 import com.pandulapeter.beagle.common.configuration.Appearance.Companion.DEFAULT_APPLY_INSETS
 import com.pandulapeter.beagle.common.configuration.Appearance.Companion.DEFAULT_THEME_RESOURCE_ID
 import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts
+import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_ANDROID_VERSION
 import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_DENSITY
 import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_MANUFACTURER
 import com.pandulapeter.beagle.common.configuration.Appearance.DeviceInfoTexts.Companion.DEFAULT_MODEL
@@ -88,9 +89,9 @@ data class Appearance(
      * @param shareHint - The hint used for the Share icon of the Gallery screen and the Log detail dialog. [DEFAULT_SHARE_HINT] by default.
      */
     data class GeneralTexts(
-        val applyButtonText: Text = Text.CharSequence(DEFAULT_APPLY_BUTTON_TEXT),
-        val resetButtonText: Text = Text.CharSequence(DEFAULT_RESET_BUTTON_TEXT),
-        val shareHint: Text = Text.CharSequence(DEFAULT_SHARE_HINT)
+        val applyButtonText: Text = DEFAULT_APPLY_BUTTON_TEXT.toText(),
+        val resetButtonText: Text = DEFAULT_RESET_BUTTON_TEXT.toText(),
+        val shareHint: Text = DEFAULT_SHARE_HINT.toText()
     ) {
         companion object {
             private const val DEFAULT_APPLY_BUTTON_TEXT = "Apply"
@@ -110,12 +111,12 @@ data class Appearance(
      * @param notificationChannelName - The name for the notification channel that handles all notifications related to screen capture. [DEFAULT_NOTIFICATION_CHANNEL_NAME] by default.
      */
     data class ScreenCaptureTexts(
-        val toastText: Text? = Text.CharSequence(DEFAULT_TOAST_TEXT),
-        val inProgressNotificationTitle: Text = Text.CharSequence(DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE),
-        val inProgressNotificationContent: Text = Text.CharSequence(DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT),
-        val readyNotificationTitle: Text = Text.CharSequence(DEFAULT_READY_NOTIFICATION_TITLE),
-        val readyNotificationContent: Text = Text.CharSequence(DEFAULT_READY_NOTIFICATION_CONTENT),
-        val notificationChannelName: Text = Text.CharSequence(DEFAULT_NOTIFICATION_CHANNEL_NAME)
+        val toastText: Text? = DEFAULT_TOAST_TEXT.toText(),
+        val inProgressNotificationTitle: Text = DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE.toText(),
+        val inProgressNotificationContent: Text = DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT.toText(),
+        val readyNotificationTitle: Text = DEFAULT_READY_NOTIFICATION_TITLE.toText(),
+        val readyNotificationContent: Text = DEFAULT_READY_NOTIFICATION_CONTENT.toText(),
+        val notificationChannelName: Text = DEFAULT_NOTIFICATION_CHANNEL_NAME.toText()
     ) {
         companion object {
             private const val DEFAULT_TOAST_TEXT = "Recording in progress. Tap on the notification to stop it."
@@ -139,13 +140,13 @@ data class Appearance(
      * @param deleteConfirmationNegative - The positive text used for the Delete confirmation dialog of the Gallery screen. [DEFAULT_DELETE_CONFIRMATION_NEGATIVE] by default.
      */
     data class GalleryTexts(
-        val title: Text = Text.CharSequence(DEFAULT_TITLE),
-        val noMediaMessage: Text = Text.CharSequence(DEFAULT_NO_MEDIA_MESSAGE),
-        val deleteHint: Text = Text.CharSequence(DEFAULT_DELETE_HINT),
-        val deleteConfirmationMessageSingular: Text = Text.CharSequence(DEFAULT_DELETE_CONFIRMATION_MESSAGE_SINGULAR),
-        val deleteConfirmationMessagePlural: Text = Text.CharSequence(DEFAULT_DELETE_CONFIRMATION_MESSAGE_PLURAL),
-        val deleteConfirmationPositive: Text = Text.CharSequence(DEFAULT_DELETE_CONFIRMATION_POSITIVE),
-        val deleteConfirmationNegative: Text = Text.CharSequence(DEFAULT_DELETE_CONFIRMATION_NEGATIVE)
+        val title: Text = DEFAULT_TITLE.toText(),
+        val noMediaMessage: Text = DEFAULT_NO_MEDIA_MESSAGE.toText(),
+        val deleteHint: Text = DEFAULT_DELETE_HINT.toText(),
+        val deleteConfirmationMessageSingular: Text = DEFAULT_DELETE_CONFIRMATION_MESSAGE_SINGULAR.toText(),
+        val deleteConfirmationMessagePlural: Text = DEFAULT_DELETE_CONFIRMATION_MESSAGE_PLURAL.toText(),
+        val deleteConfirmationPositive: Text = DEFAULT_DELETE_CONFIRMATION_POSITIVE.toText(),
+        val deleteConfirmationNegative: Text = DEFAULT_DELETE_CONFIRMATION_NEGATIVE.toText()
     ) {
         companion object {
             private const val DEFAULT_TITLE = "Gallery"
@@ -173,16 +174,16 @@ data class Appearance(
      * @param showMoreText - The text that appears below lists that have more content. [DEFAULT_SHOW_MORE_TEXT] by default.
      */
     data class BugReportTexts(
-        val title: Text = Text.CharSequence(DEFAULT_TITLE),
-        val sendButtonHint: Text = Text.CharSequence(DEFAULT_SEND_BUTTON_HINT),
-        val gallerySectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_GALLERY_SECTION_TITLE ($selectedItemCount $SELECTED)") },
-        val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> Text.CharSequence("$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)") },
-        val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> Text.CharSequence("${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)") },
-        val metadataSectionTitle: Text = Text.CharSequence(DEFAULT_METADATA_SECTION_TITLE),
-        val buildInformation: Text = Text.CharSequence(DEFAULT_BUILD_INFORMATION),
-        val deviceInformation: Text = Text.CharSequence(DEFAULT_DEVICE_INFORMATION),
-        val descriptionSectionTitle: Text = Text.CharSequence(DEFAULT_DESCRIPTION_SECTION_TITLE),
-        val showMoreText: Text = Text.CharSequence(DEFAULT_SHOW_MORE_TEXT)
+        val title: Text = DEFAULT_TITLE.toText(),
+        val sendButtonHint: Text = DEFAULT_SEND_BUTTON_HINT.toText(),
+        val gallerySectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_GALLERY_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
+        val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
+        val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> "${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)".toText() },
+        val metadataSectionTitle: Text = DEFAULT_METADATA_SECTION_TITLE.toText(),
+        val buildInformation: Text = DEFAULT_BUILD_INFORMATION.toText(),
+        val deviceInformation: Text = DEFAULT_DEVICE_INFORMATION.toText(),
+        val descriptionSectionTitle: Text = DEFAULT_DESCRIPTION_SECTION_TITLE.toText(),
+        val showMoreText: Text = DEFAULT_SHOW_MORE_TEXT.toText()
     ) {
         companion object {
             private const val DEFAULT_TITLE = "Report a bug"
@@ -210,12 +211,12 @@ data class Appearance(
      * @param toggleExpandCollapseHint - The hint for the toggle that expands or collapses all JSON tags. [DEFAULT_TOGGLE_EXPAND_COLLAPSE] by default.
      */
     data class NetworkLogTexts(
-        val metadata: Text = Text.CharSequence(DEFAULT_METADATA),
-        val headers: Text = Text.CharSequence(DEFAULT_HEADERS),
-        val none: Text = Text.CharSequence(DEFAULT_NONE),
-        val timestamp: Text = Text.CharSequence(DEFAULT_TIMESTAMP),
-        val duration: Text = Text.CharSequence(DEFAULT_DURATION),
-        val toggleExpandCollapseHint: Text = Text.CharSequence(DEFAULT_TOGGLE_EXPAND_COLLAPSE)
+        val metadata: Text = DEFAULT_METADATA.toText(),
+        val headers: Text = DEFAULT_HEADERS.toText(),
+        val none: Text = DEFAULT_NONE.toText(),
+        val timestamp: Text = DEFAULT_TIMESTAMP.toText(),
+        val duration: Text = DEFAULT_DURATION.toText(),
+        val toggleExpandCollapseHint: Text = DEFAULT_TOGGLE_EXPAND_COLLAPSE.toText()
     ) {
         companion object {
             private const val DEFAULT_METADATA = "Metadata"
@@ -238,12 +239,12 @@ data class Appearance(
      * @param androidVersion - The term used for the Android OS version code. [DEFAULT_ANDROID_VERSION] by default.
      */
     data class DeviceInfoTexts(
-        val manufacturer: Text = Text.CharSequence(DEFAULT_MANUFACTURER),
-        val model: Text = Text.CharSequence(DEFAULT_MODEL),
-        val resolutionPx: Text = Text.CharSequence(DEFAULT_RESOLUTION_PX),
-        val resolutionDp: Text = Text.CharSequence(DEFAULT_RESOLUTION_DP),
-        val density: Text = Text.CharSequence(DEFAULT_DENSITY),
-        val androidVersion: Text = Text.CharSequence(DEFAULT_ANDROID_VERSION)
+        val manufacturer: Text = DEFAULT_MANUFACTURER.toText(),
+        val model: Text = DEFAULT_MODEL.toText(),
+        val resolutionPx: Text = DEFAULT_RESOLUTION_PX.toText(),
+        val resolutionDp: Text = DEFAULT_RESOLUTION_DP.toText(),
+        val density: Text = DEFAULT_DENSITY.toText(),
+        val androidVersion: Text = DEFAULT_ANDROID_VERSION.toText()
     ) {
         companion object {
             private const val DEFAULT_MANUFACTURER = "Manufacturer"

@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.modules
 
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.commonBase.LOG_TIME_FORMAT
@@ -35,7 +36,7 @@ import java.util.Locale
  */
 @Suppress("unused")
 data class LifecycleLogListModule(
-    val title: Text = Text.CharSequence(DEFAULT_TITLE),
+    val title: Text = DEFAULT_TITLE.toText(),
     val eventTypes: List<EventType> = DEFAULT_EVENT_TYPES,
     val shouldDisplayFullNames: Boolean = DEFAULT_SHOULD_DISPLAY_FULL_NAMES,
     val maxItemCount: Int = DEFAULT_MAX_ITEM_COUNT,

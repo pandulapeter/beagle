@@ -1,6 +1,6 @@
 package com.pandulapeter.beagle.core.util
 
-import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 
 internal data class NetworkLogEntry(
@@ -13,5 +13,5 @@ internal data class NetworkLogEntry(
     val timestamp: Long
 ) : BeagleListItemContract {
 
-    override val title = Text.CharSequence(url)
+    override val title = url.toText()
 }

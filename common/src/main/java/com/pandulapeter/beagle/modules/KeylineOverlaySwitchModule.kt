@@ -4,6 +4,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import com.pandulapeter.beagle.common.configuration.Insets
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.ID
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.DEFAULT_APPLY_INSETS
@@ -36,7 +37,7 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
  */
 @Suppress("unused")
 data class KeylineOverlaySwitchModule(
-    override val text: (currentValue: Boolean) -> Text = { Text.CharSequence(DEFAULT_TEXT) },
+    override val text: (currentValue: Boolean) -> Text = { DEFAULT_TEXT.toText() },
     @Dimension val grid: Int? = DEFAULT_GRID,
     @Dimension val keylinePrimary: Int? = DEFAULT_KEYLINE_PRIMARY,
     @Dimension val keylineSecondary: Int? = DEFAULT_KEYLINE_SECONDARY,

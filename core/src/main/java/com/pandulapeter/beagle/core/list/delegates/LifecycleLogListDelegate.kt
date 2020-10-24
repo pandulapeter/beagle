@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
@@ -16,9 +16,9 @@ internal class LifecycleLogListDelegate : ExpandableModuleDelegate<LifecycleLogL
         addAll(BeagleCore.implementation.getLifecycleLogEntries(module.eventTypes).take(module.maxItemCount).map { entry ->
             ExpandedItemTextCell(
                 id = "${module.id}_${entry.id}",
-                text = Text.CharSequence((module.timestampFormatter?.let { formatter ->
+                text = (module.timestampFormatter?.let { formatter ->
                     "[".append(formatter(entry.timestamp)).append("] ").append(entry.getFormattedTitle(module.shouldDisplayFullNames))
-                } ?: entry.getFormattedTitle(module.shouldDisplayFullNames))),
+                } ?: entry.getFormattedTitle(module.shouldDisplayFullNames)).toText(),
                 isEnabled = true,
                 shouldEllipsize = false,
                 onItemSelected = null

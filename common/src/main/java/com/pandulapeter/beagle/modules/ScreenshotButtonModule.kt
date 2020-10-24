@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.modules
 import androidx.annotation.DrawableRes
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.DEFAULT_ICON
@@ -31,7 +32,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  */
 @Suppress("unused")
 data class ScreenshotButtonModule(
-    val text: Text = Text.CharSequence(DEFAULT_TEXT),
+    val text: Text = DEFAULT_TEXT.toText(),
     val type: TextModule.Type = DEFAULT_TYPE,
     @DrawableRes val icon: Int? = DEFAULT_ICON,
     val isEnabled: Boolean = DEFAULT_IS_ENABLED,

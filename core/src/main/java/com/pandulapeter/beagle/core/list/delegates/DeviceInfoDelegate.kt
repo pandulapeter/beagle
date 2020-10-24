@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.DisplayMetrics
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemKeyValueCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
@@ -36,7 +37,7 @@ internal class DeviceInfoDelegate : ExpandableModuleDelegate<DeviceInfoModule> {
                     }
                 }",
                 key = key,
-                value = Text.CharSequence(value)
+                value = value.toText()
             )
         )
     }

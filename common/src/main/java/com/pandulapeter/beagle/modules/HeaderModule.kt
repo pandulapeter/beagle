@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.HeaderModule.Companion.DEFAULT_SUBTITLE
@@ -21,8 +22,8 @@ import com.pandulapeter.beagle.modules.HeaderModule.Companion.ID
 @Suppress("unused")
 data class HeaderModule(
     val title: Text,
-    val subtitle: Text? = DEFAULT_SUBTITLE?.let { Text.CharSequence(it) },
-    val text: Text? = DEFAULT_TEXT?.let { Text.CharSequence(it) }
+    val subtitle: Text? = DEFAULT_SUBTITLE?.toText(),
+    val text: Text? = DEFAULT_TEXT?.toText()
 ) : Module<HeaderModule> {
 
     constructor(
@@ -30,9 +31,9 @@ data class HeaderModule(
         subtitle: CharSequence? = DEFAULT_SUBTITLE,
         text: CharSequence? = DEFAULT_TEXT
     ) : this(
-        title = Text.CharSequence(title),
-        subtitle = subtitle?.let { Text.CharSequence(it) },
-        text = text?.let { Text.CharSequence(it) }
+        title = title.toText(),
+        subtitle = subtitle?.toText(),
+        text = text?.toText()
     )
 
     constructor(
@@ -40,9 +41,9 @@ data class HeaderModule(
         @StringRes subtitle: Int? = DEFAULT_SUBTITLE_INT,
         @StringRes text: Int? = DEFAULT_TEXT_INT
     ) : this(
-        title = Text.ResourceId(title),
-        subtitle = subtitle?.let { Text.ResourceId(it) },
-        text = text?.let { Text.ResourceId(it) }
+        title = title.toText(),
+        subtitle = subtitle?.toText(),
+        text = text?.toText()
     )
 
     override val id: String = ID

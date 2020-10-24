@@ -11,7 +11,6 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Placement
-import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
@@ -99,13 +98,11 @@ internal class ListManager {
     private val modules = mutableListOf<Module<*>>(
         TextModule(
             id = HINT_MODULE_ID,
-            text = Text.CharSequence(
-                SpannableString("Welcome to Beagle!\n\nUse Beagle.set() or Beagle.add() to add modules to the debug menu.").apply {
-                    setSpan(StyleSpan(Typeface.BOLD), 0, 18, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                    setSpan(StyleSpan(Typeface.ITALIC), 24, 36, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                    setSpan(StyleSpan(Typeface.ITALIC), 40, 52, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                }
-            )
+            text = SpannableString("Welcome to Beagle!\n\nUse Beagle.set() or Beagle.add() to add modules to the debug menu.").apply {
+                setSpan(StyleSpan(Typeface.BOLD), 0, 18, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                setSpan(StyleSpan(Typeface.ITALIC), 24, 36, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                setSpan(StyleSpan(Typeface.ITALIC), 40, 52, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+            }
         )
     )
     private val moduleDelegates = mutableMapOf(

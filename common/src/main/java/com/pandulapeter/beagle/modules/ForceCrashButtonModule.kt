@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.DrawableRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.ForceCrashButtonModule.Companion.DEFAULT_EXCEPTION_MESSAGE
@@ -27,7 +28,7 @@ import com.pandulapeter.beagle.modules.ForceCrashButtonModule.Companion.ID
  */
 @Suppress("unused")
 data class ForceCrashButtonModule(
-    val text: Text = Text.CharSequence(DEFAULT_TEXT),
+    val text: Text = DEFAULT_TEXT.toText(),
     val exception: RuntimeException = RuntimeException(DEFAULT_EXCEPTION_MESSAGE),
     val type: TextModule.Type = DEFAULT_TYPE,
     @DrawableRes val icon: Int? = DEFAULT_ICON,

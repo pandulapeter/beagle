@@ -8,7 +8,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesDetailFragm
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
 import com.pandulapeter.beagle.appDemo.utils.showSnackbar
-import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,7 +28,7 @@ class NetworkRequestInterceptorFragment :
 
     override fun getBeagleModules(): List<Module<*>> = listOf(
         NetworkLogListModule(
-            title = Text.ResourceId(R.string.case_study_network_request_interceptor_network_activity),
+            title = R.string.case_study_network_request_interceptor_network_activity.toText(),
             isExpandedInitially = true,
             baseUrl = Constants.BASE_URL
         )

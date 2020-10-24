@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.commonBase.randomId
@@ -29,8 +30,8 @@ data class KeyValueListModule(
         isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
         id: String = randomId
     ) : this(
-        title = Text.CharSequence(title),
-        pairs = pairs.map { Text.CharSequence(it.first) to Text.CharSequence(it.second) },
+        title = title.toText(),
+        pairs = pairs.map { it.first.toText() to it.second.toText() },
         isExpandedInitially = isExpandedInitially,
         id = id
     )
@@ -41,8 +42,8 @@ data class KeyValueListModule(
         isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
         id: String = randomId
     ) : this(
-        title = Text.ResourceId(title),
-        pairs = pairs.map { Text.CharSequence(it.first) to Text.CharSequence(it.second) },
+        title = title.toText(),
+        pairs = pairs.map { it.first.toText() to it.second.toText() },
         isExpandedInitially = isExpandedInitially,
         id = id
     )

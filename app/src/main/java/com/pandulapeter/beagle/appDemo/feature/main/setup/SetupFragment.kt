@@ -12,7 +12,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.utils.createTextModule
 import com.pandulapeter.beagle.appDemo.utils.openUrl
-import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
@@ -50,9 +50,9 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
     override fun getBeagleModules() = listOf(
         createTextModule(R.string.setup_debug_menu_text_1),
         DividerModule(id = "divider1"),
-        AppInfoButtonModule(text = Text.ResourceId(R.string.setup_debug_menu_app_info_button)),
-        ScreenshotButtonModule(text = Text.ResourceId(R.string.setup_debug_menu_screenshot_button), type = TextModule.Type.BUTTON),
-        KeylineOverlaySwitchModule(text = { Text.ResourceId(R.string.setup_debug_menu_keyline_overlay_switch) }),
+        AppInfoButtonModule(text = R.string.setup_debug_menu_app_info_button.toText()),
+        ScreenshotButtonModule(text = R.string.setup_debug_menu_screenshot_button.toText(), type = TextModule.Type.BUTTON),
+        KeylineOverlaySwitchModule(text = { R.string.setup_debug_menu_keyline_overlay_switch.toText() }),
         listOf(
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_1)),
             RadioGroupOption(getString(R.string.setup_debug_menu_radio_group_option_2)),
@@ -66,7 +66,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
                 initiallySelectedItemId = radioGroupOptions.last().id
             )
         },
-        DeviceInfoModule(title = Text.ResourceId(R.string.setup_debug_menu_device_information)),
+        DeviceInfoModule(title = R.string.setup_debug_menu_device_information.toText()),
         DividerModule(id = "divider2"),
         createTextModule(R.string.setup_debug_menu_text_2)
     )
@@ -77,7 +77,7 @@ class SetupFragment : ListFragment<SetupViewModel, SetupListItem>(R.string.setup
         val name: String,
     ) : BeagleListItemContract {
 
-        override val title = Text.CharSequence(name)
+        override val title = name.toText()
     }
 
     companion object {

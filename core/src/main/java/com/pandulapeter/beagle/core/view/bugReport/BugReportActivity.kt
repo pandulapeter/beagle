@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.util.LogEntry
@@ -189,18 +190,16 @@ internal class BugReportActivity : AppCompatActivity() {
     )
 
     private fun showLogDetailDialog(entry: LogEntry) = BeagleCore.implementation.showDialog(
-        content = Text.CharSequence(entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter)),
+        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toText(),
         timestamp = entry.timestamp,
         id = entry.id
     )
 
     private fun showMetadataDetailDialog(type: BugReportViewModel.MetadataType) = BeagleCore.implementation.showDialog(
-        content = Text.CharSequence(
-            when (type) {
-                BugReportViewModel.MetadataType.BUILD_INFORMATION -> viewModel.buildInformation
-                BugReportViewModel.MetadataType.DEVICE_INFORMATION -> viewModel.deviceInformation
-            }
-        ),
+        content = when (type) {
+            BugReportViewModel.MetadataType.BUILD_INFORMATION -> viewModel.buildInformation
+            BugReportViewModel.MetadataType.DEVICE_INFORMATION -> viewModel.deviceInformation
+        }.toText(),
         shouldShowShareButton = false
     )
 

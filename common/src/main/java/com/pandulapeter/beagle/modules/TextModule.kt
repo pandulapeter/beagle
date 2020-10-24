@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.modules
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.TextModule.Companion.DEFAULT_ICON
@@ -39,7 +40,7 @@ data class TextModule(
         id: String = randomId,
         onItemSelected: (() -> Unit)? = DEFAULT_ON_ITEM_SELECTED
     ) : this(
-        text = Text.CharSequence(text),
+        text = text.toText(),
         type = type,
         icon = icon,
         isEnabled = isEnabled,
@@ -55,7 +56,7 @@ data class TextModule(
         id: String = randomId,
         onItemSelected: (() -> Unit)? = DEFAULT_ON_ITEM_SELECTED
     ) : this(
-        text = Text.ResourceId(text),
+        text = text.toText(),
         type = type,
         icon = icon,
         isEnabled = isEnabled,

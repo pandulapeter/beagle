@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.annotation.DrawableRes
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_BUILD_INFORMATION
@@ -45,13 +46,13 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  */
 @Suppress("unused")
 data class BugReportButtonModule(
-    val text: Text = Text.CharSequence(DEFAULT_TEXT),
+    val text: Text = DEFAULT_TEXT.toText(),
     val shouldShowGallerySection: Boolean = DEFAULT_SHOULD_SHOW_GALLERY_SECTION,
     val shouldShowNetworkLogsSection: Boolean = DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION,
     val logLabelSectionsToShow: List<String?> = DEFAULT_LABEL_SECTIONS_TO_SHOW,
     val shouldShowMetadataSection: Boolean = DEFAULT_SHOULD_SHOW_METADATA_SECTION,
     val buildInformation: (activity: Application?) -> List<Pair<Text, String>> = DEFAULT_BUILD_INFORMATION,
-    val descriptionTemplate: Text = Text.CharSequence(DEFAULT_DESCRIPTION_TEMPLATE),
+    val descriptionTemplate: Text = DEFAULT_DESCRIPTION_TEMPLATE.toText(),
     val type: TextModule.Type = DEFAULT_TYPE,
     @DrawableRes val icon: Int? = DEFAULT_ICON,
     val isEnabled: Boolean = DEFAULT_IS_ENABLED,
@@ -71,7 +72,7 @@ data class BugReportButtonModule(
         val DEFAULT_BUILD_INFORMATION: (Application?) -> List<Pair<Text, String>> = { application ->
             mutableListOf<Pair<Text, String>>().apply {
                 if (application != null) {
-                    add(Text.CharSequence("Package name") to application.packageName)
+                    add("Package name".toText() to application.packageName)
                 }
             }
         }

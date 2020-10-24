@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.TextInputModule.Companion.DEFAULT_ARE_REAL_TIME_UPDATES_ENABLED
@@ -35,8 +36,8 @@ data class TextInputModule(
     override val initialValue: String = DEFAULT_INITIAL_VALUE,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,
     val areRealTimeUpdatesEnabled: Boolean = DEFAULT_ARE_REAL_TIME_UPDATES_ENABLED,
-    val doneText: Text = Text.CharSequence(DEFAULT_DONE_TEXT),
-    val cancelText: Text = Text.CharSequence(DEFAULT_CANCEL_TEXT),
+    val doneText: Text = DEFAULT_DONE_TEXT.toText(),
+    val cancelText: Text = DEFAULT_CANCEL_TEXT.toText(),
     override val isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
     override val shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
     override val id: String = randomId,
@@ -49,15 +50,15 @@ data class TextInputModule(
         initialValue: String = DEFAULT_INITIAL_VALUE,
         isEnabled: Boolean = DEFAULT_IS_ENABLED,
         areRealTimeUpdatesEnabled: Boolean = DEFAULT_ARE_REAL_TIME_UPDATES_ENABLED,
-        doneText: Text = Text.CharSequence(DEFAULT_DONE_TEXT),
-        cancelText: Text = Text.CharSequence(DEFAULT_CANCEL_TEXT),
+        doneText: Text = DEFAULT_DONE_TEXT.toText(),
+        cancelText: Text = DEFAULT_CANCEL_TEXT.toText(),
         isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
         shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
         id: String = randomId,
         validator: (String) -> Boolean = DEFAULT_VALIDATOR,
         onValueChanged: (String) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
-        text = { Text.CharSequence(text) },
+        text = { text.toText() },
         initialValue = initialValue,
         isEnabled = isEnabled,
         areRealTimeUpdatesEnabled = areRealTimeUpdatesEnabled,
@@ -75,15 +76,15 @@ data class TextInputModule(
         initialValue: String = DEFAULT_INITIAL_VALUE,
         isEnabled: Boolean = DEFAULT_IS_ENABLED,
         areRealTimeUpdatesEnabled: Boolean = DEFAULT_ARE_REAL_TIME_UPDATES_ENABLED,
-        doneText: Text = Text.CharSequence(DEFAULT_DONE_TEXT),
-        cancelText: Text = Text.CharSequence(DEFAULT_CANCEL_TEXT),
+        doneText: Text = DEFAULT_DONE_TEXT.toText(),
+        cancelText: Text = DEFAULT_CANCEL_TEXT.toText(),
         isValuePersisted: Boolean = DEFAULT_IS_VALUE_PERSISTED,
         shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
         id: String = randomId,
         validator: (String) -> Boolean = DEFAULT_VALIDATOR,
         onValueChanged: (String) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
-        text = { Text.ResourceId(text) },
+        text = { text.toText() },
         initialValue = initialValue,
         isEnabled = isEnabled,
         areRealTimeUpdatesEnabled = areRealTimeUpdatesEnabled,

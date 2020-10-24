@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.DrawableRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule.Companion.DEFAULT_ICON
@@ -27,7 +28,7 @@ import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule.Companion.ID
  */
 @Suppress("unused")
 data class DeveloperOptionsButtonModule(
-    val text: Text = Text.CharSequence(DEFAULT_TEXT),
+    val text: Text = DEFAULT_TEXT.toText(),
     val shouldOpenInNewTask: Boolean = DEFAULT_SHOULD_OPEN_IN_NEW_TASK,
     val type: TextModule.Type = DEFAULT_TYPE,
     @DrawableRes val icon: Int? = DEFAULT_ICON,

@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
@@ -36,10 +36,10 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
     }
 
     companion object {
-        fun format(entry: NetworkLogEntry, formatter: ((Long) -> CharSequence)?, baseUrl: String = "") = Text.CharSequence(entry.url.replace(baseUrl, "").let { url ->
+        fun format(entry: NetworkLogEntry, formatter: ((Long) -> CharSequence)?, baseUrl: String = "") = entry.url.replace(baseUrl, "").let { url ->
             (if (entry.isOutgoing) "↑ " else "↓ ").let { prefix ->
                 formatter?.invoke(entry.timestamp)?.let { formattedTimestamp -> "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)
             }
-        })
+        }.toText()
     }
 }

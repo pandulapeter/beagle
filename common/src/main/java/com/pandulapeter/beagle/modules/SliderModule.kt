@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.SliderModule.Companion.DEFAULT_IS_ENABLED
@@ -48,7 +49,7 @@ data class SliderModule(
         id: String = randomId,
         onValueChanged: (Int) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
-        text = { Text.CharSequence(text) },
+        text = { text.toText() },
         minimumValue = minimumValue,
         maximumValue = maximumValue,
         initialValue = initialValue,
@@ -70,7 +71,7 @@ data class SliderModule(
         id: String = randomId,
         onValueChanged: (Int) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
-        text = { Text.ResourceId(text) },
+        text = { text.toText() },
         minimumValue = minimumValue,
         maximumValue = maximumValue,
         initialValue = initialValue,

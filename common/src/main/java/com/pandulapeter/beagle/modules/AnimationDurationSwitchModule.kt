@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.modules
 
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.DEFAULT_INITIAL_VALUE
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.DEFAULT_IS_ENABLED
@@ -24,7 +25,7 @@ import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule.Companion.I
  */
 @Suppress("unused")
 data class AnimationDurationSwitchModule(
-    override val text: (currentValue: Boolean) -> Text = { Text.CharSequence(DEFAULT_TEXT) },
+    override val text: (currentValue: Boolean) -> Text = { DEFAULT_TEXT.toText() },
     val multiplier: Float = DEFAULT_MULTIPLIER,
     override val initialValue: Boolean = DEFAULT_INITIAL_VALUE,
     override val isEnabled: Boolean = DEFAULT_IS_ENABLED,

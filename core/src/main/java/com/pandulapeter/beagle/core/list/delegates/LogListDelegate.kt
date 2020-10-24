@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
@@ -22,7 +22,7 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
                 shouldEllipsize = true,
                 onItemSelected = {
                     BeagleCore.implementation.showDialog(
-                        content = Text.CharSequence(entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter)),
+                        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toText(),
                         isHorizontalScrollEnabled = module.isHorizontalScrollEnabled,
                         timestamp = entry.timestamp,
                         id = entry.id
@@ -33,10 +33,10 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
     }
 
     companion object {
-        fun format(entry: LogEntry, timestampFormatter: ((Long) -> CharSequence)?) = Text.CharSequence((timestampFormatter?.let { formatter ->
+        fun format(entry: LogEntry, timestampFormatter: ((Long) -> CharSequence)?) = (timestampFormatter?.let { formatter ->
             "[".append(formatter(entry.timestamp)).append("] ").append(entry.title.charSequence)
         } ?: entry.title.charSequence).let {
             if (entry.payload == null) it else it.append("*")
-        })
+        }.toText()
     }
 }

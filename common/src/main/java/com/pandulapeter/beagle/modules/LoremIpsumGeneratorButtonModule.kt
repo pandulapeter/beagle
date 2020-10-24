@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.DrawableRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule.Companion.DEFAULT_ICON
@@ -32,7 +33,7 @@ import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule.Companion
  */
 @Suppress("unused")
 data class LoremIpsumGeneratorButtonModule(
-    val text: Text = Text.CharSequence(DEFAULT_TEXT),
+    val text: Text = DEFAULT_TEXT.toText(),
     val minimumWordCount: Int = DEFAULT_MINIMUM_WORD_COUNT,
     val maximumWordCount: Int = DEFAULT_MAXIMUM_WORD_COUNT,
     val shouldStartWithLoremIpsum: Boolean = DEFAULT_SHOULD_START_WITH_LOREM_IPSUM,

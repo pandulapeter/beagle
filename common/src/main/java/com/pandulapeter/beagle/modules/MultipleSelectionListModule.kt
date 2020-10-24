@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
@@ -49,7 +50,7 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
         id: String = randomId,
         onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
     ) : this(
-        title = { Text.CharSequence(title) },
+        title = { title.toText() },
         items = items,
         initiallySelectedItemIds = initiallySelectedItemIds,
         isEnabled = isEnabled,
@@ -71,7 +72,7 @@ data class MultipleSelectionListModule<T : BeagleListItemContract>(
         id: String = randomId,
         onSelectionChanged: (selectedItems: Set<T>) -> Unit = {}
     ) : this(
-        title = { Text.ResourceId(title) },
+        title = { title.toText() },
         items = items,
         initiallySelectedItemIds = initiallySelectedItemIds,
         isEnabled = isEnabled,

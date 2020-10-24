@@ -86,7 +86,7 @@
     <string name="case_study_static_data_title">Static data</string>
     <string name="case_study_static_data_description">Ways to display potentially useful information about the build, the environment or the session.</string>
     <string name="case_study_static_data_top_1">Here are all the modules used in this example:</string>
-    <string name="case_study_static_data_top_2">Again, let\'s discuss them individually, in detail.\n</string>
+    <string name="case_study_static_data_top_2">Whenever Beagle requires a text that will be displayed on the UI, for localization, it will ask for a subclass of <i>Text</i>: a <i>Text.CharSequence</i> or an integer <i>Text.ResourceId</i>. To simplify this, most modules have constructors that accept either a <i>CharSequence</i> or an <i>Int</i> and do the mapping under the hood. Where this was not possible, you can use the <i>.toText()</i> extension function which is defined for <i>CharSequence</i> as well as for <i>Int</i>.\n\nAgain, let\'s discuss the modules individually, in detail.\n</string>
     <string name="case_study_static_data_header_1"><b>Header</b></string>
     <string name="case_study_static_data_header_2">This module applies a specific formatting to three (optional) pieces of text. The variables for the current configuration are defined the following way:</string>
     <string name="case_study_static_data_header_3">The last line uses a custom build config field:</string>
@@ -258,7 +258,7 @@
 
     <!-- Case studies / Mock data generator -->
     <string name="case_study_mock_data_generator_title">Mock data generator</string>
-    <string name="case_study_mock_data_generator_description">Filling your development database with random content like \"d23fMIMnow81\" makes your app look bad. Why not add a simple Lorem Ipsum generator instead?</string>
+    <string name="case_study_mock_data_generator_description">Filling your development database with random content makes your app look bad. Why not add a simple Lorem Ipsum generator instead?</string>
     <string name="case_study_mock_data_generator_minimum_word_count">Minimum word count: %d</string>
     <string name="case_study_mock_data_generator_maximum_word_count">Maximum word count: %d</string>
     <string name="case_study_mock_data_generator_start_with_lorem_ipsum">Start with "Lorem ipsum"</string>

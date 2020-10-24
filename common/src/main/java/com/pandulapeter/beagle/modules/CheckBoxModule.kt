@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.CheckBoxModule.Companion.DEFAULT_INITIAL_VALUE
@@ -41,7 +42,7 @@ data class CheckBoxModule(
         shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
         onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
-        text = { Text.CharSequence(text) },
+        text = { text.toText() },
         id = id,
         initialValue = initialValue,
         isEnabled = isEnabled,
@@ -59,7 +60,7 @@ data class CheckBoxModule(
         shouldRequireConfirmation: Boolean = DEFAULT_SHOULD_REQUIRE_CONFIRMATION,
         onValueChanged: (Boolean) -> Unit = DEFAULT_ON_VALUE_CHANGED
     ) : this(
-        text = { Text.ResourceId(text) },
+        text = { text.toText() },
         id = id,
         initialValue = initialValue,
         isEnabled = isEnabled,

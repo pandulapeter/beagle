@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.modules
 
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
@@ -28,10 +29,10 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  */
 @Suppress("unused")
 data class ScreenCaptureToolboxModule(
-    val title: Text = Text.CharSequence(DEFAULT_TITLE),
-    val imageText: Text? = Text.CharSequence(DEFAULT_IMAGE_TEXT),
-    val videoText: Text? = Text.CharSequence(DEFAULT_VIDEO_TEXT),
-    val galleryText: Text = Text.CharSequence(DEFAULT_GALLERY_TEXT),
+    val title: Text = DEFAULT_TITLE.toText(),
+    val imageText: Text? = DEFAULT_IMAGE_TEXT.toText(),
+    val videoText: Text? = DEFAULT_VIDEO_TEXT.toText(),
+    val galleryText: Text = DEFAULT_GALLERY_TEXT.toText(),
     override val isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY
 ) : ExpandableModule<ScreenCaptureToolboxModule> {
 

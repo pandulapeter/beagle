@@ -11,6 +11,7 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.NetworkLogListener
@@ -384,7 +385,7 @@ interface BeagleContract {
         logLabelSectionsToShow: List<String?> = listOf(null),
         shouldShowMetadataSection: Boolean = true,
         buildInformation: (activity: Application?) -> List<Pair<Text, String>> = BugReportButtonModule.DEFAULT_BUILD_INFORMATION,
-        descriptionTemplate: Text = Text.CharSequence(""),
+        descriptionTemplate: Text = "".toText(),
         onBugReportReady: ((bugReport: Uri?) -> Unit)? = null
     ) = Unit
 

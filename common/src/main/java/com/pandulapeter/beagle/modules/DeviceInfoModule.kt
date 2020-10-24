@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.modules
 
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
@@ -31,7 +32,7 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule.Companion.ID
  */
 @Suppress("unused")
 data class DeviceInfoModule(
-    val title: Text = Text.CharSequence(DEFAULT_TITLE),
+    val title: Text = DEFAULT_TITLE.toText(),
     val shouldShowManufacturer: Boolean = DEFAULT_SHOULD_SHOW_MANUFACTURER,
     val shouldShowModel: Boolean = DEFAULT_SHOULD_SHOW_MODEL,
     val shouldShowResolutionsPx: Boolean = DEFAULT_SHOULD_SHOW_RESOLUTION_PX,

@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.commonBase.randomId
 
@@ -26,7 +27,7 @@ data class ButtonModule(
         id: String = randomId,
         onButtonPressed: () -> Unit
     ) : this(
-        text = Text.CharSequence(text),
+        text = text.toText(),
         id = id,
         onButtonPressed = onButtonPressed
     )
@@ -36,7 +37,7 @@ data class ButtonModule(
         id: String = randomId,
         onButtonPressed: () -> Unit
     ) : this(
-        text = Text.ResourceId(text),
+        text = text.toText(),
         id = id,
         onButtonPressed = onButtonPressed
     )

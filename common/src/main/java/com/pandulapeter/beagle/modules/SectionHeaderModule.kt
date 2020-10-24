@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.commonBase.randomId
 
@@ -22,7 +23,7 @@ data class SectionHeaderModule(
         title: CharSequence,
         id: String = randomId
     ) : this(
-        title = Text.CharSequence(title),
+        title = title.toText(),
         id = id
     )
 
@@ -30,7 +31,7 @@ data class SectionHeaderModule(
         @StringRes title: Int,
         id: String = randomId
     ) : this(
-        title = Text.ResourceId(title),
+        title = title.toText(),
         id = id
     )
 }

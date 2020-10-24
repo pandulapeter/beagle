@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.modules
 
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.commonBase.randomId
@@ -29,8 +30,8 @@ data class LongTextModule(
         isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
         id: String = randomId
     ) : this(
-        title = Text.CharSequence(title),
-        text = Text.CharSequence(text),
+        title = title.toText(),
+        text = text.toText(),
         isExpandedInitially = isExpandedInitially,
         id = id
     )
@@ -41,8 +42,8 @@ data class LongTextModule(
         isExpandedInitially: Boolean = DEFAULT_IS_EXPANDED_INITIALLY,
         id: String = randomId
     ) : this(
-        title = Text.ResourceId(title),
-        text = Text.ResourceId(text),
+        title = title.toText(),
+        text = text.toText(),
         isExpandedInitially = isExpandedInitially,
         id = id
     )
