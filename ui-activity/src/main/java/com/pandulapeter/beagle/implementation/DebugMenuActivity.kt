@@ -20,7 +20,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beagle_activity_debug_menu)
         supportActionBar?.hide()
-        findViewById<Toolbar>(R.id.beagle_toolbar).apply {
+        val toolbar = findViewById<Toolbar>(R.id.beagle_toolbar).apply {
             setNavigationOnClickListener { onBackPressed() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
         }
@@ -43,7 +43,8 @@ internal class DebugMenuActivity : AppCompatActivity() {
                             right = it.systemWindowInsetRight,
                             bottom = it.systemWindowInsetBottom
                         )
-                        debugMenu.applyInsets(output.left, output.top, output.right, output.bottom)
+                        toolbar.setPadding(output.left, 0, output.right, 0)
+                        debugMenu.applyInsets(0, 0, 0, output.bottom)
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = output.bottom } }
                     }
                 }

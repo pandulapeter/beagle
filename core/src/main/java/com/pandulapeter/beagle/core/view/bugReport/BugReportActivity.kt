@@ -70,7 +70,7 @@ internal class BugReportActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beagle_activity_bug_report)
         supportActionBar?.hide()
-        findViewById<Toolbar>(R.id.beagle_toolbar).apply {
+        val toolbar = findViewById<Toolbar>(R.id.beagle_toolbar).apply {
             val textColor = colorResource(android.R.attr.textColorPrimary)
             setNavigationOnClickListener { supportFinishAfterTransition() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
@@ -88,12 +88,8 @@ internal class BugReportActivity : AppCompatActivity() {
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
-                        recyclerView.setPadding(
-                            0,
-                            0,
-                            0,
-                            it.systemWindowInsetBottom + contentPadding
-                        )
+                        toolbar.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, 0)
+                        recyclerView.setPadding(contentPadding, 0, contentPadding, it.systemWindowInsetBottom + contentPadding)
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
                     }
                 }

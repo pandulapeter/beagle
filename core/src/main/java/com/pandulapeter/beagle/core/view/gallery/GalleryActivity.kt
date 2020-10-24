@@ -40,7 +40,7 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beagle_activity_gallery)
         supportActionBar?.hide()
-        findViewById<Toolbar>(R.id.beagle_toolbar).apply {
+        val toolbar = findViewById<Toolbar>(R.id.beagle_toolbar).apply {
             val textColor = colorResource(android.R.attr.textColorPrimary)
             setNavigationOnClickListener { supportFinishAfterTransition() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
@@ -69,12 +69,8 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
-                        recyclerView.setPadding(
-                            it.systemWindowInsetLeft + contentPadding,
-                            0,
-                            it.systemWindowInsetRight + contentPadding,
-                            it.systemWindowInsetBottom + contentPadding
-                        )
+                        toolbar.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, 0)
+                        recyclerView.setPadding(contentPadding, 0, contentPadding, it.systemWindowInsetBottom + contentPadding)
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
                         emptyStateTextView.setPadding(largePadding, largePadding, largePadding, largePadding + it.systemWindowInsetBottom)
                     }
