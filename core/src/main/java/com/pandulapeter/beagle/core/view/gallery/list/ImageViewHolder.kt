@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
+import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.MediaView
 import com.pandulapeter.beagle.utils.consume
 
@@ -51,11 +52,13 @@ internal class ImageViewHolder private constructor(
         mediaView.checkBox.setOnCheckedChangeListener(null)
         mediaView.checkBox.isChecked = uiModel.isSelected
         mediaView.checkBox.setOnCheckedChangeListener(onCheckChangeListener)
+        mediaView.checkBox.visible = uiModel.isInSelectionMode
     }
 
     data class UiModel(
         val fileName: String,
         val isSelected: Boolean,
+        val isInSelectionMode: Boolean,
         override val lastModified: Long
     ) : GalleryListItem {
         override val id = fileName

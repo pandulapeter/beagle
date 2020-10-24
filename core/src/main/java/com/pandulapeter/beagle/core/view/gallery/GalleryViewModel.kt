@@ -59,11 +59,22 @@ internal class GalleryViewModel : ViewModel() {
 
     private fun refresh() {
         viewModelScope.launch {
+            selectedItemIds = selectedItemIds.filterNot { id -> files.none { it.name == id } }
             _items.value = files.sortedByDescending { it.lastModified() }.mapNotNull { file ->
                 file.name.let { fileName ->
                     when {
-                        fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> ImageViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
-                        fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> VideoViewHolder.UiModel(fileName, selectedItemIds.contains(fileName), file.lastModified())
+                        fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION) -> ImageViewHolder.UiModel(
+                            fileName = fileName,
+                            isSelected = selectedItemIds.contains(fileName),
+                            isInSelectionMode = selectedItemIds.isNotEmpty(),
+                            lastModified = file.lastModified()
+                        )
+                        fileName.endsWith(ScreenCaptureManager.VIDEO_EXTENSION) -> VideoViewHolder.UiModel(
+                            fileName = fileName,
+                            isSelected = selectedItemIds.contains(fileName),
+                            isInSelectionMode = selectedItemIds.isNotEmpty(),
+                            lastModified = file.lastModified()
+                        )
                         else -> null
                     }
                 }
@@ -82,7 +93,6 @@ internal class GalleryViewModel : ViewModel() {
                     }
                 }
             }
-            selectedItemIds = selectedItemIds.filterNot { id -> files.none { it.name == id } }
         }
     }
 

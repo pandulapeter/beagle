@@ -115,11 +115,7 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
     }
 
     private fun onItemSelected(fileName: String) {
-        if (viewModel.isInSelectionMode.value == true) {
-            viewModel.selectItem(fileName)
-        } else {
-            MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
-        }
+        MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
     }
 
     private fun shareItem(fileName: String) {
