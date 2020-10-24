@@ -41,7 +41,8 @@ internal class BugReportViewModel(
     private val shouldShowMetadataSection: Boolean,
     val buildInformation: CharSequence,
     val deviceInformation: CharSequence,
-    private val textInputFields: List<Pair<Text, Text>>
+    private val textInputTitles: List<Text>,
+    textInputDescriptions: List<Text>
 ) : AndroidViewModel(application) {
 
     private val _items = MutableLiveData(emptyList<BugReportListItem>())
@@ -67,13 +68,7 @@ internal class BugReportViewModel(
     private var shouldAttachBuildInformation = true
     private var shouldAttachDeviceInformation = true
 
-    private val textInputValues = textInputFields.map { (_, defaultText) ->
-        try {
-            context.text(defaultText)
-        } catch (_: NullPointerException) {
-            ""
-        }
-    }.toMutableList()
+    private val textInputValues = textInputDescriptions.map(application::text).toMutableList()
 
     private val context = getApplication<Application>()
     private val listManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
@@ -203,7 +198,7 @@ internal class BugReportViewModel(
                 // Text inputs
                 textInputValues.forEachIndexed { index, textInputValue ->
                     if (textInputValue.trim().isNotBlank()) {
-                        val text = "${context.text(textInputFields[index].first)}\n${textInputValue.trim()}"
+                        val text = "${context.text(textInputTitles[index])}\n${textInputValue.trim()}"
                         content = if (content.isBlank()) text else "$content\n\n$text"
                     }
                 }
@@ -355,7 +350,7 @@ internal class BugReportViewModel(
                     )
                 )
             }
-            textInputFields.forEachIndexed { index, (title, _) ->
+            textInputTitles.forEachIndexed { index, title ->
                 add(
                     HeaderViewHolder.UiModel(
                         id = "textInputTitle_$index",

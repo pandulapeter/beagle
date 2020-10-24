@@ -54,11 +54,8 @@ internal class BugReportActivity : AppCompatActivity() {
                     shouldShowMetadataSection = arguments.shouldShowMetadataSection,
                     buildInformation = arguments.buildInformation,
                     deviceInformation = generateDeviceInformation(),
-                    textInputFields = arguments.textInputFieldTitles.let { titles ->
-                        arguments.textInputFieldDescriptions.let { descriptions ->
-                            titles.mapIndexed { index, title -> title to descriptions[index] }
-                        }
-                    }
+                    textInputTitles = arguments.textInputFieldTitles,
+                    textInputDescriptions = arguments.textInputFieldDescriptions
                 ) as T
             }
         }).get(BugReportViewModel::class.java)
