@@ -10,7 +10,6 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.text
-import com.pandulapeter.beagle.core.util.performOnHide
 import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
 
 internal class BugReportManager {
@@ -26,7 +25,7 @@ internal class BugReportManager {
         buildInformation: (Application?) -> List<Pair<Text, String>>,
         descriptionTemplate: Text,
         onBugReportReady: ((Uri?) -> Unit)?
-    ) = performOnHide {
+    ) {
         this.onBugReportReady = onBugReportReady
         currentActivity?.run {
             startActivity(

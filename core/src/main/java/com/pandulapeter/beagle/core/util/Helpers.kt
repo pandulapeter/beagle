@@ -12,7 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 
-internal fun performOnHide(action: () -> Unit) {
+internal inline fun performOnHide(crossinline action: () -> Unit) {
     val listener = object : VisibilityListener {
         override fun onHidden() {
             val reference = this
