@@ -33,19 +33,6 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
     }
     private lateinit var behavior: BottomSheetBehavior<View>
     private lateinit var bottomSheetView: View
-    private val topInset
-        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) Beagle.currentActivity?.window?.decorView?.rootWindowInsets?.let {
-            BeagleCore.implementation.appearance.applyInsets?.invoke(
-                Insets(
-                    left = it.systemWindowInsetLeft,
-                    top = it.systemWindowInsetTop,
-                    right = it.systemWindowInsetRight,
-                    bottom = it.systemWindowInsetBottom
-                )
-            )?.also { outputInsets ->
-                (view as? InternalDebugMenuView)?.applyInsets(outputInsets.left, 0, outputInsets.right, outputInsets.bottom)
-            }?.top ?: 0
-        } ?: 0 else 0
 
     override fun getContext() = super.getContext()?.applyTheme()
 
@@ -112,10 +99,28 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
         val displayMetrics = DisplayMetrics()
         BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         layoutParams = layoutParams.apply {
-            height = displayMetrics.heightPixels - topInset
+            height = displayMetrics.heightPixels
             width = min(displayMetrics.widthPixels, resources.getDimensionPixelSize(R.dimen.beagle_bottom_sheet_maximum_width))
             behavior.peekHeight = height / 2
             post { updateApplyResetBlockPosition() }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Beagle.currentActivity?.window?.decorView?.rootWindowInsets?.let {
+                    val inputInsets = Insets(
+                        left = it.systemWindowInsetLeft,
+                        top = it.systemWindowInsetTop,
+                        right = it.systemWindowInsetRight,
+                        bottom = it.systemWindowInsetBottom
+                    )
+                    (BeagleCore.implementation.appearance.applyInsets?.invoke(inputInsets) ?: inputInsets).also { outputInsets ->
+                        (view as? InternalDebugMenuView)?.applyInsets(
+                            outputInsets.left,
+                            0,
+                            outputInsets.right,
+                            outputInsets.bottom + outputInsets.top //TODO: Temporary fix for a landscape issue
+                        )
+                    }
+                }
+            }
         }
     }
 
