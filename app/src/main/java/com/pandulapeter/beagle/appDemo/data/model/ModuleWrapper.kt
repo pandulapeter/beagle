@@ -8,7 +8,7 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.networking.Constants
-import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.AppInfoButtonModule
@@ -208,9 +208,9 @@ sealed class ModuleWrapper(
     class SliderWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_slider,
         descriptionResourceId = R.string.add_module_slider_description,
-        module = SliderModule(text = { Text.CharSequence("Slider ($it)") }, onValueChanged = {}),
+        module = SliderModule(text = { "Slider ($it)".toText() }, onValueChanged = {}),
         codeSnippet = "SliderModule(\n" +
-                "    text = { Text.CharSequence(\"Slider (\$it)\") },\n" +
+                "    text = { \"Slider (\$it)\".toText() },\n" +
                 "    onValueChanged = { … }\n" +
                 ")"
     )
@@ -256,9 +256,9 @@ sealed class ModuleWrapper(
     class TextInputWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_text_input,
         descriptionResourceId = R.string.add_module_text_input_description,
-        module = TextInputModule(text = { Text.CharSequence("Text input ($it)") }, initialValue = "Hello!", onValueChanged = {}),
+        module = TextInputModule(text = { "Text input ($it)".toText() }, initialValue = "Hello!", onValueChanged = {}),
         codeSnippet = "TextInputModule(\n" +
-                "    text = { Text.CharSequence(\"Text input (\$it)\") },\n" +
+                "    text = { \"Text input (\$it)\".toText() },\n" +
                 "    initialValue = \"Hello!\",\n" +
                 "    onValueChanged = { … }\n" +
                 ")"
@@ -284,18 +284,18 @@ sealed class ModuleWrapper(
         module = BugReportButtonModule(
             buildInformation = {
                 listOf(
-                    Text.CharSequence("Version name") to BuildConfig.VERSION_NAME,
-                    Text.CharSequence("Version code") to BuildConfig.VERSION_CODE.toString(),
-                    Text.CharSequence("Application ID") to BuildConfig.APPLICATION_ID
+                    "Version name".toText() to BuildConfig.VERSION_NAME,
+                    "Version code".toText() to BuildConfig.VERSION_CODE.toString(),
+                    "Application ID".toText() to BuildConfig.APPLICATION_ID
                 )
             }
         ),
         codeSnippet = "BugReportButtonModule(\n" +
                 "    buildInformation = {\n" +
                 "        listOf(\n" +
-                "            Text.CharSequence(\"Version name\") to BuildConfig.VERSION_NAME,\n" +
-                "            Text.CharSequence(\"Version code\") to BuildConfig.VERSION_CODE.toString(),\n" +
-                "            Text.CharSequence(\"Application ID\") to BuildConfig.APPLICATION_ID\n" +
+                "            \"Version name\".toText() to BuildConfig.VERSION_NAME,\n" +
+                "            \"Version code\".toText() to BuildConfig.VERSION_CODE.toString(),\n" +
+                "            \"Application ID\".toText() to BuildConfig.APPLICATION_ID\n" +
                 "        )\n" +
                 "    }\n" +
                 ")"

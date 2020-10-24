@@ -54,7 +54,7 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
             TextViewHolder.UiModel(R.string.case_study_analytics_text_3),
             CodeSnippetViewHolder.UiModel(
                 "LogListModule(\n" +
-                        "    title = \"Analytics events\"\n" +
+                        "    title = \"Analytics events\".toText(),\n" +
                         "    isExpandedInitially = true,\n" +
                         "    maxItemCount = 20,\n" +
                         "    label = LOG_TAG\n" +

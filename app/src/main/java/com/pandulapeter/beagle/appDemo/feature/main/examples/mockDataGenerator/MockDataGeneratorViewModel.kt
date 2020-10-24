@@ -29,7 +29,7 @@ class MockDataGeneratorViewModel : ListViewModel<MockDataGeneratorListItem>() {
             CodeSnippetViewHolder.UiModel(
                 id = CODE_SNIPPET_ID,
                 codeSnippet = "LoremIpsumGeneratorButtonModule(\n" +
-                        "    text = \"Generate text\",\n" +
+                        "    text = \"Generate text\".toText(),\n" +
                         "    minimumWordCount = $minimumWordCount,\n" +
                         "    maximumWordCount = $maximumWordCount,\n" +
                         "    shouldStartWithLoremIpsum = $shouldStartWithLoremIpsum,\n" +

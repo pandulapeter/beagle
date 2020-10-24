@@ -131,7 +131,7 @@ class ValueWrappersViewModel : ListViewModel<ValueWrappersListItem>() {
             CodeSnippetViewHolder.UiModel(
                 "data class Option(\n" +
                         "    override val id: String,\n" +
-                        "    override val title: String \n" +
+                        "    override val title: Text \n" +
                         ") : BeagleListItemContract"
             )
         )
@@ -141,9 +141,9 @@ class ValueWrappersViewModel : ListViewModel<ValueWrappersListItem>() {
                 "MultipleSelectionListModule(\n" +
                         "    title = \"Text in the header\",\n" +
                         "    items = listOf(\n" +
-                        "        Option(id = \"option1\", title = \"Option 1\"),\n" +
-                        "        Option(id = \"option2\", title = \"Option 2\"),\n" +
-                        "        Option(id = \"option3\", title = \"Option 3\")\n" +
+                        "        Option(id = \"option1\", title = \"Option 1\".toText()),\n" +
+                        "        Option(id = \"option2\", title = \"Option 2\".toText()),\n" +
+                        "        Option(id = \"option3\", title = \"Option 3\".toText())\n" +
                         "    ),\n" +
                         "    initiallySelectedItemIds = emptySet(),\n" +
                         "    onSelectionChanged = { selectedItems -> TODO() }\n" +
@@ -159,9 +159,9 @@ class ValueWrappersViewModel : ListViewModel<ValueWrappersListItem>() {
                 "SingleSelectionListModule(\n" +
                         "    title = \"Text in the header\",\n" +
                         "    items = listOf(\n" +
-                        "        Option(id = \"option1\", title = \"Option 1\"),\n" +
-                        "        Option(id = \"option2\", title = \"Option 2\"),\n" +
-                        "        Option(id = \"option3\", title = \"Option 3\")\n" +
+                        "        Option(id = \"option1\", title = \"Option 1\".toText()),\n" +
+                        "        Option(id = \"option2\", title = \"Option 2\".toText()),\n" +
+                        "        Option(id = \"option3\", title = \"Option 3\".toText())\n" +
                         "    ),\n" +
                         "    initiallySelectedItemId = \"option1\",\n" +
                         "    onSelectionChanged = { selectedItem -> TODO() }\n" +
@@ -176,7 +176,7 @@ class ValueWrappersViewModel : ListViewModel<ValueWrappersListItem>() {
         add(
             CodeSnippetViewHolder.UiModel(
                 "SliderModule(\n" +
-                        "    text = { currentValue -> \"Current value: \$currentValue\"},\n" +
+                        "    text = { currentValue -> \"Current value: \$currentValue\".toText() },\n" +
                         "    onValueChanged = { newValue -> TODO() }\n" +
                         "),"
             )
@@ -189,7 +189,7 @@ class ValueWrappersViewModel : ListViewModel<ValueWrappersListItem>() {
         add(
             CodeSnippetViewHolder.UiModel(
                 "TextInputModule(\n" +
-                        "    text = { currentValue -> \"Current value: \$currentValue\" },\n" +
+                        "    text = { currentValue -> \"Current value: \$currentValue\".toText() },\n" +
                         "    onValueChanged = { newValue -> TODO() }\n" +
                         ")"
             )

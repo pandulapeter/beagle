@@ -30,3 +30,13 @@ sealed class Text : Parcelable {
         this.suffix = suffix
     }
 }
+
+/**
+ * Extension function for convenience.
+ */
+fun CharSequence.toText() = Text.CharSequence(this)
+
+/**
+ * Extension function for convenience.
+ */
+fun Int.toText() = Text.ResourceId(this)

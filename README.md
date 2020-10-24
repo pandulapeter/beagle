@@ -114,9 +114,9 @@ Beagle.set(
     BugReportButtonModule(
         buildInformation = {
             listOf(
-                Text.CharSequence("Version name") to BuildConfig.VERSION_NAME,
-                Text.CharSequence("Version code") to BuildConfig.VERSION_CODE.toString(),
-                Text.CharSequence("Application ID") to BuildConfig.APPLICATION_ID
+                "Version name".toText() to BuildConfig.VERSION_NAME,
+                "Version code".toText() to BuildConfig.VERSION_CODE.toString(),
+                "Application ID".toText() to BuildConfig.APPLICATION_ID
             )
         }
     )
