@@ -23,9 +23,11 @@ import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.drawable
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
 
-class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    FrameLayout(context.applyTheme(), attrs, defStyleAttr),
-    UpdateListener {
+class InternalDebugMenuView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : FrameLayout(context.applyTheme(), attrs, defStyleAttr), UpdateListener {
 
     private val verticalMargin = context.dimension(R.dimen.beagle_item_vertical_margin)
     private var recyclerLeftPadding = 0
@@ -89,6 +91,7 @@ class InternalDebugMenuView @JvmOverloads constructor(context: Context, attrs: A
         super.onAttachedToWindow()
         BeagleCore.implementation.addInternalUpdateListener(this)
         BeagleCore.implementation.setupRecyclerView(recyclerView)
+        post { recyclerView.updatePadding(BeagleCore.implementation.hasPendingUpdates) }
     }
 
     @CallSuper
