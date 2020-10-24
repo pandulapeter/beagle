@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
 import com.pandulapeter.beagle.core.util.extension.createLogFile
@@ -15,6 +16,7 @@ import com.pandulapeter.beagle.core.util.extension.getBugReportsFolder
 import com.pandulapeter.beagle.core.util.extension.getLogsFolder
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
+import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.GalleryViewHolder
@@ -39,7 +41,7 @@ internal class BugReportViewModel(
     private val shouldShowMetadataSection: Boolean,
     val buildInformation: CharSequence,
     val deviceInformation: CharSequence,
-    descriptionTemplate: CharSequence
+    private val textInputFields: List<Pair<Text, Text>>
 ) : AndroidViewModel(application) {
 
     private val _items = MutableLiveData(emptyList<BugReportListItem>())
@@ -65,13 +67,13 @@ internal class BugReportViewModel(
     private var shouldAttachBuildInformation = true
     private var shouldAttachDeviceInformation = true
 
-    private var description: CharSequence = descriptionTemplate
-        set(value) {
-            if (field != value) {
-                field = value
-                refreshSendButton()
-            }
+    private val textInputValues = textInputFields.map { (_, defaultText) ->
+        try {
+            context.text(defaultText)
+        } catch (_: NullPointerException) {
+            ""
         }
+    }.toMutableList()
 
     private val context = getApplication<Application>()
     private val listManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
@@ -118,8 +120,9 @@ internal class BugReportViewModel(
         }
     }
 
-    fun onDescriptionChanged(newValue: CharSequence) {
-        description = newValue
+    fun onDescriptionChanged(index: Int, newValue: CharSequence) {
+        textInputValues[index] = newValue
+        refreshSendButton()
     }
 
     fun onMetadataItemSelectionChanged(type: MetadataType) {
@@ -197,16 +200,23 @@ internal class BugReportViewModel(
                     content = if (content.isBlank()) deviceInformation.toString() else "$content\n\n$deviceInformation"
                 }
 
-                // Description
-                if (description.trim().isNotBlank()) {
-                    content = if (content.isBlank()) description.trim().toString() else "$content\n\n${description.trim()}"
+                // Text inputs
+                textInputValues.forEachIndexed { index, textInputValue ->
+                    if (textInputValue.trim().isNotBlank()) {
+                        val text = "${context.text(textInputFields[index].first)}\n${textInputValue.trim()}"
+                        content = if (content.isBlank()) text else "$content\n\n$text"
+                    }
                 }
+
+                // Create the log file
                 if (content.isNotBlank()) {
                     context.createBugReportTextFile(
                         fileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.txt",
                         content = content
                     )?.let { uri -> filePaths.add(uri.toPath(context.getBugReportsFolder())) }
                 }
+
+                // Create the zip file
                 val uri = context.createZipFile(
                     filePaths = filePaths,
                     zipFileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.zip",
@@ -228,7 +238,7 @@ internal class BugReportViewModel(
             !isPreparingData && (selectedMediaFileIds.isNotEmpty() ||
                     selectedNetworkLogIds.isNotEmpty() ||
                     selectedLogIds.keys.any { label -> selectedLogIds[label]?.isNotEmpty() == true } ||
-                    description.trim().isNotEmpty())
+                    textInputValues.any { it.trim().isNotEmpty() })
         )
     }
 
@@ -345,13 +355,20 @@ internal class BugReportViewModel(
                     )
                 )
             }
-            add(
-                HeaderViewHolder.UiModel(
-                    id = "headerDescription",
-                    text = BeagleCore.implementation.appearance.bugReportTexts.descriptionSectionTitle
+            textInputFields.forEachIndexed { index, (title, _) ->
+                add(
+                    HeaderViewHolder.UiModel(
+                        id = "textInputTitle_$index",
+                        text = title
+                    )
                 )
-            )
-            add(DescriptionViewHolder.UiModel(description))
+                add(
+                    DescriptionViewHolder.UiModel(
+                        index = index,
+                        text = textInputValues[index]
+                    )
+                )
+            }
         })
         refreshSendButton()
         _shouldShowLoadingIndicator.postValue(false)

@@ -3,7 +3,6 @@ package com.pandulapeter.beagle.common.configuration
 import androidx.annotation.StyleRes
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_BUILD_INFORMATION
-import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_DESCRIPTION_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_DEVICE_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_GALLERY_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_LOGS_SECTION_TITLE
@@ -170,7 +169,6 @@ data class Appearance(
      * @param metadataSectionTitle - The title of the Metadata section. [DEFAULT_METADATA_SECTION_TITLE] by default.
      * @param buildInformation - The text on the build information check box. [DEFAULT_BUILD_INFORMATION] by default.
      * @param deviceInformation - The text on the device information check box. [DEFAULT_DEVICE_INFORMATION] by default.
-     * @param descriptionSectionTitle - The title of the Description section. [DEFAULT_DESCRIPTION_SECTION_TITLE] by default.
      * @param showMoreText - The text that appears below lists that have more content. [DEFAULT_SHOW_MORE_TEXT] by default.
      */
     data class BugReportTexts(
@@ -182,7 +180,6 @@ data class Appearance(
         val metadataSectionTitle: Text = DEFAULT_METADATA_SECTION_TITLE.toText(),
         val buildInformation: Text = DEFAULT_BUILD_INFORMATION.toText(),
         val deviceInformation: Text = DEFAULT_DEVICE_INFORMATION.toText(),
-        val descriptionSectionTitle: Text = DEFAULT_DESCRIPTION_SECTION_TITLE.toText(),
         val showMoreText: Text = DEFAULT_SHOW_MORE_TEXT.toText()
     ) {
         companion object {
@@ -194,7 +191,6 @@ data class Appearance(
             private const val DEFAULT_METADATA_SECTION_TITLE = "Attach additional details"
             private const val DEFAULT_BUILD_INFORMATION = "Build information"
             private const val DEFAULT_DEVICE_INFORMATION = "Device information"
-            private const val DEFAULT_DESCRIPTION_SECTION_TITLE = "Describe the issue"
             private const val DEFAULT_SHOW_MORE_TEXT = "Show more…"
             private const val SELECTED = "selected"
         }

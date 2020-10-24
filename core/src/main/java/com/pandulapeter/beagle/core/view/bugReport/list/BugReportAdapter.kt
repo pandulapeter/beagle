@@ -16,7 +16,7 @@ internal class BugReportAdapter(
     private val onLogSelected: (String, String?) -> Unit,
     private val onLogLongTapped: (String, String?) -> Unit,
     private val onShowMoreLogsTapped: (String?) -> Unit,
-    private val onDescriptionChanged: (CharSequence) -> Unit,
+    private val onDescriptionChanged: (Int, CharSequence) -> Unit,
     private val onMetadataItemClicked: (BugReportViewModel.MetadataType) -> Unit,
     private val onMetadataItemSelectionChanged: (BugReportViewModel.MetadataType) -> Unit
 ) : ListAdapter<BugReportListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportListItem>() {

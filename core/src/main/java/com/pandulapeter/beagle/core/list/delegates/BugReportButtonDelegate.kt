@@ -25,7 +25,7 @@ internal class BugReportButtonDelegate : Module.Delegate<BugReportButtonModule> 
                         logLabelSectionsToShow = module.logLabelSectionsToShow,
                         shouldShowMetadataSection = module.shouldShowMetadataSection,
                         buildInformation = module.buildInformation,
-                        descriptionTemplate = module.descriptionTemplate,
+                        textInputFields = module.textInputFields,
                         onBugReportReady = module.onBugReportReady
                     )
                 }

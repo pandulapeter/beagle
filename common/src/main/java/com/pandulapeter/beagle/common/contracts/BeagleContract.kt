@@ -11,7 +11,6 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.configuration.Text
-import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.listeners.LogListener
 import com.pandulapeter.beagle.common.listeners.NetworkLogListener
@@ -376,7 +375,7 @@ interface BeagleContract {
      * @param logLabelSectionsToShow - The list of log labels for which sections should be added. By default it adds a section for all logs, without filtering.
      * @param shouldShowMetadataSection - Whether or not the metadata section (build information and device information) should be added. True by default.
      * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [BugReportButtonModule.DEFAULT_BUILD_INFORMATION] by default.
-     * @param descriptionTemplate - The default value of the free-text input. Empty string by default.
+     * @param textInputFields - The list of free-text inputs, where each entry is a pair of the field's title and its default value. [BugReportButtonModule.DEFAULT_TEXT_INPUT_FIELDS] by default.
      * @param onBugReportReady - The lambda that gets invoked after the bug report is ready, with the [Uri] pointing to the ZIP file, or null for the default implementation that uses the system share sheet. Null by default.
      */
     fun openBugReportingScreen(
@@ -385,7 +384,7 @@ interface BeagleContract {
         logLabelSectionsToShow: List<String?> = listOf(null),
         shouldShowMetadataSection: Boolean = true,
         buildInformation: (activity: Application?) -> List<Pair<Text, String>> = BugReportButtonModule.DEFAULT_BUILD_INFORMATION,
-        descriptionTemplate: Text = "".toText(),
+        textInputFields: List<Pair<Text, Text>> = BugReportButtonModule.DEFAULT_TEXT_INPUT_FIELDS,
         onBugReportReady: ((bugReport: Uri?) -> Unit)? = null
     ) = Unit
 

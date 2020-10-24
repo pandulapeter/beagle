@@ -23,7 +23,7 @@ internal class BugReportManager {
         logLabelSectionsToShow: List<String?>,
         shouldShowMetadataSection: Boolean,
         buildInformation: (Application?) -> List<Pair<Text, String>>,
-        descriptionTemplate: Text,
+        textInputFields: List<Pair<Text, Text>>,
         onBugReportReady: ((Uri?) -> Unit)?
     ) {
         this.onBugReportReady = onBugReportReady
@@ -36,7 +36,7 @@ internal class BugReportManager {
                     logLabelSectionsToShow = logLabelSectionsToShow,
                     shouldShowMetadataSection = shouldShowMetadataSection,
                     buildInformation = buildInformation(currentActivity?.application).generateBuildInformation(),
-                    descriptionTemplate = descriptionTemplate
+                    textInputFields = textInputFields
                 )
             )
         }

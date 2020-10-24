@@ -54,7 +54,11 @@ internal class BugReportActivity : AppCompatActivity() {
                     shouldShowMetadataSection = arguments.shouldShowMetadataSection,
                     buildInformation = arguments.buildInformation,
                     deviceInformation = generateDeviceInformation(),
-                    descriptionTemplate = arguments.descriptionTemplate?.let(::text) ?: ""
+                    textInputFields = arguments.textInputFieldTitles.let { titles ->
+                        arguments.textInputFieldDescriptions.let { descriptions ->
+                            titles.mapIndexed { index, title -> title to descriptions[index] }
+                        }
+                    }
                 ) as T
             }
         }).get(BugReportViewModel::class.java)
@@ -210,7 +214,8 @@ internal class BugReportActivity : AppCompatActivity() {
         private var Bundle.logLabelSectionsToShow by BundleArgumentDelegate.StringList("logLabelSectionsToShow")
         private var Bundle.shouldShowMetadataSection by BundleArgumentDelegate.Boolean("shouldShowMetadataSection")
         private var Bundle.buildInformation by BundleArgumentDelegate.CharSequence("buildInformation")
-        private var Bundle.descriptionTemplate by BundleArgumentDelegate.Parcelable<Text>("descriptionTemplate")
+        private var Bundle.textInputFieldTitles by BundleArgumentDelegate.ParcelableList<Text>("textInputFieldTitles")
+        private var Bundle.textInputFieldDescriptions by BundleArgumentDelegate.ParcelableList<Text>("textInputFieldDescriptions")
 
         fun newIntent(
             context: Context,
@@ -219,14 +224,15 @@ internal class BugReportActivity : AppCompatActivity() {
             logLabelSectionsToShow: List<String?>,
             shouldShowMetadataSection: Boolean,
             buildInformation: CharSequence,
-            descriptionTemplate: Text
-        ) = Intent(context, BugReportActivity::class.java).putExtra(ARGUMENTS, Bundle().also {
-            it.shouldShowGallerySection = shouldShowGallerySection
-            it.shouldShowNetworkLogsSection = shouldShowNetworkLogsSection
-            it.logLabelSectionsToShow = logLabelSectionsToShow
-            it.shouldShowMetadataSection = shouldShowMetadataSection
-            it.buildInformation = buildInformation
-            it.descriptionTemplate = descriptionTemplate
+            textInputFields: List<Pair<Text, Text>>
+        ) = Intent(context, BugReportActivity::class.java).putExtra(ARGUMENTS, Bundle().also { bundle ->
+            bundle.shouldShowGallerySection = shouldShowGallerySection
+            bundle.shouldShowNetworkLogsSection = shouldShowNetworkLogsSection
+            bundle.logLabelSectionsToShow = logLabelSectionsToShow
+            bundle.shouldShowMetadataSection = shouldShowMetadataSection
+            bundle.buildInformation = buildInformation
+            bundle.textInputFieldTitles = textInputFields.map { it.first }
+            bundle.textInputFieldDescriptions = textInputFields.map { it.second }
         })
     }
 }
