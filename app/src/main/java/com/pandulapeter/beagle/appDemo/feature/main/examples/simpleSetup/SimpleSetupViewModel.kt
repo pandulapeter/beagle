@@ -43,7 +43,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
             addAnimationDurationSwitchSection()
             addLifecycleLogListSection()
             addDeviceInfoSection()
-            addBugReportSection()
+            addBugReportButtonSection()
         }
     }
 
@@ -116,8 +116,8 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         add(TextViewHolder.UiModel(R.string.case_study_simple_setup_device_info_2))
     }
 
-    private fun MutableList<SimpleSetupListItem>.addBugReportSection() = addSection(Section.BUG_REPORT) {
-        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_bug_report_2))
+    private fun MutableList<SimpleSetupListItem>.addBugReportButtonSection() = addSection(Section.BUG_REPORT_BUTTON) {
+        add(TextViewHolder.UiModel(R.string.case_study_simple_setup_bug_report_button_2))
     }
 
     private fun MutableList<SimpleSetupListItem>.addSection(section: Section, action: MutableList<SimpleSetupListItem>.() -> Unit) =
@@ -141,7 +141,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         ANIMATION_DURATION_SWITCH(R.string.case_study_simple_setup_animation_duration_switch_1),
         LIFECYCLE_LOG_LIST(R.string.case_study_simple_setup_lifecycle_log_list_1),
         DEVICE_INFO(R.string.case_study_simple_setup_device_info_1),
-        BUG_REPORT(R.string.case_study_simple_setup_bug_report_1);
+        BUG_REPORT_BUTTON(R.string.case_study_simple_setup_bug_report_button_1);
 
         companion object {
             fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }
