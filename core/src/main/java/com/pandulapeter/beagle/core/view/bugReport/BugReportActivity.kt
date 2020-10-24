@@ -89,7 +89,7 @@ internal class BugReportActivity : AppCompatActivity() {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
                         toolbar.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, 0)
-                        recyclerView.setPadding(contentPadding, 0, contentPadding, it.systemWindowInsetBottom + contentPadding)
+                        recyclerView.setPadding(0, 0, 0, it.systemWindowInsetBottom + contentPadding)
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
                     }
                 }
