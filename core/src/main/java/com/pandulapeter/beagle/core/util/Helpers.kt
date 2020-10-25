@@ -5,6 +5,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.list.cells.ButtonCell
+import com.pandulapeter.beagle.core.list.cells.SectionHeaderCell
 import com.pandulapeter.beagle.core.list.cells.TextCell
 import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.GlobalScope
@@ -38,12 +39,17 @@ internal fun createTextModuleFromType(
     @DrawableRes icon: Int?,
     onItemSelected: (() -> Unit)?
 ) = when (type) {
-    TextModule.Type.NORMAL,
-    TextModule.Type.SECTION_HEADER -> TextCell(
+    TextModule.Type.NORMAL -> TextCell(
         id = id,
         text = text,
         isEnabled = isEnabled,
-        isSectionHeader = type == TextModule.Type.SECTION_HEADER,
+        icon = icon,
+        onItemSelected = onItemSelected
+    )
+    TextModule.Type.SECTION_HEADER -> SectionHeaderCell(
+        id = id,
+        text = text,
+        isEnabled = isEnabled,
         icon = icon,
         onItemSelected = onItemSelected
     )

@@ -13,26 +13,26 @@ import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
-internal data class TextCell(
+internal data class SectionHeaderCell(
     override val id: String,
     private val text: Text,
     private val isEnabled: Boolean,
     @DrawableRes private val icon: Int?,
     val onItemSelected: (() -> Unit)?
-) : Cell<TextCell> {
+) : Cell<SectionHeaderCell> {
 
-    override fun createViewHolderDelegate() = object : ViewHolder.Delegate<TextCell>() {
+    override fun createViewHolderDelegate() = object : ViewHolder.Delegate<SectionHeaderCell>() {
 
         override fun createViewHolder(parent: ViewGroup) = TextViewHolder(parent)
     }
 
-    private class TextViewHolder(parent: ViewGroup) : ViewHolder<TextCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_text, parent, false)) {
+    private class TextViewHolder(parent: ViewGroup) : ViewHolder<SectionHeaderCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_section_header, parent, false)) {
 
         private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
         private val normalHorizontalPadding = itemView.context.dimension(R.dimen.beagle_item_horizontal_margin)
         private val iconHorizontalPadding = itemView.context.dimension(R.dimen.beagle_item_horizontal_margin_large)
 
-        override fun bind(model: TextCell) = textView.run {
+        override fun bind(model: SectionHeaderCell) = textView.run {
             setText(model.text)
             isEnabled = model.isEnabled
             setCompoundDrawablesWithIntrinsicBounds(model.icon?.let { icon -> context.tintedDrawable(icon, textColors.defaultColor) }, null, null, null)
