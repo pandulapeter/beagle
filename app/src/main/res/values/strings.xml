@@ -281,7 +281,7 @@
     <!-- Case studies / Navigation -->
     <string name="case_study_navigation_title">Navigating within the menu</string>
     <string name="case_study_navigation_description">Create submenus to better organize the modules.</string>
-    <string name="case_study_navigation_text_1">Coming soon</string>
+    <string name="case_study_navigation_text_1">The debug menu is basically a list of modules that is distinct by the module ID. This means that whenever a new module is added with an ID that already exists in the list, it will either get replaced or, if their contents are the same, no animations will be performed.\n\nThis example simply takes advantage of this fact to create three submenus, by updating parts of the list while leaving the header intact.</string>
     <string name="case_study_navigation_header_title">Debug menu</string>
     <string name="case_study_navigation_header_subtitle">Navigation example</string>
     <string name="case_study_navigation_header_text">You can navigate within this debug menu!</string>
