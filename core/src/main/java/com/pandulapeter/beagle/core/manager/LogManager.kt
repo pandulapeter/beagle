@@ -19,6 +19,7 @@ internal class LogManager(
         id: String
     ) {
         synchronized(entries) {
+            entries.removeAll { it.id == id }
             entries.add(
                 0,
                 LogEntry(

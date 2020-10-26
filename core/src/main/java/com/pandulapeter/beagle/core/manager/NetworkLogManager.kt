@@ -27,6 +27,7 @@ internal class NetworkLogManager(
             timestamp = timestamp
         )
         synchronized(entries) {
+            entries.removeAll { it.id == id }
             entries.add(0, entry)
             entries.sortByDescending { it.timestamp }
         }
