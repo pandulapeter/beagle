@@ -25,7 +25,7 @@ internal class ExceptionHandler(
                 behavior = BeagleCore.implementation.behavior,
                 crashLogEntry = CrashLogEntry(
                     id = randomId,
-                    exception = e::class.java.simpleName,
+                    exception = e.message ?: e::class.java.simpleName,
                     stacktrace = e.stackTraceToString(),
                     timestamp = currentTimestamp
                 )
