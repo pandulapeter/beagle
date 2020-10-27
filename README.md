@@ -69,7 +69,7 @@ Beagle.initialize(this)
 
 Optionally you can add the following parameters to this function:
 * The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance. For example, here you can specify a custom theme for the debug menu using the **themeResourceId** parameter, in case the one used by the application is not suitable. Note: *Theme.AppCompat* themes don't really look great with Beagle, it's recommended to extend *Theme.MaterialComponents.NoActionBar* or *Theme.MaterialComponents.Light.NoActionBar*.
-* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. One frequent use case is adjusting the value of the **shakeThreshold** or **shakeHapticFeedbackDuration** parameters, but this is the place where additional an **logger** or **networkLoggers** can also be provided. Warning: by default Beagle interferes with other crash reporting solutions, as it tries to handle uncaught exceptions by opening the bug reporting screen. Of course this is not true for the noop artifact, but if you want to disable this feature, use the **shouldCatchExceptions** parameter.
+* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. One frequent use case is adjusting the value of the **shakeThreshold** or the **shakeHapticFeedbackDuration** parameters, but this is also the place where additional **loggers** or **networkLoggers** can be provided. Warning: by default Beagle interferes with other crash reporting solutions, as it tries to handle uncaught exceptions by opening the bug reporting screen (of course this is not true for the noop artifact). If you want to disable this feature, use the **shouldCatchExceptions** parameter.
 
 By default you can fetch Beagle by shaking the device.
 
@@ -150,7 +150,7 @@ Beagle.initialize(
     …
     behavior = Behavior(
         …
-        logger = BeagleLogger
+        loggers = listOf(BeagleLogger)
     )
 )
 ```

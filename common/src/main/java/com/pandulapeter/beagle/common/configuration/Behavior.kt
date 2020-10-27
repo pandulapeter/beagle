@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.common.configuration
 
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_EXCLUDED_PACKAGE_NAMES
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_HAPTIC_FEEDBACK_DURATION
-import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_LOGGER
+import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_LOGGERS
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_NETWORK_LOGGERS
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SHAKE_THRESHOLD
@@ -20,7 +20,7 @@ import java.util.Locale
  * @param shakeHapticFeedbackDuration - The length of the vibration triggered when a shake is detected, in milliseconds. Set to 0 to disable haptic feedback. [DEFAULT_HAPTIC_FEEDBACK_DURATION] by default.
  * @param excludedPackageNames - The list of packages that contain Activities for which Beagle should not be triggered. [DEFAULT_EXCLUDED_PACKAGE_NAMES] by default (and the library also contains a hardcoded list, unrelated to this parameter).
  * @param shouldCatchExceptions - Whether or not the library should handle uncaught exceptions by logging them and opening the bug reporting screen. Warning: this interferes with other crash reporting solutions. [DEFAULT_SHOULD_CATCH_EXCEPTIONS] by default.
- * @param logger - The [BeagleLoggerContract] implementation in case logging is used in a pure Java / Kotlin module. [DEFAULT_LOGGER] by default.
+ * @param loggers - The list of [BeagleLoggerContract] implementations, useful when logging is needed in a pure Java / Kotlin modules. [DEFAULT_LOGGERS] by default.
  * @param networkLoggers - The list of [BeagleNetworkLoggerContract] implementations for intercepting network events. [DEFAULT_NETWORK_LOGGERS] by default.
  * @param screenCaptureServiceNotificationChannelId - The ID for the notification channel that handles all notifications related to screen capture. [DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID] by default.
  * @param getLogFileName - The lambda used to generate log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format and the ID.
@@ -35,7 +35,7 @@ data class Behavior(
     val shakeHapticFeedbackDuration: Long = DEFAULT_HAPTIC_FEEDBACK_DURATION,
     val excludedPackageNames: List<String> = DEFAULT_EXCLUDED_PACKAGE_NAMES,
     val shouldCatchExceptions: Boolean = DEFAULT_SHOULD_CATCH_EXCEPTIONS,
-    val logger: BeagleLoggerContract? = DEFAULT_LOGGER,
+    val loggers: List<BeagleLoggerContract> = DEFAULT_LOGGERS,
     val networkLoggers: List<BeagleNetworkLoggerContract> = DEFAULT_NETWORK_LOGGERS,
     val screenCaptureServiceNotificationChannelId: String = DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID,
     val getLogFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "log_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" },
@@ -50,7 +50,7 @@ data class Behavior(
         private const val DEFAULT_HAPTIC_FEEDBACK_DURATION = 100L
         private val DEFAULT_EXCLUDED_PACKAGE_NAMES = emptyList<String>()
         private const val DEFAULT_SHOULD_CATCH_EXCEPTIONS = true
-        private val DEFAULT_LOGGER: BeagleLoggerContract? = null
+        private val DEFAULT_LOGGERS = emptyList<BeagleLoggerContract>()
         private val DEFAULT_NETWORK_LOGGERS = emptyList<BeagleNetworkLoggerContract>()
         private const val DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID = "channel_beagle_screen_capture"
         private val DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }

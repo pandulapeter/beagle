@@ -25,7 +25,7 @@ class BeagleDemoApplication : Application() {
             application = this,
             appearance = Appearance(themeResourceId = R.style.DebugMenuTheme),
             behavior = Behavior(
-                logger = BeagleLogger,
+                loggers = listOf(BeagleLogger),
                 networkLoggers = listOf(BeagleOkHttpLogger, BeagleKtorLogger)
             )
         )

@@ -106,7 +106,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
             exceptionHandler.initialize(application)
         }
         debugMenuInjector.register(application)
-        behavior.logger?.register(::log, ::clearLogs)
+        behavior.loggers.forEach { it.register(::log, ::clearLogs) }
         behavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }
         videoThumbnailLoader = ImageLoader.Builder(application)
             .componentRegistry {
