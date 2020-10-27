@@ -44,7 +44,7 @@ internal class CrashLogItemViewHolder private constructor(
 
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.entry.id
-        textView.text = uiModel.entry.getFormattedTitle(formatter = BeagleCore.implementation.appearance.logTimestampFormatter)
+        textView.text = uiModel.entry.getFormattedTitle(formatter = BeagleCore.implementation.appearance.logShortTimestampFormatter)
         checkBox.run {
             setOnCheckedChangeListener(null)
             isChecked = uiModel.isSelected

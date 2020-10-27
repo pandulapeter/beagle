@@ -186,7 +186,7 @@ internal class BugReportActivity : AppCompatActivity() {
     private fun showMediaPreviewDialog(fileName: String) = MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
 
     private fun showCrashLogDetailDialog(entry: CrashLogEntry) = BeagleCore.implementation.showDialog(
-        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toText(),
+        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logLongTimestampFormatter).toText(),
         isHorizontalScrollEnabled = true,
         shouldShowShareButton = true,
         timestamp = entry.timestamp,
@@ -205,7 +205,7 @@ internal class BugReportActivity : AppCompatActivity() {
     )
 
     private fun showLogDetailDialog(entry: LogEntry) = BeagleCore.implementation.showDialog(
-        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toText(),
+        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logLongTimestampFormatter).toText(),
         timestamp = entry.timestamp,
         id = entry.id
     )
@@ -213,7 +213,7 @@ internal class BugReportActivity : AppCompatActivity() {
     private fun showLifecycleLogDetailDialog(entry: LifecycleLogEntry) = BeagleCore.implementation.showDialog(
         content = LifecycleLogListDelegate.format(
             entry = entry,
-            formatter = BeagleCore.implementation.appearance.logTimestampFormatter,
+            formatter = BeagleCore.implementation.appearance.logLongTimestampFormatter,
             shouldDisplayFullNames = BeagleCore.implementation.behavior.lifecycleLogBehavior.shouldDisplayFullNames
         ),
         isHorizontalScrollEnabled = false,

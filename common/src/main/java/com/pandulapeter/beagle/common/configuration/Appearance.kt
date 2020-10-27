@@ -49,7 +49,8 @@ import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureText
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_READY_NOTIFICATION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_TOAST_TEXT
 import com.pandulapeter.beagle.commonBase.GALLERY_DATE_FORMAT
-import com.pandulapeter.beagle.commonBase.LOG_TIME_FORMAT
+import com.pandulapeter.beagle.commonBase.LOG_LONG_TIME_FORMAT
+import com.pandulapeter.beagle.commonBase.LOG_SHORT_TIME_FORMAT
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -63,7 +64,8 @@ import java.util.Locale
  * @param bugReportTexts - Customize UI strings related to the bug reporting screen, see [BugReportTexts].
  * @param networkLogTexts - Customize UI strings related to the network event detail dialog, see [NetworkLogTexts].
  * @param deviceInfoTexts - Customize UI strings related to the device info module (also used when reporting bugs), see [DeviceInfoTexts].
- * @param logTimestampFormatter - The formatter used for displaying the timestamp of any type of log on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
+ * @param logShortTimestampFormatter - The formatter used for displaying the timestamp of any type of log entry in lists. Formats with [LOG_SHORT_TIME_FORMAT] by default.
+ * @param logLongTimestampFormatter - The formatter used for displaying the timestamp of any type of log entry in detail dialogs. Formats with [LOG_LONG_TIME_FORMAT] by default.
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with [GALLERY_DATE_FORMAT] by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. [DEFAULT_APPLY_INSETS] by default.
  */
@@ -75,7 +77,8 @@ data class Appearance(
     val bugReportTexts: BugReportTexts = BugReportTexts(),
     val networkLogTexts: NetworkLogTexts = NetworkLogTexts(),
     val deviceInfoTexts: DeviceInfoTexts = DeviceInfoTexts(),
-    val logTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_LOG_DATE_FORMAT.format(it) },
+    val logShortTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_LOG_SHORT_DATE_FORMAT.format(it) },
+    val logLongTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_LOG_LONG_DATE_FORMAT.format(it) },
     val galleryTimestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_GALLERY_DATE_FORMAT.format(it) },
     val applyInsets: ((windowInsets: Insets) -> Insets)? = DEFAULT_APPLY_INSETS
 ) {
@@ -260,7 +263,8 @@ data class Appearance(
 
     companion object {
         private val DEFAULT_THEME_RESOURCE_ID: Int? = null
-        private val DEFAULT_LOG_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_LOG_SHORT_DATE_FORMAT by lazy { SimpleDateFormat(LOG_SHORT_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_LOG_LONG_DATE_FORMAT by lazy { SimpleDateFormat(LOG_LONG_TIME_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_GALLERY_DATE_FORMAT by lazy { SimpleDateFormat(GALLERY_DATE_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_APPLY_INSETS: ((windowInsets: Insets) -> Insets)? = null
     }

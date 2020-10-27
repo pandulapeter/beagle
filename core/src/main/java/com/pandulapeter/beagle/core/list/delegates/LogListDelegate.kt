@@ -22,7 +22,7 @@ internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
                 shouldEllipsize = true,
                 onItemSelected = {
                     BeagleCore.implementation.showDialog(
-                        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toText(),
+                        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logLongTimestampFormatter).toText(),
                         isHorizontalScrollEnabled = module.isHorizontalScrollEnabled,
                         timestamp = entry.timestamp,
                         id = entry.id

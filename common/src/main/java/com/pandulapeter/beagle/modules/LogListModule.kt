@@ -4,7 +4,7 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
-import com.pandulapeter.beagle.commonBase.LOG_TIME_FORMAT
+import com.pandulapeter.beagle.commonBase.LOG_SHORT_TIME_FORMAT
 import com.pandulapeter.beagle.modules.LogListModule.Companion.DEFAULT_IS_EXPANDED_INITIALLY
 import com.pandulapeter.beagle.modules.LogListModule.Companion.DEFAULT_IS_HORIZONTAL_SCROLL_ENABLED
 import com.pandulapeter.beagle.modules.LogListModule.Companion.DEFAULT_LABEL
@@ -24,7 +24,7 @@ import java.util.Locale
  *
  * @param title - The title of the module. [DEFAULT_TITLE] by default.
  * @param maxItemCount - The maximum number of messages that will appear when expanded. [DEFAULT_MAX_ITEM_COUNT] by default.
- * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [LOG_TIME_FORMAT] by default.
+ * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [LOG_SHORT_TIME_FORMAT] by default.
  * @param label - The label for which the logs should be filtered, or null for no filtering. [DEFAULT_LABEL] by default.
  * @param isHorizontalScrollEnabled - When true, the payload dialog will scroll in both directions. If false, the text will be wrapped and only vertical scrolling will be supported. [DEFAULT_IS_HORIZONTAL_SCROLL_ENABLED] by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
@@ -46,7 +46,7 @@ data class LogListModule(
     companion object {
         private const val DEFAULT_TITLE = "Logs"
         private const val DEFAULT_MAX_ITEM_COUNT = 10
-        private val DEFAULT_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
+        private val DEFAULT_DATE_FORMAT by lazy { SimpleDateFormat(LOG_SHORT_TIME_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_LABEL: String? = null
         private const val DEFAULT_IS_HORIZONTAL_SCROLL_ENABLED = false
         private const val DEFAULT_IS_EXPANDED_INITIALLY = false

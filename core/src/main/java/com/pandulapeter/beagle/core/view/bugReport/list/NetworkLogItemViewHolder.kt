@@ -49,7 +49,7 @@ internal class NetworkLogItemViewHolder private constructor(
         textView.setText(
             NetworkLogListDelegate.format(
                 entry = uiModel.entry,
-                formatter = BeagleCore.implementation.appearance.logTimestampFormatter
+                formatter = BeagleCore.implementation.appearance.logShortTimestampFormatter
             )
         )
         checkBox.run {

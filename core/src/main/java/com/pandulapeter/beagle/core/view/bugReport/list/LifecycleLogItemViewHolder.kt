@@ -49,7 +49,7 @@ internal class LifecycleLogItemViewHolder private constructor(
         textView.setText(
             LifecycleLogListDelegate.format(
                 entry = uiModel.entry,
-                formatter = BeagleCore.implementation.appearance.logTimestampFormatter,
+                formatter = BeagleCore.implementation.appearance.logShortTimestampFormatter,
                 shouldDisplayFullNames = true
             )
         )

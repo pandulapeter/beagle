@@ -46,7 +46,7 @@ internal class LogItemViewHolder private constructor(
 
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.entry
-        textView.setText(LogListDelegate.format(uiModel.entry, BeagleCore.implementation.appearance.logTimestampFormatter))
+        textView.setText(LogListDelegate.format(uiModel.entry, BeagleCore.implementation.appearance.logShortTimestampFormatter))
         checkBox.run {
             setOnCheckedChangeListener(null)
             isChecked = uiModel.isSelected

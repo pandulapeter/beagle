@@ -188,7 +188,7 @@ internal class BugReportViewModel(
                             allCrashLogEntries?.firstOrNull { it.id == id }?.let { entry ->
                                 context.createLogFile(
                                     fileName = "${getCrashLogFileName(currentTimestamp, entry.id)}.txt",
-                                    content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toString()
+                                    content = entry.getFormattedContents(BeagleCore.implementation.appearance.logShortTimestampFormatter).toString()
                                 )
                             }
                         }
@@ -231,7 +231,7 @@ internal class BugReportViewModel(
                     }.orEmpty().mapNotNull { entry ->
                         context.createLogFile(
                             fileName = "${getLogFileName(currentTimestamp, entry.id)}.txt",
-                            content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toString()
+                            content = entry.getFormattedContents(BeagleCore.implementation.appearance.logShortTimestampFormatter).toString()
                         )
                     }.toPaths(context.getLogsFolder())
                 )
@@ -245,7 +245,7 @@ internal class BugReportViewModel(
                                     fileName = "${getLifecycleLogFileName(currentTimestamp, entry.id)}.txt",
                                     content = LifecycleLogListDelegate.format(
                                         entry = entry,
-                                        formatter = BeagleCore.implementation.appearance.logTimestampFormatter,
+                                        formatter = BeagleCore.implementation.appearance.logShortTimestampFormatter,
                                         shouldDisplayFullNames = BeagleCore.implementation.behavior.lifecycleLogBehavior.shouldDisplayFullNames
                                     ).toString()
                                 )

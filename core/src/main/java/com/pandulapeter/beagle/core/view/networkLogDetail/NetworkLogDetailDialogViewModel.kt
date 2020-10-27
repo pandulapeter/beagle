@@ -228,7 +228,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             val textTimestamp = context.text(BeagleCore.implementation.appearance.networkLogTexts.timestamp)
             val textDuration = context.text(BeagleCore.implementation.appearance.networkLogTexts.duration)
             return "\n\n• ${textHeaders}:${headers.formatHeaders(context)}"
-                .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.logTimestampFormatter(it)}") } ?: text }
+                .let { text -> timestamp?.let { text.append("\n• ${textTimestamp}: ${BeagleCore.implementation.appearance.logLongTimestampFormatter(it)}") } ?: text }
                 .let { text -> duration?.let { text.append("\n• ${textDuration}: ${max(0, it)} ms") } ?: text }
                 .toString()
         }
