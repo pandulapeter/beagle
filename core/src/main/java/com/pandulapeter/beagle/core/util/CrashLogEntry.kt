@@ -1,0 +1,27 @@
+package com.pandulapeter.beagle.core.util
+
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
+import com.pandulapeter.beagle.common.configuration.toText
+import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+internal data class CrashLogEntry(
+    @Json(name = "id") override val id: String,
+    @Json(name = "exception") val exception: String,
+    @Json(name = "stacktrace") val stacktrace: String,
+    @Json(name = "timestamp") val timestamp: Long
+) : BeagleListItemContract {
+
+    override val title = exception.toText()
+
+    fun getFormattedContents(timestampFormatter: (Long) -> CharSequence): CharSequence = "[${timestampFormatter(timestamp)}] $exception".let { text ->
+        SpannableString(stacktrace.let { "$text\n\n$it" }).apply {
+            setSpan(StyleSpan(Typeface.BOLD), 0, text.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+        }
+    }
+}

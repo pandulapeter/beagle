@@ -23,6 +23,7 @@ import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.BugReportManager
+import com.pandulapeter.beagle.core.manager.CrashLogManager
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
 import com.pandulapeter.beagle.core.manager.ExceptionHandler
 import com.pandulapeter.beagle.core.manager.LifecycleLogManager
@@ -73,6 +74,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     private val overlayListenerManager by lazy { OverlayListenerManager() }
     private val updateListenerManager by lazy { UpdateListenerManager() }
     private val visibilityListenerManager by lazy { VisibilityListenerManager() }
+    private val crashLogManager by lazy { CrashLogManager() }
     private val logManager by lazy { LogManager(logListenerManager, listManager, ::refresh) }
     private val lifecycleLogManager by lazy { LifecycleLogManager(listManager, ::refresh) }
     private val networkLogManager by lazy { NetworkLogManager(networkLogListenerManager, listManager, ::refresh) }
@@ -97,6 +99,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         this.appearance = appearance
         this.behavior = behavior
         logManager.application = application
+        crashLogManager.application = application
         this.localStorageManager = LocalStorageManager(application)
         if (behavior.bugReportingBehavior.shouldCatchExceptions) {
             exceptionHandler.initialize(application)
@@ -249,6 +252,10 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     )
 
     override fun clearNetworkLogs() = networkLogManager.clearLogs()
+
+    override fun clearLifecycleLogs() = lifecycleLogManager.clearLogs()
+
+    override fun clearCrashLogs() = crashLogManager.clearLogs()
 
     override fun takeScreenshot() = screenCaptureManager.takeScreenshot()
 

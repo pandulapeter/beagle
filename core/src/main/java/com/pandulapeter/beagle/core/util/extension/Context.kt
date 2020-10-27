@@ -10,6 +10,7 @@ import android.view.ContextThemeWrapper
 import androidx.core.content.FileProvider
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.core.util.CrashLogEntry
 import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.getFolder
 import com.squareup.moshi.Moshi
@@ -66,10 +67,10 @@ internal fun Context.getPersistedLogsFolder() = getFilesFolder(LOGS_FOLDER_NAME)
 
 private fun Context.createPersistedLogFile(fileName: String) = File(getPersistedLogsFolder(), fileName)
 
-private val logEntryAdapter by lazy { Moshi.Builder().build().adapter<LogEntry>(LogEntry::class.java) }
+private val logEntryAdapter by lazy { Moshi.Builder().build().adapter(LogEntry::class.java) }
 
 @Suppress("BlockingMethodInNonBlockingContext")
-internal suspend fun Context.readPersistedLogFile(file: File): LogEntry? = withContext(Dispatchers.IO) {
+internal suspend fun readLogEntryFromLogFile(file: File): LogEntry? = withContext(Dispatchers.IO) {
     try {
         val logEntry: LogEntry?
         FileReader(file).run {
@@ -87,12 +88,51 @@ internal suspend fun Context.readPersistedLogFile(file: File): LogEntry? = withC
     }
 }
 
+internal const val LOG_PREFIX = "log_"
+
 @Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Context.createPersistedLogFile(logEntry: LogEntry) = withContext(Dispatchers.IO) {
-    val file = createPersistedLogFile("${logEntry.timestamp}.log")
+    val file = createPersistedLogFile("$LOG_PREFIX${logEntry.timestamp}.txt")
     try {
         FileWriter(file).run {
             write(logEntryAdapter.toJson(logEntry))
+            flush()
+            close()
+        }
+    } catch (_: IOException) {
+    }
+}
+
+private val crashLogEntryAdapter by lazy { Moshi.Builder().build().adapter(CrashLogEntry::class.java) }
+
+
+@Suppress("BlockingMethodInNonBlockingContext")
+internal suspend fun readCrashLogEntryFromLogFile(file: File): CrashLogEntry? = withContext(Dispatchers.IO) {
+    try {
+        val crashLogEntry: CrashLogEntry?
+        FileReader(file).run {
+            crashLogEntry = try {
+                crashLogEntryAdapter.fromJson(readText())
+            } catch (_: Exception) {
+                null
+            } finally {
+                close()
+            }
+        }
+        crashLogEntry
+    } catch (e: IOException) {
+        null
+    }
+}
+
+internal const val CRASH_LOG_PREFIX = "crashLog_"
+
+@Suppress("BlockingMethodInNonBlockingContext")
+internal suspend fun Context.createPersistedCrashLogFile(crashLogEntry: CrashLogEntry) = withContext(Dispatchers.IO) {
+    val file = createPersistedLogFile("$CRASH_LOG_PREFIX${crashLogEntry.timestamp}.txt")
+    try {
+        FileWriter(file).run {
+            write(crashLogEntryAdapter.toJson(crashLogEntry))
             flush()
             close()
         }

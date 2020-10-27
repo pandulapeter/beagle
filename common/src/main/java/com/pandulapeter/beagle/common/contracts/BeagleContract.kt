@@ -336,6 +336,16 @@ interface BeagleContract {
     fun clearNetworkLogs() = Unit
 
     /**
+     * Clears all lifecycle log messages.
+     */
+    fun clearLifecycleLogs() = Unit
+
+    /**
+     * Clears all crash log messages.
+     */
+    fun clearCrashLogs() = Unit
+
+    /**
      * Captures a screenshot image and saves it in the application's private directory (exposing it through a FileProvider).
      * Below Android Lollipop the root view's drawing cache will be used which is an inferior solution (only the current decorView will be captured, without system decorations).
      * Above Android Lollipop the entire screen will be captured, after the user agrees to the system prompt.

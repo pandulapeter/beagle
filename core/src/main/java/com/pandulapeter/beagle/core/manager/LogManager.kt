@@ -1,12 +1,12 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
-import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
 import com.pandulapeter.beagle.core.util.LogEntry
+import com.pandulapeter.beagle.core.util.extension.LOG_PREFIX
 import com.pandulapeter.beagle.core.util.extension.createPersistedLogFile
 import com.pandulapeter.beagle.core.util.extension.getPersistedLogsFolder
-import com.pandulapeter.beagle.core.util.extension.readPersistedLogFile
+import com.pandulapeter.beagle.core.util.extension.readLogEntryFromLogFile
 import com.pandulapeter.beagle.modules.LogListModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -72,7 +72,11 @@ internal class LogManager(
         }
         refreshUiIfNeeded(label)
         GlobalScope.launch(Dispatchers.IO) {
-            application?.getPersistedLogsFolder()?.listFiles()?.forEach { it.delete() }
+            application?.getPersistedLogsFolder()?.listFiles()?.forEach { file ->
+                if (file.name.startsWith(LOG_PREFIX) && readLogEntryFromLogFile(file)?.label == label) {
+                    file.delete()
+                }
+            }
         }
     }
 
@@ -95,7 +99,7 @@ internal class LogManager(
             application?.let { context ->
                 GlobalScope.launch(Dispatchers.IO) {
                     val persistedEntries = context.getPersistedLogsFolder().listFiles()?.mapNotNull { file ->
-                        context.readPersistedLogFile(file)
+                        if (file.name.startsWith(LOG_PREFIX)) readLogEntryFromLogFile(file) else null
                     }.orEmpty()
                     isSyncReady = true
                     if (persistedEntries.isNotEmpty()) {
@@ -104,7 +108,7 @@ internal class LogManager(
                             entries.clear()
                             entries.addAll(allEntries)
                             if (persistedEntries.isNotEmpty()) {
-                                BeagleCore.implementation.refresh()
+                                refreshUiIfNeeded(null)
                             }
                         }
                     }

@@ -26,4 +26,8 @@ internal class LifecycleLogManager(
             entries.filter { eventTypes.contains(it.eventType) }.toList()
         }
     }
+
+    fun clearLogs() = synchronized(entries) {
+        entries.clear()
+    }
 }
