@@ -91,7 +91,7 @@ internal const val LOG_PREFIX = "log_"
 
 @Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Context.createPersistedLogFile(logEntry: LogEntry) = withContext(Dispatchers.IO) {
-    val file = createPersistedLogFile("$LOG_PREFIX${logEntry.timestamp}.txt")
+    val file = createPersistedLogFile("$LOG_PREFIX${logEntry.id}.txt")
     try {
         FileWriter(file).run {
             write(logEntryAdapter.toJson(logEntry))
