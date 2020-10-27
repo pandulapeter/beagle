@@ -10,7 +10,9 @@ import android.view.ContextThemeWrapper
 import androidx.core.content.FileProvider
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
+import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.getFolder
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
@@ -18,6 +20,7 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
 import java.util.zip.ZipEntry
@@ -61,20 +64,39 @@ private const val LOGS_FOLDER_NAME = "beagleLogs"
 
 internal fun Context.getPersistedLogsFolder() = getFilesFolder(LOGS_FOLDER_NAME)
 
-internal fun Context.createPersistedLogFile(fileName: String) = File(getPersistedLogsFolder(), fileName)
+private fun Context.createPersistedLogFile(fileName: String) = File(getPersistedLogsFolder(), fileName)
+
+private val logEntryAdapter by lazy { Moshi.Builder().build().adapter<LogEntry>(LogEntry::class.java) }
 
 @Suppress("BlockingMethodInNonBlockingContext")
-internal suspend fun Context.createPersistedLogFile(fileName: String, content: String): Uri? = withContext(Dispatchers.IO) {
-    val file = createPersistedLogFile(fileName)
+internal suspend fun Context.readPersistedLogFile(file: File): LogEntry? = withContext(Dispatchers.IO) {
+    try {
+        val logEntry: LogEntry?
+        FileReader(file).run {
+            logEntry = try {
+                logEntryAdapter.fromJson(readText())
+            } catch (_: Exception) {
+                null
+            } finally {
+                close()
+            }
+        }
+        logEntry
+    } catch (e: IOException) {
+        null
+    }
+}
+
+@Suppress("BlockingMethodInNonBlockingContext")
+internal suspend fun Context.createPersistedLogFile(logEntry: LogEntry) = withContext(Dispatchers.IO) {
+    val file = createPersistedLogFile("${logEntry.timestamp}.log")
     try {
         FileWriter(file).run {
-            write(content)
+            write(logEntryAdapter.toJson(logEntry))
             flush()
             close()
         }
-        getUriForFile(file)
-    } catch (e: IOException) {
-        null
+    } catch (_: IOException) {
     }
 }
 

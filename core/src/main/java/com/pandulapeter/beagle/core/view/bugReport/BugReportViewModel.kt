@@ -35,15 +35,19 @@ import java.util.concurrent.Executors
 
 internal class BugReportViewModel(
     application: Application,
-    private val shouldShowGallerySection: Boolean,
-    private val shouldShowNetworkLogsSection: Boolean,
-    private val logLabelSectionsToShow: List<String?>,
-    private val shouldShowMetadataSection: Boolean,
     val buildInformation: CharSequence,
     val deviceInformation: CharSequence,
     private val textInputTitles: List<Text>,
     textInputDescriptions: List<Text>
 ) : AndroidViewModel(application) {
+
+    private val pageSize = BeagleCore.implementation.behavior.bugReportingBehavior.pageSize
+    private val shouldShowGallerySection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowGallerySection
+    private val shouldShowCrashLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowCrashLogsSection
+    private val shouldShowNetworkLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowNetworkLogsSection
+    private val logLabelSectionsToShow = BeagleCore.implementation.behavior.bugReportingBehavior.logLabelSectionsToShow
+    private val shouldShowLifecycleLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowLifecycleLogsSection
+    private val shouldShowMetadataSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowMetadataSection
 
     private val getNetworkLogFileName get() = BeagleCore.implementation.behavior.networkLogBehavior.getFileName
     private val getLogFileName get() = BeagleCore.implementation.behavior.logBehavior.getFileName
@@ -59,13 +63,13 @@ internal class BugReportViewModel(
     private var selectedMediaFileIds = emptyList<String>()
 
     private val allNetworkLogEntries = BeagleCore.implementation.getNetworkLogEntries()
-    private var lastNetworkLogIndex = LOG_INDEX_INCREMENT - 1
+    private var lastNetworkLogIndex = pageSize - 1
     private var selectedNetworkLogIds = emptyList<String>()
     private fun getNetworkLogEntries() = allNetworkLogEntries.take(lastNetworkLogIndex)
     private fun areThereMoreNetworkLogEntries() = allNetworkLogEntries.size > getNetworkLogEntries().size
 
     private val allLogEntries = logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap()
-    private val lastLogIndex = logLabelSectionsToShow.map { label -> label to LOG_INDEX_INCREMENT - 1 }.toMap().toMutableMap()
+    private val lastLogIndex = logLabelSectionsToShow.map { label -> label to pageSize - 1 }.toMap().toMutableMap()
     private val selectedLogIds = logLabelSectionsToShow.map { label -> label to emptyList<String>() }.toMap().toMutableMap()
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
@@ -106,7 +110,7 @@ internal class BugReportViewModel(
 
     fun onShowMoreNetworkLogsTapped() {
         viewModelScope.launch(listManagerContext) {
-            lastNetworkLogIndex += LOG_INDEX_INCREMENT
+            lastNetworkLogIndex += pageSize
             refreshContent()
         }
     }
@@ -115,7 +119,7 @@ internal class BugReportViewModel(
 
     fun onShowMoreLogsTapped(label: String?) {
         viewModelScope.launch(listManagerContext) {
-            lastLogIndex[label] = (lastLogIndex[label] ?: 0) + LOG_INDEX_INCREMENT
+            lastLogIndex[label] = (lastLogIndex[label] ?: 0) + pageSize
             refreshContent()
         }
     }
@@ -147,6 +151,8 @@ internal class BugReportViewModel(
                         .map { fileName -> context.getUriForFile(context.getScreenCapturesFolder().resolve(fileName)) }
                         .toPaths(context.getScreenCapturesFolder())
                 )
+
+                // TODO: Crash logs
 
                 // Network log files
                 filePaths.addAll(
@@ -188,6 +194,8 @@ internal class BugReportViewModel(
                         )
                     }.toPaths(context.getLogsFolder())
                 )
+
+                // TODO: Lifecycle logs
 
                 // Build information
                 var content = ""
@@ -293,6 +301,9 @@ internal class BugReportViewModel(
                 )
                 add(GalleryViewHolder.UiModel(mediaFiles.map { it.name to it.lastModified() }, selectedMediaFileIds))
             }
+            if (shouldShowCrashLogsSection) {
+                // TODO: Crash logs
+            }
             getNetworkLogEntries().let { networkLogEntries ->
                 if (shouldShowNetworkLogsSection && networkLogEntries.isNotEmpty()) {
                     add(
@@ -332,6 +343,9 @@ internal class BugReportViewModel(
                         }
                     }
                 }
+            }
+            if (shouldShowLifecycleLogsSection) {
+                // TODO: Crash logs
             }
             if (shouldShowMetadataSection) {
                 add(
@@ -383,9 +397,5 @@ internal class BugReportViewModel(
     enum class MetadataType {
         BUILD_INFORMATION,
         DEVICE_INFORMATION
-    }
-
-    companion object {
-        private const val LOG_INDEX_INCREMENT = 5
     }
 }

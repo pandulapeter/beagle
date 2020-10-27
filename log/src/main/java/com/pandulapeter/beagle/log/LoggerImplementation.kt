@@ -5,9 +5,9 @@ import com.pandulapeter.beagle.commonBase.BeagleLoggerContract
 internal class LoggerImplementation : BeagleLoggerContract {
 
     private var onNewLog: ((
-        message: CharSequence,
+        message: String,
         tag: String?,
-        payload: CharSequence?,
+        payload: String?,
         isPersisted: Boolean,
         timestamp: Long,
         id: String
@@ -15,9 +15,9 @@ internal class LoggerImplementation : BeagleLoggerContract {
     private var clearLogs: ((tag: String?) -> Unit)? = null
 
     override fun log(
-        message: CharSequence,
+        message: String,
         label: String?,
-        payload: CharSequence?,
+        payload: String?,
         isPersisted: Boolean,
         timestamp: Long,
         id: String
@@ -31,9 +31,9 @@ internal class LoggerImplementation : BeagleLoggerContract {
 
     override fun register(
         onNewLog: (
-            message: CharSequence,
+            message: String,
             label: String?,
-            payload: CharSequence?,
+            payload: String?,
             isPersisted: Boolean,
             timestamp: Long,
             id: String

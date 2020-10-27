@@ -13,9 +13,9 @@ interface BeagleLoggerContract {
      * @param id - The unique identifier of the event. [randomId] by default.
      */
     fun log(
-        message: CharSequence,
+        message: String,
         label: String? = null,
-        payload: CharSequence? = null,
+        payload: String? = null,
         isPersisted: Boolean = false,
         timestamp: Long = currentTimestamp,
         id: String = randomId
@@ -33,9 +33,9 @@ interface BeagleLoggerContract {
      */
     fun register(
         onNewLog: (
-            message: CharSequence,
+            message: String,
             label: String?,
-            payload: CharSequence?,
+            payload: String?,
             isPersisted: Boolean,
             timestamp: Long,
             id: String

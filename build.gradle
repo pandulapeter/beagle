@@ -7,7 +7,7 @@ buildscript {
         libraryTargetSdkVersion = 30
         libraryVersionCode = 1
         kotlinVersion = "1.4.10"
-        coroutinesVersion = "1.3.9"
+        coroutinesVersion = "1.4.0"
         annotationsVersion = "1.1.0"
         appCompatVersion = "1.2.0"
         recyclerViewVersion = "1.1.0"

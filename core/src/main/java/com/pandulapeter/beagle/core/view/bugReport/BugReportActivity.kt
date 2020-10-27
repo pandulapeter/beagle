@@ -47,10 +47,6 @@ internal class BugReportActivity : AppCompatActivity() {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T = BeagleCore.implementation.behavior.bugReportingBehavior.run {
                 BugReportViewModel(
                     application = application,
-                    shouldShowGallerySection = shouldShowGallerySection,
-                    shouldShowNetworkLogsSection = shouldShowNetworkLogsSection,
-                    logLabelSectionsToShow = logLabelSectionsToShow,
-                    shouldShowMetadataSection = shouldShowMetadataSection,
                     buildInformation = buildInformation(application).generateBuildInformation(),
                     deviceInformation = generateDeviceInformation(),
                     textInputTitles = textInputFields.map { it.first },

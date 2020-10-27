@@ -96,6 +96,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     ) = (behavior.shakeDetectionBehavior.threshold == null || shakeDetector.initialize(application)).also {
         this.appearance = appearance
         this.behavior = behavior
+        logManager.application = application
         this.localStorageManager = LocalStorageManager(application)
         if (behavior.bugReportingBehavior.shouldCatchExceptions) {
             exceptionHandler.initialize(application)
@@ -212,9 +213,9 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun clearVisibilityListeners() = visibilityListenerManager.clearListeners()
 
     override fun log(
-        message: CharSequence,
+        message: String,
         label: String?,
-        payload: CharSequence?,
+        payload: String?,
         isPersisted: Boolean,
         timestamp: Long,
         id: String

@@ -294,9 +294,9 @@ interface BeagleContract {
      * @param id - The unique identifier of the event. [randomId] by default.
      */
     fun log(
-        message: CharSequence,
+        message: String,
         label: String? = null,
-        payload: CharSequence? = null,
+        payload: String? = null,
         isPersisted: Boolean = false,
         timestamp: Long = currentTimestamp,
         id: String = randomId

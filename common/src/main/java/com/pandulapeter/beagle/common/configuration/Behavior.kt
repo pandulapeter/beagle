@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavio
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_CATCH_EXCEPTIONS
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_GALLERY_SECTION
+import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_LIFECYCLE_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_METADATA_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_TEXT_INPUT_FIELDS
@@ -135,10 +136,12 @@ data class Behavior(
      * Configuration related to bug reporting.
      *
      * @param shouldCatchExceptions - Whether or not the library should handle uncaught exceptions by logging them and opening the bug reporting screen. Warning: this interferes with other crash reporting solutions. [DEFAULT_SHOULD_CATCH_EXCEPTIONS] by default.
+     * @param pageSize - The number of crash log / network log / log / lifecycle log entries to load for every page, before the "Show more" button is displayed. [DEFAULT_PAGE_SIZE] by default.
      * @param shouldShowGallerySection - Whether or not the gallery section should be added. [DEFAULT_SHOULD_SHOW_GALLERY_SECTION] by default.
      * @param shouldShowCrashLogsSection - Whether or not the section of crash logs should be added. [DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION] by default.
      * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. [DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION] by default.
      * @param logLabelSectionsToShow - The list of log labels for which sections should be added. Setting a list containing null adds a section for all logs, without filtering. [DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW] by default.
+     * @param shouldShowLifecycleLogsSection - Whether or not the section of lifecycle logs should be added. [DEFAULT_SHOULD_SHOW_LIFECYCLE_LOGS_SECTION] by default.
      * @param shouldShowMetadataSection - Whether or not the metadata section (build information and device information) should be added. [DEFAULT_SHOULD_SHOW_METADATA_SECTION] by default.
      * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [DEFAULT_BUILD_INFORMATION] by default.
      * @param textInputFields - The list of free-text inputs, where each entry is a pair of the field's title and its default value. [DEFAULT_TEXT_INPUT_FIELDS] by default.
@@ -148,10 +151,12 @@ data class Behavior(
      */
     data class BugReportingBehavior(
         val shouldCatchExceptions: Boolean = DEFAULT_SHOULD_CATCH_EXCEPTIONS,
+        val pageSize: Int = DEFAULT_PAGE_SIZE,
         val shouldShowGallerySection: Boolean = DEFAULT_SHOULD_SHOW_GALLERY_SECTION,
         val shouldShowCrashLogsSection: Boolean = DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION,
         val shouldShowNetworkLogsSection: Boolean = DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION,
         val logLabelSectionsToShow: List<String?> = DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW,
+        val shouldShowLifecycleLogsSection: Boolean = DEFAULT_SHOULD_SHOW_LIFECYCLE_LOGS_SECTION,
         val shouldShowMetadataSection: Boolean = DEFAULT_SHOULD_SHOW_METADATA_SECTION,
         val buildInformation: (activity: Application?) -> List<Pair<Text, String>> = DEFAULT_BUILD_INFORMATION,
         val textInputFields: List<Pair<Text, Text>> = DEFAULT_TEXT_INPUT_FIELDS,
@@ -162,10 +167,12 @@ data class Behavior(
 
         companion object {
             private const val DEFAULT_SHOULD_CATCH_EXCEPTIONS = true
+            private const val DEFAULT_PAGE_SIZE = 5
             private const val DEFAULT_SHOULD_SHOW_GALLERY_SECTION = true
             private const val DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION = true
             private const val DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION = true
             private val DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW: List<String?> = listOf(null)
+            private const val DEFAULT_SHOULD_SHOW_LIFECYCLE_LOGS_SECTION = true
             private const val DEFAULT_SHOULD_SHOW_METADATA_SECTION = true
             private val DEFAULT_BUILD_INFORMATION: (Application?) -> List<Pair<Text, String>> = { application ->
                 mutableListOf<Pair<Text, String>>().apply {

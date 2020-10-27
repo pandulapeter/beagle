@@ -6,13 +6,16 @@ import android.text.Spanned
 import android.text.style.StyleSpan
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 internal data class LogEntry(
-    override val id: String,
-    val label: String?,
-    val message: CharSequence,
-    val payload: CharSequence?,
-    val timestamp: Long
+    @Json(name = "id") override val id: String,
+    @Json(name = "label") val label: String?,
+    @Json(name = "message") val message: String,
+    @Json(name = "payload") val payload: String?,
+    @Json(name = "timestamp") val timestamp: Long
 ) : BeagleListItemContract {
 
     override val title = message.toText()
