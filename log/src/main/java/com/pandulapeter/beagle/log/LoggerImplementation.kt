@@ -4,17 +4,25 @@ import com.pandulapeter.beagle.commonBase.BeagleLoggerContract
 
 internal class LoggerImplementation : BeagleLoggerContract {
 
-    private var onNewLog: ((message: CharSequence, tag: String?, payload: CharSequence?, timestamp: Long, id: String) -> Unit)? = null
+    private var onNewLog: ((
+        message: CharSequence,
+        tag: String?,
+        payload: CharSequence?,
+        isPersisted: Boolean,
+        timestamp: Long,
+        id: String
+    ) -> Unit)? = null
     private var clearLogs: ((tag: String?) -> Unit)? = null
 
     override fun log(
         message: CharSequence,
         label: String?,
         payload: CharSequence?,
+        isPersisted: Boolean,
         timestamp: Long,
         id: String
     ) {
-        onNewLog?.invoke(message, label, payload, timestamp, id)
+        onNewLog?.invoke(message, label, payload, isPersisted, timestamp, id)
     }
 
     override fun clearLogs(label: String?) {
@@ -22,7 +30,14 @@ internal class LoggerImplementation : BeagleLoggerContract {
     }
 
     override fun register(
-        onNewLog: (message: CharSequence, label: String?, payload: CharSequence?, timestamp: Long, id: String) -> Unit,
+        onNewLog: (
+            message: CharSequence,
+            label: String?,
+            payload: CharSequence?,
+            isPersisted: Boolean,
+            timestamp: Long,
+            id: String
+        ) -> Unit,
         clearLogs: (label: String?) -> Unit
     ) {
         this.onNewLog = onNewLog

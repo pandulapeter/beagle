@@ -9,12 +9,14 @@ internal class LogManager(
     private val listManager: ListManager,
     private val refreshUi: () -> Unit
 ) {
+    // TODO: Read all logs from storage
     private val entries = mutableListOf<LogEntry>()
 
     fun log(
         label: String?,
         message: CharSequence,
         payload: CharSequence?,
+        isPersisted: Boolean,
         timestamp: Long,
         id: String
     ) {
@@ -34,6 +36,9 @@ internal class LogManager(
         }
         logListenerManager.notifyListeners(label, message, payload)
         refreshUiIfNeeded(label)
+        if (isPersisted) {
+            // TODO: Save log to storage
+        }
     }
 
     fun clearLogs(label: String?) {
@@ -45,6 +50,7 @@ internal class LogManager(
             }
         }
         refreshUiIfNeeded(label)
+        // TODO: Delete all logs from storage
     }
 
     fun getEntries(label: String?): List<LogEntry> = synchronized(entries) {

@@ -220,12 +220,14 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         message: CharSequence,
         label: String?,
         payload: CharSequence?,
+        isPersisted: Boolean,
         timestamp: Long,
         id: String
     ) = logManager.log(
         label = label,
         message = message,
         payload = payload,
+        isPersisted = isPersisted,
         timestamp = timestamp,
         id = id
     )
