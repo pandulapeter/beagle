@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
 import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.extension.createPersistedLogFile
@@ -27,6 +28,10 @@ internal class LogManager(
             syncIfNeeded()
             return field
         }
+
+    init {
+        syncIfNeeded()
+    }
 
     fun log(
         label: String?,
@@ -92,11 +97,16 @@ internal class LogManager(
                     val persistedEntries = context.getPersistedLogsFolder().listFiles()?.mapNotNull { file ->
                         context.readPersistedLogFile(file)
                     }.orEmpty()
-                    synchronized(entries) {
-                        val allEntries = (entries + persistedEntries).distinctBy { it.id }.sortedByDescending { it.timestamp }
-                        entries.clear()
-                        entries.addAll(allEntries)
-                        isSyncReady = true
+                    isSyncReady = true
+                    if (persistedEntries.isNotEmpty()) {
+                        synchronized(entries) {
+                            val allEntries = (entries + persistedEntries).distinctBy { it.id }.sortedByDescending { it.timestamp }
+                            entries.clear()
+                            entries.addAll(allEntries)
+                            if (persistedEntries.isNotEmpty()) {
+                                BeagleCore.implementation.refresh()
+                            }
+                        }
                     }
                 }
             }
