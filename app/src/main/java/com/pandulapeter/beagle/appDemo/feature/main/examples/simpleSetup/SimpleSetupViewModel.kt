@@ -80,6 +80,20 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
 
     private fun MutableList<SimpleSetupListItem>.addForceCrashButtonSection() = addSection(Section.FORCE_CRASH_BUTTON) {
         add(TextViewHolder.UiModel(R.string.case_study_simple_setup_force_crash_button_2))
+        add(
+            CodeSnippetViewHolder.UiModel(
+                "Beagle.initialize(\n" +
+                        "    …\n" +
+                        "    behavior = Behavior(\n" +
+                        "        …\n" +
+                        "        bugReportingBehavior = Behavior.BugReportingBehavior(\n" +
+                        "            …\n" +
+                        "            shouldCatchExceptions = false\n" +
+                        "        )\n" +
+                        "    )\n" +
+                        ")"
+            )
+        )
     }
 
     private fun MutableList<SimpleSetupListItem>.addScreenshotButtonSection() = addSection(Section.SCREENSHOT_BUTTON) {
