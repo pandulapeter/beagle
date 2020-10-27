@@ -76,7 +76,8 @@ internal class LogDetailDialogFragment : DialogFragment() {
                 activity = activity,
                 content = textView.text.toString(),
                 timestamp = arguments?.timestamp ?: 0L,
-                id = arguments?.id.orEmpty()
+                id = arguments?.id.orEmpty(),
+                fileName = arguments?.fileName.let { if (it.isNullOrBlank()) null else it }
             )
         }
         else -> false
@@ -88,6 +89,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
         private var Bundle.shouldShowShareButton by BundleArgumentDelegate.Boolean("shouldShowShareButton")
         private var Bundle.timestamp by BundleArgumentDelegate.Long("timestamp")
         private var Bundle.id by BundleArgumentDelegate.String("id")
+        private var Bundle.fileName by BundleArgumentDelegate.String("fileName")
 
         fun show(
             fragmentManager: FragmentManager,
@@ -95,13 +97,15 @@ internal class LogDetailDialogFragment : DialogFragment() {
             isHorizontalScrollEnabled: Boolean,
             shouldShowShareButton: Boolean,
             timestamp: Long,
-            id: String
+            id: String,
+            fileName: String?
         ) = LogDetailDialogFragment().withArguments {
             it.content = content
             it.isHorizontalScrollEnabled = isHorizontalScrollEnabled
             it.shouldShowShareButton = shouldShowShareButton
             it.timestamp = timestamp
             it.id = id
+            it.fileName = fileName.orEmpty()
         }.run { show(fragmentManager, tag) }
     }
 }

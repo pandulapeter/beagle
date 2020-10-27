@@ -179,8 +179,11 @@ internal class BugReportActivity : AppCompatActivity() {
 
     private fun showCrashLogDetailDialog(entry: CrashLogEntry) = BeagleCore.implementation.showDialog(
         content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toText(),
+        isHorizontalScrollEnabled = true,
+        shouldShowShareButton = true,
         timestamp = entry.timestamp,
-        id = entry.id
+        id = entry.id,
+        fileName = BeagleCore.implementation.behavior.bugReportingBehavior.getCrashLogFileName(entry.timestamp, entry.id)
     )
 
     private fun showNetworkLogDetailDialog(entry: NetworkLogEntry) = BeagleCore.implementation.showNetworkEventDialog(
@@ -205,8 +208,11 @@ internal class BugReportActivity : AppCompatActivity() {
             formatter = BeagleCore.implementation.appearance.logTimestampFormatter,
             shouldDisplayFullNames = BeagleCore.implementation.behavior.lifecycleLogBehavior.shouldDisplayFullNames
         ),
+        isHorizontalScrollEnabled = false,
+        shouldShowShareButton = true,
         timestamp = entry.timestamp,
-        id = entry.id
+        id = entry.id,
+        fileName = BeagleCore.implementation.behavior.lifecycleLogBehavior.getFileName(entry.timestamp, entry.id)
     )
 
     private fun showMetadataDetailDialog(type: BugReportViewModel.MetadataType) = BeagleCore.implementation.showDialog(

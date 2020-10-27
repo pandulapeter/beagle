@@ -276,18 +276,14 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         shouldShowShareButton: Boolean,
         timestamp: Long,
         id: String
-    ) {
-        (uiManager.findHostFragmentManager() ?: currentActivity?.supportFragmentManager)?.let { fragmentManager ->
-            LogDetailDialogFragment.show(
-                fragmentManager = fragmentManager,
-                content = content,
-                isHorizontalScrollEnabled = isHorizontalScrollEnabled,
-                shouldShowShareButton = shouldShowShareButton,
-                timestamp = timestamp,
-                id = id
-            )
-        }
-    }
+    ) = showDialog(
+        content = content,
+        isHorizontalScrollEnabled = isHorizontalScrollEnabled,
+        shouldShowShareButton = shouldShowShareButton,
+        timestamp = timestamp,
+        id = id,
+        fileName = ""
+    )
 
     override fun showNetworkEventDialog(
         isOutgoing: Boolean,
@@ -308,6 +304,27 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
                 duration = duration,
                 timestamp = timestamp,
                 id = id
+            )
+        }
+    }
+
+    internal fun showDialog(
+        content: Text,
+        isHorizontalScrollEnabled: Boolean,
+        shouldShowShareButton: Boolean,
+        timestamp: Long,
+        id: String,
+        fileName: String
+    ) {
+        (uiManager.findHostFragmentManager() ?: currentActivity?.supportFragmentManager)?.let { fragmentManager ->
+            LogDetailDialogFragment.show(
+                fragmentManager = fragmentManager,
+                content = content,
+                isHorizontalScrollEnabled = isHorizontalScrollEnabled,
+                shouldShowShareButton = shouldShowShareButton,
+                timestamp = timestamp,
+                id = id,
+                fileName = fileName
             )
         }
     }
