@@ -22,7 +22,7 @@ internal class MediaView @JvmOverloads constructor(
         layoutTransition = LayoutTransition()
     }
 
-    val checkBox = findViewById<CheckBox>(R.id.beagle_check_box)
-    val textView = findViewById<TextView>(R.id.beagle_text_view)
-    val imageView = findViewById<ImageView>(R.id.beagle_image_view)
+    val checkBox: CheckBox = findViewById(R.id.beagle_check_box)
+    val textView: TextView = findViewById(R.id.beagle_text_view)
+    val imageView: ImageView = findViewById(R.id.beagle_image_view)
 }

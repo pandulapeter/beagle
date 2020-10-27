@@ -233,7 +233,7 @@ internal class BugReportActivity : AppCompatActivity() {
     private fun List<Pair<Text, String>>.generateBuildInformation(): CharSequence {
         var text: CharSequence = ""
         forEachIndexed { index, (keyText, value) ->
-            val key = text(keyText) ?: ""
+            val key = text(keyText)
             if (key.isNotBlank() && value.isNotBlank()) {
                 text = text.append(SpannableString("$key: $value".let { if (index == lastIndex) it else "$it\n" }).apply {
                     setSpan(StyleSpan(Typeface.BOLD), 0, key.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
