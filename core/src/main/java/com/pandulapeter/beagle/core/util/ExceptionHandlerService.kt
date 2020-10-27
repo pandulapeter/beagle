@@ -34,7 +34,12 @@ internal class ExceptionHandlerService : Service() {
             )
             crashLogEntryAdapter.fromJson(msg.data.crashLogEntry)?.let { crashLogEntry ->
                 BeagleCore.implementation.logCrash(crashLogEntry)
-                application.startActivity(BugReportActivity.newIntent(application).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                application.startActivity(
+                    BugReportActivity.newIntent(
+                        context = application,
+                        crashLogIdToShow = crashLogEntry.id
+                    ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
             }
         }
     }

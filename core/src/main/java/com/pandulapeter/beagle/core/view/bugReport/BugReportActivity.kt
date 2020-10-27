@@ -97,13 +97,13 @@ internal class BugReportActivity : AppCompatActivity() {
         val bugReportAdapter = BugReportAdapter(
             onMediaFileSelected = ::showMediaPreviewDialog,
             onMediaFileLongTapped = viewModel::onMediaFileLongTapped,
-            onCrashLogSelected = { id -> BeagleCore.implementation.getCrashLogEntries().firstOrNull { it.id == id }?.let(::showCrashLogDetailDialog) },
+            onCrashLogSelected = { id -> viewModel.allCrashLogEntries?.firstOrNull { it.id == id }?.let(::showCrashLogDetailDialog) },
             onCrashLogLongTapped = viewModel::onCrashLogLongTapped,
-            onNetworkLogSelected = { id -> BeagleCore.implementation.getNetworkLogEntries().firstOrNull { it.id == id }?.let(::showNetworkLogDetailDialog) },
+            onNetworkLogSelected = { id -> viewModel.allNetworkLogEntries.firstOrNull { it.id == id }?.let(::showNetworkLogDetailDialog) },
             onNetworkLogLongTapped = viewModel::onNetworkLogLongTapped,
-            onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
+            onLogSelected = { id, label -> viewModel.allLogEntries[label]?.firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
             onLogLongTapped = viewModel::onLogLongTapped,
-            onLifecycleLogSelected = { id -> BeagleCore.implementation.getLifecycleLogEntries(null).firstOrNull { it.id == id }?.let(::showLifecycleLogDetailDialog) },
+            onLifecycleLogSelected = { id -> viewModel.allLifecycleLogEntries.firstOrNull { it.id == id }?.let(::showLifecycleLogDetailDialog) },
             onLifecycleLogLongTapped = viewModel::onLifecycleLogLongTapped,
             onShowMoreTapped = viewModel::onShowMoreTapped,
             onDescriptionChanged = viewModel::onDescriptionChanged,
@@ -117,10 +117,16 @@ internal class BugReportActivity : AppCompatActivity() {
         }
         viewModel.items.observe(this, bugReportAdapter::submitList)
         findViewById<ProgressBar>(R.id.beagle_progress_bar).let { progressBar ->
-            viewModel.shouldShowLoadingIndicator.observe(this) {
-                progressBar.visible = it
-                if (it) {
+            viewModel.shouldShowLoadingIndicator.observe(this) { shouldShowLoadingIndicator ->
+                progressBar.visible = shouldShowLoadingIndicator
+                if (shouldShowLoadingIndicator) {
                     currentFocus?.hideKeyboard()
+                } else {
+                    val crashLogIdToShow = intent.getStringExtra(CRASH_LOG_ID_TO_SHOW).orEmpty()
+                    if (crashLogIdToShow.isNotBlank()) {
+                        intent.putExtra(CRASH_LOG_ID_TO_SHOW, "")
+                        viewModel.allCrashLogEntries?.firstOrNull { it.id == crashLogIdToShow }?.let(::showCrashLogDetailDialog)
+                    }
                 }
             }
         }
@@ -237,6 +243,10 @@ internal class BugReportActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context) = Intent(context, BugReportActivity::class.java)
+        private const val CRASH_LOG_ID_TO_SHOW = "crashLogIdToShow"
+        fun newIntent(
+            context: Context,
+            crashLogIdToShow: String
+        ) = Intent(context, BugReportActivity::class.java).putExtra(CRASH_LOG_ID_TO_SHOW, crashLogIdToShow)
     }
 }

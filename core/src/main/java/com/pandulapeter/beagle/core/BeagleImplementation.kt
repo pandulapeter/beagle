@@ -352,7 +352,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         hasSavedInstanceState = hasSavedInstanceState
     )
 
-    internal fun getCrashLogEntries() = crashLogManager.getCrashLogEntries()
+    internal suspend fun getCrashLogEntries() = crashLogManager.getCrashLogEntries()
 
     internal fun getNetworkLogEntries() = networkLogManager.getEntries()
 

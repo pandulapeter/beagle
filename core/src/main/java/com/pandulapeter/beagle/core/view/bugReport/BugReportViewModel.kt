@@ -10,6 +10,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
+import com.pandulapeter.beagle.core.util.CrashLogEntry
 import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
 import com.pandulapeter.beagle.core.util.extension.createLogFile
 import com.pandulapeter.beagle.core.util.extension.createZipFile
@@ -66,25 +67,26 @@ internal class BugReportViewModel(
     private var mediaFiles = emptyList<File>()
     private var selectedMediaFileIds = emptyList<String>()
 
-    private val allCrashLogEntries = BeagleCore.implementation.getCrashLogEntries()
+    var allCrashLogEntries: List<CrashLogEntry>? = null
+        private set
     private var lastCrashLogIndex = pageSize - 1
     private var selectedCrashLogIds = emptyList<String>()
-    private fun getCrashLogEntries() = allCrashLogEntries.take(lastCrashLogIndex)
-    private fun areThereMoreCrashLogEntries() = allCrashLogEntries.size > getCrashLogEntries().size
+    private fun getCrashLogEntries() = allCrashLogEntries?.take(lastCrashLogIndex).orEmpty()
+    private fun areThereMoreCrashLogEntries() = (allCrashLogEntries?.size ?: 0) > getCrashLogEntries().size
 
-    private val allNetworkLogEntries = BeagleCore.implementation.getNetworkLogEntries()
+    val allNetworkLogEntries = BeagleCore.implementation.getNetworkLogEntries()
     private var lastNetworkLogIndex = pageSize - 1
     private var selectedNetworkLogIds = emptyList<String>()
     private fun getNetworkLogEntries() = allNetworkLogEntries.take(lastNetworkLogIndex)
     private fun areThereMoreNetworkLogEntries() = allNetworkLogEntries.size > getNetworkLogEntries().size
 
-    private val allLogEntries = logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap()
+    val allLogEntries = logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap()
     private val lastLogIndex = logLabelSectionsToShow.map { label -> label to pageSize - 1 }.toMap().toMutableMap()
     private val selectedLogIds = logLabelSectionsToShow.map { label -> label to emptyList<String>() }.toMap().toMutableMap()
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
 
-    private val allLifecycleLogEntries = BeagleCore.implementation.getLifecycleLogEntries(lifecycleSectionEventTypes)
+    val allLifecycleLogEntries = BeagleCore.implementation.getLifecycleLogEntries(lifecycleSectionEventTypes)
     private var lastLifecycleLogIndex = pageSize - 1
     private var selectedLifecycleLogIds = emptyList<String>()
     private fun getLifecycleLogEntries() = allLifecycleLogEntries.take(lastLifecycleLogIndex)
@@ -116,6 +118,9 @@ internal class BugReportViewModel(
             _shouldShowLoadingIndicator.postValue(true)
             mediaFiles = context.getScreenCapturesFolder().listFiles().orEmpty().toList().sortedByDescending { it.lastModified() }
             selectedMediaFileIds = selectedMediaFileIds.filter { id -> mediaFiles.any { it.name == id } }
+            if (allCrashLogEntries == null) {
+                allCrashLogEntries = BeagleCore.implementation.getCrashLogEntries()
+            }
             refreshContent()
         }
     }
@@ -174,7 +179,7 @@ internal class BugReportViewModel(
                 filePaths.addAll(
                     selectedCrashLogIds
                         .mapNotNull { id ->
-                            allCrashLogEntries.firstOrNull { it.id == id }?.let { entry ->
+                            allCrashLogEntries?.firstOrNull { it.id == id }?.let { entry ->
                                 context.createLogFile(
                                     fileName = "${getCrashLogFileName(currentTimestamp, entry.id)}.txt",
                                     content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toString()

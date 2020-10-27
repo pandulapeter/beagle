@@ -29,10 +29,6 @@ internal class LogManager(
             return field
         }
 
-    init {
-        syncIfNeeded()
-    }
-
     fun log(
         label: String?,
         message: String,

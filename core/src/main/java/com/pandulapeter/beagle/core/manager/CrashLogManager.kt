@@ -14,18 +14,10 @@ internal class CrashLogManager {
     var application: Application? = null
         set(value) {
             field = value
-            syncIfNeeded()
+            GlobalScope.launch(Dispatchers.IO) { syncIfNeeded() }
         }
     private var isSyncReady = false
     private val entries = mutableListOf<CrashLogEntry>()
-        get() {
-            syncIfNeeded()
-            return field
-        }
-
-    init {
-        syncIfNeeded()
-    }
 
     fun log(entry: CrashLogEntry) {
         synchronized(entries) {
@@ -51,11 +43,14 @@ internal class CrashLogManager {
         }
     }
 
-    fun getCrashLogEntries(): List<CrashLogEntry> = synchronized(entries) {
-        entries.toList()
+    suspend fun getCrashLogEntries(): List<CrashLogEntry> {
+        syncIfNeeded()
+        return synchronized(entries) {
+            entries.toList()
+        }
     }
 
-    private fun syncIfNeeded() {
+    private suspend fun syncIfNeeded() {
         if (!isSyncReady) {
             application?.let { context ->
                 GlobalScope.launch(Dispatchers.IO) {
