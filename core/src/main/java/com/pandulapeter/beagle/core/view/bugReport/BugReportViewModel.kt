@@ -10,7 +10,6 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
-import com.pandulapeter.beagle.core.util.CrashLogEntry
 import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
 import com.pandulapeter.beagle.core.util.extension.createLogFile
 import com.pandulapeter.beagle.core.util.extension.createZipFile
@@ -19,6 +18,8 @@ import com.pandulapeter.beagle.core.util.extension.getLogsFolder
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.text
+import com.pandulapeter.beagle.core.util.model.CrashLogEntry
+import com.pandulapeter.beagle.core.util.restoreModelAdapter
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
 import com.pandulapeter.beagle.core.view.bugReport.list.CrashLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
@@ -38,6 +39,7 @@ import java.util.concurrent.Executors
 
 internal class BugReportViewModel(
     application: Application,
+    restoreModel: String,
     val buildInformation: CharSequence,
     val deviceInformation: CharSequence,
     private val textInputTitles: List<Text>,
@@ -74,19 +76,19 @@ internal class BugReportViewModel(
     private fun getCrashLogEntries() = allCrashLogEntries?.take(lastCrashLogIndex).orEmpty()
     private fun areThereMoreCrashLogEntries() = (allCrashLogEntries?.size ?: 0) > getCrashLogEntries().size
 
-    val allNetworkLogEntries = BeagleCore.implementation.getNetworkLogEntries()
+    val allNetworkLogEntries by lazy { BeagleCore.implementation.getNetworkLogEntries() }
     private var lastNetworkLogIndex = pageSize - 1
     private var selectedNetworkLogIds = emptyList<String>()
     private fun getNetworkLogEntries() = allNetworkLogEntries.take(lastNetworkLogIndex)
     private fun areThereMoreNetworkLogEntries() = allNetworkLogEntries.size > getNetworkLogEntries().size
 
-    val allLogEntries = logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap()
+    val allLogEntries by lazy { logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap() }
     private val lastLogIndex = logLabelSectionsToShow.map { label -> label to pageSize - 1 }.toMap().toMutableMap()
     private val selectedLogIds = logLabelSectionsToShow.map { label -> label to emptyList<String>() }.toMap().toMutableMap()
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
 
-    val allLifecycleLogEntries = BeagleCore.implementation.getLifecycleLogEntries(lifecycleSectionEventTypes)
+    val allLifecycleLogEntries by lazy { BeagleCore.implementation.getLifecycleLogEntries(lifecycleSectionEventTypes) }
     private var lastLifecycleLogIndex = pageSize - 1
     private var selectedLifecycleLogIds = emptyList<String>()
     private fun getLifecycleLogEntries() = allLifecycleLogEntries.take(lastLifecycleLogIndex)
@@ -110,12 +112,16 @@ internal class BugReportViewModel(
     val zipFileUriToShare = MutableLiveData<Uri?>()
 
     init {
-        refresh()
+        refresh(restoreModel)
     }
 
-    fun refresh() {
+    @Suppress("BlockingMethodInNonBlockingContext")
+    fun refresh(restoreModel: String = "") {
+        _shouldShowLoadingIndicator.postValue(true)
         viewModelScope.launch(listManagerContext) {
-            _shouldShowLoadingIndicator.postValue(true)
+            if (restoreModel.isNotBlank()) {
+                restoreModelAdapter.fromJson(restoreModel)?.let(BeagleCore.implementation::restoreAfterCrash)
+            }
             mediaFiles = context.getScreenCapturesFolder().listFiles().orEmpty().toList().sortedByDescending { it.lastModified() }
             selectedMediaFileIds = selectedMediaFileIds.filter { id -> mediaFiles.any { it.name == id } }
             if (allCrashLogEntries == null) {

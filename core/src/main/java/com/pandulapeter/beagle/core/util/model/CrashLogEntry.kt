@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.util
+package com.pandulapeter.beagle.core.util.model
 
 import android.graphics.Typeface
 import android.text.SpannableString

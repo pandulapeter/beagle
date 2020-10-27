@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.util.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import com.pandulapeter.beagle.utils.consume
 
 internal class CrashLogItemViewHolder private constructor(

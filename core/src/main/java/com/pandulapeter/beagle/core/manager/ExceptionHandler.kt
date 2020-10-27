@@ -11,24 +11,26 @@ import android.os.Process
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.commonBase.randomId
-import com.pandulapeter.beagle.core.util.CrashLogEntry
 import com.pandulapeter.beagle.core.util.ExceptionHandlerService
+import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 
 internal class ExceptionHandler(
     private val service: Messenger
 ) : Thread.UncaughtExceptionHandler {
 
     override fun uncaughtException(t: Thread, e: Throwable) {
+        val limit = BeagleCore.implementation.behavior.bugReportingBehavior.logRestoreLimit
         service.send(Message().apply {
             data = ExceptionHandlerService.createBundle(
-                appearance = BeagleCore.implementation.appearance,
-                behavior = BeagleCore.implementation.behavior,
                 crashLogEntry = CrashLogEntry(
                     id = randomId,
                     exception = e.message ?: e::class.java.simpleName,
                     stacktrace = e.stackTraceToString(),
                     timestamp = currentTimestamp
-                )
+                ),
+                logs = BeagleCore.implementation.getLogEntries(null).take(limit),
+                networkLogs = BeagleCore.implementation.getNetworkLogEntries().take(limit),
+                lifecycleLogs = BeagleCore.implementation.getLifecycleLogEntries(BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes).take(limit)
             )
         })
         Process.killProcess(Process.myPid())

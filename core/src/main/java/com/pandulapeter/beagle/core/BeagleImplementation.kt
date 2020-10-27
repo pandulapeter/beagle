@@ -40,7 +40,8 @@ import com.pandulapeter.beagle.core.manager.listener.NetworkLogListenerManager
 import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
-import com.pandulapeter.beagle.core.util.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.RestoreModel
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.core.view.logDetail.LogDetailDialogFragment
 import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogFragment
@@ -339,6 +340,12 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     internal fun getLogEntries(label: String?) = logManager.getEntries(label)
 
     internal fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>?) = lifecycleLogManager.getEntries(eventTypes)
+
+    internal fun restoreAfterCrash(restoreModel: RestoreModel) {
+        logManager.restore(restoreModel.logs)
+        networkLogManager.restore(restoreModel.networkLogs)
+        lifecycleLogManager.restore(restoreModel.lifecycleLogs)
+    }
 
     internal fun logCrash(crashLogEntry: CrashLogEntry) = crashLogManager.log(crashLogEntry)
 

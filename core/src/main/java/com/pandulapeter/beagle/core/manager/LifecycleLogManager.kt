@@ -1,6 +1,6 @@
 package com.pandulapeter.beagle.core.manager
 
-import com.pandulapeter.beagle.core.util.LifecycleLogEntry
+import com.pandulapeter.beagle.core.util.model.LifecycleLogEntry
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 
 internal class LifecycleLogManager(
@@ -13,6 +13,16 @@ internal class LifecycleLogManager(
         synchronized(entries) {
             entries.add(0, LifecycleLogEntry(classType, eventType, hasSavedInstanceState))
             entries.sortByDescending { it.timestamp }
+        }
+        if (listManager.contains(LifecycleLogListModule.ID)) {
+            refreshUi()
+        }
+    }
+
+    fun restore(lifecycleLogs: List<LifecycleLogEntry>) {
+        synchronized(entries) {
+            entries.clear()
+            entries.addAll(lifecycleLogs.sortedByDescending { it.timestamp })
         }
         if (listManager.contains(LifecycleLogListModule.ID)) {
             refreshUi()

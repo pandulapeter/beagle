@@ -6,6 +6,7 @@ import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavio
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_BUILD_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LIFECYCLE_SECTION_EVENT_TYPES
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW
+import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LOG_RESTORE_LIMIT
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_ON_BUG_REPORT_READY
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_PAGE_SIZE
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_CATCH_EXCEPTIONS
@@ -154,6 +155,7 @@ data class Behavior(
      *
      * @param shouldCatchExceptions - Whether or not the library should handle uncaught exceptions by logging them and opening the bug reporting screen. Warning: this interferes with other crash reporting solutions. [DEFAULT_SHOULD_CATCH_EXCEPTIONS] by default.
      * @param pageSize - The number of crash log / network log / log / lifecycle log entries to load for every page, before the "Show more" button is displayed. [DEFAULT_PAGE_SIZE] by default.
+     * @param logRestoreLimit - The number of individual entries from each category (network log / log / lifecycle log) to persist after a crash. Be careful with this number as a high value can lead to TransactionTooLargeExceptions. [DEFAULT_LOG_RESTORE_LIMIT] by default.
      * @param shouldShowGallerySection - Whether or not the gallery section should be added. [DEFAULT_SHOULD_SHOW_GALLERY_SECTION] by default.
      * @param shouldShowCrashLogsSection - Whether or not the section of crash logs should be added. [DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION] by default.
      * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. [DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION] by default.
@@ -169,6 +171,7 @@ data class Behavior(
     data class BugReportingBehavior(
         val shouldCatchExceptions: Boolean = DEFAULT_SHOULD_CATCH_EXCEPTIONS,
         val pageSize: Int = DEFAULT_PAGE_SIZE,
+        val logRestoreLimit: Int = DEFAULT_LOG_RESTORE_LIMIT,
         val shouldShowGallerySection: Boolean = DEFAULT_SHOULD_SHOW_GALLERY_SECTION,
         val shouldShowCrashLogsSection: Boolean = DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION,
         val shouldShowNetworkLogsSection: Boolean = DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION,
@@ -184,6 +187,7 @@ data class Behavior(
         companion object {
             private const val DEFAULT_SHOULD_CATCH_EXCEPTIONS = true
             private const val DEFAULT_PAGE_SIZE = 5
+            private const val DEFAULT_LOG_RESTORE_LIMIT = 20
             private const val DEFAULT_SHOULD_SHOW_GALLERY_SECTION = true
             private const val DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION = true
             private const val DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION = true

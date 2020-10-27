@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle.core.manager.listener
 
 import com.pandulapeter.beagle.common.listeners.NetworkLogListener
-import com.pandulapeter.beagle.core.util.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
 
 internal class NetworkLogListenerManager : BaseListenerManager<NetworkLogListener>() {
 

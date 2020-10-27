@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
-import com.pandulapeter.beagle.core.util.LogEntry
+import com.pandulapeter.beagle.core.util.model.LogEntry
 import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.consume
 

@@ -10,8 +10,8 @@ import android.view.ContextThemeWrapper
 import androidx.core.content.FileProvider
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
-import com.pandulapeter.beagle.core.util.CrashLogEntry
-import com.pandulapeter.beagle.core.util.LogEntry
+import com.pandulapeter.beagle.core.util.model.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.LogEntry
 import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
 import com.pandulapeter.beagle.core.util.getFolder
 import com.pandulapeter.beagle.core.util.logEntryAdapter

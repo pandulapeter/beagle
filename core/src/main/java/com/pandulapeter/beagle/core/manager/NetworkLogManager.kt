@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle.core.manager
 
 import com.pandulapeter.beagle.core.manager.listener.NetworkLogListenerManager
-import com.pandulapeter.beagle.core.util.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 
 internal class NetworkLogManager(
@@ -9,11 +9,6 @@ internal class NetworkLogManager(
     private val listManager: ListManager,
     private val refreshUi: () -> Unit
 ) {
-    /**
-     * Holds the NetworkEntry logs, logged by the attached Network Calls.
-     *
-     * Critical resource, since it can be modified by multiple threads via [log] and [clearLogs] at the same time, every time it is accessed we need to do synchronization.
-     */
     private val entries = mutableListOf<NetworkLogEntry>()
 
     fun log(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long, id: String) {
@@ -32,6 +27,16 @@ internal class NetworkLogManager(
             entries.sortByDescending { it.timestamp }
         }
         networkLogListenerManager.notifyListeners(entry)
+        if (listManager.contains(NetworkLogListModule.ID)) {
+            refreshUi()
+        }
+    }
+
+    fun restore(networkLogs: List<NetworkLogEntry>) {
+        synchronized(entries) {
+            entries.clear()
+            entries.addAll(networkLogs.sortedByDescending { it.timestamp })
+        }
         if (listManager.contains(NetworkLogListModule.ID)) {
             refreshUi()
         }

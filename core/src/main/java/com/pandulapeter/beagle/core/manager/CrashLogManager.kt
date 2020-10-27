@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
-import com.pandulapeter.beagle.core.util.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import com.pandulapeter.beagle.core.util.extension.CRASH_LOG_PREFIX
 import com.pandulapeter.beagle.core.util.extension.createPersistedCrashLogFile
 import com.pandulapeter.beagle.core.util.extension.getPersistedLogsFolder

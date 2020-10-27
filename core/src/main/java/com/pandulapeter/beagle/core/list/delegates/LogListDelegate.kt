@@ -5,7 +5,7 @@ import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
-import com.pandulapeter.beagle.core.util.LogEntry
+import com.pandulapeter.beagle.core.util.model.LogEntry
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.modules.LogListModule
 

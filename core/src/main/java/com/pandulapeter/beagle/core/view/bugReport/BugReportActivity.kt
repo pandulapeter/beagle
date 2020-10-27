@@ -26,14 +26,14 @@ import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
-import com.pandulapeter.beagle.core.util.CrashLogEntry
-import com.pandulapeter.beagle.core.util.LifecycleLogEntry
-import com.pandulapeter.beagle.core.util.LogEntry
-import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
+import com.pandulapeter.beagle.core.util.model.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.LifecycleLogEntry
+import com.pandulapeter.beagle.core.util.model.LogEntry
+import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.utils.consume
@@ -50,6 +50,7 @@ internal class BugReportActivity : AppCompatActivity() {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T = BeagleCore.implementation.behavior.bugReportingBehavior.run {
                 BugReportViewModel(
                     application = application,
+                    restoreModel = intent.getStringExtra(RESTORE_MODEL).orEmpty(),
                     buildInformation = buildInformation(application).generateBuildInformation(),
                     deviceInformation = generateDeviceInformation(),
                     textInputTitles = textInputFields.map { it.first },
@@ -245,9 +246,14 @@ internal class BugReportActivity : AppCompatActivity() {
 
     companion object {
         private const val CRASH_LOG_ID_TO_SHOW = "crashLogIdToShow"
+        private const val RESTORE_MODEL = "restoreModel"
+
         fun newIntent(
             context: Context,
-            crashLogIdToShow: String
-        ) = Intent(context, BugReportActivity::class.java).putExtra(CRASH_LOG_ID_TO_SHOW, crashLogIdToShow)
+            crashLogIdToShow: String = "",
+            restoreModel: String = ""
+        ) = Intent(context, BugReportActivity::class.java)
+            .putExtra(CRASH_LOG_ID_TO_SHOW, crashLogIdToShow)
+            .putExtra(RESTORE_MODEL, restoreModel)
     }
 }

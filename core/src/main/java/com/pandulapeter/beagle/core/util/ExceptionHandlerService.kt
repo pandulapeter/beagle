@@ -10,8 +10,11 @@ import android.os.Looper
 import android.os.Message
 import android.os.Messenger
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.common.configuration.Appearance
-import com.pandulapeter.beagle.common.configuration.Behavior
+import com.pandulapeter.beagle.core.util.model.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.LifecycleLogEntry
+import com.pandulapeter.beagle.core.util.model.LogEntry
+import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.model.RestoreModel
 import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 
@@ -26,18 +29,13 @@ internal class ExceptionHandlerService : Service() {
     ) : Handler(Looper.getMainLooper()) {
 
         override fun handleMessage(msg: Message) {
-            //TODO: Beagle needs to be restored.
-            BeagleCore.implementation.initialize(
-                application = application,
-//                appearance = msg.data.appearance ?: Appearance(),
-//                behavior = msg.data.behavior ?: Behavior()
-            )
             crashLogEntryAdapter.fromJson(msg.data.crashLogEntry)?.let { crashLogEntry ->
                 BeagleCore.implementation.logCrash(crashLogEntry)
                 application.startActivity(
                     BugReportActivity.newIntent(
                         context = application,
-                        crashLogIdToShow = crashLogEntry.id
+                        crashLogIdToShow = crashLogEntry.id,
+                        restoreModel = msg.data.restoreModel
                     ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
             }
@@ -45,18 +43,23 @@ internal class ExceptionHandlerService : Service() {
     }
 
     companion object {
-        //        private var Bundle.appearance by BundleArgumentDelegate.Parcelable<Appearance>("appearance")
-//        private var Bundle.behavior by BundleArgumentDelegate.Parcelable<Behavior>("behavior")
         private var Bundle.crashLogEntry by BundleArgumentDelegate.String("crashLogEntry")
+        private var Bundle.restoreModel by BundleArgumentDelegate.String("restoreModel")
 
         fun createBundle(
-            appearance: Appearance,
-            behavior: Behavior,
-            crashLogEntry: CrashLogEntry
+            crashLogEntry: CrashLogEntry,
+            logs: List<LogEntry>,
+            networkLogs: List<NetworkLogEntry>,
+            lifecycleLogs: List<LifecycleLogEntry>
         ) = Bundle().apply {
-//            this.appearance = appearance
-//            this.behavior = behavior
             this.crashLogEntry = crashLogEntryAdapter.toJson(crashLogEntry)
+            restoreModel = restoreModelAdapter.toJson(
+                RestoreModel(
+                    logs = logs,
+                    networkLogs = networkLogs,
+                    lifecycleLogs = lifecycleLogs
+                )
+            )
         }
     }
 }

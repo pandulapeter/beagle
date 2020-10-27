@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
-import com.pandulapeter.beagle.core.util.LogEntry
+import com.pandulapeter.beagle.core.util.model.LogEntry
 import com.pandulapeter.beagle.core.util.extension.LOG_PREFIX
 import com.pandulapeter.beagle.core.util.extension.createPersistedLogFile
 import com.pandulapeter.beagle.core.util.extension.getPersistedLogsFolder
@@ -56,6 +56,15 @@ internal class LogManager(
                 application?.createPersistedLogFile(entry)
             }
         }
+    }
+
+    fun restore(logs: List<LogEntry>) {
+        synchronized(entries) {
+            entries.clear()
+            entries.addAll(logs.sortedByDescending { it.timestamp })
+        }
+        refreshUiIfNeeded(null)
+        syncIfNeeded()
     }
 
     fun clearLogs(label: String?) {
