@@ -318,8 +318,8 @@ sealed class ModuleWrapper(
     object ForceCrashButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_force_crash_button,
         descriptionResourceId = R.string.add_module_force_crash_button_description,
-        module = ForceCrashButtonModule(isEnabled = false),
-        codeSnippet = "ForceCrashButtonModule(isEnabled = false)"
+        module = ForceCrashButtonModule(),
+        codeSnippet = "ForceCrashButtonModule()"
     )
 
     object GalleryButtonWrapper : ModuleWrapper(

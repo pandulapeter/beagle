@@ -24,6 +24,7 @@ import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.BugReportManager
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
+import com.pandulapeter.beagle.core.manager.ExceptionHandler
 import com.pandulapeter.beagle.core.manager.LifecycleLogManager
 import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.LocalStorageManager
@@ -65,6 +66,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     internal lateinit var localStorageManager: LocalStorageManager
         private set
     private val shakeDetector by lazy { ShakeDetector() }
+    private val exceptionHandler by lazy { ExceptionHandler() }
     private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
     private val logListenerManager by lazy { LogListenerManager() }
     private val networkLogListenerManager by lazy { NetworkLogListenerManager() }
@@ -100,6 +102,9 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         this.appearance = appearance
         this.behavior = behavior
         this.localStorageManager = LocalStorageManager(application)
+        if (behavior.shouldCatchExceptions) {
+            exceptionHandler.initialize(application)
+        }
         debugMenuInjector.register(application)
         behavior.logger?.register(::log, ::clearLogs)
         behavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }

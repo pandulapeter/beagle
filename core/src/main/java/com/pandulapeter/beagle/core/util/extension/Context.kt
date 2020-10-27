@@ -59,6 +59,25 @@ private fun Context.getFilesFolder(name: String) = getFolder(filesDir, name)
 
 private const val LOGS_FOLDER_NAME = "beagleLogs"
 
+internal fun Context.getPersistedLogsFolder() = getFilesFolder(LOGS_FOLDER_NAME)
+
+internal fun Context.createPersistedLogFile(fileName: String) = File(getPersistedLogsFolder(), fileName)
+
+@Suppress("BlockingMethodInNonBlockingContext")
+internal suspend fun Context.createPersistedLogFile(fileName: String, content: String): Uri? = withContext(Dispatchers.IO) {
+    val file = createPersistedLogFile(fileName)
+    try {
+        FileWriter(file).run {
+            write(content)
+            flush()
+            close()
+        }
+        getUriForFile(file)
+    } catch (e: IOException) {
+        null
+    }
+}
+
 internal fun Context.getLogsFolder() = getCacheFolder(LOGS_FOLDER_NAME)
 
 internal fun Context.createLogFile(fileName: String) = File(getLogsFolder(), fileName)

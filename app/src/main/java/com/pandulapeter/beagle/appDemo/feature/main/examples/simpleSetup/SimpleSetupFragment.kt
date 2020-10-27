@@ -33,7 +33,7 @@ class SimpleSetupFragment : ExamplesDetailFragment<SimpleSetupViewModel, SimpleS
     override fun getBeagleModules(): List<Module<*>> = mutableListOf<Module<*>>().apply {
         add(AppInfoButtonModule())
         add(DeveloperOptionsButtonModule())
-        add(ForceCrashButtonModule(isEnabled = false))
+        add(ForceCrashButtonModule())
         add(ScreenshotButtonModule())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             add(ScreenRecordingButtonModule())

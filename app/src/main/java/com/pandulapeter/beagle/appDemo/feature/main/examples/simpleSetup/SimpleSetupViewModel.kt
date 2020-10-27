@@ -54,7 +54,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
                 "Beagle.set(\n" +
                         "    AppInfoButtonModule(),\n" +
                         "    DeveloperOptionsButtonModule(),\n" +
-                        "    ForceCrashButtonModule(isEnabled = false),\n" +
+                        "    ForceCrashButtonModule(),\n" +
                         "    ScreenshotButtonModule(),\n" +
                         "    ScreenRecordingButtonModule(), // Only available on API 21 and above\n" +
                         "    GalleryButtonModule(),\n" +
