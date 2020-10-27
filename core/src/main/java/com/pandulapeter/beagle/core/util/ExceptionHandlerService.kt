@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.core.util
 
-import android.app.Application
 import android.app.Service
 import android.content.Intent
 import android.os.Bundle
@@ -20,28 +19,22 @@ import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 
 internal class ExceptionHandlerService : Service() {
 
-    private val exceptionHandler by lazy { ExceptionHandler(application) }
-
-    override fun onBind(intent: Intent?): IBinder? = Messenger(exceptionHandler).binder
-
-    private class ExceptionHandler(
-        private val application: Application
-    ) : Handler(Looper.getMainLooper()) {
+    override fun onBind(intent: Intent?): IBinder? = Messenger(object : Handler(Looper.myLooper() ?: Looper.getMainLooper()) {
 
         //TODO: Doesn't get called in minified builds.
         override fun handleMessage(msg: Message) {
             crashLogEntryAdapter.fromJson(msg.data.crashLogEntry)?.let { crashLogEntry ->
                 BeagleCore.implementation.logCrash(crashLogEntry)
-                application.startActivity(
+                startActivity(
                     BugReportActivity.newIntent(
-                        context = application,
+                        context = this@ExceptionHandlerService,
                         crashLogIdToShow = crashLogEntry.id,
                         restoreModel = msg.data.restoreModel
                     ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
             }
         }
-    }
+    }).binder
 
     companion object {
         private var Bundle.crashLogEntry by BundleArgumentDelegate.String("crashLogEntry")
