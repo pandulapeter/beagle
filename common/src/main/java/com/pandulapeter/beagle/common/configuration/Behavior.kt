@@ -4,16 +4,19 @@ import android.app.Application
 import android.net.Uri
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_BUILD_INFORMATION
+import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LIFECYCLE_SECTION_EVENT_TYPES
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_ON_BUG_REPORT_READY
+import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_PAGE_SIZE
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_CATCH_EXCEPTIONS
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_GALLERY_SECTION
-import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_LIFECYCLE_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_METADATA_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_TEXT_INPUT_FIELDS
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_EXCLUDED_PACKAGE_NAMES
+import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior
+import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior.Companion.DEFAULT_SHOULD_DISPLAY_FULL_NAMES
 import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior.Companion.DEFAULT_LOGGERS
 import com.pandulapeter.beagle.common.configuration.Behavior.NetworkLogBehavior
@@ -29,6 +32,7 @@ import com.pandulapeter.beagle.common.configuration.Behavior.ShakeDetectionBehav
 import com.pandulapeter.beagle.commonBase.BeagleLoggerContract
 import com.pandulapeter.beagle.commonBase.BeagleNetworkLoggerContract
 import com.pandulapeter.beagle.commonBase.FILE_NAME_DATE_TIME_FORMAT
+import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -39,6 +43,7 @@ import java.util.Locale
  * @param shakeDetectionBehavior - Customize the shake detection behavior, see [ShakeDetectionBehavior].
  * @param logBehavior - Customize the logging behavior, see [LogBehavior].
  * @param networkLogBehavior - Customize the network logging behavior, see [NetworkLogBehavior].
+ * @param lifecycleLogBehavior - Customize the lifecycle logging behavior, see [LifecycleLogBehavior].
  * @param screenCaptureBehavior - Customize the screen capture behavior, see [ScreenCaptureBehavior].
  * @param bugReportingBehavior - Customize the bug reporting behavior, see [BugReportingBehavior].
  */
@@ -47,6 +52,7 @@ data class Behavior(
     val shakeDetectionBehavior: ShakeDetectionBehavior = ShakeDetectionBehavior(),
     val logBehavior: LogBehavior = LogBehavior(),
     val networkLogBehavior: NetworkLogBehavior = NetworkLogBehavior(),
+    val lifecycleLogBehavior: LifecycleLogBehavior = LifecycleLogBehavior(),
     val screenCaptureBehavior: ScreenCaptureBehavior = ScreenCaptureBehavior(),
     val bugReportingBehavior: BugReportingBehavior = BugReportingBehavior()
 ) {
@@ -109,6 +115,22 @@ data class Behavior(
     }
 
     /**
+     * Configuration related to lifecycle logs.
+     *
+     * @param shouldDisplayFullNames - Whether or not displayed class names should include full package names in detail dialogs. [DEFAULT_SHOULD_DISPLAY_FULL_NAMES] by default.
+     * @param getFileName - The lambda used to generate lifecycle log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format and the ID.
+     */
+    data class LifecycleLogBehavior(
+        val shouldDisplayFullNames: Boolean = DEFAULT_SHOULD_DISPLAY_FULL_NAMES,
+        val getFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "lifecycleLog_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" }
+    ) {
+
+        companion object {
+            private const val DEFAULT_SHOULD_DISPLAY_FULL_NAMES = true
+        }
+    }
+
+    /**
      * Configuration related to screen capture.
      *
      * @param serviceNotificationChannelId - The ID for the notification channel that handles all notifications related to screen capture. [DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID] by default.
@@ -141,7 +163,7 @@ data class Behavior(
      * @param shouldShowCrashLogsSection - Whether or not the section of crash logs should be added. [DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION] by default.
      * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. [DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION] by default.
      * @param logLabelSectionsToShow - The list of log labels for which sections should be added. Setting a list containing null adds a section for all logs, without filtering. [DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW] by default.
-     * @param shouldShowLifecycleLogsSection - Whether or not the section of lifecycle logs should be added. [DEFAULT_SHOULD_SHOW_LIFECYCLE_LOGS_SECTION] by default.
+     * @param lifecycleSectionEventTypes -The event types that should be added for the section of lifecycle logs. Set an empty list to remove the section. [DEFAULT_LIFECYCLE_SECTION_EVENT_TYPES] by default.
      * @param shouldShowMetadataSection - Whether or not the metadata section (build information and device information) should be added. [DEFAULT_SHOULD_SHOW_METADATA_SECTION] by default.
      * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [DEFAULT_BUILD_INFORMATION] by default.
      * @param textInputFields - The list of free-text inputs, where each entry is a pair of the field's title and its default value. [DEFAULT_TEXT_INPUT_FIELDS] by default.
@@ -156,7 +178,7 @@ data class Behavior(
         val shouldShowCrashLogsSection: Boolean = DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION,
         val shouldShowNetworkLogsSection: Boolean = DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION,
         val logLabelSectionsToShow: List<String?> = DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW,
-        val shouldShowLifecycleLogsSection: Boolean = DEFAULT_SHOULD_SHOW_LIFECYCLE_LOGS_SECTION,
+        val lifecycleSectionEventTypes: List<LifecycleLogListModule.EventType> = DEFAULT_LIFECYCLE_SECTION_EVENT_TYPES,
         val shouldShowMetadataSection: Boolean = DEFAULT_SHOULD_SHOW_METADATA_SECTION,
         val buildInformation: (activity: Application?) -> List<Pair<Text, String>> = DEFAULT_BUILD_INFORMATION,
         val textInputFields: List<Pair<Text, Text>> = DEFAULT_TEXT_INPUT_FIELDS,
@@ -172,7 +194,7 @@ data class Behavior(
             private const val DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION = true
             private const val DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION = true
             private val DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW: List<String?> = listOf(null)
-            private const val DEFAULT_SHOULD_SHOW_LIFECYCLE_LOGS_SECTION = true
+            private val DEFAULT_LIFECYCLE_SECTION_EVENT_TYPES: List<LifecycleLogListModule.EventType> = listOf(LifecycleLogListModule.EventType.ON_RESUME)
             private const val DEFAULT_SHOULD_SHOW_METADATA_SECTION = true
             private val DEFAULT_BUILD_INFORMATION: (Application?) -> List<Pair<Text, String>> = { application ->
                 mutableListOf<Pair<Text, String>>().apply {

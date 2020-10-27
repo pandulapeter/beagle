@@ -9,12 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
-import com.pandulapeter.beagle.core.list.delegates.NetworkLogListDelegate
-import com.pandulapeter.beagle.core.util.NetworkLogEntry
+import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
+import com.pandulapeter.beagle.core.util.LifecycleLogEntry
 import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.consume
 
-internal class NetworkLogItemViewHolder private constructor(
+internal class LifecycleLogItemViewHolder private constructor(
     itemView: View,
     onItemSelected: (String) -> Unit,
     onItemLongTapped: (String) -> Unit
@@ -47,9 +47,10 @@ internal class NetworkLogItemViewHolder private constructor(
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.entry.id
         textView.setText(
-            NetworkLogListDelegate.format(
+            LifecycleLogListDelegate.format(
                 entry = uiModel.entry,
-                formatter = BeagleCore.implementation.appearance.logTimestampFormatter
+                formatter = BeagleCore.implementation.appearance.logTimestampFormatter,
+                shouldDisplayFullNames = true
             )
         )
         checkBox.run {
@@ -60,11 +61,11 @@ internal class NetworkLogItemViewHolder private constructor(
     }
 
     data class UiModel(
-        val entry: NetworkLogEntry,
+        val entry: LifecycleLogEntry,
         val isSelected: Boolean
     ) : BugReportListItem {
 
-        override val id: String = "networkLog_${entry.id}"
+        override val id: String = "lifecycleLog_${entry.id}"
     }
 
     companion object {
@@ -72,8 +73,8 @@ internal class NetworkLogItemViewHolder private constructor(
             parent: ViewGroup,
             onItemSelected: (String) -> Unit,
             onItemLongTapped: (String) -> Unit
-        ) = NetworkLogItemViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_network_log_item, parent, false),
+        ) = LifecycleLogItemViewHolder(
+            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_lifecycle_log_item, parent, false),
             onItemSelected = onItemSelected,
             onItemLongTapped = onItemLongTapped
         )

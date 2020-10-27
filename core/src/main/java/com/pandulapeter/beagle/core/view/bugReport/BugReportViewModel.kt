@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.commonBase.currentTimestamp
+import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
 import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
 import com.pandulapeter.beagle.core.util.extension.createLogFile
 import com.pandulapeter.beagle.core.util.extension.createZipFile
@@ -21,11 +22,11 @@ import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.GalleryViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.HeaderViewHolder
+import com.pandulapeter.beagle.core.view.bugReport.list.LifecycleLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.LogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.MetadataItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.NetworkLogItemViewHolder
-import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreLogsViewHolder
-import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreNetworkLogsViewHolder
+import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreViewHolder
 import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogViewModel
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -46,11 +47,12 @@ internal class BugReportViewModel(
     private val shouldShowCrashLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowCrashLogsSection
     private val shouldShowNetworkLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowNetworkLogsSection
     private val logLabelSectionsToShow = BeagleCore.implementation.behavior.bugReportingBehavior.logLabelSectionsToShow
-    private val shouldShowLifecycleLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowLifecycleLogsSection
+    private val lifecycleSectionEventTypes = BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes
     private val shouldShowMetadataSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowMetadataSection
 
     private val getNetworkLogFileName get() = BeagleCore.implementation.behavior.networkLogBehavior.getFileName
     private val getLogFileName get() = BeagleCore.implementation.behavior.logBehavior.getFileName
+    private val getLifecycleLogFileName get() = BeagleCore.implementation.behavior.lifecycleLogBehavior.getFileName
     private val getBugReportFileName get() = BeagleCore.implementation.behavior.bugReportingBehavior.getBugReportFileName
     private val onBugReportReady get() = BeagleCore.implementation.behavior.bugReportingBehavior.onBugReportReady
 
@@ -73,6 +75,12 @@ internal class BugReportViewModel(
     private val selectedLogIds = logLabelSectionsToShow.map { label -> label to emptyList<String>() }.toMap().toMutableMap()
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
+
+    private val allLifecycleLogEntries = BeagleCore.implementation.getLifecycleLogEntries(lifecycleSectionEventTypes)
+    private var lastLifecycleLogIndex = pageSize - 1
+    private var selectedLifecycleLogIds = emptyList<String>()
+    private fun getLifecycleLogEntries() = allLifecycleLogEntries.take(lastLifecycleLogIndex)
+    private fun areThereMoreLifecycleEntries() = allLifecycleLogEntries.size > getLifecycleLogEntries().size
 
     private var shouldAttachBuildInformation = true
     private var shouldAttachDeviceInformation = true
@@ -108,18 +116,18 @@ internal class BugReportViewModel(
 
     fun onNetworkLogLongTapped(id: String) = onNetworkLogSelectionChanged(id)
 
-    fun onShowMoreNetworkLogsTapped() {
-        viewModelScope.launch(listManagerContext) {
-            lastNetworkLogIndex += pageSize
-            refreshContent()
-        }
-    }
-
     fun onLogLongTapped(id: String, label: String?) = onLogSelectionChanged(id, label)
 
-    fun onShowMoreLogsTapped(label: String?) {
+    fun onLifecycleLogLongTapped(id: String) = onLifecycleLogSelectionChanged(id)
+
+    fun onShowMoreTapped(type: ShowMoreViewHolder.Type) {
         viewModelScope.launch(listManagerContext) {
-            lastLogIndex[label] = (lastLogIndex[label] ?: 0) + pageSize
+            when (type) {
+                ShowMoreViewHolder.Type.CrashLog -> Unit // TODO
+                ShowMoreViewHolder.Type.NetworkLog -> lastNetworkLogIndex += pageSize
+                is ShowMoreViewHolder.Type.Log -> lastLogIndex[type.label] = (lastLogIndex[type.label] ?: 0) + pageSize
+                ShowMoreViewHolder.Type.LifecycleLog -> lastLifecycleLogIndex += pageSize
+            }
             refreshContent()
         }
     }
@@ -195,7 +203,23 @@ internal class BugReportViewModel(
                     }.toPaths(context.getLogsFolder())
                 )
 
-                // TODO: Lifecycle logs
+                // Lifecycle logs
+                filePaths.addAll(
+                    selectedLifecycleLogIds
+                        .mapNotNull { id ->
+                            allLifecycleLogEntries.firstOrNull { it.id == id }?.let { entry ->
+                                context.createLogFile(
+                                    fileName = "${getLifecycleLogFileName(currentTimestamp, entry.id)}.txt",
+                                    content = LifecycleLogListDelegate.format(
+                                        entry = entry,
+                                        formatter = BeagleCore.implementation.appearance.logTimestampFormatter,
+                                        shouldDisplayFullNames = BeagleCore.implementation.behavior.lifecycleLogBehavior.shouldDisplayFullNames
+                                    ).toString()
+                                )
+                            }
+                        }
+                        .toPaths(context.getLogsFolder())
+                )
 
                 // Build information
                 var content = ""
@@ -290,8 +314,20 @@ internal class BugReportViewModel(
         }
     }
 
+    private fun onLifecycleLogSelectionChanged(id: String) {
+        viewModelScope.launch(listManagerContext) {
+            selectedLifecycleLogIds = if (selectedLifecycleLogIds.contains(id)) {
+                selectedLifecycleLogIds.filterNot { it == id }
+            } else {
+                (selectedLifecycleLogIds + id)
+            }.distinct()
+            refreshContent()
+        }
+    }
+
     private suspend fun refreshContent() = withContext(listManagerContext) {
         _items.postValue(mutableListOf<BugReportListItem>().apply {
+            // Media files
             if (shouldShowGallerySection && mediaFiles.isNotEmpty()) {
                 add(
                     HeaderViewHolder.UiModel(
@@ -301,9 +337,13 @@ internal class BugReportViewModel(
                 )
                 add(GalleryViewHolder.UiModel(mediaFiles.map { it.name to it.lastModified() }, selectedMediaFileIds))
             }
+
+            // Crash logs
             if (shouldShowCrashLogsSection) {
                 // TODO: Crash logs
             }
+
+            // Network logs
             getNetworkLogEntries().let { networkLogEntries ->
                 if (shouldShowNetworkLogsSection && networkLogEntries.isNotEmpty()) {
                     add(
@@ -319,10 +359,12 @@ internal class BugReportViewModel(
                         )
                     })
                     if (areThereMoreNetworkLogEntries()) {
-                        add(ShowMoreNetworkLogsViewHolder.UiModel())
+                        add(ShowMoreViewHolder.UiModel(ShowMoreViewHolder.Type.NetworkLog))
                     }
                 }
             }
+
+            // Logs
             logLabelSectionsToShow.distinct().forEach { label ->
                 getLogEntries(label).let { logEntries ->
                     if (logEntries.isNotEmpty()) {
@@ -339,14 +381,34 @@ internal class BugReportViewModel(
                             )
                         })
                         if (areThereMoreLogEntries(label)) {
-                            add(ShowMoreLogsViewHolder.UiModel(label))
+                            add(ShowMoreViewHolder.UiModel(ShowMoreViewHolder.Type.Log(label)))
                         }
                     }
                 }
             }
-            if (shouldShowLifecycleLogsSection) {
-                // TODO: Crash logs
+
+            // Lifecycle logs
+            getLifecycleLogEntries().let { lifecycleLogEntries ->
+                if (lifecycleLogEntries.isNotEmpty()) {
+                    add(
+                        HeaderViewHolder.UiModel(
+                            id = "headerLifecycleLogs",
+                            text = BeagleCore.implementation.appearance.bugReportTexts.lifecycleLogsSectionTitle(selectedLifecycleLogIds.size)
+                        )
+                    )
+                    addAll(lifecycleLogEntries.map { entry ->
+                        LifecycleLogItemViewHolder.UiModel(
+                            entry = entry,
+                            isSelected = selectedLifecycleLogIds.contains(entry.id)
+                        )
+                    })
+                    if (areThereMoreLifecycleEntries()) {
+                        add(ShowMoreViewHolder.UiModel(ShowMoreViewHolder.Type.LifecycleLog))
+                    }
+                }
             }
+
+            // Metadata
             if (shouldShowMetadataSection) {
                 add(
                     HeaderViewHolder.UiModel(
@@ -369,6 +431,8 @@ internal class BugReportViewModel(
                     )
                 )
             }
+
+            // Input fields
             textInputTitles.forEachIndexed { index, title ->
                 add(
                     HeaderViewHolder.UiModel(

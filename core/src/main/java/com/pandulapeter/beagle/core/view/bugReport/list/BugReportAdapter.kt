@@ -12,10 +12,11 @@ internal class BugReportAdapter(
     private val onMediaFileLongTapped: (String) -> Unit,
     private val onNetworkLogSelected: (String) -> Unit,
     private val onNetworkLogLongTapped: (String) -> Unit,
-    private val onShowMoreNetworkLogsTapped: () -> Unit,
     private val onLogSelected: (String, String?) -> Unit,
     private val onLogLongTapped: (String, String?) -> Unit,
-    private val onShowMoreLogsTapped: (String?) -> Unit,
+    private val onLifecycleLogSelected: (String) -> Unit,
+    private val onLifecycleLogLongTapped: (String) -> Unit,
+    private val onShowMoreTapped: (ShowMoreViewHolder.Type) -> Unit,
     private val onDescriptionChanged: (Int, CharSequence) -> Unit,
     private val onMetadataItemClicked: (BugReportViewModel.MetadataType) -> Unit,
     private val onMetadataItemSelectionChanged: (BugReportViewModel.MetadataType) -> Unit
@@ -32,8 +33,8 @@ internal class BugReportAdapter(
         is GalleryViewHolder.UiModel -> R.layout.beagle_item_bug_report_gallery
         is NetworkLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_network_log_item
         is LogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_log_item
-        is ShowMoreNetworkLogsViewHolder.UiModel -> R.layout.beagle_item_bug_report_show_more_network_logs
-        is ShowMoreLogsViewHolder.UiModel -> R.layout.beagle_item_bug_report_show_more_logs
+        is LifecycleLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_lifecycle_log_item
+        is ShowMoreViewHolder.UiModel -> R.layout.beagle_item_bug_report_show_more
         is DescriptionViewHolder.UiModel -> R.layout.beagle_item_bug_report_description
         is MetadataItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_metadata_item
         else -> throw IllegalArgumentException("Unsupported item type at position $position.")
@@ -56,13 +57,14 @@ internal class BugReportAdapter(
             onItemSelected = onLogSelected,
             onItemLongTapped = onLogLongTapped
         )
-        R.layout.beagle_item_bug_report_show_more_network_logs -> ShowMoreNetworkLogsViewHolder.create(
+        R.layout.beagle_item_bug_report_lifecycle_log_item -> LifecycleLogItemViewHolder.create(
             parent = parent,
-            onButtonPressed = onShowMoreNetworkLogsTapped
+            onItemSelected = onLifecycleLogSelected,
+            onItemLongTapped = onLifecycleLogLongTapped
         )
-        R.layout.beagle_item_bug_report_show_more_logs -> ShowMoreLogsViewHolder.create(
+        R.layout.beagle_item_bug_report_show_more -> ShowMoreViewHolder.create(
             parent = parent,
-            onButtonPressed = onShowMoreLogsTapped
+            onButtonPressed = onShowMoreTapped
         )
         R.layout.beagle_item_bug_report_description -> DescriptionViewHolder.create(
             parent = parent,
@@ -81,8 +83,8 @@ internal class BugReportAdapter(
         is GalleryViewHolder -> holder.bind(getItem(position) as GalleryViewHolder.UiModel)
         is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewHolder.UiModel)
         is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewHolder.UiModel)
-        is ShowMoreNetworkLogsViewHolder -> Unit
-        is ShowMoreLogsViewHolder -> holder.bind(getItem(position) as ShowMoreLogsViewHolder.UiModel)
+        is LifecycleLogItemViewHolder -> holder.bind(getItem(position) as LifecycleLogItemViewHolder.UiModel)
+        is ShowMoreViewHolder -> holder.bind(getItem(position) as ShowMoreViewHolder.UiModel)
         is DescriptionViewHolder -> holder.bind(getItem(position) as DescriptionViewHolder.UiModel)
         is MetadataItemViewHolder -> holder.bind(getItem(position) as MetadataItemViewHolder.UiModel)
         else -> throw IllegalArgumentException("Unsupported view holder type at position $position.")

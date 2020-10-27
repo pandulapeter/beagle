@@ -9,40 +9,51 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.setText
 
-internal class ShowMoreLogsViewHolder private constructor(
+internal class ShowMoreViewHolder private constructor(
     itemView: View,
-    onButtonPressed: (String?) -> Unit
+    onButtonPressed: (Type) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
-    private val label get() = itemView.tag as? String?
+    val type get() = itemView.tag as? Type?
 
     init {
         itemView.findViewById<TextView>(R.id.beagle_text_view).apply {
             setText(BeagleCore.implementation.appearance.bugReportTexts.showMoreText)
             setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onButtonPressed(label)
+                    type?.let { onButtonPressed(it) }
                 }
             }
         }
     }
 
     fun bind(uiModel: UiModel) {
-        itemView.tag = uiModel.label
+        itemView.tag = uiModel.type
     }
 
     data class UiModel(
-        val label: String?
+        val type: Type
     ) : BugReportListItem {
-        override val id: String = "showMoreLogs_$label"
+        override val id: String = "showMore_${type.id}"
+    }
+
+    sealed class Type(val id: String) {
+
+        object CrashLog : Type("crashLog")
+
+        object NetworkLog : Type("networkLog")
+
+        data class Log(val label: String?) : Type("log_$label")
+
+        object LifecycleLog : Type("lifecycleLog")
     }
 
     companion object {
         fun create(
             parent: ViewGroup,
-            onButtonPressed: (String?) -> Unit
-        ) = ShowMoreLogsViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_show_more_logs, parent, false),
+            onButtonPressed: (Type) -> Unit
+        ) = ShowMoreViewHolder(
+            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_show_more, parent, false),
             onButtonPressed = onButtonPressed
         )
     }

@@ -25,6 +25,8 @@ import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
+import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
+import com.pandulapeter.beagle.core.util.LifecycleLogEntry
 import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.extension.append
@@ -96,10 +98,11 @@ internal class BugReportActivity : AppCompatActivity() {
             onMediaFileLongTapped = viewModel::onMediaFileLongTapped,
             onNetworkLogSelected = { id -> BeagleCore.implementation.getNetworkLogEntries().firstOrNull { it.id == id }?.let(::showNetworkLogDetailDialog) },
             onNetworkLogLongTapped = viewModel::onNetworkLogLongTapped,
-            onShowMoreNetworkLogsTapped = viewModel::onShowMoreNetworkLogsTapped,
             onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
             onLogLongTapped = viewModel::onLogLongTapped,
-            onShowMoreLogsTapped = viewModel::onShowMoreLogsTapped,
+            onLifecycleLogSelected = { id -> BeagleCore.implementation.getLifecycleLogEntries(null).firstOrNull { it.id == id }?.let(::showLifecycleLogDetailDialog) },
+            onLifecycleLogLongTapped = viewModel::onLifecycleLogLongTapped,
+            onShowMoreTapped = viewModel::onShowMoreTapped,
             onDescriptionChanged = viewModel::onDescriptionChanged,
             onMetadataItemClicked = ::showMetadataDetailDialog,
             onMetadataItemSelectionChanged = viewModel::onMetadataItemSelectionChanged
@@ -183,6 +186,16 @@ internal class BugReportActivity : AppCompatActivity() {
 
     private fun showLogDetailDialog(entry: LogEntry) = BeagleCore.implementation.showDialog(
         content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toText(),
+        timestamp = entry.timestamp,
+        id = entry.id
+    )
+
+    private fun showLifecycleLogDetailDialog(entry: LifecycleLogEntry) = BeagleCore.implementation.showDialog(
+        content = LifecycleLogListDelegate.format(
+            entry = entry,
+            formatter = BeagleCore.implementation.appearance.logTimestampFormatter,
+            shouldDisplayFullNames = BeagleCore.implementation.behavior.lifecycleLogBehavior.shouldDisplayFullNames
+        ),
         timestamp = entry.timestamp,
         id = entry.id
     )

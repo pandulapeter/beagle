@@ -314,7 +314,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal fun getLogEntries(label: String?) = logManager.getEntries(label)
 
-    internal fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>) = lifecycleLogManager.getEntries(eventTypes)
+    internal fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>?) = lifecycleLogManager.getEntries(eventTypes)
 
     internal fun logLifecycle(
         classType: Class<*>,

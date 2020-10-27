@@ -36,7 +36,10 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
     }
 
     companion object {
-        fun format(entry: NetworkLogEntry, formatter: ((Long) -> CharSequence)?) = entry.url.replace(BeagleCore.implementation.behavior.networkLogBehavior.baseUrl, "").let { url ->
+        fun format(
+            entry: NetworkLogEntry,
+            formatter: ((Long) -> CharSequence)?
+        ) = entry.url.replace(BeagleCore.implementation.behavior.networkLogBehavior.baseUrl, "").let { url ->
             (if (entry.isOutgoing) "↑ " else "↓ ").let { prefix ->
                 formatter?.invoke(entry.timestamp)?.let { formattedTimestamp -> "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)
             }

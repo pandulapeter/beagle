@@ -19,7 +19,11 @@ internal class LifecycleLogManager(
         }
     }
 
-    fun getEntries(eventTypes: List<LifecycleLogListModule.EventType>): List<LifecycleLogEntry> = synchronized(entries) {
-        entries.filter { eventTypes.contains(it.eventType) }.toList()
+    fun getEntries(eventTypes: List<LifecycleLogListModule.EventType>?): List<LifecycleLogEntry> = synchronized(entries) {
+        if (eventTypes == null) {
+            entries.toList()
+        } else {
+            entries.filter { eventTypes.contains(it.eventType) }.toList()
+        }
     }
 }

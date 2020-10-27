@@ -5,6 +5,7 @@ import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_BUILD_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_DEVICE_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_GALLERY_SECTION_TITLE
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_LOGS_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_METADATA_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_NETWORK_LOGS_SECTION_TITLE
@@ -61,8 +62,7 @@ import java.util.Locale
  * @param bugReportTexts - Customize UI strings related to the bug reporting screen, see [BugReportTexts].
  * @param networkLogTexts - Customize UI strings related to the network event detail dialog, see [NetworkLogTexts].
  * @param deviceInfoTexts - Customize UI strings related to the device info module (also used when reporting bugs), see [DeviceInfoTexts].
- * @param networkLogTimestampFormatter - The formatter used for displaying the timestamp of network events on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
- * @param logTimestampFormatter - The formatter used for displaying the timestamp of logs on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
+ * @param logTimestampFormatter - The formatter used for displaying the timestamp of any type of log on the detail dialog. Formats with [LOG_TIME_FORMAT] by default.
  * @param galleryTimestampFormatter - The formatter used for displaying the timestamp of each day section in the gallery, or null if the sections should not be displayed at all. Formats with [GALLERY_DATE_FORMAT] by default.
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. [DEFAULT_APPLY_INSETS] by default.
  */
@@ -74,7 +74,6 @@ data class Appearance(
     val bugReportTexts: BugReportTexts = BugReportTexts(),
     val networkLogTexts: NetworkLogTexts = NetworkLogTexts(),
     val deviceInfoTexts: DeviceInfoTexts = DeviceInfoTexts(),
-    val networkLogTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_NETWORK_LOG_DATE_FORMAT.format(it) },
     val logTimestampFormatter: (timestamp: Long) -> CharSequence = { DEFAULT_LOG_DATE_FORMAT.format(it) },
     val galleryTimestampFormatter: ((timestamp: Long) -> CharSequence)? = { DEFAULT_GALLERY_DATE_FORMAT.format(it) },
     val applyInsets: ((windowInsets: Insets) -> Insets)? = DEFAULT_APPLY_INSETS
@@ -166,6 +165,7 @@ data class Appearance(
      * @param gallerySectionTitle - The title of the Gallery section. [DEFAULT_GALLERY_SECTION_TITLE] by default.
      * @param networkLogsSectionTitle - The title of the Network logs section. [DEFAULT_NETWORK_LOGS_SECTION_TITLE] by default.
      * @param logsSectionTitle - The title of the Logs section. Multiple such sections can be added filtered by tags (the parameter of the lambda function). [DEFAULT_LOGS_SECTION_TITLE] by default, suffixed with the tag name if it is not null.
+     * @param lifecycleLogsSectionTitle - The title of the Lifecycle logs section. [DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE] by default.
      * @param metadataSectionTitle - The title of the Metadata section. [DEFAULT_METADATA_SECTION_TITLE] by default.
      * @param buildInformation - The text on the build information check box. [DEFAULT_BUILD_INFORMATION] by default.
      * @param deviceInformation - The text on the device information check box. [DEFAULT_DEVICE_INFORMATION] by default.
@@ -177,6 +177,7 @@ data class Appearance(
         val gallerySectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_GALLERY_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
         val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
         val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> "${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)".toText() },
+        val lifecycleLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
         val metadataSectionTitle: Text = DEFAULT_METADATA_SECTION_TITLE.toText(),
         val buildInformation: Text = DEFAULT_BUILD_INFORMATION.toText(),
         val deviceInformation: Text = DEFAULT_DEVICE_INFORMATION.toText(),
@@ -188,6 +189,7 @@ data class Appearance(
             private const val DEFAULT_GALLERY_SECTION_TITLE = "Attach media items from the Gallery"
             private const val DEFAULT_NETWORK_LOGS_SECTION_TITLE = "Attach network logs"
             private const val DEFAULT_LOGS_SECTION_TITLE = "Attach logs"
+            private const val DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE = "Attach lifecycle logs"
             private const val DEFAULT_METADATA_SECTION_TITLE = "Attach additional details"
             private const val DEFAULT_BUILD_INFORMATION = "Build information"
             private const val DEFAULT_DEVICE_INFORMATION = "Device information"
