@@ -25,9 +25,9 @@ internal class ScreenRecordingButtonDelegate : Module.Delegate<ScreenRecordingBu
     )
 
     companion object {
-        fun hideDebugMenuAndRecordScreen() = performOnHide {
+        fun hideDebugMenuAndRecordScreen() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                BeagleCore.implementation.recordScreen { }
+                performOnHide(BeagleCore.implementation::recordScreen)
             }
         }
     }

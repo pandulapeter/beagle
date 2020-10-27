@@ -1,24 +1,16 @@
 package com.pandulapeter.beagle.modules
 
-import android.app.Application
-import android.net.Uri
 import androidx.annotation.DrawableRes
 import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AppInfoButtonModule.Companion.ID
-import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_BUILD_INFORMATION
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_ICON
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_IS_ENABLED
-import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_LABEL_SECTIONS_TO_SHOW
-import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_ON_BUG_REPORT_READY
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_ON_BUTTON_PRESSED
-import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_SHOULD_SHOW_GALLERY_SECTION
-import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_SHOULD_SHOW_METADATA_SECTION
-import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_TEXT
-import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_TEXT_INPUT_FIELDS
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.DEFAULT_TYPE
 import com.pandulapeter.beagle.modules.BugReportButtonModule.Companion.ID
 import com.pandulapeter.beagle.modules.GalleryButtonModule.Companion.ID
@@ -27,37 +19,23 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 
 /**
  * Displays a button that opens the bug reporting screen. Empty sections will not be displayed.
- * Check out the [Appearance] class for customization options.
+ * Check out the [Appearance] and [Behavior] classes for customization options.
  *
  * This module can only be added once. It uses the value of [ID] as id.
  *
  * @param text - The text that should be displayed on the button. [DEFAULT_TEXT] by default.
- * @param shouldShowGallerySection - Whether or not the gallery section should be added. [DEFAULT_SHOULD_SHOW_GALLERY_SECTION] by default.
- * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. [DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION] by default.
- * @param logLabelSectionsToShow - The list of log tags for which sections should be added. [DEFAULT_LABEL_SECTIONS_TO_SHOW] by default, which adds a section for all logs, without filtering.
- * @param shouldShowMetadataSection - Whether or not the metadata section (build information and device information) should be added. [DEFAULT_SHOULD_SHOW_METADATA_SECTION] by default.
- * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [DEFAULT_BUILD_INFORMATION] by default.
- * @param textInputFields - The list of free-text inputs, where each entry is a pair of the field's title and its default value. [DEFAULT_TEXT_INPUT_FIELDS] by default.
  * @param type - Specify a [TextModule.Type] to apply a specific appearance. [DEFAULT_TYPE] by default.
  * @param icon - A drawable resource ID that will be tinted and displayed before the text, or null to display no icon. [DEFAULT_ICON] by default.
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
  * @param onButtonPressed - Callback invoked when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
- * @param onBugReportReady - The lambda that gets invoked after the bug report is ready, with the [Uri] pointing to the ZIP file, or null for the default implementation that uses the system share sheet. [DEFAULT_ON_BUG_REPORT_READY] by default.
  */
 @Suppress("unused")
 data class BugReportButtonModule(
     val text: Text = DEFAULT_TEXT.toText(),
-    val shouldShowGallerySection: Boolean = DEFAULT_SHOULD_SHOW_GALLERY_SECTION,
-    val shouldShowNetworkLogsSection: Boolean = DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION,
-    val logLabelSectionsToShow: List<String?> = DEFAULT_LABEL_SECTIONS_TO_SHOW,
-    val shouldShowMetadataSection: Boolean = DEFAULT_SHOULD_SHOW_METADATA_SECTION,
-    val buildInformation: (activity: Application?) -> List<Pair<Text, String>> = DEFAULT_BUILD_INFORMATION,
-    val textInputFields: List<Pair<Text, Text>> = DEFAULT_TEXT_INPUT_FIELDS,
     val type: TextModule.Type = DEFAULT_TYPE,
     @DrawableRes val icon: Int? = DEFAULT_ICON,
     val isEnabled: Boolean = DEFAULT_IS_ENABLED,
-    val onButtonPressed: () -> Unit = {},
-    val onBugReportReady: ((bugReport: Uri?) -> Unit)? = DEFAULT_ON_BUG_REPORT_READY
+    val onButtonPressed: () -> Unit = {}
 ) : Module<BugReportButtonModule> {
 
     override val id: String = ID
@@ -69,22 +47,9 @@ data class BugReportButtonModule(
         private const val DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION = true
         private val DEFAULT_LABEL_SECTIONS_TO_SHOW = listOf<String?>(null)
         private const val DEFAULT_SHOULD_SHOW_METADATA_SECTION = true
-        val DEFAULT_BUILD_INFORMATION: (Application?) -> List<Pair<Text, String>> = { application ->
-            mutableListOf<Pair<Text, String>>().apply {
-                if (application != null) {
-                    add("Package name".toText() to application.packageName)
-                }
-            }
-        }
-        val DEFAULT_TEXT_INPUT_FIELDS: List<Pair<Text, Text>> = listOf(
-            "Issue title".toText() to "".toText(),
-            "Issue description".toText() to "".toText()
-        )
-        private const val DEFAULT_DESCRIPTION_TEMPLATE = ""
         private val DEFAULT_TYPE = TextModule.Type.NORMAL
         private val DEFAULT_ICON: Int? = null
         private const val DEFAULT_IS_ENABLED = true
         private val DEFAULT_ON_BUTTON_PRESSED: () -> Unit = {}
-        private val DEFAULT_ON_BUG_REPORT_READY: ((Uri?) -> Unit)? = null
     }
 }

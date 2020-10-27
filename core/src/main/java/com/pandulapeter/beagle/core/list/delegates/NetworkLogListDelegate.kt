@@ -17,7 +17,7 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
         addAll(BeagleCore.implementation.getNetworkLogEntries().take(module.maxItemCount).map { entry ->
             ExpandedItemTextCell(
                 id = "${module.id}_${entry.id}",
-                text = format(entry, module.timestampFormatter, module.baseUrl),
+                text = format(entry, module.timestampFormatter),
                 isEnabled = true,
                 shouldEllipsize = true,
                 onItemSelected = {
@@ -36,7 +36,7 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
     }
 
     companion object {
-        fun format(entry: NetworkLogEntry, formatter: ((Long) -> CharSequence)?, baseUrl: String = "") = entry.url.replace(baseUrl, "").let { url ->
+        fun format(entry: NetworkLogEntry, formatter: ((Long) -> CharSequence)?) = entry.url.replace(BeagleCore.implementation.behavior.networkLogBehavior.baseUrl, "").let { url ->
             (if (entry.isOutgoing) "↑ " else "↓ ").let { prefix ->
                 formatter?.invoke(entry.timestamp)?.let { formattedTimestamp -> "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)
             }

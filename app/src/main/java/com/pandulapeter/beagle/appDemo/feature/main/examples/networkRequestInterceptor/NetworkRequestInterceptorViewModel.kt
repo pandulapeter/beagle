@@ -102,7 +102,10 @@ class NetworkRequestInterceptorViewModel(
                             "    …\n" +
                             "    behavior = Behavior(\n" +
                             "        …\n" +
-                            "        networkLoggers = listOf(BeagleOkHttpLogger)\n" +
+                            "        networkLogBehavior = Behavior.NetworkLogBehavior(\n" +
+                            "            networkLoggers = listOf(BeagleOkHttpLogger),\n" +
+                            "            …\n" +
+                            "        )\n" +
                             "    )\n" +
                             ")"
                 )
@@ -136,7 +139,10 @@ class NetworkRequestInterceptorViewModel(
                             "    …\n" +
                             "    behavior = Behavior(\n" +
                             "        …\n" +
-                            "        networkLoggers = listOf(BeagleKtorLogger)\n" +
+                            "        networkLogBehavior = Behavior.NetworkLogBehavior(\n" +
+                            "            networkLoggers = listOf(BeagleKtorLogger),\n" +
+                            "            …\n" +
+                            "        )\n" +
                             "    )\n" +
                             ")"
                 )

@@ -81,7 +81,10 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
                         "    …\n" +
                         "    behavior = Behavior(\n" +
                         "        …\n" +
-                        "        logger = BeagleLogger\n" +
+                        "        logBehavior = Behavior.LogBehavior(\n" +
+                        "            loggers = listOf(BeagleLogger),\n" +
+                        "            …\n" +
+                        "        )\n" +
                         "    )\n" +
                         ")"
             ),

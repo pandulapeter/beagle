@@ -19,7 +19,7 @@ internal class LogDetailDialogViewModel : ViewModel() {
             viewModelScope.launch {
                 _isShareButtonEnabled.postValue(false)
                 activity?.createAndShareLogFile(
-                    fileName = "${BeagleCore.implementation.behavior.getLogFileName(timestamp, id)}.txt",
+                    fileName = "${BeagleCore.implementation.behavior.logBehavior.getFileName(timestamp, id)}.txt",
                     content = content
                 )
                 _isShareButtonEnabled.postValue(true)

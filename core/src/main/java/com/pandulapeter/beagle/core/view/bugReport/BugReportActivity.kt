@@ -33,7 +33,6 @@ import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
-import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
@@ -45,17 +44,17 @@ internal class BugReportActivity : AppCompatActivity() {
     @Suppress("UNCHECKED_CAST")
     private val viewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T = intent.getBundleExtra(ARGUMENTS)!!.let { arguments ->
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T = BeagleCore.implementation.behavior.bugReportingBehavior.run {
                 BugReportViewModel(
                     application = application,
-                    shouldShowGallerySection = arguments.shouldShowGallerySection,
-                    shouldShowNetworkLogsSection = arguments.shouldShowNetworkLogsSection,
-                    logLabelSectionsToShow = arguments.logLabelSectionsToShow,
-                    shouldShowMetadataSection = arguments.shouldShowMetadataSection,
-                    buildInformation = arguments.buildInformation,
+                    shouldShowGallerySection = shouldShowGallerySection,
+                    shouldShowNetworkLogsSection = shouldShowNetworkLogsSection,
+                    logLabelSectionsToShow = logLabelSectionsToShow,
+                    shouldShowMetadataSection = shouldShowMetadataSection,
+                    buildInformation = buildInformation(application).generateBuildInformation(),
                     deviceInformation = generateDeviceInformation(),
-                    textInputTitles = arguments.textInputFieldTitles,
-                    textInputDescriptions = arguments.textInputFieldDescriptions
+                    textInputTitles = textInputFields.map { it.first },
+                    textInputDescriptions = textInputFields.map { it.second }
                 ) as T
             }
         }).get(BugReportViewModel::class.java)
@@ -200,32 +199,20 @@ internal class BugReportActivity : AppCompatActivity() {
         shouldShowShareButton = false
     )
 
-    companion object {
-        private const val ARGUMENTS = "arguments"
-        private var Bundle.shouldShowGallerySection by BundleArgumentDelegate.Boolean("shouldShowGallerySection")
-        private var Bundle.shouldShowNetworkLogsSection by BundleArgumentDelegate.Boolean("shouldShowNetworkLogsSection")
-        private var Bundle.logLabelSectionsToShow by BundleArgumentDelegate.StringList("logLabelSectionsToShow")
-        private var Bundle.shouldShowMetadataSection by BundleArgumentDelegate.Boolean("shouldShowMetadataSection")
-        private var Bundle.buildInformation by BundleArgumentDelegate.CharSequence("buildInformation")
-        private var Bundle.textInputFieldTitles by BundleArgumentDelegate.ParcelableList<Text>("textInputFieldTitles")
-        private var Bundle.textInputFieldDescriptions by BundleArgumentDelegate.ParcelableList<Text>("textInputFieldDescriptions")
+    private fun List<Pair<Text, String>>.generateBuildInformation(): CharSequence {
+        var text: CharSequence = ""
+        forEachIndexed { index, (keyText, value) ->
+            val key = text(keyText) ?: ""
+            if (key.isNotBlank() && value.isNotBlank()) {
+                text = text.append(SpannableString("$key: $value".let { if (index == lastIndex) it else "$it\n" }).apply {
+                    setSpan(StyleSpan(Typeface.BOLD), 0, key.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                })
+            }
+        }
+        return text
+    }
 
-        fun newIntent(
-            context: Context,
-            shouldShowGallerySection: Boolean,
-            shouldShowNetworkLogsSection: Boolean,
-            logLabelSectionsToShow: List<String?>,
-            shouldShowMetadataSection: Boolean,
-            buildInformation: CharSequence,
-            textInputFields: List<Pair<Text, Text>>
-        ) = Intent(context, BugReportActivity::class.java).putExtra(ARGUMENTS, Bundle().also { bundle ->
-            bundle.shouldShowGallerySection = shouldShowGallerySection
-            bundle.shouldShowNetworkLogsSection = shouldShowNetworkLogsSection
-            bundle.logLabelSectionsToShow = logLabelSectionsToShow
-            bundle.shouldShowMetadataSection = shouldShowMetadataSection
-            bundle.buildInformation = buildInformation
-            bundle.textInputFieldTitles = textInputFields.map { it.first }
-            bundle.textInputFieldDescriptions = textInputFields.map { it.second }
-        })
+    companion object {
+        fun newIntent(context: Context) = Intent(context, BugReportActivity::class.java)
     }
 }

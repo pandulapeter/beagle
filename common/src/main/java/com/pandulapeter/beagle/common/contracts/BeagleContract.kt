@@ -2,7 +2,6 @@ package com.pandulapeter.beagle.common.contracts
 
 import android.app.Application
 import android.content.Context
-import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
@@ -19,7 +18,6 @@ import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.commonBase.randomId
-import com.pandulapeter.beagle.modules.BugReportButtonModule
 import kotlin.reflect.KClass
 
 /**
@@ -344,10 +342,8 @@ interface BeagleContract {
      * Check out the [Behavior] class to override the default file naming logic.
      *
      * The app will show a media preview dialog when the recording is done, or a notification that opens to the gallery if it is no longer in the foreground.
-     *
-     * @param callback - The lambda that gets invoked after the screenshot is done, with the [Uri] pointing to the PNG file. The argument will be null if anything goes wrong.
      */
-    fun takeScreenshot(callback: (image: Uri?) -> Unit) = callback.invoke(null)
+    fun takeScreenshot() = Unit
 
     /**
      * Captures a screen recording video and saves it in the application's private directory (exposing it through a FileProvider).
@@ -356,11 +352,9 @@ interface BeagleContract {
      * Check out the [Behavior] class to override the default file naming logic.
      *
      * The app will show a media preview dialog when the recording is done, or a notification that opens to the gallery if it is no longer in the foreground.
-     *
-     * @param callback - The lambda that gets invoked after the recording is done, with the [Uri] pointing to the MP4 file. The argument will be null if anything goes wrong.
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun recordScreen(callback: (video: Uri?) -> Unit) = callback.invoke(null)
+    fun recordScreen() = Unit
 
     /**
      * Opens the gallery of captured screenshot images and screen recording videos.
@@ -370,25 +364,9 @@ interface BeagleContract {
 
     /**
      * Opens the bug reporting screen. Empty sections will not be displayed.
-     * Check out the [Appearance] class for customization options.
-     *
-     * @param shouldShowGallerySection - Whether or not the gallery section should be added. True by default.
-     * @param shouldShowNetworkLogsSection - Whether or not the section of network logs should be added. True by default.
-     * @param logLabelSectionsToShow - The list of log labels for which sections should be added. By default it adds a section for all logs, without filtering.
-     * @param shouldShowMetadataSection - Whether or not the metadata section (build information and device information) should be added. True by default.
-     * @param buildInformation - The list of key-value pairs that should be attached to reports as build information. The library can't figure out many important things so it is recommended to override the default value. [BugReportButtonModule.DEFAULT_BUILD_INFORMATION] by default.
-     * @param textInputFields - The list of free-text inputs, where each entry is a pair of the field's title and its default value. [BugReportButtonModule.DEFAULT_TEXT_INPUT_FIELDS] by default.
-     * @param onBugReportReady - The lambda that gets invoked after the bug report is ready, with the [Uri] pointing to the ZIP file, or null for the default implementation that uses the system share sheet. Null by default.
+     * Check out the [Appearance] and [Behavior] classes for customization options.
      */
-    fun openBugReportingScreen(
-        shouldShowGallerySection: Boolean = true,
-        shouldShowNetworkLogsSection: Boolean = true,
-        logLabelSectionsToShow: List<String?> = listOf(null),
-        shouldShowMetadataSection: Boolean = true,
-        buildInformation: (activity: Application?) -> List<Pair<Text, String>> = BugReportButtonModule.DEFAULT_BUILD_INFORMATION,
-        textInputFields: List<Pair<Text, Text>> = BugReportButtonModule.DEFAULT_TEXT_INPUT_FIELDS,
-        onBugReportReady: ((bugReport: Uri?) -> Unit)? = null
-    ) = Unit
+    fun openBugReportingScreen() = Unit
 
     /**
      * Call this function to trigger recreating every cell model for every module.

@@ -45,6 +45,11 @@ internal class BugReportViewModel(
     textInputDescriptions: List<Text>
 ) : AndroidViewModel(application) {
 
+    private val getNetworkLogFileName get() = BeagleCore.implementation.behavior.networkLogBehavior.getFileName
+    private val getLogFileName get() = BeagleCore.implementation.behavior.logBehavior.getFileName
+    private val getBugReportFileName get() = BeagleCore.implementation.behavior.bugReportingBehavior.getBugReportFileName
+    private val onBugReportReady get() = BeagleCore.implementation.behavior.bugReportingBehavior.onBugReportReady
+
     private val _items = MutableLiveData(emptyList<BugReportListItem>())
     val items: LiveData<List<BugReportListItem>> = _items
     private val _shouldShowLoadingIndicator = MutableLiveData(true)
@@ -149,7 +154,7 @@ internal class BugReportViewModel(
                         .mapNotNull { id ->
                             allNetworkLogEntries.firstOrNull { it.id == id }?.let { entry ->
                                 context.createLogFile(
-                                    fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(currentTimestamp, entry.id)}.txt",
+                                    fileName = "${getNetworkLogFileName(currentTimestamp, entry.id)}.txt",
                                     content = NetworkLogDetailDialogViewModel.createLogFileContents(
                                         title = NetworkLogDetailDialogViewModel.createTitle(
                                             isOutgoing = entry.isOutgoing,
@@ -178,7 +183,7 @@ internal class BugReportViewModel(
                         selectedLogIds.flatMap { it.value }.distinct().mapNotNull { id -> allLogEntries.firstOrNull { it.id == id } }
                     }.orEmpty().mapNotNull { entry ->
                         context.createLogFile(
-                            fileName = "${BeagleCore.implementation.behavior.getLogFileName(currentTimestamp, entry.id)}.txt",
+                            fileName = "${getLogFileName(currentTimestamp, entry.id)}.txt",
                             content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toString()
                         )
                     }.toPaths(context.getLogsFolder())
@@ -206,7 +211,7 @@ internal class BugReportViewModel(
                 // Create the log file
                 if (content.isNotBlank()) {
                     context.createBugReportTextFile(
-                        fileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.txt",
+                        fileName = "${getBugReportFileName(currentTimestamp)}.txt",
                         content = content
                     )?.let { uri -> filePaths.add(uri.toPath(context.getBugReportsFolder())) }
                 }
@@ -214,14 +219,14 @@ internal class BugReportViewModel(
                 // Create the zip file
                 val uri = context.createZipFile(
                     filePaths = filePaths,
-                    zipFileName = "${BeagleCore.implementation.behavior.getBugReportFileName(currentTimestamp)}.zip",
+                    zipFileName = "${getBugReportFileName(currentTimestamp)}.zip",
                 )
-                val onBugReportReady = BeagleCore.implementation.onBugReportReady
-                if (onBugReportReady == null) {
-                    zipFileUriToShare.postValue(uri)
-                } else {
-                    onBugReportReady(uri)
-                    BeagleCore.implementation.onBugReportReady = null
+                onBugReportReady.let { onBugReportReady ->
+                    if (onBugReportReady == null) {
+                        zipFileUriToShare.postValue(uri)
+                    } else {
+                        onBugReportReady(uri)
+                    }
                 }
                 isPreparingData = false
             }

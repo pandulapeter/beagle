@@ -16,18 +16,21 @@ internal class ScreenCaptureManager {
 
     var onScreenCaptureReady: ((Uri?) -> Unit)? = null
     private val currentActivity get() = BeagleCore.implementation.currentActivity
-    private val behavior get() = BeagleCore.implementation.behavior
+    private val getImageFileName get() = BeagleCore.implementation.behavior.screenCaptureBehavior.getImageFileName
+    private val onImageReady get() = BeagleCore.implementation.behavior.screenCaptureBehavior.onImageReady
+    private val getVideoFileName get() = BeagleCore.implementation.behavior.screenCaptureBehavior.getVideoFileName
+    private val onVideoReady get() = BeagleCore.implementation.behavior.screenCaptureBehavior.onVideoReady
 
-    fun takeScreenshot(callback: (Uri?) -> Unit) {
+    fun takeScreenshot() {
         if (onScreenCaptureReady != null) {
-            callback(null)
+            onImageReady?.invoke(null)
         } else {
             onScreenCaptureReady = { uri ->
-                callback(uri)
+                onImageReady?.invoke(uri)
                 onScreenCaptureReady = null
             }
             currentActivity?.run {
-                val fileName = "${behavior.getImageFileName(currentTimestamp)}$IMAGE_EXTENSION"
+                val fileName = "${getImageFileName(currentTimestamp)}$IMAGE_EXTENSION"
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     takeScreenshotWithMediaProjectionManager(fileName)
                 } else {
@@ -38,15 +41,15 @@ internal class ScreenCaptureManager {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun recordScreen(callback: (Uri?) -> Unit) {
+    fun recordScreen() {
         if (onScreenCaptureReady != null) {
-            callback(null)
+            onVideoReady?.invoke(null)
         } else {
             onScreenCaptureReady = { uri ->
-                callback(uri)
+                onVideoReady?.invoke(uri)
                 onScreenCaptureReady = null
             }
-            currentActivity?.recordScreenWithMediaProjectionManager("${behavior.getVideoFileName(currentTimestamp)}$VIDEO_EXTENSION")
+            currentActivity?.recordScreenWithMediaProjectionManager("${getVideoFileName(currentTimestamp)}$VIDEO_EXTENSION")
         }
     }
 

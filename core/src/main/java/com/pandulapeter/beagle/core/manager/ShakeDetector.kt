@@ -49,7 +49,7 @@ internal class ShakeDetector : SensorEventListener, DefaultLifecycleObserver {
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (BeagleCore.implementation.currentActivity?.lifecycle?.currentState?.isAtLeast(Lifecycle.State.STARTED) == true) {
-            BeagleCore.implementation.behavior.shakeThreshold?.let { threshold ->
+            BeagleCore.implementation.behavior.shakeDetectionBehavior.threshold?.let { threshold ->
                 if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
                     val currentTime = currentTimestamp
                     if (currentTime - lastSensorUpdate > SHAKE_DETECTION_DELAY) {
@@ -71,7 +71,7 @@ internal class ShakeDetector : SensorEventListener, DefaultLifecycleObserver {
     private fun showDebugMenuAndVibrateIfNeeded() {
         if (BeagleCore.implementation.show()) {
             vibrator?.run {
-                val duration = BeagleCore.implementation.behavior.shakeHapticFeedbackDuration
+                val duration = BeagleCore.implementation.behavior.shakeDetectionBehavior.hapticFeedbackDuration
                 if (duration > 0) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))

@@ -111,7 +111,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             viewModelScope.launch {
                 _isShareButtonEnabled.postValue(false)
                 activity?.createAndShareLogFile(
-                    fileName = "${BeagleCore.implementation.behavior.getNetworkLogFileName(timestamp, id)}.txt",
+                    fileName = "${BeagleCore.implementation.behavior.networkLogBehavior.getFileName(timestamp, id)}.txt",
                     content = createLogFileContents(
                         title = title,
                         metadata = metadata,

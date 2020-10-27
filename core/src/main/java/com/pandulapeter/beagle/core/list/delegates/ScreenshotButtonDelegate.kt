@@ -24,8 +24,6 @@ internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule
     )
 
     companion object {
-        fun hideDebugMenuAndTakeScreenshot() = performOnHide {
-            BeagleCore.implementation.takeScreenshot { }
-        }
+        fun hideDebugMenuAndTakeScreenshot() = performOnHide(BeagleCore.implementation::takeScreenshot)
     }
 }

@@ -84,11 +84,6 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         set(value) {
             screenCaptureManager.onScreenCaptureReady = value
         }
-    internal var onBugReportReady: ((Uri?) -> Unit)?
-        get() = bugReportManager.onBugReportReady
-        set(value) {
-            bugReportManager.onBugReportReady = value
-        }
 
     init {
         BeagleCore.implementation = this
@@ -98,16 +93,16 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         application: Application,
         appearance: Appearance,
         behavior: Behavior
-    ) = (behavior.shakeThreshold == null || shakeDetector.initialize(application)).also {
+    ) = (behavior.shakeDetectionBehavior.threshold == null || shakeDetector.initialize(application)).also {
         this.appearance = appearance
         this.behavior = behavior
         this.localStorageManager = LocalStorageManager(application)
-        if (behavior.shouldCatchExceptions) {
+        if (behavior.bugReportingBehavior.shouldCatchExceptions) {
             exceptionHandler.initialize(application)
         }
         debugMenuInjector.register(application)
-        behavior.loggers.forEach { it.register(::log, ::clearLogs) }
-        behavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }
+        behavior.logBehavior.loggers.forEach { it.register(::log, ::clearLogs) }
+        behavior.networkLogBehavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }
         videoThumbnailLoader = ImageLoader.Builder(application)
             .componentRegistry {
                 add(VideoFrameFileFetcher(application))
@@ -254,30 +249,14 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun clearNetworkLogs() = networkLogManager.clearLogs()
 
-    override fun takeScreenshot(callback: (Uri?) -> Unit) = screenCaptureManager.takeScreenshot(callback)
+    override fun takeScreenshot() = screenCaptureManager.takeScreenshot()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun recordScreen(callback: (Uri?) -> Unit) = screenCaptureManager.recordScreen(callback)
+    override fun recordScreen() = screenCaptureManager.recordScreen()
 
     override fun openGallery() = screenCaptureManager.openGallery()
 
-    override fun openBugReportingScreen(
-        shouldShowGallerySection: Boolean,
-        shouldShowNetworkLogsSection: Boolean,
-        logLabelSectionsToShow: List<String?>,
-        shouldShowMetadataSection: Boolean,
-        buildInformation: (Application?) -> List<Pair<Text, String>>,
-        textInputFields: List<Pair<Text, Text>>,
-        onBugReportReady: ((Uri?) -> Unit)?
-    ) = bugReportManager.openBugReportingScreen(
-        shouldShowGallerySection = shouldShowGallerySection,
-        shouldShowNetworkLogsSection = shouldShowNetworkLogsSection,
-        logLabelSectionsToShow = logLabelSectionsToShow,
-        shouldShowMetadataSection = shouldShowMetadataSection,
-        buildInformation = buildInformation,
-        textInputFields = textInputFields,
-        onBugReportReady = onBugReportReady
-    )
+    override fun openBugReportingScreen() = bugReportManager.openBugReportingScreen()
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)
 

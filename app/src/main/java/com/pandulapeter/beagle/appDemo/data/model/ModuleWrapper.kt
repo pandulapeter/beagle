@@ -5,9 +5,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.Beagle
-import com.pandulapeter.beagle.appDemo.BuildConfig
 import com.pandulapeter.beagle.appDemo.R
-import com.pandulapeter.beagle.appDemo.data.networking.Constants
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
@@ -281,24 +279,8 @@ sealed class ModuleWrapper(
     object BugReportButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_bug_report_button,
         descriptionResourceId = R.string.add_module_bug_report_button_description,
-        module = BugReportButtonModule(
-            buildInformation = {
-                listOf(
-                    "Version name".toText() to BuildConfig.VERSION_NAME,
-                    "Version code".toText() to BuildConfig.VERSION_CODE.toString(),
-                    "Application ID".toText() to BuildConfig.APPLICATION_ID
-                )
-            }
-        ),
-        codeSnippet = "BugReportButtonModule(\n" +
-                "    buildInformation = {\n" +
-                "        listOf(\n" +
-                "            \"Version name\".toText() to BuildConfig.VERSION_NAME,\n" +
-                "            \"Version code\".toText() to BuildConfig.VERSION_CODE.toString(),\n" +
-                "            \"Application ID\".toText() to BuildConfig.APPLICATION_ID\n" +
-                "        )\n" +
-                "    }\n" +
-                ")"
+        module = BugReportButtonModule(),
+        codeSnippet = "BugReportButtonModule()"
     )
 
     object DeveloperOptionsButtonWrapper : ModuleWrapper(
@@ -366,7 +348,7 @@ sealed class ModuleWrapper(
     object NetworkLogListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_log_list,
         descriptionResourceId = R.string.add_module_network_log_list_description,
-        module = NetworkLogListModule(baseUrl = Constants.BASE_URL),
+        module = NetworkLogListModule(),
         codeSnippet = "NetworkLogListModule()"
     )
 

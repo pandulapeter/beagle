@@ -49,6 +49,7 @@ internal class ScreenCaptureService : Service() {
     private val handlerThread = HandlerThread(javaClass.simpleName, Process.THREAD_PRIORITY_BACKGROUND)
     private lateinit var handler: Handler
     private lateinit var file: File
+    private val notificationChannelId get() = BeagleCore.implementation.behavior.screenCaptureBehavior.serviceNotificationChannelId
 
     override fun onCreate() {
         super.onCreate()
@@ -164,10 +165,10 @@ internal class ScreenCaptureService : Service() {
 
     private fun moveToForeground(isForVideo: Boolean) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId) == null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(notificationChannelId) == null) {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
-                    BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId,
+                    notificationChannelId,
                     text(BeagleCore.implementation.appearance.screenCaptureTexts.notificationChannelName),
                     NotificationManager.IMPORTANCE_LOW
                 ).apply {
@@ -180,7 +181,7 @@ internal class ScreenCaptureService : Service() {
         }
         startForeground(
             RECORDING_NOTIFICATION_ID,
-            NotificationCompat.Builder(this, BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId)
+            NotificationCompat.Builder(this, notificationChannelId)
                 .setAutoCancel(false)
                 .setSound(null)
                 .setSmallIcon(R.drawable.beagle_ic_recording)
@@ -227,7 +228,7 @@ internal class ScreenCaptureService : Service() {
 
     private fun showGalleryNotification() {
         (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(GALLERY_NOTIFICATION_ID,
-            NotificationCompat.Builder(this, BeagleCore.implementation.behavior.screenCaptureServiceNotificationChannelId)
+            NotificationCompat.Builder(this, notificationChannelId)
                 .setSound(null)
                 .setSmallIcon(R.drawable.beagle_ic_recording)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
