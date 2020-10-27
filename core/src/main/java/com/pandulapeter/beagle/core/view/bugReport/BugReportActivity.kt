@@ -125,6 +125,7 @@ internal class BugReportActivity : AppCompatActivity() {
                     val crashLogIdToShow = intent.getStringExtra(CRASH_LOG_ID_TO_SHOW).orEmpty()
                     if (crashLogIdToShow.isNotBlank()) {
                         intent.putExtra(CRASH_LOG_ID_TO_SHOW, "")
+                        viewModel.onCrashLogLongTapped(crashLogIdToShow)
                         viewModel.allCrashLogEntries?.firstOrNull { it.id == crashLogIdToShow }?.let(::showCrashLogDetailDialog)
                     }
                 }

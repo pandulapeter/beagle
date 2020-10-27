@@ -295,8 +295,10 @@ internal class BugReportViewModel(
     private fun refreshSendButton() {
         _isSendButtonEnabled.postValue(
             !isPreparingData && (selectedMediaFileIds.isNotEmpty() ||
+                    selectedCrashLogIds.isNotEmpty() ||
                     selectedNetworkLogIds.isNotEmpty() ||
                     selectedLogIds.keys.any { label -> selectedLogIds[label]?.isNotEmpty() == true } ||
+                    selectedLifecycleLogIds.isNotEmpty() ||
                     textInputValues.any { it.trim().isNotEmpty() })
         )
     }
