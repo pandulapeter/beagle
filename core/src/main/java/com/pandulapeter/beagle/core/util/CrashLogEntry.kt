@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
+import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.squareup.moshi.Json
@@ -17,7 +18,7 @@ internal data class CrashLogEntry(
     @Json(name = "timestamp") val timestamp: Long
 ) : BeagleListItemContract {
 
-    override val title = exception.toText()
+    override val title: Text = exception.toText()
 
     fun getFormattedTitle(formatter: (Long) -> CharSequence): String = "[${formatter(timestamp)}] $exception"
 

@@ -40,6 +40,7 @@ import com.pandulapeter.beagle.core.manager.listener.NetworkLogListenerManager
 import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
+import com.pandulapeter.beagle.core.util.CrashLogEntry
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.core.view.logDetail.LogDetailDialogFragment
 import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogFragment
@@ -67,7 +68,6 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     internal lateinit var localStorageManager: LocalStorageManager
         private set
     private val shakeDetector by lazy { ShakeDetector() }
-    private val exceptionHandler by lazy { ExceptionHandler() }
     private val debugMenuInjector by lazy { DebugMenuInjector(uiManager) }
     private val logListenerManager by lazy { LogListenerManager() }
     private val networkLogListenerManager by lazy { NetworkLogListenerManager() }
@@ -102,7 +102,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         crashLogManager.application = application
         this.localStorageManager = LocalStorageManager(application)
         if (behavior.bugReportingBehavior.shouldCatchExceptions) {
-            exceptionHandler.initialize(application)
+            ExceptionHandler.initialize(application)
         }
         debugMenuInjector.register(application)
         behavior.logBehavior.loggers.forEach { it.register(::log, ::clearLogs) }
@@ -339,6 +339,8 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     internal fun getLogEntries(label: String?) = logManager.getEntries(label)
 
     internal fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>?) = lifecycleLogManager.getEntries(eventTypes)
+
+    internal fun logCrash(crashLogEntry: CrashLogEntry) = crashLogManager.log(crashLogEntry)
 
     internal fun logLifecycle(
         classType: Class<*>,

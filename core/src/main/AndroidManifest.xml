@@ -20,6 +20,9 @@
             android:name=".util.ScreenCaptureService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
+        <service
+            android:name=".util.ExceptionHandlerService"
+            android:process=":beagle_exception_handler_process" />
 
         <provider
             android:name=".BeagleFileProvider"

@@ -12,8 +12,9 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.core.util.CrashLogEntry
 import com.pandulapeter.beagle.core.util.LogEntry
+import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
 import com.pandulapeter.beagle.core.util.getFolder
-import com.squareup.moshi.Moshi
+import com.pandulapeter.beagle.core.util.logEntryAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
@@ -67,8 +68,6 @@ internal fun Context.getPersistedLogsFolder() = getFilesFolder(LOGS_FOLDER_NAME)
 
 private fun Context.createPersistedLogFile(fileName: String) = File(getPersistedLogsFolder(), fileName)
 
-private val logEntryAdapter by lazy { Moshi.Builder().build().adapter(LogEntry::class.java) }
-
 @Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun readLogEntryFromLogFile(file: File): LogEntry? = withContext(Dispatchers.IO) {
     try {
@@ -102,9 +101,6 @@ internal suspend fun Context.createPersistedLogFile(logEntry: LogEntry) = withCo
     } catch (_: IOException) {
     }
 }
-
-private val crashLogEntryAdapter by lazy { Moshi.Builder().build().adapter(CrashLogEntry::class.java) }
-
 
 @Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun readCrashLogEntryFromLogFile(file: File): CrashLogEntry? = withContext(Dispatchers.IO) {

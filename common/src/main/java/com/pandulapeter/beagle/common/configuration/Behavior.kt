@@ -72,7 +72,6 @@ data class Behavior(
         val threshold: Int? = DEFAULT_THRESHOLD,
         val hapticFeedbackDuration: Long = DEFAULT_HAPTIC_FEEDBACK_DURATION,
     ) {
-
         companion object {
             private const val DEFAULT_THRESHOLD = 13
             private const val DEFAULT_HAPTIC_FEEDBACK_DURATION = 100L
@@ -89,7 +88,6 @@ data class Behavior(
         val loggers: List<BeagleLoggerContract> = DEFAULT_LOGGERS,
         val getFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "log_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" },
     ) {
-
         companion object {
             private val DEFAULT_LOGGERS = emptyList<BeagleLoggerContract>()
         }
@@ -107,7 +105,6 @@ data class Behavior(
         val baseUrl: String = DEFAULT_BASE_URL,
         val getFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "networkLog_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" }
     ) {
-
         companion object {
             private const val DEFAULT_BASE_URL = ""
             private val DEFAULT_NETWORK_LOGGERS = emptyList<BeagleNetworkLoggerContract>()
@@ -124,7 +121,6 @@ data class Behavior(
         val shouldDisplayFullNames: Boolean = DEFAULT_SHOULD_DISPLAY_FULL_NAMES,
         val getFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "lifecycleLog_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" }
     ) {
-
         companion object {
             private const val DEFAULT_SHOULD_DISPLAY_FULL_NAMES = true
         }
@@ -146,7 +142,6 @@ data class Behavior(
         val getVideoFileName: (timestamp: Long) -> String = { timestamp -> "${DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT.format(timestamp)}_video" },
         val onVideoReady: ((videoUri: Uri?) -> Unit)? = DEFAULT_ON_VIDEO_READY,
     ) {
-
         companion object {
             private const val DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID = "channel_beagle_screen_capture"
             private val DEFAULT_ON_IMAGE_READY: ((Uri?) -> Unit)? = null
@@ -186,7 +181,6 @@ data class Behavior(
         val getBugReportFileName: (timestamp: Long) -> String = { timestamp -> "bugReport_${DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT.format(timestamp)}" },
         val onBugReportReady: ((bugReport: Uri?) -> Unit)? = DEFAULT_ON_BUG_REPORT_READY
     ) {
-
         companion object {
             private const val DEFAULT_SHOULD_CATCH_EXCEPTIONS = true
             private const val DEFAULT_PAGE_SIZE = 5

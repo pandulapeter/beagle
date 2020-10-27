@@ -260,7 +260,6 @@ data class Appearance(
 
     companion object {
         private val DEFAULT_THEME_RESOURCE_ID: Int? = null
-        private val DEFAULT_NETWORK_LOG_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_LOG_DATE_FORMAT by lazy { SimpleDateFormat(LOG_TIME_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_GALLERY_DATE_FORMAT by lazy { SimpleDateFormat(GALLERY_DATE_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_APPLY_INSETS: ((windowInsets: Insets) -> Insets)? = null

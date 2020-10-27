@@ -1,8 +1,6 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
-import com.pandulapeter.beagle.commonBase.currentTimestamp
-import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.core.util.CrashLogEntry
 import com.pandulapeter.beagle.core.util.extension.CRASH_LOG_PREFIX
 import com.pandulapeter.beagle.core.util.extension.createPersistedCrashLogFile
@@ -29,13 +27,7 @@ internal class CrashLogManager {
         syncIfNeeded()
     }
 
-    fun log(exception: Exception) {
-        val entry = CrashLogEntry(
-            id = randomId,
-            exception = exception.message ?: "Unknown",
-            stacktrace = exception.stackTraceToString(),
-            timestamp = currentTimestamp
-        )
+    fun log(entry: CrashLogEntry) {
         synchronized(entries) {
             entries.removeAll { it.id == entry.id }
             entries.add(0, entry)

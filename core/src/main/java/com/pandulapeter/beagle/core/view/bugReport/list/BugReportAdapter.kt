@@ -50,7 +50,7 @@ internal class BugReportAdapter(
             onMediaSelected = onMediaFileSelected,
             onMediaLongTapped = onMediaFileLongTapped
         )
-        R.layout.beagle_item_bug_report_crash_log_item -> NetworkLogItemViewHolder.create(
+        R.layout.beagle_item_bug_report_crash_log_item -> CrashLogItemViewHolder.create(
             parent = parent,
             onItemSelected = onCrashLogSelected,
             onItemLongTapped = onCrashLogLongTapped
