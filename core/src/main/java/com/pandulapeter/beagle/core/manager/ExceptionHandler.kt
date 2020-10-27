@@ -1,6 +1,12 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.IBinder
+import android.os.Messenger
 import android.os.Process
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
@@ -10,19 +16,14 @@ import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import kotlin.system.exitProcess
 
 internal class ExceptionHandler private constructor(
-    private val application: Application
+    private val messenger: Messenger
 ) : Thread.UncaughtExceptionHandler {
-
-    init {
-        application.startService(ExceptionHandlerService.getStartIntent(application))
-    }
 
     override fun uncaughtException(thread: Thread, excepton: Throwable) {
         try {
             val limit = BeagleCore.implementation.behavior.bugReportingBehavior.logRestoreLimit
-            application.startService(
-                ExceptionHandlerService.getStartIntent(
-                    context = application,
+            messenger.send(
+                ExceptionHandlerService.getMessage(
                     crashLogEntry = CrashLogEntry(
                         id = randomId,
                         exception = excepton.message ?: excepton::class.java.simpleName,
@@ -34,10 +35,14 @@ internal class ExceptionHandler private constructor(
                     lifecycleLogs = BeagleCore.implementation.getLifecycleLogEntries(BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes).take(limit)
                 )
             )
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         } finally {
             defaultExceptionHandler.let { defaultExceptionHandler ->
-                if (defaultExceptionHandler != null && defaultExceptionHandler::class.java.canonicalName?.startsWith("com.android.internal.os") != true) {
+                if (currentTimestamp - lastCrashTimestamp > CRASH_LOOP_LIMIT
+                    && defaultExceptionHandler != null
+                    && defaultExceptionHandler::class.java.canonicalName?.startsWith("com.android.internal.os") != true
+                ) {
+                    lastCrashTimestamp = currentTimestamp
                     defaultExceptionHandler.uncaughtException(thread, excepton)
                 }
                 Process.killProcess(Process.myPid())
@@ -49,6 +54,8 @@ internal class ExceptionHandler private constructor(
     companion object {
         private var isInitialized = false
         private var defaultExceptionHandler: Thread.UncaughtExceptionHandler? = null
+        private var lastCrashTimestamp = 0L
+        private const val CRASH_LOOP_LIMIT = 1000L
 
         fun initialize(application: Application) {
             if (!isInitialized) {
@@ -58,7 +65,23 @@ internal class ExceptionHandler private constructor(
                         defaultExceptionHandler = it
                     }
                 }
-                Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(application))
+                application.bindService(
+                    Intent(application, ExceptionHandlerService::class.java),
+                    object : ServiceConnection {
+
+                        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+                            Thread.getDefaultUncaughtExceptionHandler()?.let {
+                                if (it !is ExceptionHandler) {
+                                    defaultExceptionHandler = it
+                                }
+                            }
+                            Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(Messenger(service)))
+                        }
+
+                        override fun onServiceDisconnected(name: ComponentName?) = Unit
+                    },
+                    Context.BIND_AUTO_CREATE
+                )
             }
         }
     }
