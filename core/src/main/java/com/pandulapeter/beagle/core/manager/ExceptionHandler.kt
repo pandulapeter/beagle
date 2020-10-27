@@ -1,13 +1,6 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
-import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
 import android.os.Process
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
@@ -16,15 +9,20 @@ import com.pandulapeter.beagle.core.util.ExceptionHandlerService
 import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import kotlin.system.exitProcess
 
-internal class ExceptionHandler(
-    private val service: Messenger
+internal class ExceptionHandler private constructor(
+    private val application: Application
 ) : Thread.UncaughtExceptionHandler {
+
+    init {
+        application.startService(ExceptionHandlerService.getStartIntent(application))
+    }
 
     override fun uncaughtException(thread: Thread, excepton: Throwable) {
         try {
             val limit = BeagleCore.implementation.behavior.bugReportingBehavior.logRestoreLimit
-            service.send(Message().apply {
-                data = ExceptionHandlerService.createBundle(
+            application.startService(
+                ExceptionHandlerService.getStartIntent(
+                    context = application,
                     crashLogEntry = CrashLogEntry(
                         id = randomId,
                         exception = excepton.message ?: excepton::class.java.simpleName,
@@ -35,10 +33,10 @@ internal class ExceptionHandler(
                     networkLogs = BeagleCore.implementation.getNetworkLogEntries().take(limit),
                     lifecycleLogs = BeagleCore.implementation.getLifecycleLogEntries(BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes).take(limit)
                 )
-            })
-        } catch (_: Exception) {
+            )
+        } catch (e: Exception) {
         } finally {
-            InitializationManager.defaultExceptionHandler.let { defaultExceptionHandler ->
+            defaultExceptionHandler.let { defaultExceptionHandler ->
                 if (defaultExceptionHandler != null && defaultExceptionHandler::class.java.canonicalName?.startsWith("com.android.internal.os") != true) {
                     defaultExceptionHandler.uncaughtException(thread, excepton)
                 }
@@ -48,37 +46,20 @@ internal class ExceptionHandler(
         }
     }
 
-    private object InitializationManager {
+    companion object {
+        private var isInitialized = false
+        private var defaultExceptionHandler: Thread.UncaughtExceptionHandler? = null
 
-        private var isInitialized: Boolean = false
-        var defaultExceptionHandler: Thread.UncaughtExceptionHandler? = null
-            private set
-
-        private val connection = object : ServiceConnection {
-
-            override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        fun initialize(application: Application) {
+            if (!isInitialized) {
+                isInitialized = true
                 Thread.getDefaultUncaughtExceptionHandler()?.let {
                     if (it !is ExceptionHandler) {
                         defaultExceptionHandler = it
                     }
                 }
-                Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(Messenger(service)))
+                Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(application))
             }
-
-            override fun onServiceDisconnected(name: ComponentName?) = Unit
         }
-
-        fun init(applicationContext: Context) {
-            if (isInitialized) {
-                return
-            }
-            isInitialized = true
-            val intent = Intent(applicationContext, ExceptionHandlerService::class.java)
-            applicationContext.bindService(intent, connection, Context.BIND_AUTO_CREATE)
-        }
-    }
-
-    companion object {
-        fun initialize(application: Application) = InitializationManager.init(application)
     }
 }
