@@ -384,7 +384,7 @@ internal class BugReportViewModel(
                     add(
                         HeaderViewHolder.UiModel(
                             id = "headerCrashLogs",
-                            text = BeagleCore.implementation.appearance.bugReportTexts.crashLogsSectionTitle(selectedNetworkLogIds.size)
+                            text = BeagleCore.implementation.appearance.bugReportTexts.crashLogsSectionTitle(selectedCrashLogIds.size)
                         )
                     )
                     addAll(crashLogEntries.map { entry ->
