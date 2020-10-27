@@ -153,7 +153,7 @@ data class Behavior(
     /**
      * Configuration related to bug reporting.
      *
-     * @param shouldCatchExceptions - Whether or not the library should handle uncaught exceptions by logging them and opening the bug reporting screen. Warning: this interferes with other crash reporting solutions. [DEFAULT_SHOULD_CATCH_EXCEPTIONS] by default.
+     * @param shouldCatchExceptions - Whether or not the library should handle uncaught exceptions by logging them and opening the bug reporting screen. Warning: enabling this might interfere with other crash reporting solutions. [DEFAULT_SHOULD_CATCH_EXCEPTIONS] by default.
      * @param pageSize - The number of crash log / network log / log / lifecycle log entries to load for every page, before the "Show more" button is displayed. [DEFAULT_PAGE_SIZE] by default.
      * @param logRestoreLimit - The number of individual entries from each category (network log / log / lifecycle log) to persist after a crash. Be careful with this number as a high value can lead to TransactionTooLargeExceptions. [DEFAULT_LOG_RESTORE_LIMIT] by default.
      * @param shouldShowGallerySection - Whether or not the gallery section should be added. [DEFAULT_SHOULD_SHOW_GALLERY_SECTION] by default.
