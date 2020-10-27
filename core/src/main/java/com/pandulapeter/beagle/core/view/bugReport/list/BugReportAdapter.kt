@@ -10,6 +10,8 @@ import com.pandulapeter.beagle.core.view.bugReport.BugReportViewModel
 internal class BugReportAdapter(
     private val onMediaFileSelected: (String) -> Unit,
     private val onMediaFileLongTapped: (String) -> Unit,
+    private val onCrashLogSelected: (String) -> Unit,
+    private val onCrashLogLongTapped: (String) -> Unit,
     private val onNetworkLogSelected: (String) -> Unit,
     private val onNetworkLogLongTapped: (String) -> Unit,
     private val onLogSelected: (String, String?) -> Unit,
@@ -31,6 +33,7 @@ internal class BugReportAdapter(
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is HeaderViewHolder.UiModel -> R.layout.beagle_item_bug_report_header
         is GalleryViewHolder.UiModel -> R.layout.beagle_item_bug_report_gallery
+        is CrashLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_crash_log_item
         is NetworkLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_network_log_item
         is LogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_log_item
         is LifecycleLogItemViewHolder.UiModel -> R.layout.beagle_item_bug_report_lifecycle_log_item
@@ -46,6 +49,11 @@ internal class BugReportAdapter(
             parent = parent,
             onMediaSelected = onMediaFileSelected,
             onMediaLongTapped = onMediaFileLongTapped
+        )
+        R.layout.beagle_item_bug_report_crash_log_item -> NetworkLogItemViewHolder.create(
+            parent = parent,
+            onItemSelected = onCrashLogSelected,
+            onItemLongTapped = onCrashLogLongTapped
         )
         R.layout.beagle_item_bug_report_network_log_item -> NetworkLogItemViewHolder.create(
             parent = parent,
@@ -81,6 +89,7 @@ internal class BugReportAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
         is HeaderViewHolder -> holder.bind(getItem(position) as HeaderViewHolder.UiModel)
         is GalleryViewHolder -> holder.bind(getItem(position) as GalleryViewHolder.UiModel)
+        is CrashLogItemViewHolder -> holder.bind(getItem(position) as CrashLogItemViewHolder.UiModel)
         is NetworkLogItemViewHolder -> holder.bind(getItem(position) as NetworkLogItemViewHolder.UiModel)
         is LogItemViewHolder -> holder.bind(getItem(position) as LogItemViewHolder.UiModel)
         is LifecycleLogItemViewHolder -> holder.bind(getItem(position) as LifecycleLogItemViewHolder.UiModel)

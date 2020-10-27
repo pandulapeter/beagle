@@ -26,6 +26,7 @@ import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
+import com.pandulapeter.beagle.core.util.CrashLogEntry
 import com.pandulapeter.beagle.core.util.LifecycleLogEntry
 import com.pandulapeter.beagle.core.util.LogEntry
 import com.pandulapeter.beagle.core.util.NetworkLogEntry
@@ -96,6 +97,8 @@ internal class BugReportActivity : AppCompatActivity() {
         val bugReportAdapter = BugReportAdapter(
             onMediaFileSelected = ::showMediaPreviewDialog,
             onMediaFileLongTapped = viewModel::onMediaFileLongTapped,
+            onCrashLogSelected = { id -> BeagleCore.implementation.getCrashLogEntries().firstOrNull { it.id == id }?.let(::showCrashLogDetailDialog) },
+            onCrashLogLongTapped = viewModel::onCrashLogLongTapped,
             onNetworkLogSelected = { id -> BeagleCore.implementation.getNetworkLogEntries().firstOrNull { it.id == id }?.let(::showNetworkLogDetailDialog) },
             onNetworkLogLongTapped = viewModel::onNetworkLogLongTapped,
             onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
@@ -173,6 +176,12 @@ internal class BugReportActivity : AppCompatActivity() {
     }
 
     private fun showMediaPreviewDialog(fileName: String) = MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
+
+    private fun showCrashLogDetailDialog(entry: CrashLogEntry) = BeagleCore.implementation.showDialog(
+        content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toText(),
+        timestamp = entry.timestamp,
+        id = entry.id
+    )
 
     private fun showNetworkLogDetailDialog(entry: NetworkLogEntry) = BeagleCore.implementation.showNetworkEventDialog(
         isOutgoing = entry.isOutgoing,

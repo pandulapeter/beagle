@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.common.configuration
 import androidx.annotation.StyleRes
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_BUILD_INFORMATION
+import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_CRASH_LOGS_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_DEVICE_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_GALLERY_SECTION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.BugReportTexts.Companion.DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE
@@ -163,6 +164,7 @@ data class Appearance(
      * @param title - The title of the bug reporting screen. [DEFAULT_TITLE] by default.
      * @param sendButtonHint - The hint that appears on the Send button. [DEFAULT_SEND_BUTTON_HINT] by default.
      * @param gallerySectionTitle - The title of the Gallery section. [DEFAULT_GALLERY_SECTION_TITLE] by default.
+     * @param crashLogsSectionTitle - The title of the Crash logs section. [DEFAULT_CRASH_LOGS_SECTION_TITLE] by default.
      * @param networkLogsSectionTitle - The title of the Network logs section. [DEFAULT_NETWORK_LOGS_SECTION_TITLE] by default.
      * @param logsSectionTitle - The title of the Logs section. Multiple such sections can be added filtered by tags (the parameter of the lambda function). [DEFAULT_LOGS_SECTION_TITLE] by default, suffixed with the tag name if it is not null.
      * @param lifecycleLogsSectionTitle - The title of the Lifecycle logs section. [DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE] by default.
@@ -175,6 +177,7 @@ data class Appearance(
         val title: Text = DEFAULT_TITLE.toText(),
         val sendButtonHint: Text = DEFAULT_SEND_BUTTON_HINT.toText(),
         val gallerySectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_GALLERY_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
+        val crashLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_CRASH_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
         val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
         val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> "${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)".toText() },
         val lifecycleLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
@@ -187,6 +190,7 @@ data class Appearance(
             private const val DEFAULT_TITLE = "Report a bug"
             private const val DEFAULT_SEND_BUTTON_HINT = "Send bug report"
             private const val DEFAULT_GALLERY_SECTION_TITLE = "Attach media items from the Gallery"
+            private const val DEFAULT_CRASH_LOGS_SECTION_TITLE = "Attach crash logs"
             private const val DEFAULT_NETWORK_LOGS_SECTION_TITLE = "Attach network logs"
             private const val DEFAULT_LOGS_SECTION_TITLE = "Attach logs"
             private const val DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE = "Attach lifecycle logs"

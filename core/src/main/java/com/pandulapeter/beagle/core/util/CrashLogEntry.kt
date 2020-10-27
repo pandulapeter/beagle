@@ -19,7 +19,9 @@ internal data class CrashLogEntry(
 
     override val title = exception.toText()
 
-    fun getFormattedContents(timestampFormatter: (Long) -> CharSequence): CharSequence = "[${timestampFormatter(timestamp)}] $exception".let { text ->
+    fun getFormattedTitle(formatter: (Long) -> CharSequence): String = "[${formatter(timestamp)}] $exception"
+
+    fun getFormattedContents(formatter: (Long) -> CharSequence): CharSequence = getFormattedTitle(formatter).let { text ->
         SpannableString(stacktrace.let { "$text\n\n$it" }).apply {
             setSpan(StyleSpan(Typeface.BOLD), 0, text.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
         }

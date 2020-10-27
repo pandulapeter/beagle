@@ -19,6 +19,7 @@ import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
+import com.pandulapeter.beagle.core.view.bugReport.list.CrashLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.GalleryViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.HeaderViewHolder
@@ -50,6 +51,7 @@ internal class BugReportViewModel(
     private val lifecycleSectionEventTypes = BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes
     private val shouldShowMetadataSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowMetadataSection
 
+    private val getCrashLogFileName get() = BeagleCore.implementation.behavior.bugReportingBehavior.getCrashLogFileName
     private val getNetworkLogFileName get() = BeagleCore.implementation.behavior.networkLogBehavior.getFileName
     private val getLogFileName get() = BeagleCore.implementation.behavior.logBehavior.getFileName
     private val getLifecycleLogFileName get() = BeagleCore.implementation.behavior.lifecycleLogBehavior.getFileName
@@ -63,6 +65,12 @@ internal class BugReportViewModel(
 
     private var mediaFiles = emptyList<File>()
     private var selectedMediaFileIds = emptyList<String>()
+
+    private val allCrashLogEntries = BeagleCore.implementation.getCrashLogEntries()
+    private var lastCrashLogIndex = pageSize - 1
+    private var selectedCrashLogIds = emptyList<String>()
+    private fun getCrashLogEntries() = allCrashLogEntries.take(lastCrashLogIndex)
+    private fun areThereMoreCrashLogEntries() = allCrashLogEntries.size > getCrashLogEntries().size
 
     private val allNetworkLogEntries = BeagleCore.implementation.getNetworkLogEntries()
     private var lastNetworkLogIndex = pageSize - 1
@@ -114,6 +122,8 @@ internal class BugReportViewModel(
 
     fun onMediaFileLongTapped(fileName: String) = onMediaFileSelectionChanged(fileName)
 
+    fun onCrashLogLongTapped(id: String) = onCrashLogSelectionChanged(id)
+
     fun onNetworkLogLongTapped(id: String) = onNetworkLogSelectionChanged(id)
 
     fun onLogLongTapped(id: String, label: String?) = onLogSelectionChanged(id, label)
@@ -123,7 +133,7 @@ internal class BugReportViewModel(
     fun onShowMoreTapped(type: ShowMoreViewHolder.Type) {
         viewModelScope.launch(listManagerContext) {
             when (type) {
-                ShowMoreViewHolder.Type.CrashLog -> Unit // TODO
+                ShowMoreViewHolder.Type.CrashLog -> lastCrashLogIndex += pageSize
                 ShowMoreViewHolder.Type.NetworkLog -> lastNetworkLogIndex += pageSize
                 is ShowMoreViewHolder.Type.Log -> lastLogIndex[type.label] = (lastLogIndex[type.label] ?: 0) + pageSize
                 ShowMoreViewHolder.Type.LifecycleLog -> lastLifecycleLogIndex += pageSize
@@ -160,7 +170,19 @@ internal class BugReportViewModel(
                         .toPaths(context.getScreenCapturesFolder())
                 )
 
-                // TODO: Crash logs
+                // Crash logs
+                filePaths.addAll(
+                    selectedCrashLogIds
+                        .mapNotNull { id ->
+                            allCrashLogEntries.firstOrNull { it.id == id }?.let { entry ->
+                                context.createLogFile(
+                                    fileName = "${getCrashLogFileName(currentTimestamp, entry.id)}.txt",
+                                    content = entry.getFormattedContents(BeagleCore.implementation.appearance.logTimestampFormatter).toString()
+                                )
+                            }
+                        }
+                        .toPaths(context.getLogsFolder())
+                )
 
                 // Network log files
                 filePaths.addAll(
@@ -285,6 +307,17 @@ internal class BugReportViewModel(
         }
     }
 
+    private fun onCrashLogSelectionChanged(id: String) {
+        viewModelScope.launch(listManagerContext) {
+            selectedCrashLogIds = if (selectedCrashLogIds.contains(id)) {
+                selectedCrashLogIds.filterNot { it == id }
+            } else {
+                (selectedCrashLogIds + id)
+            }.distinct()
+            refreshContent()
+        }
+    }
+
     private fun onNetworkLogSelectionChanged(id: String) {
         viewModelScope.launch(listManagerContext) {
             selectedNetworkLogIds = if (selectedNetworkLogIds.contains(id)) {
@@ -339,8 +372,24 @@ internal class BugReportViewModel(
             }
 
             // Crash logs
-            if (shouldShowCrashLogsSection) {
-                // TODO: Crash logs
+            getCrashLogEntries().let { crashLogEntries ->
+                if (shouldShowCrashLogsSection && crashLogEntries.isNotEmpty()) {
+                    add(
+                        HeaderViewHolder.UiModel(
+                            id = "headerCrashLogs",
+                            text = BeagleCore.implementation.appearance.bugReportTexts.crashLogsSectionTitle(selectedNetworkLogIds.size)
+                        )
+                    )
+                    addAll(crashLogEntries.map { entry ->
+                        CrashLogItemViewHolder.UiModel(
+                            entry = entry,
+                            isSelected = selectedCrashLogIds.contains(entry.id)
+                        )
+                    })
+                    if (areThereMoreCrashLogEntries()) {
+                        add(ShowMoreViewHolder.UiModel(ShowMoreViewHolder.Type.CrashLog))
+                    }
+                }
             }
 
             // Network logs
