@@ -29,7 +29,7 @@ internal data class LifecycleLogEntry(
         timestamp = timestamp
     )
 
-    override val title get() = "${name}: ${eventType.name}".toText()
+    override val title = "${name}: ${eventType.name}".toText()
 
     fun getFormattedTitle(shouldDisplayFullNames: Boolean) = "${(if (shouldDisplayFullNames) name else simpleName)}: ${eventType.formattedName}".let {
         if (hasSavedInstanceState == null) it else "$it, savedInstanceState ${if (hasSavedInstanceState) "!=" else "="} null"

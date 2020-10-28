@@ -16,5 +16,5 @@ internal data class NetworkLogEntry(
     @Json(name = "timestamp") val timestamp: Long
 ) : BeagleListItemContract {
 
-    override val title get() = url.toText()
+    override val title = url.toText()
 }

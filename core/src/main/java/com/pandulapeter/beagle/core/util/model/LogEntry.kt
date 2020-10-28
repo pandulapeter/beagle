@@ -18,7 +18,7 @@ internal data class LogEntry(
     @Json(name = "timestamp") val timestamp: Long
 ) : BeagleListItemContract {
 
-    override val title get() = message.toText()
+    override val title = message.toText()
 
     fun getFormattedContents(timestampFormatter: (Long) -> CharSequence): CharSequence = "[${timestampFormatter(timestamp)}] $message".let { text ->
         SpannableString(payload.let { if (it == null) text else "$text\n\n$it" }).apply {
