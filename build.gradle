@@ -15,11 +15,11 @@ buildscript {
         materialVersion = "1.2.1"
         constraintLayoutVersion = "2.0.3"
         retrofitVersion = "2.9.0"
-        moshiVersion = "1.9.3"
-        okHttpVersion = "4.8.1"
+        moshiVersion = "1.11.0"
+        okHttpVersion = "4.9.0"
         ktorVersion = "1.4.1"
-        coilVersion = "1.0.0-rc3"
-        leakCanaryVersion = "2.2"
+        coilVersion = "1.0.0"
+        leakCanaryVersion = "2.5"
     }
     repositories {
         google()
