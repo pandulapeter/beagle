@@ -14,7 +14,6 @@ class ModuleRepository {
         ModuleWrapper.HeaderWrapper,
         ModuleWrapper.AppInfoButtonWrapper,
         ModuleWrapper.DeveloperOptionsButtonWrapper,
-        ModuleWrapper.ForceCrashButtonWrapper,
         ModuleWrapper.PaddingWrapper(),
         ModuleWrapper.TextSectionHeaderWrapper(),
         ModuleWrapper.KeylineOverlaySwitchWrapper,
@@ -28,7 +27,8 @@ class ModuleRepository {
         ModuleWrapper.DividerWrapper(),
         ModuleWrapper.TextSectionHeaderWrapper(),
         ModuleWrapper.DeviceInfoWrapper,
-        ModuleWrapper.BugReportButtonWrapper
+        ModuleWrapper.BugReportButtonWrapper,
+        ModuleWrapper.ForceCrashButtonWrapper
     )
     val modules: List<ModuleWrapper> get() = _modules
 
