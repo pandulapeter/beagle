@@ -7,10 +7,13 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/beagle_compound_button_height_fix"
     android:layout_marginBottom="@dimen/beagle_compound_button_height_fix"
+    android:minHeight="@dimen/beagle_item_minimum_height"
     android:paddingStart="@dimen/beagle_item_horizontal_margin"
     android:paddingLeft="@dimen/beagle_item_horizontal_margin"
+    android:paddingTop="@dimen/beagle_item_vertical_margin"
     android:paddingEnd="@dimen/beagle_content_padding"
     android:paddingRight="@dimen/beagle_content_padding"
+    android:paddingBottom="@dimen/beagle_item_vertical_margin"
     android:textColor="?android:attr/textColorPrimary"
     app:switchPadding="@dimen/beagle_content_padding"
     tools:text="Text" />

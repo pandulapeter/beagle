@@ -7,6 +7,7 @@
     android:background="?attr/selectableItemBackground"
     android:drawablePadding="@dimen/beagle_medium_content_padding"
     android:gravity="center_vertical"
+    android:minHeight="@dimen/beagle_item_minimum_height"
     android:paddingStart="@dimen/beagle_item_horizontal_margin"
     android:paddingLeft="@dimen/beagle_item_horizontal_margin"
     android:paddingTop="@dimen/beagle_item_vertical_margin"

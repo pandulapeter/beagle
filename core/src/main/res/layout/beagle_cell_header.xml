@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="@dimen/beagle_item_minimum_height"
     android:orientation="vertical"
     android:paddingStart="@dimen/beagle_item_horizontal_margin"
     android:paddingLeft="@dimen/beagle_item_horizontal_margin"
