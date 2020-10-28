@@ -14,7 +14,6 @@ class ModuleRepository {
         ModuleWrapper.HeaderWrapper,
         ModuleWrapper.AppInfoButtonWrapper,
         ModuleWrapper.DeveloperOptionsButtonWrapper,
-        ModuleWrapper.PaddingWrapper(),
         ModuleWrapper.TextSectionHeaderWrapper(),
         ModuleWrapper.KeylineOverlaySwitchWrapper,
         ModuleWrapper.AnimationDurationSwitchWrapper,
