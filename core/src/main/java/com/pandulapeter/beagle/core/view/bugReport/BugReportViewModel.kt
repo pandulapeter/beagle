@@ -47,7 +47,7 @@ internal class BugReportViewModel(
     textInputDescriptions: List<Text>
 ) : AndroidViewModel(application) {
 
-    private val pageSize = BeagleCore.implementation.behavior.bugReportingBehavior.pageSize
+    private val pageSize = BeagleCore.implementation.behavior.bugReportingBehavior.pageSize + 1
     private val shouldShowGallerySection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowGallerySection
     private val shouldShowCrashLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowCrashLogsSection
     private val shouldShowNetworkLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowNetworkLogsSection

@@ -35,7 +35,7 @@ class BeagleDemoApplication : Application() {
                     networkLoggers = listOf(BeagleOkHttpLogger, BeagleKtorLogger)
                 ),
                 bugReportingBehavior = Behavior.BugReportingBehavior(
-                    logRestoreLimit = 6,
+                    logRestoreLimit = 5,
                     buildInformation = {
                         listOf(
                             "Version name".toText() to BuildConfig.VERSION_NAME,
