@@ -15,7 +15,7 @@ This demo application also contains instructions on how to set up Beagle and how
 The tutorials in the app cover everything from this readme, but in more detail.
 
 ## Use it in your project
-If the wall of text below is too long for your taste, check out [this gist](https://gist.github.com/pandulapeter/3f9b404d953c6d80ed8a19eb06db4541) that contains all the code you need for a nice configuration.
+If the wall of text below is too long for your taste, check out [this gist](https://gist.github.com/pandulapeter/3f9b404d953c6d80ed8a19eb06db4541) that contains all the code you need for a nice configuration. Otherwise, let's do it step by step:
 
 ### Step 0: Check the requirements
 - Minimum SDK level: 16+
