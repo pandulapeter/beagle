@@ -5,7 +5,7 @@
     <dimen name="beagle_medium_content_padding">12dp</dimen>
     <dimen name="beagle_large_content_padding">16dp</dimen>
     <dimen name="beagle_minimum_size">256dp</dimen>
-    <dimen name="beagle_compound_button_height_fix">-4dp</dimen>
+    <dimen name="beagle_compound_button_height_fix">-6dp</dimen>
     <dimen name="beagle_item_horizontal_margin">@dimen/beagle_large_content_padding</dimen>
     <dimen name="beagle_item_horizontal_margin_large">20dp</dimen>
     <dimen name="beagle_item_vertical_margin_small">6dp</dimen>

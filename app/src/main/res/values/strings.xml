@@ -96,7 +96,7 @@
     <string name="case_study_static_data_long_text_1"><b>LongText</b></string>
     <string name="case_study_static_data_long_text_2">Similar to TextModule, but the main content (<i>text</i> parameter) can be collapsed into a header (<i>title</i> parameter), and no special formatting types are available in this case. The <i>isExpandedInitially</i> parameter can be used to specify whether or not the content should be expanded the first time the user opens the debug menu.</string>
     <string name="case_study_static_data_padding_1"><b>Padding</b></string>
-    <string name="case_study_static_data_padding_2">Adds 8dp of empty space to the debug menu. Feel free to add more than one instances if more space is needed.</string>
+    <string name="case_study_static_data_padding_2">Adds a configurable size of empty space to the debug menu (8dp by default). The maximum value supported by the <i>size</i> parameter is 16dp, but feel free to add multiple instances if more space is needed.</string>
     <string name="case_study_static_data_divider_1"><b>Divider</b></string>
     <string name="case_study_static_data_divider_2">A 1dp tall, horizontal line that uses the default text color of the theme.</string>
     <string name="case_study_static_data_key_value_list_1"><b>KeyValueList</b></string>
