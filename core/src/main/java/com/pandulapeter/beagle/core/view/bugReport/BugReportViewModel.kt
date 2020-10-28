@@ -19,7 +19,7 @@ import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.model.CrashLogEntry
-import com.pandulapeter.beagle.core.util.restoreModelAdapter
+import com.pandulapeter.beagle.core.util.model.RestoreModel
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
 import com.pandulapeter.beagle.core.view.bugReport.list.CrashLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
@@ -39,7 +39,8 @@ import java.util.concurrent.Executors
 
 internal class BugReportViewModel(
     application: Application,
-    restoreModel: String,
+    restoreModel: RestoreModel?,
+    crashLogEntryToShow: CrashLogEntry?,
     val buildInformation: CharSequence,
     val deviceInformation: CharSequence,
     private val textInputTitles: List<Text>,
@@ -112,16 +113,17 @@ internal class BugReportViewModel(
     val zipFileUriToShare = MutableLiveData<Uri?>()
 
     init {
+        if (crashLogEntryToShow != null) {
+            BeagleCore.implementation.logCrash(crashLogEntryToShow)
+        }
         refresh(restoreModel)
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    fun refresh(restoreModel: String = "") {
+    fun refresh(restoreModel: RestoreModel? = null) {
         _shouldShowLoadingIndicator.postValue(true)
         viewModelScope.launch(listManagerContext) {
-            if (restoreModel.isNotBlank()) {
-                restoreModelAdapter.fromJson(restoreModel)?.let(BeagleCore.implementation::restoreAfterCrash)
-            }
+            restoreModel?.let(BeagleCore.implementation::restoreAfterCrash)
             mediaFiles = context.getScreenCapturesFolder().listFiles().orEmpty().toList().sortedByDescending { it.lastModified() }
             selectedMediaFileIds = selectedMediaFileIds.filter { id -> mediaFiles.any { it.name == id } }
             if (allCrashLogEntries == null) {

@@ -23,7 +23,7 @@
 
         <service
             android:name=".util.ExceptionHandlerService"
-            android:process=":beagle_exception_handler_process" />
+            android:process=":beagle_exception_handler" />
 
         <provider
             android:name=".BeagleFileProvider"

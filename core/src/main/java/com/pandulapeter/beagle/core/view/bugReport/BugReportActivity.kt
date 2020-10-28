@@ -26,6 +26,7 @@ import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
+import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
 import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.text
@@ -34,6 +35,7 @@ import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import com.pandulapeter.beagle.core.util.model.LifecycleLogEntry
 import com.pandulapeter.beagle.core.util.model.LogEntry
 import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.restoreModelAdapter
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.utils.consume
@@ -41,8 +43,28 @@ import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
+import com.squareup.moshi.JsonDataException
 
 internal class BugReportActivity : AppCompatActivity() {
+
+    private val crashLogEntryToShow by lazy {
+        intent.getStringExtra(CRASH_LOG_ENTRY_TO_SHOW).let { inputString ->
+            if (inputString.isNullOrBlank()) null else try {
+                crashLogEntryAdapter.fromJson(inputString)
+            } catch (_: JsonDataException) {
+                null
+            }
+        }
+    }
+    private val restoreModel by lazy {
+        intent.getStringExtra(RESTORE_MODEL).let { inputString ->
+            if (inputString.isNullOrBlank()) null else try {
+                restoreModelAdapter.fromJson(inputString)
+            } catch (_: JsonDataException) {
+                null
+            }
+        }
+    }
 
     @Suppress("UNCHECKED_CAST")
     private val viewModel by lazy {
@@ -50,7 +72,8 @@ internal class BugReportActivity : AppCompatActivity() {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T = BeagleCore.implementation.behavior.bugReportingBehavior.run {
                 BugReportViewModel(
                     application = application,
-                    restoreModel = intent.getStringExtra(RESTORE_MODEL).orEmpty(),
+                    restoreModel = restoreModel,
+                    crashLogEntryToShow = crashLogEntryToShow,
                     buildInformation = buildInformation(application).generateBuildInformation(),
                     deviceInformation = generateDeviceInformation(),
                     textInputTitles = textInputFields.map { it.first },
@@ -123,11 +146,12 @@ internal class BugReportActivity : AppCompatActivity() {
                 if (shouldShowLoadingIndicator) {
                     currentFocus?.hideKeyboard()
                 } else {
-                    val crashLogIdToShow = intent.getStringExtra(CRASH_LOG_ID_TO_SHOW).orEmpty()
-                    if (crashLogIdToShow.isNotBlank()) {
-                        intent.putExtra(CRASH_LOG_ID_TO_SHOW, "")
-                        viewModel.onCrashLogLongTapped(crashLogIdToShow)
-                        viewModel.allCrashLogEntries?.firstOrNull { it.id == crashLogIdToShow }?.let(::showCrashLogDetailDialog)
+                    crashLogEntryToShow?.let { crashLogEntryToShow ->
+                        if (!intent.getStringExtra(CRASH_LOG_ENTRY_TO_SHOW).isNullOrBlank()) {
+                            intent.removeExtra(CRASH_LOG_ENTRY_TO_SHOW)
+                            viewModel.onCrashLogLongTapped(crashLogEntryToShow.id)
+                            viewModel.allCrashLogEntries?.firstOrNull { it.id == crashLogEntryToShow.id }?.let(::showCrashLogDetailDialog)
+                        }
                     }
                 }
             }
@@ -245,15 +269,15 @@ internal class BugReportActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val CRASH_LOG_ID_TO_SHOW = "crashLogIdToShow"
+        private const val CRASH_LOG_ENTRY_TO_SHOW = "crashLogEntry"
         private const val RESTORE_MODEL = "restoreModel"
 
         fun newIntent(
             context: Context,
-            crashLogIdToShow: String = "",
-            restoreModel: String = ""
+            crashLogEntryToShowJson: String = "",
+            restoreModelJson: String = ""
         ) = Intent(context, BugReportActivity::class.java)
-            .putExtra(CRASH_LOG_ID_TO_SHOW, crashLogIdToShow)
-            .putExtra(RESTORE_MODEL, restoreModel)
+            .putExtra(CRASH_LOG_ENTRY_TO_SHOW, crashLogEntryToShowJson)
+            .putExtra(RESTORE_MODEL, restoreModelJson)
     }
 }

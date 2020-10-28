@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.modules
 
+import androidx.annotation.Keep
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleContract
@@ -51,6 +52,7 @@ data class LifecycleLogListModule(
     /**
      * Contains all event types for Fragments and Activities that can be tracked.
      */
+    @Keep
     enum class EventType(val formattedName: String) {
         ON_CREATE("onCreate()"),
         ON_START("onStart()"),

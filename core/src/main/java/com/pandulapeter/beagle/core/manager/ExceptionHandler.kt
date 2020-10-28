@@ -35,8 +35,6 @@ internal class ExceptionHandler private constructor(
                     lifecycleLogs = BeagleCore.implementation.getLifecycleLogEntries(BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes).take(limit)
                 )
             )
-        } catch (_: Exception) {
-        } finally {
             defaultExceptionHandler.let { defaultExceptionHandler ->
                 if (currentTimestamp - lastCrashTimestamp > CRASH_LOOP_LIMIT
                     && defaultExceptionHandler != null
@@ -45,9 +43,11 @@ internal class ExceptionHandler private constructor(
                     lastCrashTimestamp = currentTimestamp
                     defaultExceptionHandler.uncaughtException(thread, excepton)
                 }
-                Process.killProcess(Process.myPid())
-                exitProcess(10)
             }
+        } catch (_: Exception) {
+        } finally {
+            Process.killProcess(Process.myPid())
+            exitProcess(10)
         }
     }
 
@@ -75,7 +75,9 @@ internal class ExceptionHandler private constructor(
                                     defaultExceptionHandler = it
                                 }
                             }
-                            Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(Messenger(service)))
+                            if (service != null) {
+                                Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler(Messenger(service)))
+                            }
                         }
 
                         override fun onServiceDisconnected(name: ComponentName?) = Unit
