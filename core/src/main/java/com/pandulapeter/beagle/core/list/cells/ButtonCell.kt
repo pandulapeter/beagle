@@ -30,7 +30,7 @@ internal data class ButtonCell(
 
         private val button = itemView.findViewById<Button>(R.id.beagle_button)
         private val normalHorizontalPadding = itemView.context.dimension(R.dimen.beagle_item_horizontal_margin)
-        private val iconHorizontalPadding = itemView.context.dimension(R.dimen.beagle_content_padding_small)
+        private val iconHorizontalPadding = itemView.context.dimension(R.dimen.beagle_small_content_padding)
         private val drawablePadding = itemView.context.dimension(R.dimen.beagle_medium_content_padding)
 
         override fun bind(model: ButtonCell) = button.run {

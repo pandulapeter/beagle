@@ -32,8 +32,8 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="4"
-        android:paddingTop="@dimen/beagle_content_padding_small"
-        android:paddingBottom="@dimen/beagle_content_padding_small"
+        android:paddingTop="@dimen/beagle_small_content_padding"
+        android:paddingBottom="@dimen/beagle_small_content_padding"
         android:textColor="?android:attr/textColorPrimary"
         tools:text="Text" />
 

@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.common.contracts.module.ExpandableModule
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.list.cells.ExpandableHeaderCell
 import com.pandulapeter.beagle.core.list.cells.PaddingCell
+import com.pandulapeter.beagle.modules.PaddingModule
 
 internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.Delegate<M> {
 
@@ -19,9 +20,9 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
     override fun createCells(module: M): List<Cell<*>> = mutableListOf<Cell<*>>().apply {
         addHeader(module)
         if (module.isExpanded) {
-            add(PaddingCell(id = "headerPadding_${module.id}"))
+            add(PaddingCell(id = "headerPadding_${module.id}", size = PaddingModule.Size.SMALL))
             addItems(module)
-            addFooter(module)
+            add(PaddingCell(id = "footerPadding_${module.id}", size = PaddingModule.Size.SMALL))
         }
     }
 
@@ -37,8 +38,6 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
             }
         )
     )
-
-    fun MutableList<Cell<*>>.addFooter(module: M) = add(PaddingCell(id = "footerPadding_${module.id}"))
 
     fun canExpand(module: M): Boolean
 

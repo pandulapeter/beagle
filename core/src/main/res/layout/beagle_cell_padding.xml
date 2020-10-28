@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Space xmlns:android="http://schemas.android.com/apk/res/android"
+<View xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/beagle_item_vertical_margin" />
+    android:layout_height="0dp" />
