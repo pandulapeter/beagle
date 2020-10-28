@@ -19,6 +19,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
     override fun createCells(module: M): List<Cell<*>> = mutableListOf<Cell<*>>().apply {
         addHeader(module)
         if (module.isExpanded) {
+            add(PaddingCell(id = "headerPadding_${module.id}"))
             addItems(module)
             addFooter(module)
         }
@@ -37,7 +38,7 @@ internal interface ExpandableModuleDelegate<M : ExpandableModule<M>> : Module.De
         )
     )
 
-    fun MutableList<Cell<*>>.addFooter(module: M) = add(PaddingCell(id = "footer_${module.id}"))
+    fun MutableList<Cell<*>>.addFooter(module: M) = add(PaddingCell(id = "footerPadding_${module.id}"))
 
     fun canExpand(module: M): Boolean
 
