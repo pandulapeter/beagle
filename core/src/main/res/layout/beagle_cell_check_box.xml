@@ -10,6 +10,7 @@
     android:layout_marginEnd="0dp"
     android:layout_marginRight="0dp"
     android:layout_marginBottom="@dimen/beagle_compound_button_height_fix"
+    android:gravity="center_vertical"
     android:minHeight="@dimen/beagle_item_minimum_height"
     android:paddingStart="@dimen/beagle_content_padding"
     android:paddingLeft="@dimen/beagle_content_padding"
