@@ -47,7 +47,7 @@ internal class BugReportViewModel(
     textInputDescriptions: List<Text>
 ) : AndroidViewModel(application) {
 
-    private val pageSize = BeagleCore.implementation.behavior.bugReportingBehavior.pageSize + 1
+    private val pageSize = BeagleCore.implementation.behavior.bugReportingBehavior.pageSize
     private val shouldShowGallerySection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowGallerySection
     private val shouldShowCrashLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowCrashLogsSection
     private val shouldShowNetworkLogsSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowNetworkLogsSection
@@ -72,25 +72,25 @@ internal class BugReportViewModel(
 
     var allCrashLogEntries: List<CrashLogEntry>? = null
         private set
-    private var lastCrashLogIndex = pageSize - 1
+    private var lastCrashLogIndex = pageSize
     private var selectedCrashLogIds = emptyList<String>()
     private fun getCrashLogEntries() = allCrashLogEntries?.take(lastCrashLogIndex).orEmpty()
     private fun areThereMoreCrashLogEntries() = (allCrashLogEntries?.size ?: 0) > getCrashLogEntries().size
 
     val allNetworkLogEntries by lazy { BeagleCore.implementation.getNetworkLogEntries() }
-    private var lastNetworkLogIndex = pageSize - 1
+    private var lastNetworkLogIndex = pageSize
     private var selectedNetworkLogIds = emptyList<String>()
     private fun getNetworkLogEntries() = allNetworkLogEntries.take(lastNetworkLogIndex)
     private fun areThereMoreNetworkLogEntries() = allNetworkLogEntries.size > getNetworkLogEntries().size
 
     val allLogEntries by lazy { logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap() }
-    private val lastLogIndex = logLabelSectionsToShow.map { label -> label to pageSize - 1 }.toMap().toMutableMap()
+    private val lastLogIndex = logLabelSectionsToShow.map { label -> label to pageSize }.toMap().toMutableMap()
     private val selectedLogIds = logLabelSectionsToShow.map { label -> label to emptyList<String>() }.toMap().toMutableMap()
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
 
     val allLifecycleLogEntries by lazy { BeagleCore.implementation.getLifecycleLogEntries(lifecycleSectionEventTypes) }
-    private var lastLifecycleLogIndex = pageSize - 1
+    private var lastLifecycleLogIndex = pageSize
     private var selectedLifecycleLogIds = emptyList<String>()
     private fun getLifecycleLogEntries() = allLifecycleLogEntries.take(lastLifecycleLogIndex)
     private fun areThereMoreLifecycleEntries() = allLifecycleLogEntries.size > getLifecycleLogEntries().size
