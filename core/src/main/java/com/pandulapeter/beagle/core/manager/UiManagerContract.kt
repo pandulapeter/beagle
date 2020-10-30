@@ -16,7 +16,7 @@ interface UiManagerContract {
         val overlayFragment = findOverlayFragment(activity) ?: OverlayFragment.newInstance()
         activity.supportFragmentManager
             .beginTransaction()
-            .apply {
+            .run {
                 if (overlayFragment.isAdded) {
                     show(overlayFragment)
                 } else {
