@@ -83,7 +83,7 @@ internal class BugReportViewModel(
     private fun getNetworkLogEntries() = allNetworkLogEntries.take(lastNetworkLogIndex)
     private fun areThereMoreNetworkLogEntries() = allNetworkLogEntries.size > getNetworkLogEntries().size
 
-    val allLogEntries by lazy { logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap() }
+    private val allLogEntries by lazy { logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap() }
     private val lastLogIndex = logLabelSectionsToShow.map { label -> label to pageSize }.toMap().toMutableMap()
     private val selectedLogIds = logLabelSectionsToShow.map { label -> label to emptyList<String>() }.toMap().toMutableMap()
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
