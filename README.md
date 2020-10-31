@@ -49,7 +49,7 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.3.4"
+    def beagleVersion = "2.3.5"
     debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
