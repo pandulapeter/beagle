@@ -13,18 +13,14 @@ import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
 interface UiManagerContract {
 
     fun addOverlayFragment(activity: FragmentActivity) {
-        val overlayFragment = findOverlayFragment(activity) ?: OverlayFragment.newInstance()
         activity.supportFragmentManager
             .beginTransaction()
             .run {
-                if (overlayFragment.isAdded) {
-                    show(overlayFragment)
-                } else {
-                    add(android.R.id.content, overlayFragment, OverlayFragment.TAG)
-                }
+                findOverlayFragment(activity)?.let(::remove)
+                add(android.R.id.content, OverlayFragment.newInstance(), OverlayFragment.TAG)
             }
             .setReorderingAllowed(true)
-            .commit()
+            .commitAllowingStateLoss()
     }
 
     fun createOverlayLayout(activity: FragmentActivity): View = OverlayFrameLayout(activity)
