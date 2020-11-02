@@ -34,6 +34,7 @@ class AboutViewModel(context: Context) : ListViewModel<AboutListItem>(), Purchas
         mutableListOf<AboutListItem>().apply {
             add(TextViewHolder.UiModel(R.string.about_description))
             add(ClickableItemViewHolder.UiModel(R.string.about_github, R.drawable.ic_github))
+            add(ClickableItemViewHolder.UiModel(R.string.about_article, R.drawable.ic_article))
             add(ClickableItemViewHolder.UiModel(R.string.about_google_play, R.drawable.ic_google_play))
             add(ClickableItemViewHolder.UiModel(R.string.about_share, R.drawable.ic_share))
             add(ClickableItemViewHolder.UiModel(R.string.about_contact, R.drawable.ic_contact))

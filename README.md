@@ -12,7 +12,7 @@ This demo application also contains instructions on how to set up Beagle and how
 
 [<img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" />](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle)
 
-The tutorials in the app cover everything from this readme, but in more detail.
+The tutorials in the app cover everything from this readme, but in more detail. Another way to get an idea of what can be achieved with the library is [this article](https://halcyonmobile.com/blog/mobile-app-development/android-app-development/what-could-a-debug-menu-contain/), which presents various problems that can be solved with Beagle.
 
 ## Use it in your project
 If the wall of text below is too long for your taste, check out [this gist](https://gist.github.com/pandulapeter/3f9b404d953c6d80ed8a19eb06db4541) that contains all the code you need for a nice configuration. Otherwise, let's do it step by step:

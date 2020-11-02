@@ -39,6 +39,7 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
     override fun createAdapter() = AboutAdapter(viewModel.viewModelScope) { uiModel ->
         when (uiModel.textResourceId) {
             R.string.about_github -> openGitHubRepository()
+            R.string.about_article -> openArticle()
             R.string.about_google_play -> openPlayStoreListing()
             R.string.about_share -> openShareSheet()
             R.string.about_contact -> openEmailComposer()
@@ -57,6 +58,8 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
     )
 
     private fun openGitHubRepository() = binding.recyclerView.openUrl(GITHUB_URL)
+
+    private fun openArticle() = binding.recyclerView.openUrl(ARTICLE_URL)
 
     private fun openPlayStoreListing() {
         try {
@@ -98,6 +101,7 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
     companion object {
         const val PACKAGE_NAME = "com.pandulapeter.beagle"
         private const val EMAIL_ADDRESS = "pandulapeter@gmail.com"
+        const val ARTICLE_URL = "https://halcyonmobile.com/blog/mobile-app-development/android-app-development/what-could-a-debug-menu-contain/"
         const val GITHUB_URL = "https://github.com/pandulapeter/beagle"
 
         fun newInstance() = AboutFragment()

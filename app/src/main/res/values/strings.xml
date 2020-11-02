@@ -371,6 +371,7 @@
     <string name="about_description">Beagle is developed by me, Pandula Péter. Thanks for taking the time to check it out - I hope you\'ll find it useful in your projects. If you have any issues, questions or ideas, don\'t hesitate to contact me!\n</string>
     <string name="about_version_text">This build depends on version %s of the Beagle library.</string>
     <string name="about_github"><b>GitHub repository</b>\nCheck out the source code</string>
+    <string name="about_article"><b>Feature list article</b>\nSee what can be solved with Beagle</string>
     <string name="about_google_play"><b>Play Store listing</b>\nRate the app on Google Play</string>
     <string name="about_share"><b>Share</b>\nSpread the word about Beagle</string>
     <string name="about_share_text">Check out Beagle, a free and open-source Android library that adds a highly customizable debug menu to the internal builds of your apps: %s</string>
