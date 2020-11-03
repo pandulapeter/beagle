@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.util.model
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.commonBase.currentTimestamp
+import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -29,6 +30,7 @@ internal data class LifecycleLogEntry(
         timestamp = timestamp
     )
 
+    override val id = randomId
     override val title = "${name}: ${eventType.name}".toText()
 
     fun getFormattedTitle(shouldDisplayFullNames: Boolean) = "${(if (shouldDisplayFullNames) name else simpleName)}: ${eventType.formattedName}".let {
