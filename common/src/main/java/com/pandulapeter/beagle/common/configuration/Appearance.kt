@@ -42,6 +42,7 @@ import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.C
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TIMESTAMP
 import com.pandulapeter.beagle.common.configuration.Appearance.NetworkLogTexts.Companion.DEFAULT_TOGGLE_EXPAND_COLLAPSE
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts
+import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_ERROR_TOAST
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE
 import com.pandulapeter.beagle.common.configuration.Appearance.ScreenCaptureTexts.Companion.DEFAULT_NOTIFICATION_CHANNEL_NAME
@@ -111,6 +112,7 @@ data class Appearance(
      * @param readyNotificationTitle - The title for the notification displayed after a screen capture is done, [DEFAULT_READY_NOTIFICATION_TITLE] by default.
      * @param readyNotificationContent - The content for the notification described for the [readyNotificationTitle] parameter. [DEFAULT_READY_NOTIFICATION_CONTENT] by default.
      * @param notificationChannelName - The name for the notification channel that handles all notifications related to screen capture. [DEFAULT_NOTIFICATION_CHANNEL_NAME] by default.
+     * @param errorToast - Error message displayed in a Toast in case something goes wrong, or null if no Toast should be displayed. [DEFAULT_ERROR_TOAST] by default.
      */
     data class ScreenCaptureTexts(
         val toastText: Text? = DEFAULT_TOAST_TEXT.toText(),
@@ -118,7 +120,8 @@ data class Appearance(
         val inProgressNotificationContent: Text = DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT.toText(),
         val readyNotificationTitle: Text = DEFAULT_READY_NOTIFICATION_TITLE.toText(),
         val readyNotificationContent: Text = DEFAULT_READY_NOTIFICATION_CONTENT.toText(),
-        val notificationChannelName: Text = DEFAULT_NOTIFICATION_CHANNEL_NAME.toText()
+        val notificationChannelName: Text = DEFAULT_NOTIFICATION_CHANNEL_NAME.toText(),
+        val errorToast: Text? = DEFAULT_ERROR_TOAST.toText()
     ) {
         companion object {
             private const val DEFAULT_TOAST_TEXT = "Recording in progress. Tap on the notification to stop it."
@@ -127,6 +130,7 @@ data class Appearance(
             private const val DEFAULT_READY_NOTIFICATION_TITLE = "Screen captured"
             private const val DEFAULT_READY_NOTIFICATION_CONTENT = "Tap on this notification to open the Gallery."
             private const val DEFAULT_NOTIFICATION_CHANNEL_NAME = "Screen capture notifications"
+            private const val DEFAULT_ERROR_TOAST = "Something went wrong"
         }
     }
 

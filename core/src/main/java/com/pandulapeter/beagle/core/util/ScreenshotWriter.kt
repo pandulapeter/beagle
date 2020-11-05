@@ -30,13 +30,17 @@ internal class ScreenshotWriter(
         imageReader.setOnImageAvailableListener(this, handler)
     }
 
-    fun forceTry() = imageReader.acquireLatestImage().let {
-        if (it == null) {
-            false
-        } else {
-            handleImage(it)
-            true
+    fun forceTry() = try {
+        imageReader.acquireLatestImage().let {
+            if (it == null) {
+                false
+            } else {
+                handleImage(it)
+                true
+            }
         }
+    } catch (_: RuntimeException) {
+        false
     }
 
     override fun onImageAvailable(reader: ImageReader) {

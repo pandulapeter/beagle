@@ -211,7 +211,13 @@ internal class ScreenCaptureService : Service() {
     }
 
     private fun onReady(uri: Uri?) {
-        if (uri != null) {
+        if (uri == null) {
+            BeagleCore.implementation.appearance.screenCaptureTexts.errorToast?.let { errorToast ->
+                BeagleCore.implementation.currentActivity?.run {
+                    Toast.makeText(this, text(errorToast), Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
             BeagleCore.implementation.currentActivity.let { currentActivity ->
                 if (currentActivity == null || !currentActivity.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                     showGalleryNotification()
