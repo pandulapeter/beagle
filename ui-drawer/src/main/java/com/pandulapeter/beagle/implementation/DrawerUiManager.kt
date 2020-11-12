@@ -62,7 +62,10 @@ internal class DrawerUiManager : UiManagerContract, DrawerLayout.DrawerListener 
 
     override fun onDrawerStateChanged(newState: Int) = Unit
 
-    override fun onDrawerSlide(drawerView: View, slideOffset: Float) = BeagleCore.implementation.hideKeyboard()
+    override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+        BeagleCore.implementation.hideKeyboard()
+        onBackPressedCallback.isEnabled = slideOffset != 0f
+    }
 
     override fun onDrawerClosed(drawerView: View) {
         onBackPressedCallback.isEnabled = false

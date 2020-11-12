@@ -139,16 +139,6 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
 
     private fun MutableList<SetupListItem>.addTroubleshootingSection() = addSection(Section.TROUBLESHOOTING) {
         add(TextViewHolder.UiModel(R.string.setup_troubleshooting_2))
-        add(
-            CodeSnippetViewHolder.UiModel(
-                "override fun onBackPressed() {\n" +
-                        "    if (!Beagle.hide()) {\n" +
-                        "        super.onBackPressed()\n" +
-                        "    }\n" +
-                        "}"
-            )
-        )
-        add(TextViewHolder.UiModel(R.string.setup_troubleshooting_3))
     }
 
     private fun MutableList<SetupListItem>.addSection(section: Section, action: MutableList<SetupListItem>.() -> Unit) = (selectedSection == section).also { isExpanded ->
