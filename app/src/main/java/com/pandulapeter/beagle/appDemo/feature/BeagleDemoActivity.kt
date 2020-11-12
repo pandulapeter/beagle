@@ -43,7 +43,7 @@ class BeagleDemoActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (binding.debugMenu is FrameLayout && binding.debugMenu.visible) {
             binding.debugMenu.visible = false
-        } else if (currentFragment?.onBackPressed() != true) {
+        } else if (!Beagle.hide() && currentFragment?.onBackPressed() != true) {
             super.onBackPressed()
         }
     }
