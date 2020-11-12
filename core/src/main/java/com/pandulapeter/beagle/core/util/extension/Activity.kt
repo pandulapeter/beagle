@@ -23,6 +23,9 @@ private val excludedPackageNames = listOf(
     "com.pandulapeter.beagle.implementation.DebugMenuActivity",
     "com.pandulapeter.beagle.core.view.gallery.GalleryActivity",
     "com.pandulapeter.beagle.core.view.bugReport.BugReportActivity",
+    "com.google.android.gms.auth.api.signin.internal.SignInHubActivity",
+    "com.gigya.android.sdk.ui.HostActivity",
+    "com.facebook.FacebookActivity",
     "com.markodevcic.peko.PekoActivity"
 )
 
