@@ -25,7 +25,9 @@ class BeagleDemoApplication : Application() {
         }
         Beagle.initialize(
             application = this,
-            appearance = Appearance(themeResourceId = R.style.DebugMenuTheme),
+            appearance = Appearance(
+                themeResourceId = R.style.DebugMenuTheme
+            ),
             behavior = Behavior(
                 logBehavior = Behavior.LogBehavior(
                     loggers = listOf(BeagleLogger)

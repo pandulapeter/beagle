@@ -7,6 +7,8 @@ import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.WindowInsets
+import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.Beagle
@@ -66,14 +68,15 @@ internal class DebugMenuDrawerLayout(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         removeDrawerListener(listener)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            setOnApplyWindowInsetsListener(null)
+        }
     }
 
     private fun setDrawerSize(displayMetrics: DisplayMetrics) {
+        BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         if (displayMetrics.widthPixels == 0) {
-            post {
-                BeagleCore.implementation.currentActivity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-                setDrawerSize(displayMetrics)
-            }
+            post { setDrawerSize(displayMetrics) }
         } else {
             debugMenuView.run {
                 layoutParams = layoutParams.apply {
@@ -82,27 +85,23 @@ internal class DebugMenuDrawerLayout(
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
                 Beagle.currentActivity?.window?.decorView?.run {
-                    setOnApplyWindowInsetsListener { _, insets ->
-                        onApplyWindowInsets(insets).also {
-                            val input = Insets(
-                                left = it.systemWindowInsetLeft,
-                                top = it.systemWindowInsetTop,
-                                right = it.systemWindowInsetRight,
-                                bottom = it.systemWindowInsetBottom
-                            )
-                            val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: Insets(
-                                left = 0,
-                                top = it.systemWindowInsetTop,
-                                right = it.systemWindowInsetRight,
-                                bottom = it.systemWindowInsetBottom
-                            )
-                            debugMenuView.applyInsets(output.left, output.top, output.right, output.bottom)
-                        }
-                    }
+                    setOnApplyWindowInsetsListener { _, insets -> insets.also(::updateInsets) }
                     requestApplyInsets()
                 }
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
+    private fun updateInsets(insets: WindowInsets) {
+        val input = Insets(
+            left = insets.systemWindowInsetLeft,
+            top = insets.systemWindowInsetTop,
+            right = insets.systemWindowInsetRight,
+            bottom = insets.systemWindowInsetBottom
+        )
+        val output = (BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: input)
+        debugMenuView.applyInsets(output.left, output.top, output.right, output.bottom)
     }
 
     companion object {
