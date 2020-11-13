@@ -49,38 +49,36 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
     override fun onResume() {
         super.onResume()
         if (!isLoaded) {
-            context?.let { context ->
-                imageView?.run {
-                    if (fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION)) {
-                        load(context.getScreenCapturesFolder().resolve(fileName)) {
-                            listener { _, _ -> setDialogSizeFromImage(this@run) }
-                        }
-                    } else {
-                        GlobalScope.launch {
-                            BeagleCore.implementation.videoThumbnailLoader.execute(
-                                ImageRequest.Builder(context)
-                                    .data(context.getScreenCapturesFolder().resolve(fileName))
-                                    .target(this@run)
-                                    .listener { _, _ -> setDialogSizeFromImage(this@run) }
-                                    .build()
-                            )
-                        }
+            imageView?.run {
+                if (fileName.endsWith(ScreenCaptureManager.IMAGE_EXTENSION)) {
+                    load(context.getScreenCapturesFolder().resolve(fileName)) {
+                        listener { _, _ -> setDialogSizeFromImage(this@run) }
+                    }
+                } else {
+                    GlobalScope.launch {
+                        BeagleCore.implementation.videoThumbnailLoader.execute(
+                            ImageRequest.Builder(context)
+                                .data(context.getScreenCapturesFolder().resolve(fileName))
+                                .target(this@run)
+                                .listener { _, _ -> setDialogSizeFromImage(this@run) }
+                                .build()
+                        )
                     }
                 }
-                toolbar?.run {
-                    val textColor = context.colorResource(android.R.attr.textColorPrimary)
-                    setNavigationOnClickListener { dismiss() }
-                    navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
-                    shareButton = menu.findItem(R.id.beagle_share).also {
-                        it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
-                        it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
-                    }
-                    deleteButton = menu.findItem(R.id.beagle_delete).also {
-                        it.title = context.text(BeagleCore.implementation.appearance.galleryTexts.deleteHint)
-                        it.icon = context.tintedDrawable(R.drawable.beagle_ic_delete, textColor)
-                    }
-                    setOnMenuItemClickListener(::onMenuItemClicked)
+            }
+            toolbar?.run {
+                val textColor = context.colorResource(android.R.attr.textColorPrimary)
+                setNavigationOnClickListener { dismiss() }
+                navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
+                shareButton = menu.findItem(R.id.beagle_share).also {
+                    it.title = context.text(BeagleCore.implementation.appearance.generalTexts.shareHint)
+                    it.icon = context.tintedDrawable(R.drawable.beagle_ic_share, textColor)
                 }
+                deleteButton = menu.findItem(R.id.beagle_delete).also {
+                    it.title = context.text(BeagleCore.implementation.appearance.galleryTexts.deleteHint)
+                    it.icon = context.tintedDrawable(R.drawable.beagle_ic_delete, textColor)
+                }
+                setOnMenuItemClickListener(::onMenuItemClicked)
             }
         }
     }
