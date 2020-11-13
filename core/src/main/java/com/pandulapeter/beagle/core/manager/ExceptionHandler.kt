@@ -41,7 +41,7 @@ internal class ExceptionHandler private constructor(
     }
 
     companion object {
-        private const val CRASH_LOOP_LIMIT = 1000L
+        private const val CRASH_LOOP_LIMIT = 5000L
         private var isInitialized = false
         private var defaultExceptionHandler: Thread.UncaughtExceptionHandler? = null
         private var lastCrashTimestamp = 0L
