@@ -69,7 +69,7 @@ internal class DebugMenuDrawerLayout(
         super.onDetachedFromWindow()
         removeDrawerListener(listener)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            setOnApplyWindowInsetsListener(null)
+            debugMenuView.setOnApplyWindowInsetsListener(null)
         }
     }
 
@@ -84,7 +84,7 @@ internal class DebugMenuDrawerLayout(
                 }
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                Beagle.currentActivity?.window?.decorView?.run {
+                debugMenuView.run {
                     setOnApplyWindowInsetsListener { _, insets -> insets.also(::updateInsets) }
                     requestApplyInsets()
                 }
