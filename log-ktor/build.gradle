@@ -6,7 +6,6 @@ version = libraryVersion
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "io.ktor:ktor-client-logging-jvm:$ktorVersion"
     api project(":common-base")
 }
