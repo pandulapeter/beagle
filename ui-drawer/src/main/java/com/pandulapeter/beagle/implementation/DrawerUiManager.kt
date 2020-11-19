@@ -9,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.UiManagerContract
+import com.pandulapeter.beagle.core.util.runOnUiThread
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 
 internal class DrawerUiManager : UiManagerContract, DrawerLayout.DrawerListener {
@@ -45,7 +46,7 @@ internal class DrawerUiManager : UiManagerContract, DrawerLayout.DrawerListener 
             BeagleCore.implementation.notifyVisibilityListenersOnShow()
             (drawer.parent as DebugMenuDrawerLayout).let { drawerLayout ->
                 drawerLayout.isDrawerVisible(drawer).let { isDrawerOpen ->
-                    drawerLayout.openDrawer(drawer)
+                    runOnUiThread { drawerLayout.openDrawer(drawer) }
                     !isDrawerOpen
                 }
             }
@@ -56,7 +57,8 @@ internal class DrawerUiManager : UiManagerContract, DrawerLayout.DrawerListener 
         val drawer = getDrawerView(activity)
         val drawerLayout = drawer?.parent as? DebugMenuDrawerLayout?
         return (drawerLayout?.isDrawerOpen(drawer) == true).also {
-            drawerLayout?.closeDrawers()
+            BeagleCore.implementation
+            runOnUiThread { drawerLayout?.closeDrawers() }
         }
     }
 

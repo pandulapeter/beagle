@@ -8,6 +8,7 @@ import com.pandulapeter.beagle.core.list.cells.ButtonCell
 import com.pandulapeter.beagle.core.list.cells.SectionHeaderCell
 import com.pandulapeter.beagle.core.list.cells.TextCell
 import com.pandulapeter.beagle.modules.TextModule
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -29,6 +30,10 @@ internal inline fun performOnHide(crossinline action: () -> Unit) {
         BeagleCore.implementation.removeVisibilityListener(listener)
         listener.onHidden()
     }
+}
+
+inline fun runOnUiThread(crossinline action: () -> Any?) {
+    GlobalScope.launch(Dispatchers.Main) { action() }
 }
 
 internal fun createTextModuleFromType(
