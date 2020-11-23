@@ -6,7 +6,7 @@ buildscript {
         libraryCompileSdkVersion = 30
         libraryTargetSdkVersion = 30
         libraryVersionCode = 1
-        kotlinVersion = "1.4.10"
+        kotlinVersion = "1.4.20"
         coroutinesVersion = "1.4.1"
         annotationsVersion = "1.1.0"
         appCompatVersion = "1.2.0"
