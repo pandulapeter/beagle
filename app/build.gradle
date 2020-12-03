@@ -115,11 +115,11 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:2.1.6"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion") { exclude module: "okhttp" }
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha06" //TODO: Use $recyclerViewVersion once 1.2.0 becomes stable
+    implementation "androidx.recyclerview:recyclerview:1.2.0-beta01" //TODO: Use $recyclerViewVersion once 1.2.0 becomes stable
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "io.ktor:ktor-client-android:$ktorVersion"
     implementation "io.ktor:ktor-client-gson:$ktorVersion"
-    implementation "com.android.billingclient:billing:3.0.1"
+    implementation "com.android.billingclient:billing:3.0.2"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"

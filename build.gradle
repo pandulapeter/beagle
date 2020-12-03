@@ -6,7 +6,6 @@ buildscript {
         libraryCompileSdkVersion = 30
         libraryTargetSdkVersion = 30
         libraryVersionCode = 1
-        kotlinVersion = "1.4.20"
         coroutinesVersion = "1.4.1"
         annotationsVersion = "1.1.0"
         appCompatVersion = "1.2.0"
@@ -28,7 +27,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
         classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.20"
     }
 }
 
