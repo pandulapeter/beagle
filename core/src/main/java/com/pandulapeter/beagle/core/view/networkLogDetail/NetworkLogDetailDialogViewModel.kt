@@ -157,6 +157,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                     add(MetadataDetailsViewHolder.UiModel(metadata.trim()))
                 }
                 var levelToSkip = Int.MAX_VALUE
+                var collapsedItemCount = 0
                 lateinit var lastCollapsedLine: Line
                 val linesToAdd = jsonLines.mapNotNull { line ->
                     if (collapsedLineIndices.contains(line.index)) {
@@ -168,16 +169,21 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                                 levelToSkip = Int.MAX_VALUE
                             }
                             if (line.level == levelToSkip) {
-                                line.copy(content = "${line.content} … ").also {
+                                line.copy(content = line.content).also {
                                     lastCollapsedLine = it
+                                    collapsedItemCount = 0
                                 }
                             } else {
-                                lastCollapsedLine.content += line.content
+                                lastCollapsedLine.content += " ${if (line.content.startsWith("]")) collapsedItemCount else "…"} ${line.content}"
                                 null
                             }
                         }
                         line.level < levelToSkip -> line
-                        else -> null
+                        else -> null.also {
+                            if (line.level == levelToSkip + 1 && line.content.startsWith("{")) {
+                                collapsedItemCount++
+                            }
+                        }
                     }
                 }
                 addAll(linesToAdd.map { line ->
