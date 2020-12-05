@@ -1,3 +1,5 @@
+rootProject.name = "Beagle"
+
 // UI modules
 include ":ui-activity"
 include ":ui-bottom-sheet"
@@ -26,9 +28,7 @@ include ":log-crash-noop"
 include ":app"
 
 // Implementation
-include ":internal-common-base"
-include ":internal-common"
-include ":internal-core"
-include ":internal-utilities"
-
-rootProject.name = "Beagle"
+include ':internal:common-base'
+include ':internal:common'
+include ':internal:core'
+include ':internal:utilities'

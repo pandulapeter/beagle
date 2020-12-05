@@ -19,9 +19,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    implementation project(':internal-utilities')
-    implementation project(':internal-core')
-    api project(':internal-common')
+    implementation project(':internal:utilities')
+    implementation project(':internal:core')
+    api project(':internal:common')
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

@@ -7,5 +7,5 @@ version = libraryVersion
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "io.ktor:ktor-client-logging-jvm:$ktorVersion"
-    api project(':internal-common-base')
+    api project(':internal:common-base')
 }
