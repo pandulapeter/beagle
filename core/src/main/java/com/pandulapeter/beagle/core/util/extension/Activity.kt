@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 
 @Suppress("SpellCheckingInspection")
 private val excludedPackageNames = listOf(
-    "com.pandulapeter.beagle.implementation.DebugMenuActivity",
+    "com.pandulapeter.beagle.logCrash.implementation.DebugMenuActivity",
     "com.pandulapeter.beagle.core.view.gallery.GalleryActivity",
     "com.pandulapeter.beagle.core.view.bugReport.BugReportActivity",
     "com.google.android.gms.auth.api.signin.internal.SignInHubActivity",

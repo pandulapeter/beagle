@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.implementation
+package com.pandulapeter.beagle.logCrash.implementation
 
 import android.app.Activity
 import android.content.Intent

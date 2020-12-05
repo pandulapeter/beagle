@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.implementation
+package com.pandulapeter.beagle.logCrash.implementation
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
