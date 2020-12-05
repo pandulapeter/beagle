@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.manager
+package com.pandulapeter.beagle.implementation
 
 import android.app.Application
 import android.content.ComponentName
@@ -11,7 +11,6 @@ import android.os.Process
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.commonBase.randomId
-import com.pandulapeter.beagle.core.util.ExceptionHandlerService
 import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
 import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import com.pandulapeter.beagle.core.util.model.RestoreModel
@@ -41,7 +40,7 @@ internal class ExceptionHandler private constructor(
     }
 
     companion object {
-        private const val CRASH_LOOP_LIMIT = 5000L
+        private const val CRASH_LOOP_LIMIT = 2000L
         private var isInitialized = false
         private var defaultExceptionHandler: Thread.UncaughtExceptionHandler? = null
         private var lastCrashTimestamp = 0L

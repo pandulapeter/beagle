@@ -1,18 +1,34 @@
-include ":app"
-include ":common-base"
-include ":common"
-include ":core"
-include ":noop"
+// UI modules
 include ":ui-activity"
 include ":ui-bottom-sheet"
 include ":ui-dialog"
 include ":ui-drawer"
 include ":ui-view"
-include ":log-noop"
+include ":noop"
+
+// Log
 include ":log"
-include ":log-okhttp-noop"
+include ":log-noop"
+
+// Log - OkHttp
 include ":log-okhttp"
-include ":log-ktor-noop"
+include ":log-okhttp-noop"
+
+// Log - Ktor
 include ":log-ktor"
+include ":log-ktor-noop"
+
+// Log - Crash
+include ":log-crash"
+include ":log-crash-noop"
+
+// Demo
+include ":app"
+
+// Implementation
+include ":common-base"
+include ":common"
+include ":core"
 include ":utils"
+
 rootProject.name = "Beagle"

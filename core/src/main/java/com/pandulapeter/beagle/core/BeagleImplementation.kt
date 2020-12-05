@@ -25,7 +25,6 @@ import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.manager.BugReportManager
 import com.pandulapeter.beagle.core.manager.CrashLogManager
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
-import com.pandulapeter.beagle.core.manager.ExceptionHandler
 import com.pandulapeter.beagle.core.manager.LifecycleLogManager
 import com.pandulapeter.beagle.core.manager.ListManager
 import com.pandulapeter.beagle.core.manager.LocalStorageManager
@@ -102,9 +101,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         logManager.application = application
         crashLogManager.application = application
         this.localStorageManager = LocalStorageManager(application)
-        if (behavior.bugReportingBehavior.shouldCatchExceptions) {
-            ExceptionHandler.initialize(application)
-        }
+        behavior.bugReportingBehavior.crashLoggers.forEach { it.initialize(application) }
         debugMenuInjector.register(application)
         behavior.logBehavior.loggers.forEach { it.register(::log, ::clearLogs) }
         behavior.networkLogBehavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }
@@ -337,9 +334,9 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal fun resetPendingChanges() = listManager.resetPendingChanges()
 
-    internal fun getLogEntries(label: String?) = logManager.getEntries(label)
+    fun getLogEntries(label: String?) = logManager.getEntries(label)
 
-    internal fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>?) = lifecycleLogManager.getEntries(eventTypes)
+    fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>?) = lifecycleLogManager.getEntries(eventTypes)
 
     internal fun restoreAfterCrash(restoreModel: RestoreModel) {
         logManager.restore(restoreModel.logs)
@@ -361,7 +358,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal suspend fun getCrashLogEntries() = crashLogManager.getCrashLogEntries()
 
-    internal fun getNetworkLogEntries() = networkLogManager.getEntries()
+    fun getNetworkLogEntries() = networkLogManager.getEntries()
 
     internal fun createOverlayLayout(activity: FragmentActivity) = uiManager.createOverlayLayout(activity)
 

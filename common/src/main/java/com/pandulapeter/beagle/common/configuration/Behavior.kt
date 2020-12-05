@@ -4,12 +4,12 @@ import android.app.Application
 import android.net.Uri
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_BUILD_INFORMATION
+import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_CRASH_LOGGERS
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LIFECYCLE_SECTION_EVENT_TYPES
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LOG_RESTORE_LIMIT
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_ON_BUG_REPORT_READY
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_PAGE_SIZE
-import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_CATCH_EXCEPTIONS
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_CRASH_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_GALLERY_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_METADATA_SECTION
@@ -30,6 +30,7 @@ import com.pandulapeter.beagle.common.configuration.Behavior.ScreenCaptureBehavi
 import com.pandulapeter.beagle.common.configuration.Behavior.ShakeDetectionBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.ShakeDetectionBehavior.Companion.DEFAULT_HAPTIC_FEEDBACK_DURATION
 import com.pandulapeter.beagle.common.configuration.Behavior.ShakeDetectionBehavior.Companion.DEFAULT_THRESHOLD
+import com.pandulapeter.beagle.common.contracts.BeagleCrashLoggerContract
 import com.pandulapeter.beagle.commonBase.BeagleLoggerContract
 import com.pandulapeter.beagle.commonBase.BeagleNetworkLoggerContract
 import com.pandulapeter.beagle.commonBase.FILE_NAME_DATE_TIME_FORMAT
@@ -153,7 +154,7 @@ data class Behavior(
     /**
      * Configuration related to bug reporting.
      *
-     * @param shouldCatchExceptions - Whether or not the library should handle uncaught exceptions by logging them and opening the bug reporting screen. Warning: enabling this might interfere with other crash reporting solutions. [DEFAULT_SHOULD_CATCH_EXCEPTIONS] by default.
+     * @param crashLoggers - The list of [BeagleCrashLoggerContract] implementations for intercepting uncaught exceptions. [DEFAULT_CRASH_LOGGERS] by default.
      * @param pageSize - The number of crash log / network log / log / lifecycle log entries to load for every page, before the "Show more" button is displayed. [DEFAULT_PAGE_SIZE] by default.
      * @param logRestoreLimit - The number of individual entries from each category (network log / log / lifecycle log) to persist after a crash. Be careful with this number as a high value can lead to TransactionTooLargeExceptions. [DEFAULT_LOG_RESTORE_LIMIT] by default.
      * @param shouldShowGallerySection - Whether or not the gallery section should be added. [DEFAULT_SHOULD_SHOW_GALLERY_SECTION] by default.
@@ -169,7 +170,7 @@ data class Behavior(
      * @param onBugReportReady - The lambda that gets invoked after the bug report is ready, with the [Uri] pointing to the ZIP file, or null for the default implementation that uses the system share sheet. [DEFAULT_ON_BUG_REPORT_READY] by default.
      */
     data class BugReportingBehavior(
-        val shouldCatchExceptions: Boolean = DEFAULT_SHOULD_CATCH_EXCEPTIONS,
+        val crashLoggers: List<BeagleCrashLoggerContract> = DEFAULT_CRASH_LOGGERS,
         val pageSize: Int = DEFAULT_PAGE_SIZE,
         val logRestoreLimit: Int = DEFAULT_LOG_RESTORE_LIMIT,
         val shouldShowGallerySection: Boolean = DEFAULT_SHOULD_SHOW_GALLERY_SECTION,
@@ -185,7 +186,7 @@ data class Behavior(
         val onBugReportReady: ((bugReport: Uri?) -> Unit)? = DEFAULT_ON_BUG_REPORT_READY
     ) {
         companion object {
-            private const val DEFAULT_SHOULD_CATCH_EXCEPTIONS = true
+            private val DEFAULT_CRASH_LOGGERS = emptyList<BeagleCrashLoggerContract>()
             private const val DEFAULT_PAGE_SIZE = 5
             private const val DEFAULT_LOG_RESTORE_LIMIT = 20
             private const val DEFAULT_SHOULD_SHOW_GALLERY_SECTION = true

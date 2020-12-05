@@ -1,0 +1,28 @@
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.github.dcendents.android-maven"
+group = libraryGroup
+version = libraryVersion
+
+android {
+    compileSdkVersion libraryCompileSdkVersion
+    defaultConfig {
+        minSdkVersion libraryMinimumSdkVersion
+        targetSdkVersion libraryTargetSdkVersion
+        versionCode libraryVersionCode
+        versionName libraryVersion
+        consumerProguardFiles "consumer-rules.pro"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(":common")
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = ["-Xjvm-default=all"]
+    }
+}

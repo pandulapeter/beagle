@@ -45,7 +45,7 @@ import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 import com.squareup.moshi.JsonDataException
 
-internal class BugReportActivity : AppCompatActivity() {
+class BugReportActivity : AppCompatActivity() {
 
     private val crashLogEntryToShow by lazy {
         intent.getStringExtra(CRASH_LOG_ENTRY_TO_SHOW).let { inputString ->

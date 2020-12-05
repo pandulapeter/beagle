@@ -10,7 +10,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class LogEntry(
+data class LogEntry(
     @Json(name = "id") override val id: String,
     @Json(name = "label") val label: String?,
     @Json(name = "message") val message: String,

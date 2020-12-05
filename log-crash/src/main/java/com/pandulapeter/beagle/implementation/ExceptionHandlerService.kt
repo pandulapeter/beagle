@@ -1,4 +1,4 @@
-package com.pandulapeter.beagle.core.util
+package com.pandulapeter.beagle.implementation
 
 import android.app.Service
 import android.content.Intent
@@ -8,11 +8,13 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
+import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
 import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import com.pandulapeter.beagle.core.util.model.LifecycleLogEntry
 import com.pandulapeter.beagle.core.util.model.LogEntry
 import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
 import com.pandulapeter.beagle.core.util.model.RestoreModel
+import com.pandulapeter.beagle.core.util.restoreModelAdapter
 import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 

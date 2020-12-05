@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class NetworkLogEntry(
+data class NetworkLogEntry(
     @Json(name = "id") override val id: String,
     @Json(name = "isOutgoing") val isOutgoing: Boolean,
     @Json(name = "payload") val payload: String,

@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pandulapeter.beagle">
+
+    <application>
+
+        <service
+            android:name=".implementation.ExceptionHandlerService"
+            android:process=":beagle_exception_handler" />
+
+    </application>
+
+</manifest>
