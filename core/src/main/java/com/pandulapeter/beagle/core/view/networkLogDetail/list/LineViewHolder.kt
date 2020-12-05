@@ -38,11 +38,11 @@ internal class LineViewHolder private constructor(
         setCompoundDrawablesWithIntrinsicBounds(
             if (uiModel.isClickable) {
                 if (uiModel.isCollapsed) drawableExpand else drawableCollapse
-            } else if (uiModel.level == 0 || !uiModel.hasCollapsingContent) null else drawableEmpty,
+            } else if (uiModel.hasCollapsingContent) drawableEmpty else null,
             null, null, null
         )
         setPadding(
-            largeContentPadding + if (uiModel.hasCollapsingContent) max(largeContentPadding * (uiModel.level - 1), 0) else largeContentPadding * uiModel.level,
+            largeContentPadding + if (uiModel.hasCollapsingContent) max(largeContentPadding * uiModel.level, 0) else largeContentPadding * uiModel.level,
             paddingTop,
             largeContentPadding * if (uiModel.isClickable) 2 else 1,
             paddingBottom

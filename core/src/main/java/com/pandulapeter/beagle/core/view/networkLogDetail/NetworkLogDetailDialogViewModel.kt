@@ -79,7 +79,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 if (line.length > longestLine.length) {
                     longestLine = line
                 }
-                if (it.level > 1) {
+                if (it.level > 0) {
                     hasCollapsingContent = true
                 }
             }
@@ -192,7 +192,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                         content = line.content,
                         level = line.level,
                         hasCollapsingContent = hasCollapsingContent,
-                        isClickable = line.level != 0 && line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
+                        isClickable = line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
                         isCollapsed = collapsedLineIndices.contains(line.index)
                     )
                 })
