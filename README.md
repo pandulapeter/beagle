@@ -19,10 +19,11 @@
         - [OkHttp](#okhttp)
         - [Ktor (Android engine)](#ktor-android-engine)
     - [Displaying crash logs](#displaying-crash-logs)
-- [Documentation](#documentation)
 - [Troubleshooting](#troubleshooting)
     - [Crash on app launch](#crash-on-app-launch)
     - [Crash when opening a third party Activity](#crash-when-opening-a-third-party-activity)
+    - [Gallery or Bug report screens having two toolbars](#gallery-or-bug-report-screens-having-two-toolbars)
+- [Documentation](#documentation)
 - [Changelog](#changelog)
 - [Known issues](#known-issues)
 - [Buy me a beer](#buy-me-a-beer)
@@ -316,10 +317,13 @@ While this feature should work together with other crash reporting solutions, I 
 While the library is being battle-tested on multiple projects under active development, problems can always appear. These will always be restricted to internal builds thanks to the noop implementation not doing anything that can go wrong. Here are the issues you should know about.
 
 ### Crash on app launch
-By default Beagle uses the current Activity's theme. Some modules require a Material theme to work so if you have a crash caused by various theme attributes not being found, make sure you set a Material theme for the library. If changing the theme of your Activity is not an option, please note that the library can work with a custom theme that you can set in the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) class provided during initialization.
+By default Beagle uses the current Activity's theme. Some modules require a Material theme to work, so if you have a crash caused by various theme attributes not being found, override the debug menu's theme with the **themeResourceId** property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization.
 
 ### Crash when opening a third party Activity
-Beagle works by adding a Fragment on top of every Activity's layout. Sometimes this is not necessary or not possible. Please note that while the library comes with a list of excluded Activity package names, you can manually add new entries to this list if needed, by using the [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) class provided during initialization.
+Beagle works by adding a Fragment on top of every Activity's layout. Sometimes this is not necessary or not possible. While the library comes with a list of excluded Activity package names, you can manually add new entries to this list if needed, by using the **excludedPackageNames** property of the [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance provided during initialization.
+
+### Gallery or Bug report screens having two toolbars
+Set a **.NoActionBar** Material theme for the **themeResourceId** property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization.
 
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
