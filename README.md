@@ -17,7 +17,7 @@
         - [Logging with Timber](#logging-with-timber)
     - [Intercepting network events](#intercepting-network-events)
         - [OkHttp](#okhttp)
-        - [KTor (Android engine)](#ktor-android-engine)
+        - [Ktor (Android engine)](#ktor-android-engine)
     - [Displaying crash logs](#displaying-crash-logs)
 - [Documentation](#documentation)
 - [Changelog](#changelog)
@@ -275,7 +275,38 @@ val client = HttpClient(engine) {
 }
 ```
 ### Displaying crash logs
-Coming soon.
+The library can intercept uncaught exceptions and display their stack trace in a dialog. Users will be able to share the crash report using the bug reporting screen that gets opened automatically. This functionality is achieved through a separate dependency that should be added to the main module (where Beagle is initialized):
+
+```groovy
+dependencies {
+    …
+    debugImplementation "com.github.pandulapeter.beagle:log-crash:$beagleVersion"
+    releaseImplementation "com.github.pandulapeter.beagle:log-crash-noop:$beagleVersion"
+}
+```
+
+After the dependencies are added, the newly introduced **BeagleCrashLogger** should be connected to the main library:
+
+```kotlin
+Beagle.initialize(
+    …
+    behavior = Behavior(
+        …
+        bugReportingBehavior = Behavior.BugReportingBehavior(
+            crashLoggers = listOf(BeagleCrashLogger),
+            …
+        )
+    )
+)
+```
+
+The **log-crash** dependency introduces a Service running in a separate process. Firebase has a problem with this, so make sure you call the following in your Application class if you use Firebase:
+
+```kotlin
+FirebaseApp.initializeApp(this)
+```
+
+While this feature should work together with other crash reporting solutions, I do have some reliability concerns so please report any issues you encounter.
 
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
