@@ -3,6 +3,28 @@
 
 <img src="metadata/logo.png" width="20%" />
 
+## Contents
+- [See it in action](#see-it-in-action)
+- [Use it in your project](#use-it-in-your-project)
+    - [Step 0: Check the requirements](#step-0-check-the-requirements)
+    - [Step 1: Add the Jitpack repository](#step-1-add-the-jitpack-repository)
+    - [Step 2: Pick a UI implementation and configure the dependencies](#step-2-pick-a-ui-implementation-and-configure-the-dependencies)
+    - [Step 3: Initialize the library](#step-3-initialize-the-library)
+    - [Step 4: Finish the setup by adding modules](#step-4-finish-the-setup-by-adding-modules)
+- [Advanced features](#advanced-features)
+    - [Logging](#logging)
+        - [Logging from pure Kotlin modules](#logging-from-pure-kotlin-modules)
+        - [Logging with Timber](#logging-with-timber)
+    - [Intercepting network events](#intercepting-network-events)
+        - [OkHttp](#okhttp)
+        - [KTor (Android engine)](#ktor-android-engine)
+    - [Displaying crash logs](#displaying-crash-logs)
+- [Documentation](#documentation)
+- [Changelog](#changelog)
+- [Known issues](#known-issues)
+- [Buy me a beer](#buy-me-a-beer)
+- [License](#license)
+
 ## See it in action
 Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:
 
@@ -117,11 +139,11 @@ Beagle.set(
 )
 ```
 
-## Logging and intercepting network events
-To add content to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt) or [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), you can simply call Beagle.log() and Beagle.logNetworkEvent() respectively. However, you might need to access this functionality from pure Java / Kotlin modules or, in the case of network events, you might want to use an Interceptor / Logger that works out of the box.
+## Advanced features
+To take advantage of some of the library's more powerful features, additional setup is needed.
 
 ### Logging
-While calling Beagle.log() is the simplest way to add items to the log list, a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
+While calling **Beagle.log()** is the simplest way to add items to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt), a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
 
 #### Logging from pure Kotlin modules
 To access the same functionality that Beagle.log() provides from a pure Kotlin / Java module, first you need to add the following to the module in question:
@@ -175,7 +197,7 @@ Timber.plant(
 To create a special LogListModule that only displays these logs, simply set the **label** constructor parameter of the module to "Timber".
 
 ### Intercepting network events
-Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment, out of the box, Beagle can hook into two networking libraries (but manually calling Beagle.logNetworkEvent() is always an option).
+Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment Beagle can hook into two networking libraries to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling **Beagle.logNetworkEvent()** is always an option.
 
 #### OkHttp
 Add the following to the module where your networking logic is implemented:
@@ -252,6 +274,8 @@ val client = HttpClient(engine) {
     (BeagleKtorLogger.logger as? HttpClientFeature<*,*>?)?.let { install(it) }
 }
 ```
+### Displaying crash logs
+Coming soon.
 
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
