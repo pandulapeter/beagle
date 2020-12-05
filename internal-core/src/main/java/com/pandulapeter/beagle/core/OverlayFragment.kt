@@ -67,7 +67,6 @@ internal class OverlayFragment : Fragment() {
     }
 
     companion object {
-        const val TAG = "beagleOverlayFragment"
         private var Bundle.fileName by BundleArgumentDelegate.String("fileName")
         private const val SCREENSHOT_REQUEST = 4246
         private const val SCREEN_RECORDING_REQUEST = 4247

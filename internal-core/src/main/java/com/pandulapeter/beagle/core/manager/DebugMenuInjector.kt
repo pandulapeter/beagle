@@ -24,16 +24,10 @@ internal class DebugMenuInjector(
         private set(value) {
             field = value
             if (value != null) {
-                onBackStackChangedListener.onBackStackChanged()
+                injectDebugMenu(value.supportFragmentManager.findFragmentById(android.R.id.content))
             }
         }
-    private val onBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
-        currentActivity?.let { currentActivity ->
-            if (!BeagleCore.implementation.uiManager.isActivityDebugMenu(currentActivity) && currentActivity.supportFragmentManager.fragments.lastOrNull() !is OverlayFragment) {
-                uiManager.addOverlayFragment(currentActivity)
-            }
-        }
-    }
+
     private val fragmentLifecycleCallbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
 
         override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
@@ -56,6 +50,7 @@ internal class DebugMenuInjector(
 
         override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
             if (f.shouldLogFragment()) {
+                injectDebugMenu(f)
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.FRAGMENT_ON_VIEW_CREATED, savedInstanceState != null)
             }
         }
@@ -114,8 +109,6 @@ internal class DebugMenuInjector(
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             if (activity.supportsDebugMenu) {
                 (activity as FragmentActivity).supportFragmentManager.run {
-                    removeOnBackStackChangedListener(onBackStackChangedListener)
-                    addOnBackStackChangedListener(onBackStackChangedListener)
                     unregisterFragmentLifecycleCallbacks(fragmentLifecycleCallbacks)
                     registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
                 }
@@ -162,7 +155,6 @@ internal class DebugMenuInjector(
                 if (activity == currentActivity) {
                     currentActivity = null
                 }
-                (activity as FragmentActivity).supportFragmentManager.removeOnBackStackChangedListener(onBackStackChangedListener)
                 BeagleCore.implementation.logLifecycle(activity::class.java, LifecycleLogListModule.EventType.ON_DESTROY)
             }
         }
@@ -182,4 +174,12 @@ internal class DebugMenuInjector(
             && this !is LogDetailDialogFragment
             && this !is NetworkLogDetailDialogFragment
             && !BeagleCore.implementation.uiManager.isFragmentDebugMenu(this)
+
+    private fun injectDebugMenu(currentFragment: Fragment?) {
+        currentActivity?.let { currentActivity ->
+            if (!BeagleCore.implementation.uiManager.isActivityDebugMenu(currentActivity)) {
+                uiManager.addOverlayFragment(currentFragment, currentActivity)
+            }
+        }
+    }
 }
