@@ -317,10 +317,10 @@ While this feature should work together with other crash reporting solutions, I 
 
 The `noop` implementations of every public artifact are the default ways of not including Beagle-related logic in your production releases. While this should be good enough for most projects, it can be improved by creating a separate wrapper module for the debug menu. This would mean hiding every call to Beagle behind an interface that has an empty implementation in release builds. This approach has its own benefits and drawbacks:
 
-- Advantages:
+- **Advantages**
     - No Beagle imports outside of the wrapper module
     - Having a single entry-point to all features related to the debug menu
-- Disadvantages:
+- **Disadvantages**
     - More cumbersome initial setup
     - Losing the ability to use Beagle features in pure Kotlin modules
 

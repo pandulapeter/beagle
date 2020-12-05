@@ -26,9 +26,9 @@ include ":log-crash-noop"
 include ":app"
 
 // Implementation
-include ":common-base"
-include ":common"
-include ":core"
-include ":utils"
+include ':internal-common-base'
+include ':internal-common'
+include ':internal-core'
+include ':internal-utilities'
 
 rootProject.name = "Beagle"

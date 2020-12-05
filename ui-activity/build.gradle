@@ -20,9 +20,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
-    implementation project(":core")
-    implementation project(":utils")
-    api project(":common")
+    implementation project(':internal-core')
+    implementation project(':internal-utilities')
+    api project(':internal-common')
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
