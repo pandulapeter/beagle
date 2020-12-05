@@ -19,6 +19,7 @@
         - [OkHttp](#okhttp)
         - [Ktor (Android engine)](#ktor-android-engine)
     - [Displaying crash logs](#displaying-crash-logs)
+    - [Improving encapsulation](#improving-encapsulation)
 - [Troubleshooting](#troubleshooting)
     - [Crash on app launch](#crash-on-app-launch)
     - [Crash when opening a third party Activity](#crash-when-opening-a-third-party-activity)
@@ -75,7 +76,7 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.3.9"
+    def beagleVersion = "2.4.0"
     debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
@@ -312,12 +313,23 @@ FirebaseApp.initializeApp(this)
 
 While this feature should work together with other crash reporting solutions, I do have some reliability concerns so please report any issues you encounter.
 
+### Improving encapsulation
+
+The `noop` implementations of every public artifact are the default ways of not including Beagle-related logic in your production releases. While this should be good enough for most projects, it can be improved by creating a separate wrapper module for the debug menu. This would mean hiding every call to Beagle behind an interface that has an empty implementation in release builds. This approach has its own benefits and drawbacks:
+
+- Advantages:
+    - No Beagle imports outside of the wrapper module
+    - Having a single entry-point to all features related to the debug menu
+- Disadvantages:
+    - More cumbersome initial setup
+    - Losing the ability to use Beagle features in pure Kotlin modules
+
 ## Troubleshooting
 
 While the library is being battle-tested on multiple projects under active development, problems can always appear. These will always be restricted to internal builds thanks to the noop implementation not doing anything that can go wrong. Here are the issues you should know about.
 
 ### Crash on app launch
-By default Beagle uses the current Activity's theme. Some modules require a Material theme to work, so if you have a crash caused by various theme attributes not being found, override the debug menu's theme with the **themeResourceId** property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization.
+By default Beagle uses the current Activity's theme. Some modules require a Material theme to work, so if you have a crash caused by various theme attributes not being found, override the debug menu's theme with the **themeResourceId** property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization with a Material theme.
 
 ### Crash when opening a third party Activity
 Beagle works by adding a Fragment on top of every Activity's layout. Sometimes this is not necessary or not possible. While the library comes with a list of excluded Activity package names, you can manually add new entries to this list if needed, by using the **excludedPackageNames** property of the [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance provided during initialization.
