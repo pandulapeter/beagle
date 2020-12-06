@@ -68,7 +68,7 @@ The following versions exist:
 * **ui-bottom-sheet** - Displays the debug menu as a modal bottom sheet (recommended).
 * **ui-dialog** - Displays the debug menu as a modal dialog (recommended).
 * **ui-drawer** - Displays the debug menu as a side navigation drawer (highly recommended).
-* **ui-view** - Displaying DebugMenuView is your responsibility (not recommended: shake to open, Beagle.show(), Beagle.hide(), the related VisibilityListener as well as the inset handling logic won't work out of the box).
+* **ui-view** - Displaying DebugMenuView is your responsibility (not recommended: shake to open, `Beagle.show()`, `Beagle.hide()`, the related `VisibilityListener` as well as the inset handling logic won't work out of the box).
 * **noop** - No UI, no logic. It has the same public API as all other variants, but it does nothing (this is intended for production builds).
 
 So, for example, if you prefer the Drawer UI, something like the following needs to be added to your app-level build.gradle file (check the widget below the code snippet for the latest version):
@@ -87,7 +87,7 @@ The latest version is:
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
-**Note**: In case of the drawer UI, if you have overwritten the Activity's onBackPressed() method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity's onBackPressed() you should check that Beagle.hide() returns false before doing any other checks or calling the super implementation.
+**Note**: In case of the drawer UI, if you have overwritten the Activity's onBackPressed() method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity's `onBackPressed()` you should check that `Beagle.hide()` returns false before doing any other checks or calling the super implementation.
 
 ### Step 3: Initialize the library
 Just one line of code, preferably in the Application's onCreate() method:
@@ -148,10 +148,10 @@ Beagle.set(
 To take advantage of some of the library's more powerful features, additional setup is needed.
 
 ### Logging
-While calling **Beagle.log()** is the simplest way to add items to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt), a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
+While calling `Beagle.log()` is the simplest way to add items to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt), a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
 
 #### Logging from pure Kotlin modules
-To access the same functionality that Beagle.log() provides from a pure Kotlin / Java module, first you need to add the following to the module in question:
+To access the same functionality that `Beagle.log()` provides from a pure Kotlin / Java module, first you need to add the following to the module in question:
 
 ```groovy
 dependencies {
@@ -164,7 +164,7 @@ dependencies {
 }
 ```
 
-These libraries provide the **BeagleLogger** object which needs to be connected to the main library when it is initialized in the Application class:
+These libraries provide the `BeagleLogger` object which needs to be connected to the main library when it is initialized in the Application class:
 
 ```kotlin
 Beagle.initialize(
@@ -185,7 +185,7 @@ To add log messages, now you can call the following:
 BeagleLogger.log(…)
 ```
 
-The messages list will be merged with the ones logged using the regular Beagle.log() function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use BeagleLogger.clearLogs() if you cannot access Beagle.clearLogs().
+The messages list will be merged with the ones logged using the regular `Beagle.log()` function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use `BeagleLogger.clearLogs()` if you cannot access `Beagle.clearLogs()`.
 
 #### Logging with Timber
 To automatically add events logged with [Timber](https://github.com/JakeWharton/timber) to the debug menu, planting a special tree is the simplest solution:
@@ -202,7 +202,7 @@ Timber.plant(
 To create a special LogListModule that only displays these logs, simply set the **label** constructor parameter of the module to "Timber".
 
 ### Intercepting network events
-Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment Beagle can hook into two networking libraries to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling **Beagle.logNetworkEvent()** is always an option.
+Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment Beagle can hook into two networking libraries to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling `Beagle.logNetworkEvent()` is always an option.
 
 #### OkHttp
 Add the following to the module where your networking logic is implemented:
@@ -218,7 +218,7 @@ dependencies {
 }
 ```
 
-This will introduce the **BeagleOkHttpLogger** object which first needs to be connected to the main library, the moment it gets initialized:
+This will introduce the `BeagleOkHttpLogger` object which first needs to be connected to the main library, the moment it gets initialized:
 
 ```kotlin
 Beagle.initialize(
@@ -233,7 +233,7 @@ Beagle.initialize(
 )
 ```
 
-The last step is setting up the Interceptor (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
+The last step is setting up the `Interceptor` (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
 
 ```kotlin
 val client = OkHttpClient.Builder()
@@ -256,7 +256,7 @@ dependencies {
 }
 ```
 
-This will introduce the **BeagleKtorLogger** object which first needs to be connected to the main library, the moment it gets initialized:
+This will introduce the `BeagleKtorLogger` object which first needs to be connected to the main library, the moment it gets initialized:
 
 ```kotlin
 Beagle.initialize(
@@ -271,7 +271,7 @@ Beagle.initialize(
 )
 ```
 
-The last step is setting up the Logger (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
+The last step is setting up the `Logger` (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
 
 ```kotlin
 val client = HttpClient(engine) {
@@ -290,7 +290,7 @@ dependencies {
 }
 ```
 
-After the dependencies are added, the newly introduced **BeagleCrashLogger** should be connected to the main library:
+After the dependencies are added, the newly introduced `BeagleCrashLogger` object should be connected to the main library:
 
 ```kotlin
 Beagle.initialize(
@@ -305,7 +305,7 @@ Beagle.initialize(
 )
 ```
 
-The **log-crash** dependency introduces a Service running in a separate process. Firebase has a problem with this, so make sure you call the following in your Application class if you use Firebase:
+The **log-crash** dependency introduces a `Service` running in a separate process. Firebase has a problem with this, so make sure you call the following in your custom `Application` class if you use Firebase:
 
 ```kotlin
 FirebaseApp.initializeApp(this)
