@@ -1,36 +1,15 @@
 package com.pandulapeter.beagle.core.util
 
 import androidx.annotation.DrawableRes
-import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
-import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.core.list.cells.ButtonCell
 import com.pandulapeter.beagle.core.list.cells.SectionHeaderCell
 import com.pandulapeter.beagle.core.list.cells.TextCell
 import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
-
-internal inline fun performOnHide(crossinline action: () -> Unit) {
-    val listener = object : VisibilityListener {
-        override fun onHidden() {
-            val reference = this
-            action()
-            GlobalScope.launch {
-                delay(100)
-                BeagleCore.implementation.removeVisibilityListener(reference)
-            }
-        }
-    }
-    BeagleCore.implementation.addInternalVisibilityListener(listener)
-    if (!BeagleCore.implementation.hide()) {
-        BeagleCore.implementation.removeVisibilityListener(listener)
-        listener.onHidden()
-    }
-}
 
 inline fun runOnUiThread(crossinline action: () -> Any?) {
     GlobalScope.launch(Dispatchers.Main) { action() }

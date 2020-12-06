@@ -4,7 +4,6 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.util.createTextModuleFromType
-import com.pandulapeter.beagle.core.util.performOnHide
 import com.pandulapeter.beagle.modules.ScreenshotButtonModule
 
 internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule> {
@@ -24,6 +23,6 @@ internal class ScreenshotButtonDelegate : Module.Delegate<ScreenshotButtonModule
     )
 
     companion object {
-        fun hideDebugMenuAndTakeScreenshot() = performOnHide(BeagleCore.implementation::takeScreenshot)
+        fun hideDebugMenuAndTakeScreenshot() = BeagleCore.implementation.performOnHide(BeagleCore.implementation::takeScreenshot)
     }
 }

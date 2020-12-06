@@ -4,7 +4,6 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.util.createTextModuleFromType
-import com.pandulapeter.beagle.core.util.performOnHide
 import com.pandulapeter.beagle.modules.BugReportButtonModule
 
 internal class BugReportButtonDelegate : Module.Delegate<BugReportButtonModule> {
@@ -18,7 +17,7 @@ internal class BugReportButtonDelegate : Module.Delegate<BugReportButtonModule> 
             icon = module.icon,
             onItemSelected = {
                 module.onButtonPressed()
-                performOnHide(BeagleCore.implementation::openBugReportingScreen)
+                BeagleCore.implementation.performOnHide(BeagleCore.implementation::openBugReportingScreen)
             }
         )
     )

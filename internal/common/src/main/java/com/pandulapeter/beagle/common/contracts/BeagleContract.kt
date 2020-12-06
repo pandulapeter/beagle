@@ -428,5 +428,15 @@ interface BeagleContract {
         timestamp: Long = currentTimestamp,
         id: String = randomId
     ) = Unit
+
+    /**
+     * Can be used to delay performing actions until the debug menu is closed.
+     * If the debug menu is not visible or the noop artifact is used, the action is performed instantaneously.
+     *
+     * @param action - The action to perform when the debug menu becomes hidden.
+     */
+    fun performOnHide(action: () -> Any?) {
+        action()
+    }
     //endregion
 }

@@ -9,7 +9,6 @@ import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.extension.recordScreenWithMediaProjectionManager
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithDrawingCache
 import com.pandulapeter.beagle.core.util.extension.takeScreenshotWithMediaProjectionManager
-import com.pandulapeter.beagle.core.util.performOnHide
 import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
 
 internal class ScreenCaptureManager {
@@ -53,7 +52,7 @@ internal class ScreenCaptureManager {
         }
     }
 
-    fun openGallery() = performOnHide { currentActivity?.run { startActivity(Intent(this, GalleryActivity::class.java)) } }
+    fun openGallery() = BeagleCore.implementation.performOnHide { currentActivity?.run { startActivity(Intent(this, GalleryActivity::class.java)) } }
 
     companion object {
         const val IMAGE_EXTENSION = ".png"

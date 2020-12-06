@@ -5,7 +5,6 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.core.util.createTextModuleFromType
-import com.pandulapeter.beagle.core.util.performOnHide
 import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 
 internal class ScreenRecordingButtonDelegate : Module.Delegate<ScreenRecordingButtonModule> {
@@ -27,7 +26,7 @@ internal class ScreenRecordingButtonDelegate : Module.Delegate<ScreenRecordingBu
     companion object {
         fun hideDebugMenuAndRecordScreen() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                performOnHide(BeagleCore.implementation::recordScreen)
+                BeagleCore.implementation.performOnHide(BeagleCore.implementation::recordScreen)
             }
         }
     }

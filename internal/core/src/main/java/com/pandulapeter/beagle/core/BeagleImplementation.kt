@@ -47,6 +47,9 @@ import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialog
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
@@ -199,7 +202,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun clearOverlayListeners() = overlayListenerManager.clearListeners()
 
-    internal fun addInternalVisibilityListener(listener: VisibilityListener) = visibilityListenerManager.addInternalListener(listener)
+    private fun addInternalVisibilityListener(listener: VisibilityListener) = visibilityListenerManager.addInternalListener(listener)
 
     override fun addVisibilityListener(
         listener: VisibilityListener,
@@ -303,6 +306,24 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
                 timestamp = timestamp,
                 id = id
             )
+        }
+    }
+
+    override fun performOnHide(action: () -> Any?) {
+        val listener = object : VisibilityListener {
+            override fun onHidden() {
+                val reference = this
+                action()
+                GlobalScope.launch {
+                    delay(100)
+                    removeVisibilityListener(reference)
+                }
+            }
+        }
+        addInternalVisibilityListener(listener)
+        if (!hide()) {
+            removeVisibilityListener(listener)
+            listener.onHidden()
         }
     }
 
