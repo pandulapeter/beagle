@@ -6,4 +6,4 @@ One disadvantage to note is that the code written for your custom modules will a
 If you come up with a module that seems useful to others, please let me know about it so that we can include it in the library!
 
 # How should I start?
-TODO: Coming soon... But meanwhile check out the [Module](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/module/Module.kt) and [Cell](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/module/Cell.kt) interfaces.
+TODO: Coming soon... But meanwhile check out the [Module](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/common/contracts/module/Module.kt) and [Cell](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/common/contracts/module/Cell.kt) interfaces.

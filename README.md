@@ -97,8 +97,8 @@ Beagle.initialize(this)
 ```
 
 Optionally you can add the following parameters to this function:
-* The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance. For example, here you can specify a custom theme for the debug menu using the `themeResourceId` property, in case the one used by the `Application` / `Activity` is not suitable. Note: It's recommended to extend a `.NoActionBar` Material theme.
-* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. For example, adjusting the shake to open threshold or the strength of the haptic feedback is a frequent use case of this class.
+* The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance. For example, here you can specify a custom theme for the debug menu using the `themeResourceId` property, in case the one used by the `Application` / `Activity` is not suitable. Note: It's recommended to extend a `.NoActionBar` Material theme.
+* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. For example, adjusting the shake to open threshold or the strength of the haptic feedback is a frequent use case of this class.
 
 By default you can fetch Beagle by shaking the device.
 
@@ -109,7 +109,7 @@ After this a number of modules should be provided, but this configuration can be
 Beagle.set(module1, module2, …)
 ```
 At this point you should be aware of two options:
-* The list of [built-in modules](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/modules/). Every file in this package is documented. These modules should cover most use cases and have the advantage of also providing a fake, **noop** implementation which means that no part of their logic is compiled into your release builds.
+* The list of [built-in modules](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/modules/). Every file in this package is documented. These modules should cover most use cases and have the advantage of also providing a fake, **noop** implementation which means that no part of their logic is compiled into your release builds.
 * The ability to write custom modules. For this a good starting point is looking at the built-in implementations from above, but [this document](https://github.com/pandulapeter/beagle/blob/master/metadata/CUSTOM_MODULES.md) also provides some guidance.
 
 Check out [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle) for some ideas on what is possible with the built-in modules or for an interactive tool that can be used to preview any module configuration and generate the code for it. A more visual guide to some of the possibilities is [this article](https://halcyonmobile.com/blog/mobile-app-development/android-app-development/what-could-a-debug-menu-contain/).
@@ -150,7 +150,7 @@ If you ever need to add temporary modules, `Beagle.add()` has an optional `lifec
 To take advantage of some of the library's more powerful features, additional setup is needed.
 
 ### Logging
-While calling `Beagle.log()` is the simplest way to add items to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt), a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
+While calling `Beagle.log()` is the simplest way to add items to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt), a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
 
 #### Logging from pure Kotlin modules
 To access the same functionality that `Beagle.log()` provides from a pure Kotlin / Java module, first you need to add the following to the module in question:
@@ -187,7 +187,7 @@ To add log messages, now you can call the following:
 BeagleLogger.log(…)
 ```
 
-The messages list will be merged with the ones logged using the regular `Beagle.log()` function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use `BeagleLogger.clearLogs()` if you cannot access `Beagle.clearLogs()`.
+The messages list will be merged with the ones logged using the regular `Beagle.log()` function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use `BeagleLogger.clearLogs()` if you cannot access `Beagle.clearLogs()`.
 
 #### Logging with Timber
 To automatically add events logged with [Timber](https://github.com/JakeWharton/timber) to the debug menu, planting a special tree is the simplest solution:
@@ -204,7 +204,7 @@ Timber.plant(
 To create a special LogListModule that only displays these logs, simply set the **label** constructor parameter of the module to "Timber".
 
 ### Intercepting network events
-Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment Beagle can hook into two networking libraries to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling `Beagle.logNetworkEvent()` is always an option.
+Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment Beagle can hook into two networking libraries to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling `Beagle.logNetworkEvent()` is always an option.
 
 #### OkHttp
 Add the following to the module where your networking logic is implemented:
@@ -331,16 +331,16 @@ The `noop` implementations of every public artifact are the default ways of not 
 While the library is being battle-tested on multiple projects under active development, problems can always appear. These will always be restricted to internal builds thanks to the noop implementation not doing anything that can go wrong. Here are the issues you should know about.
 
 ### Crash on app launch
-By default Beagle uses the current `Activity`'s theme. Some modules require a Material theme to work, so if you have a crash caused by various theme attributes not being found, override the debug menu's theme with the `themeResourceId` property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization with a Material theme.
+By default Beagle uses the current `Activity`'s theme. Some modules require a Material theme to work, so if you have a crash caused by various theme attributes not being found, override the debug menu's theme with the `themeResourceId` property of the [Appearance](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization with a Material theme.
 
 ### Crash when opening a third party Activity
-Beagle works by adding a `Fragment` on top of every `Activity`'s layout. Sometimes this is not necessary or not possible. While the library comes with a list of excluded `Activity` package names, you can manually add new entries to this list if needed, by using the `excludedPackageNames` property of the [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance provided during initialization.
+Beagle works by adding a `Fragment` on top of every `Activity`'s layout. Sometimes this is not necessary or not possible. While the library comes with a list of excluded `Activity` package names, you can manually add new entries to this list if needed, by using the `excludedPackageNames` property of the [Behavior](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance provided during initialization.
 
 ### Gallery or Bug report screens having two toolbars
-Set a `.NoActionBar` Material theme for the `themeResourceId` property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization.
+Set a `.NoActionBar` Material theme for the `themeResourceId` property of the [Appearance](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization.
 
 ## Documentation
-All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
+All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
 
 If you're interested in what's under the hood, [this document](https://github.com/pandulapeter/beagle/blob/master/metadata/DOCUMENTATION.md) can be helpful while navigating the source code. 
 

@@ -88,7 +88,7 @@ interface BeagleContract {
     /**
      * Replaces the list of modules.
      *
-     * To see the list of built-in modules, check out this folder: https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules
+     * To see the list of built-in modules, check out this folder: https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/modules
      *
      * @param modules - The new [Module] implementations to use.
      */
@@ -97,7 +97,7 @@ interface BeagleContract {
     /**
      * Use this function to add new modules to the debug menu without removing the current ones. Modules with duplicated ID-s will get replaced.
      *
-     * To see the list of built-in modules, check out this folder: https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules
+     * To see the list of built-in modules, check out this folder: https://github.com/pandulapeter/beagle/tree/master/internal/common/src/main/java/com/pandulapeter/beagle/modules
      *
      * @param modules - The new modules to be added.
      * @param placement - The positioning of the new trick. Optional, [Placement.Bottom] by default.
