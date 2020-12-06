@@ -34,8 +34,8 @@ dependencies {
     implementation "io.coil-kt:coil-video:$coilVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
-    implementation project(':internal:utilities')
-    implementation project(':internal:common')
+    implementation project(":internal:utilities")
+    implementation project(":internal:common")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

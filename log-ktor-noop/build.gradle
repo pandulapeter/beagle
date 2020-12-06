@@ -6,5 +6,5 @@ version = libraryVersion
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(':internal:common-base')
+    api project(":internal:common-base")
 }
