@@ -68,7 +68,7 @@ The following versions exist:
 * **ui-bottom-sheet** - Displays the debug menu as a modal bottom sheet (recommended).
 * **ui-dialog** - Displays the debug menu as a modal dialog (recommended).
 * **ui-drawer** - Displays the debug menu as a side navigation drawer (highly recommended).
-* **ui-view** - Displaying DebugMenuView is your responsibility (not recommended: shake to open, `Beagle.show()`, `Beagle.hide()`, the related `VisibilityListener` as well as the inset handling logic won't work out of the box).
+* **ui-view** - Displaying the `DebugMenuView` is your responsibility (not recommended: shake to open, `Beagle.show()`, `Beagle.hide()`, the related `VisibilityListener` as well as the inset handling logic won't work out of the box).
 * **noop** - No UI, no logic. It has the same public API as all other variants, but it does nothing (this is intended for production builds).
 
 So, for example, if you prefer the Drawer UI, something like the following needs to be added to your app-level build.gradle file (check the widget below the code snippet for the latest version):
@@ -98,7 +98,7 @@ Beagle.initialize(this)
 
 Optionally you can add the following parameters to this function:
 * The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance. For example, here you can specify a custom theme for the debug menu using the `themeResourceId` property, in case the one used by the `Application` / `Activity` is not suitable. Note: It's recommended to extend a `.NoActionBar` Material theme.
-* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. For example, adjusting the shake-to-open threshold or the strength of the haptic feedback is a frequent use case of this class.
+* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. For example, adjusting the shake to open threshold or the strength of the haptic feedback is a frequent use case of this class.
 
 By default you can fetch Beagle by shaking the device.
 
@@ -143,6 +143,8 @@ Beagle.set(
     BugReportButtonModule()
 )
 ```
+
+If you ever need to add temporary modules, `Beagle.add()` has an optional `lifecycleOwner` parameter that automatically removes the specified modules once the provided lifecycle is over. Manually calling `Beagle.remove()` with module ID-s is also an option.
 
 ## Advanced features
 To take advantage of some of the library's more powerful features, additional setup is needed.

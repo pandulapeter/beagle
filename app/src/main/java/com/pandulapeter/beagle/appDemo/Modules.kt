@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.about.licences.LicencesViewM
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.AnalyticsViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.AuthenticationViewModel
+import com.pandulapeter.beagle.appDemo.feature.main.examples.crashLogging.CrashLoggingViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.MockDataGeneratorViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.navigation.NavigationViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.NetworkRequestInterceptorViewModel
@@ -42,6 +43,7 @@ private val featureModule = module {
     viewModel { MockDataGeneratorViewModel() }
     viewModel { OverlayViewModel() }
     viewModel { NavigationViewModel() }
+    viewModel { CrashLoggingViewModel() }
     viewModel { PlaygroundViewModel(get()) }
     viewModel { AddModuleViewModel(get()) }
     viewModel { AboutViewModel(androidContext()) }

@@ -43,5 +43,9 @@ enum class CaseStudy(
     NAVIGATION(
         title = R.string.case_study_navigation_title,
         description = R.string.case_study_navigation_description,
+    ),
+    CRASH_LOGGING(
+        title = R.string.case_study_crash_logging_title,
+        description = R.string.case_study_crash_logging_description,
     );
 }

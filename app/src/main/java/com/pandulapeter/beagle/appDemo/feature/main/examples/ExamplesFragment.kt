@@ -7,6 +7,7 @@ import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
 import com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.AnalyticsFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.AuthenticationFragment
+import com.pandulapeter.beagle.appDemo.feature.main.examples.crashLogging.CrashLoggingFragment
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesAdapter
 import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.MockDataGeneratorFragment
@@ -63,6 +64,7 @@ class ExamplesFragment : ListFragment<ExamplesViewModel, ExamplesListItem>(R.str
         CaseStudy.MOCK_DATA_GENERATOR -> navigateTo(MockDataGeneratorFragment.Companion::newInstance)
         CaseStudy.OVERLAY -> navigateTo(OverlayFragment.Companion::newInstance)
         CaseStudy.NAVIGATION -> navigateTo(NavigationFragment.Companion::newInstance)
+        CaseStudy.CRASH_LOGGING -> navigateTo(CrashLoggingFragment.Companion::newInstance)
     }
 
     private inline fun <reified T : ExamplesDetailFragment<*, *>> navigateTo(crossinline newInstance: () -> T) = parentFragment?.childFragmentManager?.handleReplace(
