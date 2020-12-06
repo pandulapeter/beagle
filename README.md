@@ -98,7 +98,7 @@ Beagle.initialize(this)
 
 Optionally you can add the following parameters to this function:
 * The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance. For example, here you can specify a custom theme for the debug menu using the `themeResourceId` property, in case the one used by the `Application` / `Activity` is not suitable. Note: It's recommended to extend a `.NoActionBar` Material theme.
-* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. Warning: by default Beagle can interfere with other crash reporting solutions, as it tries to handle uncaught exceptions by opening the bug reporting screen (of course this is not true for the noop artifact). If you want to disable this feature, use the **shouldCatchExceptions** parameter of the **BugReportingBehavior** class.
+* The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. For example, adjusting the shake-to-open threshold or the strength of the haptic feedback is a frequent use case of this class.
 
 By default you can fetch Beagle by shaking the device.
 
