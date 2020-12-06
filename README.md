@@ -87,17 +87,17 @@ The latest version is:
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
-**Note**: In case of the drawer UI, if you have overwritten the Activity's onBackPressed() method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every Activity's `onBackPressed()` you should check that `Beagle.hide()` returns false before doing any other checks or calling the super implementation.
+**Note**: In case of the drawer UI, if you have overwritten the `Activity`'s `onBackPressed()` method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every `Activity`'s `onBackPressed()` you should check that `Beagle.hide()` returns false before doing any other checks or calling the super implementation.
 
 ### Step 3: Initialize the library
-Just one line of code, preferably in the Application's onCreate() method:
+Just one line of code, preferably in the `Application`'s `onCreate()` method:
 
 ```kotlin
 Beagle.initialize(this)
 ```
 
 Optionally you can add the following parameters to this function:
-* The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance. For example, here you can specify a custom theme for the debug menu using the **themeResourceId** parameter, in case the one used by the application is not suitable. Note: It's recommended to extend a *.NoActionBar* theme.
+* The appearance of the menu can be personalized by specifying an [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance. For example, here you can specify a custom theme for the debug menu using the `themeResourceId` property, in case the one used by the `Application` / `Activity` is not suitable. Note: It's recommended to extend a `.NoActionBar` Material theme.
 * The behavior of the menu can be personalized by specifying a [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance. Warning: by default Beagle can interfere with other crash reporting solutions, as it tries to handle uncaught exceptions by opening the bug reporting screen (of course this is not true for the noop artifact). If you want to disable this feature, use the **shouldCatchExceptions** parameter of the **BugReportingBehavior** class.
 
 By default you can fetch Beagle by shaking the device.
@@ -164,7 +164,7 @@ dependencies {
 }
 ```
 
-These libraries provide the `BeagleLogger` object which needs to be connected to the main library when it is initialized in the Application class:
+These libraries provide the `BeagleLogger` object which needs to be connected to the main library when it is initialized in the `Application` class:
 
 ```kotlin
 Beagle.initialize(
@@ -329,13 +329,13 @@ The `noop` implementations of every public artifact are the default ways of not 
 While the library is being battle-tested on multiple projects under active development, problems can always appear. These will always be restricted to internal builds thanks to the noop implementation not doing anything that can go wrong. Here are the issues you should know about.
 
 ### Crash on app launch
-By default Beagle uses the current Activity's theme. Some modules require a Material theme to work, so if you have a crash caused by various theme attributes not being found, override the debug menu's theme with the **themeResourceId** property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization with a Material theme.
+By default Beagle uses the current `Activity`'s theme. Some modules require a Material theme to work, so if you have a crash caused by various theme attributes not being found, override the debug menu's theme with the `themeResourceId` property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization with a Material theme.
 
 ### Crash when opening a third party Activity
-Beagle works by adding a Fragment on top of every Activity's layout. Sometimes this is not necessary or not possible. While the library comes with a list of excluded Activity package names, you can manually add new entries to this list if needed, by using the **excludedPackageNames** property of the [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance provided during initialization.
+Beagle works by adding a `Fragment` on top of every `Activity`'s layout. Sometimes this is not necessary or not possible. While the library comes with a list of excluded `Activity` package names, you can manually add new entries to this list if needed, by using the `excludedPackageNames` property of the [Behavior](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance provided during initialization.
 
 ### Gallery or Bug report screens having two toolbars
-Set a **.NoActionBar** Material theme for the **themeResourceId** property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization.
+Set a `.NoActionBar` Material theme for the `themeResourceId` property of the [Appearance](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization.
 
 ## Documentation
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/blob/master/common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
