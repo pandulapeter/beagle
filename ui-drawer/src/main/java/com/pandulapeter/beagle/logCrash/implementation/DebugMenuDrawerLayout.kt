@@ -11,7 +11,6 @@ import android.view.WindowInsets
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
 import com.pandulapeter.beagle.common.configuration.Insets
@@ -60,7 +59,7 @@ internal class DebugMenuDrawerLayout(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        setDrawerLockMode(if (Beagle.isUiEnabled) LOCK_MODE_UNDEFINED else LOCK_MODE_LOCKED_CLOSED)
+        setDrawerLockMode(if (isDrawerLocked) LOCK_MODE_LOCKED_CLOSED else LOCK_MODE_UNDEFINED)
         addDrawerListener(listener)
         setDrawerSize(DisplayMetrics())
     }

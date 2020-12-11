@@ -72,15 +72,17 @@ internal class DrawerUiManager : UiManagerContract, DrawerLayout.DrawerListener 
 
     override fun onDrawerClosed(drawerView: View) {
         onBackPressedCallback.isEnabled = false
+        (drawerView.parent as? DebugMenuDrawerLayout)?.updateDrawerLockMode()
     }
 
     override fun onDrawerOpened(drawerView: View) {
         onBackPressedCallback.isEnabled = true
+        (drawerView.parent as? DebugMenuDrawerLayout)?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED)
     }
 
     private fun getDrawerView(activity: FragmentActivity?) = getDrawerLayout(activity)?.debugMenuView
 
     private fun getDrawerLayout(activity: FragmentActivity?) = findOverlayFragment(activity)?.view as? DebugMenuDrawerLayout?
 
-    private fun DebugMenuDrawerLayout.updateDrawerLockMode() = setDrawerLockMode(if (Beagle.isUiEnabled) DrawerLayout.LOCK_MODE_UNDEFINED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    private fun DebugMenuDrawerLayout.updateDrawerLockMode() = setDrawerLockMode(if (isDrawerLocked) DrawerLayout.LOCK_MODE_LOCKED_CLOSED else DrawerLayout.LOCK_MODE_UNDEFINED)
 }

@@ -16,6 +16,7 @@ import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavio
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_TEXT_INPUT_FIELDS
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_EXCLUDED_PACKAGE_NAMES
+import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SHOULD_LOCK_DRAWER
 import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior.Companion.DEFAULT_SHOULD_DISPLAY_FULL_NAMES
 import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior
@@ -42,6 +43,7 @@ import java.util.Locale
  * Specifies the behavior customization options for the debug menu. Used as an optional argument of Beagle.initialize(). All parameters are optional.
  *
  * @param excludedPackageNames - The list of packages that contain Activities for which Beagle should not be triggered. [DEFAULT_EXCLUDED_PACKAGE_NAMES] by default (and the library also contains a hardcoded list, unrelated to this parameter).
+ * @param shouldLockDrawer - Only used in the `ui-drawer` artifact. If true, it disables the swipe-to-open gesture of the Drawer so the debug menu can only be opened by a shake gesture ore manually calling Beagle.show(). [DEFAULT_SHOULD_LOCK_DRAWER] by default.
  * @param shakeDetectionBehavior - Customize the shake detection behavior, see [ShakeDetectionBehavior].
  * @param logBehavior - Customize the logging behavior, see [LogBehavior].
  * @param networkLogBehavior - Customize the network logging behavior, see [NetworkLogBehavior].
@@ -51,6 +53,7 @@ import java.util.Locale
  */
 data class Behavior(
     val excludedPackageNames: List<String> = DEFAULT_EXCLUDED_PACKAGE_NAMES,
+    val shouldLockDrawer: Boolean = DEFAULT_SHOULD_LOCK_DRAWER,
     val shakeDetectionBehavior: ShakeDetectionBehavior = ShakeDetectionBehavior(),
     val logBehavior: LogBehavior = LogBehavior(),
     val networkLogBehavior: NetworkLogBehavior = NetworkLogBehavior(),
@@ -60,6 +63,7 @@ data class Behavior(
 ) {
     companion object {
         private val DEFAULT_EXCLUDED_PACKAGE_NAMES = emptyList<String>()
+        private const val DEFAULT_SHOULD_LOCK_DRAWER = false
         private val DEFAULT_LOG_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
     }
