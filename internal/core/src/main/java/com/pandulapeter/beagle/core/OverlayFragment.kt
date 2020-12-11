@@ -19,7 +19,7 @@ internal class OverlayFragment : Fragment() {
 
     private var fileName: String = "file"
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = BeagleCore.implementation.createOverlayLayout(requireActivity())
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = BeagleCore.implementation.createOverlayLayout(requireActivity(), this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fileName = savedInstanceState?.fileName ?: fileName

@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -381,7 +382,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     fun getNetworkLogEntries() = networkLogManager.getEntries()
 
-    internal fun createOverlayLayout(activity: FragmentActivity) = uiManager.createOverlayLayout(activity)
+    internal fun createOverlayLayout(activity: FragmentActivity, overlayFragment: Fragment) = uiManager.createOverlayLayout(activity, overlayFragment)
 
     fun notifyVisibilityListenersOnShow() = visibilityListenerManager.notifyListenersOnShow()
 

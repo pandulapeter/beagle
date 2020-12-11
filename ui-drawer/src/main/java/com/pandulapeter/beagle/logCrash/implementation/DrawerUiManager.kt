@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.logCrash.implementation
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -20,18 +21,18 @@ internal class DrawerUiManager : UiManagerContract, DrawerLayout.DrawerListener 
         }
     }
 
-    override fun createOverlayLayout(activity: FragmentActivity) = InternalDebugMenuView(activity).let { drawer ->
+    override fun createOverlayLayout(activity: FragmentActivity, overlayFragment: Fragment) = InternalDebugMenuView(activity).let { drawer ->
         activity.onBackPressedDispatcher.addCallback(activity, onBackPressedCallback)
         DebugMenuDrawerLayout(
             context = activity,
-            overlayFrameLayout = super.createOverlayLayout(activity),
+            overlayFrameLayout = super.createOverlayLayout(activity, overlayFragment),
             debugMenuView = drawer
         ).apply {
             updateDrawerLockMode()
             if (onBackPressedCallback.isEnabled) {
                 openDrawer(drawer, false)
             }
-            activity.lifecycle.addObserver(object : DefaultLifecycleObserver {
+            overlayFragment.viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
                 override fun onStart(owner: LifecycleOwner) = addDrawerListener(this@DrawerUiManager)
 
                 override fun onStop(owner: LifecycleOwner) = removeDrawerListener(this@DrawerUiManager)

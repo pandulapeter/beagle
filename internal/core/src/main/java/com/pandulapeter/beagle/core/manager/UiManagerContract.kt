@@ -49,7 +49,7 @@ interface UiManagerContract {
         }
     }
 
-    fun createOverlayLayout(activity: FragmentActivity): View = OverlayFrameLayout(activity)
+    fun createOverlayLayout(activity: FragmentActivity, overlayFragment: Fragment): View = OverlayFrameLayout(activity)
 
     fun findOverlayFragment(activity: FragmentActivity?): Fragment? = activity?.supportFragmentManager?.findFragmentById(android.R.id.content) as? OverlayFragment?
 
