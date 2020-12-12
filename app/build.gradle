@@ -123,7 +123,7 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
-    implementation project(":internal:utilities")
+    implementation project(":internal-utilities")
     activityDebugImplementation project(":ui-activity")
     activityDebugImplementation project(":log")
     activityDebugImplementation project(":log-okhttp")

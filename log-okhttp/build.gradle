@@ -7,5 +7,5 @@ version = libraryVersion
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    api project(":internal:common-base")
+    api project(":internal-common-base")
 }
