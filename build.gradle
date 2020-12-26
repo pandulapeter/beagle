@@ -6,7 +6,7 @@ buildscript {
         libraryCompileSdkVersion = 30
         libraryTargetSdkVersion = 30
         libraryVersionCode = 1
-        coroutinesVersion = "1.4.1"
+        coroutinesVersion = "1.4.2"
         annotationsVersion = "1.1.0"
         appCompatVersion = "1.2.0"
         recyclerViewVersion = "1.1.0"
@@ -16,9 +16,8 @@ buildscript {
         retrofitVersion = "2.9.0"
         moshiVersion = "1.11.0"
         okHttpVersion = "4.9.0"
-        ktorVersion = "1.4.2"
-        coilVersion = "1.0.0"
-        leakCanaryVersion = "2.5"
+        ktorVersion = "1.5.0"
+        coilVersion = "1.1.0"
     }
     repositories {
         google()

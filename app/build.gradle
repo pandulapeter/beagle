@@ -122,7 +122,7 @@ dependencies {
     implementation "com.android.billingclient:billing:3.0.2"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.6"
     implementation project(":internal-utilities")
     activityDebugImplementation project(":ui-activity")
     activityDebugImplementation project(":log")
