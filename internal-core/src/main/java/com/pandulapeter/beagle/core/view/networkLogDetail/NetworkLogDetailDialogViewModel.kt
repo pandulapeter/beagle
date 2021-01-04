@@ -96,7 +96,6 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         }
         _longestLine.postValue(longestLine)
         refreshUi()
-        _isProgressBarVisible.postValue(false)
         _isShareButtonEnabled.postValue(true)
     }
 
@@ -139,17 +138,20 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
 
     fun onItemClicked(lineIndex: Int) {
         viewModelScope.launch(tagManagerContext) {
-            if (collapsedLineIndices.contains(lineIndex)) {
-                collapsedLineIndices.remove(lineIndex)
-            } else {
-                collapsedLineIndices.add(lineIndex)
+            if (_isProgressBarVisible.value == false) {
+                if (collapsedLineIndices.contains(lineIndex)) {
+                    collapsedLineIndices.remove(lineIndex)
+                } else {
+                    collapsedLineIndices.add(lineIndex)
+                }
+                refreshUi()
             }
-            refreshUi()
         }
     }
 
     private suspend fun refreshUi() = withContext(tagManagerContext) {
         if (jsonLines.isNotEmpty()) {
+            _isProgressBarVisible.postValue(true)
             _items.postValue(mutableListOf<NetworkLogDetailListItem>().apply {
                 add(TitleViewHolder.UiModel(title = title))
                 add(MetadataHeaderViewHolder.UiModel(isCollapsed = !shouldShowMetadata))
@@ -197,6 +199,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                     )
                 })
             })
+            _isProgressBarVisible.postValue(false)
         }
     }
 
