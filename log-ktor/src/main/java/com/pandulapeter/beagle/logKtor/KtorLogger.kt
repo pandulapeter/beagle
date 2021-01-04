@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
  */
 internal class KtorLogger {
 
-    private suspend fun logRequest(request: HttpRequestBuilder): OutgoingContent? {
+    private suspend fun logRequest(request: HttpRequestBuilder): OutgoingContent {
         val content = request.body as OutgoingContent
         val channel = ByteChannel()
         val result = content.observe(channel)

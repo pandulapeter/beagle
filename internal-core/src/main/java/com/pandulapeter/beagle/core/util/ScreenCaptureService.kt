@@ -81,7 +81,7 @@ internal class ScreenCaptureService : Service() {
         super.onDestroy()
     }
 
-    override fun onBind(intent: Intent): IBinder? = throw IllegalStateException("Binding not supported.")
+    override fun onBind(intent: Intent): IBinder = throw IllegalStateException("Binding not supported.")
 
     private fun cleanUp() {
         projection?.stop()
