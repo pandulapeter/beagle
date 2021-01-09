@@ -307,13 +307,7 @@ Beagle.initialize(
 )
 ```
 
-The **log-crash** dependency introduces a `Service` running in a separate process. Firebase has a problem with this, so make sure you call the following in your custom `Application` class if you use Firebase:
-
-```kotlin
-FirebaseApp.initializeApp(this)
-```
-
-While this feature should work together with other crash reporting solutions, I do have some reliability concerns so please report any issues you encounter.
+**Enabling this feature will disable the crash collection of Firebase Crashlytics as using the two simultaneously has proved to be unreliable.**
 
 ### Improving encapsulation
 

@@ -171,7 +171,18 @@ internal class BugReportViewModel(
     }
 
     fun onAttachAllButtonClicked(id: String) {
-        // TODO
+        viewModelScope.launch(listManagerContext) {
+            when (id) {
+                ID_CRASH_LOGS -> selectedCrashLogIds = allCrashLogEntries?.map { it.id }.orEmpty()
+                ID_NETWORK_LOGS -> selectedNetworkLogIds = allNetworkLogEntries.map { it.id }
+                ID_LIFECYCLE_LOGS -> selectedLifecycleLogIds = allLifecycleLogEntries.map { it.id }
+                else -> if (id.startsWith(ID_LOGS)) {
+                    val label = id.removePrefix(ID_LOGS).let { if (it == "null") null else it }
+                    selectedLogIds[label] = allLogEntries[label]?.map { it.id }.orEmpty()
+                }
+            }
+            refreshContent()
+        }
     }
 
     fun onSendButtonPressed() {
@@ -396,9 +407,9 @@ internal class BugReportViewModel(
                 if (shouldShowCrashLogsSection && crashLogEntries.isNotEmpty()) {
                     add(
                         HeaderViewHolder.UiModel(
-                            id = "headerCrashLogs",
+                            id = ID_CRASH_LOGS,
                             text = BeagleCore.implementation.appearance.bugReportTexts.crashLogsSectionTitle(selectedCrashLogIds.size),
-                            shouldShowAttachAllButton = false
+                            shouldShowAttachAllButton = selectedCrashLogIds.size < allCrashLogEntries?.size ?: 0
                         )
                     )
                     addAll(crashLogEntries.map { entry ->
@@ -418,7 +429,7 @@ internal class BugReportViewModel(
                 if (shouldShowNetworkLogsSection && networkLogEntries.isNotEmpty()) {
                     add(
                         HeaderViewHolder.UiModel(
-                            id = "headerNetworkLogs",
+                            id = ID_NETWORK_LOGS,
                             text = BeagleCore.implementation.appearance.bugReportTexts.networkLogsSectionTitle(selectedNetworkLogIds.size),
                             shouldShowAttachAllButton = selectedNetworkLogIds.size < allNetworkLogEntries.size
                         )
@@ -441,7 +452,7 @@ internal class BugReportViewModel(
                     if (logEntries.isNotEmpty()) {
                         add(
                             HeaderViewHolder.UiModel(
-                                id = "headerLogs_$label",
+                                id = "${ID_LOGS}$label",
                                 text = BeagleCore.implementation.appearance.bugReportTexts.logsSectionTitle(label, selectedLogIds[label]?.size ?: 0),
                                 shouldShowAttachAllButton = selectedLogIds[label]?.size ?: 0 < allLogEntries[label]?.size ?: 0
                             )
@@ -464,7 +475,7 @@ internal class BugReportViewModel(
                 if (lifecycleLogEntries.isNotEmpty()) {
                     add(
                         HeaderViewHolder.UiModel(
-                            id = "headerLifecycleLogs",
+                            id = ID_LIFECYCLE_LOGS,
                             text = BeagleCore.implementation.appearance.bugReportTexts.lifecycleLogsSectionTitle(selectedLifecycleLogIds.size),
                             shouldShowAttachAllButton = selectedLifecycleLogIds.size < allLifecycleLogEntries.size
                         )
@@ -536,5 +547,12 @@ internal class BugReportViewModel(
     enum class MetadataType {
         BUILD_INFORMATION,
         DEVICE_INFORMATION
+    }
+
+    companion object {
+        private const val ID_CRASH_LOGS = "headerCrashLogs"
+        private const val ID_NETWORK_LOGS = "headerNetworkLogs"
+        private const val ID_LOGS = "headerLogs_"
+        private const val ID_LIFECYCLE_LOGS = "headerLifecycleLogs"
     }
 }
