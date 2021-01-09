@@ -60,6 +60,7 @@ internal class ExceptionHandler private constructor(
             if (currentTimestamp - lastCrashTimestamp > CRASH_LOOP_LIMIT
                 && defaultExceptionHandler != null
                 && defaultExceptionHandler::class.java.canonicalName?.startsWith("com.android.internal.os") != true
+                && defaultExceptionHandler::class.java.canonicalName?.startsWith("com.google.firebase.crashlytics") != true
             ) {
                 lastCrashTimestamp = currentTimestamp
                 defaultExceptionHandler.uncaughtException(thread, exception)
