@@ -76,7 +76,7 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.4.3"
+    def beagleVersion = "2.4.4"
     debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
@@ -307,7 +307,7 @@ Beagle.initialize(
 )
 ```
 
-**Enabling this feature will disable the crash collection of Firebase Crashlytics as using the two simultaneously has proved to be unreliable.**
+Enabling this feature will disable the crash collection of Firebase Crashlytics as using the two simultaneously has proved to be unreliable.
 
 ### Improving encapsulation
 
