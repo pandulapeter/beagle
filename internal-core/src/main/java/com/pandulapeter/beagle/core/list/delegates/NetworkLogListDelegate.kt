@@ -1,12 +1,10 @@
 package com.pandulapeter.beagle.core.list.delegates
 
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
 import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
-import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 
 internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListModule> {
@@ -39,10 +37,12 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
         fun format(
             entry: NetworkLogEntry,
             formatter: ((Long) -> CharSequence)?
-        ) = entry.url.replace(BeagleCore.implementation.behavior.networkLogBehavior.baseUrl, "").let { url ->
-            (if (entry.isOutgoing) "↑ " else "↓ ").let { prefix ->
-                formatter?.invoke(entry.timestamp)?.let { formattedTimestamp -> "$prefix[".append(formattedTimestamp).append("] ").append(url) } ?: prefix.append(url)
-            }
-        }.toText()
+        ) = BeagleCore.implementation.appearance.networkLogTexts.titleFormatter(
+            entry.isOutgoing,
+            entry.url,
+            formatter?.invoke(entry.timestamp),
+            entry.headers,
+            BeagleCore.implementation.behavior.networkLogBehavior.baseUrl
+        )
     }
 }
