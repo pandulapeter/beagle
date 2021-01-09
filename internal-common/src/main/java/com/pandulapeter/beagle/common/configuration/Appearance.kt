@@ -175,7 +175,7 @@ data class Appearance(
      * @param gallerySectionTitle - The title of the Gallery section. [DEFAULT_GALLERY_SECTION_TITLE] by default.
      * @param crashLogsSectionTitle - The title of the Crash logs section. [DEFAULT_CRASH_LOGS_SECTION_TITLE] by default.
      * @param networkLogsSectionTitle - The title of the Network logs section. [DEFAULT_NETWORK_LOGS_SECTION_TITLE] by default.
-     * @param logsSectionTitle - The title of the Logs section. Multiple such sections can be added filtered by tags (the parameter of the lambda function). [DEFAULT_LOGS_SECTION_TITLE] by default, suffixed with the tag name if it is not null.
+     * @param logsSectionTitle - The title of the Logs section. Multiple such sections can be added filtered by labels. [DEFAULT_LOGS_SECTION_TITLE] by default, suffixed with the label name if it is not null.
      * @param lifecycleLogsSectionTitle - The title of the Lifecycle logs section. [DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE] by default.
      * @param metadataSectionTitle - The title of the Metadata section. [DEFAULT_METADATA_SECTION_TITLE] by default.
      * @param buildInformation - The text on the build information check box. [DEFAULT_BUILD_INFORMATION] by default.
@@ -189,7 +189,7 @@ data class Appearance(
         val gallerySectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_GALLERY_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
         val crashLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_CRASH_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
         val networkLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_NETWORK_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
-        val logsSectionTitle: (tag: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> "${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)".toText() },
+        val logsSectionTitle: (label: String?, selectedItemCount: Int) -> Text = { tag, selectedItemCount -> "${DEFAULT_LOGS_SECTION_TITLE.let { title -> if (tag != null) "$title: $tag" else title }} ($selectedItemCount $SELECTED)".toText() },
         val lifecycleLogsSectionTitle: (selectedItemCount: Int) -> Text = { selectedItemCount -> "$DEFAULT_LIFECYCLE_LOGS_SECTION_TITLE ($selectedItemCount $SELECTED)".toText() },
         val metadataSectionTitle: Text = DEFAULT_METADATA_SECTION_TITLE.toText(),
         val buildInformation: Text = DEFAULT_BUILD_INFORMATION.toText(),
