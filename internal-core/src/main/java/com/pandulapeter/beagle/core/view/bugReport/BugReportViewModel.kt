@@ -170,6 +170,10 @@ internal class BugReportViewModel(
         }
     }
 
+    fun onAttachAllButtonClicked(id: String) {
+        // TODO
+    }
+
     fun onSendButtonPressed() {
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
             viewModelScope.launch {
@@ -380,7 +384,8 @@ internal class BugReportViewModel(
                 add(
                     HeaderViewHolder.UiModel(
                         id = "headerGallery",
-                        text = BeagleCore.implementation.appearance.bugReportTexts.gallerySectionTitle(selectedMediaFileIds.size)
+                        text = BeagleCore.implementation.appearance.bugReportTexts.gallerySectionTitle(selectedMediaFileIds.size),
+                        shouldShowAttachAllButton = false
                     )
                 )
                 add(GalleryViewHolder.UiModel(mediaFiles.map { it.name to it.lastModified() }, selectedMediaFileIds))
@@ -392,7 +397,8 @@ internal class BugReportViewModel(
                     add(
                         HeaderViewHolder.UiModel(
                             id = "headerCrashLogs",
-                            text = BeagleCore.implementation.appearance.bugReportTexts.crashLogsSectionTitle(selectedCrashLogIds.size)
+                            text = BeagleCore.implementation.appearance.bugReportTexts.crashLogsSectionTitle(selectedCrashLogIds.size),
+                            shouldShowAttachAllButton = false
                         )
                     )
                     addAll(crashLogEntries.map { entry ->
@@ -413,7 +419,8 @@ internal class BugReportViewModel(
                     add(
                         HeaderViewHolder.UiModel(
                             id = "headerNetworkLogs",
-                            text = BeagleCore.implementation.appearance.bugReportTexts.networkLogsSectionTitle(selectedNetworkLogIds.size)
+                            text = BeagleCore.implementation.appearance.bugReportTexts.networkLogsSectionTitle(selectedNetworkLogIds.size),
+                            shouldShowAttachAllButton = selectedNetworkLogIds.size < allNetworkLogEntries.size
                         )
                     )
                     addAll(networkLogEntries.map { entry ->
@@ -435,7 +442,8 @@ internal class BugReportViewModel(
                         add(
                             HeaderViewHolder.UiModel(
                                 id = "headerLogs_$label",
-                                text = BeagleCore.implementation.appearance.bugReportTexts.logsSectionTitle(label, selectedLogIds[label]?.size ?: 0)
+                                text = BeagleCore.implementation.appearance.bugReportTexts.logsSectionTitle(label, selectedLogIds[label]?.size ?: 0),
+                                shouldShowAttachAllButton = selectedLogIds[label]?.size ?: 0 < allLogEntries[label]?.size ?: 0
                             )
                         )
                         addAll(logEntries.map { entry ->
@@ -457,7 +465,8 @@ internal class BugReportViewModel(
                     add(
                         HeaderViewHolder.UiModel(
                             id = "headerLifecycleLogs",
-                            text = BeagleCore.implementation.appearance.bugReportTexts.lifecycleLogsSectionTitle(selectedLifecycleLogIds.size)
+                            text = BeagleCore.implementation.appearance.bugReportTexts.lifecycleLogsSectionTitle(selectedLifecycleLogIds.size),
+                            shouldShowAttachAllButton = selectedLifecycleLogIds.size < allLifecycleLogEntries.size
                         )
                     )
                     addAll(lifecycleLogEntries.map { entry ->
@@ -477,7 +486,8 @@ internal class BugReportViewModel(
                 add(
                     HeaderViewHolder.UiModel(
                         id = "headerMetadata",
-                        text = BeagleCore.implementation.appearance.bugReportTexts.metadataSectionTitle
+                        text = BeagleCore.implementation.appearance.bugReportTexts.metadataSectionTitle,
+                        shouldShowAttachAllButton = false
                     )
                 )
                 if (buildInformation.isNotBlank()) {
@@ -501,7 +511,8 @@ internal class BugReportViewModel(
                 add(
                     HeaderViewHolder.UiModel(
                         id = "textInputTitle_$index",
-                        text = title
+                        text = title,
+                        shouldShowAttachAllButton = false
                     )
                 )
                 add(

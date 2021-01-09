@@ -132,7 +132,8 @@ class BugReportActivity : AppCompatActivity() {
             onShowMoreTapped = viewModel::onShowMoreTapped,
             onDescriptionChanged = viewModel::onDescriptionChanged,
             onMetadataItemClicked = ::showMetadataDetailDialog,
-            onMetadataItemSelectionChanged = viewModel::onMetadataItemSelectionChanged
+            onMetadataItemSelectionChanged = viewModel::onMetadataItemSelectionChanged,
+            onAttachAllButtonClicked = viewModel::onAttachAllButtonClicked
         )
         recyclerView.run {
             setHasFixedSize(true)

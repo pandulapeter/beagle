@@ -21,7 +21,8 @@ internal class BugReportAdapter(
     private val onShowMoreTapped: (ShowMoreViewHolder.Type) -> Unit,
     private val onDescriptionChanged: (Int, CharSequence) -> Unit,
     private val onMetadataItemClicked: (BugReportViewModel.MetadataType) -> Unit,
-    private val onMetadataItemSelectionChanged: (BugReportViewModel.MetadataType) -> Unit
+    private val onMetadataItemSelectionChanged: (BugReportViewModel.MetadataType) -> Unit,
+    private val onAttachAllButtonClicked: (String) -> Unit
 ) : ListAdapter<BugReportListItem, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<BugReportListItem>() {
 
     override fun areItemsTheSame(oldItem: BugReportListItem, newItem: BugReportListItem) = oldItem.id == newItem.id
@@ -44,7 +45,7 @@ internal class BugReportAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
-        R.layout.beagle_item_bug_report_header -> HeaderViewHolder.create(parent)
+        R.layout.beagle_item_bug_report_header -> HeaderViewHolder.create(parent, onAttachAllButtonClicked)
         R.layout.beagle_item_bug_report_gallery -> GalleryViewHolder.create(
             parent = parent,
             onMediaSelected = onMediaFileSelected,
