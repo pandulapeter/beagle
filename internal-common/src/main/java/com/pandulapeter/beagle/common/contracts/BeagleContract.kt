@@ -17,7 +17,12 @@ import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
 import com.pandulapeter.beagle.commonBase.currentTimestamp
+import com.pandulapeter.beagle.commonBase.model.CrashLogEntry
+import com.pandulapeter.beagle.commonBase.model.LifecycleLogEntry
+import com.pandulapeter.beagle.commonBase.model.LogEntry
+import com.pandulapeter.beagle.commonBase.model.NetworkLogEntry
 import com.pandulapeter.beagle.commonBase.randomId
+import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import kotlin.reflect.KClass
 
 /**
@@ -269,22 +274,9 @@ interface BeagleContract {
     fun clearVisibilityListeners() = Unit
     //endregion
 
-    //region Helpers
+    //region Logs (general)
     /**
-     * Convenience getter when a module callback implementation needs to perform UI-related operations or simply needs a [Context] instance.
-     *
-     * @return The nullable [FragmentActivity] instance which is currently on top of the back stack. Possible reasons for returning null:
-     *  - The library has not been initialized yet.
-     *  - The application does not have any created activities.
-     *  - The currently visible Activity is not a subclass of [FragmentActivity].
-     *  - The currently visible Activity does not support a debug menu (social login overlay, in-app-purchase overlay, manually excluded package specified by the [Behavior], etc).
-     *  - The currently visible Activity is the debug menu (let me know if this is an issue...)
-     *  - The application depends on the noop variant.
-     */
-    val currentActivity: FragmentActivity? get() = null
-
-    /**
-     * Adds a new log message handled by instances of LogListModule and notifies the registered LogListeners.
+     * Adds a new log entry and notifies the registered [LogListener]-s.
      *
      * @param message - The message that will be displayed.
      * @param label - Optional tag that can be used to create filtered LogListModule instances, null by default.
@@ -303,14 +295,23 @@ interface BeagleContract {
     ) = Unit
 
     /**
-     * Clears all log messages for the specified tag.
+     * Returns all log messages for the provided label.
      *
-     * @param label - A specific tag to filter out, or null to delete all logs. Null by default.
+     * @param label - A specific label to filter for, or null to return all logs. Null by default.
      */
-    fun clearLogs(label: String? = null) = Unit
+    suspend fun getLogEntries(label: String? = null): List<LogEntry> = emptyList()
 
     /**
-     * Adds a new network log message handled by NetworkLogListModule and notifies the registered NetworkLogListeners.
+     * Clears all log entries for the specified tag.
+     *
+     * @param label - A specific label to filter out, or null to delete all logs. Null by default.
+     */
+    fun clearLogEntries(label: String? = null) = Unit
+    //endregion
+
+    //region Logs (network)
+    /**
+     * Logs a new network event and notifies the registered [NetworkLogListener]-s.
      *
      * @param isOutgoing - True for requests, false for responses.
      * @param url - The complete URL of the endpoint. This will appear in the log list as the title of the entry.
@@ -320,7 +321,7 @@ interface BeagleContract {
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
      * @param id - The unique identifier of the event. [randomId] by default.
      */
-    fun logNetworkEvent(
+    fun logNetwork(
         isOutgoing: Boolean,
         url: String,
         payload: String?,
@@ -331,19 +332,55 @@ interface BeagleContract {
     ) = Unit
 
     /**
-     * Clears all network log messages.
+     * Returns all network log entries.
      */
-    fun clearNetworkLogs() = Unit
+    suspend fun getNetworkLogEntries(): List<NetworkLogEntry> = emptyList()
+
+    /**
+     * Clears all network log entries.
+     */
+    fun clearNetworkLogEntries() = Unit
+    //endregion
+
+    //region Logs (lifecycle)
+    /**
+     * Returns all lifecycle log entries, for the specified lifecycle events.
+     *
+     * @param eventTypes - The list of lifecycle events to filter for, or null to return all entries.
+     */
+    suspend fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>? = null): List<LifecycleLogEntry> = emptyList()
 
     /**
      * Clears all lifecycle log messages.
      */
-    fun clearLifecycleLogs() = Unit
+    fun clearLifecycleLogEntries() = Unit
+    //endregion
+
+    //region Logs (crash)
+    /**
+     * Returns all crash log entries.
+     */
+    suspend fun getCrashLogEntries(): List<CrashLogEntry> = emptyList()
 
     /**
      * Clears all crash log messages.
      */
-    fun clearCrashLogs() = Unit
+    fun clearCrashLogEntries() = Unit
+    //endregion
+
+    //region Helpers
+    /**
+     * Convenience getter when a module callback implementation needs to perform UI-related operations or simply needs a [Context] instance.
+     *
+     * @return The nullable [FragmentActivity] instance which is currently on top of the back stack. Possible reasons for returning null:
+     *  - The library has not been initialized yet.
+     *  - The application does not have any created activities.
+     *  - The currently visible Activity is not a subclass of [FragmentActivity].
+     *  - The currently visible Activity does not support a debug menu (social login overlay, in-app-purchase overlay, manually excluded package specified by the [Behavior], etc).
+     *  - The currently visible Activity is the debug menu (let me know if this is an issue...)
+     *  - The application depends on the noop variant.
+     */
+    val currentActivity: FragmentActivity? get() = null
 
     /**
      * Captures a screenshot image and saves it in the application's private directory (exposing it through a FileProvider).

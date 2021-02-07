@@ -10,7 +10,7 @@ internal class BeagleKtorLoggerImplementation : BeagleNetworkLoggerContract {
     private var clearLogs: (() -> Unit)? = null
     override val logger: HttpClientFeature<*, *> = KtorLogger
 
-    override fun logNetworkEvent(
+    override fun logNetwork(
         isOutgoing: Boolean,
         url: String,
         payload: String?,
@@ -32,7 +32,7 @@ internal class BeagleKtorLoggerImplementation : BeagleNetworkLoggerContract {
         )
     }
 
-    override fun clearNetworkLogs() {
+    override fun clearNetworkLogEntries() {
         clearLogs?.invoke()
     }
 

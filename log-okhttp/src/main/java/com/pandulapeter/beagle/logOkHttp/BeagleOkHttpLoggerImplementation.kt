@@ -10,7 +10,7 @@ internal class BeagleOkHttpLoggerImplementation : BeagleNetworkLoggerContract {
     private var clearLogs: (() -> Unit)? = null
     override val logger: Interceptor by lazy { OkHttpInterceptor() }
 
-    override fun logNetworkEvent(
+    override fun logNetwork(
         isOutgoing: Boolean,
         url: String,
         payload: String?,
@@ -32,7 +32,7 @@ internal class BeagleOkHttpLoggerImplementation : BeagleNetworkLoggerContract {
         )
     }
 
-    override fun clearNetworkLogs() {
+    override fun clearNetworkLogEntries() {
         clearLogs?.invoke()
     }
 

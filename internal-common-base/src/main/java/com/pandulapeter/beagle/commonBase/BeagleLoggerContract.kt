@@ -28,7 +28,7 @@ interface BeagleLoggerContract {
      *
      * @param label - A specific tag to filter out, or null to delete all logs. Null by default.
      */
-    fun clearLogs(label: String? = null) = Unit
+    fun clearLogEntries(label: String? = null) = Unit
 
     /**
      * For internal use only.

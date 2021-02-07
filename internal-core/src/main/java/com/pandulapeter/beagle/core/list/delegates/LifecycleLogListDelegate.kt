@@ -11,10 +11,10 @@ import com.pandulapeter.beagle.modules.LifecycleLogListModule
 
 internal class LifecycleLogListDelegate : ExpandableModuleDelegate<LifecycleLogListModule> {
 
-    override fun canExpand(module: LifecycleLogListModule) = BeagleCore.implementation.getLifecycleLogEntries(module.eventTypes).isNotEmpty()
+    override fun canExpand(module: LifecycleLogListModule) = BeagleCore.implementation.getLifecycleLogEntriesInternal(module.eventTypes).isNotEmpty()
 
     override fun MutableList<Cell<*>>.addItems(module: LifecycleLogListModule) {
-        addAll(BeagleCore.implementation.getLifecycleLogEntries(module.eventTypes).take(module.maxItemCount).map { entry ->
+        addAll(BeagleCore.implementation.getLifecycleLogEntriesInternal(module.eventTypes).take(module.maxItemCount).map { entry ->
             ExpandedItemTextCell(
                 id = "${module.id}_${entry.id}",
                 text = format(entry, module.timestampFormatter, module.shouldDisplayFullNames),

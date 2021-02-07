@@ -122,7 +122,7 @@ class BugReportActivity : AppCompatActivity() {
             onCrashLogLongTapped = viewModel::onCrashLogLongTapped,
             onNetworkLogSelected = { id -> viewModel.allNetworkLogEntries.firstOrNull { it.id == id }?.let(::showNetworkLogDetailDialog) },
             onNetworkLogLongTapped = viewModel::onNetworkLogLongTapped,
-            onLogSelected = { id, label -> BeagleCore.implementation.getLogEntries(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
+            onLogSelected = { id, label -> BeagleCore.implementation.getLogEntriesInternal(label).firstOrNull { it.id == id }?.let(::showLogDetailDialog) },
             onLogLongTapped = viewModel::onLogLongTapped,
             onLifecycleLogSelected = { id -> viewModel.allLifecycleLogEntries.firstOrNull { it.id == id }?.let(::showLifecycleLogDetailDialog) },
             onLifecycleLogLongTapped = viewModel::onLifecycleLogLongTapped,

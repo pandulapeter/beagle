@@ -61,7 +61,7 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
                         ")"
             ),
             TextViewHolder.UiModel(R.string.case_study_analytics_text_4),
-            CodeSnippetViewHolder.UiModel("Beagle.clearLogs(LOG_TAG)"),
+            CodeSnippetViewHolder.UiModel("Beagle.clearLogEntries(LOG_TAG)"),
             TextViewHolder.UiModel(R.string.case_study_analytics_text_5),
             ClearButtonViewHolder.UiModel(),
             TextViewHolder.UiModel(R.string.case_study_analytics_text_6),

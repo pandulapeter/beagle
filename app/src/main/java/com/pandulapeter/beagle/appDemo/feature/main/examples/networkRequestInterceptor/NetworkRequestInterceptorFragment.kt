@@ -33,7 +33,7 @@ class NetworkRequestInterceptorFragment :
     )
 
     private fun clearNetworkLogs() {
-        Beagle.clearNetworkLogs()
+        Beagle.clearNetworkLogEntries()
         binding.recyclerView.showSnackbar(R.string.case_study_network_request_interceptor_logs_cleared)
     }
 

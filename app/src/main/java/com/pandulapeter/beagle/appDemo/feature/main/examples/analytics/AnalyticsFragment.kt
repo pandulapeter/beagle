@@ -41,7 +41,7 @@ class AnalyticsFragment : ExamplesDetailFragment<AnalyticsViewModel, AnalyticsLi
     )
 
     private fun onClearButtonPressed() {
-        Beagle.clearLogs(LOG_TAG)
+        Beagle.clearLogEntries(LOG_TAG)
         binding.recyclerView.showSnackbar(R.string.case_study_analytics_logs_cleared)
     }
 

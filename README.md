@@ -187,7 +187,7 @@ To add log messages, now you can call the following:
 BeagleLogger.log(…)
 ```
 
-The messages list will be merged with the ones logged using the regular `Beagle.log()` function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use `BeagleLogger.clearLogs()` if you cannot access `Beagle.clearLogs()`.
+The messages list will be merged with the ones logged using the regular `Beagle.log()` function (unless they are filtered by their tags) and can be displayed using a [LogListModule](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt). You can also use `BeagleLogger.clearLogEntries()` if you cannot access `Beagle.clearLogEntries()`.
 
 #### Logging with Timber
 To automatically add events logged with [Timber](https://github.com/JakeWharton/timber) to the debug menu, planting a special tree is the simplest solution:

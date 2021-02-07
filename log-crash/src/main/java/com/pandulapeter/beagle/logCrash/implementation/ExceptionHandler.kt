@@ -19,11 +19,11 @@ internal class ExceptionHandler private constructor(
 
     private val limit by lazy { BeagleCore.implementation.behavior.bugReportingBehavior.logRestoreLimit }
     private val logsToRestore
-        get() = BeagleCore.implementation.getLogEntries(null).take(limit)
+        get() = BeagleCore.implementation.getLogEntriesInternal(null).take(limit)
     private val networkLogsToRestore
-        get() = BeagleCore.implementation.getNetworkLogEntries().take(limit)
+        get() = BeagleCore.implementation.getNetworkLogEntriesInternal().take(limit)
     private val lifecycleLogsToRestore
-        get() = BeagleCore.implementation.getLifecycleLogEntries(BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes).take(limit)
+        get() = BeagleCore.implementation.getLifecycleLogEntriesInternal(BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes).take(limit)
     private var lastCrashTimestamp = 0L
 
     override fun uncaughtException(thread: Thread, exception: Throwable) {

@@ -28,7 +28,7 @@ internal class LoggerImplementation : BeagleLoggerContract {
         )
     }
 
-    override fun clearLogs(label: String?) {
+    override fun clearLogEntries(label: String?) {
         clearLogs?.invoke(label)
     }
 

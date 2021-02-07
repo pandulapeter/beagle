@@ -21,7 +21,7 @@ interface BeagleNetworkLoggerContract {
      * @param timestamp - The moment the event happened. The value defaults to the moment this function is invoked.
      * @param id - The unique identifier of the event. [randomId] by default.
      */
-    fun logNetworkEvent(
+    fun logNetwork(
         isOutgoing: Boolean,
         url: String,
         payload: String?,
@@ -34,7 +34,7 @@ interface BeagleNetworkLoggerContract {
     /**
      * Clears all network log messages.
      */
-    fun clearNetworkLogs() = Unit
+    fun clearNetworkLogEntries() = Unit
 
     /**
      * For internal use only.

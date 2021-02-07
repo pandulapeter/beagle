@@ -9,10 +9,10 @@ import com.pandulapeter.beagle.modules.NetworkLogListModule
 
 internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListModule> {
 
-    override fun canExpand(module: NetworkLogListModule) = BeagleCore.implementation.getNetworkLogEntries().isNotEmpty()
+    override fun canExpand(module: NetworkLogListModule) = BeagleCore.implementation.getNetworkLogEntriesInternal().isNotEmpty()
 
     override fun MutableList<Cell<*>>.addItems(module: NetworkLogListModule) {
-        addAll(BeagleCore.implementation.getNetworkLogEntries().take(module.maxItemCount).map { entry ->
+        addAll(BeagleCore.implementation.getNetworkLogEntriesInternal().take(module.maxItemCount).map { entry ->
             ExpandedItemTextCell(
                 id = "${module.id}_${entry.id}",
                 text = format(entry, module.timestampFormatter),

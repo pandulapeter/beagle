@@ -50,9 +50,11 @@ import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialog
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
@@ -109,8 +111,8 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         this.localStorageManager = LocalStorageManager(application)
         behavior.bugReportingBehavior.crashLoggers.forEach { it.initialize(application) }
         debugMenuInjector.register(application)
-        behavior.logBehavior.loggers.forEach { it.register(::log, ::clearLogs) }
-        behavior.networkLogBehavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogs) }
+        behavior.logBehavior.loggers.forEach { it.register(::log, ::clearLogEntries) }
+        behavior.networkLogBehavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogEntries) }
         videoThumbnailLoader = ImageLoader.Builder(application)
             .componentRegistry {
                 add(VideoFrameFileFetcher(application))
@@ -245,9 +247,9 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         id = id
     )
 
-    override fun clearLogs(label: String?) = logManager.clearLogs(label)
+    override fun clearLogEntries(label: String?) = logManager.clearLogs(label)
 
-    private fun logNetworkEvent(networkLogEntry: NetworkLogEntry) = logNetworkEvent(
+    private fun logNetworkEvent(networkLogEntry: NetworkLogEntry) = logNetwork(
         isOutgoing = networkLogEntry.isOutgoing,
         url = networkLogEntry.url,
         payload = networkLogEntry.payload,
@@ -257,7 +259,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         id = networkLogEntry.id,
     )
 
-    override fun logNetworkEvent(
+    override fun logNetwork(
         isOutgoing: Boolean,
         url: String,
         payload: String?,
@@ -275,11 +277,17 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         id = id
     )
 
-    override fun clearNetworkLogs() = networkLogManager.clearLogs()
+    fun getNetworkLogEntriesInternal() = networkLogManager.getEntries()
 
-    override fun clearLifecycleLogs() = lifecycleLogManager.clearLogs()
+    override suspend fun getNetworkLogEntries() = withContext(Dispatchers.Main) {
+        getNetworkLogEntriesInternal().map { it.toNetworkLogEntry() }
+    }
 
-    override fun clearCrashLogs() = crashLogManager.clearLogs()
+    override fun clearNetworkLogEntries() = networkLogManager.clearLogs()
+
+    override fun clearLifecycleLogEntries() = lifecycleLogManager.clearLogs()
+
+    override fun clearCrashLogEntries() = crashLogManager.clearLogs()
 
     override fun takeScreenshot() = screenCaptureManager.takeScreenshot()
 
@@ -378,17 +386,11 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     internal fun resetPendingChanges() = listManager.resetPendingChanges()
 
-    fun getLogEntries(label: String?) = logManager.getEntries(label)
+    fun getLogEntriesInternal(label: String?) = logManager.getEntries(label)
 
-    fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>?) = lifecycleLogManager.getEntries(eventTypes)
-
-    internal fun restoreAfterCrash(restoreModel: RestoreModel) {
-        logManager.restore(restoreModel.logs)
-        networkLogManager.restore(restoreModel.networkLogs)
-        lifecycleLogManager.restore(restoreModel.lifecycleLogs)
+    override suspend fun getLogEntries(label: String?) = withContext(Dispatchers.Default) {
+        getLogEntriesInternal(label).map { it.toLogEntry() }
     }
-
-    internal fun logCrash(crashLogEntry: SerializableCrashLogEntry) = crashLogManager.log(crashLogEntry)
 
     internal fun logLifecycle(
         classType: Class<*>,
@@ -400,9 +402,23 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         hasSavedInstanceState = hasSavedInstanceState
     )
 
-    internal suspend fun getCrashLogEntries() = crashLogManager.getCrashLogEntries()
+    fun getLifecycleLogEntriesInternal(eventTypes: List<LifecycleLogListModule.EventType>?) = lifecycleLogManager.getEntries(eventTypes)
 
-    fun getNetworkLogEntries() = networkLogManager.getEntries()
+    override suspend fun getLifecycleLogEntries(eventTypes: List<LifecycleLogListModule.EventType>?) = withContext(Dispatchers.Default) {
+        getLifecycleLogEntriesInternal(eventTypes).map { it.toLifecycleLogEntry() }
+    }
+
+    internal fun restoreAfterCrash(restoreModel: RestoreModel) {
+        logManager.restore(restoreModel.logs)
+        networkLogManager.restore(restoreModel.networkLogs)
+        lifecycleLogManager.restore(restoreModel.lifecycleLogs)
+    }
+
+    internal fun logCrash(crashLogEntry: SerializableCrashLogEntry) = crashLogManager.log(crashLogEntry)
+
+    internal suspend fun getCrashLogEntriesInternal() = crashLogManager.getCrashLogEntries()
+
+    override suspend fun getCrashLogEntries() = getCrashLogEntriesInternal().map { it.toCrashLogEntry() }
 
     internal fun createOverlayLayout(activity: FragmentActivity, overlayFragment: Fragment) = uiManager.createOverlayLayout(activity, overlayFragment)
 

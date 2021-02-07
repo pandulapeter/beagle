@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.util.model
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.commonBase.currentTimestamp
+import com.pandulapeter.beagle.commonBase.model.LifecycleLogEntry
 import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.squareup.moshi.Json
@@ -36,4 +37,13 @@ data class SerializableLifecycleLogEntry(
     fun getFormattedTitle(shouldDisplayFullNames: Boolean) = "${(if (shouldDisplayFullNames) name else simpleName)}: ${eventType.formattedName}".let {
         if (hasSavedInstanceState == null) it else "$it, savedInstanceState ${if (hasSavedInstanceState) "!=" else "="} null"
     }
+
+    fun toLifecycleLogEntry() = LifecycleLogEntry(
+        id = id,
+        name = name,
+        simpleName = simpleName,
+        eventType = eventType.formattedName,
+        hasSavedInstanceState = hasSavedInstanceState,
+        timestamp = timestamp
+    )
 }

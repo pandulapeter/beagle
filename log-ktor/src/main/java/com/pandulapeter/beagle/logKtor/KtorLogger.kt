@@ -36,7 +36,7 @@ internal class KtorLogger {
         val channel = ByteChannel()
         val result = content.observe(channel)
         val text = readPayload(content.contentType, channel)
-        BeagleKtorLogger.logNetworkEvent(
+        BeagleKtorLogger.logNetwork(
             isOutgoing = true,
             url = "[${request.method.value}] ${Url(request.url)}",
             payload = text,
@@ -46,7 +46,7 @@ internal class KtorLogger {
     }
 
     private fun logResponse(response: HttpResponse) {
-        BeagleKtorLogger.logNetworkEvent(
+        BeagleKtorLogger.logNetwork(
             isOutgoing = false,
             url = "[${response.call.request.method.value}] ${response.status.value} ${response.call.request.url.fullPath}",
             payload = "Ktor response payload logging not implemented yet",//TODO: readPayload(response.contentType(), response.content),
@@ -56,7 +56,7 @@ internal class KtorLogger {
     }
 
     private fun logException(context: HttpRequestBuilder, cause: Throwable) {
-        BeagleKtorLogger.logNetworkEvent(
+        BeagleKtorLogger.logNetwork(
             isOutgoing = false,
             url = "[${context.method.value}] FAIL ${Url(context.url)}",
             payload = cause.message ?: "HTTP Failed"

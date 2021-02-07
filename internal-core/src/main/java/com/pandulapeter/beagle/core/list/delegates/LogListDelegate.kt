@@ -11,10 +11,10 @@ import com.pandulapeter.beagle.modules.LogListModule
 
 internal class LogListDelegate : ExpandableModuleDelegate<LogListModule> {
 
-    override fun canExpand(module: LogListModule) = BeagleCore.implementation.getLogEntries(module.label).isNotEmpty()
+    override fun canExpand(module: LogListModule) = BeagleCore.implementation.getLogEntriesInternal(module.label).isNotEmpty()
 
     override fun MutableList<Cell<*>>.addItems(module: LogListModule) {
-        addAll(BeagleCore.implementation.getLogEntries(module.label).take(module.maxItemCount).map { entry ->
+        addAll(BeagleCore.implementation.getLogEntriesInternal(module.label).take(module.maxItemCount).map { entry ->
             ExpandedItemTextCell(
                 id = "${module.id}_${entry.id}",
                 text = format(entry, module.timestampFormatter),

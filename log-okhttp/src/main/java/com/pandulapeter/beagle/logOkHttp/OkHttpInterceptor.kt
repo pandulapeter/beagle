@@ -39,7 +39,7 @@ internal class OkHttpInterceptor : Interceptor {
                 "Binary payload, ${requestBody.contentLength()}-byte body"
             }
         }
-        BeagleOkHttpLogger.logNetworkEvent(
+        BeagleOkHttpLogger.logNetwork(
             isOutgoing = true,
             url = "[${request.method}] ${request.url}",
             payload = requestJson,
@@ -50,7 +50,7 @@ internal class OkHttpInterceptor : Interceptor {
         try {
             response = chain.proceed(request)
         } catch (exception: Exception) {
-            BeagleOkHttpLogger.logNetworkEvent(
+            BeagleOkHttpLogger.logNetwork(
                 isOutgoing = false,
                 url = "[${request.method}] FAIL ${request.url}",
                 payload = exception.message ?: "HTTP Failed"
@@ -61,7 +61,7 @@ internal class OkHttpInterceptor : Interceptor {
         val responseBody = response.body
         val contentType = responseBody?.contentType()
         val responseJson = if ((contentType == null || contentType.subtype == "json") && responseBody?.source()?.buffer?.isProbablyUtf8() == true) response.body?.string() else null
-        BeagleOkHttpLogger.logNetworkEvent(
+        BeagleOkHttpLogger.logNetwork(
             isOutgoing = false,
             url = "[${request.method}] ${response.code} ${request.url}",
             payload = responseJson ?: response.message,

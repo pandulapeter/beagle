@@ -77,19 +77,19 @@ internal class BugReportViewModel(
     private fun getCrashLogEntries() = allCrashLogEntries?.take(lastCrashLogIndex).orEmpty()
     private fun areThereMoreCrashLogEntries() = (allCrashLogEntries?.size ?: 0) > getCrashLogEntries().size
 
-    val allNetworkLogEntries by lazy { BeagleCore.implementation.getNetworkLogEntries() }
+    val allNetworkLogEntries by lazy { BeagleCore.implementation.getNetworkLogEntriesInternal() }
     private var lastNetworkLogIndex = pageSize
     private var selectedNetworkLogIds = emptyList<String>()
     private fun getNetworkLogEntries() = allNetworkLogEntries.take(lastNetworkLogIndex)
     private fun areThereMoreNetworkLogEntries() = allNetworkLogEntries.size > getNetworkLogEntries().size
 
-    private val allLogEntries by lazy { logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntries(label) }.toMap() }
+    private val allLogEntries by lazy { logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntriesInternal(label) }.toMap() }
     private val lastLogIndex = logLabelSectionsToShow.map { label -> label to pageSize }.toMap().toMutableMap()
     private val selectedLogIds = logLabelSectionsToShow.map { label -> label to emptyList<String>() }.toMap().toMutableMap()
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
     private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
 
-    val allLifecycleLogEntries by lazy { BeagleCore.implementation.getLifecycleLogEntries(lifecycleSectionEventTypes) }
+    val allLifecycleLogEntries by lazy { BeagleCore.implementation.getLifecycleLogEntriesInternal(lifecycleSectionEventTypes) }
     private var lastLifecycleLogIndex = pageSize
     private var selectedLifecycleLogIds = emptyList<String>()
     private fun getLifecycleLogEntries() = allLifecycleLogEntries.take(lastLifecycleLogIndex)
@@ -126,7 +126,7 @@ internal class BugReportViewModel(
             mediaFiles = context.getScreenCapturesFolder().listFiles().orEmpty().toList().sortedByDescending { it.lastModified() }
             selectedMediaFileIds = selectedMediaFileIds.filter { id -> mediaFiles.any { it.name == id } }
             if (allCrashLogEntries == null) {
-                allCrashLogEntries = BeagleCore.implementation.getCrashLogEntries()
+                allCrashLogEntries = BeagleCore.implementation.getCrashLogEntriesInternal()
             }
             refreshContent()
         }

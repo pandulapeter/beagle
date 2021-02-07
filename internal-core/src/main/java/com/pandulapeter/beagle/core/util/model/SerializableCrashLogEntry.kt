@@ -7,6 +7,7 @@ import android.text.style.StyleSpan
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
+import com.pandulapeter.beagle.commonBase.model.CrashLogEntry
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -27,4 +28,11 @@ data class SerializableCrashLogEntry(
             setSpan(StyleSpan(Typeface.BOLD), 0, text.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
         }
     }
+
+    fun toCrashLogEntry() = CrashLogEntry(
+        id = id,
+        exception = exception,
+        stacktrace = stacktrace,
+        timestamp = timestamp
+    )
 }
