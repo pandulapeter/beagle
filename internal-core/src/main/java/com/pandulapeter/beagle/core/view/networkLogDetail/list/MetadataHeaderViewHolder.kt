@@ -1,34 +1,31 @@
 package com.pandulapeter.beagle.core.view.networkLogDetail.list
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleItemNetworkLogDetailMetadataHeaderBinding
 import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class MetadataHeaderViewHolder private constructor(
-    itemView: View,
+    private val binding: BeagleItemNetworkLogDetailMetadataHeaderBinding,
     onItemClicked: () -> Unit
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(binding.root) {
 
-    private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
-    private val drawableExpand by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_expand, textView.textColors.defaultColor) }
-    private val drawableCollapse by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_collapse, textView.textColors.defaultColor) }
+    private val drawableExpand by lazy { binding.root.context.tintedDrawable(R.drawable.beagle_ic_expand, binding.beagleTextView.textColors.defaultColor) }
+    private val drawableCollapse by lazy { binding.root.context.tintedDrawable(R.drawable.beagle_ic_collapse, binding.beagleTextView.textColors.defaultColor) }
 
     init {
-        itemView.setOnClickListener {
+        binding.root.setOnClickListener {
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 onItemClicked()
             }
         }
     }
 
-    fun bind(uiModel: UiModel) = textView.run {
+    fun bind(uiModel: UiModel) = binding.beagleTextView.run {
         setText(BeagleCore.implementation.appearance.networkLogTexts.metadata)
         setCompoundDrawablesWithIntrinsicBounds(if (uiModel.isCollapsed) drawableExpand else drawableCollapse, null, null, null)
     }
@@ -45,7 +42,7 @@ internal class MetadataHeaderViewHolder private constructor(
             parent: ViewGroup,
             onItemClicked: () -> Unit
         ) = MetadataHeaderViewHolder(
-            itemView = parent.inflater.inflate(R.layout.beagle_item_network_log_detail_metadata_header, parent, false),
+            binding = BeagleItemNetworkLogDetailMetadataHeaderBinding.inflate(parent.inflater, parent, false),
             onItemClicked = onItemClicked
         )
     }

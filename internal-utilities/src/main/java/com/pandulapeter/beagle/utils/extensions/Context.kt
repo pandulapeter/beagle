@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
+import android.view.LayoutInflater
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -28,9 +29,11 @@ fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensi
 
 fun Context.drawable(@DrawableRes drawableResourceId: Int) = AppCompatResources.getDrawable(this, drawableResourceId)
 
-fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int) : Drawable? = drawable(drawableResourceId)?.let { drawable ->
+fun Context.tintedDrawable(@DrawableRes drawableResourceId: Int, @ColorInt tint: Int): Drawable? = drawable(drawableResourceId)?.let { drawable ->
     DrawableCompat.wrap(drawable.mutate()).apply {
         DrawableCompat.setTint(this, tint)
         DrawableCompat.setTintMode(this, PorterDuff.Mode.SRC_IN)
     }
 }
+
+val Context.inflater: LayoutInflater get() = LayoutInflater.from(this)

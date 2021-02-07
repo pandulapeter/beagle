@@ -3,18 +3,14 @@ package com.pandulapeter.beagle.core.view.networkLogDetail
 import android.app.Dialog
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleDialogFragmentNetworkLogDetailBinding
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.jsonLevel
 import com.pandulapeter.beagle.core.util.extension.text
@@ -26,47 +22,42 @@ import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
+import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
-
 
 internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
+    private lateinit var binding: BeagleDialogFragmentNetworkLogDetailBinding
     private val viewModel by viewModel<NetworkLogDetailDialogViewModel>()
-    private lateinit var appBar: AppBarLayout
-    private lateinit var toolbar: Toolbar
-    private lateinit var longestLineText: TextView
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var horizontalScrollView: View
     private lateinit var toggleDetailsButton: MenuItem
     private lateinit var shareButton: MenuItem
     private val scrollListener = object : RecyclerView.OnScrollListener() {
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            appBar.setLifted(recyclerView.computeVerticalScrollOffset() != 0)
+            binding.beagleAppBar.isLifted = recyclerView.computeVerticalScrollOffset() != 0
         }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext().applyTheme())
-        .setView(R.layout.beagle_dialog_fragment_network_log_detail)
-        .create()
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = requireContext().applyTheme().let { themedContext ->
+        AlertDialog.Builder(themedContext)
+            .setView(
+                BeagleDialogFragmentNetworkLogDetailBinding.inflate(themedContext.inflater, null, false).also {
+                    binding = it
+                }.root
+            )
+            .create()
+    }
 
     override fun onResume() {
         super.onResume()
         dialog?.let { dialog ->
-            appBar = dialog.findViewById(R.id.beagle_app_bar)
-            toolbar = dialog.findViewById(R.id.beagle_toolbar)
-            longestLineText = dialog.findViewById(R.id.beagle_longest_text_view)
-            recyclerView = dialog.findViewById(R.id.beagle_recycler_view)
-            progressBar = dialog.findViewById(R.id.beagle_progress_bar)
-            horizontalScrollView = dialog.findViewById(R.id.beagle_child_horizontal_scroll_view)
-            appBar.run {
+            binding.beagleAppBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
             }
-            recyclerView.addOnScrollListener(scrollListener)
+            binding.beagleRecyclerView.addOnScrollListener(scrollListener)
             val textColor = dialog.context.colorResource(android.R.attr.textColorPrimary)
-            toolbar.run {
+            binding.beagleToolbar.run {
                 setNavigationOnClickListener { dismiss() }
                 navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
                 toggleDetailsButton = menu.findItem(R.id.beagle_toggle_details).also {
@@ -80,15 +71,15 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 setOnMenuItemClickListener(::onMenuItemClicked)
             }
             viewModel.isProgressBarVisible.observe(this, {
-                progressBar.visible = it
+                binding.beagleProgressBar.visible = it
                 if (!it) {
-                    horizontalScrollView.visible = true
+                    binding.beagleChildHorizontalScrollView.visible = true
                 }
             })
             viewModel.longestLine.observe(this, { line ->
                 context?.let { context ->
                     val contentPadding = context.dimension(R.dimen.beagle_large_content_padding)
-                    longestLineText.run {
+                    binding.beagleLongestTextView.run {
                         text = line.trim()
                         setPadding(contentPadding * (line.jsonLevel + 1), paddingTop, contentPadding, paddingBottom)
                     }
@@ -101,7 +92,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                 onHeaderClicked = viewModel::onHeaderClicked,
                 onItemClicked = viewModel::onItemClicked
             )
-            recyclerView.run {
+            binding.beagleRecyclerView.run {
                 layoutManager = LinearLayoutManager(context)
                 adapter = networkLogDetailAdapter
             }
@@ -123,7 +114,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
     override fun onPause() {
         super.onPause()
-        recyclerView.removeOnScrollListener(scrollListener)
+        binding.beagleRecyclerView.removeOnScrollListener(scrollListener)
     }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {

@@ -33,13 +33,13 @@ internal class TextInputDelegate : ValueWrapperModuleDelegate.String<TextInputMo
                 isEnabled = module.isEnabled,
                 icon = null,
                 onItemSelected = {
-                    BeagleCore.implementation.currentActivity?.applyTheme()?.run {
-                        AlertDialog.Builder(this)
+                    BeagleCore.implementation.currentActivity?.applyTheme()?.let { themedContext ->
+                        AlertDialog.Builder(themedContext)
                             .setView(R.layout.beagle_view_text_input_dialog)
-                            .setPositiveButton(text(module.doneText), onDialogButtonPressed)
+                            .setPositiveButton(themedContext.text(module.doneText), onDialogButtonPressed)
                             .apply {
                                 if (!module.areRealTimeUpdatesEnabled) {
-                                    setNegativeButton(text(module.cancelText), onDialogButtonPressed)
+                                    setNegativeButton(themedContext.text(module.cancelText), onDialogButtonPressed)
                                 }
                             }
                             .create()

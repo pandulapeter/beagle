@@ -24,4 +24,4 @@ fun View.hideKeyboard() {
     )
 }
 
-val View.inflater: LayoutInflater get() = LayoutInflater.from(context)
+val View.inflater: LayoutInflater get() = context.inflater

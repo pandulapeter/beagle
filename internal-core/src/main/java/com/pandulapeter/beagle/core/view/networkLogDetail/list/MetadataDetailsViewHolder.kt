@@ -1,20 +1,16 @@
 package com.pandulapeter.beagle.core.view.networkLogDetail.list
 
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleItemNetworkLogDetailMetadataDetailsBinding
 import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal class MetadataDetailsViewHolder private constructor(
-    itemView: View
-) : RecyclerView.ViewHolder(itemView) {
-
-    private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
+    private val binding: BeagleItemNetworkLogDetailMetadataDetailsBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(uiModel: UiModel) {
-        textView.text = uiModel.metadata
+        binding.beagleTextView.text = uiModel.metadata
     }
 
     data class UiModel(
@@ -28,7 +24,7 @@ internal class MetadataDetailsViewHolder private constructor(
         fun create(
             parent: ViewGroup
         ) = MetadataDetailsViewHolder(
-            itemView = parent.inflater.inflate(R.layout.beagle_item_network_log_detail_metadata_details, parent, false)
+            BeagleItemNetworkLogDetailMetadataDetailsBinding.inflate(parent.inflater, parent, false)
         )
     }
 }
