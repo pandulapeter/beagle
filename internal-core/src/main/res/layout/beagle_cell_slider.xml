@@ -14,7 +14,7 @@
         android:paddingRight="@dimen/beagle_item_horizontal_margin"
         android:textColor="?android:attr/textColorPrimary">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/beagle_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:textColor="?android:attr/textColorPrimary"
             tools:text="Text" />
 
-        <androidx.appcompat.widget.AppCompatSeekBar
+        <com.google.android.material.slider.Slider
             android:id="@+id/beagle_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

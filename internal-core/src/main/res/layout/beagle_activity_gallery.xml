@@ -15,7 +15,7 @@
             android:fitsSystemWindows="true"
             app:liftOnScroll="true">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/beagle_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:paddingBottom="@dimen/beagle_content_padding"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/beagle_text_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
             android:visibility="gone"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/beagle_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

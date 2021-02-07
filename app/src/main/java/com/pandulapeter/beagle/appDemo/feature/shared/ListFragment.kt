@@ -19,11 +19,11 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.appDemo.utils.observe
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.utils.extensions.color
+import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.waitForPreDraw
 
 abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
-    @StringRes protected val titleResourceId: Int,
-    @ColorRes private val backgroundColorResourceId: Int = R.color.transparent
+    @StringRes protected val titleResourceId: Int
 ) : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
 
     protected abstract val viewModel: VM
@@ -44,7 +44,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.setVariable(BR.viewModel, viewModel)
-        binding.root.setBackgroundColor(requireContext().color(backgroundColorResourceId))
+        binding.root.setBackgroundColor(requireContext().colorResource(android.R.attr.windowBackground))
         binding.appBar.setup(
             titleResourceId,
             parentFragment?.childFragmentManager?.backStackEntryCount ?: 0 <= 1,

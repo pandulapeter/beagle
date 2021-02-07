@@ -11,8 +11,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.CallSuper
-import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.R
@@ -37,13 +37,13 @@ class InternalDebugMenuView @JvmOverloads constructor(
 
     //TODO: Create a custom view for the button container and all related logic and improve their appearance
     private val largePadding = context.dimension(R.dimen.beagle_large_content_padding)
-    private val applyButton = AppCompatButton(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
+    private val applyButton = MaterialButton(context.applyTheme(), attrs, R.attr.materialButtonStyle).apply {
         isAllCaps = false
         setText(BeagleCore.implementation.appearance.generalTexts.applyButtonText)
         setPadding(largePadding, largePadding, largePadding, largePadding)
         setOnClickListener { BeagleCore.implementation.applyPendingChanges() }
     }
-    private val resetButton = AppCompatButton(context.applyTheme(), attrs, androidx.appcompat.R.attr.buttonStyle).apply {
+    private val resetButton = MaterialButton(context.applyTheme(), attrs, R.attr.materialButtonStyle).apply {
         isAllCaps = false
         setText(BeagleCore.implementation.appearance.generalTexts.resetButtonText)
         setPadding(largePadding, largePadding, largePadding, largePadding)

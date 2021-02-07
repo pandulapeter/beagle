@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.HorizontalScrollView
-import androidx.appcompat.widget.AppCompatTextView
+import com.google.android.material.textview.MaterialTextView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.utils.extensions.color
 import com.pandulapeter.beagle.utils.extensions.dimension
@@ -18,7 +18,7 @@ class CodeSnippetView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : HorizontalScrollView(context, attrs, defStyleAttr) {
 
-    private val textView = AppCompatTextView(context, attrs, defStyleAttr).apply {
+    private val textView = MaterialTextView(context, attrs, defStyleAttr).apply {
         typeface = Typeface.create("monospace", Typeface.NORMAL)
         setTextColor(context.color(R.color.black))
         setTextSize(TypedValue.COMPLEX_UNIT_PX, context.dimension(R.dimen.code_snippet).toFloat())

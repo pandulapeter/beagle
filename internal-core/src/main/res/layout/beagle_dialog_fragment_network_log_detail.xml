@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             app:liftOnScroll="true">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/beagle_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/beagle_longest_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
 
             </com.pandulapeter.beagle.core.view.TolerantHorizontalScrollView>
 
-            <ProgressBar
+            <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/beagle_progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

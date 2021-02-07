@@ -20,7 +20,7 @@
         android:layout_marginEnd="@dimen/large_content_padding"
         android:layout_marginRight="@dimen/large_content_padding">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/large_content_padding"

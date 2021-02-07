@@ -14,7 +14,7 @@
         android:paddingRight="@dimen/beagle_item_horizontal_margin"
         android:paddingBottom="@dimen/beagle_item_vertical_margin">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/beagle_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:textStyle="bold"
             tools:text="Title" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/beagle_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:textStyle="bold"
             tools:text="Subtitle" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/beagle_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button xmlns:tools="http://schemas.android.com/tools"
+    <com.google.android.material.button.MaterialButton xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/beagle_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

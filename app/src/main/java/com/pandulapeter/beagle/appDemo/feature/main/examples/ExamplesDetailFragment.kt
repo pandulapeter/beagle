@@ -5,14 +5,11 @@ import android.view.View
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.core.view.ViewCompat
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 
-abstract class ExamplesDetailFragment<VM : ListViewModel<LI>, LI : ListItem>(
-    @StringRes titleResourceId: Int
-) : ListFragment<VM, LI>(titleResourceId, R.color.window_background) {
+abstract class ExamplesDetailFragment<VM : ListViewModel<LI>, LI : ListItem>(@StringRes titleResourceId: Int) : ListFragment<VM, LI>(titleResourceId) {
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)

@@ -2,13 +2,14 @@ package com.pandulapeter.beagle.core.list.cells
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
-import android.widget.SeekBar
+import com.google.android.material.slider.Slider
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.databinding.BeagleCellSliderBinding
 import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.extensions.inflater
+import kotlin.math.roundToInt
 
 internal data class SliderCell(
     override val id: String,
@@ -42,21 +43,14 @@ internal data class SliderCell(
         override fun bind(model: SliderCell) {
             binding.beagleTextView.setText(model.text)
             binding.beagleSeekBar.run {
-                setOnSeekBarChangeListener(null)
-                max = model.maximumValue - model.minimumValue
-                progress = model.value - model.minimumValue
+                clearOnChangeListeners()
+                valueTo = (model.maximumValue - model.minimumValue).toFloat()
+                value = (model.value - model.minimumValue).toFloat()
                 isEnabled = model.isEnabled
-                setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-                    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                        if (fromUser && progress != model.value + model.minimumValue) {
-                            model.onValueChanged(progress + model.minimumValue)
-                        }
+                addOnChangeListener(Slider.OnChangeListener { _, value, fromUser ->
+                    if (fromUser && value.roundToInt() != model.value + model.minimumValue) {
+                        model.onValueChanged((value + model.minimumValue).roundToInt())
                     }
-
-                    override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
-
-                    override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
                 })
             }
         }
