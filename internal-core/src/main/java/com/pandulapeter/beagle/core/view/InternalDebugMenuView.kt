@@ -51,7 +51,9 @@ class InternalDebugMenuView @JvmOverloads constructor(
     }
     private val buttonContainer = LinearLayout(context.applyTheme(), attrs, defStyleAttr).apply {
         orientation = LinearLayout.HORIZONTAL
-        gravity = Gravity.CENTER
+        gravity = Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM
+        clipChildren = false
+        visibility = View.INVISIBLE
         addView(applyButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             leftMargin = largePadding
             rightMargin = largePadding / 2
@@ -60,8 +62,6 @@ class InternalDebugMenuView @JvmOverloads constructor(
                 marginEnd = rightMargin
             }
         })
-        clipChildren = false
-        visibility = View.INVISIBLE
         addView(resetButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             leftMargin = largePadding / 2
             rightMargin = largePadding
