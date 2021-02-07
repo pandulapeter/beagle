@@ -80,7 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/beagle_large_content_padding" />
+                android:layout_margin="@dimen/beagle_large_content_padding"
+                android:indeterminate="true" />
 
         </FrameLayout>
 

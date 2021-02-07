@@ -23,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/large_content_padding" />
+            android:layout_marginTop="@dimen/large_content_padding"
+            android:indeterminate="true" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"

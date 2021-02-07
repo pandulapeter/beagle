@@ -10,7 +10,7 @@
 
     <style name="AppThemeBase" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/brand_dark</item>
-        <item name="colorAccent">@color/brand_dark</item>
+        <item name="colorSecondary">@color/brand_dark</item>
         <item name="materialButtonStyle">@style/Button</item>
     </style>
 
@@ -18,7 +18,7 @@
 
     <style name="DarkTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/white</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
     </style>
 
     <style name="Button" parent="Widget.MaterialComponents.Button">
