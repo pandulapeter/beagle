@@ -3,5 +3,5 @@
     <stroke
         android:width="@dimen/divider"
         android:color="@color/brand_dark" />
-    <solid android:color="@color/brand_light" />
+    <solid android:color="@color/code_snippet_background" />
 </shape>

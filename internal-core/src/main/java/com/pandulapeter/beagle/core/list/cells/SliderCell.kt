@@ -46,6 +46,7 @@ internal data class SliderCell(
                 clearOnChangeListeners()
                 valueTo = (model.maximumValue - model.minimumValue).toFloat()
                 value = (model.value - model.minimumValue).toFloat()
+                stepSize = 1f
                 isEnabled = model.isEnabled
                 addOnChangeListener(Slider.OnChangeListener { _, value, fromUser ->
                     if (fromUser && value.roundToInt() != model.value + model.minimumValue) {

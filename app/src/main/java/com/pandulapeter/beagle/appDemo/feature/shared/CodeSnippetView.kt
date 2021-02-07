@@ -20,7 +20,7 @@ class CodeSnippetView @JvmOverloads constructor(
 
     private val textView = MaterialTextView(context, attrs, defStyleAttr).apply {
         typeface = Typeface.create("monospace", Typeface.NORMAL)
-        setTextColor(context.color(R.color.black))
+        setTextColor(context.color(R.color.code_snippet_text))
         setTextSize(TypedValue.COMPLEX_UNIT_PX, context.dimension(R.dimen.code_snippet).toFloat())
         context.dimension(R.dimen.content_padding).let { setPadding(it, it, it, it) }
         setTextIsSelectable(true)

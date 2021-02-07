@@ -21,10 +21,6 @@
         <item name="colorSecondary">@color/white</item>
     </style>
 
-    <style name="Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textAllCaps">false</item>
-    </style>
-
     <style name="DebugMenuTheme" parent="AppTheme" />
 
 </resources>

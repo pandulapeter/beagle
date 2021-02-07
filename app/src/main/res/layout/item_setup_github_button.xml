@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -23,6 +24,7 @@
         android:paddingTop="@dimen/content_padding"
         android:paddingBottom="@dimen/content_padding"
         android:text="@string/setup_welcome_github_button"
+        app:drawableTint="@color/button_drawable_tint"
         tools:drawableEnd="@drawable/ic_github"
         tools:drawableRight="@drawable/ic_github" />
 

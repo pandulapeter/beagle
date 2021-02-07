@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
-import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -18,7 +17,6 @@ import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseAdapter
 import com.pandulapeter.beagle.appDemo.feature.shared.list.ListItem
 import com.pandulapeter.beagle.appDemo.utils.observe
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.utils.extensions.color
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.waitForPreDraw
 
@@ -91,13 +89,15 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     private fun onListUpdated() {
         try {
             binding.appBar.run {
-                postDelayed({
-                    try {
-                        setLifted(binding.recyclerView.computeVerticalScrollOffset() != 0)
-                        binding.recyclerView.shouldBlockGestures = { false }
-                    } catch (_: IllegalStateException) {
-                    }
-                }, 300)
+                postDelayed(
+                    {
+                        try {
+                            isLifted = binding.recyclerView.computeVerticalScrollOffset() != 0
+                            binding.recyclerView.shouldBlockGestures = { false }
+                        } catch (_: IllegalStateException) {
+                        }
+                    }, 300
+                )
             }
         } catch (_: IllegalStateException) {
         }

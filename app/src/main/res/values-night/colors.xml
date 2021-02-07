@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Dynamic -->
+    <color name="code_snippet_text">@color/white</color>
+    <color name="code_snippet_background">@color/brand_dark</color>
+    <color name="button_drawable_tint">@color/black</color>
+
+</resources>
