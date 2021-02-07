@@ -1,5 +1,7 @@
 package com.pandulapeter.beagle.commonBase
 
+import com.pandulapeter.beagle.commonBase.model.LogEntry
+
 interface BeagleLoggerContract {
 
     /**
@@ -32,14 +34,7 @@ interface BeagleLoggerContract {
      * For internal use only.
      */
     fun register(
-        onNewLog: (
-            message: String,
-            label: String?,
-            payload: String?,
-            isPersisted: Boolean,
-            timestamp: Long,
-            id: String
-        ) -> Unit,
+        onNewLog: (LogEntry) -> Unit,
         clearLogs: (label: String?) -> Unit
     ) = Unit
 }

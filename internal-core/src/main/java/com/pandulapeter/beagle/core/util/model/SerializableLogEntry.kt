@@ -16,6 +16,7 @@ data class SerializableLogEntry(
     @Json(name = "label") val label: String?,
     @Json(name = "message") val message: String,
     @Json(name = "payload") val payload: String?,
+    @Json(name = "isPersisted") val isPersisted: Boolean,
     @Json(name = "timestamp") val timestamp: Long
 ) : BeagleListItemContract {
 
@@ -32,6 +33,7 @@ data class SerializableLogEntry(
         label = label,
         message = message,
         payload = payload,
+        isPersisted = isPersisted,
         timestamp = timestamp
     )
 }

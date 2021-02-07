@@ -7,6 +7,7 @@ package com.pandulapeter.beagle.commonBase.model
  * @param label - The optional label of the entry.
  * @param message - The short summary message for the log.
  * @param payload - The optional, usually longer log payload.
+ * @param isPersisted - True if the log should be saved to local storage, false otherwise.
  * @param timestamp - Timestamp of the moment the entry has been logged.
  */
 data class LogEntry(
@@ -14,5 +15,6 @@ data class LogEntry(
     val label: String?,
     val message: String,
     val payload: String?,
+    val isPersisted: Boolean,
     val timestamp: Long
 )

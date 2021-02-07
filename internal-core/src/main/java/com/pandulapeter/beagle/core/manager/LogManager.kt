@@ -42,6 +42,7 @@ internal class LogManager(
             label = label,
             message = message,
             payload = payload,
+            isPersisted = isPersisted,
             timestamp = timestamp
         )
         synchronized(entries) {

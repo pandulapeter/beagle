@@ -15,7 +15,7 @@ data class NetworkLogEntry(
     val id: String,
     val isOutgoing: Boolean,
     val url: String,
-    val payload: String,
+    val payload: String?,
     val headers: List<String>,
     val duration: Long?,
     val timestamp: Long

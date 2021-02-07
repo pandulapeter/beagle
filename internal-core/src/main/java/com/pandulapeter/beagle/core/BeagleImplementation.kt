@@ -23,6 +23,8 @@ import com.pandulapeter.beagle.common.listeners.NetworkLogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
+import com.pandulapeter.beagle.commonBase.model.LogEntry
+import com.pandulapeter.beagle.commonBase.model.NetworkLogEntry
 import com.pandulapeter.beagle.core.manager.BugReportManager
 import com.pandulapeter.beagle.core.manager.CrashLogManager
 import com.pandulapeter.beagle.core.manager.DebugMenuInjector
@@ -40,8 +42,8 @@ import com.pandulapeter.beagle.core.manager.listener.NetworkLogListenerManager
 import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
 import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
 import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
-import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.util.model.RestoreModel
+import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
 import com.pandulapeter.beagle.core.view.logDetail.LogDetailDialogFragment
 import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogFragment
@@ -218,6 +220,15 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun clearVisibilityListeners() = visibilityListenerManager.clearListeners()
 
+    private fun log(logEntry: LogEntry) = log(
+        message = logEntry.message,
+        label = logEntry.label,
+        payload = logEntry.payload,
+        isPersisted = logEntry.isPersisted,
+        timestamp = logEntry.timestamp,
+        id = logEntry.id
+    )
+
     override fun log(
         message: String,
         label: String?,
@@ -235,6 +246,16 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     )
 
     override fun clearLogs(label: String?) = logManager.clearLogs(label)
+
+    private fun logNetworkEvent(networkLogEntry: NetworkLogEntry) = logNetworkEvent(
+        isOutgoing = networkLogEntry.isOutgoing,
+        url = networkLogEntry.url,
+        payload = networkLogEntry.payload,
+        headers = networkLogEntry.headers,
+        duration = networkLogEntry.duration,
+        timestamp = networkLogEntry.timestamp,
+        id = networkLogEntry.id,
+    )
 
     override fun logNetworkEvent(
         isOutgoing: Boolean,
