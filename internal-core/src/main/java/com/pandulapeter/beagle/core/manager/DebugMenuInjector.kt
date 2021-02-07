@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.manager
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -129,6 +130,9 @@ internal class DebugMenuInjector(
             }
             if (activity.supportsDebugMenu) {
                 BeagleCore.implementation.logLifecycle(activity::class.java, LifecycleLogListModule.EventType.ON_RESUME)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && activity.isInPictureInPictureMode) {
+                    BeagleCore.implementation.hide()
+                }
             }
         }
 

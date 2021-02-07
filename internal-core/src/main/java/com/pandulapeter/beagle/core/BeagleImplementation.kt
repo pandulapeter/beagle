@@ -119,6 +119,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun show() = (currentActivity?.let { currentActivity ->
         if (currentActivity.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
             && currentActivity.supportFragmentManager.findFragmentByTag(MediaPreviewDialogFragment.TAG) == null
+            && (Build.VERSION.SDK_INT < Build.VERSION_CODES.N ||  currentActivity.isInPictureInPictureMode)
         ) uiManager.show(currentActivity) else false
     } ?: false)
 
