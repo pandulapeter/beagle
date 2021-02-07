@@ -10,20 +10,17 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleActivityBugReportBinding
 import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
 import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
@@ -47,6 +44,7 @@ import com.squareup.moshi.JsonDataException
 
 class BugReportActivity : AppCompatActivity() {
 
+    private lateinit var binding: BeagleActivityBugReportBinding
     private val crashLogEntryToShow by lazy {
         intent.getStringExtra(CRASH_LOG_ENTRY_TO_SHOW).let { inputString ->
             if (inputString.isNullOrBlank()) null else try {
@@ -83,16 +81,16 @@ class BugReportActivity : AppCompatActivity() {
         }).get(BugReportViewModel::class.java)
     }
     private lateinit var sendButton: MenuItem
-    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.beagle_recycler_view) }
-    private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.beagle_app_bar) }
-    private val onGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener { recyclerView.run { post { appBarLayout.setLifted(computeVerticalScrollOffset() != 0) } } }
+    private val onGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+        binding.beagleRecyclerView.run { post { binding.beagleAppBar.isLifted = computeVerticalScrollOffset() != 0 } }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.beagle_activity_bug_report)
+        binding = DataBindingUtil.setContentView(this, R.layout.beagle_activity_bug_report)
         supportActionBar?.hide()
-        val toolbar = findViewById<Toolbar>(R.id.beagle_toolbar).apply {
+        binding.beagleToolbar.run {
             val textColor = colorResource(android.R.attr.textColorPrimary)
             setNavigationOnClickListener { supportFinishAfterTransition() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
@@ -105,14 +103,13 @@ class BugReportActivity : AppCompatActivity() {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
-            val bottomNavigationOverlay = findViewById<View>(R.id.beagle_bottom_navigation_overlay)
-            bottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
+            binding.beagleBottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
-                        toolbar.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, 0)
-                        recyclerView.setPadding(0, 0, 0, it.systemWindowInsetBottom + contentPadding)
-                        bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
+                        binding.beagleToolbar.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, 0)
+                        binding.beagleRecyclerView.setPadding(0, 0, 0, it.systemWindowInsetBottom + contentPadding)
+                        binding.beagleBottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
                     }
                 }
                 requestApplyInsets()
@@ -135,24 +132,22 @@ class BugReportActivity : AppCompatActivity() {
             onMetadataItemSelectionChanged = viewModel::onMetadataItemSelectionChanged,
             onAttachAllButtonClicked = viewModel::onAttachAllButtonClicked
         )
-        recyclerView.run {
+        binding.beagleRecyclerView.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = bugReportAdapter
         }
         viewModel.items.observe(this, bugReportAdapter::submitList)
-        findViewById<ProgressBar>(R.id.beagle_progress_bar).let { progressBar ->
-            viewModel.shouldShowLoadingIndicator.observe(this) { shouldShowLoadingIndicator ->
-                progressBar.visible = shouldShowLoadingIndicator
-                if (shouldShowLoadingIndicator) {
-                    currentFocus?.hideKeyboard()
-                } else {
-                    crashLogEntryToShow?.let { crashLogEntryToShow ->
-                        if (!intent.getStringExtra(CRASH_LOG_ENTRY_TO_SHOW).isNullOrBlank()) {
-                            intent.removeExtra(CRASH_LOG_ENTRY_TO_SHOW)
-                            viewModel.onCrashLogLongTapped(crashLogEntryToShow.id)
-                            viewModel.allCrashLogEntries?.firstOrNull { it.id == crashLogEntryToShow.id }?.let(::showCrashLogDetailDialog)
-                        }
+        viewModel.shouldShowLoadingIndicator.observe(this) { shouldShowLoadingIndicator ->
+            binding.beagleProgressBar.visible = shouldShowLoadingIndicator
+            if (shouldShowLoadingIndicator) {
+                currentFocus?.hideKeyboard()
+            } else {
+                crashLogEntryToShow?.let { crashLogEntryToShow ->
+                    if (!intent.getStringExtra(CRASH_LOG_ENTRY_TO_SHOW).isNullOrBlank()) {
+                        intent.removeExtra(CRASH_LOG_ENTRY_TO_SHOW)
+                        viewModel.onCrashLogLongTapped(crashLogEntryToShow.id)
+                        viewModel.allCrashLogEntries?.firstOrNull { it.id == crashLogEntryToShow.id }?.let(::showCrashLogDetailDialog)
                     }
                 }
             }
@@ -171,12 +166,12 @@ class BugReportActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        recyclerView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
+        binding.beagleRecyclerView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
     }
 
     override fun onPause() {
         super.onPause()
-        recyclerView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
+        binding.beagleRecyclerView.viewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
     }
 
     fun refresh() = viewModel.refresh()

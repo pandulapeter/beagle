@@ -1,13 +1,12 @@
 package com.pandulapeter.beagle.appDemo.feature.main.setup.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSetupGithubButtonBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 import com.pandulapeter.beagle.utils.extensions.drawable
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class GithubButtonViewHolder private constructor(
     binding: ItemSetupGithubButtonBinding,
@@ -32,7 +31,7 @@ class GithubButtonViewHolder private constructor(
             parent: ViewGroup,
             onButtonPressed: () -> Unit
         ) = GithubButtonViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_setup_github_button, parent, false),
+            binding = ItemSetupGithubButtonBinding.inflate(parent.inflater, parent, false),
             onButtonPressed = onButtonPressed
         )
     }

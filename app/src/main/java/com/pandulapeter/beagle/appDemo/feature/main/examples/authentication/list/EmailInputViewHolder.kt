@@ -1,11 +1,9 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemAuthenticationEmailInputBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class EmailInputViewHolder private constructor(
     binding: ItemAuthenticationEmailInputBinding
@@ -22,7 +20,7 @@ class EmailInputViewHolder private constructor(
         fun create(
             parent: ViewGroup
         ) = EmailInputViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_authentication_email_input, parent, false)
+            binding = ItemAuthenticationEmailInputBinding.inflate(parent.inflater, parent, false)
         )
     }
 }

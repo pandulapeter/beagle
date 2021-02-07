@@ -1,12 +1,10 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemValueWrappersResetButtonBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class ResetButtonViewHolder private constructor(
     binding: ItemValueWrappersResetButtonBinding,
@@ -30,7 +28,7 @@ class ResetButtonViewHolder private constructor(
             parent: ViewGroup,
             onButtonPressed: () -> Unit
         ) = ResetButtonViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_value_wrappers_reset_button, parent, false),
+            binding = ItemValueWrappersResetButtonBinding.inflate(parent.inflater, parent, false),
             onButtonPressed = onButtonPressed
         )
     }

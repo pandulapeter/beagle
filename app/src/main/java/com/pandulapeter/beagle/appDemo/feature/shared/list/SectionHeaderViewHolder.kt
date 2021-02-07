@@ -1,12 +1,10 @@
 package com.pandulapeter.beagle.appDemo.feature.shared.list
 
 import android.os.Build
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSectionHeaderBinding
@@ -14,6 +12,7 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.Si
 import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.ValueWrappersListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
 import com.pandulapeter.beagle.appDemo.utils.animatedDrawable
+import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 class SectionHeaderViewHolder private constructor(
@@ -60,7 +59,7 @@ class SectionHeaderViewHolder private constructor(
             parent: ViewGroup,
             onItemSelected: (UiModel) -> Unit
         ) = SectionHeaderViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_section_header, parent, false),
+            binding = ItemSectionHeaderBinding.inflate(parent.inflater, parent, false),
             onItemSelected = onItemSelected
         )
     }

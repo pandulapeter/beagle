@@ -1,23 +1,21 @@
 package com.pandulapeter.beagle.core.view.bugReport.list
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportShowMoreBinding
 import com.pandulapeter.beagle.core.util.extension.setText
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal class ShowMoreViewHolder private constructor(
-    itemView: View,
+    private val binding: BeagleItemBugReportShowMoreBinding,
     onButtonPressed: (Type) -> Unit
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(binding.root) {
 
     val type get() = itemView.tag as? Type?
 
     init {
-        itemView.findViewById<TextView>(R.id.beagle_text_view).apply {
+        binding.beagleTextView.run {
             setText(BeagleCore.implementation.appearance.bugReportTexts.showMoreText)
             setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
@@ -53,7 +51,7 @@ internal class ShowMoreViewHolder private constructor(
             parent: ViewGroup,
             onButtonPressed: (Type) -> Unit
         ) = ShowMoreViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_show_more, parent, false),
+            binding = BeagleItemBugReportShowMoreBinding.inflate(parent.inflater, parent, false),
             onButtonPressed = onButtonPressed
         )
     }

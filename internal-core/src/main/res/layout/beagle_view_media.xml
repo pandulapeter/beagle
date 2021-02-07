@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:layout_height="match_parent"
-    tools:layout_width="match_parent"
-    tools:parentTag="android.widget.FrameLayout">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/beagle_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop" />
+    <merge
+        tools:layout_height="match_parent"
+        tools:layout_width="match_parent"
+        tools:parentTag="android.widget.FrameLayout">
 
-    <CheckBox
-        android:id="@+id/beagle_check_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="-8dp"
-        android:layout_marginEnd="-12dp"
-        android:layout_marginRight="-12dp" />
+        <ImageView
+            android:id="@+id/beagle_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/beagle_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/beagle_bg_gradient"
-        android:maxLines="3"
-        android:paddingStart="@dimen/beagle_item_horizontal_margin"
-        android:paddingLeft="@dimen/beagle_item_horizontal_margin"
-        android:paddingTop="@dimen/beagle_item_vertical_margin"
-        android:paddingEnd="@dimen/beagle_item_horizontal_margin"
-        android:paddingRight="@dimen/beagle_item_horizontal_margin"
-        android:paddingBottom="@dimen/beagle_item_vertical_margin"
-        android:textColor="@android:color/white"
-        tools:text="Text" />
+        <CheckBox
+            android:id="@+id/beagle_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="-8dp"
+            android:layout_marginEnd="-12dp"
+            android:layout_marginRight="-12dp" />
 
-</merge>
+        <TextView
+            android:id="@+id/beagle_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/beagle_bg_gradient"
+            android:maxLines="3"
+            android:paddingStart="@dimen/beagle_item_horizontal_margin"
+            android:paddingLeft="@dimen/beagle_item_horizontal_margin"
+            android:paddingTop="@dimen/beagle_item_vertical_margin"
+            android:paddingEnd="@dimen/beagle_item_horizontal_margin"
+            android:paddingRight="@dimen/beagle_item_horizontal_margin"
+            android:paddingBottom="@dimen/beagle_item_vertical_margin"
+            android:textColor="@android:color/white"
+            tools:text="Text" />
+
+    </merge>
+
+</layout>

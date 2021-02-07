@@ -1,11 +1,11 @@
 package com.pandulapeter.beagle.core.view.networkLogDetail.list
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal class TitleViewHolder private constructor(
     itemView: View
@@ -29,7 +29,7 @@ internal class TitleViewHolder private constructor(
         fun create(
             parent: ViewGroup
         ) = TitleViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log_detail_title, parent, false)
+            itemView = parent.inflater.inflate(R.layout.beagle_item_network_log_detail_title, parent, false)
         )
     }
 }

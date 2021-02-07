@@ -1,59 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/beagle_app_bar"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        android:fitsSystemWindows="true"
-        app:liftOnScroll="true">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/beagle_toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/beagle_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/gallery" />
+            android:background="?android:attr/windowBackground"
+            android:fitsSystemWindows="true"
+            app:liftOnScroll="true">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/beagle_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/gallery" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/beagle_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingStart="@dimen/beagle_content_padding"
-        android:paddingLeft="@dimen/beagle_content_padding"
-        android:paddingEnd="@dimen/beagle_content_padding"
-        android:paddingRight="@dimen/beagle_content_padding"
-        android:paddingBottom="@dimen/beagle_content_padding"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/beagle_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="@dimen/beagle_large_content_padding"
-        android:visibility="gone"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/beagle_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/beagle_content_padding"
+            android:paddingLeft="@dimen/beagle_content_padding"
+            android:paddingEnd="@dimen/beagle_content_padding"
+            android:paddingRight="@dimen/beagle_content_padding"
+            android:paddingBottom="@dimen/beagle_content_padding"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
-    <ProgressBar
-        android:id="@+id/beagle_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        <TextView
+            android:id="@+id/beagle_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/beagle_large_content_padding"
+            android:visibility="gone"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
-    <!--TODO: Hacky - why do we need this? -->
-    <View
-        android:id="@+id/beagle_bottom_navigation_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:fitsSystemWindows="true" />
+        <ProgressBar
+            android:id="@+id/beagle_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!--TODO: Hacky - why do we need this? -->
+        <View
+            android:id="@+id/beagle_bottom_navigation_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="bottom"
+            android:fitsSystemWindows="true" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

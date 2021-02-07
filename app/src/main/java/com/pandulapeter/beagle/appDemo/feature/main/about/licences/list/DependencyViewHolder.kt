@@ -1,13 +1,11 @@
 package com.pandulapeter.beagle.appDemo.feature.main.about.licences.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.Dependency
 import com.pandulapeter.beagle.appDemo.databinding.ItemLicencesDependencyBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class DependencyViewHolder private constructor(
     binding: ItemLicencesDependencyBinding,
@@ -34,7 +32,7 @@ class DependencyViewHolder private constructor(
             parent: ViewGroup,
             onItemClicked: (String) -> Unit
         ) = DependencyViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_licences_dependency, parent, false),
+            binding = ItemLicencesDependencyBinding.inflate(parent.inflater, parent, false),
             onItemClicked = onItemClicked
         )
     }

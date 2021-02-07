@@ -1,13 +1,11 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.analytics.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemAnalyticsCheckBoxBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class CheckBoxViewHolder private constructor(
     binding: ItemAnalyticsCheckBoxBinding,
@@ -37,7 +35,7 @@ class CheckBoxViewHolder private constructor(
             parent: ViewGroup,
             onStateChanged: (Int, Boolean) -> Unit
         ) = CheckBoxViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_analytics_check_box, parent, false),
+            binding = ItemAnalyticsCheckBoxBinding.inflate(parent.inflater, parent, false),
             onStateChanged = onStateChanged
         )
     }

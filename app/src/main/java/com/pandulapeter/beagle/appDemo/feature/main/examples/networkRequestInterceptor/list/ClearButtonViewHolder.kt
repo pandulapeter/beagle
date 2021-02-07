@@ -1,12 +1,10 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemNetworkRequestInterceptorClearButtonBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class ClearButtonViewHolder private constructor(
     binding: ItemNetworkRequestInterceptorClearButtonBinding,
@@ -30,7 +28,7 @@ class ClearButtonViewHolder private constructor(
             parent: ViewGroup,
             onClearButtonPressed: () -> Unit
         ) = ClearButtonViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_network_request_interceptor_clear_button, parent, false),
+            binding = ItemNetworkRequestInterceptorClearButtonBinding.inflate(parent.inflater, parent, false),
             onClearButtonPressed = onClearButtonPressed
         )
     }

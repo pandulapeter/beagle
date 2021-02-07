@@ -1,13 +1,11 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.CaseStudy
 import com.pandulapeter.beagle.appDemo.databinding.ItemExamplesCaseStudyBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class CaseStudyViewHolder private constructor(
     binding: ItemExamplesCaseStudyBinding,
@@ -34,7 +32,7 @@ class CaseStudyViewHolder private constructor(
             parent: ViewGroup,
             onItemSelected: (UiModel) -> Unit
         ) = CaseStudyViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_examples_case_study, parent, false),
+            binding = ItemExamplesCaseStudyBinding.inflate(parent.inflater, parent, false),
             onItemSelected = onItemSelected
         )
     }

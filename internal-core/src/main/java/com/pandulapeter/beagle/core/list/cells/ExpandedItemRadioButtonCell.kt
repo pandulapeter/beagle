@@ -1,13 +1,12 @@
 package com.pandulapeter.beagle.core.list.cells
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.RadioButton
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleCellExpandedItemRadioButtonBinding
 import com.pandulapeter.beagle.core.util.extension.setText
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal data class ExpandedItemRadioButtonCell(
     override val id: String,
@@ -19,14 +18,16 @@ internal data class ExpandedItemRadioButtonCell(
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<ExpandedItemRadioButtonCell>() {
 
-        override fun createViewHolder(parent: ViewGroup) = SwitchViewHolder(parent)
+        override fun createViewHolder(parent: ViewGroup) = SwitchViewHolder(
+            binding = BeagleCellExpandedItemRadioButtonBinding.inflate(parent.inflater, parent, false)
+        )
     }
 
-    private class SwitchViewHolder(parent: ViewGroup) : ViewHolder<ExpandedItemRadioButtonCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_expanded_item_radio_button, parent, false)) {
+    private class SwitchViewHolder(
+        private val binding: BeagleCellExpandedItemRadioButtonBinding
+    ) : ViewHolder<ExpandedItemRadioButtonCell>(binding.root) {
 
-        private val radioButton = itemView.findViewById<RadioButton>(R.id.beagle_radio_button)
-
-        override fun bind(model: ExpandedItemRadioButtonCell) = radioButton.run {
+        override fun bind(model: ExpandedItemRadioButtonCell) = binding.beagleRadioButton.run {
             setText(model.text)
             setOnCheckedChangeListener(null)
             isChecked = model.isChecked

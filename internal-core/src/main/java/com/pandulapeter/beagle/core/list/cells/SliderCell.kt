@@ -1,15 +1,14 @@
 package com.pandulapeter.beagle.core.list.cells
 
 import android.annotation.SuppressLint
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.TextView
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleCellSliderBinding
 import com.pandulapeter.beagle.core.util.extension.setText
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal data class SliderCell(
     override val id: String,
@@ -23,30 +22,32 @@ internal data class SliderCell(
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<SliderCell>() {
 
-        override fun createViewHolder(parent: ViewGroup) = SliderViewHolder(parent)
+        override fun createViewHolder(parent: ViewGroup) = SliderViewHolder(
+            binding = BeagleCellSliderBinding.inflate(parent.inflater, parent, false)
+        )
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private class SliderViewHolder(parent: ViewGroup) : ViewHolder<SliderCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_slider, parent, false)) {
-
-        private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
-        private val seekBar = itemView.findViewById<SeekBar>(R.id.beagle_seek_bar)
+    private class SliderViewHolder(
+        private val binding: BeagleCellSliderBinding
+    ) : ViewHolder<SliderCell>(binding.root) {
 
         init {
-            seekBar.setOnTouchListener { _, _ ->
+            binding.beagleSeekBar.setOnTouchListener { _, _ ->
                 (itemView.parent?.parent as? ViewGroup?)?.requestDisallowInterceptTouchEvent(true)
                 false
             }
         }
 
         override fun bind(model: SliderCell) {
-            textView.setText(model.text)
-            seekBar.run {
+            binding.beagleTextView.setText(model.text)
+            binding.beagleSeekBar.run {
                 setOnSeekBarChangeListener(null)
                 max = model.maximumValue - model.minimumValue
                 progress = model.value - model.minimumValue
                 isEnabled = model.isEnabled
                 setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
                     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                         if (fromUser && progress != model.value + model.minimumValue) {
                             model.onValueChanged(progress + model.minimumValue)

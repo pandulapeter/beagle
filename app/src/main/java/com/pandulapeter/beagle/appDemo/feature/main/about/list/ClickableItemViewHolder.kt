@@ -1,14 +1,12 @@
 package com.pandulapeter.beagle.appDemo.feature.main.about.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemAboutClickableItemBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 class ClickableItemViewHolder private constructor(
@@ -40,7 +38,7 @@ class ClickableItemViewHolder private constructor(
             parent: ViewGroup,
             onItemClicked: (UiModel) -> Unit
         ) = ClickableItemViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_about_clickable_item, parent, false),
+            binding = ItemAboutClickableItemBinding.inflate(parent.inflater, parent, false),
             onItemClicked = onItemClicked
         )
     }

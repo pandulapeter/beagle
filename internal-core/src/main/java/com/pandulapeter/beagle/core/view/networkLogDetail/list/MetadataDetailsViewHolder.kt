@@ -1,11 +1,11 @@
 package com.pandulapeter.beagle.core.view.networkLogDetail.list
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal class MetadataDetailsViewHolder private constructor(
     itemView: View
@@ -28,7 +28,7 @@ internal class MetadataDetailsViewHolder private constructor(
         fun create(
             parent: ViewGroup
         ) = MetadataDetailsViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log_detail_metadata_details, parent, false)
+            itemView = parent.inflater.inflate(R.layout.beagle_item_network_log_detail_metadata_details, parent, false)
         )
     }
 }

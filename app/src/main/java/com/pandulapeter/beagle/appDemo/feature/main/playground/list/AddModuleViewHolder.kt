@@ -1,12 +1,11 @@
 package com.pandulapeter.beagle.appDemo.feature.main.playground.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemPlaygroundAddModuleBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 class AddModuleViewHolder private constructor(
@@ -38,7 +37,7 @@ class AddModuleViewHolder private constructor(
             parent: ViewGroup,
             onAddModuleClicked: () -> Unit
         ) = AddModuleViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_playground_add_module, parent, false),
+            binding = ItemPlaygroundAddModuleBinding.inflate(parent.inflater, parent, false),
             onAddModuleClicked = onAddModuleClicked
         )
     }

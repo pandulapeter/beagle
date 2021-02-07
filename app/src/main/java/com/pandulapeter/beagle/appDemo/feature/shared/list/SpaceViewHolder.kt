@@ -1,15 +1,13 @@
 package com.pandulapeter.beagle.appDemo.feature.shared.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSpaceBinding
 import com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list.AuthenticationListItem
+import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list.SimpleSetupListItem
 import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.list.ValueWrappersListItem
-import com.pandulapeter.beagle.appDemo.feature.main.examples.list.ExamplesListItem
 import com.pandulapeter.beagle.appDemo.feature.main.setup.list.SetupListItem
+import com.pandulapeter.beagle.utils.extensions.inflater
 import java.util.UUID
 
 class SpaceViewHolder private constructor(
@@ -24,7 +22,7 @@ class SpaceViewHolder private constructor(
         fun create(
             parent: ViewGroup
         ) = SpaceViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_space, parent, false)
+            binding = ItemSpaceBinding.inflate(parent.inflater, parent, false)
         )
     }
 }

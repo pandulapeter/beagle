@@ -1,26 +1,21 @@
 package com.pandulapeter.beagle.core.view.bugReport.list
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.CompoundButton
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportCrashLogItemBinding
 import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import com.pandulapeter.beagle.utils.consume
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal class CrashLogItemViewHolder private constructor(
-    itemView: View,
+    private val binding: BeagleItemBugReportCrashLogItemBinding,
     onItemSelected: (String) -> Unit,
     onItemLongTapped: (String) -> Unit
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(binding.root) {
 
     private val id get() = itemView.tag as String
-    private val checkBox = itemView.findViewById<CheckBox>(R.id.beagle_check_box)
-    private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
     private val checkedChangedListener = CompoundButton.OnCheckedChangeListener { _, _ ->
         if (adapterPosition != RecyclerView.NO_POSITION) {
             onItemLongTapped(id)
@@ -28,12 +23,12 @@ internal class CrashLogItemViewHolder private constructor(
     }
 
     init {
-        itemView.setOnClickListener {
+        binding.root.setOnClickListener {
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 onItemSelected(id)
             }
         }
-        itemView.setOnLongClickListener {
+        binding.root.setOnLongClickListener {
             consume {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     onItemLongTapped(id)
@@ -44,8 +39,8 @@ internal class CrashLogItemViewHolder private constructor(
 
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.entry.id
-        textView.text = uiModel.entry.getFormattedTitle(formatter = BeagleCore.implementation.appearance.logShortTimestampFormatter)
-        checkBox.run {
+        binding.beagleTextView.text = uiModel.entry.getFormattedTitle(formatter = BeagleCore.implementation.appearance.logShortTimestampFormatter)
+        binding.beagleCheckBox.run {
             setOnCheckedChangeListener(null)
             isChecked = uiModel.isSelected
             setOnCheckedChangeListener(checkedChangedListener)
@@ -66,7 +61,7 @@ internal class CrashLogItemViewHolder private constructor(
             onItemSelected: (String) -> Unit,
             onItemLongTapped: (String) -> Unit
         ) = CrashLogItemViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_crash_log_item, parent, false),
+            binding = BeagleItemBugReportCrashLogItemBinding.inflate(parent.inflater, parent, false),
             onItemSelected = onItemSelected,
             onItemLongTapped = onItemLongTapped
         )

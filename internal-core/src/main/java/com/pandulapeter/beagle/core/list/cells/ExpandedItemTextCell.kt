@@ -1,15 +1,15 @@
 package com.pandulapeter.beagle.core.list.cells
 
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleCellExpandedItemTextBinding
 import com.pandulapeter.beagle.core.util.extension.setText
+import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal data class ExpandedItemTextCell(
@@ -22,16 +22,18 @@ internal data class ExpandedItemTextCell(
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<ExpandedItemTextCell>() {
 
-        override fun createViewHolder(parent: ViewGroup) = ExpandedItemTextViewHolder(parent)
+        override fun createViewHolder(parent: ViewGroup) = ExpandedItemTextViewHolder(
+            binding = BeagleCellExpandedItemTextBinding.inflate(parent.inflater, parent, false)
+        )
     }
 
-    private class ExpandedItemTextViewHolder(parent: ViewGroup) :
-        ViewHolder<ExpandedItemTextCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_expanded_item_text, parent, false)) {
+    private class ExpandedItemTextViewHolder(
+        private val binding: BeagleCellExpandedItemTextBinding
+    ) : ViewHolder<ExpandedItemTextCell>(binding.root) {
 
-        private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
-        private val bulletPointDrawable by lazy { itemView.context.tintedDrawable(R.drawable.beagle_ic_bullet_point, textView.textColors.defaultColor) }
+        private val bulletPointDrawable by lazy { binding.root.context.tintedDrawable(R.drawable.beagle_ic_bullet_point, binding.beagleTextView.textColors.defaultColor) }
 
-        override fun bind(model: ExpandedItemTextCell) = textView.run {
+        override fun bind(model: ExpandedItemTextCell) = binding.beagleTextView.run {
             setText(model.text)
             maxLines = if (model.shouldEllipsize) 4 else Int.MAX_VALUE
             ellipsize = TextUtils.TruncateAt.END

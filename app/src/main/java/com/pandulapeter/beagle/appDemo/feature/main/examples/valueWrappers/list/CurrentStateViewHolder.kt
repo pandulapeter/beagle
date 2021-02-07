@@ -4,13 +4,12 @@ import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemValueWrappersCurrentStateBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class CurrentStateViewHolder private constructor(
     binding: ItemValueWrappersCurrentStateBinding,
@@ -88,7 +87,7 @@ class CurrentStateViewHolder private constructor(
             parent: ViewGroup,
             onCurrentStateCardPressed: () -> Unit
         ) = CurrentStateViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_value_wrappers_current_state, parent, false),
+            binding = ItemValueWrappersCurrentStateBinding.inflate(parent.inflater, parent, false),
             onCurrentStateCardPressed = onCurrentStateCardPressed
         )
     }

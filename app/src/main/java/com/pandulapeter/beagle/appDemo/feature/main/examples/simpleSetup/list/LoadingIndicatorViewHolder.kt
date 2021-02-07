@@ -1,11 +1,9 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.simpleSetup.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemSimpleSetupLoadingIndicatorBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 import java.util.UUID
 
 class LoadingIndicatorViewHolder private constructor(
@@ -20,7 +18,7 @@ class LoadingIndicatorViewHolder private constructor(
         fun create(
             parent: ViewGroup
         ) = LoadingIndicatorViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_simple_setup_loading_indicator, parent, false)
+            binding = ItemSimpleSetupLoadingIndicatorBinding.inflate(parent.inflater, parent, false)
         )
     }
 }

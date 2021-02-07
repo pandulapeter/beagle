@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/beagle_text_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/beagle_large_content_padding"
-    android:layout_marginLeft="@dimen/beagle_large_content_padding"
-    android:layout_marginTop="-8dp"
-    android:paddingStart="@dimen/beagle_content_padding"
-    android:paddingLeft="@dimen/beagle_content_padding"
-    android:paddingEnd="0dp"
-    android:paddingRight="0dp"
-    android:paddingBottom="@dimen/beagle_large_content_padding"
-    android:textColor="?android:attr/textColorPrimary"
-    tools:ignore="Overdraw"
-    tools:text="Text" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/beagle_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/beagle_large_content_padding"
+        android:layout_marginLeft="@dimen/beagle_large_content_padding"
+        android:layout_marginTop="-8dp"
+        android:paddingStart="@dimen/beagle_content_padding"
+        android:paddingLeft="@dimen/beagle_content_padding"
+        android:paddingEnd="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="@dimen/beagle_large_content_padding"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:ignore="Overdraw"
+        tools:text="Text" />
+
+</layout>

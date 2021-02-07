@@ -1,57 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/beagle_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="0dp"
-        android:paddingLeft="0dp"
-        android:paddingEnd="@dimen/beagle_content_padding"
-        android:paddingRight="@dimen/beagle_content_padding"
-        app:menu="@menu/gallery" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/beagle_content_padding"
-        android:paddingLeft="@dimen/beagle_content_padding"
-        android:paddingEnd="@dimen/beagle_content_padding"
-        android:paddingRight="@dimen/beagle_content_padding"
-        android:paddingBottom="@dimen/beagle_content_padding">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/beagle_image_view"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/beagle_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="@dimen/beagle_content_padding"
+            android:paddingRight="@dimen/beagle_content_padding"
+            app:menu="@menu/gallery" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:importantForAccessibility="no"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingStart="@dimen/beagle_content_padding"
+            android:paddingLeft="@dimen/beagle_content_padding"
+            android:paddingEnd="@dimen/beagle_content_padding"
+            android:paddingRight="@dimen/beagle_content_padding"
+            android:paddingBottom="@dimen/beagle_content_padding">
 
-        <VideoView
-            android:id="@+id/beagle_video_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/beagle_image_view"
-            app:layout_constraintEnd_toEndOf="@+id/beagle_image_view"
-            app:layout_constraintLeft_toLeftOf="@+id/beagle_image_view"
-            app:layout_constraintRight_toRightOf="@+id/beagle_image_view"
-            app:layout_constraintStart_toStartOf="@+id/beagle_image_view"
-            app:layout_constraintTop_toTopOf="@+id/beagle_image_view" />
+            <ImageView
+                android:id="@+id/beagle_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:importantForAccessibility="no"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <VideoView
+                android:id="@+id/beagle_video_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/beagle_image_view"
+                app:layout_constraintEnd_toEndOf="@+id/beagle_image_view"
+                app:layout_constraintLeft_toLeftOf="@+id/beagle_image_view"
+                app:layout_constraintRight_toRightOf="@+id/beagle_image_view"
+                app:layout_constraintStart_toStartOf="@+id/beagle_image_view"
+                app:layout_constraintTop_toTopOf="@+id/beagle_image_view" />
 
-</LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</layout>

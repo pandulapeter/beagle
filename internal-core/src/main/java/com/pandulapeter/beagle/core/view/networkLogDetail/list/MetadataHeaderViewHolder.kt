@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.setText
+import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class MetadataHeaderViewHolder private constructor(
@@ -44,7 +45,7 @@ internal class MetadataHeaderViewHolder private constructor(
             parent: ViewGroup,
             onItemClicked: () -> Unit
         ) = MetadataHeaderViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log_detail_metadata_header, parent, false),
+            itemView = parent.inflater.inflate(R.layout.beagle_item_network_log_detail_metadata_header, parent, false),
             onItemClicked = onItemClicked
         )
     }

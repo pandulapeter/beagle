@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/beagle_radio_button"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/beagle_large_content_padding"
-    android:layout_marginLeft="@dimen/beagle_large_content_padding"
-    android:layout_marginTop="@dimen/beagle_compound_button_height_fix"
-    android:layout_marginEnd="0dp"
-    android:layout_marginRight="0dp"
-    android:layout_marginBottom="@dimen/beagle_compound_button_height_fix"
-    android:gravity="center_vertical"
-    android:minHeight="@dimen/beagle_item_minimum_height"
-    android:paddingStart="@dimen/beagle_content_padding"
-    android:paddingLeft="@dimen/beagle_content_padding"
-    android:paddingEnd="@dimen/beagle_item_horizontal_margin"
-    android:paddingRight="@dimen/beagle_item_horizontal_margin"
-    android:textColor="?android:attr/textColorPrimary"
-    tools:text="Text" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RadioButton
+        android:id="@+id/beagle_radio_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/beagle_large_content_padding"
+        android:layout_marginLeft="@dimen/beagle_large_content_padding"
+        android:layout_marginTop="@dimen/beagle_compound_button_height_fix"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="@dimen/beagle_compound_button_height_fix"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/beagle_item_minimum_height"
+        android:paddingStart="@dimen/beagle_content_padding"
+        android:paddingLeft="@dimen/beagle_content_padding"
+        android:paddingEnd="@dimen/beagle_item_horizontal_margin"
+        android:paddingRight="@dimen/beagle_item_horizontal_margin"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:text="Text" />
+
+</layout>

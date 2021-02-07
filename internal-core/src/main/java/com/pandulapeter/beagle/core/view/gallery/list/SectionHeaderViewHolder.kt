@@ -1,19 +1,17 @@
 package com.pandulapeter.beagle.core.view.gallery.list
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleItemGallerySectionHeaderBinding
+import com.pandulapeter.beagle.utils.extensions.inflater
 
-internal class SectionHeaderViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    private val textView = itemView.findViewById<TextView>(R.id.beagle_text_view)
+internal class SectionHeaderViewHolder private constructor(
+    private val binding: BeagleItemGallerySectionHeaderBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(uiModel: UiModel) {
-        textView.text = BeagleCore.implementation.appearance.galleryTimestampFormatter?.invoke(uiModel.timestamp) ?: ""
+        binding.beagleTextView.text = BeagleCore.implementation.appearance.galleryTimestampFormatter?.invoke(uiModel.timestamp) ?: ""
     }
 
     data class UiModel(
@@ -27,7 +25,7 @@ internal class SectionHeaderViewHolder private constructor(itemView: View) : Rec
         fun create(
             parent: ViewGroup
         ) = SectionHeaderViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_gallery_section_header, parent, false)
+            BeagleItemGallerySectionHeaderBinding.inflate(parent.inflater, parent, false)
         )
     }
 }

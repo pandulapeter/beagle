@@ -1,13 +1,12 @@
 package com.pandulapeter.beagle.core.list.cells
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.widget.SwitchCompat
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.common.contracts.module.ViewHolder
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleCellSwitchBinding
 import com.pandulapeter.beagle.core.util.extension.setText
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal data class SwitchCell(
     override val id: String,
@@ -19,14 +18,16 @@ internal data class SwitchCell(
 
     override fun createViewHolderDelegate() = object : ViewHolder.Delegate<SwitchCell>() {
 
-        override fun createViewHolder(parent: ViewGroup) = SwitchViewHolder(parent)
+        override fun createViewHolder(parent: ViewGroup) = SwitchViewHolder(
+            binding = BeagleCellSwitchBinding.inflate(parent.inflater, parent, false)
+        )
     }
 
-    private class SwitchViewHolder(parent: ViewGroup) : ViewHolder<SwitchCell>(LayoutInflater.from(parent.context).inflate(R.layout.beagle_cell_switch, parent, false)) {
+    private class SwitchViewHolder(
+        private val binding: BeagleCellSwitchBinding
+    ) : ViewHolder<SwitchCell>(binding.root) {
 
-        private val switch = itemView.findViewById<SwitchCompat>(R.id.beagle_switch)
-
-        override fun bind(model: SwitchCell) = switch.run {
+        override fun bind(model: SwitchCell) = binding.beagleSwitch.run {
             setText(model.text)
             setOnCheckedChangeListener(null)
             isChecked = model.isChecked

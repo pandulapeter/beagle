@@ -5,15 +5,12 @@ import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.MenuItem
-import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleActivityGalleryBinding
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
@@ -30,6 +27,7 @@ import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFragment.OnPositiveButtonClickedListener {
 
+    private lateinit var binding: BeagleActivityGalleryBinding
     private val viewModel by viewModel<GalleryViewModel>()
     private val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
     private lateinit var shareButton: MenuItem
@@ -38,9 +36,9 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
     override fun onCreate(savedInstanceState: Bundle?) {
         BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.beagle_activity_gallery)
+        binding = DataBindingUtil.setContentView(this, R.layout.beagle_activity_gallery)
         supportActionBar?.hide()
-        val toolbar = findViewById<Toolbar>(R.id.beagle_toolbar).apply {
+        binding.beagleToolbar.run {
             val textColor = colorResource(android.R.attr.textColorPrimary)
             setNavigationOnClickListener { supportFinishAfterTransition() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, textColor)
@@ -59,44 +57,41 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             shareButton.isVisible = it
             deleteButton.isVisible = it
         }
-        val emptyStateTextView = findViewById<TextView>(R.id.beagle_text_view)
-        emptyStateTextView.text = text(BeagleCore.implementation.appearance.galleryTexts.noMediaMessage)
+        binding.beagleTextView.text = text(BeagleCore.implementation.appearance.galleryTexts.noMediaMessage)
         val largePadding = dimension(R.dimen.beagle_large_content_padding)
-        val recyclerView = findViewById<RecyclerView>(R.id.beagle_recycler_view)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            val bottomNavigationOverlay = findViewById<View>(R.id.beagle_bottom_navigation_overlay)
-            bottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
+            binding.beagleBottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
             window.decorView.run {
                 setOnApplyWindowInsetsListener { _, insets ->
                     onApplyWindowInsets(insets).also {
-                        toolbar.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, 0)
-                        recyclerView.setPadding(contentPadding, 0, contentPadding, it.systemWindowInsetBottom + contentPadding)
-                        bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
-                        emptyStateTextView.setPadding(largePadding, largePadding, largePadding, largePadding + it.systemWindowInsetBottom)
+                        binding.beagleToolbar.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, 0)
+                        binding.beagleRecyclerView.setPadding(contentPadding, 0, contentPadding, it.systemWindowInsetBottom + contentPadding)
+                        binding.beagleBottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
+                        binding.beagleTextView.setPadding(largePadding, largePadding, largePadding, largePadding + it.systemWindowInsetBottom)
                     }
                 }
                 requestApplyInsets()
             }
         }
-        val adapter = GalleryAdapter(
+        val galleryAdapter = GalleryAdapter(
             onMediaSelected = { position -> viewModel.items.value?.get(position)?.id?.let(::onItemSelected) },
             onLongTap = { position -> viewModel.items.value?.get(position)?.id?.let(viewModel::selectItem) }
         )
-        recyclerView.setHasFixedSize(true)
-        val spanCount = getSpanCount()
-        recyclerView.layoutManager = GridLayoutManager(this, spanCount).apply {
-            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int) = if (viewModel.isSectionHeader(position)) spanCount else 1
+        binding.beagleRecyclerView.run {
+            setHasFixedSize(true)
+            val spanCount = getSpanCount()
+            layoutManager = GridLayoutManager(this@GalleryActivity, spanCount).apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int) = if (viewModel.isSectionHeader(position)) spanCount else 1
+                }
             }
+            adapter = galleryAdapter
         }
-        recyclerView.adapter = adapter
         viewModel.items.observe(this, {
-            adapter.submitList(it)
-            emptyStateTextView.visible = it.isEmpty()
+            galleryAdapter.submitList(it)
+            binding.beagleTextView.visible = it.isEmpty()
         })
-        findViewById<ProgressBar>(R.id.beagle_progress_bar).let { progressBar ->
-            viewModel.shouldShowLoadingIndicator.observe(this) { progressBar.visible = it }
-        }
+        viewModel.shouldShowLoadingIndicator.observe(this) { binding.beagleProgressBar.visible = it }
     }
 
     override fun onResume() {

@@ -3,13 +3,10 @@ package com.pandulapeter.beagle.core.view
 import android.animation.LayoutTransition
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.widget.CheckBox
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleViewMediaBinding
 import com.pandulapeter.beagle.core.util.extension.applyTheme
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal class MediaView @JvmOverloads constructor(
     context: Context,
@@ -17,12 +14,12 @@ internal class MediaView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context.applyTheme(), attrs, defStyleAttr) {
 
+    private val binding = BeagleViewMediaBinding.inflate(inflater, this, true)
+    val checkBox = binding.beagleCheckBox
+    val textView = binding.beagleTextView
+    val imageView = binding.beagleImageView
+
     init {
-        LayoutInflater.from(context).inflate(R.layout.beagle_view_media, this, true)
         layoutTransition = LayoutTransition()
     }
-
-    val checkBox: CheckBox = findViewById(R.id.beagle_check_box)
-    val textView: TextView = findViewById(R.id.beagle_text_view)
-    val imageView: ImageView = findViewById(R.id.beagle_image_view)
 }

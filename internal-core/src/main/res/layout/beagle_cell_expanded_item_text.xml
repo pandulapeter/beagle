@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/beagle_text_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:drawablePadding="@dimen/beagle_medium_content_padding"
-    android:gravity="center_vertical"
-    android:minHeight="@dimen/beagle_item_minimum_height"
-    android:paddingStart="@dimen/beagle_item_horizontal_margin_large"
-    android:paddingLeft="@dimen/beagle_item_horizontal_margin_large"
-    android:paddingTop="@dimen/beagle_item_vertical_margin"
-    android:paddingEnd="@dimen/beagle_item_horizontal_margin"
-    android:paddingRight="@dimen/beagle_item_horizontal_margin"
-    android:paddingBottom="@dimen/beagle_item_vertical_margin"
-    android:textColor="?android:attr/textColorPrimary"
-    tools:text="Text" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/beagle_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:drawablePadding="@dimen/beagle_medium_content_padding"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/beagle_item_minimum_height"
+        android:paddingStart="@dimen/beagle_item_horizontal_margin_large"
+        android:paddingLeft="@dimen/beagle_item_horizontal_margin_large"
+        android:paddingTop="@dimen/beagle_item_vertical_margin"
+        android:paddingEnd="@dimen/beagle_item_horizontal_margin"
+        android:paddingRight="@dimen/beagle_item_horizontal_margin"
+        android:paddingBottom="@dimen/beagle_item_vertical_margin"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:text="Text" />
+
+</layout>

@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.utils.extensions
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
@@ -22,3 +23,5 @@ fun View.hideKeyboard() {
         0
     )
 }
+
+val View.inflater: LayoutInflater get() = LayoutInflater.from(context)

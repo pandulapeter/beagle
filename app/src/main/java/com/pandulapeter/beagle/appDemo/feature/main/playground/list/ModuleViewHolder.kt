@@ -1,15 +1,14 @@
 package com.pandulapeter.beagle.appDemo.feature.main.playground.list
 
 import android.annotation.SuppressLint
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.model.ModuleWrapper
 import com.pandulapeter.beagle.appDemo.databinding.ItemPlaygroundModuleBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 @SuppressLint("ClickableViewAccessibility")
@@ -44,7 +43,7 @@ class ModuleViewHolder private constructor(
             parent: ViewGroup,
             onDragHandleTouched: (RecyclerView.ViewHolder) -> Unit
         ) = ModuleViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_playground_module, parent, false),
+            binding = ItemPlaygroundModuleBinding.inflate(parent.inflater, parent, false),
             onDragHandleTouched = onDragHandleTouched
         )
     }

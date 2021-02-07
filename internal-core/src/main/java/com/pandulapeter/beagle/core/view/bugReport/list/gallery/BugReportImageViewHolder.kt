@@ -1,24 +1,21 @@
 package com.pandulapeter.beagle.core.view.bugReport.list.gallery
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportGalleryImageBinding
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
-import com.pandulapeter.beagle.core.view.MediaView
 import com.pandulapeter.beagle.utils.consume
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal class BugReportImageViewHolder private constructor(
-    itemView: View,
+    private val binding: BeagleItemBugReportGalleryImageBinding,
     onTap: (String) -> Unit,
     onLongTap: (String) -> Unit
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(binding.root) {
 
     private val fileName get() = itemView.tag as String
-    private val mediaView = itemView.findViewById<MediaView>(R.id.beagle_media_view)
     private val onCheckChangeListener = CompoundButton.OnCheckedChangeListener { _, _ ->
         adapterPosition.let { adapterPosition ->
             if (adapterPosition != RecyclerView.NO_POSITION) {
@@ -28,12 +25,12 @@ internal class BugReportImageViewHolder private constructor(
     }
 
     init {
-        itemView.setOnClickListener {
+        binding.root.setOnClickListener {
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 onTap(fileName)
             }
         }
-        itemView.setOnLongClickListener {
+        binding.root.setOnLongClickListener {
             consume {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     onLongTap(fileName)
@@ -44,11 +41,15 @@ internal class BugReportImageViewHolder private constructor(
 
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.fileName
-        mediaView.textView.text = uiModel.fileName
-        mediaView.imageView.run { load(context.getScreenCapturesFolder().resolve(uiModel.fileName)) }
-        mediaView.checkBox.setOnCheckedChangeListener(null)
-        mediaView.checkBox.isChecked = uiModel.isSelected
-        mediaView.checkBox.setOnCheckedChangeListener(onCheckChangeListener)
+        binding.beagleMediaView.run {
+            textView.text = uiModel.fileName
+            imageView.run { load(context.getScreenCapturesFolder().resolve(uiModel.fileName)) }
+            checkBox.run {
+                setOnCheckedChangeListener(null)
+                isChecked = uiModel.isSelected
+                setOnCheckedChangeListener(onCheckChangeListener)
+            }
+        }
     }
 
     data class UiModel(
@@ -65,7 +66,7 @@ internal class BugReportImageViewHolder private constructor(
             onTap: (String) -> Unit,
             onLongTap: (String) -> Unit
         ) = BugReportImageViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_gallery_image, parent, false),
+            binding = BeagleItemBugReportGalleryImageBinding.inflate(parent.inflater, parent, false),
             onTap = onTap,
             onLongTap = onLongTap
         )

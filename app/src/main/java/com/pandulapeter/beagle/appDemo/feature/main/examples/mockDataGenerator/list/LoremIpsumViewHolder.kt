@@ -1,12 +1,10 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.mockDataGenerator.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemMockDataGeneratorLoremIpsumBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class LoremIpsumViewHolder private constructor(
     binding: ItemMockDataGeneratorLoremIpsumBinding,
@@ -33,7 +31,7 @@ class LoremIpsumViewHolder private constructor(
             parent: ViewGroup,
             onCardPressed: () -> Unit
         ) = LoremIpsumViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_mock_data_generator_lorem_ipsum, parent, false),
+            binding = ItemMockDataGeneratorLoremIpsumBinding.inflate(parent.inflater, parent, false),
             onCardPressed = onCardPressed
         )
     }

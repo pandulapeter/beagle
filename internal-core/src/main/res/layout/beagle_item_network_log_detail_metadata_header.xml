@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/beagle_text_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/beagle_large_content_padding"
-    android:background="?attr/selectableItemBackground"
-    android:drawablePadding="@dimen/beagle_small_content_padding"
-    android:gravity="center_vertical"
-    android:paddingStart="@dimen/beagle_large_content_padding"
-    android:paddingLeft="@dimen/beagle_large_content_padding"
-    android:paddingTop="@dimen/beagle_small_content_padding"
-    android:paddingEnd="@dimen/beagle_large_content_padding"
-    android:paddingRight="@dimen/beagle_large_content_padding"
-    android:paddingBottom="@dimen/beagle_small_content_padding"
-    android:textColor="?android:attr/textColorPrimary"
-    android:textStyle="bold"
-    tools:ignore="Overdraw"
-    tools:text="Text" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/beagle_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/beagle_large_content_padding"
+        android:background="?attr/selectableItemBackground"
+        android:drawablePadding="@dimen/beagle_small_content_padding"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/beagle_large_content_padding"
+        android:paddingLeft="@dimen/beagle_large_content_padding"
+        android:paddingTop="@dimen/beagle_small_content_padding"
+        android:paddingEnd="@dimen/beagle_large_content_padding"
+        android:paddingRight="@dimen/beagle_large_content_padding"
+        android:paddingBottom="@dimen/beagle_small_content_padding"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textStyle="bold"
+        tools:ignore="Overdraw"
+        tools:text="Text" />
+
+</layout>

@@ -1,28 +1,25 @@
 package com.pandulapeter.beagle.core.view.bugReport.list.gallery
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import coil.request.ImageRequest
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportGalleryVideoBinding
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
-import com.pandulapeter.beagle.core.view.MediaView
 import com.pandulapeter.beagle.utils.consume
+import com.pandulapeter.beagle.utils.extensions.inflater
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 internal class BugReportVideoViewHolder private constructor(
-    itemView: View,
+    private val binding: BeagleItemBugReportGalleryVideoBinding,
     onTap: (String) -> Unit,
     onLongTap: (String) -> Unit
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(binding.root) {
 
     private val fileName get() = itemView.tag as String
-    private val mediaView = itemView.findViewById<MediaView>(R.id.beagle_media_view)
     private var job: Job? = null
     private val onCheckChangeListener = CompoundButton.OnCheckedChangeListener { _, _ ->
         adapterPosition.let { adapterPosition ->
@@ -49,21 +46,25 @@ internal class BugReportVideoViewHolder private constructor(
 
     fun bind(uiModel: UiModel) {
         itemView.tag = uiModel.fileName
-        mediaView.textView.text = uiModel.fileName
-        mediaView.imageView.run {
-            job?.cancel()
-            job = GlobalScope.launch {
-                BeagleCore.implementation.videoThumbnailLoader.execute(
-                    ImageRequest.Builder(context)
-                        .data(context.getScreenCapturesFolder().resolve(uiModel.fileName))
-                        .target(this@run)
-                        .build()
-                )
+        binding.beagleMediaView.run {
+            textView.text = uiModel.fileName
+            imageView.run {
+                job?.cancel()
+                job = GlobalScope.launch {
+                    BeagleCore.implementation.videoThumbnailLoader.execute(
+                        ImageRequest.Builder(context)
+                            .data(context.getScreenCapturesFolder().resolve(uiModel.fileName))
+                            .target(imageView)
+                            .build()
+                    )
+                }
+            }
+            checkBox.run {
+                setOnCheckedChangeListener(null)
+                isChecked = uiModel.isSelected
+                setOnCheckedChangeListener(onCheckChangeListener)
             }
         }
-        mediaView.checkBox.setOnCheckedChangeListener(null)
-        mediaView.checkBox.isChecked = uiModel.isSelected
-        mediaView.checkBox.setOnCheckedChangeListener(onCheckChangeListener)
     }
 
     data class UiModel(
@@ -80,7 +81,7 @@ internal class BugReportVideoViewHolder private constructor(
             onTap: (String) -> Unit,
             onLongTap: (String) -> Unit
         ) = BugReportVideoViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_gallery_video, parent, false),
+            binding = BeagleItemBugReportGalleryVideoBinding.inflate(parent.inflater, parent, false),
             onTap = onTap,
             onLongTap = onLongTap
         )

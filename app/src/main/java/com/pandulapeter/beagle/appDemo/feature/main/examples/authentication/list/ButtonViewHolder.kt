@@ -1,12 +1,10 @@
 package com.pandulapeter.beagle.appDemo.feature.main.examples.authentication.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.databinding.ItemAuthenticationButtonBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 class ButtonViewHolder private constructor(
     binding: ItemAuthenticationButtonBinding,
@@ -30,7 +28,7 @@ class ButtonViewHolder private constructor(
             parent: ViewGroup,
             onButtonPressed: () -> Unit
         ) = ButtonViewHolder(
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_authentication_button, parent, false),
+            binding = ItemAuthenticationButtonBinding.inflate(parent.inflater, parent, false),
             onButtonPressed = onButtonPressed
         )
     }

@@ -2,20 +2,17 @@ package com.pandulapeter.beagle.core.view.bugReport.list
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.core.R
+import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportDescriptionBinding
+import com.pandulapeter.beagle.utils.extensions.inflater
 
 internal class DescriptionViewHolder private constructor(
-    itemView: View,
+    private val binding: BeagleItemBugReportDescriptionBinding,
     private val onTextChanged: (Int, CharSequence) -> Unit
-) : RecyclerView.ViewHolder(itemView), TextWatcher {
+) : RecyclerView.ViewHolder(binding.root), TextWatcher {
 
-    private val editText = itemView.findViewById<EditText>(R.id.beagle_edit_text)
-    private val index get() = editText.tag as Int
+    private val index get() = binding.beagleEditText.tag as Int
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
@@ -27,11 +24,11 @@ internal class DescriptionViewHolder private constructor(
 
     override fun afterTextChanged(s: Editable?) = Unit
 
-    fun bind(uiModel: UiModel) {
-        editText.tag = uiModel.index
-        editText.removeTextChangedListener(this)
-        editText.setText(uiModel.text)
-        editText.addTextChangedListener(this)
+    fun bind(uiModel: UiModel) = binding.beagleEditText.run {
+        tag = uiModel.index
+        removeTextChangedListener(this@DescriptionViewHolder)
+        setText(uiModel.text)
+        addTextChangedListener(this@DescriptionViewHolder)
     }
 
     data class UiModel(
@@ -47,7 +44,7 @@ internal class DescriptionViewHolder private constructor(
             parent: ViewGroup,
             onTextChanged: (Int, CharSequence) -> Unit
         ) = DescriptionViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_bug_report_description, parent, false),
+            binding = BeagleItemBugReportDescriptionBinding.inflate(parent.inflater, parent, false),
             onTextChanged = onTextChanged
         )
     }

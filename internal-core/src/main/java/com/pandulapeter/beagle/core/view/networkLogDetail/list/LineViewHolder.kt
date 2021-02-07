@@ -1,12 +1,12 @@
 package com.pandulapeter.beagle.core.view.networkLogDetail.list
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.utils.extensions.dimension
+import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 import kotlin.math.max
 
@@ -63,7 +63,7 @@ internal class LineViewHolder private constructor(
             parent: ViewGroup,
             onItemClicked: (Int) -> Unit
         ) = LineViewHolder(
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.beagle_item_network_log_detail_line, parent, false),
+            itemView = parent.inflater.inflate(R.layout.beagle_item_network_log_detail_line, parent, false),
             onItemClicked = onItemClicked
         )
     }
