@@ -300,8 +300,7 @@
     <string name="case_study_crash_logging_hint_2">The logs are persisted on the device storage so opening the Bug report screen at any point should show all the crash logs from the past. Press the button below to check it out.</string>
     <string name="case_study_crash_logging_text_1">Open the debug menu to test Beagle\'s exception handler.\n\nThis feature is not bundled with the main library; it needs a separate dependency to work:</string>
     <string name="case_study_crash_logging_text_2">After the dependencies are added, the newly introduced <i>BeagleCrashLogger</i> object should be connected to the main library:</string>
-    <string name="case_study_crash_logging_text_3">The <i>log-crash</i> dependency introduces a <i>Service</i> running in a separate process. Firebase has a problem with this, so make sure you call the following in your custom <i>Application</i> class if you use Firebase:</string>
-    <string name="case_study_crash_logging_text_4">While this feature should work together with other crash reporting solutions, I do have some reliability concerns so please report any issues you encounter.</string>
+    <string name="case_study_crash_logging_text_3">Please note that enabling this feature will disable the crash collection of Firebase Crashlytics, as using the two simultaneously has proved to be unreliable.</string>
 
     <!-- Playground -->
     <string name="playground_title">Playground</string>

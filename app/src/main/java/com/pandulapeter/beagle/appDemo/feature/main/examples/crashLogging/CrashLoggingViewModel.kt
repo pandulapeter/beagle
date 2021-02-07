@@ -34,8 +34,6 @@ class CrashLoggingViewModel : ListViewModel<ListItem>() {
                         ")"
             ),
             TextViewHolder.UiModel(R.string.case_study_crash_logging_text_3),
-            CodeSnippetViewHolder.UiModel("FirebaseApp.initializeApp(this)"),
-            TextViewHolder.UiModel(R.string.case_study_crash_logging_text_4),
         )
     )
 }

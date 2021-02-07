@@ -307,7 +307,7 @@ Beagle.initialize(
 )
 ```
 
-Enabling this feature will disable the crash collection of Firebase Crashlytics as using the two simultaneously has proved to be unreliable.
+Enabling this feature will disable the crash collection of Firebase Crashlytics, as using the two simultaneously has proved to be unreliable.
 
 ### Improving encapsulation
 
