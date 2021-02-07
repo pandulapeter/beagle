@@ -1,7 +1,0 @@
-<resources>
-
-    <style name="Card" parent="CardBase">
-        <item name="strokeColor">@color/white</item>
-    </style>
-
-</resources>

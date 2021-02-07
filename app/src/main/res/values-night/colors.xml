@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Dynamic -->
-    <color name="code_snippet_text">@color/white</color>
+    <color name="code_snippet_text">@color/brand_light</color>
     <color name="code_snippet_background">@color/brand_dark</color>
     <color name="button_drawable_tint">@color/black</color>
 

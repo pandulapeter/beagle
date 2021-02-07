@@ -1,14 +1,12 @@
 <resources>
 
-    <style name="CardBase">
+    <style name="Card">
         <item name="strokeColor">@color/brand_dark</item>
         <item name="strokeWidth">@dimen/divider</item>
         <item name="cardCornerRadius">@dimen/nothing</item>
         <item name="cardElevation">@dimen/nothing</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-
-    <style name="Card" parent="CardBase" />
 
     <style name="Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textAllCaps">false</item>
