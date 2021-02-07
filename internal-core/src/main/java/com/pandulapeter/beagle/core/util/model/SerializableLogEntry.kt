@@ -6,11 +6,12 @@ import android.text.Spanned
 import android.text.style.StyleSpan
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
+import com.pandulapeter.beagle.commonBase.model.LogEntry
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class LogEntry(
+data class SerializableLogEntry(
     @Json(name = "id") override val id: String,
     @Json(name = "label") val label: String?,
     @Json(name = "message") val message: String,
@@ -25,4 +26,12 @@ data class LogEntry(
             setSpan(StyleSpan(Typeface.BOLD), 0, text.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
         }
     }
+
+    fun toLogEntry() = LogEntry(
+        id = id,
+        label = label,
+        message = message,
+        payload = payload,
+        timestamp = timestamp
+    )
 }

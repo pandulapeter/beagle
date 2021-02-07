@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportLogItemBinding
 import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
 import com.pandulapeter.beagle.core.util.extension.setText
-import com.pandulapeter.beagle.core.util.model.LogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableLogEntry
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.inflater
 
@@ -17,7 +17,7 @@ internal class LogItemViewHolder private constructor(
     onItemLongTapped: (String, String?) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val entry get() = itemView.tag as LogEntry
+    private val entry get() = itemView.tag as SerializableLogEntry
     private val checkedChangedListener = CompoundButton.OnCheckedChangeListener { _, _ ->
         if (adapterPosition != RecyclerView.NO_POSITION) {
             onItemLongTapped(entry.id, entry.label)
@@ -50,7 +50,7 @@ internal class LogItemViewHolder private constructor(
     }
 
     data class UiModel(
-        val entry: LogEntry,
+        val entry: SerializableLogEntry,
         val isSelected: Boolean
     ) : BugReportListItem {
 

@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportLifecycleLogItemBinding
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
 import com.pandulapeter.beagle.core.util.extension.setText
-import com.pandulapeter.beagle.core.util.model.LifecycleLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableLifecycleLogEntry
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.inflater
 
@@ -56,7 +56,7 @@ internal class LifecycleLogItemViewHolder private constructor(
     }
 
     data class UiModel(
-        val entry: LifecycleLogEntry,
+        val entry: SerializableLifecycleLogEntry,
         val isSelected: Boolean
     ) : BugReportListItem {
 

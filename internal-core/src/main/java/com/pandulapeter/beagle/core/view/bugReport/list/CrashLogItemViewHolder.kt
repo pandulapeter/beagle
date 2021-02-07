@@ -5,7 +5,7 @@ import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportCrashLogItemBinding
-import com.pandulapeter.beagle.core.util.model.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.inflater
 
@@ -48,7 +48,7 @@ internal class CrashLogItemViewHolder private constructor(
     }
 
     data class UiModel(
-        val entry: CrashLogEntry,
+        val entry: SerializableCrashLogEntry,
         val isSelected: Boolean
     ) : BugReportListItem {
 

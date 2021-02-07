@@ -1,8 +1,9 @@
 package com.pandulapeter.beagle.core.manager.listener
 
 import com.pandulapeter.beagle.common.listeners.LogListener
+import com.pandulapeter.beagle.commonBase.model.LogEntry
 
 internal class LogListenerManager : BaseListenerManager<LogListener>() {
 
-    fun notifyListeners(tag: String?, message: CharSequence, payload: CharSequence?) = notifyListeners { it.onLogMessageAdded(tag, message, payload) }
+    fun notifyListeners(logEntry: LogEntry) = notifyListeners { it.onLogEntryAdded(logEntry) }
 }

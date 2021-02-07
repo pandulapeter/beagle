@@ -4,7 +4,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.contracts.module.Cell
 import com.pandulapeter.beagle.core.list.cells.ExpandedItemTextCell
 import com.pandulapeter.beagle.core.list.delegates.shared.ExpandableModuleDelegate
-import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableNetworkLogEntry
 import com.pandulapeter.beagle.modules.NetworkLogListModule
 
 internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListModule> {
@@ -35,7 +35,7 @@ internal class NetworkLogListDelegate : ExpandableModuleDelegate<NetworkLogListM
 
     companion object {
         fun format(
-            entry: NetworkLogEntry,
+            entry: SerializableNetworkLogEntry,
             formatter: ((Long) -> CharSequence)?
         ) = BeagleCore.implementation.appearance.networkLogTexts.titleFormatter(
             entry.isOutgoing,

@@ -11,7 +11,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CrashLogEntry(
+data class SerializableCrashLogEntry(
     @Json(name = "id") override val id: String,
     @Json(name = "exception") val exception: String,
     @Json(name = "stacktrace") val stacktrace: String,

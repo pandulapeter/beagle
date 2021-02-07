@@ -28,10 +28,10 @@ import com.pandulapeter.beagle.core.util.extension.append
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
-import com.pandulapeter.beagle.core.util.model.CrashLogEntry
-import com.pandulapeter.beagle.core.util.model.LifecycleLogEntry
-import com.pandulapeter.beagle.core.util.model.LogEntry
-import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableLifecycleLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableNetworkLogEntry
 import com.pandulapeter.beagle.core.util.restoreModelAdapter
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportAdapter
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
@@ -205,7 +205,7 @@ class BugReportActivity : AppCompatActivity() {
 
     private fun showMediaPreviewDialog(fileName: String) = MediaPreviewDialogFragment.show(supportFragmentManager, fileName)
 
-    private fun showCrashLogDetailDialog(entry: CrashLogEntry) = BeagleCore.implementation.showDialog(
+    private fun showCrashLogDetailDialog(entry: SerializableCrashLogEntry) = BeagleCore.implementation.showDialog(
         content = entry.getFormattedContents(BeagleCore.implementation.appearance.logLongTimestampFormatter).toText(),
         isHorizontalScrollEnabled = true,
         shouldShowShareButton = true,
@@ -214,7 +214,7 @@ class BugReportActivity : AppCompatActivity() {
         fileName = BeagleCore.implementation.behavior.bugReportingBehavior.getCrashLogFileName(entry.timestamp, entry.id)
     )
 
-    private fun showNetworkLogDetailDialog(entry: NetworkLogEntry) = BeagleCore.implementation.showNetworkEventDialog(
+    private fun showNetworkLogDetailDialog(entry: SerializableNetworkLogEntry) = BeagleCore.implementation.showNetworkEventDialog(
         isOutgoing = entry.isOutgoing,
         url = entry.url,
         payload = entry.payload,
@@ -224,13 +224,13 @@ class BugReportActivity : AppCompatActivity() {
         id = entry.id
     )
 
-    private fun showLogDetailDialog(entry: LogEntry) = BeagleCore.implementation.showDialog(
+    private fun showLogDetailDialog(entry: SerializableLogEntry) = BeagleCore.implementation.showDialog(
         content = entry.getFormattedContents(BeagleCore.implementation.appearance.logLongTimestampFormatter).toText(),
         timestamp = entry.timestamp,
         id = entry.id
     )
 
-    private fun showLifecycleLogDetailDialog(entry: LifecycleLogEntry) = BeagleCore.implementation.showDialog(
+    private fun showLifecycleLogDetailDialog(entry: SerializableLifecycleLogEntry) = BeagleCore.implementation.showDialog(
         content = LifecycleLogListDelegate.format(
             entry = entry,
             formatter = BeagleCore.implementation.appearance.logLongTimestampFormatter,

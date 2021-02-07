@@ -2,11 +2,11 @@ package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
-import com.pandulapeter.beagle.core.util.model.LogEntry
 import com.pandulapeter.beagle.core.util.extension.LOG_PREFIX
 import com.pandulapeter.beagle.core.util.extension.createPersistedLogFile
 import com.pandulapeter.beagle.core.util.extension.getPersistedLogsFolder
 import com.pandulapeter.beagle.core.util.extension.readLogEntryFromLogFile
+import com.pandulapeter.beagle.core.util.model.SerializableLogEntry
 import com.pandulapeter.beagle.modules.LogListModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -23,7 +23,7 @@ internal class LogManager(
             syncIfNeeded()
         }
     private var isSyncReady = false
-    private val entries = mutableListOf<LogEntry>()
+    private val entries = mutableListOf<SerializableLogEntry>()
         get() {
             syncIfNeeded()
             return field
@@ -37,7 +37,7 @@ internal class LogManager(
         timestamp: Long,
         id: String
     ) {
-        val entry = LogEntry(
+        val entry = SerializableLogEntry(
             id = id,
             label = label,
             message = message,
@@ -49,7 +49,7 @@ internal class LogManager(
             entries.add(0, entry)
             entries.sortByDescending { it.timestamp }
         }
-        logListenerManager.notifyListeners(label, message, payload)
+        logListenerManager.notifyListeners(entry.toLogEntry())
         refreshUiIfNeeded(label)
         if (isPersisted) {
             GlobalScope.launch(Dispatchers.IO) {
@@ -58,7 +58,7 @@ internal class LogManager(
         }
     }
 
-    fun restore(logs: List<LogEntry>) {
+    fun restore(logs: List<SerializableLogEntry>) {
         synchronized(entries) {
             entries.clear()
             entries.addAll(logs.sortedByDescending { it.timestamp })
@@ -85,7 +85,7 @@ internal class LogManager(
         }
     }
 
-    fun getEntries(label: String?): List<LogEntry> = synchronized(entries) {
+    fun getEntries(label: String?): List<SerializableLogEntry> = synchronized(entries) {
         if (label == null) {
             entries.toList()
         } else {

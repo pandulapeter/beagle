@@ -1,7 +1,7 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
-import com.pandulapeter.beagle.core.util.model.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.util.extension.CRASH_LOG_PREFIX
 import com.pandulapeter.beagle.core.util.extension.createPersistedCrashLogFile
 import com.pandulapeter.beagle.core.util.extension.getPersistedLogsFolder
@@ -17,9 +17,9 @@ internal class CrashLogManager {
             GlobalScope.launch(Dispatchers.IO) { syncIfNeeded() }
         }
     private var isSyncReady = false
-    private val entries = mutableListOf<CrashLogEntry>()
+    private val entries = mutableListOf<SerializableCrashLogEntry>()
 
-    fun log(entry: CrashLogEntry) {
+    fun log(entry: SerializableCrashLogEntry) {
         synchronized(entries) {
             entries.removeAll { it.id == entry.id }
             entries.add(0, entry)
@@ -43,7 +43,7 @@ internal class CrashLogManager {
         }
     }
 
-    suspend fun getCrashLogEntries(): List<CrashLogEntry> {
+    suspend fun getCrashLogEntries(): List<SerializableCrashLogEntry> {
         syncIfNeeded()
         return synchronized(entries) {
             entries.toList()

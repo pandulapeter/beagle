@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
-import com.pandulapeter.beagle.core.util.model.CrashLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.util.model.RestoreModel
 import com.pandulapeter.beagle.core.util.restoreModelAdapter
 import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
@@ -48,7 +48,7 @@ internal class ExceptionHandler private constructor(
         }
     }
 
-    private fun Throwable.toCrashLogEntry() = CrashLogEntry(
+    private fun Throwable.toCrashLogEntry() = SerializableCrashLogEntry(
         id = randomId,
         exception = message ?: this::class.java.simpleName,
         stacktrace = stackTraceToString(),

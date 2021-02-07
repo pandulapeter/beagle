@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class RestoreModel(
-    @Json(name = "logs") val logs: List<LogEntry>,
-    @Json(name = "networkLogs") val networkLogs: List<NetworkLogEntry>,
-    @Json(name = "lifecycleLogs") val lifecycleLogs: List<LifecycleLogEntry>
+    @Json(name = "logs") val logs: List<SerializableLogEntry>,
+    @Json(name = "networkLogs") val networkLogs: List<SerializableNetworkLogEntry>,
+    @Json(name = "lifecycleLogs") val lifecycleLogs: List<SerializableLifecycleLogEntry>
 )

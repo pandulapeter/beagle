@@ -2,11 +2,12 @@ package com.pandulapeter.beagle.core.util.model
 
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
+import com.pandulapeter.beagle.commonBase.model.NetworkLogEntry
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class NetworkLogEntry(
+data class SerializableNetworkLogEntry(
     @Json(name = "id") override val id: String,
     @Json(name = "isOutgoing") val isOutgoing: Boolean,
     @Json(name = "payload") val payload: String,
@@ -17,4 +18,14 @@ data class NetworkLogEntry(
 ) : BeagleListItemContract {
 
     override val title = url.toText()
+
+    fun toNetworkLogEntry() = NetworkLogEntry(
+        id = id,
+        isOutgoing = isOutgoing,
+        url = url,
+        payload = payload,
+        headers = headers,
+        duration = duration,
+        timestamp = timestamp
+    )
 }

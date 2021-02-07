@@ -9,7 +9,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class LifecycleLogEntry(
+data class SerializableLifecycleLogEntry(
     @Json(name = "name") val name: String,
     @Json(name = "simpleName") val simpleName: String,
     @Json(name = "eventType") val eventType: LifecycleLogListModule.EventType,

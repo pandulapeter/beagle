@@ -1,16 +1,16 @@
 package com.pandulapeter.beagle.common.listeners
 
+import com.pandulapeter.beagle.commonBase.model.LogEntry
+
 /**
  * Implement this interface to get notified about when a new log message is added using Beagle.log().
  */
 interface LogListener {
 
     /**
-     * Called when the new log message is added.
+     * Called when the new log entry is added.
      *
-     * @param tag - Tag string that can be used to create filtered LogListModule instances.
-     * @param message - The main content of the log entry.
-     * @param payload - Optional, extra content.
+     * @param logEntry - The newly added [LogEntry].
      */
-    fun onLogMessageAdded(tag: String?, message: CharSequence, payload: CharSequence?)
+    fun onLogEntryAdded(logEntry: LogEntry)
 }

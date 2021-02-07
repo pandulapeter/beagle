@@ -8,7 +8,7 @@
 
     <style name="AppTheme" parent="AppThemeBase" />
 
-    <style name="AppThemeBase" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/brand_dark</item>
         <item name="colorSecondary">@color/brand_dark</item>
         <item name="materialButtonStyle">@style/Button</item>

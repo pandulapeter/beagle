@@ -18,8 +18,8 @@ import com.pandulapeter.beagle.core.util.extension.getLogsFolder
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.text
-import com.pandulapeter.beagle.core.util.model.CrashLogEntry
 import com.pandulapeter.beagle.core.util.model.RestoreModel
+import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
 import com.pandulapeter.beagle.core.view.bugReport.list.CrashLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
@@ -40,7 +40,7 @@ import java.util.concurrent.Executors
 internal class BugReportViewModel(
     application: Application,
     restoreModel: RestoreModel?,
-    crashLogEntryToShow: CrashLogEntry?,
+    crashLogEntryToShow: SerializableCrashLogEntry?,
     val buildInformation: CharSequence,
     val deviceInformation: CharSequence,
     private val textInputTitles: List<Text>,
@@ -70,7 +70,7 @@ internal class BugReportViewModel(
     private var mediaFiles = emptyList<File>()
     private var selectedMediaFileIds = emptyList<String>()
 
-    var allCrashLogEntries: List<CrashLogEntry>? = null
+    var allCrashLogEntries: List<SerializableCrashLogEntry>? = null
         private set
     private var lastCrashLogIndex = pageSize
     private var selectedCrashLogIds = emptyList<String>()
@@ -119,7 +119,6 @@ internal class BugReportViewModel(
         refresh(restoreModel)
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     fun refresh(restoreModel: RestoreModel? = null) {
         _shouldShowLoadingIndicator.postValue(true)
         viewModelScope.launch(listManagerContext) {

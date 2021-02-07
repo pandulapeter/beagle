@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppThemeBase" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppThemeBase" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/brand_light</item>
         <item name="colorSecondary">@color/brand_light</item>
         <item name="materialButtonStyle">@style/Button</item>

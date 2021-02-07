@@ -7,7 +7,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportNetworkLogItemBinding
 import com.pandulapeter.beagle.core.list.delegates.NetworkLogListDelegate
 import com.pandulapeter.beagle.core.util.extension.setText
-import com.pandulapeter.beagle.core.util.model.NetworkLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableNetworkLogEntry
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.inflater
 
@@ -55,7 +55,7 @@ internal class NetworkLogItemViewHolder private constructor(
     }
 
     data class UiModel(
-        val entry: NetworkLogEntry,
+        val entry: SerializableNetworkLogEntry,
         val isSelected: Boolean
     ) : BugReportListItem {
 

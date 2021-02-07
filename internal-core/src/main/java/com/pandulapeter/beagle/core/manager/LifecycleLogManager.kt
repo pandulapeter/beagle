@@ -1,17 +1,17 @@
 package com.pandulapeter.beagle.core.manager
 
-import com.pandulapeter.beagle.core.util.model.LifecycleLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableLifecycleLogEntry
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 
 internal class LifecycleLogManager(
     private val listManager: ListManager,
     private val refreshUi: () -> Unit
 ) {
-    private val entries = mutableListOf<LifecycleLogEntry>()
+    private val entries = mutableListOf<SerializableLifecycleLogEntry>()
 
     fun log(classType: Class<*>, eventType: LifecycleLogListModule.EventType, hasSavedInstanceState: Boolean?) {
         synchronized(entries) {
-            entries.add(0, LifecycleLogEntry(classType, eventType, hasSavedInstanceState))
+            entries.add(0, SerializableLifecycleLogEntry(classType, eventType, hasSavedInstanceState))
             entries.sortByDescending { it.timestamp }
         }
         if (listManager.contains(LifecycleLogListModule.ID)) {
@@ -19,7 +19,7 @@ internal class LifecycleLogManager(
         }
     }
 
-    fun restore(lifecycleLogs: List<LifecycleLogEntry>) {
+    fun restore(lifecycleLogs: List<SerializableLifecycleLogEntry>) {
         synchronized(entries) {
             entries.clear()
             entries.addAll(lifecycleLogs.sortedByDescending { it.timestamp })
@@ -29,7 +29,7 @@ internal class LifecycleLogManager(
         }
     }
 
-    fun getEntries(eventTypes: List<LifecycleLogListModule.EventType>?): List<LifecycleLogEntry> = synchronized(entries) {
+    fun getEntries(eventTypes: List<LifecycleLogListModule.EventType>?): List<SerializableLifecycleLogEntry> = synchronized(entries) {
         if (eventTypes == null) {
             entries.toList()
         } else {
