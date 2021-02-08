@@ -31,13 +31,7 @@ fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawa
 fun View.showSnackbar(@StringRes messageResourceId: Int) =
     Toast.makeText(context, messageResourceId, Toast.LENGTH_SHORT).show()
 
-fun View.openUrl(url: String) = Intent(Intent.ACTION_VIEW, Uri.parse(url)).let { intent ->
-    if (intent.resolveActivity(context.packageManager) != null) {
-        context.startActivity(intent)
-    } else {
-        showSnackbar(R.string.app_not_found)
-    }
-}
+fun View.openUrl(url: String) = context.startActivity(Intent.createChooser(Intent(Intent.ACTION_VIEW, Uri.parse(url)), null))
 
 inline fun <reified T : Fragment> FragmentManager.handleReplace(
     tag: String = T::class.java.name,

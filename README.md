@@ -48,6 +48,7 @@ If the wall of text below is too long for your taste, check out [this gist](http
 - Minimum SDK level: 16+
 - Target SDK level: 30+
 - Language: Kotlin 1.4.10 (should work with Java as well but the API was not optimized for that)
+- DataBinding: the latest release (2.5.0) only works with data binding enabled. This is a temporary issue, [see the comments here](https://github.com/pandulapeter/beagle/issues/80).
 
 ### Step 1: Add the Jitpack repository
 Make sure that the following is part of your project-level build.gradle file:
