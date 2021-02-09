@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clipToPadding="false"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="0dp"
+    android:paddingLeft="0dp"
+    android:paddingEnd="@dimen/beagle_item_horizontal_margin"
+    android:paddingRight="@dimen/beagle_item_horizontal_margin"
+    tools:ignore="Overdraw">
 
-    <LinearLayout
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/beagle_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/beagle_content_padding"
+        android:layout_marginLeft="@dimen/beagle_content_padding"
+        android:layout_marginTop="@dimen/beagle_compound_button_height_fix"
+        android:layout_marginEnd="@dimen/beagle_bug_report_checkbox_width_fix"
+        android:layout_marginRight="@dimen/beagle_bug_report_checkbox_width_fix"
+        android:layout_marginBottom="@dimen/beagle_compound_button_height_fix"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:text="Text" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/beagle_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:clipToPadding="false"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="0dp"
-        android:paddingLeft="0dp"
-        android:paddingEnd="@dimen/beagle_item_horizontal_margin"
-        android:paddingRight="@dimen/beagle_item_horizontal_margin"
-        tools:ignore="Overdraw">
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:paddingTop="@dimen/beagle_small_content_padding"
+        android:paddingBottom="@dimen/beagle_small_content_padding"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:text="Text" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/beagle_check_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/beagle_content_padding"
-            android:layout_marginLeft="@dimen/beagle_content_padding"
-            android:layout_marginTop="@dimen/beagle_compound_button_height_fix"
-            android:layout_marginEnd="@dimen/beagle_bug_report_checkbox_width_fix"
-            android:layout_marginRight="@dimen/beagle_bug_report_checkbox_width_fix"
-            android:layout_marginBottom="@dimen/beagle_compound_button_height_fix"
-            android:textColor="?android:attr/textColorPrimary"
-            tools:text="Text" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/beagle_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="4"
-            android:paddingTop="@dimen/beagle_small_content_padding"
-            android:paddingBottom="@dimen/beagle_small_content_padding"
-            android:textColor="?android:attr/textColorPrimary"
-            tools:text="Text" />
-
-    </LinearLayout>
-
-</layout>
+</LinearLayout>

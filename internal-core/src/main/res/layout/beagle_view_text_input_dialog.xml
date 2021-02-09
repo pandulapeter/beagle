@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/beagle_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:imeOptions="actionDone"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:paddingStart="@dimen/beagle_large_content_padding"
-        android:paddingLeft="@dimen/beagle_large_content_padding"
-        android:paddingTop="@dimen/beagle_large_content_padding"
-        android:paddingEnd="@dimen/beagle_large_content_padding"
-        android:paddingRight="@dimen/beagle_large_content_padding"
-        android:textColor="?android:attr/textColorPrimary"
-        tools:ignore="LabelFor"
-        tools:text="Text" />
-
-</layout>
+<com.google.android.material.textfield.TextInputEditText xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/beagle_edit_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:imeOptions="actionDone"
+    android:importantForAutofill="no"
+    android:inputType="text"
+    android:paddingStart="@dimen/beagle_large_content_padding"
+    android:paddingLeft="@dimen/beagle_large_content_padding"
+    android:paddingTop="@dimen/beagle_large_content_padding"
+    android:paddingEnd="@dimen/beagle_large_content_padding"
+    android:paddingRight="@dimen/beagle_large_content_padding"
+    android:textColor="?android:attr/textColorPrimary"
+    tools:ignore="LabelFor"
+    tools:text="Text" />

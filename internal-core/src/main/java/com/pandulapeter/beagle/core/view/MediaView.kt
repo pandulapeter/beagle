@@ -14,7 +14,7 @@ internal class MediaView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context.applyTheme(), attrs, defStyleAttr) {
 
-    private val binding = BeagleViewMediaBinding.inflate(inflater, this, true)
+    private val binding = BeagleViewMediaBinding.inflate(inflater, this)
     val checkBox = binding.beagleCheckBox
     val textView = binding.beagleTextView
     val imageView = binding.beagleImageView

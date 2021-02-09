@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
@@ -36,7 +35,8 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
     override fun onCreate(savedInstanceState: Bundle?) {
         BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.beagle_activity_gallery)
+        binding = BeagleActivityGalleryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.hide()
         binding.beagleToolbar.run {
             val textColor = colorResource(android.R.attr.textColorPrimary)

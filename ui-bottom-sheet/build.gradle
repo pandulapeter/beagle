@@ -14,7 +14,7 @@ android {
         versionName libraryVersion
         consumerProguardFiles "consumer-rules.pro"
     }
-    buildFeatures.dataBinding = true
+    buildFeatures.viewBinding = true
 }
 
 dependencies {

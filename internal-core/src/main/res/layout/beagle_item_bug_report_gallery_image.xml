@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/beagle_bug_report_gallery_item"
+    android:layout_height="@dimen/beagle_bug_report_gallery_item"
+    android:layout_margin="@dimen/beagle_content_padding"
+    app:cardBackgroundColor="?android:attr/colorBackground">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="@dimen/beagle_bug_report_gallery_item"
-        android:layout_height="@dimen/beagle_bug_report_gallery_item"
-        android:layout_margin="@dimen/beagle_content_padding"
-        app:cardBackgroundColor="?android:attr/colorBackground">
+    <com.pandulapeter.beagle.core.view.MediaView
+        android:id="@+id/beagle_media_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <com.pandulapeter.beagle.core.view.MediaView
-            android:id="@+id/beagle_media_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-</layout>
+</com.google.android.material.card.MaterialCardView>

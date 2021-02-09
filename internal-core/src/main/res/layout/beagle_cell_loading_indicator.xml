@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/beagle_item_minimum_height"
+    android:paddingTop="@dimen/beagle_content_padding"
+    android:paddingBottom="@dimen/beagle_content_padding">
 
-    <FrameLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/beagle_progress_bar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/beagle_item_minimum_height"
-        android:paddingTop="@dimen/beagle_content_padding"
-        android:paddingBottom="@dimen/beagle_content_padding">
+        android:layout_gravity="center"
+        android:indeterminate="true" />
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/beagle_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true" />
-
-    </FrameLayout>
-
-</layout>
+</FrameLayout>

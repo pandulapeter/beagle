@@ -12,7 +12,6 @@ import android.text.style.StyleSpan
 import android.view.MenuItem
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -88,7 +87,8 @@ class BugReportActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.beagle_activity_bug_report)
+        binding = BeagleActivityBugReportBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.hide()
         binding.beagleToolbar.run {
             val textColor = colorResource(android.R.attr.textColorPrimary)
