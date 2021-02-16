@@ -17,6 +17,7 @@ import com.pandulapeter.beagle.core.view.networkLogDetail.list.MetadataDetailsVi
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.MetadataHeaderViewHolder
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.NetworkLogDetailListItem
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.TitleViewHolder
+import com.pandulapeter.beagle.utils.mutableLiveDataOf
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,15 +31,15 @@ import kotlin.math.min
 
 internal class NetworkLogDetailDialogViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _isProgressBarVisible = MutableLiveData(true)
+    private val _isProgressBarVisible = mutableLiveDataOf(true)
     val isProgressBarVisible: LiveData<Boolean> = _isProgressBarVisible
-    private val _areTagsExpanded = MutableLiveData(true)
+    private val _areTagsExpanded = mutableLiveDataOf(true)
     val areTagsExpanded: LiveData<Boolean> = _areTagsExpanded
-    private val _isShareButtonEnabled = MutableLiveData(false)
+    private val _isShareButtonEnabled = mutableLiveDataOf(false)
     val isShareButtonEnabled: LiveData<Boolean> = _isShareButtonEnabled
-    private val _items = MutableLiveData(emptyList<NetworkLogDetailListItem>())
+    private val _items = mutableLiveDataOf(emptyList<NetworkLogDetailListItem>())
     val items: LiveData<List<NetworkLogDetailListItem>> = _items
-    private val _longestLine = MutableLiveData("")
+    private val _longestLine = mutableLiveDataOf("")
     val longestLine: LiveData<String> = _longestLine
     private var title = ""
     private var metadata = ""

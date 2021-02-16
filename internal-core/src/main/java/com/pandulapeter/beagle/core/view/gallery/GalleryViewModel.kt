@@ -12,6 +12,7 @@ import com.pandulapeter.beagle.core.view.gallery.list.GalleryListItem
 import com.pandulapeter.beagle.core.view.gallery.list.ImageViewHolder
 import com.pandulapeter.beagle.core.view.gallery.list.SectionHeaderViewHolder
 import com.pandulapeter.beagle.core.view.gallery.list.VideoViewHolder
+import com.pandulapeter.beagle.utils.mutableLiveDataOf
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -21,9 +22,9 @@ internal class GalleryViewModel : ViewModel() {
 
     private val _items = MutableLiveData<List<GalleryListItem>>()
     val items: LiveData<List<GalleryListItem>> = _items
-    private val _shouldShowLoadingIndicator = MutableLiveData(true)
+    private val _shouldShowLoadingIndicator = mutableLiveDataOf(true)
     val shouldShowLoadingIndicator: LiveData<Boolean> = _shouldShowLoadingIndicator
-    private val _isInSelectionMode = MutableLiveData(false)
+    private val _isInSelectionMode = mutableLiveDataOf(false)
     val isInSelectionMode: LiveData<Boolean> = _isInSelectionMode
     var selectedItemIds = emptyList<String>()
         private set(value) {

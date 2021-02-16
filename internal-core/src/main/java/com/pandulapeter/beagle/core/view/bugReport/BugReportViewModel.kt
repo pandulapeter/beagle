@@ -31,6 +31,7 @@ import com.pandulapeter.beagle.core.view.bugReport.list.MetadataItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.NetworkLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreViewHolder
 import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogViewModel
+import com.pandulapeter.beagle.utils.mutableLiveDataOf
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -62,9 +63,9 @@ internal class BugReportViewModel(
     private val getBugReportFileName get() = BeagleCore.implementation.behavior.bugReportingBehavior.getBugReportFileName
     private val onBugReportReady get() = BeagleCore.implementation.behavior.bugReportingBehavior.onBugReportReady
 
-    private val _items = MutableLiveData(emptyList<BugReportListItem>())
+    private val _items = mutableLiveDataOf(emptyList<BugReportListItem>())
     val items: LiveData<List<BugReportListItem>> = _items
-    private val _shouldShowLoadingIndicator = MutableLiveData(true)
+    private val _shouldShowLoadingIndicator = mutableLiveDataOf(true)
     val shouldShowLoadingIndicator: LiveData<Boolean> = _shouldShowLoadingIndicator
 
     private var mediaFiles = emptyList<File>()
@@ -102,7 +103,7 @@ internal class BugReportViewModel(
 
     private val context = getApplication<Application>()
     private val listManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
-    private val _isSendButtonEnabled = MutableLiveData(false)
+    private val _isSendButtonEnabled = mutableLiveDataOf(false)
     val isSendButtonEnabled: LiveData<Boolean> = _isSendButtonEnabled
     private var isPreparingData = false
         set(value) {
