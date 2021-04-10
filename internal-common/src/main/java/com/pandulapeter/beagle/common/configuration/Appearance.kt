@@ -222,6 +222,7 @@ data class Appearance(
      * @param none - The term used when the list of headers is empty. [DEFAULT_NONE] by default.
      * @param timestamp - The term used for the timestamp of the logged event. [DEFAULT_TIMESTAMP] by default.
      * @param duration - The term used for the duration of the logged event. [DEFAULT_DURATION] by default.
+     * @param caseSensitive - The term used for the case sensitive checkbox of the dialog. [DEFAULT_CASE_SENSITIVE] by default.
      * @param toggleExpandCollapseHint - The hint for the toggle that expands or collapses all JSON tags. [DEFAULT_TOGGLE_EXPAND_COLLAPSE] by default.
      * @param titleFormatter - Generates the title of a network log entry as it will appear on the UI. [DEFAULT_TITLE_FORMATTER] by default.
      */
@@ -231,6 +232,7 @@ data class Appearance(
         val none: Text = DEFAULT_NONE.toText(),
         val timestamp: Text = DEFAULT_TIMESTAMP.toText(),
         val duration: Text = DEFAULT_DURATION.toText(),
+        val caseSensitive: Text = DEFAULT_CASE_SENSITIVE.toText(),
         val toggleExpandCollapseHint: Text = DEFAULT_TOGGLE_EXPAND_COLLAPSE.toText(),
         val titleFormatter: (
             isOutgoing: Boolean,
@@ -246,6 +248,7 @@ data class Appearance(
             private const val DEFAULT_NONE = "none"
             private const val DEFAULT_TIMESTAMP = "Timestamp"
             private const val DEFAULT_DURATION = "Duration"
+            private const val DEFAULT_CASE_SENSITIVE = "Case-sensitive"
             private const val DEFAULT_TOGGLE_EXPAND_COLLAPSE = "Expand / collapse all"
             val DEFAULT_TITLE_FORMATTER: (
                 isOutgoing: Boolean,

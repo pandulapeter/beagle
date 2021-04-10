@@ -3,9 +3,15 @@ package com.pandulapeter.beagle.core.view.networkLogDetail
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.extension.append
@@ -18,7 +24,13 @@ import com.pandulapeter.beagle.core.view.networkLogDetail.list.MetadataHeaderVie
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.NetworkLogDetailListItem
 import com.pandulapeter.beagle.core.view.networkLogDetail.list.TitleViewHolder
 import com.pandulapeter.beagle.utils.mutableLiveDataOf
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -48,6 +60,17 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private var hasCollapsingContent = false
     private var shouldShowMetadata = false
     private val tagManagerContext = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
+    val searchQuery = MutableStateFlow("")
+    private val _matchCount = MutableStateFlow(0)
+    val matchCount = _matchCount.asLiveData()
+    val isCaseSensitive = MutableLiveData(true)
+    val scrollToPosition = searchQuery.map { query ->
+        if (query.isEmpty()) {
+            0
+        } else {
+            max(0, _items.value?.indexOfFirst { it is LineViewHolder.UiModel && it.content.contains(query) } ?: 0)
+        }
+    }.asLiveData()
 
     init {
         areTagsExpanded.observeForever { areDetailsEnabled ->
@@ -62,6 +85,8 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                 _isProgressBarVisible.postValue(false)
             }
         }
+        isCaseSensitive.observeForever { viewModelScope.launch { refreshUi() } }
+        searchQuery.onEach { refreshUi() }.flowOn(Dispatchers.Default).launchIn(viewModelScope)
     }
 
     fun formatJson(
@@ -189,14 +214,38 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                         }
                     }
                 }
+                val searchQueryRegex = searchQuery.value.let {
+                    if (it.isEmpty()) null else {
+                        if (isCaseSensitive.value != true) {
+                            it.toRegex(setOf(RegexOption.LITERAL, RegexOption.IGNORE_CASE))
+                        } else {
+                            it.toRegex(RegexOption.LITERAL)
+                        }
+                    }
+                }
+                _matchCount.value = 0
                 addAll(linesToAdd.map { line ->
                     LineViewHolder.UiModel(
                         lineIndex = line.index,
-                        content = line.content,
+                        content = line.content.let { content ->
+                            searchQueryRegex?.let { regex ->
+                                val searchQueryLength = regex.pattern.length
+                                SpannableString(content).apply {
+                                    val matches = regex.findAll(content).map { it.range.first }.toList()
+                                    _matchCount.value += matches.size
+                                    if (matches.isNotEmpty()) {
+                                        setSpan(StyleSpan(Typeface.BOLD), 0, content.length - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                                    }
+                                    matches.forEach { startIndex ->
+                                        setSpan(UnderlineSpan(), startIndex, startIndex + searchQueryLength, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                                    }
+                                }
+                            } ?: content
+                        },
                         level = line.level,
                         hasCollapsingContent = hasCollapsingContent,
                         isClickable = line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
-                        isCollapsed = collapsedLineIndices.contains(line.index)
+                        isCollapsed = collapsedLineIndices.contains(line.index),
                     )
                 })
             })

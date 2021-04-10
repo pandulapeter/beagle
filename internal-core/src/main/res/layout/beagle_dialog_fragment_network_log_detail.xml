@@ -12,17 +12,68 @@
         android:id="@+id/beagle_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         app:liftOnScroll="true">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/beagle_toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="0dp"
-            android:paddingLeft="0dp"
-            android:paddingEnd="@dimen/beagle_content_padding"
-            android:paddingRight="@dimen/beagle_content_padding"
-            app:menu="@menu/network_log_detail" />
+            android:animateLayoutChanges="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/beagle_toolbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="0dp"
+                android:paddingLeft="0dp"
+                android:paddingEnd="@dimen/beagle_content_padding"
+                android:paddingRight="@dimen/beagle_content_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/network_log_detail" />
+
+            <EditText
+                android:id="@+id/beagle_search_query"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/beagle_large_content_padding"
+                android:layout_marginLeft="@dimen/beagle_large_content_padding"
+                android:layout_marginEnd="@dimen/beagle_content_padding"
+                android:layout_marginRight="@dimen/beagle_content_padding"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                app:layout_constraintEnd_toStartOf="@+id/beagle_match_counter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/beagle_toolbar"
+                tools:ignore="LabelFor" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/beagle_match_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/beagle_large_content_padding"
+                android:layout_marginRight="@dimen/beagle_large_content_padding"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/beagle_content_padding"
+                app:layout_constraintBottom_toBottomOf="@+id/beagle_search_query"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/beagle_search_query" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/beagle_case_sensitive_checkbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/beagle_medium_content_padding"
+                android:layout_marginLeft="@dimen/beagle_medium_content_padding"
+                android:layout_marginEnd="@dimen/beagle_large_content_padding"
+                android:layout_marginRight="@dimen/beagle_large_content_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/beagle_search_query"
+                tools:text="Case sensitive" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 

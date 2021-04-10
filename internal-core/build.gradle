@@ -31,6 +31,7 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.lifecycle:lifecycle-process:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     implementation "io.coil-kt:coil:$coilVersion"
     implementation "io.coil-kt:coil-video:$coilVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"

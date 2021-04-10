@@ -2,6 +2,8 @@ package com.pandulapeter.beagle.core.view.networkLogDetail
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -13,6 +15,7 @@ import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.databinding.BeagleDialogFragmentNetworkLogDetailBinding
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.jsonLevel
+import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.viewModel
 import com.pandulapeter.beagle.core.util.extension.visible
@@ -25,7 +28,7 @@ import com.pandulapeter.beagle.utils.extensions.dimension
 import com.pandulapeter.beagle.utils.extensions.inflater
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
-internal class NetworkLogDetailDialogFragment : DialogFragment() {
+internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
 
     private lateinit var binding: BeagleDialogFragmentNetworkLogDetailBinding
     private val viewModel by viewModel<NetworkLogDetailDialogViewModel>()
@@ -51,6 +54,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
     override fun onResume() {
         super.onResume()
         dialog?.let { dialog ->
+            binding.beagleSearchQuery.addTextChangedListener(this)
             binding.beagleAppBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
@@ -76,6 +80,23 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
                     binding.beagleChildHorizontalScrollView.visible = true
                 }
             })
+            viewModel.scrollToPosition.observe(this) { binding.beagleRecyclerView.smoothScrollToPosition(it) }
+            viewModel.isCaseSensitive.observe(this) {
+                if (binding.beagleCaseSensitiveCheckbox.isChecked != it) {
+                    binding.beagleCaseSensitiveCheckbox.isChecked = it
+                }
+            }
+            binding.beagleCaseSensitiveCheckbox.run {
+                setText(BeagleCore.implementation.appearance.networkLogTexts.caseSensitive)
+                setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked != viewModel.isCaseSensitive.value) {
+                        viewModel.isCaseSensitive.value = isChecked
+                    }
+                }
+            }
+            viewModel.matchCount.observe(this) {
+                binding.beagleMatchCounter.text = it.toString()
+            }
             viewModel.longestLine.observe(this, { line ->
                 context?.let { context ->
                     val contentPadding = context.dimension(R.dimen.beagle_large_content_padding)
@@ -114,8 +135,19 @@ internal class NetworkLogDetailDialogFragment : DialogFragment() {
 
     override fun onPause() {
         super.onPause()
+        binding.beagleSearchQuery.removeTextChangedListener(this)
         binding.beagleRecyclerView.removeOnScrollListener(scrollListener)
     }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = s?.toString().orEmpty().let {
+        if (viewModel.searchQuery.value != it) {
+            viewModel.searchQuery.value = it
+        }
+    }
+
+    override fun afterTextChanged(s: Editable?) = Unit
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
         R.id.beagle_share -> consume {
