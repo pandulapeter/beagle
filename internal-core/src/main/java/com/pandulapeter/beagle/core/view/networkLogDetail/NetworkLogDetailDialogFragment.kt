@@ -41,6 +41,9 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             binding.beagleAppBar.isLifted = recyclerView.computeVerticalScrollOffset() != 0
+            if (dy > 0) {
+                binding.beagleSearchQuery.hideKeyboard()
+            }
         }
     }
 
@@ -87,7 +90,13 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
                     binding.beagleChildHorizontalScrollView.visible = true
                 }
             })
-            viewModel.scrollToPosition.observe(this) { binding.beagleRecyclerView.smoothScrollToPosition(it) }
+            binding.beagleMatchCounter.setOnClickListener {
+                viewModel.onMatchCounterClicked()
+                binding.beagleSearchQuery.hideKeyboard()
+            }
+            viewModel.scrollToPosition.observe(this) {
+                (binding.beagleRecyclerView.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(it, 0)
+            }
             viewModel.isCaseSensitive.observe(this) {
                 if (binding.beagleCaseSensitiveCheckbox.isChecked != it) {
                     binding.beagleCaseSensitiveCheckbox.isChecked = it

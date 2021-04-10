@@ -203,7 +203,7 @@
     <string name="case_study_network_request_interceptor_text_1">The lyrics for the following songs are downloaded from the internet every time you change the selection. The underlying implementation uses either OkHttp or Ktor:\n</string>
     <string name="case_study_network_request_interceptor_engine_ok_http">OkHttp</string>
     <string name="case_study_network_request_interceptor_engine_ktor">Ktor</string>
-    <string name="case_study_network_request_interceptor_text_2">Observe how the debug menu tracks every outgoing and incoming network request. You can also tap on the individual entries to see the formatted JSON payload.\n\nTry selecting a different song to trigger a new network request:\n</string>
+    <string name="case_study_network_request_interceptor_text_2">Observe how the debug menu tracks every outgoing and incoming network request. You can also tap on the individual entries to see the formatted JSON payload, where you can use a search feature.\n\nTry selecting a different song to trigger a new network request:\n</string>
     <string name="case_study_network_request_interceptor_loading">Loading…</string>
     <string name="case_study_network_request_interceptor_something_went_wrong">Something went wrong.</string>
     <string name="case_study_network_request_interceptor_try_again">Try again</string>

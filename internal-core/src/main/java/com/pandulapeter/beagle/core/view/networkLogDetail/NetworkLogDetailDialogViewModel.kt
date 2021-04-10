@@ -66,12 +66,12 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private val _matchCount = MutableStateFlow(0)
     val matchCount = _matchCount.asLiveData()
     val isCaseSensitive = MutableLiveData(true)
-    val scrollToPosition = searchQuery.map { query ->
-        if (query.isEmpty()) {
-            0
-        } else {
-            max(0, _items.value?.indexOfFirst { it is LineViewHolder.UiModel && it.content.contains(query) } ?: 0)
-        }
+    var searchResultLineIndices = emptyList<Int>()
+    private val currentResultLineIndex = MutableStateFlow(0)
+    val scrollToPosition = currentResultLineIndex.map { currentResultLineIndex ->
+        _items.value?.indexOfFirst { (it as? LineViewHolder.UiModel)?.lineIndex == currentResultLineIndex }?.let { result ->
+            if (result == -1) 0 else result
+        } ?: 0
     }.asLiveData()
 
     init {
@@ -88,7 +88,10 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
             }
         }
         isCaseSensitive.observeForever { viewModelScope.launch { refreshUi() } }
-        searchQuery.onEach { refreshUi() }.flowOn(Dispatchers.Default).launchIn(viewModelScope)
+        searchQuery.onEach {
+            refreshUi()
+            onMatchCounterClicked()
+        }.flowOn(Dispatchers.Default).launchIn(viewModelScope)
     }
 
     fun formatJson(
@@ -125,6 +128,21 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         _longestLine.postValue(longestLine)
         refreshUi()
         _isShareButtonEnabled.postValue(true)
+    }
+
+    fun onMatchCounterClicked() {
+        val lineIndices = searchResultLineIndices
+        val currentScrollPosition = currentResultLineIndex.value
+        currentResultLineIndex.value = if (currentScrollPosition == lineIndices.lastOrNull() ?: 0) {
+            lineIndices.firstOrNull() ?: 0
+        } else {
+            val currentIndex = lineIndices.indexOf(currentScrollPosition)
+            if (currentIndex == -1) {
+                lineIndices.firstOrNull() ?: 0
+            } else {
+                lineIndices[currentIndex + 1]
+            }
+        }
     }
 
     fun onToggleSearchButtonPressed() {
@@ -233,30 +251,35 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                     }
                 }
                 _matchCount.value = 0
-                addAll(linesToAdd.map { line ->
-                    LineViewHolder.UiModel(
-                        lineIndex = line.index,
-                        content = line.content.let { content ->
-                            searchQueryRegex?.let { regex ->
-                                val searchQueryLength = regex.pattern.length
-                                SpannableString(content).apply {
-                                    val matches = regex.findAll(content).map { it.range.first }.toList()
-                                    _matchCount.value += matches.size
-                                    if (matches.isNotEmpty()) {
-                                        setSpan(StyleSpan(Typeface.BOLD), 0, content.length - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                val newLineIndices = mutableListOf<Int>()
+                addAll(
+                    linesToAdd.map { line ->
+                        LineViewHolder.UiModel(
+                            lineIndex = line.index,
+                            content = line.content.let { content ->
+                                searchQueryRegex?.let { regex ->
+                                    val searchQueryLength = regex.pattern.length
+                                    SpannableString(content).apply {
+                                        val matches = regex.findAll(content).map { it.range.first }.toList()
+                                        _matchCount.value += matches.size
+                                        if (matches.isNotEmpty()) {
+                                            setSpan(StyleSpan(Typeface.BOLD), 0, content.length - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                                            newLineIndices.add(line.index)
+                                        }
+                                        matches.forEach { startIndex ->
+                                            setSpan(UnderlineSpan(), startIndex, startIndex + searchQueryLength, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                                        }
                                     }
-                                    matches.forEach { startIndex ->
-                                        setSpan(UnderlineSpan(), startIndex, startIndex + searchQueryLength, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                                    }
-                                }
-                            } ?: content
-                        },
-                        level = line.level,
-                        hasCollapsingContent = hasCollapsingContent,
-                        isClickable = line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
-                        isCollapsed = collapsedLineIndices.contains(line.index),
-                    )
-                })
+                                } ?: content
+                            },
+                            level = line.level,
+                            hasCollapsingContent = hasCollapsingContent,
+                            isClickable = line.index != jsonLines.lastIndex && line.level < jsonLines[line.index + 1].level,
+                            isCollapsed = collapsedLineIndices.contains(line.index),
+                        )
+                    }
+                )
+                searchResultLineIndices = newLineIndices
             })
             _isProgressBarVisible.postValue(false)
         }
