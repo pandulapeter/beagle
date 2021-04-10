@@ -224,6 +224,7 @@ data class Appearance(
      * @param duration - The term used for the duration of the logged event. [DEFAULT_DURATION] by default.
      * @param toggleExpandCollapseHint - The hint for the toggle that expands or collapses all JSON tags. [DEFAULT_TOGGLE_EXPAND_COLLAPSE] by default.
      * @param toggleSearchHint - The hint for the toggle that expands or collapses the search box. [DEFAULT_TOGGLE_SEARCH] by default.
+     * @param searchQueryHint - The hint for the search query. [DEFAULT_SEARCH_QUERY_HINT] by default.
      * @param caseSensitive - The term used for the case sensitive checkbox of the search box. [DEFAULT_CASE_SENSITIVE] by default.
      * @param titleFormatter - Generates the title of a network log entry as it will appear on the UI. [DEFAULT_TITLE_FORMATTER] by default.
      */
@@ -235,6 +236,7 @@ data class Appearance(
         val duration: Text = DEFAULT_DURATION.toText(),
         val toggleExpandCollapseHint: Text = DEFAULT_TOGGLE_EXPAND_COLLAPSE.toText(),
         val toggleSearchHint: Text = DEFAULT_TOGGLE_SEARCH.toText(),
+        val searchQueryHint: Text = DEFAULT_SEARCH_QUERY_HINT.toText(),
         val caseSensitive: Text = DEFAULT_CASE_SENSITIVE.toText(),
         val titleFormatter: (
             isOutgoing: Boolean,
@@ -252,6 +254,7 @@ data class Appearance(
             private const val DEFAULT_DURATION = "Duration"
             private const val DEFAULT_TOGGLE_EXPAND_COLLAPSE = "Expand / collapse all"
             private const val DEFAULT_TOGGLE_SEARCH = "Toggle search"
+            private const val DEFAULT_SEARCH_QUERY_HINT = "Search query"
             private const val DEFAULT_CASE_SENSITIVE = "Case-sensitive"
             val DEFAULT_TITLE_FORMATTER: (
                 isOutgoing: Boolean,

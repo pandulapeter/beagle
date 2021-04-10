@@ -60,7 +60,10 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
     override fun onResume() {
         super.onResume()
         dialog?.let { dialog ->
-            binding.beagleSearchQuery.addTextChangedListener(this)
+            binding.beagleSearchQuery.run {
+                addTextChangedListener(this@NetworkLogDetailDialogFragment)
+                hint = context.text(BeagleCore.implementation.appearance.networkLogTexts.searchQueryHint)
+            }
             binding.beagleAppBar.run {
                 setPadding(0, 0, 0, 0)
                 setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
