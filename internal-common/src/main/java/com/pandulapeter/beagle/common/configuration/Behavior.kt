@@ -2,6 +2,7 @@ package com.pandulapeter.beagle.common.configuration
 
 import android.app.Application
 import android.net.Uri
+import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_BUILD_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_CRASH_LOGGERS
@@ -15,7 +16,6 @@ import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavio
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_METADATA_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_SHOULD_SHOW_NETWORK_LOGS_SECTION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_TEXT_INPUT_FIELDS
-import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_EXCLUDED_PACKAGE_NAMES
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SHOULD_LOCK_DRAWER
 import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior.Companion.DEFAULT_SHOULD_DISPLAY_FULL_NAMES
@@ -42,7 +42,7 @@ import java.util.Locale
 /**
  * Specifies the behavior customization options for the debug menu. Used as an optional argument of Beagle.initialize(). All parameters are optional.
  *
- * @param excludedPackageNames - The list of packages that contain Activities for which Beagle should not be triggered. [DEFAULT_EXCLUDED_PACKAGE_NAMES] by default (and the library also contains a hardcoded list, unrelated to this parameter).
+ * @param shouldAddDebugMenu - Can be used to disable Beagle for certain Activities. [DEFAULT_SHOULD_ADD_DEBUG_MENU] by default (also, the library also contains a hardcoded list of unsupported package names, unrelated to this parameter).
  * @param shouldLockDrawer - Only used in the `ui-drawer` artifact. If true, it disables the swipe-to-open gesture of the Drawer so the debug menu can only be opened by a shake gesture ore manually calling Beagle.show(). [DEFAULT_SHOULD_LOCK_DRAWER] by default.
  * @param shakeDetectionBehavior - Customize the shake detection behavior, see [ShakeDetectionBehavior].
  * @param logBehavior - Customize the logging behavior, see [LogBehavior].
@@ -52,7 +52,7 @@ import java.util.Locale
  * @param bugReportingBehavior - Customize the bug reporting behavior, see [BugReportingBehavior].
  */
 data class Behavior(
-    val excludedPackageNames: List<String> = DEFAULT_EXCLUDED_PACKAGE_NAMES,
+    val shouldAddDebugMenu: (FragmentActivity) -> Boolean = DEFAULT_SHOULD_ADD_DEBUG_MENU,
     val shouldLockDrawer: Boolean = DEFAULT_SHOULD_LOCK_DRAWER,
     val shakeDetectionBehavior: ShakeDetectionBehavior = ShakeDetectionBehavior(),
     val logBehavior: LogBehavior = LogBehavior(),
@@ -62,7 +62,7 @@ data class Behavior(
     val bugReportingBehavior: BugReportingBehavior = BugReportingBehavior()
 ) {
     companion object {
-        private val DEFAULT_EXCLUDED_PACKAGE_NAMES = emptyList<String>()
+        private val DEFAULT_SHOULD_ADD_DEBUG_MENU : (FragmentActivity) -> Boolean = { true }
         private const val DEFAULT_SHOULD_LOCK_DRAWER = false
         private val DEFAULT_LOG_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }

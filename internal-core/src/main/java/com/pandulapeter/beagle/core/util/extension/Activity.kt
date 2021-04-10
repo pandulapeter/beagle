@@ -32,7 +32,7 @@ private val excludedPackageNames = listOf(
 internal val Activity.supportsDebugMenu
     get() = this is FragmentActivity
             && excludedPackageNames.none { componentName.className.startsWith(it) }
-            && BeagleCore.implementation.behavior.excludedPackageNames.none { componentName.className.startsWith(it) }
+            && BeagleCore.implementation.behavior.shouldAddDebugMenu(this)
 
 internal fun Activity.shareFile(uri: Uri, fileType: String) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
