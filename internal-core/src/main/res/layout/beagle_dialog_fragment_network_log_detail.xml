@@ -12,13 +12,11 @@
         android:id="@+id/beagle_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
         app:liftOnScroll="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/beagle_toolbar"

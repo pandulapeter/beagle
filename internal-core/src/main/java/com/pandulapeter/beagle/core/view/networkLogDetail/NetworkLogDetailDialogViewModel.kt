@@ -46,6 +46,8 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private val _isProgressBarVisible = mutableLiveDataOf(true)
     val isProgressBarVisible: LiveData<Boolean> = _isProgressBarVisible
     private val _areTagsExpanded = mutableLiveDataOf(true)
+    private val _shouldShowSearch = MutableStateFlow(false)
+    val shouldShowSearch = _shouldShowSearch.asLiveData()
     val areTagsExpanded: LiveData<Boolean> = _areTagsExpanded
     private val _isShareButtonEnabled = mutableLiveDataOf(false)
     val isShareButtonEnabled: LiveData<Boolean> = _isShareButtonEnabled
@@ -123,6 +125,13 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
         _longestLine.postValue(longestLine)
         refreshUi()
         _isShareButtonEnabled.postValue(true)
+    }
+
+    fun onToggleSearchButtonPressed() {
+        if (_isProgressBarVisible.value == false) {
+            _shouldShowSearch.value = !_shouldShowSearch.value
+            viewModelScope.launch { refreshUi() }
+        }
     }
 
     fun onToggleDetailsButtonPressed() {
@@ -215,7 +224,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
                     }
                 }
                 val searchQueryRegex = searchQuery.value.let {
-                    if (it.isEmpty()) null else {
+                    if (!_shouldShowSearch.value || it.isEmpty()) null else {
                         if (isCaseSensitive.value != true) {
                             it.toRegex(setOf(RegexOption.LITERAL, RegexOption.IGNORE_CASE))
                         } else {

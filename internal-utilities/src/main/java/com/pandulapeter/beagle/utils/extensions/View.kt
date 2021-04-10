@@ -24,4 +24,9 @@ fun View.hideKeyboard() {
     )
 }
 
+fun View.showKeyboard() {
+    requestFocus()
+    post { (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(this, 0) }
+}
+
 val View.inflater: LayoutInflater get() = context.inflater

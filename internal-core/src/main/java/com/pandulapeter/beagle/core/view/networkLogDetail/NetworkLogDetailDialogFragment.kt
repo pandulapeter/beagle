@@ -25,13 +25,16 @@ import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.dimension
+import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.utils.extensions.inflater
+import com.pandulapeter.beagle.utils.extensions.showKeyboard
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
 
 internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
 
     private lateinit var binding: BeagleDialogFragmentNetworkLogDetailBinding
     private val viewModel by viewModel<NetworkLogDetailDialogViewModel>()
+    private lateinit var toggleSearchButton: MenuItem
     private lateinit var toggleDetailsButton: MenuItem
     private lateinit var shareButton: MenuItem
     private val scrollListener = object : RecyclerView.OnScrollListener() {
@@ -64,6 +67,10 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
             binding.beagleToolbar.run {
                 setNavigationOnClickListener { dismiss() }
                 navigationIcon = context.tintedDrawable(R.drawable.beagle_ic_close, textColor)
+                toggleSearchButton = menu.findItem(R.id.beagle_toggle_search).also {
+                    it.isVisible = true
+                    it.title = context.text(BeagleCore.implementation.appearance.networkLogTexts.toggleSearchHint)
+                }
                 toggleDetailsButton = menu.findItem(R.id.beagle_toggle_details).also {
                     it.isVisible = true
                     it.title = context.text(BeagleCore.implementation.appearance.networkLogTexts.toggleExpandCollapseHint)
@@ -91,6 +98,19 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
                 setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked != viewModel.isCaseSensitive.value) {
                         viewModel.isCaseSensitive.value = isChecked
+                    }
+                }
+            }
+            viewModel.shouldShowSearch.observe(this) {
+                binding.beagleMatchCounter.visible = it
+                binding.beagleCaseSensitiveCheckbox.visible = it
+                binding.beagleSearchQuery.run {
+                    visible = it
+                    if (it) {
+                        setSelection(text?.toString().orEmpty().length)
+                        showKeyboard()
+                    } else {
+                        hideKeyboard()
                     }
                 }
             }
@@ -150,6 +170,8 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
     override fun afterTextChanged(s: Editable?) = Unit
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
+        R.id.beagle_toggle_search -> consume(viewModel::onToggleSearchButtonPressed)
+        R.id.beagle_toggle_details -> consume(viewModel::onToggleDetailsButtonPressed)
         R.id.beagle_share -> consume {
             viewModel.shareLogs(
                 activity = activity,
@@ -157,7 +179,6 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
                 id = arguments?.id.orEmpty()
             )
         }
-        R.id.beagle_toggle_details -> consume(viewModel::onToggleDetailsButtonPressed)
         else -> false
     }
 

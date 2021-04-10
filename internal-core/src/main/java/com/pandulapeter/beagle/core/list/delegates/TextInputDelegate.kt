@@ -1,12 +1,10 @@
 package com.pandulapeter.beagle.core.list.delegates
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.pandulapeter.beagle.BeagleCore
@@ -17,6 +15,7 @@ import com.pandulapeter.beagle.core.list.delegates.shared.ValueWrapperModuleDele
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.modules.TextInputModule
+import com.pandulapeter.beagle.utils.extensions.showKeyboard
 
 internal class TextInputDelegate : ValueWrapperModuleDelegate.String<TextInputModule>() {
 
@@ -60,8 +59,7 @@ internal class TextInputDelegate : ValueWrapperModuleDelegate.String<TextInputMo
         getCurrentValue(module).let { currentValue ->
             setText(currentValue)
             setSelection(currentValue.length)
-            requestFocus()
-            post { (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(this, 0) }
+            showKeyboard()
             setOnEditorActionListener { _, actionId, _ ->
                 true.also {
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
