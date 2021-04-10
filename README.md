@@ -47,7 +47,7 @@ If the wall of text below is too long for your taste, check out [this gist](http
 ### Step 0: Check the requirements
 - Minimum SDK level: 16+
 - Target SDK level: 30+
-- Language: Kotlin 1.4.10 (should work with Java as well but the API was not optimized for that)
+- Language: Kotlin 1.4.32+
 
 ### Step 1: Add the Jitpack repository
 Make sure that the following is part of your project-level build.gradle file:

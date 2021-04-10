@@ -42,7 +42,7 @@ import java.util.Locale
 /**
  * Specifies the behavior customization options for the debug menu. Used as an optional argument of Beagle.initialize(). All parameters are optional.
  *
- * @param shouldAddDebugMenu - Can be used to disable Beagle for certain Activities. [DEFAULT_SHOULD_ADD_DEBUG_MENU] by default (also, the library also contains a hardcoded list of unsupported package names, unrelated to this parameter).
+ * @param shouldAddDebugMenu - Can be used to disable Beagle for certain Activities. [DEFAULT_SHOULD_ADD_DEBUG_MENU] by default (also, the library contains a hardcoded list of unsupported package names, unrelated to this parameter).
  * @param shouldLockDrawer - Only used in the `ui-drawer` artifact. If true, it disables the swipe-to-open gesture of the Drawer so the debug menu can only be opened by a shake gesture ore manually calling Beagle.show(). [DEFAULT_SHOULD_LOCK_DRAWER] by default.
  * @param shakeDetectionBehavior - Customize the shake detection behavior, see [ShakeDetectionBehavior].
  * @param logBehavior - Customize the logging behavior, see [LogBehavior].
