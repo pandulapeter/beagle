@@ -4,10 +4,8 @@ import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Placement
@@ -195,15 +193,13 @@ internal class ListManager {
 
     @Suppress("unused")
     private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?, onContentsChanged: () -> Unit) =
-        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleObserver {
+        lifecycleOwner?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
 
-            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-            fun onCreate() {
+            override fun onCreate(owner: LifecycleOwner) {
                 GlobalScope.launch { addModulesInternal(newModules, placement, onContentsChanged) }
             }
 
-            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-            fun onDestroy() {
+            override fun onDestroy(owner: LifecycleOwner) {
                 GlobalScope.launch { removeModules(newModules.map { it.id }, onContentsChanged) }
                 lifecycleOwner.lifecycle.removeObserver(this)
             }
