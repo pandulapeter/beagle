@@ -113,7 +113,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "org.koin:koin-androidx-viewmodel:2.2.2"
+    implementation "io.insert-koin:koin-android-ext:3.0.1"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion") { exclude module: "okhttp" }

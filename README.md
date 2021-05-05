@@ -1,5 +1,5 @@
 # Beagle (Android library)
-*A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, generating bug reports, and many other useful features.*
+*A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, generating bug reports, and many other useful features.*
 
 <img src="metadata/logo.png" width="20%" />
 
@@ -47,7 +47,7 @@ If the wall of text below is too long for your taste, check out [this gist](http
 ### Step 0: Check the requirements
 - Minimum SDK level: 16+
 - Target SDK level: 30+
-- Language: Kotlin 1.4.32+
+- Language: Kotlin 1.5.0+
 
 ### Step 1: Add the Jitpack repository
 Make sure that the following is part of your project-level build.gradle file:
