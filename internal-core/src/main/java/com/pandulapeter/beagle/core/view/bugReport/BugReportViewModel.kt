@@ -1,27 +1,15 @@
 package com.pandulapeter.beagle.core.view.bugReport
 
 import android.app.Application
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
-import com.pandulapeter.beagle.commonBase.currentTimestamp
-import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
-import com.pandulapeter.beagle.core.util.extension.createZipFile
-import com.pandulapeter.beagle.core.util.extension.getBugReportsFolder
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.text
-import com.pandulapeter.beagle.core.util.getCrashLogsFolder
-import com.pandulapeter.beagle.core.util.getLifecycleLogsFolder
-import com.pandulapeter.beagle.core.util.getLogsFolder
-import com.pandulapeter.beagle.core.util.getMediaFolder
-import com.pandulapeter.beagle.core.util.getNetworkLogsFolder
 import com.pandulapeter.beagle.core.util.model.RestoreModel
 import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
-import com.pandulapeter.beagle.core.util.realPath
 import com.pandulapeter.beagle.core.view.bugReport.list.BugReportListItem
 import com.pandulapeter.beagle.core.view.bugReport.list.CrashLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.DescriptionViewHolder
@@ -56,9 +44,6 @@ internal class BugReportViewModel(
     private val logLabelSectionsToShow = BeagleCore.implementation.behavior.bugReportingBehavior.logLabelSectionsToShow
     private val lifecycleSectionEventTypes = BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes
     private val shouldShowMetadataSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowMetadataSection
-
-    private val getBugReportFileName get() = BeagleCore.implementation.behavior.bugReportingBehavior.getBugReportFileName
-    private val onBugReportReady get() = BeagleCore.implementation.behavior.bugReportingBehavior.onBugReportReady
 
     private val _items = mutableLiveDataOf(emptyList<BugReportListItem>())
     val items: LiveData<List<BugReportListItem>> = _items
@@ -108,7 +93,6 @@ internal class BugReportViewModel(
             _shouldShowLoadingIndicator.postValue(value)
             refreshSendButton()
         }
-    val zipFileUriToShare = MutableLiveData<Uri?>()
 
     init {
         if (crashLogEntryToShow != null) {
@@ -186,62 +170,25 @@ internal class BugReportViewModel(
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
             viewModelScope.launch {
                 isPreparingData = true
-                val filePaths = mutableListOf<String>()
-
-                // Media files
-                filePaths.addAll(getMediaFolder(selectedMediaFileIds, context))
-
-                // Crash logs
-                filePaths.addAll(getCrashLogsFolder(selectedCrashLogIds, allCrashLogEntries, context))
-
-                // Network log files
-                filePaths.addAll(getNetworkLogsFolder(selectedNetworkLogIds, allNetworkLogEntries, context))
-
-                // Log files
-                filePaths.addAll(getLogsFolder(selectedLogIds, allLogEntries, context))
-
-                // Lifecycle logs
-                filePaths.addAll(getLifecycleLogsFolder(selectedLifecycleLogIds, allLifecycleLogEntries, context))
-
-                // Build information
                 var content = ""
-                if (shouldShowMetadataSection && shouldAttachBuildInformation && buildInformation.isNotBlank()) {
-                    content = buildInformation.toString()
-                }
-
-                // Device information
-                if (shouldShowMetadataSection && shouldAttachDeviceInformation) {
-                    content = if (content.isBlank()) deviceInformation.toString() else "$content\n\n$deviceInformation"
-                }
-
-                // Text inputs
                 textInputValues.forEachIndexed { index, textInputValue ->
                     if (textInputValue.trim().isNotBlank()) {
                         val text = "${context.text(textInputTitles[index])}\n${textInputValue.trim()}"
                         content = if (content.isBlank()) text else "$content\n\n$text"
                     }
                 }
-
-                // Create the log file
-                if (content.isNotBlank()) {
-                    context.createBugReportTextFile(
-                        fileName = "${getBugReportFileName(currentTimestamp)}.txt",
-                        content = content
-                    )?.let { uri -> filePaths.add(uri.toPath(context.getBugReportsFolder())) }
-                }
-
-                // Create the zip file
-                val uri = context.createZipFile(
-                    filePaths = filePaths,
-                    zipFileName = "${getBugReportFileName(currentTimestamp)}.zip",
+                val selectedLogIdList = selectedLogIds.flatMap { it.value }.distinct()
+                BeagleCore.implementation.shareBugReportInternal(
+                    shouldIncludeMediaFile = { selectedMediaFileIds.contains(it.name) },
+                    shouldIncludeCrashLogEntry = { selectedCrashLogIds.contains(it.id) },
+                    shouldIncludeNetworkLogEntry = { selectedNetworkLogIds.contains(it.id) },
+                    shouldIncludeLogEntry = { selectedLogIdList.contains(it.id) },
+                    shouldIncludeLifecycleLogEntry = { selectedLifecycleLogIds.contains(it.id) },
+                    shouldIncludeBuildInformation = shouldShowMetadataSection && shouldAttachBuildInformation,
+                    shouldIncludeDeviceInformation = shouldShowMetadataSection && shouldAttachDeviceInformation,
+                    extraDataToInclude = content,
+                    scope = viewModelScope
                 )
-                onBugReportReady.let { onBugReportReady ->
-                    if (onBugReportReady == null) {
-                        zipFileUriToShare.postValue(uri)
-                    } else {
-                        onBugReportReady(uri)
-                    }
-                }
                 isPreparingData = false
             }
         }
@@ -469,8 +416,6 @@ internal class BugReportViewModel(
         refreshSendButton()
         _shouldShowLoadingIndicator.postValue(false)
     }
-
-    private fun Uri.toPath(folder: File): String = "${folder.canonicalPath}/$realPath"
 
     enum class MetadataType {
         BUILD_INFORMATION,

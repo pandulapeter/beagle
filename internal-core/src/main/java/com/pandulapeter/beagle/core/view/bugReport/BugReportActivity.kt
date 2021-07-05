@@ -3,12 +3,8 @@ package com.pandulapeter.beagle.core.view.bugReport
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.StyleSpan
 import android.view.MenuItem
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
@@ -16,17 +12,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandulapeter.beagle.BeagleCore
-import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.databinding.BeagleActivityBugReportBinding
-import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
 import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
-import com.pandulapeter.beagle.core.util.extension.append
-import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.extension.visible
+import com.pandulapeter.beagle.core.util.generateBuildInformation
+import com.pandulapeter.beagle.core.util.generateDeviceInformation
 import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.util.model.SerializableLifecycleLogEntry
 import com.pandulapeter.beagle.core.util.model.SerializableLogEntry
@@ -71,8 +65,8 @@ class BugReportActivity : AppCompatActivity() {
                     application = application,
                     restoreModel = restoreModel,
                     crashLogEntryToShow = crashLogEntryToShow,
-                    buildInformation = buildInformation(application).generateBuildInformation(),
-                    deviceInformation = generateDeviceInformation(),
+                    buildInformation = buildInformation(application).generateBuildInformation(this@BugReportActivity),
+                    deviceInformation = generateDeviceInformation(this@BugReportActivity),
                     textInputTitles = textInputFields.map { it.first },
                     textInputDescriptions = textInputFields.map { it.second }
                 ) as T
@@ -156,12 +150,6 @@ class BugReportActivity : AppCompatActivity() {
             sendButton.isEnabled = it
             sendButton.icon.alpha = if (it) 255 else 63
         }
-        viewModel.zipFileUriToShare.observe(this) { uri ->
-            if (uri != null) {
-                shareFile(uri, "application/zip")
-                viewModel.zipFileUriToShare.value = null
-            }
-        }
     }
 
     override fun onResume() {
@@ -175,28 +163,6 @@ class BugReportActivity : AppCompatActivity() {
     }
 
     fun refresh() = viewModel.refresh()
-
-    private fun generateDeviceInformation(): CharSequence {
-        var text: CharSequence = ""
-        //TODO: Should be configurable
-        DeviceInfoDelegate.getDeviceInfo(
-            shouldShowManufacturer = true,
-            shouldShowModel = true,
-            shouldShowResolutionsPx = true,
-            shouldShowResolutionsDp = true,
-            shouldShowDensity = true,
-            shouldShowAndroidVersion = true
-        ).also { sections ->
-            val lastIndex = sections.lastIndex
-            sections.forEachIndexed { index, (keyText, value) ->
-                val key = text(keyText)
-                text = text.append(SpannableString("$key: $value".let { if (index == lastIndex) it else "$it\n" }).apply {
-                    setSpan(StyleSpan(Typeface.BOLD), 0, key.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                })
-            }
-        }
-        return text
-    }
 
     private fun onMenuItemClicked(menuItem: MenuItem) = when (menuItem.itemId) {
         R.id.beagle_send -> consume(viewModel::onSendButtonPressed)
@@ -250,19 +216,6 @@ class BugReportActivity : AppCompatActivity() {
         }.toText(),
         shouldShowShareButton = false
     )
-
-    private fun List<Pair<Text, String>>.generateBuildInformation(): CharSequence {
-        var text: CharSequence = ""
-        forEachIndexed { index, (keyText, value) ->
-            val key = text(keyText)
-            if (key.isNotBlank() && value.isNotBlank()) {
-                text = text.append(SpannableString("$key: $value".let { if (index == lastIndex) it else "$it\n" }).apply {
-                    setSpan(StyleSpan(Typeface.BOLD), 0, key.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                })
-            }
-        }
-        return text
-    }
 
     companion object {
         private const val CRASH_LOG_ENTRY_TO_SHOW = "crashLogEntry"

@@ -173,7 +173,7 @@ data class Behavior(
      * @param getCrashLogFileName - The lambda used to generate crash log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format and the ID.
      * @param getBugReportFileName - The lambda used to generate bug report file names (without the extension). The argument is the timestamp when the file was created. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format.
      * @param onBugReportReady - The lambda that gets invoked after the bug report is ready, with the [Uri] pointing to the ZIP file, or null for the default implementation that uses the system share sheet. [DEFAULT_ON_BUG_REPORT_READY] by default.
-     * @param emailAddress - used as a prefilled email address when sharing the bug report
+     * @param emailAddress - Used as a prefilled email address when sharing the bug report, if the user decides to use an email client. [DEFAULT_EMAIL_ADDRESS] by default.
      */
     data class BugReportingBehavior(
         val crashLoggers: List<BeagleCrashLoggerContract> = DEFAULT_CRASH_LOGGERS,
@@ -185,7 +185,7 @@ data class Behavior(
         val logLabelSectionsToShow: List<String?> = DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW,
         val lifecycleSectionEventTypes: List<LifecycleLogListModule.EventType> = DEFAULT_LIFECYCLE_SECTION_EVENT_TYPES,
         val shouldShowMetadataSection: Boolean = DEFAULT_SHOULD_SHOW_METADATA_SECTION,
-        val buildInformation: (activity: Application?) -> List<Pair<Text, String>> = DEFAULT_BUILD_INFORMATION,
+        val buildInformation: (application: Application?) -> List<Pair<Text, String>> = DEFAULT_BUILD_INFORMATION,
         val textInputFields: List<Pair<Text, Text>> = DEFAULT_TEXT_INPUT_FIELDS,
         val getCrashLogFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "crashLog_${DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" },
         val getBugReportFileName: (timestamp: Long) -> String = { timestamp -> "bugReport_${DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT.format(timestamp)}" },
@@ -214,6 +214,7 @@ data class Behavior(
                 "Issue description".toText() to "".toText()
             )
             private val DEFAULT_ON_BUG_REPORT_READY: ((Uri?) -> Unit)? = null
+            private val DEFAULT_EMAIL_ADDRESS: String? = null
         }
     }
 }
