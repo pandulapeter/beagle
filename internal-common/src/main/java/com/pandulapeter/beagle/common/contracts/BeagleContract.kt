@@ -23,6 +23,7 @@ import com.pandulapeter.beagle.commonBase.model.LogEntry
 import com.pandulapeter.beagle.commonBase.model.NetworkLogEntry
 import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
+import java.io.File
 import kotlin.reflect.KClass
 
 /**
@@ -414,6 +415,30 @@ interface BeagleContract {
      * Check out the [Appearance] and [Behavior] classes for customization options.
      */
     fun openBugReportingScreen() = Unit
+
+    /**
+     * Opens the built-in share sheet and shares the generated bu report zip file. The contents of the package can be customized with the parameters.
+     * Check out the [Behavior] class for customization options.
+     *
+     * @param shouldIncludeMediaFile - Optional lambda that can be used to filter media files.
+     * @param shouldIncludeCrashLogEntry - Optional lambda that can be used to filter crash log entries.
+     * @param shouldIncludeNetworkLogEntry - Optional lambda that can be used to filter network log entries.
+     * @param shouldIncludeLogEntry - Optional lambda that can be used to filter log entries.
+     * @param shouldIncludeLifecycleLogEntry - Optional lambda that can be used to filter lifecycle log entries.
+     * @param shouldIncludeBuildInformation - Whether or not the bug report should include the build information.
+     * @param shouldIncludeDeviceInformation - Whether or not the bug report should include the device information.
+     * @param extraDataToInclude - Any additional String that should be added to the bug report.
+     */
+    fun shareBugReport(
+        shouldIncludeMediaFile: (File) -> Boolean = { true },
+        shouldIncludeCrashLogEntry: (CrashLogEntry) -> Boolean = { true },
+        shouldIncludeNetworkLogEntry: (NetworkLogEntry) -> Boolean = { true },
+        shouldIncludeLogEntry: (LogEntry) -> Boolean = { true },
+        shouldIncludeLifecycleLogEntry: (LifecycleLogEntry) -> Boolean = { true },
+        shouldIncludeBuildInformation: Boolean = true,
+        shouldIncludeDeviceInformation: Boolean = true,
+        extraDataToInclude: String = ""
+    ) = Unit
 
     /**
      * Call this function to trigger recreating every cell model for every module.

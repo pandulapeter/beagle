@@ -1,22 +1,12 @@
 package com.pandulapeter.beagle.core.view.bugReport
 
 import android.app.Application
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
-import com.pandulapeter.beagle.commonBase.currentTimestamp
-import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
-import com.pandulapeter.beagle.core.util.extension.createBugReportTextFile
-import com.pandulapeter.beagle.core.util.extension.createLogFile
-import com.pandulapeter.beagle.core.util.extension.createZipFile
-import com.pandulapeter.beagle.core.util.extension.getBugReportsFolder
-import com.pandulapeter.beagle.core.util.extension.getLogsFolder
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
-import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.util.model.RestoreModel
 import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
@@ -30,7 +20,6 @@ import com.pandulapeter.beagle.core.view.bugReport.list.LogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.MetadataItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.NetworkLogItemViewHolder
 import com.pandulapeter.beagle.core.view.bugReport.list.ShowMoreViewHolder
-import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogViewModel
 import com.pandulapeter.beagle.utils.mutableLiveDataOf
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -55,13 +44,6 @@ internal class BugReportViewModel(
     private val logLabelSectionsToShow = BeagleCore.implementation.behavior.bugReportingBehavior.logLabelSectionsToShow
     private val lifecycleSectionEventTypes = BeagleCore.implementation.behavior.bugReportingBehavior.lifecycleSectionEventTypes
     private val shouldShowMetadataSection = BeagleCore.implementation.behavior.bugReportingBehavior.shouldShowMetadataSection
-
-    private val getCrashLogFileName get() = BeagleCore.implementation.behavior.bugReportingBehavior.getCrashLogFileName
-    private val getNetworkLogFileName get() = BeagleCore.implementation.behavior.networkLogBehavior.getFileName
-    private val getLogFileName get() = BeagleCore.implementation.behavior.logBehavior.getFileName
-    private val getLifecycleLogFileName get() = BeagleCore.implementation.behavior.lifecycleLogBehavior.getFileName
-    private val getBugReportFileName get() = BeagleCore.implementation.behavior.bugReportingBehavior.getBugReportFileName
-    private val onBugReportReady get() = BeagleCore.implementation.behavior.bugReportingBehavior.onBugReportReady
 
     private val _items = mutableLiveDataOf(emptyList<BugReportListItem>())
     val items: LiveData<List<BugReportListItem>> = _items
@@ -111,7 +93,6 @@ internal class BugReportViewModel(
             _shouldShowLoadingIndicator.postValue(value)
             refreshSendButton()
         }
-    val zipFileUriToShare = MutableLiveData<Uri?>()
 
     init {
         if (crashLogEntryToShow != null) {
@@ -189,127 +170,25 @@ internal class BugReportViewModel(
         if (isSendButtonEnabled.value == true && _shouldShowLoadingIndicator.value == false) {
             viewModelScope.launch {
                 isPreparingData = true
-                val filePaths = mutableListOf<String>()
-
-                // Media files
-                filePaths.addAll(
-                    selectedMediaFileIds
-                        .map { fileName -> context.getUriForFile(context.getScreenCapturesFolder().resolve(fileName)) }
-                        .toPaths(context.getScreenCapturesFolder())
-                )
-
-                // Crash logs
-                filePaths.addAll(
-                    selectedCrashLogIds
-                        .mapNotNull { id ->
-                            allCrashLogEntries?.firstOrNull { it.id == id }?.let { entry ->
-                                context.createLogFile(
-                                    fileName = "${getCrashLogFileName(currentTimestamp, entry.id)}.txt",
-                                    content = entry.getFormattedContents(BeagleCore.implementation.appearance.logShortTimestampFormatter).toString()
-                                )
-                            }
-                        }
-                        .toPaths(context.getLogsFolder())
-                )
-
-                // Network log files
-                filePaths.addAll(
-                    selectedNetworkLogIds
-                        .mapNotNull { id ->
-                            allNetworkLogEntries.firstOrNull { it.id == id }?.let { entry ->
-                                context.createLogFile(
-                                    fileName = "${getNetworkLogFileName(currentTimestamp, entry.id)}.txt",
-                                    content = NetworkLogDetailDialogViewModel.createLogFileContents(
-                                        title = NetworkLogDetailDialogViewModel.createTitle(
-                                            isOutgoing = entry.isOutgoing,
-                                            url = entry.url
-                                        ),
-                                        metadata = NetworkLogDetailDialogViewModel.createMetadata(
-                                            context = context,
-                                            headers = entry.headers,
-                                            timestamp = entry.timestamp,
-                                            duration = entry.duration
-                                        ),
-                                        formattedJson = NetworkLogDetailDialogViewModel.formatJson(
-                                            json = entry.payload,
-                                            indentation = 4
-                                        )
-                                    )
-                                )
-                            }
-                        }
-                        .toPaths(context.getLogsFolder())
-                )
-
-                // Log files
-                filePaths.addAll(
-                    allLogEntries[null]?.let { allLogEntries ->
-                        selectedLogIds.flatMap { it.value }.distinct().mapNotNull { id -> allLogEntries.firstOrNull { it.id == id } }
-                    }.orEmpty().mapNotNull { entry ->
-                        context.createLogFile(
-                            fileName = "${getLogFileName(currentTimestamp, entry.id)}.txt",
-                            content = entry.getFormattedContents(BeagleCore.implementation.appearance.logShortTimestampFormatter).toString()
-                        )
-                    }.toPaths(context.getLogsFolder())
-                )
-
-                // Lifecycle logs
-                filePaths.addAll(
-                    selectedLifecycleLogIds
-                        .mapNotNull { id ->
-                            allLifecycleLogEntries.firstOrNull { it.id == id }?.let { entry ->
-                                context.createLogFile(
-                                    fileName = "${getLifecycleLogFileName(currentTimestamp, entry.id)}.txt",
-                                    content = LifecycleLogListDelegate.format(
-                                        entry = entry,
-                                        formatter = BeagleCore.implementation.appearance.logShortTimestampFormatter,
-                                        shouldDisplayFullNames = BeagleCore.implementation.behavior.lifecycleLogBehavior.shouldDisplayFullNames
-                                    ).toString()
-                                )
-                            }
-                        }
-                        .toPaths(context.getLogsFolder())
-                )
-
-                // Build information
                 var content = ""
-                if (shouldShowMetadataSection && shouldAttachBuildInformation && buildInformation.isNotBlank()) {
-                    content = buildInformation.toString()
-                }
-
-                // Device information
-                if (shouldShowMetadataSection && shouldAttachDeviceInformation) {
-                    content = if (content.isBlank()) deviceInformation.toString() else "$content\n\n$deviceInformation"
-                }
-
-                // Text inputs
                 textInputValues.forEachIndexed { index, textInputValue ->
                     if (textInputValue.trim().isNotBlank()) {
                         val text = "${context.text(textInputTitles[index])}\n${textInputValue.trim()}"
                         content = if (content.isBlank()) text else "$content\n\n$text"
                     }
                 }
-
-                // Create the log file
-                if (content.isNotBlank()) {
-                    context.createBugReportTextFile(
-                        fileName = "${getBugReportFileName(currentTimestamp)}.txt",
-                        content = content
-                    )?.let { uri -> filePaths.add(uri.toPath(context.getBugReportsFolder())) }
-                }
-
-                // Create the zip file
-                val uri = context.createZipFile(
-                    filePaths = filePaths,
-                    zipFileName = "${getBugReportFileName(currentTimestamp)}.zip",
+                val selectedLogIdList = selectedLogIds.flatMap { it.value }.distinct()
+                BeagleCore.implementation.shareBugReportInternal(
+                    shouldIncludeMediaFile = { selectedMediaFileIds.contains(it.name) },
+                    shouldIncludeCrashLogEntry = { selectedCrashLogIds.contains(it.id) },
+                    shouldIncludeNetworkLogEntry = { selectedNetworkLogIds.contains(it.id) },
+                    shouldIncludeLogEntry = { selectedLogIdList.contains(it.id) },
+                    shouldIncludeLifecycleLogEntry = { selectedLifecycleLogIds.contains(it.id) },
+                    shouldIncludeBuildInformation = shouldShowMetadataSection && shouldAttachBuildInformation,
+                    shouldIncludeDeviceInformation = shouldShowMetadataSection && shouldAttachDeviceInformation,
+                    extraDataToInclude = content,
+                    scope = viewModelScope
                 )
-                onBugReportReady.let { onBugReportReady ->
-                    if (onBugReportReady == null) {
-                        zipFileUriToShare.postValue(uri)
-                    } else {
-                        onBugReportReady(uri)
-                    }
-                }
                 isPreparingData = false
             }
         }
@@ -537,12 +416,6 @@ internal class BugReportViewModel(
         refreshSendButton()
         _shouldShowLoadingIndicator.postValue(false)
     }
-
-    private fun Uri.toPath(folder: File): String = "${folder.canonicalPath}/$realPath"
-
-    private fun List<Uri>.toPaths(folder: File): List<String> = folder.canonicalPath.let { path -> map { "$path/${it.realPath}" } }
-
-    private val Uri.realPath get() = path?.split("/")?.lastOrNull()
 
     enum class MetadataType {
         BUILD_INFORMATION,

@@ -23,6 +23,8 @@ import com.pandulapeter.beagle.common.listeners.NetworkLogListener
 import com.pandulapeter.beagle.common.listeners.OverlayListener
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.common.listeners.VisibilityListener
+import com.pandulapeter.beagle.commonBase.model.CrashLogEntry
+import com.pandulapeter.beagle.commonBase.model.LifecycleLogEntry
 import com.pandulapeter.beagle.commonBase.model.LogEntry
 import com.pandulapeter.beagle.commonBase.model.NetworkLogEntry
 import com.pandulapeter.beagle.core.manager.BugReportManager
@@ -50,11 +52,13 @@ import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialog
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
@@ -297,6 +301,49 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
     override fun openGallery() = screenCaptureManager.openGallery()
 
     override fun openBugReportingScreen() = bugReportManager.openBugReportingScreen()
+
+    override fun shareBugReport(
+        shouldIncludeMediaFile: (File) -> Boolean,
+        shouldIncludeCrashLogEntry: (CrashLogEntry) -> Boolean,
+        shouldIncludeNetworkLogEntry: (NetworkLogEntry) -> Boolean,
+        shouldIncludeLogEntry: (LogEntry) -> Boolean,
+        shouldIncludeLifecycleLogEntry: (LifecycleLogEntry) -> Boolean,
+        shouldIncludeBuildInformation: Boolean,
+        shouldIncludeDeviceInformation: Boolean,
+        extraDataToInclude: String
+    ) = shareBugReportInternal(
+        shouldIncludeMediaFile = shouldIncludeMediaFile,
+        shouldIncludeCrashLogEntry = shouldIncludeCrashLogEntry,
+        shouldIncludeNetworkLogEntry = shouldIncludeNetworkLogEntry,
+        shouldIncludeLogEntry = shouldIncludeLogEntry,
+        shouldIncludeLifecycleLogEntry = shouldIncludeLifecycleLogEntry,
+        shouldIncludeBuildInformation = shouldIncludeBuildInformation,
+        shouldIncludeDeviceInformation = shouldIncludeDeviceInformation,
+        extraDataToInclude = extraDataToInclude,
+        scope = GlobalScope
+    )
+
+    internal fun shareBugReportInternal(
+        shouldIncludeMediaFile: (File) -> Boolean,
+        shouldIncludeCrashLogEntry: (CrashLogEntry) -> Boolean,
+        shouldIncludeNetworkLogEntry: (NetworkLogEntry) -> Boolean,
+        shouldIncludeLogEntry: (LogEntry) -> Boolean,
+        shouldIncludeLifecycleLogEntry: (LifecycleLogEntry) -> Boolean,
+        shouldIncludeBuildInformation: Boolean,
+        shouldIncludeDeviceInformation: Boolean,
+        extraDataToInclude: String,
+        scope: CoroutineScope
+    ) = bugReportManager.shareBugReport(
+        shouldIncludeMediaFile = shouldIncludeMediaFile,
+        shouldIncludeCrashLogEntry = shouldIncludeCrashLogEntry,
+        shouldIncludeNetworkLogEntry = shouldIncludeNetworkLogEntry,
+        shouldIncludeLogEntry = shouldIncludeLogEntry,
+        shouldIncludeLifecycleLogEntry = shouldIncludeLifecycleLogEntry,
+        shouldIncludeBuildInformation = shouldIncludeBuildInformation,
+        shouldIncludeDeviceInformation = shouldIncludeDeviceInformation,
+        extraDataToInclude = extraDataToInclude,
+        scope = scope
+    )
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)
 

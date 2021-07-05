@@ -34,9 +34,12 @@ internal val Activity.supportsDebugMenu
             && excludedPackageNames.none { componentName.className.startsWith(it) }
             && BeagleCore.implementation.behavior.shouldAddDebugMenu(this)
 
-internal fun Activity.shareFile(uri: Uri, fileType: String) {
+internal fun Activity.shareFile(uri: Uri, fileType: String, email: String? = null) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
         type = fileType
+        if (email != null) {
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+        }
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         putExtra(Intent.EXTRA_STREAM, uri)
     }, null))
@@ -45,6 +48,9 @@ internal fun Activity.shareFile(uri: Uri, fileType: String) {
 internal fun Activity.shareFiles(uris: List<Uri>) {
     startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND_MULTIPLE).apply {
         type = "*/*"
+        BeagleCore.implementation.behavior.bugReportingBehavior.emailAddress?.let { email ->
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+        }
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
     }, null))

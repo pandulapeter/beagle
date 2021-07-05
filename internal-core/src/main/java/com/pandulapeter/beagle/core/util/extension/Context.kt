@@ -10,11 +10,15 @@ import android.view.ContextThemeWrapper
 import androidx.core.content.FileProvider
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
-import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
-import com.pandulapeter.beagle.core.util.model.SerializableLogEntry
+import com.pandulapeter.beagle.commonBase.currentTimestamp
+import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
 import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
 import com.pandulapeter.beagle.core.util.getFolder
 import com.pandulapeter.beagle.core.util.logEntryAdapter
+import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
+import com.pandulapeter.beagle.core.util.model.SerializableLogEntry
+import com.pandulapeter.beagle.core.util.toPaths
+import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialogViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
@@ -181,23 +185,27 @@ private fun Context.getCacheFolder(name: String) = getFolder(cacheDir, name)
 private const val BUFFER = 1024
 
 internal fun Context.createZipFile(filePaths: List<String>, zipFileName: String): Uri? = try {
-    var origin: BufferedInputStream?
-    val zipFile = createBugReportsFile(zipFileName)
-    val output = ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile)))
-    val data = ByteArray(BUFFER)
-    filePaths.forEach { path ->
-        val input = FileInputStream(File(path))
-        origin = BufferedInputStream(input, BUFFER)
-        val entry = ZipEntry(path.substring(path.lastIndexOf("/") + 1))
-        output.putNextEntry(entry)
-        var count: Int? = null
-        while (origin?.read(data, 0, BUFFER)?.also { count = it } != -1) {
-            count?.let { output.write(data, 0, it) }
+    if (filePaths.isEmpty()) {
+        null
+    } else {
+        var origin: BufferedInputStream?
+        val zipFile = createBugReportsFile(zipFileName)
+        val output = ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile)))
+        val data = ByteArray(BUFFER)
+        filePaths.forEach { path ->
+            val input = FileInputStream(File(path))
+            origin = BufferedInputStream(input, BUFFER)
+            val entry = ZipEntry(path.substring(path.lastIndexOf("/") + 1))
+            output.putNextEntry(entry)
+            var count: Int? = null
+            while (origin?.read(data, 0, BUFFER)?.also { count = it } != -1) {
+                count?.let { output.write(data, 0, it) }
+            }
+            origin?.close()
         }
-        origin?.close()
+        output.close()
+        getUriForFile(zipFile)
     }
-    output.close()
-    getUriForFile(zipFile)
 } catch (e: Exception) {
     null
 }
@@ -206,3 +214,72 @@ internal fun Context.text(text: Text) = when (text) {
     is Text.CharSequence -> text.charSequence
     is Text.ResourceId -> getText(text.resourceId)
 }.append(text.suffix)
+
+internal fun Context.getMediaFilePaths(ids: List<String>) = ids
+    .map { fileName -> getUriForFile(getScreenCapturesFolder().resolve(fileName)) }
+    .toPaths(getScreenCapturesFolder())
+
+internal suspend fun Context.getCrashLogFilePaths(ids: List<String>) =
+    BeagleCore.implementation.getCrashLogEntriesInternal().let { allCrashLogEntries ->
+        ids.mapNotNull { id ->
+            allCrashLogEntries.firstOrNull { it.id == id }?.let { entry ->
+                createLogFile(
+                    fileName = "${BeagleCore.implementation.behavior.bugReportingBehavior.getCrashLogFileName(currentTimestamp, entry.id)}.txt",
+                    content = entry.getFormattedContents(BeagleCore.implementation.appearance.logShortTimestampFormatter).toString()
+                )
+            }
+        }.toPaths(getLogsFolder())
+    }
+
+internal suspend fun Context.getNetworkLogFilePaths(ids: List<String>) =
+    BeagleCore.implementation.getNetworkLogEntriesInternal().let { allNetworkLogEntries ->
+        ids.mapNotNull { id ->
+            allNetworkLogEntries.firstOrNull { it.id == id }?.let { entry ->
+                createLogFile(
+                    fileName = "${BeagleCore.implementation.behavior.networkLogBehavior.getFileName(currentTimestamp, entry.id)}.txt",
+                    content = NetworkLogDetailDialogViewModel.createLogFileContents(
+                        title = NetworkLogDetailDialogViewModel.createTitle(
+                            isOutgoing = entry.isOutgoing,
+                            url = entry.url
+                        ),
+                        metadata = NetworkLogDetailDialogViewModel.createMetadata(
+                            context = this,
+                            headers = entry.headers,
+                            timestamp = entry.timestamp,
+                            duration = entry.duration
+                        ),
+                        formattedJson = NetworkLogDetailDialogViewModel.formatJson(
+                            json = entry.payload,
+                            indentation = 4
+                        )
+                    )
+                )
+            }
+        }.toPaths(getLogsFolder())
+    }
+
+internal suspend fun Context.getLogFilePaths(ids: List<String>) =
+    BeagleCore.implementation.getLogEntriesInternal(null).filter { ids.contains(it.id) }.mapNotNull { entry ->
+        createLogFile(
+            fileName = "${BeagleCore.implementation.behavior.logBehavior.getFileName(currentTimestamp, entry.id)}.txt",
+            content = entry.getFormattedContents(BeagleCore.implementation.appearance.logShortTimestampFormatter).toString()
+        )
+    }.toPaths(getLogsFolder())
+
+internal suspend fun Context.getLifecycleLogFilePaths(ids: List<String>) =
+    BeagleCore.implementation.getLifecycleLogEntriesInternal(null).let { allLifecycleLogEntries ->
+        ids.mapNotNull { id ->
+            allLifecycleLogEntries.firstOrNull { it.id == id }?.let { entry ->
+                createLogFile(
+                    fileName = "${BeagleCore.implementation.behavior.lifecycleLogBehavior.getFileName(currentTimestamp, entry.id)}.txt",
+                    content = text(
+                        LifecycleLogListDelegate.format(
+                            entry = entry,
+                            formatter = BeagleCore.implementation.appearance.logShortTimestampFormatter,
+                            shouldDisplayFullNames = BeagleCore.implementation.behavior.lifecycleLogBehavior.shouldDisplayFullNames
+                        )
+                    ).toString()
+                )
+            }
+        }.toPaths(getLogsFolder())
+    }
