@@ -298,7 +298,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun openBugReportingScreen() = bugReportManager.openBugReportingScreen()
 
-    override fun shareBugReport(emailAddress: String?) = bugReportManager.shareBugReport(emailAddress)
+    override fun shareBugReport() = bugReportManager.shareBugReport()
 
     override fun refresh() = listManager.refreshCells(updateListenerManager::notifyListenersOnContentsChanged)
 

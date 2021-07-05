@@ -416,10 +416,9 @@ interface BeagleContract {
     fun openBugReportingScreen() = Unit
 
     /**
-     * Opens the built-in share sheet and shares the generated zip file with all the logs: crashLogs, networkLogs, logs, lifecycleLogs.
-     * If you pass an [emailAddress] as parameter, it will only show the email clients on the share sheet, otherwise all the possible options.
+     * Opens the built-in share sheet and shares the generated zip file with all the logs (crashLogs, networkLogs, logs, lifecycleLogs), screenshots.
      */
-    fun shareBugReport(emailAddress : String? = null) = Unit
+    fun shareBugReport() = Unit
 
     /**
      * Call this function to trigger recreating every cell model for every module.

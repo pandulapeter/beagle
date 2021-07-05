@@ -3,10 +3,12 @@ package com.pandulapeter.beagle.core.manager
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.core.util.extension.createZipFile
+import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.core.util.extension.shareFile
 import com.pandulapeter.beagle.core.util.getCrashLogsFolder
 import com.pandulapeter.beagle.core.util.getLifecycleLogsFolder
 import com.pandulapeter.beagle.core.util.getLogsFolder
+import com.pandulapeter.beagle.core.util.getMediaFolder
 import com.pandulapeter.beagle.core.util.getNetworkLogsFolder
 import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
 import kotlinx.coroutines.GlobalScope
@@ -20,12 +22,16 @@ internal class BugReportManager {
         }
     }
 
-    fun shareBugReport(emailAddress: String? = null) {
+    fun shareBugReport() {
         val filePaths = mutableListOf<String>()
 
         BeagleCore.implementation.currentActivity?.let { context ->
 
             GlobalScope.launch {
+                // Media
+                val mediaFileIds = context.getScreenCapturesFolder().listFiles().orEmpty().toList().sortedByDescending { it.lastModified() }.map { it.name }
+                filePaths.addAll(getMediaFolder(mediaFileIds, context))
+
                 // Crash logs
                 val crashLogEntries = BeagleCore.implementation.getCrashLogEntriesInternal()
                 filePaths.addAll(getCrashLogsFolder(crashLogEntries.map { it.id }, crashLogEntries, context))
@@ -55,7 +61,7 @@ internal class BugReportManager {
                     filePaths = filePaths,
                     zipFileName = "${BeagleCore.implementation.behavior.bugReportingBehavior.getBugReportFileName(currentTimestamp)}.zip",
                 )?.let { uri ->
-                    context.shareFile(uri, "application/zip", emailAddress)
+                    context.shareFile(uri, "application/zip")
                 }
             }
         }
