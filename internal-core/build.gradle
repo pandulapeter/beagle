@@ -2,6 +2,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-parcelize"
 apply plugin: "kotlin-kapt"
+apply plugin: "maven-publish"
 group = libraryGroup
 version = libraryVersion
 
@@ -16,7 +17,7 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
-    buildFeatures.viewBinding = true
+    buildFeatures.viewBinding true
 }
 
 dependencies {
@@ -41,5 +42,15 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs = ["-Xjvm-default=all"]
+    }
+}
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
+        }
     }
 }

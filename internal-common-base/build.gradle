@@ -1,8 +1,18 @@
 apply plugin: "java-library"
 apply plugin: "kotlin"
+apply plugin: "maven-publish"
 group = libraryGroup
 version = libraryVersion
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+            }
+        }
+    }
 }
