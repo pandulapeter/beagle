@@ -18,6 +18,7 @@
 
         <activity
             android:name="com.pandulapeter.beagle.appDemo.feature.BeagleDemoActivity"
+            android:exported="false"
             android:windowSoftInputMode="adjustNothing">
 
             <intent-filter>

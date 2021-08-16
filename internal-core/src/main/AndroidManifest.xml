@@ -8,11 +8,13 @@
 
         <activity
             android:name=".view.gallery.GalleryActivity"
+            android:exported="false"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".view.bugReport.BugReportActivity"
+            android:exported="false"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize" />
 

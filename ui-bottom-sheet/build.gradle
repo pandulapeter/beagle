@@ -1,7 +1,6 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-parcelize"
-apply plugin: "com.github.dcendents.android-maven"
 group = libraryGroup
 version = libraryVersion
 
@@ -10,8 +9,6 @@ android {
     defaultConfig {
         minSdkVersion libraryMinimumSdkVersion
         targetSdkVersion libraryTargetSdkVersion
-        versionCode libraryVersionCode
-        versionName libraryVersion
         consumerProguardFiles "consumer-rules.pro"
     }
     buildFeatures.viewBinding = true
