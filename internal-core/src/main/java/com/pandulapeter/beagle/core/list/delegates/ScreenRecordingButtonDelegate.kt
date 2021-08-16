@@ -9,19 +9,24 @@ import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
 
 internal class ScreenRecordingButtonDelegate : Module.Delegate<ScreenRecordingButtonModule> {
 
-    override fun createCells(module: ScreenRecordingButtonModule): List<Cell<*>> = listOf(
-        createTextModuleFromType(
-            type = module.type,
-            id = module.id,
-            text = module.text,
-            isEnabled = module.isEnabled,
-            icon = module.icon,
-            onItemSelected = {
-                module.onButtonPressed()
-                hideDebugMenuAndRecordScreen()
-            }
-        )
-    )
+    override fun createCells(module: ScreenRecordingButtonModule): List<Cell<*>> =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            listOf(
+                createTextModuleFromType(
+                    type = module.type,
+                    id = module.id,
+                    text = module.text,
+                    isEnabled = module.isEnabled,
+                    icon = module.icon,
+                    onItemSelected = {
+                        module.onButtonPressed()
+                        hideDebugMenuAndRecordScreen()
+                    }
+                )
+            )
+        } else {
+            emptyList()
+        }
 
     companion object {
         fun hideDebugMenuAndRecordScreen() {

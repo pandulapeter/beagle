@@ -10,12 +10,23 @@ dependencies {
     api project(":internal-common-base")
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 project.afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
                 from components.java
+                artifact sourceJar
             }
         }
     }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.java.srcDirs
+    classifier "sources"
 }
