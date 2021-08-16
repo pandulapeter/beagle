@@ -1,3 +1,20 @@
 jdk: openjdk11
 install:
-  - ./gradlew build :publishToMavenLocal
+  - ./gradlew build :internal-common-base:publishToMavenLocal
+  - ./gradlew build :internal-common:publishToMavenLocal
+  - ./gradlew build :internal-core:publishToMavenLocal
+  - ./gradlew build :internal-utilities:publishToMavenLocal
+  - ./gradlew build :log:publishToMavenLocal
+  - ./gradlew build :log-crash:publishToMavenLocal
+  - ./gradlew build :log-crash-noop:publishToMavenLocal
+  - ./gradlew build :log-ktor:publishToMavenLocal
+  - ./gradlew build :log-ktor-noop:publishToMavenLocal
+  - ./gradlew build :log-noop:publishToMavenLocal
+  - ./gradlew build :log-okhttp:publishToMavenLocal
+  - ./gradlew build :log-okhttp-noop:publishToMavenLocal
+  - ./gradlew build :noop:publishToMavenLocal
+  - ./gradlew build :ui-activity:publishToMavenLocal
+  - ./gradlew build :ui-bottom-sheet:publishToMavenLocal
+  - ./gradlew build :ui-dialog:publishToMavenLocal
+  - ./gradlew build :ui-drawer:publishToMavenLocal
+  - ./gradlew build :ui-view:publishToMavenLocal
