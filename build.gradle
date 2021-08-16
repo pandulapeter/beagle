@@ -42,3 +42,28 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            pom {
+                name = 'Beagle'
+                description = 'A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, and many other useful features.'
+                url = 'https://github.com/pandulapeter/beagle'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'pandulapeter'
+                        name = 'Pandula Péter'
+                        email = 'pandulapeter@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
