@@ -11,6 +11,9 @@ android {
         targetSdkVersion libraryTargetSdkVersion
         consumerProguardFiles "consumer-rules.pro"
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
