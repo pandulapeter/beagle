@@ -10,10 +10,11 @@ import android.view.ViewConfiguration
 import android.view.WindowInsets
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.common.configuration.Insets
+import com.pandulapeter.beagle.common.configuration.getBeagleInsets
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -84,7 +85,7 @@ internal class DebugMenuDrawerLayout(
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
                 debugMenuView.run {
-                    setOnApplyWindowInsetsListener { _, insets -> insets.also(::updateInsets) }
+                    setOnApplyWindowInsetsListener { view, insets -> insets.also { updateInsets(it, view) } }
                     requestApplyInsets()
                 }
             }
@@ -92,13 +93,8 @@ internal class DebugMenuDrawerLayout(
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
-    private fun updateInsets(insets: WindowInsets) {
-        val input = Insets(
-            left = insets.systemWindowInsetLeft,
-            top = insets.systemWindowInsetTop,
-            right = insets.systemWindowInsetRight,
-            bottom = insets.systemWindowInsetBottom
-        )
+    private fun updateInsets(insets: WindowInsets, view: View) {
+        val input = WindowInsetsCompat.toWindowInsetsCompat(insets, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
         val output = (BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: input)
         debugMenuView.applyInsets(output.left, output.top, output.right, output.bottom)
     }
