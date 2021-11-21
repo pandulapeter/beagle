@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.WindowInsetsCompat
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.common.configuration.Insets
+import com.pandulapeter.beagle.common.configuration.getBeagleInsets
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
 import com.pandulapeter.beagle.utils.extensions.colorResource
 import com.pandulapeter.beagle.utils.extensions.tintedDrawable
@@ -34,20 +35,10 @@ internal class DebugMenuActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             bottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
             window.decorView.run {
-                setOnApplyWindowInsetsListener { _, insets ->
+                setOnApplyWindowInsetsListener { view, insets ->
                     onApplyWindowInsets(insets).also {
-                        val input = Insets(
-                            left = it.systemWindowInsetLeft,
-                            top = it.systemWindowInsetTop,
-                            right = it.systemWindowInsetRight,
-                            bottom = it.systemWindowInsetBottom
-                        )
-                        val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: Insets(
-                            left = it.systemWindowInsetLeft,
-                            top = 0,
-                            right = it.systemWindowInsetRight,
-                            bottom = it.systemWindowInsetBottom
-                        )
+                        val input = WindowInsetsCompat.toWindowInsetsCompat(it, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
+                        val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: input.copy(top = 0)
                         toolbar.setPadding(output.left, 0, output.right, 0)
                         debugMenu.applyInsets(0, 0, 0, output.bottom)
                         bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = output.bottom } }
