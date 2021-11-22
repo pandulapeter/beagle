@@ -1,5 +1,6 @@
 package com.pandulapeter.beagle.core.manager
 
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.listener.NetworkLogListenerManager
 import com.pandulapeter.beagle.core.util.model.SerializableNetworkLogEntry
 import com.pandulapeter.beagle.modules.NetworkLogListModule
@@ -10,6 +11,7 @@ internal class NetworkLogManager(
     private val refreshUi: () -> Unit
 ) {
     private val entries = mutableListOf<SerializableNetworkLogEntry>()
+    private val maximumEntryCount get() = BeagleCore.implementation.behavior.networkLogBehavior.maximumLogCount
 
     fun log(isOutgoing: Boolean, url: String, payload: String?, headers: List<String>?, duration: Long?, timestamp: Long, id: String) {
         val entry = SerializableNetworkLogEntry(
@@ -24,6 +26,9 @@ internal class NetworkLogManager(
         synchronized(entries) {
             entries.removeAll { it.id == id }
             entries.add(0, entry)
+            if (entries.size > maximumEntryCount) {
+                entries.removeAt(entries.lastIndex)
+            }
             entries.sortByDescending { it.timestamp }
         }
         networkLogListenerManager.notifyListeners(entry.toNetworkLogEntry())
@@ -35,7 +40,7 @@ internal class NetworkLogManager(
     fun restore(networkLogs: List<SerializableNetworkLogEntry>) {
         synchronized(entries) {
             entries.clear()
-            entries.addAll(networkLogs.sortedByDescending { it.timestamp })
+            entries.addAll(networkLogs.take(maximumEntryCount).sortedByDescending { it.timestamp })
         }
         if (listManager.contains(NetworkLogListModule.ID)) {
             refreshUi()

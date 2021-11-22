@@ -22,6 +22,7 @@ import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavio
 import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior.Companion.DEFAULT_SHOULD_DISPLAY_FULL_NAMES
 import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior.Companion.DEFAULT_LOGGERS
+import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior.Companion.DEFAULT_MAXIMUM_LOG_COUNT
 import com.pandulapeter.beagle.common.configuration.Behavior.NetworkLogBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.NetworkLogBehavior.Companion.DEFAULT_BASE_URL
 import com.pandulapeter.beagle.common.configuration.Behavior.NetworkLogBehavior.Companion.DEFAULT_NETWORK_LOGGERS
@@ -88,14 +89,17 @@ data class Behavior(
     /**
      * Configuration related to logs.
      *
+     * @param maximumLogCount - The maximum number of log entries to keep. Smaller values reduce the memory footprint of the library.  [DEFAULT_MAXIMUM_LOG_COUNT] by default.
      * @param loggers - The list of [BeagleLoggerContract] implementations, useful when logging is needed in a pure Java / Kotlin modules. [DEFAULT_LOGGERS] by default.
      * @param getFileName - The lambda used to generate log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format and the ID.
      */
     data class LogBehavior(
+        val maximumLogCount: Int = DEFAULT_MAXIMUM_LOG_COUNT,
         val loggers: List<BeagleLoggerContract> = DEFAULT_LOGGERS,
         val getFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "log_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" },
     ) {
         companion object {
+            private const val DEFAULT_MAXIMUM_LOG_COUNT = 4096
             private val DEFAULT_LOGGERS = emptyList<BeagleLoggerContract>()
         }
     }
@@ -103,16 +107,19 @@ data class Behavior(
     /**
      * Configuration related to network logs.
      *
+     * @param maximumLogCount - The maximum number of log entries to keep. Smaller values reduce the memory footprint of the library.  [DEFAULT_MAXIMUM_LOG_COUNT] by default.
      * @param networkLoggers - The list of [BeagleNetworkLoggerContract] implementations for intercepting network events. [DEFAULT_NETWORK_LOGGERS] by default.
      * @param baseUrl - When not empty, all URL-s will have the specified String filtered out to reduce the amount of redundant information. [DEFAULT_BASE_URL] by default.
      * @param getFileName - The lambda used to generate network log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format and the ID.
      */
     data class NetworkLogBehavior(
+        val maximumLogCount: Int = DEFAULT_MAXIMUM_LOG_COUNT,
         val networkLoggers: List<BeagleNetworkLoggerContract> = DEFAULT_NETWORK_LOGGERS,
         val baseUrl: String = DEFAULT_BASE_URL,
         val getFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "networkLog_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" }
     ) {
         companion object {
+            private const val DEFAULT_MAXIMUM_LOG_COUNT = 4096
             private const val DEFAULT_BASE_URL = ""
             private val DEFAULT_NETWORK_LOGGERS = emptyList<BeagleNetworkLoggerContract>()
         }
@@ -121,14 +128,17 @@ data class Behavior(
     /**
      * Configuration related to lifecycle logs.
      *
+     * @param maximumLogCount - The maximum number of log entries to keep. Smaller values reduce the memory footprint of the library.  [DEFAULT_MAXIMUM_LOG_COUNT] by default.
      * @param shouldDisplayFullNames - Whether or not displayed class names should include full package names in detail dialogs. [DEFAULT_SHOULD_DISPLAY_FULL_NAMES] by default.
      * @param getFileName - The lambda used to generate lifecycle log file names (without the extension) when sharing them. The arguments are the timestamp and a unique ID of the log. By default a name will be generated with the [FILE_NAME_DATE_TIME_FORMAT] format and the ID.
      */
     data class LifecycleLogBehavior(
+        val maximumLogCount: Int = DEFAULT_MAXIMUM_LOG_COUNT,
         val shouldDisplayFullNames: Boolean = DEFAULT_SHOULD_DISPLAY_FULL_NAMES,
         val getFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "lifecycleLog_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" }
     ) {
         companion object {
+            private const val DEFAULT_MAXIMUM_LOG_COUNT = 4096
             private const val DEFAULT_SHOULD_DISPLAY_FULL_NAMES = true
         }
     }

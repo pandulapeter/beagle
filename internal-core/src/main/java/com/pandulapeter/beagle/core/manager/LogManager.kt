@@ -1,6 +1,7 @@
 package com.pandulapeter.beagle.core.manager
 
 import android.app.Application
+import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
 import com.pandulapeter.beagle.core.util.extension.LOG_PREFIX
 import com.pandulapeter.beagle.core.util.extension.createPersistedLogFile
@@ -28,6 +29,7 @@ internal class LogManager(
             syncIfNeeded()
             return field
         }
+    private val maximumEntryCount get() = BeagleCore.implementation.behavior.logBehavior.maximumLogCount
 
     fun log(
         label: String?,
@@ -48,6 +50,9 @@ internal class LogManager(
         synchronized(entries) {
             entries.removeAll { it.id == id }
             entries.add(0, entry)
+            if (entries.size > maximumEntryCount) {
+                entries.removeAt(entries.lastIndex)
+            }
             entries.sortByDescending { it.timestamp }
         }
         logListenerManager.notifyListeners(entry.toLogEntry())
@@ -62,7 +67,7 @@ internal class LogManager(
     fun restore(logs: List<SerializableLogEntry>) {
         synchronized(entries) {
             entries.clear()
-            entries.addAll(logs.sortedByDescending { it.timestamp })
+            entries.addAll(logs.take(maximumEntryCount).sortedByDescending { it.timestamp })
         }
         refreshUiIfNeeded(null)
         syncIfNeeded()
@@ -110,7 +115,7 @@ internal class LogManager(
                     isSyncReady = true
                     if (persistedEntries.isNotEmpty()) {
                         synchronized(entries) {
-                            val allEntries = (entries + persistedEntries).distinctBy { it.id }.sortedByDescending { it.timestamp }
+                            val allEntries = (entries + persistedEntries).asSequence().distinctBy { it.id }.take(maximumEntryCount).sortedByDescending { it.timestamp }
                             entries.clear()
                             entries.addAll(allEntries)
                             if (persistedEntries.isNotEmpty()) {
