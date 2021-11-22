@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pandulapeter.beagle.BeagleCore
+import com.pandulapeter.beagle.common.configuration.getBeagleInsets
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.databinding.BeagleActivityGalleryBinding
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
@@ -62,12 +64,13 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             binding.beagleBottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
             window.decorView.run {
-                setOnApplyWindowInsetsListener { _, insets ->
+                setOnApplyWindowInsetsListener { view, insets ->
                     onApplyWindowInsets(insets).also {
-                        binding.beagleToolbar.setPadding(it.systemWindowInsetLeft, 0, it.systemWindowInsetRight, 0)
-                        binding.beagleRecyclerView.setPadding(contentPadding, 0, contentPadding, it.systemWindowInsetBottom + contentPadding)
-                        binding.beagleBottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = it.systemWindowInsetBottom } }
-                        binding.beagleTextView.setPadding(largePadding, largePadding, largePadding, largePadding + it.systemWindowInsetBottom)
+                        val beagleInsets = WindowInsetsCompat.toWindowInsetsCompat(it, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
+                        binding.beagleToolbar.setPadding(beagleInsets.left, 0, beagleInsets.right, 0)
+                        binding.beagleRecyclerView.setPadding(contentPadding, 0, contentPadding, beagleInsets.bottom + contentPadding)
+                        binding.beagleBottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = beagleInsets.bottom } }
+                        binding.beagleTextView.setPadding(largePadding, largePadding, largePadding, largePadding + beagleInsets.bottom)
                     }
                 }
                 requestApplyInsets()

@@ -7,13 +7,15 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.R
-import com.pandulapeter.beagle.common.configuration.Insets
+import com.pandulapeter.beagle.common.configuration.getBeagleInsets
 import com.pandulapeter.beagle.common.listeners.UpdateListener
 import com.pandulapeter.beagle.core.util.extension.applyTheme
 import com.pandulapeter.beagle.core.view.InternalDebugMenuView
@@ -62,7 +64,9 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
                 behavior = this
                 addBottomSheetCallback(bottomSheetCallback)
             }
-            dialog?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            dialog?.window?.let {
+                WindowCompat.setDecorFitsSystemWindows(it, false)
+            }
         }
     }
 
@@ -104,20 +108,17 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
             behavior.peekHeight = height / 2
             post { updateApplyResetBlockPosition() }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Beagle.currentActivity?.window?.decorView?.rootWindowInsets?.let {
-                    val inputInsets = Insets(
-                        left = it.systemWindowInsetLeft,
-                        top = it.systemWindowInsetTop,
-                        right = it.systemWindowInsetRight,
-                        bottom = it.systemWindowInsetBottom
-                    )
-                    (BeagleCore.implementation.appearance.applyInsets?.invoke(inputInsets) ?: inputInsets).also { outputInsets ->
-                        (view as? InternalDebugMenuView)?.applyInsets(
-                            outputInsets.left,
-                            0,
-                            outputInsets.right,
-                            outputInsets.bottom + outputInsets.top //TODO: Temporary fix for a landscape issue
-                        )
+                Beagle.currentActivity?.window?.decorView?.let { view ->
+                    view.rootWindowInsets?.let { insets ->
+                        val inputInsets = WindowInsetsCompat.toWindowInsetsCompat(insets, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
+                        (BeagleCore.implementation.appearance.applyInsets?.invoke(inputInsets) ?: inputInsets).also { outputInsets ->
+                            (view as? InternalDebugMenuView)?.applyInsets(
+                                outputInsets.left,
+                                0,
+                                outputInsets.right,
+                                outputInsets.bottom + outputInsets.top //TODO: Temporary fix for a landscape issue
+                            )
+                        }
                     }
                 }
             }
