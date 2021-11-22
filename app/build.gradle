@@ -7,7 +7,7 @@ android {
     compileSdkVersion libraryCompileSdkVersion
     defaultConfig {
         applicationId "com.pandulapeter.beagle"
-        minSdkVersion libraryMinimumSdkVersion
+        minSdkVersion 21 // While the library supports SDK 16, the demo app does not
         targetSdkVersion libraryTargetSdkVersion
         versionCode 24
         versionName "1.4.1"
@@ -125,6 +125,7 @@ dependencies {
     implementation "io.ktor:ktor-client-gson:$ktorVersion"
     implementation "com.android.billingclient:billing:4.0.0"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation "androidx.core:core-splashscreen:1.0.0-alpha02"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:2.7"
     implementation project(":internal-utilities")
