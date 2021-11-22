@@ -18,7 +18,7 @@
 
         <activity
             android:name="com.pandulapeter.beagle.appDemo.feature.BeagleDemoActivity"
-            android:exported="false"
+            android:exported="true"
             android:windowSoftInputMode="adjustNothing">
 
             <intent-filter>
@@ -35,7 +35,7 @@
 
     <queries>
         <intent>
-            <action android:name="android.intent.action.VIEW"/>
+            <action android:name="android.intent.action.VIEW" />
         </intent>
     </queries>
 

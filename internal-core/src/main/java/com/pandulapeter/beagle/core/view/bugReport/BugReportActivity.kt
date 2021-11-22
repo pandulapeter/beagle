@@ -62,7 +62,7 @@ class BugReportActivity : AppCompatActivity() {
     @Suppress("UNCHECKED_CAST")
     private val viewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T = BeagleCore.implementation.behavior.bugReportingBehavior.run {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = BeagleCore.implementation.behavior.bugReportingBehavior.run {
                 BugReportViewModel(
                     application = application,
                     restoreModel = restoreModel,
@@ -73,7 +73,7 @@ class BugReportActivity : AppCompatActivity() {
                     textInputDescriptions = textInputFields.map { it.second }
                 ) as T
             }
-        }).get(BugReportViewModel::class.java)
+        })[BugReportViewModel::class.java]
     }
     private lateinit var sendButton: MenuItem
     private val onGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
