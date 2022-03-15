@@ -13,7 +13,7 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
     buildFeatures.viewBinding true
-    lintOptions {
+    lint {
         abortOnError false
     }
 }
