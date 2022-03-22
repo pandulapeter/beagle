@@ -386,9 +386,12 @@ Don't hesitate to open a new issue if you find a bug or if you have any question
 If you found my work useful and are considering a small donation, the About section of the [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle) has an option for you to do so. Thanks in advance!
 </details>
 
-## License
+<details>
+<summary>License</summary>
+<br/>
+
 ```
-Copyright 2020 Pandula Péter
+Copyright 2022 Pandula Péter
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -402,3 +405,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+</details>
