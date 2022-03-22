@@ -3,10 +3,10 @@
 
 <img src="metadata/logo.png" width="20%" />
 
-## See it in action
+## First steps
 <details>
-<summary>Expand / collapse</summary>
-
+<summary>See it in action</summary>
+\n
 
 Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:
 
@@ -19,10 +19,9 @@ This demo application also contains instructions on how to set up Beagle and how
 The tutorials in the app cover everything from this readme, but in more detail. Another way to get an idea of what can be achieved with the library is [this article](https://halcyonmobile.com/blog/mobile-app-development/android-app-development/what-could-a-debug-menu-contain/), which presents various problems that can be solved with Beagle.
 </details>
 
-## Use it in your project
 <details>
-<summary>Expand / collapse</summary>
-
+<summary>Use it in your project</summary>
+\n
 
 If the wall of text below is too long for your taste, check out [this gist](https://gist.github.com/pandulapeter/3f9b404d953c6d80ed8a19eb06db4541) that contains all the code you need for a nice configuration. Otherwise, let's do it step by step:
 
@@ -132,7 +131,7 @@ If you ever need to add temporary modules, `Beagle.add()` has an optional `lifec
 ## Advanced features
 
 <details>
-### <summary>Logging</summary>
+<summary>Logging</summary>
 
 
 While calling `Beagle.log()` is the simplest way to add items to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt), a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
@@ -190,7 +189,7 @@ To create a special LogListModule that only displays these logs, simply set the 
 </details>
 
 <details>
-### <summary>Intercepting network events</summary>
+<summary>Intercepting network events</summary>
 
 
 Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment Beagle can hook into two networking libraries to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling `Beagle.logNetworkEvent()` is always an option.
@@ -274,7 +273,7 @@ val client = HttpClient(engine) {
 </details>
 
 <details>
-### <summary>Displaying crash logs</summary>
+<summary>Displaying crash logs</summary>
 
 
 The library can intercept uncaught exceptions and display their stack trace in a dialog. Users will be able to share the crash report using the bug reporting screen that gets opened automatically. This functionality is achieved through a separate dependency that should be added to the main module (where Beagle is initialized):
@@ -306,7 +305,7 @@ Enabling this feature will disable the crash collection of Firebase Crashlytics,
 </details>
 
 <details>
-### <summary>Improving encapsulation</summary>
+<summary>Improving encapsulation</summary>
 
 
 The `noop` implementations of every public artifact are the default ways of not including Beagle-related logic in your production releases. While this should be good enough for most projects, it can be improved by creating a separate wrapper module for the debug menu. This would mean hiding every call to Beagle behind an interface that has an empty implementation in release builds. This approach has its own benefits and drawbacks:
