@@ -6,7 +6,7 @@
 ## First steps
 <details>
 <summary>See it in action</summary>
-\n
+<br/>
 
 Clone this repository, pick a build variant and run the **app** configuration. It should look something like this:
 
@@ -21,7 +21,7 @@ The tutorials in the app cover everything from this readme, but in more detail. 
 
 <details>
 <summary>Use it in your project</summary>
-\n
+<br/>
 
 If the wall of text below is too long for your taste, check out [this gist](https://gist.github.com/pandulapeter/3f9b404d953c6d80ed8a19eb06db4541) that contains all the code you need for a nice configuration. Otherwise, let's do it step by step:
 
@@ -132,7 +132,7 @@ If you ever need to add temporary modules, `Beagle.add()` has an optional `lifec
 
 <details>
 <summary>Logging</summary>
-
+<br/>
 
 While calling `Beagle.log()` is the simplest way to add items to [LogListModule](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules/LogListModule.kt), a special workaround is needed to access this functionality from pure Kotlin modules. Another frequent use case is integration with [Timber](https://github.com/JakeWharton/timber).
 
@@ -190,7 +190,7 @@ To create a special LogListModule that only displays these logs, simply set the 
 
 <details>
 <summary>Intercepting network events</summary>
-
+<br/>
 
 Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment Beagle can hook into two networking libraries to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling `Beagle.logNetworkEvent()` is always an option.
 
@@ -274,7 +274,7 @@ val client = HttpClient(engine) {
 
 <details>
 <summary>Displaying crash logs</summary>
-
+<br/>
 
 The library can intercept uncaught exceptions and display their stack trace in a dialog. Users will be able to share the crash report using the bug reporting screen that gets opened automatically. This functionality is achieved through a separate dependency that should be added to the main module (where Beagle is initialized):
 
@@ -306,7 +306,7 @@ Enabling this feature will disable the crash collection of Firebase Crashlytics,
 
 <details>
 <summary>Improving encapsulation</summary>
-
+<br/>
 
 The `noop` implementations of every public artifact are the default ways of not including Beagle-related logic in your production releases. While this should be good enough for most projects, it can be improved by creating a separate wrapper module for the debug menu. This would mean hiding every call to Beagle behind an interface that has an empty implementation in release builds. This approach has its own benefits and drawbacks:
 
@@ -323,7 +323,7 @@ The `noop` implementations of every public artifact are the default ways of not 
 
 <details>
 <summary>The debug menu UI doesn't show up</summary>
-
+<br/>
 
 - Make sure that you're not using the `noop` artifact in your current configuration
 - Make sure that you call the `initialize()` function in your custom `Application` class, and that class is properly registered in the Manifest
@@ -332,59 +332,56 @@ The `noop` implementations of every public artifact are the default ways of not 
 
 <details>
 <summary>Crash on app launch</summary>
-
+<br/>
 
 By default Beagle uses the current `Activity`'s theme. However, it requires a Material theme to work, so if you have a crash caused by various theme attributes not being found, override the debug menu's theme with the `themeResourceId` property of the [Appearance](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization with a Material theme.
 </details>
 
 <details>
 <summary>Crash when opening a third party Activity</summary>
-
+<br/>
 
 Beagle works by adding a `Fragment` on top of every `Activity`'s layout. Sometimes this is not necessary or not possible. While the library comes with a list of excluded `Activity` package names, you can provide additional filtering if needed, by using the `shouldAddDebugMenu` lambda property of the [Behavior](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/common/configuration/Behavior.kt) instance provided during initialization.
 </details>
 
 <details>
 <summary>Gallery or Bug report screens having two toolbars</summary>
-
+<br/>
 
 Set a `.NoActionBar` Material theme for the `themeResourceId` property of the [Appearance](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/common/configuration/Appearance.kt) instance provided during initialization.
 </details>
 
-## Documentation
+## About
 <details>
-<summary>Expand / collapse</summary>
-
+<summary>Documentation</summary>
+<br/>
 
 All public functions are documented with KDoc. The [BeagleContract](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/common/contracts/BeagleContract.kt) file is a good start for learning about all the built-in capabilities. For information on the [individual modules](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules), see the relevant class headers.
 
 If you're interested in what's under the hood, [this document](https://github.com/pandulapeter/beagle/blob/master/metadata/DOCUMENTATION.md) can be helpful while navigating the source code.
 </details>
 
-## Changelog
 <details>
-<summary>Expand / collapse</summary>
-
+<summary>Changelog</summary>
+<br/>
 
 Check out the [Releases](https://github.com/pandulapeter/beagle/releases) page for the changes in every version.
 
 The library uses [semantic versioning](https://semver.org): **MAJOR.MINOR.PATCH** where **PATCH** changes only contain bug fixes, **MINOR** changes add new features and **MAJOR** changes introduce breaking modifications to the API.
 </details>
 
-## Known issues
 <details>
-<summary>Expand / collapse</summary>
-
+<summary>Known issues</summary>
+<br/>
 
 Check out the [Issues](https://github.com/pandulapeter/beagle/issues) page for the list of known problems and for the planned enhancements of the library.
 
 Don't hesitate to open a new issue if you find a bug or if you have any questions / feature requests!
 </details>
 
-## Buy me a beer
 <details>
-<summary>Expand / collapse</summary>
-
+<summary>Buy me a beer</summary>
+<br/>
 
 If you found my work useful and are considering a small donation, the About section of the [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle) has an option for you to do so. Thanks in advance!
 </details>
