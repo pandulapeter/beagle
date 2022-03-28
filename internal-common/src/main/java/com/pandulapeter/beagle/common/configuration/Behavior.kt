@@ -1,11 +1,13 @@
 package com.pandulapeter.beagle.common.configuration
 
 import android.app.Application
+import android.content.Context
 import android.net.Uri
 import androidx.fragment.app.FragmentActivity
-import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior
+import com.pandulapeter.beagle.common.configuration.Behavior.*
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_BUILD_INFORMATION
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_CRASH_LOGGERS
+import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_EMAIL_ADDRESS
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LIFECYCLE_SECTION_EVENT_TYPES
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LOG_LABEL_SECTIONS_TO_SHOW
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_LOG_RESTORE_LIMIT
@@ -18,19 +20,16 @@ import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavio
 import com.pandulapeter.beagle.common.configuration.Behavior.BugReportingBehavior.Companion.DEFAULT_TEXT_INPUT_FIELDS
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SHOULD_ADD_DEBUG_MENU
 import com.pandulapeter.beagle.common.configuration.Behavior.Companion.DEFAULT_SHOULD_LOCK_DRAWER
-import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior
+import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior.Companion.DEFAULT_MAXIMUM_LOG_COUNT
 import com.pandulapeter.beagle.common.configuration.Behavior.LifecycleLogBehavior.Companion.DEFAULT_SHOULD_DISPLAY_FULL_NAMES
-import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior.Companion.DEFAULT_LOGGERS
 import com.pandulapeter.beagle.common.configuration.Behavior.LogBehavior.Companion.DEFAULT_MAXIMUM_LOG_COUNT
-import com.pandulapeter.beagle.common.configuration.Behavior.NetworkLogBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.NetworkLogBehavior.Companion.DEFAULT_BASE_URL
+import com.pandulapeter.beagle.common.configuration.Behavior.NetworkLogBehavior.Companion.DEFAULT_MAXIMUM_LOG_COUNT
 import com.pandulapeter.beagle.common.configuration.Behavior.NetworkLogBehavior.Companion.DEFAULT_NETWORK_LOGGERS
-import com.pandulapeter.beagle.common.configuration.Behavior.ScreenCaptureBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.ScreenCaptureBehavior.Companion.DEFAULT_ON_IMAGE_READY
 import com.pandulapeter.beagle.common.configuration.Behavior.ScreenCaptureBehavior.Companion.DEFAULT_ON_VIDEO_READY
 import com.pandulapeter.beagle.common.configuration.Behavior.ScreenCaptureBehavior.Companion.DEFAULT_SCREEN_CAPTURE_SERVICE_NOTIFICATION_CHANNEL_ID
-import com.pandulapeter.beagle.common.configuration.Behavior.ShakeDetectionBehavior
 import com.pandulapeter.beagle.common.configuration.Behavior.ShakeDetectionBehavior.Companion.DEFAULT_HAPTIC_FEEDBACK_DURATION
 import com.pandulapeter.beagle.common.configuration.Behavior.ShakeDetectionBehavior.Companion.DEFAULT_THRESHOLD
 import com.pandulapeter.beagle.common.contracts.BeagleCrashLoggerContract
@@ -39,13 +38,14 @@ import com.pandulapeter.beagle.commonBase.BeagleNetworkLoggerContract
 import com.pandulapeter.beagle.commonBase.FILE_NAME_DATE_TIME_FORMAT
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 /**
  * Specifies the behavior customization options for the debug menu. Used as an optional argument of Beagle.initialize(). All parameters are optional.
  *
  * @param shouldAddDebugMenu - Can be used to disable Beagle for certain Activities. [DEFAULT_SHOULD_ADD_DEBUG_MENU] by default (also, the library contains a hardcoded list of unsupported package names, unrelated to this parameter).
  * @param shouldLockDrawer - Only used in the `ui-drawer` artifact. If true, it disables the swipe-to-open gesture of the Drawer so the debug menu can only be opened by a shake gesture ore manually calling Beagle.show(). [DEFAULT_SHOULD_LOCK_DRAWER] by default.
+ * @param getDrawerSize - Only used in the `ui-drawer` artifact to set the width of the drawer. The lambda provides a Context attribute and the screen's current width. Use null for the default drawer width, that is min(0.6*screenWidth,320dp). [DEFAULT_GET_DRAWER_SIZE] by default.
  * @param shakeDetectionBehavior - Customize the shake detection behavior, see [ShakeDetectionBehavior].
  * @param logBehavior - Customize the logging behavior, see [LogBehavior].
  * @param networkLogBehavior - Customize the network logging behavior, see [NetworkLogBehavior].
@@ -56,6 +56,7 @@ import java.util.Locale
 data class Behavior(
     val shouldAddDebugMenu: (FragmentActivity) -> Boolean = DEFAULT_SHOULD_ADD_DEBUG_MENU,
     val shouldLockDrawer: Boolean = DEFAULT_SHOULD_LOCK_DRAWER,
+    val getDrawerSize: ((context: Context, screenWidth: Int) -> Int)? = DEFAULT_GET_DRAWER_SIZE,
     val shakeDetectionBehavior: ShakeDetectionBehavior = ShakeDetectionBehavior(),
     val logBehavior: LogBehavior = LogBehavior(),
     val networkLogBehavior: NetworkLogBehavior = NetworkLogBehavior(),
@@ -66,6 +67,7 @@ data class Behavior(
     companion object {
         private val DEFAULT_SHOULD_ADD_DEBUG_MENU: (FragmentActivity) -> Boolean = { true }
         private const val DEFAULT_SHOULD_LOCK_DRAWER = false
+        private val DEFAULT_GET_DRAWER_SIZE: ((Context, Int) -> Int)? = null
         private val DEFAULT_LOG_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
         private val DEFAULT_MEDIA_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
     }

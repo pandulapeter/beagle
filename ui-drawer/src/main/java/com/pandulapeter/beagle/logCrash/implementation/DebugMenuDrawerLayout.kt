@@ -80,7 +80,12 @@ internal class DebugMenuDrawerLayout(
         } else {
             debugMenuView.run {
                 layoutParams = layoutParams.apply {
-                    width = min(resources.getDimensionPixelSize(R.dimen.beagle_drawer_maximum_width), (displayMetrics.widthPixels * DRAWER_WIDTH_RATIO).roundToInt())
+                    displayMetrics.widthPixels.let { screenWidth ->
+                        width = BeagleCore.implementation.behavior.getDrawerSize?.invoke(
+                            context,
+                            screenWidth
+                        ) ?: min(resources.getDimensionPixelSize(R.dimen.beagle_drawer_maximum_width), (screenWidth * DRAWER_WIDTH_RATIO).roundToInt())
+                    }
                 }
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
