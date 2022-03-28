@@ -1,8 +1,10 @@
 package com.pandulapeter.beagle.appDemo.feature
 
+import android.animation.Animator
 import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -26,7 +28,7 @@ class BeagleDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+        handleSplashScreen()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_beagle_demo)
         setupEdgeToEdge()
         binding.beagleButton.setOnClickListener {
@@ -39,6 +41,23 @@ class BeagleDemoActivity : AppCompatActivity() {
                 newInstance = MainFragment.Companion::newInstance
             )
         }
+    }
+
+    private fun handleSplashScreen() = installSplashScreen().setOnExitAnimationListener { splashScreen ->
+        splashScreen.view.animate()
+            .scaleX(2f)
+            .scaleY(2f)
+            .alpha(0f)
+            .setInterpolator(AccelerateInterpolator())
+            .setListener(
+                object : Animator.AnimatorListener {
+                    override fun onAnimationStart(animator: Animator?) = Unit
+                    override fun onAnimationEnd(animator: Animator?) = splashScreen.remove()
+                    override fun onAnimationCancel(animator: Animator?) = Unit
+                    override fun onAnimationRepeat(animator: Animator?) = Unit
+                }
+            )
+            .start()
     }
 
     override fun onBackPressed() {
