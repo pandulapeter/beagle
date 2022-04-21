@@ -28,7 +28,7 @@ If the wall of text below is too long for your taste, check out [this gist](http
 ### Step 0: Check the requirements
 - Minimum SDK level: 16+
 - Target SDK level: 31+
-- Language: Kotlin 1.5.21+
+- Language: Kotlin 1.6.21+
 
 ### Step 1: Add the Jitpack repository
 Make sure that the following is part of your project-level build.gradle file:
@@ -57,7 +57,7 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.6.7"
+    def beagleVersion = "2.7.0"
     debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
 }
