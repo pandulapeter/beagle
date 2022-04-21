@@ -7,12 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.data.SongRepository
 import com.pandulapeter.beagle.appDemo.data.model.Song
-import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.ClearButtonViewHolder
-import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.ErrorViewHolder
-import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.LoadingIndicatorViewHolder
-import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.NetworkRequestInterceptorListItem
-import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.RadioButtonViewHolder
-import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.SongLyricsViewHolder
+import com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.*
 import com.pandulapeter.beagle.appDemo.feature.shared.ListViewModel
 import com.pandulapeter.beagle.appDemo.feature.shared.list.CodeSnippetViewHolder
 import com.pandulapeter.beagle.appDemo.feature.shared.list.TextViewHolder
@@ -35,11 +30,6 @@ class NetworkRequestInterceptorViewModel(
     private var job: Job? = null
     private val _items = MutableLiveData(listOf<NetworkRequestInterceptorListItem>())
     override val items: LiveData<List<NetworkRequestInterceptorListItem>> = _items
-    private var selectedEngine: SongRepository.Engine = SongRepository.Engine.values().first()
-        set(value) {
-            field = value
-            refreshItems()
-        }
 
     init {
         loadSong()
@@ -48,7 +38,6 @@ class NetworkRequestInterceptorViewModel(
 
     fun onRadioButtonSelected(selectedItem: RadioButtonViewHolder.UiModel) {
         SongTitle.fromResourceId(selectedItem.titleResourceId)?.let { selectedSong = it }
-        SongRepository.Engine.fromResourceId(selectedItem.titleResourceId)?.let { selectedEngine = it }
     }
 
     fun loadSong() {
@@ -57,8 +46,8 @@ class NetworkRequestInterceptorViewModel(
             isLoading = true
             refreshItems()
             job = viewModelScope.launch {
-                loadedSong = songRepository.getSong(selectedSong.id, selectedEngine)
-                songRepository.getLibrary(selectedEngine) //TODO: Remove this
+                loadedSong = songRepository.getSong(selectedSong.id)
+                songRepository.getLibrary() //TODO: Remove this
                 isLoading = false
                 refreshItems()
             }
@@ -68,8 +57,6 @@ class NetworkRequestInterceptorViewModel(
     private fun refreshItems() {
         _items.value = mutableListOf<NetworkRequestInterceptorListItem>().apply {
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_1))
-            addAll(SongRepository.Engine.values().map { engine -> RadioButtonViewHolder.UiModel(engine.nameResourceId, selectedEngine == engine) })
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_2))
             addAll(SongTitle.values().map { songTitle -> RadioButtonViewHolder.UiModel(songTitle.titleResourceId, selectedSong == songTitle) })
             if (isLoading) {
                 add(LoadingIndicatorViewHolder.UiModel())
@@ -120,45 +107,8 @@ class NetworkRequestInterceptorViewModel(
                 )
             )
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_7))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "dependencies {\n" +
-                            "    …\n" +
-                            "    api \"com.github.pandulapeter.beagle:log-ktor:\$beagleVersion\"\n" +
-                            "    \n" +
-                            "    // Alternative for Android modules:\n" +
-                            "    // debugApi \"com.github.pandulapeter.beagle:log-ktor:\$beagleVersion\"\n" +
-                            "    // releaseApi \"com.github.pandulapeter.beagle:log-ktor-noop:\$beagleVersion\"\n" +
-                            "}"
-                )
-            )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_8))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "Beagle.initialize(\n" +
-                            "    …\n" +
-                            "    behavior = Behavior(\n" +
-                            "        …\n" +
-                            "        networkLogBehavior = Behavior.NetworkLogBehavior(\n" +
-                            "            networkLoggers = listOf(BeagleKtorLogger),\n" +
-                            "            …\n" +
-                            "        )\n" +
-                            "    )\n" +
-                            ")"
-                )
-            )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_9))
-            add(
-                CodeSnippetViewHolder.UiModel(
-                    "val client = HttpClient(engine) {\n" +
-                            "    …\n" +
-                            "    (BeagleKtorLogger.logger as? HttpClientFeature<*,*>?)?.let { install(it) }\n" +
-                            "}"
-                )
-            )
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_10))
             add(ClearButtonViewHolder.UiModel())
-            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_11))
+            add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_8))
         }
     }
 

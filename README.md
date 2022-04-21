@@ -192,9 +192,8 @@ To create a special LogListModule that only displays these logs, simply set the 
 <summary>Intercepting network events</summary>
 <br/>
 
-Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. However, another reason was to provide the ability to choose between multiple implementations, in function of the project tech stack. At the moment Beagle can hook into two networking libraries to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling `Beagle.logNetworkEvent()` is always an option.
+Not bundling the network interceptor with the main library was mainly done to provide a pure Kotlin dependency that does not use the Android SDK, similarly to the logger solution described above. At the moment Beagle can only hook into the OkHttp networking library to provide content for [NetworkLogListModule](https://github.com/pandulapeter/beagle/tree/master/internal-common/src/main/java/com/pandulapeter/beagle/modules/NetworkLogListModule.kt), but manually calling `Beagle.logNetworkEvent()` is always an option.
 
-#### OkHttp
 Add the following to the module where your networking logic is implemented:
 
 ```groovy
@@ -230,44 +229,6 @@ val client = OkHttpClient.Builder()
     …
     .apply { (BeagleOkHttpLogger.logger as? Interceptor?)?.let { addInterceptor(it) } }
     .build()
-```
-
-#### Ktor (Android engine)
-Add the following to the module where your networking logic is implemented:
- 
-```groovy
-dependencies {
-    …
-    api "com.github.pandulapeter.beagle:log-ktor:$beagleVersion"
-    
-    // Alternative for Android modules:
-    // debugApi "com.github.pandulapeter.beagle:log-ktor:$beagleVersion"
-    // releaseApi "com.github.pandulapeter.beagle:log-ktor-noop:$beagleVersion"
-}
-```
-
-This will introduce the `BeagleKtorLogger` object which first needs to be connected to the main library, the moment it gets initialized:
-
-```kotlin
-Beagle.initialize(
-    …
-    behavior = Behavior(
-        …
-        networkLogBehavior = Behavior.NetworkLogBehavior(
-            networkLoggers = listOf(BeagleKtorLogger),
-            …
-        )
-    )
-)
-```
-
-The last step is setting up the `Logger` (the awkward casting is there to make sure the noop implementation does nothing while still having the same public API):
-
-```kotlin
-val client = HttpClient(engine) {
-    …
-    (BeagleKtorLogger.logger as? HttpClientFeature<*,*>?)?.let { install(it) }
-}
 ```
 
 </details>

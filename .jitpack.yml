@@ -7,8 +7,6 @@ install:
   - ./gradlew build :log:publishToMavenLocal
   - ./gradlew build :log-crash:publishToMavenLocal
   - ./gradlew build :log-crash-noop:publishToMavenLocal
-  - ./gradlew build :log-ktor:publishToMavenLocal
-  - ./gradlew build :log-ktor-noop:publishToMavenLocal
   - ./gradlew build :log-noop:publishToMavenLocal
   - ./gradlew build :log-okhttp:publishToMavenLocal
   - ./gradlew build :log-okhttp-noop:publishToMavenLocal

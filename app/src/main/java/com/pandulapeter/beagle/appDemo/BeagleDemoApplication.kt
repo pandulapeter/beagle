@@ -10,7 +10,6 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.log.BeagleLogger
-import com.pandulapeter.beagle.logKtor.BeagleKtorLogger
 import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -35,7 +34,7 @@ class BeagleDemoApplication : Application() {
                 ),
                 networkLogBehavior = Behavior.NetworkLogBehavior(
                     baseUrl = Constants.BASE_URL,
-                    networkLoggers = listOf(BeagleOkHttpLogger, BeagleKtorLogger)
+                    networkLoggers = listOf(BeagleOkHttpLogger)
                 ),
                 bugReportingBehavior = Behavior.BugReportingBehavior(
                     crashLoggers = listOf(BeagleCrashLogger),

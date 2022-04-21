@@ -15,7 +15,6 @@ buildscript {
         constraintLayoutVersion = "2.1.3" // https://developer.android.com/jetpack/androidx/releases/constraintlayout
         moshiVersion = "1.13.0" // https://github.com/square/moshi/tags
         okHttpVersion = "4.9.3" // https://github.com/square/okhttp/tags
-        ktorVersion = "2.0.0" // https://github.com/ktorio/ktor/releases
         coilVersion = "2.0.0-rc03" // https://github.com/coil-kt/coil/releases
     }
     repositories {

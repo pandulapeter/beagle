@@ -5,7 +5,7 @@ import com.pandulapeter.beagle.commonBase.model.NetworkLogEntry
 interface BeagleNetworkLoggerContract {
 
     /**
-     * Cast this value to a nullable OkHttp Interceptor or Ktor Logger depending on the Beagle log dependency you're using.
+     * Cast this value to a nullable OkHttp Interceptor.
      * By doing so the library will automatically intercept all network events.
      */
     val logger: Any? get() = null

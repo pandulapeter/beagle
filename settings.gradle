@@ -16,10 +16,6 @@ include ":log-noop"
 include ":log-okhttp"
 include ":log-okhttp-noop"
 
-// Log - Ktor
-include ":log-ktor"
-include ":log-ktor-noop"
-
 // Log - Crash
 include ":log-crash"
 include ":log-crash-noop"

@@ -2,7 +2,6 @@ package com.pandulapeter.beagle.appDemo.data.networking.retrofit
 
 import com.pandulapeter.beagle.appDemo.data.model.Song
 import com.pandulapeter.beagle.appDemo.data.networking.Constants
-import com.pandulapeter.beagle.appDemo.data.networking.RemoteSongSource
 import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
 import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
@@ -10,7 +9,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class OkHttpRemoteSongSource : RemoteSongSource {
+class SongRemoteSource {
 
     private val songService: SongService = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
@@ -23,13 +22,13 @@ class OkHttpRemoteSongSource : RemoteSongSource {
         .build()
         .create(SongService::class.java)
 
-    override suspend fun getSong(id: String): Song? = try {
+    suspend fun getSong(id: String): Song? = try {
         songService.getSongAsync(id)
     } catch (_: Exception) {
         null
     }
 
-    override suspend fun getLibrary() = try {
+    suspend fun getLibrary() = try {
         songService.getLibraryAsync()
     } catch (_: Exception) {
         null

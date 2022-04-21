@@ -92,11 +92,6 @@ enum class Dependency(
         copyright = "Copyright 2018, Google Inc.",
         url = "https://github.com/google/gson"
     ),
-    KTOR(
-        type = Type.APACHE_V2,
-        title = "Ktor",
-        url = "https://github.com/ktorio/ktor"
-    ),
     LEAK_CANARY(
         type = Type.APACHE_V2,
         title = "LeakCanary",
