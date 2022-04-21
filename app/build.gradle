@@ -9,8 +9,8 @@ android {
         applicationId "com.pandulapeter.beagle"
         minSdkVersion libraryMinimumSdkVersion
         targetSdkVersion libraryTargetSdkVersion
-        versionCode 26
-        versionName "1.4.3"
+        versionCode 27
+        versionName "1.4.4"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy-MM-dd")}\"")
         buildConfigField("String", "BEAGLE_VERSION", "\"$libraryVersion\"")
         vectorDrawables.useSupportLibrary = true
