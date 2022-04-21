@@ -112,25 +112,25 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.multidex:multidex:2.0.1"
+    implementation "androidx.multidex:multidex:2.0.1" // https://developer.android.com/jetpack/androidx/releases/multidex
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "io.insert-koin:koin-android:3.1.5"
+    implementation "io.insert-koin:koin-android:3.1.6" // https://github.com/InsertKoinIO/koin/tags
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    def retrofitVersion = "2.9.0"
+    def retrofitVersion = "2.9.0" // https://github.com/square/retrofit/tags
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion") { exclude module: "okhttp" }
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "io.ktor:ktor-client-android:$ktorVersion"
     implementation "io.ktor:ktor-client-gson:$ktorVersion"
-    implementation "com.android.billingclient:billing:4.1.0"
+    implementation "com.android.billingclient:billing:4.1.0" // https://developer.android.com/google/play/billing/release-notes
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    implementation "androidx.core:core-splashscreen:1.0.0-beta01"
+    implementation "androidx.core:core-splashscreen:1.0.0-beta02" // https://developer.android.com/jetpack/androidx/releases/core
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.7"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.9.1" // https://square.github.io/leakcanary/changelog/
     implementation project(":internal-utilities")
     activityDebugImplementation project(":ui-activity")
     activityDebugImplementation project(":log")
