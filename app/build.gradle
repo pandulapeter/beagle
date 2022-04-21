@@ -125,8 +125,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion") { exclude module: "okhttp" }
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "com.android.billingclient:billing:4.1.0" // https://developer.android.com/google/play/billing/release-notes
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     implementation "androidx.core:core-splashscreen:1.0.0-beta02" // https://developer.android.com/jetpack/androidx/releases/core
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:2.9.1" // https://square.github.io/leakcanary/changelog/
     implementation project(":internal-utilities")
