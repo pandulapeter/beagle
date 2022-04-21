@@ -7,7 +7,7 @@ android {
     compileSdkVersion libraryCompileSdkVersion
     defaultConfig {
         applicationId "com.pandulapeter.beagle"
-        minSdkVersion 21 // While the library supports SDK 16, the demo app does not
+        minSdkVersion libraryMinimumSdkVersion
         targetSdkVersion libraryTargetSdkVersion
         versionCode 26
         versionName "1.4.3"

@@ -26,7 +26,7 @@ The tutorials in the app cover everything from this readme, but in more detail. 
 If the wall of text below is too long for your taste, check out [this gist](https://gist.github.com/pandulapeter/3f9b404d953c6d80ed8a19eb06db4541) that contains all the code you need for a nice configuration. Otherwise, let's do it step by step:
 
 ### Step 0: Check the requirements
-- Minimum SDK level: 16+
+- Minimum SDK level: 21+
 - Target SDK level: 31+
 - Language: Kotlin 1.6.21+
 
