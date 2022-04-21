@@ -4,7 +4,6 @@ import android.app.Application
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -271,7 +270,6 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
 
     override fun takeScreenshot() = screenCaptureManager.takeScreenshot()
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun recordScreen() = screenCaptureManager.recordScreen()
 
     override fun openGallery() = screenCaptureManager.openGallery()

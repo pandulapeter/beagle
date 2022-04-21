@@ -1,43 +1,13 @@
 package com.pandulapeter.beagle.appDemo.data.model
 
-import android.os.Build
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
-import com.pandulapeter.beagle.modules.AppInfoButtonModule
-import com.pandulapeter.beagle.modules.BugReportButtonModule
-import com.pandulapeter.beagle.modules.CheckBoxModule
-import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
-import com.pandulapeter.beagle.modules.DeviceInfoModule
-import com.pandulapeter.beagle.modules.DividerModule
-import com.pandulapeter.beagle.modules.ForceCrashButtonModule
-import com.pandulapeter.beagle.modules.GalleryButtonModule
-import com.pandulapeter.beagle.modules.HeaderModule
-import com.pandulapeter.beagle.modules.ItemListModule
-import com.pandulapeter.beagle.modules.KeyValueListModule
-import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
-import com.pandulapeter.beagle.modules.LifecycleLogListModule
-import com.pandulapeter.beagle.modules.LoadingIndicatorModule
-import com.pandulapeter.beagle.modules.LogListModule
-import com.pandulapeter.beagle.modules.LongTextModule
-import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
-import com.pandulapeter.beagle.modules.MultipleSelectionListModule
-import com.pandulapeter.beagle.modules.NetworkLogListModule
-import com.pandulapeter.beagle.modules.PaddingModule
-import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
-import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
-import com.pandulapeter.beagle.modules.ScreenshotButtonModule
-import com.pandulapeter.beagle.modules.SingleSelectionListModule
-import com.pandulapeter.beagle.modules.SliderModule
-import com.pandulapeter.beagle.modules.SwitchModule
-import com.pandulapeter.beagle.modules.TextInputModule
-import com.pandulapeter.beagle.modules.TextModule
-import java.util.UUID
+import com.pandulapeter.beagle.modules.*
+import java.util.*
 
 sealed class ModuleWrapper(
     @StringRes val titleResourceId: Int,
@@ -359,7 +329,6 @@ sealed class ModuleWrapper(
         codeSnippet = "ScreenCaptureToolboxModule()"
     )
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     object ScreenRecordingButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_screen_recording_button,
         descriptionResourceId = R.string.add_module_network_screen_recording_button_description,

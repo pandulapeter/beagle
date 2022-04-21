@@ -2,8 +2,6 @@ package com.pandulapeter.beagle.common.contracts
 
 import android.app.Application
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import com.pandulapeter.beagle.common.configuration.Appearance
@@ -11,11 +9,7 @@ import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.common.listeners.LogListener
-import com.pandulapeter.beagle.common.listeners.NetworkLogListener
-import com.pandulapeter.beagle.common.listeners.OverlayListener
-import com.pandulapeter.beagle.common.listeners.UpdateListener
-import com.pandulapeter.beagle.common.listeners.VisibilityListener
+import com.pandulapeter.beagle.common.listeners.*
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.commonBase.model.CrashLogEntry
 import com.pandulapeter.beagle.commonBase.model.LifecycleLogEntry
@@ -384,9 +378,8 @@ interface BeagleContract {
     val currentActivity: FragmentActivity? get() = null
 
     /**
-     * Captures a screenshot image and saves it in the application's private directory (exposing it through a FileProvider).
-     * Below Android Lollipop the root view's drawing cache will be used which is an inferior solution (only the current decorView will be captured, without system decorations).
-     * Above Android Lollipop the entire screen will be captured, after the user agrees to the system prompt.
+     * Captures a screenshot image and saves it in the application's private directory (exposing it through a FileProvider)
+     * The capture happens after the user agrees to the system prompt.
      * Check out the [Behavior] class to override the default file naming logic.
      *
      * The app will show a media preview dialog when the recording is done, or a notification that opens to the gallery if it is no longer in the foreground.
@@ -396,12 +389,11 @@ interface BeagleContract {
     /**
      * Captures a screen recording video and saves it in the application's private directory (exposing it through a FileProvider).
      * A notification will appear during the recording which contains the button to stop it. The recording will have at most 720p resolution.
-     * This feature relies on API-s only present on Android Lollipop and above. Recording will only be started after the user agrees to the system prompt.
+     * Recording will only be started after the user agrees to the system prompt.
      * Check out the [Behavior] class to override the default file naming logic.
      *
      * The app will show a media preview dialog when the recording is done, or a notification that opens to the gallery if it is no longer in the foreground.
      */
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun recordScreen() = Unit
 
     /**

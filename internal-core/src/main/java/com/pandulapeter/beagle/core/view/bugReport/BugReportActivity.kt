@@ -2,8 +2,6 @@ package com.pandulapeter.beagle.core.view.bugReport
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.ViewTreeObserver
@@ -97,20 +95,18 @@ class BugReportActivity : AppCompatActivity() {
             }
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
-            binding.beagleBottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
-            window.decorView.run {
-                setOnApplyWindowInsetsListener { view, insets ->
-                    onApplyWindowInsets(insets).also {
-                        val beagleInsets = WindowInsetsCompat.toWindowInsetsCompat(it, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
-                        binding.beagleToolbar.setPadding(beagleInsets.left, 0, beagleInsets.right, 0)
-                        binding.beagleRecyclerView.setPadding(0, 0, 0, beagleInsets.bottom + contentPadding)
-                        binding.beagleBottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = beagleInsets.bottom } }
-                    }
+        val contentPadding by lazy { dimension(R.dimen.beagle_content_padding) }
+        binding.beagleBottomNavigationOverlay.setBackgroundColor(window.navigationBarColor)
+        window.decorView.run {
+            setOnApplyWindowInsetsListener { view, insets ->
+                onApplyWindowInsets(insets).also {
+                    val beagleInsets = WindowInsetsCompat.toWindowInsetsCompat(it, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
+                    binding.beagleToolbar.setPadding(beagleInsets.left, 0, beagleInsets.right, 0)
+                    binding.beagleRecyclerView.setPadding(0, 0, 0, beagleInsets.bottom + contentPadding)
+                    binding.beagleBottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = beagleInsets.bottom } }
                 }
-                requestApplyInsets()
             }
+            requestApplyInsets()
         }
         val bugReportAdapter = BugReportAdapter(
             onMediaFileSelected = ::showMediaPreviewDialog,

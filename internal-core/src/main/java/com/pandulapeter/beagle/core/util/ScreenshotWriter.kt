@@ -6,13 +6,10 @@ import android.graphics.PixelFormat
 import android.media.Image
 import android.media.ImageReader
 import android.media.ImageReader.OnImageAvailableListener
-import android.os.Build
 import android.os.Handler
 import android.view.Surface
-import androidx.annotation.RequiresApi
 import java.io.ByteArrayOutputStream
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 internal class ScreenshotWriter(
     private val width: Int,
     private val height: Int,

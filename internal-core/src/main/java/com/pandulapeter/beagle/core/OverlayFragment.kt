@@ -3,12 +3,10 @@ package com.pandulapeter.beagle.core
 import android.content.Context
 import android.content.Intent
 import android.media.projection.MediaProjectionManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.ScreenCaptureService
@@ -25,7 +23,6 @@ internal class OverlayFragment : Fragment() {
         fileName = savedInstanceState?.fileName ?: fileName
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun startCapture(isForVideo: Boolean, fileName: String) {
         (context?.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?).let { mediaProjectionManager ->
             if (mediaProjectionManager == null) {
@@ -41,7 +38,7 @@ internal class OverlayFragment : Fragment() {
         when (requestCode) {
             SCREENSHOT_REQUEST,
             SCREEN_RECORDING_REQUEST -> {
-                if (data == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                if (data == null) {
                     BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
                 } else {
                     requireContext().run {

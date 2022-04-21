@@ -1,7 +1,5 @@
 package com.pandulapeter.beagle.logCrash.implementation
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -32,20 +30,18 @@ internal class DebugMenuActivity : AppCompatActivity() {
             setNavigationOnClickListener { onBackPressed() }
             navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            bottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
-            window.decorView.run {
-                setOnApplyWindowInsetsListener { view, insets ->
-                    onApplyWindowInsets(insets).also {
-                        val input = WindowInsetsCompat.toWindowInsetsCompat(it, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
-                        val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: input.copy(top = 0)
-                        toolbar.setPadding(output.left, 0, output.right, 0)
-                        debugMenu.applyInsets(0, 0, 0, output.bottom)
-                        bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = output.bottom } }
-                    }
+        bottomNavigationOverlay.setBackgroundColor(window.navigationBarColor)
+        window.decorView.run {
+            setOnApplyWindowInsetsListener { view, insets ->
+                onApplyWindowInsets(insets).also {
+                    val input = WindowInsetsCompat.toWindowInsetsCompat(it, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
+                    val output = BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: input.copy(top = 0)
+                    toolbar.setPadding(output.left, 0, output.right, 0)
+                    debugMenu.applyInsets(0, 0, 0, output.bottom)
+                    bottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = output.bottom } }
                 }
-                requestApplyInsets()
             }
+            requestApplyInsets()
         }
         if (savedInstanceState == null) {
             BeagleCore.implementation.notifyVisibilityListenersOnShow()

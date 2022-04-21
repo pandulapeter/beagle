@@ -363,9 +363,9 @@
     <string name="add_module_network_log_list">NetworkLogList</string>
     <string name="add_module_network_log_list_description">Displays an expandable list of historical network activity. The entries are clickable to inspect their JSON payloads.</string>
     <string name="add_module_network_screen_capture_toolbox">ScreenCaptureToolbox</string>
-    <string name="add_module_network_screen_capture_toolbox_description">Functionality-wise this module adds a ScreenshotButtonModule, a ScreenRecordingButtonModule (on Lollipop and above) and a GalleryButtonModule to the debug menu. However, they will be displayed as list items.</string>
+    <string name="add_module_network_screen_capture_toolbox_description">Functionality-wise this module adds a ScreenshotButtonModule, a ScreenRecordingButtonModule and a GalleryButtonModule to the debug menu. However, they will be displayed as list items.</string>
     <string name="add_module_network_screen_recording_button">ScreenRecordingButton</string>
-    <string name="add_module_network_screen_recording_button_description">Displays a button that takes a screen recording video of the current layout and allows the user to share it (only available on Android 5.0 Lollipop and above).</string>
+    <string name="add_module_network_screen_recording_button_description">Displays a button that takes a screen recording video of the current layout and allows the user to share it.</string>
     <string name="add_module_network_screenshot_button">ScreenshotButton</string>
     <string name="add_module_network_screenshot_button_description">Displays a button that takes a screenshot image of the current layout and allows the user to share it.</string>
 

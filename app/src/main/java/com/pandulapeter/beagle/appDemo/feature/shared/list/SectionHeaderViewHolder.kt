@@ -1,9 +1,7 @@
 package com.pandulapeter.beagle.appDemo.feature.shared.list
 
-import android.os.Build
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.pandulapeter.beagle.appDemo.R
@@ -32,7 +30,7 @@ class SectionHeaderViewHolder private constructor(
 
     override fun bind(uiModel: UiModel) = binding.header.run {
         super.bind(uiModel)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && uiModel.isExpanded != isExpanded) {
+        if (uiModel.isExpanded != isExpanded) {
             isExpanded = uiModel.isExpanded
             setCompoundDrawablesWithIntrinsicBounds(null, null, getAnimatedDrawable(uiModel.isExpanded), null)
         } else {
@@ -40,7 +38,6 @@ class SectionHeaderViewHolder private constructor(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun TextView.getAnimatedDrawable(isExpanded: Boolean) = context.animatedDrawable(if (isExpanded) R.drawable.avd_expand else R.drawable.avd_collapse).apply {
         setTintList(textColors)
         start()

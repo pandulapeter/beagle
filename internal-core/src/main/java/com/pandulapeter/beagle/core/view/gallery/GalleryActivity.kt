@@ -1,7 +1,5 @@
 package com.pandulapeter.beagle.core.view.gallery
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.MenuItem
@@ -13,13 +11,7 @@ import com.pandulapeter.beagle.common.configuration.getBeagleInsets
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.databinding.BeagleActivityGalleryBinding
 import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
-import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
-import com.pandulapeter.beagle.core.util.extension.getUriForFile
-import com.pandulapeter.beagle.core.util.extension.shareFile
-import com.pandulapeter.beagle.core.util.extension.shareFiles
-import com.pandulapeter.beagle.core.util.extension.text
-import com.pandulapeter.beagle.core.util.extension.viewModel
-import com.pandulapeter.beagle.core.util.extension.visible
+import com.pandulapeter.beagle.core.util.extension.*
 import com.pandulapeter.beagle.core.view.gallery.list.GalleryAdapter
 import com.pandulapeter.beagle.utils.consume
 import com.pandulapeter.beagle.utils.extensions.colorResource
@@ -61,20 +53,18 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
         }
         binding.beagleTextView.text = text(BeagleCore.implementation.appearance.galleryTexts.noMediaMessage)
         val largePadding = dimension(R.dimen.beagle_large_content_padding)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            binding.beagleBottomNavigationOverlay.setBackgroundColor(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK)
-            window.decorView.run {
-                setOnApplyWindowInsetsListener { view, insets ->
-                    onApplyWindowInsets(insets).also {
-                        val beagleInsets = WindowInsetsCompat.toWindowInsetsCompat(it, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
-                        binding.beagleToolbar.setPadding(beagleInsets.left, 0, beagleInsets.right, 0)
-                        binding.beagleRecyclerView.setPadding(contentPadding, 0, contentPadding, beagleInsets.bottom + contentPadding)
-                        binding.beagleBottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = beagleInsets.bottom } }
-                        binding.beagleTextView.setPadding(largePadding, largePadding, largePadding, largePadding + beagleInsets.bottom)
-                    }
+        binding.beagleBottomNavigationOverlay.setBackgroundColor(window.navigationBarColor)
+        window.decorView.run {
+            setOnApplyWindowInsetsListener { view, insets ->
+                onApplyWindowInsets(insets).also {
+                    val beagleInsets = WindowInsetsCompat.toWindowInsetsCompat(it, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
+                    binding.beagleToolbar.setPadding(beagleInsets.left, 0, beagleInsets.right, 0)
+                    binding.beagleRecyclerView.setPadding(contentPadding, 0, contentPadding, beagleInsets.bottom + contentPadding)
+                    binding.beagleBottomNavigationOverlay.run { layoutParams = layoutParams.apply { height = beagleInsets.bottom } }
+                    binding.beagleTextView.setPadding(largePadding, largePadding, largePadding, largePadding + beagleInsets.bottom)
                 }
-                requestApplyInsets()
             }
+            requestApplyInsets()
         }
         val galleryAdapter = GalleryAdapter(
             onMediaSelected = { position -> viewModel.items.value?.get(position)?.id?.let(::onItemSelected) },

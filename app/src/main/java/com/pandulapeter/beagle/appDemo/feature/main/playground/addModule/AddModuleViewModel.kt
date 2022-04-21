@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.appDemo.feature.main.playground.addModule
 
-import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pandulapeter.beagle.Beagle
@@ -46,9 +45,7 @@ class AddModuleViewModel(private val moduleRepository: ModuleRepository) : ListV
             add(createModuleUiModel(ModuleWrapper.LoremIpsumGeneratorButtonWrapper()))
             add(createModuleUiModel(ModuleWrapper.NetworkLogListWrapper))
             add(createModuleUiModel(ModuleWrapper.ScreenCaptureToolboxWrapper))
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                add(createModuleUiModel(ModuleWrapper.ScreenRecordingButtonWrapper))
-            }
+            add(createModuleUiModel(ModuleWrapper.ScreenRecordingButtonWrapper))
             add(createModuleUiModel(ModuleWrapper.ScreenshotButtonWrapper))
         }
     )

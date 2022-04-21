@@ -3,12 +3,9 @@ package com.pandulapeter.beagle.appDemo.utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
@@ -18,18 +15,17 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.pandulapeter.beagle.appDemo.R
 import com.pandulapeter.beagle.appDemo.feature.shared.ListFragment
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 fun Context.animatedDrawable(@DrawableRes drawableId: Int) = AnimatedVectorDrawableCompat.create(this, drawableId)!!
 
-//TODO: Snackbar.make(this, messageResourceId, Snackbar.LENGTH_SHORT).show()
 fun View.showSnackbar(@StringRes messageResourceId: Int) =
-    Toast.makeText(context, messageResourceId, Toast.LENGTH_SHORT).show()
+    Snackbar.make(this, messageResourceId, Snackbar.LENGTH_SHORT).show()
 
 fun View.openUrl(url: String) = context.startActivity(Intent.createChooser(Intent(Intent.ACTION_VIEW, Uri.parse(url)), null))
 

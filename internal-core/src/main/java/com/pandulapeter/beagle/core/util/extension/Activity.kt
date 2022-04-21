@@ -61,44 +61,14 @@ internal suspend fun Activity.createAndShareLogFile(fileName: String, content: S
     createLogFile(fileName, content)?.let { uri -> shareFile(uri, "text/plain") }
 }
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 internal fun Activity.takeScreenshotWithMediaProjectionManager(fileName: String) {
     (BeagleCore.implementation.uiManager.findOverlayFragment(this as? FragmentActivity?) as? OverlayFragment?).let { overlayFragment ->
         overlayFragment?.startCapture(false, fileName) ?: BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 internal fun Activity.recordScreenWithMediaProjectionManager(fileName: String) {
     (BeagleCore.implementation.uiManager.findOverlayFragment(this as? FragmentActivity?) as? OverlayFragment?).let { overlayFragment ->
         overlayFragment?.startCapture(true, fileName) ?: BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
     }
 }
-
-internal fun Activity.takeScreenshotWithDrawingCache(fileName: String) {
-    val rootView = findRootViewGroup()
-    val bitmap = Bitmap.createBitmap(rootView.width, rootView.height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
-    val bgDrawable = rootView.background
-    if (bgDrawable != null) {
-        bgDrawable.draw(canvas)
-    } else {
-        val typedValue = TypedValue()
-        theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
-        if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
-            canvas.drawColor(typedValue.data)
-        } else {
-            drawable(typedValue.resourceId)?.draw(canvas)
-        }
-    }
-    rootView.draw(canvas)
-    GlobalScope.launch(Dispatchers.IO) {
-        (createScreenshotFromBitmap(bitmap, fileName))?.let { uri ->
-            launch(Dispatchers.Main) {
-                BeagleCore.implementation.onScreenCaptureReady?.invoke(uri)
-            }
-        }
-    }
-}
-
-private fun Activity.findRootViewGroup(): ViewGroup = findViewById(android.R.id.content) ?: window.decorView.findViewById(android.R.id.content)

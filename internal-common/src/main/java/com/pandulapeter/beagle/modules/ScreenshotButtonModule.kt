@@ -16,8 +16,7 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
 
 /**
  * Displays a button that takes a screenshot image of the current layout.
- * Below Android Lollipop the root view's drawing cache will be used which is an inferior solution (only the current decorView will be captured, without system decorations).
- * Above Android Lollipop the entire screen will be captured, after the user agrees to the system prompt.
+ * The capture happens after the user agrees to the system prompt.
  * Check out the [Behavior] class to override the default file naming logic.
  *
  * The app will show a media preview dialog when the recording is done, or a notification that opens to the gallery if it is no longer in the foreground.
