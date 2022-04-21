@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import coil.ImageLoader
-import coil.fetch.VideoFrameFileFetcher
+import coil.decode.VideoFrameDecoder
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
@@ -18,32 +18,13 @@ import com.pandulapeter.beagle.common.configuration.Placement
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.common.contracts.BeagleContract
 import com.pandulapeter.beagle.common.contracts.module.Module
-import com.pandulapeter.beagle.common.listeners.LogListener
-import com.pandulapeter.beagle.common.listeners.NetworkLogListener
-import com.pandulapeter.beagle.common.listeners.OverlayListener
-import com.pandulapeter.beagle.common.listeners.UpdateListener
-import com.pandulapeter.beagle.common.listeners.VisibilityListener
+import com.pandulapeter.beagle.common.listeners.*
 import com.pandulapeter.beagle.commonBase.model.CrashLogEntry
 import com.pandulapeter.beagle.commonBase.model.LifecycleLogEntry
 import com.pandulapeter.beagle.commonBase.model.LogEntry
 import com.pandulapeter.beagle.commonBase.model.NetworkLogEntry
-import com.pandulapeter.beagle.core.manager.BugReportManager
-import com.pandulapeter.beagle.core.manager.CrashLogManager
-import com.pandulapeter.beagle.core.manager.DebugMenuInjector
-import com.pandulapeter.beagle.core.manager.LifecycleLogManager
-import com.pandulapeter.beagle.core.manager.ListManager
-import com.pandulapeter.beagle.core.manager.LocalStorageManager
-import com.pandulapeter.beagle.core.manager.LogManager
-import com.pandulapeter.beagle.core.manager.MemoryStorageManager
-import com.pandulapeter.beagle.core.manager.NetworkLogManager
-import com.pandulapeter.beagle.core.manager.ScreenCaptureManager
-import com.pandulapeter.beagle.core.manager.ShakeDetector
-import com.pandulapeter.beagle.core.manager.UiManagerContract
-import com.pandulapeter.beagle.core.manager.listener.LogListenerManager
-import com.pandulapeter.beagle.core.manager.listener.NetworkLogListenerManager
-import com.pandulapeter.beagle.core.manager.listener.OverlayListenerManager
-import com.pandulapeter.beagle.core.manager.listener.UpdateListenerManager
-import com.pandulapeter.beagle.core.manager.listener.VisibilityListenerManager
+import com.pandulapeter.beagle.core.manager.*
+import com.pandulapeter.beagle.core.manager.listener.*
 import com.pandulapeter.beagle.core.util.model.RestoreModel
 import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.view.gallery.MediaPreviewDialogFragment
@@ -52,12 +33,7 @@ import com.pandulapeter.beagle.core.view.networkLogDetail.NetworkLogDetailDialog
 import com.pandulapeter.beagle.modules.LifecycleLogListModule
 import com.pandulapeter.beagle.utils.extensions.hideKeyboard
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.File
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
@@ -118,8 +94,8 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         behavior.logBehavior.loggers.forEach { it.register(::log, ::clearLogEntries) }
         behavior.networkLogBehavior.networkLoggers.forEach { it.register(::logNetworkEvent, ::clearNetworkLogEntries) }
         videoThumbnailLoader = ImageLoader.Builder(application)
-            .componentRegistry {
-                add(VideoFrameFileFetcher(application))
+            .components {
+                add(VideoFrameDecoder.Factory())
             }
             .build()
     }
