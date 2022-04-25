@@ -270,7 +270,7 @@ data class Appearance(
                   baseUrl ->
                     url.replace(baseUrl, "").let { formattedUrl ->
                         (if (isOutgoing) "↑" else "↓").let { prefix ->
-                            formattedTimestamp?.let { formattedTimestamp -> "$prefix [$formattedTimestamp] $url" } ?: "$prefix $formattedUrl"
+                            formattedTimestamp?.let { formattedTimestamp -> "$prefix [$formattedTimestamp] $formattedUrl" } ?: "$prefix $formattedUrl"
                         }
                     }.toText()
                 }
