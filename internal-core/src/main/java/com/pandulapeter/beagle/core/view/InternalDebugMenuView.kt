@@ -3,7 +3,6 @@ package com.pandulapeter.beagle.core.view
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -57,18 +56,14 @@ class InternalDebugMenuView @JvmOverloads constructor(
         addView(applyButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             leftMargin = largePadding
             rightMargin = largePadding / 2
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                marginStart = leftMargin
-                marginEnd = rightMargin
-            }
+            marginStart = leftMargin
+            marginEnd = rightMargin
         })
         addView(resetButton, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             leftMargin = largePadding / 2
             rightMargin = largePadding
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                marginStart = leftMargin
-                marginEnd = rightMargin
-            }
+            marginStart = leftMargin
+            marginEnd = rightMargin
         })
         background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, context.applyTheme().colorResource(android.R.attr.textColorPrimary)))
     }

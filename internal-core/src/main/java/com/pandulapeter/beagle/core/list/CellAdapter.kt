@@ -38,28 +38,32 @@ internal class CellAdapter : RecyclerView.Adapter<ViewHolder<out Cell<*>>>() {
     override fun onBindViewHolder(holder: ViewHolder<out Cell<*>>, position: Int) = holder.forceBind(items[position])
 
     suspend fun submitList(newItems: List<Cell<*>>, onListUpdated: (() -> Unit)? = null) {
-        withContext(Dispatchers.Main) {
-            pendingUpdates.add(newItems)
-            if (pendingUpdates.size == 1) {
-                update(newItems, onListUpdated)
+        withContext(Dispatchers.Default) {
+            synchronized(pendingUpdates) {
+                pendingUpdates.add(newItems)
+                if (pendingUpdates.size == 1) {
+                    update(newItems, onListUpdated)
+                }
             }
         }
     }
 
     private fun update(newItems: List<Cell<*>>, onListUpdated: (() -> Unit)? = null) {
         job?.cancel()
-        job = GlobalScope.launch(Dispatchers.IO) {
+        job = GlobalScope.launch(Dispatchers.Default) {
             val result = DiffUtil.calculateDiff(DiffCallback(items, newItems))
             job = launch(Dispatchers.Main) {
                 items = newItems
                 result.dispatchUpdatesTo(this@CellAdapter)
-                processQueue(onListUpdated)
-                job = null
+                launch(Dispatchers.Default) {
+                    processQueue(onListUpdated)
+                    job = null
+                }
             }
         }
     }
 
-    private fun processQueue(onListUpdated: (() -> Unit)?) {
+    private fun processQueue(onListUpdated: (() -> Unit)?) = synchronized(pendingUpdates) {
         pendingUpdates.remove()
         if (pendingUpdates.isEmpty()) {
             onListUpdated?.invoke()
