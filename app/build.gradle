@@ -6,8 +6,8 @@ apply plugin: "kotlin-kapt"
 android {
     defaultConfig {
         applicationId "com.pandulapeter.beagle"
-        versionCode 27
-        versionName "1.4.4"
+        versionCode 29
+        versionName "1.5.1"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy-MM-dd")}\"")
         buildConfigField("String", "BEAGLE_VERSION", "\"$libraryVersion\"")
     }
