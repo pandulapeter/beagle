@@ -102,30 +102,34 @@ class InternalDebugMenuView @JvmOverloads constructor(
         } catch (_: ConcurrentModificationException) {
             false
         }
-        recyclerView.updatePadding(hasPendingChanges)
-        buttonContainer.run {
-            if (hasPendingChanges) {
-                visibility = View.VISIBLE
-            }
-            post {
-                animate()
-                    .alpha(if (hasPendingChanges) 1f else 0f)
-                    .start()
-                applyButton.animate().translationY(if (hasPendingChanges) 0f else height.toFloat()).start()
-                resetButton.animate().translationY(if (hasPendingChanges) 0f else height.toFloat()).start()
+        post {
+            recyclerView.updatePadding(hasPendingChanges)
+            buttonContainer.run {
+                if (hasPendingChanges) {
+                    visibility = View.VISIBLE
+                }
+                post {
+                    animate()
+                        .alpha(if (hasPendingChanges) 1f else 0f)
+                        .start()
+                    applyButton.animate().translationY(if (hasPendingChanges) 0f else height.toFloat()).start()
+                    resetButton.animate().translationY(if (hasPendingChanges) 0f else height.toFloat()).start()
+                }
             }
         }
     }
 
     fun applyInsets(left: Int, top: Int, right: Int, bottom: Int) {
-        val scrollBy = recyclerTopPadding - top - verticalMargin
-        recyclerLeftPadding = left
-        recyclerTopPadding = top + verticalMargin
-        recyclerRightPadding = right
-        recyclerBottomPadding = bottom + verticalMargin
-        buttonContainer.setPadding(left, top, right, bottom + largePadding)
-        recyclerView.updatePadding(BeagleCore.implementation.hasPendingUpdates)
-        recyclerView.scrollBy(0, scrollBy)
+        post {
+            val scrollBy = recyclerTopPadding - top - verticalMargin
+            recyclerLeftPadding = left
+            recyclerTopPadding = top + verticalMargin
+            recyclerRightPadding = right
+            recyclerBottomPadding = bottom + verticalMargin
+            buttonContainer.setPadding(left, top, right, bottom + largePadding)
+            recyclerView.updatePadding(BeagleCore.implementation.hasPendingUpdates)
+            recyclerView.scrollBy(0, scrollBy)
+        }
     }
 
     private fun setBackgroundFromWindowBackground() {
