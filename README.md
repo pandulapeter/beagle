@@ -30,14 +30,14 @@ If the wall of text below is too long for your taste, check out [this gist](http
 - Target SDK level: 31+
 - Language: Kotlin 1.6.21+
 
-### Step 1: Add the Jitpack repository
+### Step 1: Add the MavenCentral repository
 Make sure that the following is part of your project-level build.gradle file:
 
 ```groovy
 allprojects {
     repositories {
         …
-        maven { url "https://jitpack.io" }
+        mavenCentral()
     }
 }
 ```
@@ -57,14 +57,19 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.7.4"
-    debugImplementation "com.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
-    releaseImplementation "com.github.pandulapeter.beagle:noop:$beagleVersion"
+    def beagleVersion = "2.8.0"
+    debugImplementation "io.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
+    releaseImplementation "io.github.pandulapeter.beagle:noop:$beagleVersion"
 }
 ```
 
 The latest version is:
 
+MavenCentral:
+
+[![](https://maven-badges.herokuapp.com/maven-central/io.github.pandulapeter/beagle/badge.svg?style=flat-square)](https://repo1.maven.org/maven2/io/github/pandulapeter/beagle/)
+
+JitPack (outdated):
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
@@ -142,11 +147,11 @@ To access the same functionality that `Beagle.log()` provides from a pure Kotlin
 ```groovy
 dependencies {
     …
-    api "com.github.pandulapeter.beagle:log:$beagleVersion"
+    api "io.github.pandulapeter.beagle:log:$beagleVersion"
 
     // Alternative for Android modules:
-    // debugApi "com.github.pandulapeter.beagle:log:$beagleVersion"
-    // releaseApi "com.github.pandulapeter.beagle:log-noop:$beagleVersion"
+    // debugApi "io.github.pandulapeter.beagle:log:$beagleVersion"
+    // releaseApi "io.github.pandulapeter.beagle:log-noop:$beagleVersion"
 }
 ```
 
@@ -199,11 +204,11 @@ Add the following to the module where your networking logic is implemented:
 ```groovy
 dependencies {
     …
-    api "com.github.pandulapeter.beagle:log-okhttp:$beagleVersion"
+    api "io.github.pandulapeter.beagle:log-okhttp:$beagleVersion"
     
     // Alternative for Android modules:
-    // debugApi "com.github.pandulapeter.beagle:log-okhttp:$beagleVersion"
-    // releaseApi "com.github.pandulapeter.beagle:log-okhttp-noop:$beagleVersion"
+    // debugApi "io.github.pandulapeter.beagle:log-okhttp:$beagleVersion"
+    // releaseApi "io.github.pandulapeter.beagle:log-okhttp-noop:$beagleVersion"
 }
 ```
 
@@ -242,8 +247,8 @@ The library can intercept uncaught exceptions and display their stack trace in a
 ```groovy
 dependencies {
     …
-    debugImplementation "com.github.pandulapeter.beagle:log-crash:$beagleVersion"
-    releaseImplementation "com.github.pandulapeter.beagle:log-crash-noop:$beagleVersion"
+    debugImplementation "io.github.pandulapeter.beagle:log-crash:$beagleVersion"
+    releaseImplementation "io.github.pandulapeter.beagle:log-crash-noop:$beagleVersion"
 }
 ```
 
