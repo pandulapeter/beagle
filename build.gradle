@@ -11,24 +11,24 @@ buildscript {
         appCompatVersion = "1.4.1" // https://developer.android.com/jetpack/androidx/releases/appcompat
         recyclerViewVersion = "1.2.1" // https://developer.android.com/jetpack/androidx/releases/recyclerview
         lifecycleVersion = "2.4.1" // https://developer.android.com/jetpack/androidx/releases/lifecycle
-        materialVersion = "1.6.0-rc01" // https://github.com/material-components/material-components-android/releases
+        materialVersion = "1.6.0" // https://github.com/material-components/material-components-android/releases
         constraintLayoutVersion = "2.1.3" // https://developer.android.com/jetpack/androidx/releases/constraintlayout
         moshiVersion = "1.13.0" // https://github.com/square/moshi/tags
         okHttpVersion = "4.9.3" // https://github.com/square/okhttp/tags
-        coilVersion = "2.0.0-rc03" // https://github.com/coil-kt/coil/releases
+        coilVersion = "2.0.0" // https://github.com/coil-kt/coil/releases
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.1.3"
+        classpath "com.android.tools.build:gradle:7.2.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
     }
 }
 
 plugins {
-    id 'maven-publish'
+    id "maven-publish"
 }
 
 allprojects {
@@ -46,20 +46,20 @@ publishing {
     publications {
         release(MavenPublication) {
             pom {
-                name = 'Beagle'
-                description = 'A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, and many other useful features.'
-                url = 'https://github.com/pandulapeter/beagle'
+                name = "Beagle"
+                description = "A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, and many other useful features."
+                url = "https://github.com/pandulapeter/beagle"
                 licenses {
                     license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
                     }
                 }
                 developers {
                     developer {
-                        id = 'pandulapeter'
-                        name = 'Pandula Péter'
-                        email = 'pandulapeter@gmail.com'
+                        id = "pandulapeter"
+                        name = "Pandula Péter"
+                        email = "pandulapeter@gmail.com"
                     }
                 }
             }
