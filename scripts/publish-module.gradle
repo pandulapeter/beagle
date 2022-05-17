@@ -27,20 +27,16 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-
                 groupId libraryGroup
                 artifactId moduleArtifactId
                 version libraryVersion
-
                 if (project.plugins.findPlugin("com.android.library")) {
                     from components.release
                 } else {
                     from components.java
                 }
-
                 artifact androidSourcesJar
                 artifact javadocJar
-
                 pom {
                     name = "Beagle"
                     description = "A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, and many other useful features."
