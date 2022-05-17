@@ -2,6 +2,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-parcelize"
 apply plugin: "maven-publish"
+apply plugin: "com.vanniktech.maven.publish"
 group = libraryGroup
 version = libraryVersion
 
