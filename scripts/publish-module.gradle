@@ -1,0 +1,79 @@
+apply plugin: "maven-publish"
+apply plugin: "signing"
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    if (project.plugins.findPlugin("com.android.library")) {
+        from android.sourceSets.main.java.srcDirs
+        from android.sourceSets.main.kotlin.srcDirs
+    } else {
+        from sourceSets.main.java.srcDirs
+        from sourceSets.main.kotlin.srcDirs
+    }
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier.set('javadoc')
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+
+group = libraryGroup
+version = libraryVersion
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+
+                groupId libraryGroup
+                artifactId moduleArtifactId
+                version libraryVersion
+
+                if (project.plugins.findPlugin("com.android.library")) {
+                    from components.release
+                } else {
+                    from components.java
+                }
+
+                artifact androidSourcesJar
+                artifact javadocJar
+
+                pom {
+                    name = "Beagle"
+                    description = "A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, and many other useful features."
+                    url = "https://github.com/pandulapeter/beagle"
+                    licenses {
+                        license {
+                            name = "The Apache Software License, Version 2.0"
+                            url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "pandulapeter"
+                            name = "Pandula Péter"
+                            email = "pandulapeter@gmail.com"
+                        }
+                    }
+                    scm {
+                        connection = "scm:git@github.com:pandulapeter/beagle.git"
+                        developerConnection = "scm:git:ssh://github.com/pandulapeter/beagle.git"
+                        url = "https://github.com/pandulapeter/beagle"
+                    }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    useInMemoryPgpKeys(
+            rootProject.ext["signing.keyId"],
+            rootProject.ext["signing.key"],
+            rootProject.ext["signing.password"],
+    )
+    sign publishing.publications
+}

@@ -1,46 +1,9 @@
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-apply plugin: "maven-publish"
-// apply plugin: "com.vanniktech.maven.publish"
-group = libraryGroup
-version = libraryVersion
+apply from: "${rootProject.projectDir}/scripts/module-android.gradle"
 
-android {
-    compileSdkVersion libraryCompileSdkVersion
-    defaultConfig {
-        minSdkVersion libraryMinimumSdkVersion
-        targetSdkVersion libraryTargetSdkVersion
-        consumerProguardFiles "consumer-rules.pro"
-    }
-    lint {
-        abortOnError false
-    }
-}
+ext.moduleArtifactId = "log-crash-noop"
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(":internal-common")
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = ["-Xjvm-default=all"]
-    }
-}
-
-project.afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                artifact sourceJar
-            }
-        }
-    }
-}
-
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
 }

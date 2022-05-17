@@ -1,23 +1,15 @@
 apply plugin: "com.android.application"
-apply plugin: "kotlin-android"
+apply from: "${rootProject.projectDir}/scripts/module-android.gradle"
 apply plugin: "kotlin-parcelize"
 apply plugin: "kotlin-kapt"
 
 android {
-    compileSdkVersion libraryCompileSdkVersion
     defaultConfig {
         applicationId "com.pandulapeter.beagle"
-        minSdkVersion libraryMinimumSdkVersion
-        targetSdkVersion libraryTargetSdkVersion
         versionCode 27
         versionName "1.4.4"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy-MM-dd")}\"")
         buildConfigField("String", "BEAGLE_VERSION", "\"$libraryVersion\"")
-        vectorDrawables.useSupportLibrary = true
-    }
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
     }
     signingConfigs {
         internal {
@@ -66,9 +58,6 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
-    lint {
-        abortOnError false
-    }
     flavorDimensions "beagle-ui"
     productFlavors {
         activity {
@@ -111,7 +100,6 @@ configurations {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.multidex:multidex:2.0.1" // https://developer.android.com/jetpack/androidx/releases/multidex
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
@@ -174,11 +162,4 @@ dependencies {
     releaseImplementation project(":log-noop")
     releaseImplementation project(":log-okhttp-noop")
     releaseImplementation project(":log-crash-noop")
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = ["-Xjvm-default=all"]
-    }
 }

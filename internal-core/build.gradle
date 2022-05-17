@@ -1,32 +1,14 @@
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
+apply from: "${rootProject.projectDir}/scripts/module-android.gradle"
 apply plugin: "kotlin-parcelize"
 apply plugin: "kotlin-kapt"
-apply plugin: "maven-publish"
-// apply plugin: "com.vanniktech.maven.publish"
-group = libraryGroup
-version = libraryVersion
 
-android {
-    compileSdkVersion libraryCompileSdkVersion
-    defaultConfig {
-        minSdkVersion libraryMinimumSdkVersion
-        targetSdkVersion libraryTargetSdkVersion
-        consumerProguardFiles "consumer-rules.pro"
-        vectorDrawables.useSupportLibrary = true
-    }
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
-    buildFeatures.viewBinding true
-    lint {
-        abortOnError false
-    }
-}
+ext.moduleArtifactId = "internal-core"
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
+android.buildFeatures.viewBinding true
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
@@ -41,27 +23,4 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     implementation project(":internal-utilities")
     implementation project(":internal-common")
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = ["-Xjvm-default=all"]
-    }
-}
-
-project.afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                artifact sourceJar
-            }
-        }
-    }
-}
-
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
 }

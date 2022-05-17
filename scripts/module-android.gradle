@@ -1,0 +1,15 @@
+apply plugin: "kotlin-android"
+
+android {
+    compileSdkVersion libraryCompileSdkVersion
+    defaultConfig {
+        minSdkVersion libraryMinimumSdkVersion
+        targetSdkVersion libraryTargetSdkVersion
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    lint.abortOnError false
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}

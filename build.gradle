@@ -24,13 +24,11 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:7.2.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
-        // classpath "com.vanniktech:gradle-maven-publish-plugin:0.19.0"
-        // classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.6.21"
     }
 }
 
 plugins {
-    id "maven-publish"
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 allprojects {
@@ -38,38 +36,10 @@ allprojects {
         google()
         mavenCentral()
     }
-    plugins.withId("com.vanniktech.maven.publish") {
-        mavenPublish {
-            sonatypeHost = "S01"
-        }
-    }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            pom {
-                name = "Beagle"
-                description = "A smart, reliable, and highly customizable debug menu library for Android apps that supports screen recording, network activity logging, and many other useful features."
-                url = "https://github.com/pandulapeter/beagle"
-                licenses {
-                    license {
-                        name = "The Apache License, Version 2.0"
-                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-                    }
-                }
-                developers {
-                    developer {
-                        id = "pandulapeter"
-                        name = "Pandula Péter"
-                        email = "pandulapeter@gmail.com"
-                    }
-                }
-            }
-        }
-    }
-}
+apply from: "$rootDir/scripts/publish-root.gradle"
