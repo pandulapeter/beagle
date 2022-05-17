@@ -65,11 +65,11 @@ dependencies {
 
 The latest version is:
 
-MavenCentral:
+**MavenCentral:**
 
-[![](https://maven-badges.herokuapp.com/maven-central/io.github.pandulapeter/beagle/badge.svg?style=flat-square)](https://repo1.maven.org/maven2/io/github/pandulapeter/beagle/)
+[![](https://maven-badges.herokuapp.com/maven-central/io.github.pandulapeter/beagle/badge.svg?style=plastic)](https://repo1.maven.org/maven2/io/github/pandulapeter/beagle/)
 
-JitPack (outdated):
+**JitPack (outdated):**
 
 [![](https://jitpack.io/v/pandulapeter/beagle.svg)](https://jitpack.io/#pandulapeter/beagle)
 
