@@ -67,7 +67,7 @@ The latest version is:
 
 **MavenCentral:**
 
-[![](https://maven-badges.herokuapp.com/maven-central/io.github.pandulapeter/beagle/badge.svg?style=plastic)](https://repo1.maven.org/maven2/io/github/pandulapeter/beagle/)
+[![](https://maven-badges.herokuapp.com/maven-central/io.github.pandulapeter/beagle/badge.svg?style=flat)](https://repo1.maven.org/maven2/io/github/pandulapeter/beagle/)
 
 **JitPack (outdated):**
 

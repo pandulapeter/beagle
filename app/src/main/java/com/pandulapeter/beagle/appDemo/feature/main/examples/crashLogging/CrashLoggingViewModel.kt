@@ -16,8 +16,8 @@ class CrashLoggingViewModel : ListViewModel<ListItem>() {
             CodeSnippetViewHolder.UiModel(
                 "dependencies {\n" +
                         "    …\n" +
-                        "    debugImplementation \"com.github.pandulapeter.beagle:log-crash:\$beagleVersion\"\n" +
-                        "    releaseImplementation \"com.github.pandulapeter.beagle:log-crash-noop:\$beagleVersion\"\n" +
+                        "    debugImplementation \"io.github.pandulapeter.beagle:log-crash:\$beagleVersion\"\n" +
+                        "    releaseImplementation \"io.github.pandulapeter.beagle:log-crash-noop:\$beagleVersion\"\n" +
                         "}"
             ),
             TextViewHolder.UiModel(R.string.case_study_crash_logging_text_2),

@@ -74,11 +74,11 @@ class NetworkRequestInterceptorViewModel(
                 CodeSnippetViewHolder.UiModel(
                     "dependencies {\n" +
                             "    …\n" +
-                            "    api \"com.github.pandulapeter.beagle:log-okhttp:\$beagleVersion\"\n" +
+                            "    api \"io.github.pandulapeter.beagle:log-okhttp:\$beagleVersion\"\n" +
                             "    \n" +
                             "    // Alternative for Android modules:\n" +
-                            "    // debugApi \"com.github.pandulapeter.beagle:log-okhttp:\$beagleVersion\"\n" +
-                            "    // releaseApi \"com.github.pandulapeter.beagle:log-okhttp-noop:\$beagleVersion\"\n" +
+                            "    // debugApi \"io.github.pandulapeter.beagle:log-okhttp:\$beagleVersion\"\n" +
+                            "    // releaseApi \"io.github.pandulapeter.beagle:log-okhttp-noop:\$beagleVersion\"\n" +
                             "}"
                 )
             )

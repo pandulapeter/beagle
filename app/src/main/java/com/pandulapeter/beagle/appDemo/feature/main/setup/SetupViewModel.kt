@@ -64,7 +64,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                 "allprojects {\n" +
                         "    repositories {\n" +
                         "        …\n" +
-                        "        maven { url \"https://jitpack.io\" }\n" +
+                        "        mavenCentral()\n" +
                         "    }\n" +
                         "}"
             )
@@ -81,7 +81,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                 codeSnippet = "dependencies {\n" +
                         "    …\n" +
                         "    def beagleVersion = \"${BuildConfig.BEAGLE_VERSION}\" // Check the GitHub repository for the latest version\n" +
-                        "    debugImplementation \"com.github.pandulapeter.beagle:ui-${
+                        "    debugImplementation \"io.github.pandulapeter.beagle:ui-${
                             when (selectedUiVariant) {
                                 UiVariant.ACTIVITY -> "activity"
                                 UiVariant.BOTTOM_SHEET -> "bottom-sheet"
@@ -90,7 +90,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
                                 UiVariant.VIEW -> "view"
                             }
                         }:\$beagleVersion\"\n" +
-                        "    releaseImplementation \"com.github.pandulapeter.beagle:noop:\$beagleVersion\"\n" +
+                        "    releaseImplementation \"io.github.pandulapeter.beagle:noop:\$beagleVersion\"\n" +
                         "}"
             )
         )

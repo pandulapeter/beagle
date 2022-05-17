@@ -68,11 +68,11 @@ class AnalyticsViewModel : ListViewModel<AnalyticsListItem>() {
             CodeSnippetViewHolder.UiModel(
                 "dependencies {\n" +
                         "    …\n" +
-                        "    api \"com.github.pandulapeter.beagle:log:\$beagleVersion\"\n" +
+                        "    api \"io.github.pandulapeter.beagle:log:\$beagleVersion\"\n" +
                         "\n" +
                         "    // Alternative for Android modules:\n" +
-                        "    // debugApi \"com.github.pandulapeter.beagle:log:\$beagleVersion\"\n" +
-                        "    // releaseApi \"com.github.pandulapeter.beagle:log-noop:\$beagleVersion\"\n" +
+                        "    // debugApi \"io.github.pandulapeter.beagle:log:\$beagleVersion\"\n" +
+                        "    // releaseApi \"io.github.pandulapeter.beagle:log-noop:\$beagleVersion\"\n" +
                         "}"
             ),
             TextViewHolder.UiModel(R.string.case_study_analytics_text_7),
