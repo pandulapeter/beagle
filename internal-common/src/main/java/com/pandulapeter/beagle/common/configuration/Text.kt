@@ -2,7 +2,7 @@ package com.pandulapeter.beagle.common.configuration
 
 import android.os.Parcelable
 import androidx.annotation.StringRes
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Used as a generic way to provide texts, either as CharSequence or resource ID.

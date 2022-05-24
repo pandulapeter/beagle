@@ -17,8 +17,8 @@ internal class BugReportImageViewHolder private constructor(
 
     private val fileName get() = itemView.tag as String
     private val onCheckChangeListener = CompoundButton.OnCheckedChangeListener { _, _ ->
-        adapterPosition.let { adapterPosition ->
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+        bindingAdapterPosition.let { bindingAdapterPosition ->
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 onLongTap(fileName)
             }
         }
@@ -26,13 +26,13 @@ internal class BugReportImageViewHolder private constructor(
 
     init {
         binding.root.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 onTap(fileName)
             }
         }
         binding.root.setOnLongClickListener {
             consume {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     onLongTap(fileName)
                 }
             }

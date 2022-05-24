@@ -18,7 +18,7 @@ internal class HeaderViewHolder private constructor(
 
     init {
         binding.beagleAttachAllButton.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 onAttachAllButtonClicked(id)
             }
         }

@@ -38,7 +38,7 @@ internal data class ExpandableHeaderCell(
             setText(model.text)
             setCompoundDrawablesWithIntrinsicBounds(null, null, if (model.canExpand) if (model.isExpanded) drawableCollapse else drawableExpand else drawableEmpty, null)
             setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     model.onItemSelected()
                 }
             }

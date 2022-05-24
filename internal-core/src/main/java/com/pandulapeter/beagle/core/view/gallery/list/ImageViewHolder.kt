@@ -17,26 +17,26 @@ internal class ImageViewHolder private constructor(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val onCheckChangeListener = CompoundButton.OnCheckedChangeListener { _, _ ->
-        adapterPosition.let { adapterPosition ->
-            if (adapterPosition != RecyclerView.NO_POSITION) {
-                onLongTap(adapterPosition)
+        bindingAdapterPosition.let { bindingAdapterPosition ->
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                onLongTap(bindingAdapterPosition)
             }
         }
     }
 
     init {
         binding.root.setOnClickListener {
-            adapterPosition.let { adapterPosition ->
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onTap(adapterPosition)
+            bindingAdapterPosition.let { bindingAdapterPosition ->
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                    onTap(bindingAdapterPosition)
                 }
             }
         }
         binding.root.setOnLongClickListener {
             consume {
-                adapterPosition.let { adapterPosition ->
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
-                        onLongTap(adapterPosition)
+                bindingAdapterPosition.let { bindingAdapterPosition ->
+                    if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
+                        onLongTap(bindingAdapterPosition)
                     }
                 }
             }

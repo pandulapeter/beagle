@@ -17,20 +17,20 @@ internal class CrashLogItemViewHolder private constructor(
 
     private val id get() = itemView.tag as String
     private val checkedChangedListener = CompoundButton.OnCheckedChangeListener { _, _ ->
-        if (adapterPosition != RecyclerView.NO_POSITION) {
+        if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
             onItemLongTapped(id)
         }
     }
 
     init {
         binding.root.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 onItemSelected(id)
             }
         }
         binding.root.setOnLongClickListener {
             consume {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     onItemLongTapped(id)
                 }
             }

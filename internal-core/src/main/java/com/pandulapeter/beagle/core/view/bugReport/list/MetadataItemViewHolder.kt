@@ -18,20 +18,20 @@ internal class MetadataItemViewHolder private constructor(
 
     private val type get() = itemView.tag as BugReportViewModel.MetadataType
     private val checkedChangedListener = CompoundButton.OnCheckedChangeListener { _, _ ->
-        if (adapterPosition != RecyclerView.NO_POSITION) {
+        if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
             onItemSelectionChanged(type)
         }
     }
 
     init {
         binding.root.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 onItemClicked(type)
             }
         }
         binding.root.setOnLongClickListener {
             consume {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     onItemSelectionChanged(type)
                 }
             }

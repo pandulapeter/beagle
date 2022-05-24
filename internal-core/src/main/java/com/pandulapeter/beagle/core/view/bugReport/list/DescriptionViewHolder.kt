@@ -17,7 +17,7 @@ internal class DescriptionViewHolder private constructor(
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (adapterPosition != RecyclerView.NO_POSITION) {
+        if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
             onTextChanged(index, s ?: "")
         }
     }

@@ -19,20 +19,20 @@ internal class LogItemViewHolder private constructor(
 
     private val entry get() = itemView.tag as SerializableLogEntry
     private val checkedChangedListener = CompoundButton.OnCheckedChangeListener { _, _ ->
-        if (adapterPosition != RecyclerView.NO_POSITION) {
+        if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
             onItemLongTapped(entry.id, entry.label)
         }
     }
 
     init {
         binding.root.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 onItemSelected(entry.id, entry.label)
             }
         }
         binding.root.setOnLongClickListener {
             consume {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     onItemLongTapped(entry.id, entry.label)
                 }
             }

@@ -18,7 +18,7 @@ internal class ShowMoreViewHolder private constructor(
         binding.beagleTextView.run {
             setText(BeagleCore.implementation.appearance.bugReportTexts.showMoreText)
             setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
+                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     type?.let { onButtonPressed(it) }
                 }
             }

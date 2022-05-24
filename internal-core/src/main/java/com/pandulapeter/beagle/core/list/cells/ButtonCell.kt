@@ -47,7 +47,7 @@ internal data class ButtonCell(
             )
             compoundDrawablePadding = drawablePadding
             setOnClickListener {
-                adapterPosition.let { bindingAdapterPosition ->
+                bindingAdapterPosition.let { bindingAdapterPosition ->
                     if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                         model.onButtonPressed?.invoke()
                     }

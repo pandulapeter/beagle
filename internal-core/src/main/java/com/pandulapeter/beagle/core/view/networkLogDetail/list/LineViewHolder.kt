@@ -21,7 +21,7 @@ internal class LineViewHolder private constructor(
 
     init {
         binding.root.setOnClickListener {
-            if (adapterPosition != RecyclerView.NO_POSITION) {
+            if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                 (binding.beagleTextView.tag as? Int?)?.let { lineNumber ->
                     onItemClicked(lineNumber)
                 }

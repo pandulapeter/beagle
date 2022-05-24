@@ -1,11 +1,9 @@
 package com.pandulapeter.beagle.appDemo.data
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import com.pandulapeter.beagle.appDemo.data.model.ModuleWrapper
-import java.util.Collections
+import java.util.*
 
 class ModuleRepository {
 
@@ -33,18 +31,16 @@ class ModuleRepository {
 
     @Suppress("unused")
     fun registerListener(lifecycleOwner: LifecycleOwner, listener: Listener) {
-        lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
+        lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
 
-            @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-            fun onCreate() {
+            override fun onCreate(owner: LifecycleOwner) {
                 if (!listeners.contains(listener)) {
                     listeners.add(listener)
                     listener.onModuleListChanged()
                 }
             }
 
-            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-            fun onDestroy() {
+            override fun onDestroy(owner: LifecycleOwner) {
                 listeners.remove(listener)
             }
         })
