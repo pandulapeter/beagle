@@ -5,8 +5,8 @@ ext.moduleArtifactId = "log-crash"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation libs.androidx.appcompat
+    implementation libs.square.moshi
     implementation project(":internal-utilities")
     implementation project(":internal-core")
     api project(":internal-common")

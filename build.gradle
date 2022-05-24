@@ -6,24 +6,14 @@ buildscript {
         libraryCompileSdkVersion = 31
         libraryTargetSdkVersion = 31
         libraryVersionCode = 1
-        coroutinesVersion = "1.6.1" // https://github.com/Kotlin/kotlinx.coroutines/releases
-        annotationsVersion = "1.3.0" // https://developer.android.com/jetpack/androidx/releases/annotation
-        appCompatVersion = "1.4.1" // https://developer.android.com/jetpack/androidx/releases/appcompat
-        recyclerViewVersion = "1.2.1" // https://developer.android.com/jetpack/androidx/releases/recyclerview
-        lifecycleVersion = "2.4.1" // https://developer.android.com/jetpack/androidx/releases/lifecycle
-        materialVersion = "1.6.0" // https://github.com/material-components/material-components-android/releases
-        constraintLayoutVersion = "2.1.3" // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-        moshiVersion = "1.13.0" // https://github.com/square/moshi/tags
-        okHttpVersion = "4.9.3" // https://github.com/square/okhttp/tags
-        coilVersion = "2.0.0" // https://github.com/coil-kt/coil/releases
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.2.0"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
+        classpath libs.gradle
+        classpath libs.kotlin.gradle
     }
 }
 

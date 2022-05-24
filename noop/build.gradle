@@ -6,6 +6,6 @@ ext.moduleArtifactId = "noop"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation libs.androidx.appcompat
     api project(":internal-common")
 }

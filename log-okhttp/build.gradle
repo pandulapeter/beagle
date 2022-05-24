@@ -4,6 +4,6 @@ ext.moduleArtifactId = "log-okhttp"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 dependencies {
-    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation libs.square.okhttp
     api project(":internal-common-base")
 }

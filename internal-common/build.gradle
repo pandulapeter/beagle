@@ -6,8 +6,8 @@ ext.moduleArtifactId = "internal-common"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 dependencies {
-    implementation "androidx.annotation:annotation:$annotationsVersion"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+    implementation libs.androidx.annotation
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.recyclerview
     api project(":internal-common-base")
 }

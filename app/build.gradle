@@ -100,24 +100,24 @@ configurations {
 }
 
 dependencies {
-    implementation "androidx.multidex:multidex:2.0.1" // https://developer.android.com/jetpack/androidx/releases/multidex
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "io.insert-koin:koin-android:3.1.6" // https://github.com/InsertKoinIO/koin/tags
-    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    def retrofitVersion = "2.9.0" // https://github.com/square/retrofit/tags
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion") { exclude module: "okhttp" }
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    implementation "com.android.billingclient:billing:4.1.0" // https://developer.android.com/google/play/billing/release-notes
-    implementation "androidx.core:core-splashscreen:1.0.0-beta02" // https://developer.android.com/jetpack/androidx/releases/core
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.9.1" // https://square.github.io/leakcanary/changelog/
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.lifecycle.viewmodel
+    implementation libs.androidx.multidex
+    implementation libs.androidx.recyclerview
+    implementation libs.androidx.splashscreen
+    implementation libs.google.billing
+    implementation libs.google.material
+    implementation libs.koin
+    implementation libs.kotlin.coroutines
+    implementation libs.square.moshi
+    kapt libs.square.moshi.codegen
+    implementation libs.square.okhttp
+    implementation(libs.square.retrofit) { exclude module: "okhttp" }
+    implementation libs.square.retrofit.converter
     implementation project(":internal-utilities")
+
+    debugImplementation libs.square.leakcanary
     activityDebugImplementation project(":ui-activity")
     activityDebugImplementation project(":log")
     activityDebugImplementation project(":log-okhttp")

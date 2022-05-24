@@ -6,8 +6,8 @@ ext.moduleArtifactId = "ui-activity"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "com.google.android.material:material:$materialVersion"
+    implementation libs.androidx.appcompat
+    implementation libs.google.material
     implementation project(":internal-core")
     implementation project(":internal-utilities")
     api project(":internal-common")

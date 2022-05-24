@@ -6,9 +6,9 @@ ext.moduleArtifactId = "ui-drawer"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.lifecycle.common
+    implementation libs.google.material
     implementation project(":internal-core")
     api project(":internal-common")
 }

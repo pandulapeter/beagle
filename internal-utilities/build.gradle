@@ -6,6 +6,6 @@ ext.moduleArtifactId = "internal-utilities"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 dependencies {
-    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.recyclerview
 }

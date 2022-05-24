@@ -9,18 +9,18 @@ apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 android.buildFeatures.viewBinding true
 
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.lifecycle:lifecycle-process:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
-    implementation "io.coil-kt:coil:$coilVersion"
-    implementation "io.coil-kt:coil-video:$coilVersion"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    implementation libs.kotlin.coroutines
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.recyclerview
+    implementation libs.androidx.constraintlayout
+    implementation libs.google.material
+    implementation libs.androidx.lifecycle.livedata
+    implementation libs.androidx.lifecycle.process
+    implementation libs.androidx.lifecycle.viewmodel
+    implementation libs.coil
+    implementation libs.coil.video
+    implementation libs.square.moshi
+    kapt libs.square.moshi.codegen
     implementation project(":internal-utilities")
     implementation project(":internal-common")
 }
