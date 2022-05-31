@@ -183,20 +183,12 @@ internal class ScreenCaptureService : Service() {
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .apply {
                     if (isForVideo) {
-                        val intentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            FLAG_IMMUTABLE
-                        } else {
-                            0
-                        }
                         setContentIntent(
                             PendingIntent.getService(
                                 this@ScreenCaptureService,
                                 0,
-                                Intent(
-                                    this@ScreenCaptureService,
-                                    ScreenCaptureService::class.java
-                                ).setAction(ACTION_DONE),
-                                intentFlag
+                                Intent(this@ScreenCaptureService, ScreenCaptureService::class.java).setAction(ACTION_DONE),
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) FLAG_IMMUTABLE else 0
                             )
                         )
                         setStyle(NotificationCompat.BigTextStyle().bigText(text(BeagleCore.implementation.appearance.screenCaptureTexts.inProgressNotificationContent)))
