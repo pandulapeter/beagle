@@ -1,13 +1,13 @@
 [versions]
 androidx-annotation = "1.3.0" # https://developer.android.com/jetpack/androidx/releases/annotation
 androidx-appcompat = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidx-constraintlayout = "2.1.3" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
+androidx-constraintlayout = "2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-lifecycle = "2.4.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-recyclerview = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
 coil = "2.1.0" # https://github.com/coil-kt/coil/releases
 google-material = "1.6.0" # https://github.com/material-components/material-components-android/releases
 gradle = "7.2.0" # https://developer.android.com/studio/releases/gradle-plugin
-kotlin-coroutines = "1.6.1" # https://github.com/Kotlin/kotlinx.coroutines/releases
+kotlin-coroutines = "1.6.2" # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-gradle = "1.6.21" # https://kotlinlang.org/docs/releases.html#release-details
 square-moshi = "1.13.0" # https://github.com/square/moshi/tags
 square-okhttp = "4.9.3" # https://github.com/square/okhttp/tags
