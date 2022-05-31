@@ -57,7 +57,7 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.8.1"
+    def beagleVersion = "2.8.2"
     debugImplementation "io.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "io.github.pandulapeter.beagle:noop:$beagleVersion"
 }
@@ -261,7 +261,9 @@ Beagle.initialize(
 )
 ```
 
-Enabling this feature will disable the crash collection of Firebase Crashlytics, as using the two simultaneously has proved to be unreliable.
+Using this feature simultaneously with other crash reporting solutions can be unreliable.
+
+Also, please note that by introducing the `log-crash` dependency, Beagle's bug reporting Activity will now run in a separate process (Firebase for example needs a special initialization call for multi-process apps).
 </details>
 
 <details>
