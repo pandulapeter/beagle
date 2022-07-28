@@ -48,7 +48,8 @@ internal class ShakeDetector : SensorEventListener, DefaultLifecycleObserver {
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
 
     override fun onSensorChanged(event: SensorEvent?) {
-        if (BeagleCore.implementation.currentActivity?.lifecycle?.currentState?.isAtLeast(Lifecycle.State.STARTED) == true) {
+        if (BeagleCore.implementation.currentActivity?.lifecycle?.currentState?.isAtLeast(Lifecycle.State.STARTED) == true
+            && BeagleCore.implementation.currentActivity?.let { BeagleCore.implementation.behavior.shouldShowDebugMenu.invoke(it) } == true) {
             BeagleCore.implementation.behavior.shakeDetectionBehavior.threshold?.let { threshold ->
                 if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
                     val currentTime = currentTimestamp
