@@ -44,6 +44,7 @@ import java.util.*
  * Specifies the behavior customization options for the debug menu. Used as an optional argument of Beagle.initialize(). All parameters are optional.
  *
  * @param shouldAddDebugMenu - Can be used to disable Beagle for certain Activities. [DEFAULT_SHOULD_ADD_DEBUG_MENU] by default (also, the library contains a hardcoded list of unsupported package names, unrelated to this parameter).
+ * @param shouldShowDebugMenu - Can be used to control whether Beagle opens in certain situations. [DEFAULT_SHOULD_SHOW_DEBUG_MENU] by default.
  * @param shouldLockDrawer - Only used in the `ui-drawer` artifact. If true, it disables the swipe-to-open gesture of the Drawer so the debug menu can only be opened by a shake gesture ore manually calling Beagle.show(). [DEFAULT_SHOULD_LOCK_DRAWER] by default.
  * @param getDrawerSize - Only used in the `ui-drawer` artifact to set the width of the drawer. The lambda provides a Context attribute and the screen's current width. Use null for the default drawer width, that is min(0.6*screenWidth,320dp). [DEFAULT_GET_DRAWER_SIZE] by default.
  * @param shakeDetectionBehavior - Customize the shake detection behavior, see [ShakeDetectionBehavior].
@@ -55,6 +56,7 @@ import java.util.*
  */
 data class Behavior(
     val shouldAddDebugMenu: (FragmentActivity) -> Boolean = DEFAULT_SHOULD_ADD_DEBUG_MENU,
+    val shouldShowDebugMenu: (FragmentActivity) -> Boolean = DEFAULT_SHOULD_SHOW_DEBUG_MENU,
     val shouldLockDrawer: Boolean = DEFAULT_SHOULD_LOCK_DRAWER,
     val getDrawerSize: ((context: Context, screenWidth: Int) -> Int)? = DEFAULT_GET_DRAWER_SIZE,
     val shakeDetectionBehavior: ShakeDetectionBehavior = ShakeDetectionBehavior(),
@@ -66,6 +68,7 @@ data class Behavior(
 ) {
     companion object {
         private val DEFAULT_SHOULD_ADD_DEBUG_MENU: (FragmentActivity) -> Boolean = { true }
+        private val DEFAULT_SHOULD_SHOW_DEBUG_MENU: (FragmentActivity) -> Boolean = { true }
         private const val DEFAULT_SHOULD_LOCK_DRAWER = false
         private val DEFAULT_GET_DRAWER_SIZE: ((Context, Int) -> Int)? = null
         private val DEFAULT_LOG_FILE_NAME_DATE_FORMAT by lazy { SimpleDateFormat(FILE_NAME_DATE_TIME_FORMAT, Locale.ENGLISH) }
