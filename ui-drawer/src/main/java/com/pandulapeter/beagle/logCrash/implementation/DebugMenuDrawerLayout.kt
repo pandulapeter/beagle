@@ -2,13 +2,11 @@ package com.pandulapeter.beagle.logCrash.implementation
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.WindowInsets
-import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -68,9 +66,7 @@ internal class DebugMenuDrawerLayout(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         removeDrawerListener(listener)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            debugMenuView.setOnApplyWindowInsetsListener(null)
-        }
+        debugMenuView.setOnApplyWindowInsetsListener(null)
     }
 
     private fun setDrawerSize(displayMetrics: DisplayMetrics) {
@@ -88,16 +84,13 @@ internal class DebugMenuDrawerLayout(
                     }
                 }
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                debugMenuView.run {
-                    setOnApplyWindowInsetsListener { view, insets -> insets.also { updateInsets(it, view) } }
-                    requestApplyInsets()
-                }
+            debugMenuView.run {
+                setOnApplyWindowInsetsListener { view, insets -> insets.also { updateInsets(it, view) } }
+                requestApplyInsets()
             }
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
     private fun updateInsets(insets: WindowInsets, view: View) {
         val input = WindowInsetsCompat.toWindowInsetsCompat(insets, view).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
         val output = (BeagleCore.implementation.appearance.applyInsets?.invoke(input) ?: input)

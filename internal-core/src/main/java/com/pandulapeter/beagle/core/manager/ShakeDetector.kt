@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -25,7 +26,13 @@ internal class ShakeDetector : SensorEventListener, DefaultLifecycleObserver {
     private var lastSensorUpdate = 0L
     private val previousEvent = SensorValues()
     private var application: Application? = null
-    private val vibrator by lazy { application?.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator? }
+    private val vibrator by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            (application?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager)?.defaultVibrator
+        } else {
+            application?.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator?
+        }
+    }
 
     fun initialize(application: Application): Boolean {
         application.unregisterSensorEventListener(this)

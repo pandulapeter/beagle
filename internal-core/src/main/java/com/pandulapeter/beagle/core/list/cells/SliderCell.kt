@@ -9,6 +9,8 @@ import com.pandulapeter.beagle.common.contracts.module.ViewHolder
 import com.pandulapeter.beagle.core.databinding.BeagleCellSliderBinding
 import com.pandulapeter.beagle.core.util.extension.setText
 import com.pandulapeter.beagle.utils.extensions.inflater
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 internal data class SliderCell(
@@ -45,15 +47,17 @@ internal data class SliderCell(
             binding.beagleSeekBar.run {
                 clearOnChangeListeners()
                 valueTo = (model.maximumValue - model.minimumValue).toFloat()
-                value = (model.value - model.minimumValue).toFloat()
+                value = (model.adjustedValue - model.minimumValue).toFloat()
                 stepSize = 1f
                 isEnabled = model.isEnabled
                 addOnChangeListener(Slider.OnChangeListener { _, value, fromUser ->
-                    if (fromUser && value.roundToInt() != model.value + model.minimumValue) {
+                    if (fromUser && value.roundToInt() != model.adjustedValue + model.minimumValue) {
                         model.onValueChanged((value + model.minimumValue).roundToInt())
                     }
                 })
             }
         }
+
+        private val SliderCell.adjustedValue get() = min(maximumValue, max(minimumValue, value))
     }
 }
