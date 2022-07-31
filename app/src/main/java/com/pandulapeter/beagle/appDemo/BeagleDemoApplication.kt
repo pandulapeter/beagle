@@ -4,12 +4,12 @@ import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
 import com.pandulapeter.beagle.Beagle
-import com.pandulapeter.beagle.logCrash.BeagleCrashLogger
 import com.pandulapeter.beagle.appDemo.data.networking.Constants
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
 import com.pandulapeter.beagle.common.configuration.toText
 import com.pandulapeter.beagle.log.BeagleLogger
+import com.pandulapeter.beagle.logCrash.BeagleCrashLogger
 import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
