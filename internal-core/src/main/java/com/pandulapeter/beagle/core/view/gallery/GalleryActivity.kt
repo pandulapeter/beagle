@@ -80,10 +80,10 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
             }
             adapter = galleryAdapter
         }
-        viewModel.items.observe(this, {
+        viewModel.items.observe(this) {
             galleryAdapter.submitList(it)
             binding.beagleTextView.visible = it.isEmpty()
-        })
+        }
         viewModel.shouldShowLoadingIndicator.observe(this) { binding.beagleProgressBar.visible = it }
     }
 
