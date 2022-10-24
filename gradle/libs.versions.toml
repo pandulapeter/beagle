@@ -1,22 +1,22 @@
 [versions]
-androidx-annotation = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/annotation
-androidx-appcompat = "1.4.2" # https://developer.android.com/jetpack/androidx/releases/appcompat
+androidx-annotation = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/annotation
+androidx-appcompat = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidx-constraintlayout = "2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-recyclerview = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
-coil = "2.1.0" # https://github.com/coil-kt/coil/releases
-google-material = "1.6.1" # https://github.com/material-components/material-components-android/releases
-gradle = "7.2.1" # https://developer.android.com/studio/releases/gradle-plugin
+coil = "2.2.2" # https://github.com/coil-kt/coil/releases
+google-material = "1.7.0" # https://github.com/material-components/material-components-android/releases
+gradle = "7.3.0" # https://developer.android.com/studio/releases/gradle-plugin
 kotlin-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlin-gradle = "1.7.10" # https://kotlinlang.org/docs/releases.html#release-details
-square-moshi = "1.13.0" # https://github.com/square/moshi/tags
+kotlin-gradle = "1.7.20" # https://kotlinlang.org/docs/releases.html#release-details
+square-moshi = "1.14.0" # https://github.com/square/moshi/tags
 square-okhttp = "4.10.0" # https://github.com/square/okhttp/tags
 
 # The dependencies below are used only in the demo app
 androidx-multidex = "2.0.1" # https://developer.android.com/jetpack/androidx/releases/multidex
 androidx-splashscreen = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/core
-google-billing = "4.1.0" # https://developer.android.com/google/play/billing/release-notes
-koin = "3.1.6" # https://github.com/InsertKoinIO/koin/tags
+google-billing = "4.1.0" # https://developer.android.com/google/play/billing/release-notes // TODO Update to v5
+koin = "3.2.2" # https://github.com/InsertKoinIO/koin/tags
 square-leakcanary = "2.9.1" # https://square.github.io/leakcanary/changelog/
 square-retrofit = "2.9.0" # https://github.com/square/retrofit/tags
 

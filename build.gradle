@@ -3,8 +3,8 @@ buildscript {
         libraryGroup = "io.github.pandulapeter.beagle"
         libraryVersion = "2.8.4"
         libraryMinimumSdkVersion = 21
-        libraryCompileSdkVersion = 31
-        libraryTargetSdkVersion = 31
+        libraryCompileSdkVersion = 32
+        libraryTargetSdkVersion = 32
         libraryVersionCode = 1
     }
     repositories {
