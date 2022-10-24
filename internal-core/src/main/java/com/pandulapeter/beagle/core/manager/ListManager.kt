@@ -13,76 +13,10 @@ import com.pandulapeter.beagle.common.contracts.BeagleListItemContract
 import com.pandulapeter.beagle.common.contracts.module.Module
 import com.pandulapeter.beagle.common.contracts.module.ValueWrapperModule
 import com.pandulapeter.beagle.core.list.CellAdapter
-import com.pandulapeter.beagle.core.list.delegates.AnimationDurationSwitchDelegate
-import com.pandulapeter.beagle.core.list.delegates.AppInfoButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.BugReportButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.ButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.CheckBoxDelegate
-import com.pandulapeter.beagle.core.list.delegates.DeveloperOptionsButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.DeviceInfoDelegate
-import com.pandulapeter.beagle.core.list.delegates.DividerDelegate
-import com.pandulapeter.beagle.core.list.delegates.ForceCrashButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.GalleryButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.HeaderDelegate
-import com.pandulapeter.beagle.core.list.delegates.ItemListDelegate
-import com.pandulapeter.beagle.core.list.delegates.KeyValueListDelegate
-import com.pandulapeter.beagle.core.list.delegates.KeylineOverlaySwitchDelegate
-import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
-import com.pandulapeter.beagle.core.list.delegates.LoadingIndicatorDelegate
-import com.pandulapeter.beagle.core.list.delegates.LogListDelegate
-import com.pandulapeter.beagle.core.list.delegates.LongTextDelegate
-import com.pandulapeter.beagle.core.list.delegates.LoremIpsumGeneratorButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.MultipleSelectionListDelegate
-import com.pandulapeter.beagle.core.list.delegates.NetworkLogListDelegate
-import com.pandulapeter.beagle.core.list.delegates.PaddingDelegate
-import com.pandulapeter.beagle.core.list.delegates.ScreenCaptureToolboxDelegate
-import com.pandulapeter.beagle.core.list.delegates.ScreenRecordingButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.ScreenshotButtonDelegate
-import com.pandulapeter.beagle.core.list.delegates.SectionHeaderDelegate
-import com.pandulapeter.beagle.core.list.delegates.SingleSelectionListDelegate
-import com.pandulapeter.beagle.core.list.delegates.SliderDelegate
-import com.pandulapeter.beagle.core.list.delegates.SwitchDelegate
-import com.pandulapeter.beagle.core.list.delegates.TextDelegate
-import com.pandulapeter.beagle.core.list.delegates.TextInputDelegate
-import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
-import com.pandulapeter.beagle.modules.AppInfoButtonModule
-import com.pandulapeter.beagle.modules.BugReportButtonModule
-import com.pandulapeter.beagle.modules.ButtonModule
-import com.pandulapeter.beagle.modules.CheckBoxModule
-import com.pandulapeter.beagle.modules.DeveloperOptionsButtonModule
-import com.pandulapeter.beagle.modules.DeviceInfoModule
-import com.pandulapeter.beagle.modules.DividerModule
-import com.pandulapeter.beagle.modules.ForceCrashButtonModule
-import com.pandulapeter.beagle.modules.GalleryButtonModule
-import com.pandulapeter.beagle.modules.HeaderModule
-import com.pandulapeter.beagle.modules.ItemListModule
-import com.pandulapeter.beagle.modules.KeyValueListModule
-import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
-import com.pandulapeter.beagle.modules.LifecycleLogListModule
-import com.pandulapeter.beagle.modules.LoadingIndicatorModule
-import com.pandulapeter.beagle.modules.LogListModule
-import com.pandulapeter.beagle.modules.LongTextModule
-import com.pandulapeter.beagle.modules.LoremIpsumGeneratorButtonModule
-import com.pandulapeter.beagle.modules.MultipleSelectionListModule
-import com.pandulapeter.beagle.modules.NetworkLogListModule
-import com.pandulapeter.beagle.modules.PaddingModule
-import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
-import com.pandulapeter.beagle.modules.ScreenRecordingButtonModule
-import com.pandulapeter.beagle.modules.ScreenshotButtonModule
-import com.pandulapeter.beagle.modules.SectionHeaderModule
-import com.pandulapeter.beagle.modules.SingleSelectionListModule
-import com.pandulapeter.beagle.modules.SliderModule
-import com.pandulapeter.beagle.modules.SwitchModule
-import com.pandulapeter.beagle.modules.TextInputModule
-import com.pandulapeter.beagle.modules.TextModule
+import com.pandulapeter.beagle.core.list.delegates.*
+import com.pandulapeter.beagle.modules.*
 import com.pandulapeter.beagle.utils.view.GestureBlockingRecyclerView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.util.concurrent.Executors
 import kotlin.reflect.KClass
 
@@ -107,7 +41,6 @@ internal class ListManager {
         AnimationDurationSwitchModule::class to AnimationDurationSwitchDelegate(),
         AppInfoButtonModule::class to AppInfoButtonDelegate(),
         BugReportButtonModule::class to BugReportButtonDelegate(),
-        ButtonModule::class to ButtonDelegate(),
         CheckBoxModule::class to CheckBoxDelegate(),
         DeveloperOptionsButtonModule::class to DeveloperOptionsButtonDelegate(),
         DeviceInfoModule::class to DeviceInfoDelegate(),
@@ -129,7 +62,6 @@ internal class ListManager {
         ScreenCaptureToolboxModule::class to ScreenCaptureToolboxDelegate(),
         ScreenRecordingButtonModule::class to ScreenRecordingButtonDelegate(),
         ScreenshotButtonModule::class to ScreenshotButtonDelegate(),
-        SectionHeaderModule::class to SectionHeaderDelegate(),
         SingleSelectionListModule::class to SingleSelectionListDelegate<BeagleListItemContract>(),
         SliderModule::class to SliderDelegate(),
         SwitchModule::class to SwitchDelegate(),
