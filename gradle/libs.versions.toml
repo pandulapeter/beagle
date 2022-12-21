@@ -5,10 +5,9 @@ androidx-constraintlayout = "2.1.4" # https://developer.android.com/jetpack/andr
 androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-recyclerview = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
 coil = "2.2.2" # https://github.com/coil-kt/coil/releases
-google-material = "1.7.0" # https://github.com/material-components/material-components-android/releases
-gradle = "7.3.0" # https://developer.android.com/studio/releases/gradle-plugin
+gradle = "7.3.1" # https://developer.android.com/studio/releases/gradle-plugin
 kotlin-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlin-gradle = "1.7.20" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin-gradle = "1.7.21" # https://kotlinlang.org/docs/releases.html#release-details
 square-moshi = "1.14.0" # https://github.com/square/moshi/tags
 square-okhttp = "4.10.0" # https://github.com/square/okhttp/tags
 
@@ -16,8 +15,9 @@ square-okhttp = "4.10.0" # https://github.com/square/okhttp/tags
 androidx-multidex = "2.0.1" # https://developer.android.com/jetpack/androidx/releases/multidex
 androidx-splashscreen = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/core
 google-billing = "4.1.0" # https://developer.android.com/google/play/billing/release-notes // TODO Update to v5
-koin = "3.2.2" # https://github.com/InsertKoinIO/koin/tags
-square-leakcanary = "2.9.1" # https://square.github.io/leakcanary/changelog/
+google-material = "1.7.0" # https://github.com/material-components/material-components-android/releases
+koin = "3.3.1" # https://github.com/InsertKoinIO/koin/tags
+square-leakcanary = "2.10" # https://square.github.io/leakcanary/changelog/
 square-retrofit = "2.9.0" # https://github.com/square/retrofit/tags
 
 [libraries]
