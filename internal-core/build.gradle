@@ -6,7 +6,10 @@ apply plugin: "kotlin-kapt"
 ext.moduleArtifactId = "internal-core"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
-android.buildFeatures.viewBinding true
+android {
+    namespace = "com.pandulapeter.beagle.core"
+    buildFeatures.viewBinding true
+}
 
 dependencies {
     implementation libs.kotlin.coroutines

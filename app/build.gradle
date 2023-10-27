@@ -4,6 +4,7 @@ apply plugin: "kotlin-parcelize"
 apply plugin: "kotlin-kapt"
 
 android {
+    namespace = "com.pandulapeter.beagle.appDemo"
     defaultConfig {
         applicationId "com.pandulapeter.beagle"
         versionCode 29

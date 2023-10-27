@@ -4,6 +4,10 @@ apply from: "${rootProject.projectDir}/scripts/module-android.gradle"
 ext.moduleArtifactId = "log-crash-noop"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
+android {
+    namespace = "com.pandulapeter.beagle.logCrash"
+}
+
 dependencies {
     api project(":internal-common")
 }

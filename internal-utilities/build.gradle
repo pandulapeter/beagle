@@ -5,6 +5,10 @@ apply plugin: "kotlin-parcelize"
 ext.moduleArtifactId = "internal-utilities"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
+android {
+    namespace = "com.pandulapeter.beagle.utils"
+}
+
 dependencies {
     implementation libs.androidx.appcompat
     implementation libs.androidx.recyclerview

@@ -4,6 +4,10 @@ apply from: "${rootProject.projectDir}/scripts/module-android.gradle"
 ext.moduleArtifactId = "log-crash"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
+android {
+    namespace = "com.pandulapeter.beagle.logCrash"
+}
+
 dependencies {
     implementation libs.androidx.appcompat
     implementation libs.square.moshi

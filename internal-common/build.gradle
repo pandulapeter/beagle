@@ -5,6 +5,10 @@ apply plugin: "kotlin-parcelize"
 ext.moduleArtifactId = "internal-common"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
+android {
+    namespace = "com.pandulapeter.beagle.common"
+}
+
 dependencies {
     implementation libs.androidx.annotation
     implementation libs.androidx.appcompat

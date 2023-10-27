@@ -37,6 +37,7 @@ internal class DebugMenuInjector(
             }
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onFragmentActivityCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
             if (f.shouldLogFragment()) {
                 BeagleCore.implementation.logLifecycle(f::class.java, LifecycleLogListModule.EventType.FRAGMENT_ON_ACTIVITY_CREATED, savedInstanceState != null)
