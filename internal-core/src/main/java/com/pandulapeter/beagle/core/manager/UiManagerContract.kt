@@ -13,39 +13,25 @@ import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
 interface UiManagerContract {
 
     fun addOverlayFragment(currentFragment: Fragment?, activity: FragmentActivity) {
-        if (currentFragment !is OverlayFragment) {
-            val hasRootFragmentChanged = currentFragment?.id == android.R.id.content
-            if (hasRootFragmentChanged) {
-                activity.supportFragmentManager
-                    .beginTransaction()
-                    .apply {
-                        activity.supportFragmentManager.fragments.forEach {
-                            if (it is OverlayFragment) {
-                                remove(it)
-                            }
+        if (currentFragment !is OverlayFragment && activity.supportFragmentManager.findFragmentById(android.R.id.content) !is OverlayFragment) {
+            activity.supportFragmentManager
+                .beginTransaction()
+                .apply {
+                    activity.supportFragmentManager.fragments.forEach {
+                        if (it is OverlayFragment) {
+                            remove(it)
                         }
                     }
-                    .setReorderingAllowed(true)
-                    .runOnCommit {
-                        activity.supportFragmentManager
-                            .beginTransaction()
-                            .add(android.R.id.content, OverlayFragment.newInstance())
-                            .setReorderingAllowed(true)
-                            .commitAllowingStateLoss()
-                    }
-                    .commitAllowingStateLoss()
-            } else {
-                if (activity.supportFragmentManager.fragments.lastOrNull() !is OverlayFragment) {
+                }
+                .setReorderingAllowed(true)
+                .runOnCommit {
                     activity.supportFragmentManager
                         .beginTransaction()
-                        .run {
-                            findOverlayFragment(activity)?.let(::remove)
-                            add(android.R.id.content, OverlayFragment.newInstance())
-                        }
+                        .add(android.R.id.content, OverlayFragment.newInstance())
                         .setReorderingAllowed(true)
                         .commitAllowingStateLoss()
                 }
-            }
+                .commitAllowingStateLoss()
         }
     }
 

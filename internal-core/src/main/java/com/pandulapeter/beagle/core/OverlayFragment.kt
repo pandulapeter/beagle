@@ -55,6 +55,7 @@ internal class OverlayFragment : Fragment() {
                     }
                 }
             }
+
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
