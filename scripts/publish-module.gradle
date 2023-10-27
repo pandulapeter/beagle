@@ -1,23 +1,9 @@
 apply plugin: "maven-publish"
 apply plugin: "signing"
 
-task androidSourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    if (project.plugins.findPlugin("com.android.library")) {
-        from android.sourceSets.main.java.srcDirs
-        from android.sourceSets.main.kotlin.srcDirs
-    } else {
-        from sourceSets.main.java.srcDirs
-        from sourceSets.main.kotlin.srcDirs
-    }
-}
 
 task javadocJar(type: Jar) {
     archiveClassifier.set('javadoc')
-}
-
-artifacts {
-    archives androidSourcesJar
 }
 
 group = libraryGroup
@@ -35,7 +21,6 @@ afterEvaluate {
                 } else {
                     from components.java
                 }
-                artifact androidSourcesJar
                 artifact javadocJar
                 pom {
                     name = "Beagle"

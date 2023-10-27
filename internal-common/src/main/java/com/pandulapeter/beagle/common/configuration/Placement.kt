@@ -8,12 +8,12 @@ sealed class Placement {
     /**
      * Adds the new module to the bottom of the list as the last item.
      */
-    object Bottom : Placement()
+    data object Bottom : Placement()
 
     /**
      * Adds the new module to the top of the list, as the first item (after the header).
      */
-    object Top : Placement()
+    data object Top : Placement()
 
     /**
      * Adds the new module below the module with the specified ID, or as the last item if the specified module cannot be found.

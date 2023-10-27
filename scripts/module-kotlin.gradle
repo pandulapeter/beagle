@@ -1,1 +1,5 @@
 apply plugin: "kotlin"
+
+java {
+    withSourcesJar()
+}

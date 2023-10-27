@@ -8,8 +8,12 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
     lint.abortOnError false
-
-    kotlin {
+    kotlin{
         jvmToolchain(17)
+    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
     }
 }
