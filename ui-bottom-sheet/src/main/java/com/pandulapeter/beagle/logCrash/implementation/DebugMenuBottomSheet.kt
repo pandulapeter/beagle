@@ -58,7 +58,7 @@ internal class DebugMenuBottomSheet : BottomSheetDialogFragment(), UpdateListene
 
     override fun onResume() {
         super.onResume()
-        dialog?.findViewById<View>(R.id.design_bottom_sheet)?.run {
+        dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.run {
             bottomSheetView = this
             BottomSheetBehavior.from(this).run {
                 behavior = this

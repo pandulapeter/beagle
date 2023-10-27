@@ -26,7 +26,10 @@ android {
             storePassword "android"
         }
     }
-    buildFeatures.dataBinding = true
+    buildFeatures {
+        dataBinding = true
+        buildConfig = true
+    }
     buildTypes {
         debug {
             debuggable true

@@ -51,10 +51,10 @@ class BeagleDemoActivity : AppCompatActivity() {
             .setInterpolator(AccelerateInterpolator())
             .setListener(
                 object : Animator.AnimatorListener {
-                    override fun onAnimationStart(animator: Animator?) = Unit
-                    override fun onAnimationEnd(animator: Animator?) = splashScreen.remove()
-                    override fun onAnimationCancel(animator: Animator?) = Unit
-                    override fun onAnimationRepeat(animator: Animator?) = Unit
+                    override fun onAnimationStart(animator: Animator) = Unit
+                    override fun onAnimationEnd(animator: Animator) = splashScreen.remove()
+                    override fun onAnimationCancel(animator: Animator) = Unit
+                    override fun onAnimationRepeat(animator: Animator) = Unit
                 }
             )
             .start()

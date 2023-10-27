@@ -28,7 +28,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
         debugMenu = findViewById(R.id.beagle_debug_menu)
         toolbar.run {
             setNavigationOnClickListener { onBackPressed() }
-            navigationIcon = tintedDrawable(R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
+            navigationIcon = tintedDrawable(com.pandulapeter.beagle.core.R.drawable.beagle_ic_close, colorResource(android.R.attr.textColorPrimary))
         }
         bottomNavigationOverlay.setBackgroundColor(window.navigationBarColor)
         window.decorView.run {

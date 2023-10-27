@@ -47,7 +47,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
             textView.text = arguments?.content?.let { context?.text(it) }
             appBar.run {
                 setPadding(0, 0, 0, 0)
-                setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
+                setBackgroundColor(context.colorResource(com.google.android.material.R.attr.colorBackgroundFloating))
             }
             scrollView.viewTreeObserver.addOnScrollChangedListener(scrollListener)
             toolbar.run {

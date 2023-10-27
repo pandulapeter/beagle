@@ -66,7 +66,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
             }
             binding.beagleAppBar.run {
                 setPadding(0, 0, 0, 0)
-                setBackgroundColor(context.colorResource(R.attr.colorBackgroundFloating))
+                setBackgroundColor(context.colorResource(com.google.android.material.R.attr.colorBackgroundFloating))
             }
             binding.beagleRecyclerView.addOnScrollListener(scrollListener)
             val textColor = dialog.context.colorResource(android.R.attr.textColorPrimary)

@@ -8,8 +8,8 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
     lint.abortOnError false
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+
+    kotlin {
+        jvmToolchain(17)
     }
 }

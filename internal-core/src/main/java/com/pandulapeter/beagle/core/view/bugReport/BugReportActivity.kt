@@ -147,7 +147,7 @@ class BugReportActivity : AppCompatActivity() {
         }
         viewModel.isSendButtonEnabled.observe(this) {
             sendButton.isEnabled = it
-            sendButton.icon.alpha = if (it) 255 else 63
+            sendButton.icon?.alpha = if (it) 255 else 63
         }
     }
 
