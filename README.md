@@ -27,8 +27,8 @@ If the wall of text below is too long for your taste, check out [this gist](http
 
 ### Step 0: Check the requirements
 - Minimum SDK level: 21+
-- Target SDK level: 31+
-- Language: Kotlin 1.6.21+
+- Target SDK level: 34+
+- Language: Kotlin 1.9.10+
 
 ### Step 1: Add the MavenCentral repository
 Make sure that the following is part of your project-level build.gradle file:
@@ -57,7 +57,7 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.9.0"
+    def beagleVersion = "2.9.1"
     debugImplementation "io.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "io.github.pandulapeter.beagle:noop:$beagleVersion"
 }
