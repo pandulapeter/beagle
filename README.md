@@ -29,6 +29,7 @@ If the wall of text below is too long for your taste, check out [this gist](http
 - Minimum SDK level: 21+
 - Target SDK level: 34+
 - Language: Kotlin 1.9.10+
+- Gradle version: Kotlin 8.1.0+
 
 ### Step 1: Add the MavenCentral repository
 Make sure that the following is part of your project-level build.gradle file:

@@ -8,6 +8,7 @@ coil = "2.4.0" # https://github.com/coil-kt/coil/releases
 gradle = "8.1.2" # https://developer.android.com/studio/releases/gradle-plugin
 kotlin-coroutines = "1.7.3" # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-gradle = "1.9.10" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin-ksp = "1.9.10-1.0.13" # https://github.com/google/ksp/releases
 square-moshi = "1.15.0" # https://github.com/square/moshi/tags
 square-okhttp = "4.12.0" # https://github.com/square/okhttp/tags
 

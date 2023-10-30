@@ -19,6 +19,7 @@ buildscript {
 
 plugins {
     id("io.github.gradle-nexus.publish-plugin") version libs.versions.nexus
+    id("com.google.devtools.ksp") version libs.versions.kotlin.ksp apply false
 }
 
 allprojects {

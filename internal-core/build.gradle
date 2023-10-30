@@ -1,7 +1,7 @@
 apply plugin: "com.android.library"
 apply from: "${rootProject.projectDir}/scripts/module-android.gradle"
 apply plugin: "kotlin-parcelize"
-apply plugin: "kotlin-kapt"
+apply plugin: "com.google.devtools.ksp"
 
 ext.moduleArtifactId = "internal-core"
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
@@ -23,7 +23,7 @@ dependencies {
     implementation libs.coil
     implementation libs.coil.video
     implementation libs.square.moshi
-    kapt libs.square.moshi.codegen
+    ksp libs.square.moshi.codegen
     implementation project(":internal-utilities")
     implementation project(":internal-common")
 }

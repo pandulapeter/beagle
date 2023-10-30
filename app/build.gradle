@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 apply from: "${rootProject.projectDir}/scripts/module-android.gradle"
 apply plugin: "kotlin-parcelize"
 apply plugin: "kotlin-kapt"
+apply plugin: "com.google.devtools.ksp"
 
 android {
     namespace = "com.pandulapeter.beagle.appDemo"
@@ -62,7 +63,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
-    flavorDimensions "beagle-ui"
+    flavorDimensions = ["beagle-ui"]
     productFlavors {
         activity {
             applicationIdSuffix ".activity"
@@ -115,9 +116,9 @@ dependencies {
     implementation libs.koin
     implementation libs.kotlin.coroutines
     implementation libs.square.moshi
-    kapt libs.square.moshi.codegen
+    ksp libs.square.moshi.codegen
     implementation libs.square.okhttp
-    implementation(libs.square.retrofit) { exclude module: "okhttp" }
+    implementation libs.square.retrofit
     implementation libs.square.retrofit.converter
     implementation project(":internal-utilities")
 
