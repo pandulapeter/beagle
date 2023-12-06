@@ -5,7 +5,6 @@ android {
     defaultConfig {
         minSdkVersion libraryMinimumSdkVersion
         targetSdkVersion libraryTargetSdkVersion
-        consumerProguardFiles "consumer-rules.pro"
     }
     lint.abortOnError false
     kotlin{
