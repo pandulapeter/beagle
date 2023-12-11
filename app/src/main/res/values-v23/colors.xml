@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- Dynamic -->
-    <color name="toolbar_background">@color/transparent</color>
-    <color name="toolbar_text">@color/brand_dark</color>
-
-</resources>

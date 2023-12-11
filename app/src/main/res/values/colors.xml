@@ -11,8 +11,8 @@
     <color name="brand_dark">#4F3D2F</color>
 
     <!-- Dynamic -->
-    <color name="toolbar_background">@color/brand_dark</color>
-    <color name="toolbar_text">@color/white</color>
+    <color name="toolbar_background">@color/transparent</color>
+    <color name="toolbar_text">@color/brand_dark</color>
     <color name="code_snippet_text">@color/black</color>
     <color name="code_snippet_background">@color/brand_light</color>
     <color name="button_drawable_tint">@color/white</color>

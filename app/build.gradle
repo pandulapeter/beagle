@@ -111,7 +111,6 @@ dependencies {
     implementation libs.androidx.multidex
     implementation libs.androidx.recyclerview
     implementation libs.androidx.splashscreen
-    implementation libs.google.billing
     implementation libs.google.material
     implementation libs.koin
     implementation libs.kotlin.coroutines

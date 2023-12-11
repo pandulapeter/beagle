@@ -39,12 +39,6 @@ enum class Dependency(
         copyright = "Copyright 2020, The Android Open Source Project",
         url = "https://developer.android.com/jetpack/androidx/releases/lifecycle"
     ),
-    ANDROID_X_BILLING(
-        type = Type.APACHE_V2,
-        title = "AndroidX Billing",
-        copyright = "Copyright 2020, The Android Open Source Project",
-        url = "https://developer.android.com/google/play/billing"
-    ),
     MATERIAL_COMPONENTS(
         type = Type.APACHE_V2,
         title = "Android Material Components",

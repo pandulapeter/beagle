@@ -6,9 +6,15 @@
         <item name="postSplashScreenTheme">@style/AppTheme</item>  # Required.
     </style>
 
-    <style name="SplashTheme" parent="SplashThemeBase" />
+    <style name="SplashTheme" parent="SplashThemeBase">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/brand_dark</item>
+    </style>
 
-    <style name="AppTheme" parent="AppThemeBase" />
+    <style name="AppTheme" parent="AppThemeBase">
+        <item name="android:statusBarColor">@color/toolbar_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 
     <style name="AppThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/brand_dark</item>
@@ -16,7 +22,7 @@
         <item name="materialButtonStyle">@style/Button</item>
     </style>
 
-    <style name="AppBarTheme" parent="DarkTheme" />
+    <style name="AppBarTheme" parent="AppTheme" />
 
     <style name="DarkTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/white</item>

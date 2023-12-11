@@ -18,7 +18,6 @@ nexus = "2.0.0-rc-1" # https://github.com/gradle-nexus/publish-plugin/releases
 # The dependencies below are used only in the demo app
 androidx-multidex = "2.0.1" # https://developer.android.com/jetpack/androidx/releases/multidex
 androidx-splashscreen = "1.0.1" # https://developer.android.com/jetpack/androidx/releases/core
-google-billing = "4.1.0" # https://developer.android.com/google/play/billing/release-notes // TODO Update to v5
 google-material = "1.10.0" # https://github.com/material-components/material-components-android/releases
 koin = "3.5.0" # https://github.com/InsertKoinIO/koin/tags
 square-leakcanary = "2.12" # https://square.github.io/leakcanary/changelog/
@@ -37,7 +36,6 @@ androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
-google-billing = { module = "com.android.billingclient:billing", version.ref = "google-billing" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 koin = { module = "io.insert-koin:koin-android", version.ref = "koin" }

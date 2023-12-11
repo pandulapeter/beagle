@@ -43,7 +43,6 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
             R.string.about_google_play -> openPlayStoreListing()
             R.string.about_share -> openShareSheet()
             R.string.about_contact -> openEmailComposer()
-            R.string.about_donate -> openInAppPurchaseDialog()
             R.string.about_open_source -> navigateToLicences()
         }
     }
@@ -82,15 +81,12 @@ class AboutFragment : ListFragment<AboutViewModel, AboutListItem>(R.string.about
         Intent.createChooser(
             Intent().apply {
                 action = Intent.ACTION_SENDTO
-                type = "text/plain"
-                data = Uri.parse("mailto:$EMAIL_ADDRESS?subject=${Uri.encode("Beagle")}")
-            }.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), null
+            }.setDataAndType(
+                Uri.parse("mailto:$EMAIL_ADDRESS?subject=${Uri.encode("Beagle")}"),
+                "text/plain"
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), null
         )
     )
-
-    private fun openInAppPurchaseDialog() {
-        activity?.let { viewModel.startPurchaseFlow(it) }
-    }
 
     private fun navigateToLicences() = parentFragment?.childFragmentManager?.handleReplace(
         transitionType = TransitionType.MODAL,

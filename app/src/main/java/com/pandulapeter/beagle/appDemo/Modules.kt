@@ -19,7 +19,6 @@ import com.pandulapeter.beagle.appDemo.feature.main.examples.valueWrappers.Value
 import com.pandulapeter.beagle.appDemo.feature.main.playground.PlaygroundViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.playground.addModule.AddModuleViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.setup.SetupViewModel
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -44,7 +43,7 @@ private val featureModule = module {
     viewModel { CrashLoggingViewModel() }
     viewModel { PlaygroundViewModel(get()) }
     viewModel { AddModuleViewModel(get()) }
-    viewModel { AboutViewModel(androidContext()) }
+    viewModel { AboutViewModel() }
     viewModel { LicencesViewModel() }
 }
 
