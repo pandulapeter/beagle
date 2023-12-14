@@ -1,5 +1,5 @@
 [versions]
-androidx-annotation = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/annotation
+androidx-annotation = "1.7.1" # https://developer.android.com/jetpack/androidx/releases/annotation
 androidx-appcompat = "1.6.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidx-constraintlayout = "2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-lifecycle = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
@@ -8,7 +8,7 @@ coil = "2.5.0" # https://github.com/coil-kt/coil/releases
 gradle = "8.2.0" # https://developer.android.com/studio/releases/gradle-plugin
 kotlin-coroutines = "1.7.3" # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-gradle = "1.9.21" # https://kotlinlang.org/docs/releases.html#release-details
-kotlin-ksp = "1.9.21-1.0.15" # https://github.com/google/ksp/releases
+kotlin-ksp = "1.9.21-1.0.16" # https://github.com/google/ksp/releases
 square-moshi = "1.15.0" # https://github.com/square/moshi/tags
 square-okhttp = "4.12.0" # https://github.com/square/okhttp/tags
 
@@ -18,7 +18,7 @@ nexus = "2.0.0-rc-1" # https://github.com/gradle-nexus/publish-plugin/releases
 # The dependencies below are used only in the demo app
 androidx-multidex = "2.0.1" # https://developer.android.com/jetpack/androidx/releases/multidex
 androidx-splashscreen = "1.0.1" # https://developer.android.com/jetpack/androidx/releases/core
-google-material = "1.10.0" # https://github.com/material-components/material-components-android/releases
+google-material = "1.11.0" # https://github.com/material-components/material-components-android/releases
 koin = "3.5.0" # https://github.com/InsertKoinIO/koin/tags
 square-leakcanary = "2.12" # https://square.github.io/leakcanary/changelog/
 square-retrofit = "2.9.0" # https://github.com/square/retrofit/tags
