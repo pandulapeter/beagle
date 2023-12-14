@@ -21,7 +21,7 @@ class NetworkRequestInterceptorFragment :
         scope = viewModel.viewModelScope,
         onSongCardPressed = { Beagle.show() },
         onSongSelected = viewModel::onRadioButtonSelected,
-        onTryAgainButtonPressed = viewModel::loadSong,
+        onTryAgainButtonPressed = viewModel::loadEndpoint,
         onClearLogsButtonPressed = ::clearNetworkLogs
     )
 

@@ -1,8 +1,8 @@
 package com.pandulapeter.beagle.appDemo
 
 import com.pandulapeter.beagle.appDemo.data.ModuleRepository
-import com.pandulapeter.beagle.appDemo.data.SongRepository
-import com.pandulapeter.beagle.appDemo.data.networking.retrofit.SongRemoteSource
+import com.pandulapeter.beagle.appDemo.data.UserRepository
+import com.pandulapeter.beagle.appDemo.data.networking.retrofit.UserRemoteSource
 import com.pandulapeter.beagle.appDemo.feature.main.about.AboutViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.about.licences.LicencesViewModel
 import com.pandulapeter.beagle.appDemo.feature.main.examples.ExamplesViewModel
@@ -23,8 +23,8 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 private val dataModule = module {
-    single { SongRemoteSource() }
-    single { SongRepository(get()) }
+    single { UserRemoteSource() }
+    single { UserRepository(get()) }
     single { ModuleRepository() }
 }
 

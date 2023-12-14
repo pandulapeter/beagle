@@ -18,7 +18,7 @@ class NetworkRequestInterceptorAdapter(
         is RadioButtonViewHolder.UiModel -> R.layout.item_network_request_interceptor_radio_button
         is LoadingIndicatorViewHolder.UiModel -> R.layout.item_network_request_interceptor_loading_indicator
         is ErrorViewHolder.UiModel -> R.layout.item_network_request_interceptor_error
-        is SongLyricsViewHolder.UiModel -> R.layout.item_network_request_interceptor_song_lyrics
+        is UserViewHolder.UiModel -> R.layout.item_network_request_interceptor_user
         is ClearButtonViewHolder.UiModel -> R.layout.item_network_request_interceptor_clear_button
         else -> super.getItemViewType(position)
     }
@@ -27,7 +27,7 @@ class NetworkRequestInterceptorAdapter(
         R.layout.item_network_request_interceptor_radio_button -> RadioButtonViewHolder.create(parent, onSongSelected)
         R.layout.item_network_request_interceptor_loading_indicator -> LoadingIndicatorViewHolder.create(parent)
         R.layout.item_network_request_interceptor_error -> ErrorViewHolder.create(parent, onTryAgainButtonPressed)
-        R.layout.item_network_request_interceptor_song_lyrics -> SongLyricsViewHolder.create(parent, onSongCardPressed)
+        R.layout.item_network_request_interceptor_user -> UserViewHolder.create(parent, onSongCardPressed)
         R.layout.item_network_request_interceptor_clear_button -> ClearButtonViewHolder.create(parent, onClearLogsButtonPressed)
         else -> super.onCreateViewHolder(parent, viewType)
     }
@@ -36,7 +36,7 @@ class NetworkRequestInterceptorAdapter(
         is RadioButtonViewHolder -> holder.bind(getItem(position) as RadioButtonViewHolder.UiModel)
         is LoadingIndicatorViewHolder -> holder.bind(getItem(position) as LoadingIndicatorViewHolder.UiModel)
         is ErrorViewHolder -> holder.bind(getItem(position) as ErrorViewHolder.UiModel)
-        is SongLyricsViewHolder -> holder.bind(getItem(position) as SongLyricsViewHolder.UiModel)
+        is UserViewHolder -> holder.bind(getItem(position) as UserViewHolder.UiModel)
         is ClearButtonViewHolder -> holder.bind(getItem(position) as ClearButtonViewHolder.UiModel)
         else -> super.onBindViewHolder(holder, position)
     }

@@ -2,14 +2,15 @@ package com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInte
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.pandulapeter.beagle.appDemo.databinding.ItemNetworkRequestInterceptorSongLyricsBinding
+import com.pandulapeter.beagle.appDemo.data.model.User
+import com.pandulapeter.beagle.appDemo.databinding.ItemNetworkRequestInterceptorUserBinding
 import com.pandulapeter.beagle.appDemo.feature.shared.list.BaseViewHolder
 import com.pandulapeter.beagle.utils.extensions.inflater
 
-class SongLyricsViewHolder private constructor(
-    binding: ItemNetworkRequestInterceptorSongLyricsBinding,
+class UserViewHolder private constructor(
+    binding: ItemNetworkRequestInterceptorUserBinding,
     onSongCardPressed: () -> Unit
-) : BaseViewHolder<ItemNetworkRequestInterceptorSongLyricsBinding, SongLyricsViewHolder.UiModel>(binding) {
+) : BaseViewHolder<ItemNetworkRequestInterceptorUserBinding, UserViewHolder.UiModel>(binding) {
 
     init {
         binding.root.setOnClickListener {
@@ -20,18 +21,19 @@ class SongLyricsViewHolder private constructor(
     }
 
     data class UiModel(
-        val lyrics: CharSequence
+        private val user: User
     ) : NetworkRequestInterceptorListItem {
 
-        override val id = "songLyrics"
+        override val id = "user_${user.id}"
+        val name = "${user.firstName} ${user.lastName}"
     }
 
     companion object {
         fun create(
             parent: ViewGroup,
             onSongCardPressed: () -> Unit
-        ) = SongLyricsViewHolder(
-            binding = ItemNetworkRequestInterceptorSongLyricsBinding.inflate(parent.inflater, parent, false),
+        ) = UserViewHolder(
+            binding = ItemNetworkRequestInterceptorUserBinding.inflate(parent.inflater, parent, false),
             onSongCardPressed = onSongCardPressed
         )
     }

@@ -6,7 +6,7 @@
 
         <variable
             name="uiModel"
-            type="com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.SongLyricsViewHolder.UiModel" />
+            type="com.pandulapeter.beagle.appDemo.feature.main.examples.networkRequestInterceptor.list.UserViewHolder.UiModel" />
 
     </data>
 
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/large_content_padding"
-            android:text="@{uiModel.lyrics}"
+            android:text="@{uiModel.name}"
             tools:text="Song lyrics" />
 
     </com.google.android.material.card.MaterialCardView>
