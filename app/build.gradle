@@ -8,8 +8,8 @@ android {
     namespace = "com.pandulapeter.beagle.appDemo"
     defaultConfig {
         applicationId "com.pandulapeter.beagle"
-        versionCode 29
-        versionName "1.5.1"
+        versionCode 30
+        versionName "1.5.2"
         buildConfigField("String", "BUILD_DATE", "\"${new Date().format("yyyy-MM-dd")}\"")
         buildConfigField("String", "BEAGLE_VERSION", "\"$libraryVersion\"")
     }
