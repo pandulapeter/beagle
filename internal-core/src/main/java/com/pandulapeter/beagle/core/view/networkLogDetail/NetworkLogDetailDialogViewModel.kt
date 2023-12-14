@@ -66,7 +66,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     private val _matchCount = MutableStateFlow(0)
     val matchCount = _matchCount.asLiveData()
     val isCaseSensitive = MutableLiveData(true)
-    var searchResultLineIndices = emptyList<Int>()
+    private var searchResultLineIndices = emptyList<Int>()
     private val currentResultLineIndex = MutableStateFlow(0)
     val scrollToPosition = currentResultLineIndex.map { currentResultLineIndex ->
         _items.value?.indexOfFirst { (it as? LineViewHolder.UiModel)?.lineIndex == currentResultLineIndex }?.let { result ->
@@ -133,7 +133,7 @@ internal class NetworkLogDetailDialogViewModel(application: Application) : Andro
     fun onMatchCounterClicked() {
         val lineIndices = searchResultLineIndices
         val currentScrollPosition = currentResultLineIndex.value
-        currentResultLineIndex.value = if (currentScrollPosition == lineIndices.lastOrNull() ?: 0) {
+        currentResultLineIndex.value = if (currentScrollPosition == (lineIndices.lastOrNull() ?: 0)) {
             lineIndices.firstOrNull() ?: 0
         } else {
             val currentIndex = lineIndices.indexOf(currentScrollPosition)

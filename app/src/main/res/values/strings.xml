@@ -3,7 +3,6 @@
     <!-- Main -->
     <string name="open_debug_menu">Open debug menu</string>
     <string name="back">Back</string>
-    <string name="app_not_found">No application can handle this link</string>
 
     <!-- Setup -->
     <string name="setup_title">Setup</string>
@@ -379,7 +378,6 @@
     <string name="about_share_text">Check out Beagle, a free and open-source Android library that adds a highly customizable debug menu to the internal builds of your apps: %s</string>
     <string name="about_contact"><b>Contact me</b>\nDrop me a line about any questions or problems</string>
     <string name="about_open_source"><b>Open source licences</b>\nLegal information regarding dependencies</string>
-    <string name="about_donate_error">Something went wrong</string>
 
     <!-- Licences -->
     <string name="licences_title">Licences</string>

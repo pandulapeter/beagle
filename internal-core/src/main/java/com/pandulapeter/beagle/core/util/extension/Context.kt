@@ -44,7 +44,6 @@ fun Context.applyTheme() = BeagleCore.implementation.appearance.themeResourceId?
 
 internal fun Context.getUriForFile(file: File) = FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".beagle.fileProvider", file)
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Context.createScreenshotFromBitmap(bitmap: Bitmap, fileName: String): Uri? = withContext(Dispatchers.IO) {
     val file = createScreenCaptureFile(fileName)
     try {
@@ -72,7 +71,6 @@ internal fun Context.getPersistedLogsFolder() = getFilesFolder(LOGS_FOLDER_NAME)
 
 private fun Context.createPersistedLogFile(fileName: String) = File(getPersistedLogsFolder(), fileName)
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun readLogEntryFromLogFile(file: File): SerializableLogEntry? = withContext(Dispatchers.IO) {
     try {
         val logEntry: SerializableLogEntry?
@@ -93,7 +91,6 @@ internal suspend fun readLogEntryFromLogFile(file: File): SerializableLogEntry? 
 
 internal const val LOG_PREFIX = "log_"
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Context.createPersistedLogFile(logEntry: SerializableLogEntry) = withContext(Dispatchers.IO) {
     val file = createPersistedLogFile("$LOG_PREFIX${logEntry.id}.txt")
     try {
@@ -106,7 +103,6 @@ internal suspend fun Context.createPersistedLogFile(logEntry: SerializableLogEnt
     }
 }
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun readCrashLogEntryFromLogFile(file: File): SerializableCrashLogEntry? = withContext(Dispatchers.IO) {
     try {
         val crashLogEntry: SerializableCrashLogEntry?
@@ -127,7 +123,6 @@ internal suspend fun readCrashLogEntryFromLogFile(file: File): SerializableCrash
 
 internal const val CRASH_LOG_PREFIX = "crashLog_"
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Context.createPersistedCrashLogFile(crashLogEntry: SerializableCrashLogEntry) = withContext(Dispatchers.IO) {
     val file = createPersistedLogFile("$CRASH_LOG_PREFIX${crashLogEntry.timestamp}.txt")
     try {
@@ -144,7 +139,6 @@ internal fun Context.getLogsFolder() = getCacheFolder(LOGS_FOLDER_NAME)
 
 internal fun Context.createLogFile(fileName: String) = File(getLogsFolder(), fileName)
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Context.createLogFile(fileName: String, content: String): Uri? = withContext(Dispatchers.IO) {
     val file = createLogFile(fileName)
     try {
@@ -165,7 +159,6 @@ internal fun Context.getBugReportsFolder() = getCacheFolder(BUG_REPORTS_FOLDER_N
 
 internal fun Context.createBugReportsFile(fileName: String) = File(getBugReportsFolder(), fileName)
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal suspend fun Context.createBugReportTextFile(fileName: String, content: String): Uri? = withContext(Dispatchers.IO) {
     val file = createBugReportsFile(fileName)
     try {

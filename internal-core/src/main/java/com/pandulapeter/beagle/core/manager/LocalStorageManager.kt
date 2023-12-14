@@ -48,7 +48,7 @@ internal class LocalStorageManager(context: Context) {
 
         operator fun set(key: kotlin.String, value: T) {
             if (value == null) {
-                preferences.edit().remove(mainKey + value).apply()
+                preferences.edit().remove(mainKey + key).apply()
             } else {
                 setFinal(mainKey + key, value)
             }

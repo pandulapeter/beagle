@@ -1,6 +1,5 @@
 package com.pandulapeter.beagle.appDemo.feature.shared
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
@@ -45,7 +44,7 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
         binding.root.setBackgroundColor(requireContext().colorResource(android.R.attr.windowBackground))
         binding.appBar.setup(
             titleResourceId,
-            parentFragment?.childFragmentManager?.backStackEntryCount ?: 0 <= 1,
+            (parentFragment?.childFragmentManager?.backStackEntryCount ?: 0) <= 1,
             requireActivity()
         )
         setupRecyclerView()
@@ -78,11 +77,9 @@ abstract class ListFragment<VM : ListViewModel<LI>, LI : ListItem>(
     }
 
     private fun setupEdgeToEdge() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ViewCompat.setOnApplyWindowInsetsListener(binding.appBar) { _, insets ->
-                binding.appBar.updateTopInset(insets.getInsets(WindowInsetsCompat.Type.systemBars()).top)
-                insets
-            }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.appBar) { _, insets ->
+            binding.appBar.updateTopInset(insets.getInsets(WindowInsetsCompat.Type.systemBars()).top)
+            insets
         }
     }
 

@@ -9,10 +9,8 @@
     android:gravity="center_vertical"
     android:minHeight="@dimen/beagle_item_minimum_height"
     android:paddingStart="@dimen/beagle_item_horizontal_margin_large"
-    android:paddingLeft="@dimen/beagle_item_horizontal_margin_large"
     android:paddingTop="@dimen/beagle_item_vertical_margin"
     android:paddingEnd="@dimen/beagle_item_horizontal_margin"
-    android:paddingRight="@dimen/beagle_item_horizontal_margin"
     android:paddingBottom="@dimen/beagle_item_vertical_margin"
     android:textColor="?android:attr/textColorPrimary"
     tools:text="Text" />

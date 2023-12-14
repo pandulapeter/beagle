@@ -30,7 +30,6 @@ import com.pandulapeter.beagle.modules.DeviceInfoModule.Companion.ID
  * @param shouldShowAndroidVersion - Whether or not the device's Android SDK version should be part of the list. [DEFAULT_SHOULD_SHOW_ANDROID_VERSION] by default.
  * @param isExpandedInitially - Whether or not the list is expanded the first time the module becomes visible. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
-@Suppress("unused")
 data class DeviceInfoModule(
     val title: Text = DEFAULT_TITLE.toText(),
     val shouldShowManufacturer: Boolean = DEFAULT_SHOULD_SHOW_MANUFACTURER,

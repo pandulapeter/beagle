@@ -13,6 +13,6 @@ class ExamplesViewModel : ListViewModel<ExamplesListItem>() {
 
     override val items: LiveData<List<ExamplesListItem>> = MutableLiveData(mutableListOf<ExamplesListItem>().apply {
         add(TextViewHolder.UiModel(R.string.examples_text))
-        addAll(CaseStudy.values().map { caseStudy -> CaseStudyViewHolder.UiModel(caseStudy) })
+        addAll(CaseStudy.entries.map { caseStudy -> CaseStudyViewHolder.UiModel(caseStudy) })
     })
 }

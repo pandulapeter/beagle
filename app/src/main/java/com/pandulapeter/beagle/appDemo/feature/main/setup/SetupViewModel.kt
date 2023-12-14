@@ -71,7 +71,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         )
         add(TextViewHolder.UiModel(R.string.setup_initialization_3))
         add(SpaceViewHolder.UiModel())
-        addAll(UiVariant.values().map { uiVariant ->
+        addAll(UiVariant.entries.map { uiVariant ->
             RadioButtonViewHolder.UiModel(uiVariant.titleResourceId, uiVariant == selectedUiVariant)
         })
         add(TextViewHolder.UiModel(R.string.setup_initialization_4))
@@ -167,7 +167,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         VIEW(R.string.setup_variant_view);
 
         companion object {
-            fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }
+            fun fromResourceId(@StringRes titleResourceId: Int?) = entries.firstOrNull { it.titleResourceId == titleResourceId }
         }
     }
 
@@ -179,7 +179,7 @@ class SetupViewModel : ListViewModel<SetupListItem>() {
         TROUBLESHOOTING(R.string.setup_troubleshooting_1);
 
         companion object {
-            fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }
+            fun fromResourceId(@StringRes titleResourceId: Int?) = entries.firstOrNull { it.titleResourceId == titleResourceId }
         }
     }
 }

@@ -152,7 +152,7 @@ class StaticDataViewModel : ListViewModel<ListItem>() {
         LOADING_INDICATOR(R.string.case_study_static_data_loading_indicator_1);
 
         companion object {
-            fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }
+            fun fromResourceId(@StringRes titleResourceId: Int?) = entries.firstOrNull { it.titleResourceId == titleResourceId }
         }
     }
 }

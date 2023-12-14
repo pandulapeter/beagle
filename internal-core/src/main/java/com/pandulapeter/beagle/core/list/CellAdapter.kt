@@ -32,7 +32,6 @@ internal class CellAdapter : RecyclerView.Adapter<ViewHolder<out Cell<*>>>() {
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<*> = delegates.values.toList()[viewType].createViewHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder<out Cell<*>>, position: Int) = holder.forceBind(items[position])

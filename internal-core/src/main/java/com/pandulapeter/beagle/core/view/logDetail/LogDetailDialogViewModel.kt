@@ -2,7 +2,6 @@ package com.pandulapeter.beagle.core.view.logDetail
 
 import android.app.Activity
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pandulapeter.beagle.BeagleCore

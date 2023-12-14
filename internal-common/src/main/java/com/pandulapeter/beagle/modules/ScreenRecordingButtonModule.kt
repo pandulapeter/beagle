@@ -31,7 +31,6 @@ import com.pandulapeter.beagle.modules.ScreenshotButtonModule.Companion.ID
  * @param isEnabled - Can be used to enable or disable all user interaction with the module. [DEFAULT_IS_ENABLED] by default.
  * @param onButtonPressed - Callback invoked when the user presses the button. [DEFAULT_ON_BUTTON_PRESSED] by default.
  */
-@Suppress("unused")
 data class ScreenRecordingButtonModule(
     val text: Text = DEFAULT_TEXT.toText(),
     val type: TextModule.Type = DEFAULT_TYPE,

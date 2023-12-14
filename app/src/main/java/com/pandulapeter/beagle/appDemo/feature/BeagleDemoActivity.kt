@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.appDemo.feature
 
 import android.animation.Animator
-import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
@@ -74,16 +73,14 @@ class BeagleDemoActivity : AppCompatActivity() {
     }
 
     private fun setupEdgeToEdge() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-            binding.beagleButton.run {
-                val margin = dimension(R.dimen.beagle_button_margin)
-                ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
-                    layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
-                        bottomMargin = margin + insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
-                    }
-                    insets
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        binding.beagleButton.run {
+            val margin = dimension(R.dimen.beagle_button_margin)
+            ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
+                layoutParams = (layoutParams as ViewGroup.MarginLayoutParams).apply {
+                    bottomMargin = margin + insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
                 }
+                insets
             }
         }
     }

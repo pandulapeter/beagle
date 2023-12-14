@@ -11,7 +11,6 @@ import com.pandulapeter.beagle.modules.PaddingModule.Size
  * @param size - The size of the padding. See the [Size] enum for dimensions. [DEFAULT_SIZE] by default.
  * @param id - A unique identifier for the module. [randomId] by default.
  */
-@Suppress("unused")
 data class PaddingModule(
     val size: Size = Size.MEDIUM,
     override val id: String = randomId

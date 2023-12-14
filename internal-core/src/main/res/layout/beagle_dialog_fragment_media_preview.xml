@@ -12,9 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="0dp"
-        android:paddingLeft="0dp"
         android:paddingEnd="@dimen/beagle_content_padding"
-        android:paddingRight="@dimen/beagle_content_padding"
         app:menu="@menu/gallery" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

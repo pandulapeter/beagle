@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.appDemo.data.model
 import androidx.annotation.StringRes
 import com.pandulapeter.beagle.appDemo.R
 
+@Suppress("unused")
 enum class Dependency(
     val type: Type,
     val title: String,

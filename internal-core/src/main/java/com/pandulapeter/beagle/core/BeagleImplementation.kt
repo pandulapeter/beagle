@@ -3,7 +3,6 @@ package com.pandulapeter.beagle.core
 import android.app.Application
 import android.graphics.Canvas
 import android.net.Uri
-import android.os.Build
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -103,7 +102,7 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         if (currentActivity.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
             && currentActivity.supportFragmentManager.findFragmentByTag(MediaPreviewDialogFragment.TAG) == null
             && BeagleCore.implementation.currentActivity?.let { BeagleCore.implementation.behavior.shouldShowDebugMenu(it) } == true
-            && (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || !currentActivity.isInPictureInPictureMode)
+            && !currentActivity.isInPictureInPictureMode
         ) uiManager.show(currentActivity) else false
     } ?: false)
 

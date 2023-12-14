@@ -158,7 +158,7 @@ class SimpleSetupViewModel : ListViewModel<SimpleSetupListItem>() {
         BUG_REPORT_BUTTON(R.string.case_study_simple_setup_bug_report_button_1);
 
         companion object {
-            fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }
+            fun fromResourceId(@StringRes titleResourceId: Int?) = entries.firstOrNull { it.titleResourceId == titleResourceId }
         }
     }
 }

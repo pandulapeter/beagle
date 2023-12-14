@@ -29,7 +29,6 @@ class ModuleRepository {
     )
     val modules: List<ModuleWrapper> get() = _modules
 
-    @Suppress("unused")
     fun registerListener(lifecycleOwner: LifecycleOwner, listener: Listener) {
         lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
 

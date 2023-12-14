@@ -66,11 +66,11 @@ internal class BugReportViewModel(
     private fun getNetworkLogEntries() = allNetworkLogEntries.take(lastNetworkLogIndex)
     private fun areThereMoreNetworkLogEntries() = allNetworkLogEntries.size > getNetworkLogEntries().size
 
-    private val allLogEntries by lazy { logLabelSectionsToShow.map { label -> label to BeagleCore.implementation.getLogEntriesInternal(label) }.toMap() }
-    private val lastLogIndex = logLabelSectionsToShow.map { label -> label to pageSize }.toMap().toMutableMap()
-    private val selectedLogIds = logLabelSectionsToShow.map { label -> label to emptyList<String>() }.toMap().toMutableMap()
+    private val allLogEntries by lazy { logLabelSectionsToShow.associateWith { label -> BeagleCore.implementation.getLogEntriesInternal(label) } }
+    private val lastLogIndex = logLabelSectionsToShow.associateWith { _ -> pageSize }.toMutableMap()
+    private val selectedLogIds = logLabelSectionsToShow.associateWith { _ -> emptyList<String>() }.toMutableMap()
     private fun getLogEntries(label: String?) = allLogEntries[label]?.take(lastLogIndex[label] ?: 0).orEmpty()
-    private fun areThereMoreLogEntries(label: String?) = allLogEntries[label]?.size ?: 0 > getLogEntries(label).size
+    private fun areThereMoreLogEntries(label: String?) = (allLogEntries[label]?.size ?: 0) > getLogEntries(label).size
 
     val allLifecycleLogEntries by lazy { BeagleCore.implementation.getLifecycleLogEntriesInternal(lifecycleSectionEventTypes) }
     private var lastLifecycleLogIndex = pageSize
@@ -288,7 +288,7 @@ internal class BugReportViewModel(
                         HeaderViewHolder.UiModel(
                             id = ID_CRASH_LOGS,
                             text = BeagleCore.implementation.appearance.bugReportTexts.crashLogsSectionTitle(selectedCrashLogIds.size),
-                            shouldShowAttachAllButton = selectedCrashLogIds.size < allCrashLogEntries?.size ?: 0
+                            shouldShowAttachAllButton = selectedCrashLogIds.size < (allCrashLogEntries?.size ?: 0)
                         )
                     )
                     addAll(crashLogEntries.map { entry ->
@@ -333,7 +333,7 @@ internal class BugReportViewModel(
                             HeaderViewHolder.UiModel(
                                 id = "${ID_LOGS}$label",
                                 text = BeagleCore.implementation.appearance.bugReportTexts.logsSectionTitle(label, selectedLogIds[label]?.size ?: 0),
-                                shouldShowAttachAllButton = selectedLogIds[label]?.size ?: 0 < allLogEntries[label]?.size ?: 0
+                                shouldShowAttachAllButton = (selectedLogIds[label]?.size ?: 0) < (allLogEntries[label]?.size ?: 0)
                             )
                         )
                         addAll(logEntries.map { entry ->

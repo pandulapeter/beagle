@@ -247,7 +247,7 @@ class ValueWrappersViewModel : ListViewModel<ValueWrappersListItem>() {
         BULK_APPLY(R.string.case_study_value_wrappers_bulk_apply);
 
         companion object {
-            fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }
+            fun fromResourceId(@StringRes titleResourceId: Int?) = entries.firstOrNull { it.titleResourceId == titleResourceId }
         }
     }
 }

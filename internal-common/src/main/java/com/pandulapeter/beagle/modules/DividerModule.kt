@@ -8,7 +8,6 @@ import com.pandulapeter.beagle.commonBase.randomId
  *
  * @param id - A unique identifier for the module. [randomId] by default.
  */
-@Suppress("unused")
 data class DividerModule(
     override val id: String = randomId
 ) : Module<DividerModule>

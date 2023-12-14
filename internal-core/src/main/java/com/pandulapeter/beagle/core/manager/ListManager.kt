@@ -123,7 +123,6 @@ internal class ListManager {
         refreshCellsInternal(onContentsChanged)
     }
 
-    @Suppress("unused")
     private suspend fun addModulesInternal(newModules: List<Module<*>>, placement: Placement, lifecycleOwner: LifecycleOwner?, onContentsChanged: () -> Unit) =
         lifecycleOwner?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
 

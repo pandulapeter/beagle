@@ -87,12 +87,12 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
             }
-            viewModel.isProgressBarVisible.observe(this, {
+            viewModel.isProgressBarVisible.observe(this) {
                 binding.beagleProgressBar.visible = it
                 if (!it) {
                     binding.beagleChildHorizontalScrollView.visible = true
                 }
-            })
+            }
             binding.beagleMatchCounter.setOnClickListener {
                 viewModel.onMatchCounterClicked()
                 binding.beagleSearchQuery.hideKeyboard()
@@ -129,7 +129,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
             viewModel.matchCount.observe(this) {
                 binding.beagleMatchCounter.text = it.toString()
             }
-            viewModel.longestLine.observe(this, { line ->
+            viewModel.longestLine.observe(this) { line ->
                 context?.let { context ->
                     val contentPadding = context.dimension(R.dimen.beagle_large_content_padding)
                     binding.beagleLongestTextView.run {
@@ -137,10 +137,10 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
                         setPadding(contentPadding * (line.jsonLevel + 1), paddingTop, contentPadding, paddingBottom)
                     }
                 }
-            })
-            viewModel.areTagsExpanded.observe(this, {
+            }
+            viewModel.areTagsExpanded.observe(this) {
                 toggleDetailsButton.icon = context?.tintedDrawable(if (it) R.drawable.beagle_ic_toggle_details_on else R.drawable.beagle_ic_toggle_details_off, textColor)
-            })
+            }
             val networkLogDetailAdapter = NetworkLogDetailAdapter(
                 onHeaderClicked = viewModel::onHeaderClicked,
                 onItemClicked = viewModel::onItemClicked
@@ -151,7 +151,7 @@ internal class NetworkLogDetailDialogFragment : DialogFragment(), TextWatcher {
             }
             //TODO: Multiple observers are set, viewLifecycleOwner should be used instead (but it is null...)
             viewModel.items.observe(this, networkLogDetailAdapter::submitList)
-            viewModel.isShareButtonEnabled.observe(this, { shareButton.isEnabled = it })
+            viewModel.isShareButtonEnabled.observe(this) { shareButton.isEnabled = it }
             if (viewModel.isProgressBarVisible.value == true) {
                 viewModel.formatJson(
                     isOutgoing = arguments?.isOutgoing == true,

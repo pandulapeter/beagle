@@ -35,7 +35,6 @@ import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule.Companion.ID
  * @param applyInsets - The library tries to handle window insets the best it can, but this might not work with your specific setup. To override the default behavior, provide a lambda that returns a new [Insets] object. [DEFAULT_APPLY_INSETS] by default.
  * @param onValueChanged - Callback triggered when the user toggles the switch. In case of persisted values, this will also get called the first time the module is added. [DEFAULT_ON_VALUE_CHANGED] by default.
  */
-@Suppress("unused")
 data class KeylineOverlaySwitchModule(
     override val text: (currentValue: Boolean) -> Text = { DEFAULT_TEXT.toText() },
     @Dimension val grid: Int? = DEFAULT_GRID,

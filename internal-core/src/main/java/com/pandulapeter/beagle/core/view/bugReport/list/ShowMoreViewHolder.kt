@@ -37,13 +37,13 @@ internal class ShowMoreViewHolder private constructor(
 
     sealed class Type(val id: String) {
 
-        object CrashLog : Type("crashLog")
+        data object CrashLog : Type("crashLog")
 
-        object NetworkLog : Type("networkLog")
+        data object NetworkLog : Type("networkLog")
 
         data class Log(val label: String?) : Type("log_$label")
 
-        object LifecycleLog : Type("lifecycleLog")
+        data object LifecycleLog : Type("lifecycleLog")
     }
 
     companion object {

@@ -62,7 +62,7 @@ class NetworkRequestInterceptorViewModel(
     private fun refreshItems() {
         _items.value = mutableListOf<NetworkRequestInterceptorListItem>().apply {
             add(TextViewHolder.UiModel(R.string.case_study_network_request_interceptor_text_1))
-            addAll(Endpoints.entries.map { songTitle -> RadioButtonViewHolder.UiModel(songTitle.titleResourceId, selectedEndpoint == songTitle) })
+            addAll(Endpoints.entries.map { endpoint -> RadioButtonViewHolder.UiModel(endpoint.titleResourceId, selectedEndpoint == endpoint) })
             if (isLoading) {
                 add(LoadingIndicatorViewHolder.UiModel())
             } else {
@@ -119,19 +119,12 @@ class NetworkRequestInterceptorViewModel(
         }
     }
 
-    private fun String.formatSongLyrics() =
-        replace(Regex("\\[(.*?)[]]"), "") // Remove chords
-            .replace(Regex("\\{(.*?)[}]"), "") // Remove sections
-            .replace(Regex("[ ][ ]+"), "") // Remove consecutive whitespaces
-            .lines().filterNot { it.isEmpty() }.take(4) // Take the first four lines
-            .joinToString("\n") + "\n…"
-
-    private enum class Endpoints(@StringRes val titleResourceId: Int, val id: String) {
-        ENDPOINT_1(titleResourceId = R.string.case_study_network_request_interceptor_endpoint_1, id = "get_all_users"),
-        ENDPOINT_2(titleResourceId = R.string.case_study_network_request_interceptor_endpoint_2, id = "search_for_alison");
+    private enum class Endpoints(@StringRes val titleResourceId: Int) {
+        ENDPOINT_1(titleResourceId = R.string.case_study_network_request_interceptor_endpoint_1),
+        ENDPOINT_2(titleResourceId = R.string.case_study_network_request_interceptor_endpoint_2);
 
         companion object {
-            fun fromResourceId(@StringRes titleResourceId: Int?) = values().firstOrNull { it.titleResourceId == titleResourceId }
+            fun fromResourceId(@StringRes titleResourceId: Int?) = entries.firstOrNull { it.titleResourceId == titleResourceId }
         }
     }
 }

@@ -2,20 +2,11 @@ package com.pandulapeter.beagle.core.util.extension
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.net.Uri
-import android.os.Build
-import android.util.TypedValue
-import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
-import com.pandulapeter.beagle.utils.extensions.drawable
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Suppress("SpellCheckingInspection")

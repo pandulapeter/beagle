@@ -20,7 +20,6 @@ import com.pandulapeter.beagle.core.util.extension.registerSensorEventListener
 import com.pandulapeter.beagle.core.util.extension.unregisterSensorEventListener
 import kotlin.math.abs
 
-@Suppress("unused")
 internal class ShakeDetector : SensorEventListener, DefaultLifecycleObserver {
 
     private var lastSensorUpdate = 0L

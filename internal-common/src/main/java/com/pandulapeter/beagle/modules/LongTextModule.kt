@@ -16,7 +16,6 @@ import com.pandulapeter.beagle.modules.LongTextModule.Companion.DEFAULT_IS_EXPAN
  * @param isExpandedInitially - Whether or not the text is expanded the first time the module becomes visible. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  * @param id - A unique identifier for the module. [randomId] by default.
  */
-@Suppress("unused")
 data class LongTextModule(
     val title: Text,
     val text: Text,

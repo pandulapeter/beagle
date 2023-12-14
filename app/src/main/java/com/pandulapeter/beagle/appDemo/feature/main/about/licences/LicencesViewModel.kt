@@ -14,9 +14,9 @@ class LicencesViewModel : ListViewModel<LicencesListItem>() {
     override val items: LiveData<List<LicencesListItem>> = MutableLiveData(
         mutableListOf<LicencesListItem>().apply {
             add(TextViewHolder.UiModel(R.string.licences_description))
-            Dependency.Type.values().forEach { type ->
+            Dependency.Type.entries.forEach { type ->
                 add(TextViewHolder.UiModel(type.titleResourceId))
-                addAll(Dependency.values().filter { it.type == type }.sortedBy { it.title }.map { DependencyViewHolder.UiModel(it) })
+                addAll(Dependency.entries.filter { it.type == type }.sortedBy { it.title }.map { DependencyViewHolder.UiModel(it) })
             }
         }
     )

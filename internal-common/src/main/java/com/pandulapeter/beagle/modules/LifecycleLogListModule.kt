@@ -35,7 +35,6 @@ import java.util.Locale
  * @param timestampFormatter - The formatter used for displaying the timestamp of each entry, or null if the timestamps should not be displayed at all. Formats with [LOG_SHORT_TIME_FORMAT] by default.
  * @param isExpandedInitially - Whether or not the list should be expanded when the drawer is opened for the first time. [DEFAULT_IS_EXPANDED_INITIALLY] by default.
  */
-@Suppress("unused")
 data class LifecycleLogListModule(
     val title: Text = DEFAULT_TITLE.toText(),
     val eventTypes: List<EventType> = DEFAULT_EVENT_TYPES,
@@ -71,7 +70,7 @@ data class LifecycleLogListModule(
     companion object {
         const val ID = "lifecycleLogList"
         private const val DEFAULT_TITLE = "Lifecycle logs"
-        private val DEFAULT_EVENT_TYPES = EventType.values().toList()
+        private val DEFAULT_EVENT_TYPES = EventType.entries
         private const val DEFAULT_SHOULD_DISPLAY_FULL_NAMES = false
         private const val DEFAULT_MAX_ITEM_COUNT = 20
         private const val DEFAULT_IS_EXPANDED_INITIALLY = false

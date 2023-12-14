@@ -232,56 +232,56 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    object AnimationDurationSwitchWrapper : ModuleWrapper(
+    data object AnimationDurationSwitchWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_animation_duration_switch,
         descriptionResourceId = R.string.add_module_animation_duration_switch_description,
         module = AnimationDurationSwitchModule(),
         codeSnippet = "AnimationDurationSwitchModule()"
     )
 
-    object AppInfoButtonWrapper : ModuleWrapper(
+    data object AppInfoButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_app_info_button,
         descriptionResourceId = R.string.add_module_app_info_button_description,
         module = AppInfoButtonModule(),
         codeSnippet = "AppInfoButtonModule()"
     )
 
-    object BugReportButtonWrapper : ModuleWrapper(
+    data object BugReportButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_bug_report_button,
         descriptionResourceId = R.string.add_module_bug_report_button_description,
         module = BugReportButtonModule(),
         codeSnippet = "BugReportButtonModule()"
     )
 
-    object DeveloperOptionsButtonWrapper : ModuleWrapper(
+    data object DeveloperOptionsButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_developer_options_button,
         descriptionResourceId = R.string.add_module_developer_options_button_description,
         module = DeveloperOptionsButtonModule(),
         codeSnippet = "DeveloperOptionsButtonModule()"
     )
 
-    object DeviceInfoWrapper : ModuleWrapper(
+    data object DeviceInfoWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_device_info,
         descriptionResourceId = R.string.add_module_device_info_description,
         module = DeviceInfoModule(),
         codeSnippet = "DeviceInfoModule()"
     )
 
-    object ForceCrashButtonWrapper : ModuleWrapper(
+    data object ForceCrashButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_force_crash_button,
         descriptionResourceId = R.string.add_module_force_crash_button_description,
         module = ForceCrashButtonModule(),
         codeSnippet = "ForceCrashButtonModule()"
     )
 
-    object GalleryButtonWrapper : ModuleWrapper(
+    data object GalleryButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_gallery_button,
         descriptionResourceId = R.string.add_module_gallery_button_description,
         module = GalleryButtonModule(),
         codeSnippet = "GalleryButtonModule()"
     )
 
-    object HeaderWrapper : ModuleWrapper(
+    data object HeaderWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_header,
         descriptionResourceId = R.string.add_module_header_description,
         module = HeaderModule(
@@ -294,14 +294,14 @@ sealed class ModuleWrapper(
                 ")"
     )
 
-    object KeylineOverlaySwitchWrapper : ModuleWrapper(
+    data object KeylineOverlaySwitchWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_keyline_overlay_switch,
         descriptionResourceId = R.string.add_module_keyline_overlay_switch_description,
         module = KeylineOverlaySwitchModule(),
         codeSnippet = "KeylineOverlaySwitchModule()"
     )
 
-    object LifecycleLogListWrapper : ModuleWrapper(
+    data object LifecycleLogListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_lifecycle_log_list,
         descriptionResourceId = R.string.add_module_lifecycle_log_list_description,
         module = LifecycleLogListModule(),
@@ -315,28 +315,28 @@ sealed class ModuleWrapper(
         codeSnippet = "LoremIpsumGeneratorButtonModule { generatedText -> … }"
     )
 
-    object NetworkLogListWrapper : ModuleWrapper(
+    data object NetworkLogListWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_log_list,
         descriptionResourceId = R.string.add_module_network_log_list_description,
         module = NetworkLogListModule(),
         codeSnippet = "NetworkLogListModule()"
     )
 
-    object ScreenCaptureToolboxWrapper : ModuleWrapper(
+    data object ScreenCaptureToolboxWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_screen_capture_toolbox,
         descriptionResourceId = R.string.add_module_network_screen_capture_toolbox_description,
         module = ScreenCaptureToolboxModule(),
         codeSnippet = "ScreenCaptureToolboxModule()"
     )
 
-    object ScreenRecordingButtonWrapper : ModuleWrapper(
+    data object ScreenRecordingButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_screen_recording_button,
         descriptionResourceId = R.string.add_module_network_screen_recording_button_description,
         module = ScreenRecordingButtonModule(),
         codeSnippet = "ScreenRecordingButtonModule()"
     )
 
-    object ScreenshotButtonWrapper : ModuleWrapper(
+    data object ScreenshotButtonWrapper : ModuleWrapper(
         titleResourceId = R.string.add_module_network_screenshot_button,
         descriptionResourceId = R.string.add_module_network_screenshot_button_description,
         module = ScreenshotButtonModule(),

@@ -61,7 +61,7 @@ internal class LogDetailDialogFragment : DialogFragment() {
                 }
                 setOnMenuItemClickListener(::onMenuItemClicked)
             }
-            viewModel.isShareButtonEnabled.observe(this, { shareButton.isEnabled = it })
+            viewModel.isShareButtonEnabled.observe(this) { shareButton.isEnabled = it }
         }
     }
 

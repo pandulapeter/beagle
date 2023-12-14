@@ -1,7 +1,6 @@
 package com.pandulapeter.beagle.logCrash.implementation
 
 import android.content.DialogInterface
-import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -31,7 +30,7 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
             val displayMetrics = DisplayMetrics()
             BeagleCore.implementation.currentActivity?.run {
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
-                val output = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val output =
                     window?.decorView?.let { view ->
                         view.rootWindowInsets?.let { insets ->
                             BeagleCore.implementation.appearance.applyInsets?.invoke(
@@ -39,19 +38,16 @@ internal class DebugMenuDialog : AppCompatDialogFragment() {
                             )
                         }
                     }
-                } else null
                 val verticalInsets = output?.let { it.top + it.bottom }
-                    ?: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        window.decorView.rootWindowInsets?.let {
-                            val insets = WindowInsetsCompat.toWindowInsetsCompat(it, window.decorView).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
-                            insets.top + insets.bottom
-                        } ?: 0 else 0
+                    ?: window.decorView.rootWindowInsets?.let {
+                        val insets = WindowInsetsCompat.toWindowInsetsCompat(it, window.decorView).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
+                        insets.top + insets.bottom
+                    } ?: 0
                 val horizontalInsets = output?.let { it.left + it.right }
-                    ?: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        window.decorView.rootWindowInsets?.let {
-                            val insets = WindowInsetsCompat.toWindowInsetsCompat(it, window.decorView).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
-                            insets.left + insets.right
-                        } ?: 0 else 0
+                    ?: window.decorView.rootWindowInsets?.let {
+                        val insets = WindowInsetsCompat.toWindowInsetsCompat(it, window.decorView).getBeagleInsets(WindowInsetsCompat.Type.systemBars())
+                        insets.left + insets.right
+                    } ?: 0
                 setLayout(
                     ((displayMetrics.widthPixels - horizontalInsets) * DIALOG_WIDTH_RATIO).roundToInt(),
                     ((displayMetrics.heightPixels - verticalInsets) * DIALOG_HEIGHT_RATIO).roundToInt()

@@ -22,7 +22,6 @@ import com.pandulapeter.beagle.modules.TextModule.Type
  * @param id - A unique identifier for the module. [randomId] by default.
  * @param onItemSelected - Callback invoked when the user clicks on the text, or null to disable selection. [DEFAULT_ON_ITEM_SELECTED] by default.
  */
-@Suppress("unused")
 data class TextModule(
     val text: Text,
     val type: Type = DEFAULT_TYPE,

@@ -10,7 +10,6 @@ import com.pandulapeter.beagle.commonBase.randomId
  *
  * @param id - A unique identifier for the module. [randomId] by default.
  */
-@Suppress("unused")
 data class LoadingIndicatorModule(
     override val id: String = randomId
 ) : Module<LoadingIndicatorModule>

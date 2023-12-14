@@ -2,7 +2,7 @@ apply plugin: "maven-publish"
 apply plugin: "signing"
 
 
-task javadocJar(type: Jar) {
+tasks.register('javadocJar', Jar) {
     archiveClassifier.set('javadoc')
 }
 

@@ -1,6 +1,9 @@
 package com.pandulapeter.beagle.core.util
 
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.Service
 import android.content.Context
@@ -12,7 +15,11 @@ import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.IBinder
+import android.os.Process
 import android.util.DisplayMetrics
 import android.view.Surface
 import android.view.WindowManager
@@ -188,7 +195,7 @@ internal class ScreenCaptureService : Service() {
                                 this@ScreenCaptureService,
                                 0,
                                 Intent(this@ScreenCaptureService, ScreenCaptureService::class.java).setAction(ACTION_DONE),
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) FLAG_IMMUTABLE else 0
+                                FLAG_IMMUTABLE
                             )
                         )
                         setStyle(NotificationCompat.BigTextStyle().bigText(text(BeagleCore.implementation.appearance.screenCaptureTexts.inProgressNotificationContent)))
@@ -240,7 +247,7 @@ internal class ScreenCaptureService : Service() {
                             this@ScreenCaptureService,
                             0,
                             Intent(this@ScreenCaptureService, GalleryActivity::class.java),
-                            0
+                            FLAG_IMMUTABLE
                         )
                     )
                     setStyle(NotificationCompat.BigTextStyle().bigText(text(BeagleCore.implementation.appearance.screenCaptureTexts.readyNotificationContent)))

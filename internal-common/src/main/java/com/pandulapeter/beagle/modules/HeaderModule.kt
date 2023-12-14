@@ -19,7 +19,6 @@ import com.pandulapeter.beagle.modules.HeaderModule.Companion.ID
  * @param subtitle - The subtitle appears below the title. [DEFAULT_SUBTITLE] by default.
  * @param text - The text appears below the subtitle. [DEFAULT_TEXT] by default.
  */
-@Suppress("unused")
 data class HeaderModule(
     val title: Text,
     val subtitle: Text? = DEFAULT_SUBTITLE?.toText(),

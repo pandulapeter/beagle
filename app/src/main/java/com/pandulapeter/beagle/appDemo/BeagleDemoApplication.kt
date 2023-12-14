@@ -14,7 +14,6 @@ import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-@Suppress("unused")
 class BeagleDemoApplication : Application() {
 
     override fun onCreate() {
@@ -53,7 +52,7 @@ class BeagleDemoApplication : Application() {
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-        @Suppress("ConstantConditionIf")
+        @Suppress("KotlinConstantConditions")
         if (BuildConfig.BUILD_TYPE == "debug") {
             MultiDex.install(this)
         }
