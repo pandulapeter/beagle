@@ -115,6 +115,7 @@ data class Appearance(
      * @param readyNotificationContent - The content for the notification described for the [readyNotificationTitle] parameter. [DEFAULT_READY_NOTIFICATION_CONTENT] by default.
      * @param notificationChannelName - The name for the notification channel that handles all notifications related to screen capture. [DEFAULT_NOTIFICATION_CHANNEL_NAME] by default.
      * @param errorToast - Error message displayed in a Toast in case something goes wrong, or null if no Toast should be displayed. [DEFAULT_ERROR_TOAST] by default.
+     * @param permissionToast - Error message displayed in a Toast in case the notifications are disabled. [DEFAULT_PERMISSION_TOAST] by default.
      */
     data class ScreenCaptureTexts(
         val toastText: Text? = DEFAULT_TOAST_TEXT.toText(),
@@ -123,7 +124,8 @@ data class Appearance(
         val readyNotificationTitle: Text = DEFAULT_READY_NOTIFICATION_TITLE.toText(),
         val readyNotificationContent: Text = DEFAULT_READY_NOTIFICATION_CONTENT.toText(),
         val notificationChannelName: Text = DEFAULT_NOTIFICATION_CHANNEL_NAME.toText(),
-        val errorToast: Text? = DEFAULT_ERROR_TOAST.toText()
+        val errorToast: Text? = DEFAULT_ERROR_TOAST.toText(),
+        val permissionToast: Text = DEFAULT_PERMISSION_TOAST.toText()
     ) {
         companion object {
             private const val DEFAULT_TOAST_TEXT = "Recording in progress. Tap on the notification to stop it."
@@ -133,6 +135,7 @@ data class Appearance(
             private const val DEFAULT_READY_NOTIFICATION_CONTENT = "Tap on this notification to open the Gallery."
             private const val DEFAULT_NOTIFICATION_CHANNEL_NAME = "Screen capture notifications"
             private const val DEFAULT_ERROR_TOAST = "Something went wrong"
+            private const val DEFAULT_PERMISSION_TOAST = "Notifications need to be enabled"
         }
     }
 

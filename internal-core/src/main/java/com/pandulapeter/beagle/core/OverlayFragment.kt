@@ -1,15 +1,20 @@
 package com.pandulapeter.beagle.core
 
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.media.projection.MediaProjectionManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.util.ScreenCaptureService
+import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.utils.BundleArgumentDelegate
 
 
@@ -24,12 +29,14 @@ internal class OverlayFragment : Fragment() {
     }
 
     fun startCapture(isForVideo: Boolean, fileName: String) {
-        (context?.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?).let { mediaProjectionManager ->
-            if (mediaProjectionManager == null) {
-                BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
-            } else {
-                this.fileName = fileName
-                startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), if (isForVideo) SCREEN_RECORDING_REQUEST else SCREENSHOT_REQUEST)
+        requestNotificationPermission {
+            (getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?).let { mediaProjectionManager ->
+                if (mediaProjectionManager == null) {
+                    BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
+                } else {
+                    this@OverlayFragment.fileName = fileName
+                    startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), if (isForVideo) SCREEN_RECORDING_REQUEST else SCREENSHOT_REQUEST)
+                }
             }
         }
     }
@@ -42,7 +49,7 @@ internal class OverlayFragment : Fragment() {
                 if (data == null) {
                     BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
                 } else {
-                    requireContext().run {
+                    requestNotificationPermission {
                         startService(
                             ScreenCaptureService.getStartIntent(
                                 this,
@@ -63,6 +70,18 @@ internal class OverlayFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.fileName = fileName
+    }
+
+    private fun requestNotificationPermission(doWhenGranted: Context.() -> Unit) {
+        context?.run {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            if (notificationManager.areNotificationsEnabled()) {
+                doWhenGranted()
+            } else {
+                Toast.makeText(this, text(BeagleCore.implementation.appearance.screenCaptureTexts.permissionToast), Toast.LENGTH_SHORT).show()
+                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.fromParts("package", packageName, null)))
+            }
+        }
     }
 
     companion object {
