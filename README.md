@@ -26,10 +26,10 @@ The tutorials in the app cover everything from this readme, but in more detail. 
 If the wall of text below is too long for your taste, check out [this gist](https://gist.github.com/pandulapeter/3f9b404d953c6d80ed8a19eb06db4541) that contains all the code you need for a nice configuration. Otherwise, let's do it step by step:
 
 ### Step 0: Check the requirements
-- Minimum SDK level: 21+
+- Minimum SDK level: 24+
 - Target SDK level: 34+
-- Language: Kotlin 1.9.10+
-- Gradle version: Kotlin 8.1.0+
+- Language: Kotlin 1.9.21+
+- Gradle version: Kotlin 8.2.0+
 
 ### Step 1: Add the MavenCentral repository
 Make sure that the following is part of your project-level build.gradle file:
