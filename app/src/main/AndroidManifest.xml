@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/SplashTheme"
-        tools:ignore="DataExtractionRules,GoogleAppIndexingWarning">
+        tools:ignore="DataExtractionRules,GoogleAppIndexingWarning"
+        tools:replace="android:supportsRtl">
 
         <activity
             android:name="com.pandulapeter.beagle.appDemo.feature.BeagleDemoActivity"
