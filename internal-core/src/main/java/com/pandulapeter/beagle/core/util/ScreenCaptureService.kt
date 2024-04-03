@@ -213,7 +213,7 @@ internal class ScreenCaptureService : Service() {
 
     private fun createVirtualDisplay(width: Int, height: Int, density: Int, surface: Surface?, flags: Int) {
         projection?.registerCallback(object : MediaProjection.Callback() {
-            override fun onStop() = onReady(getUriForFile(file))
+            override fun onStop() = Unit
         }, handler)
         virtualDisplay = projection?.createVirtualDisplay("captureDisplay", width, height, density, flags, surface, null, handler)
     }
@@ -275,7 +275,13 @@ internal class ScreenCaptureService : Service() {
         private const val EXTRA_FILE_NAME = "fileName"
         private const val ACTION_DONE = "done"
 
-        fun getStartIntent(context: Context, resultCode: Int, data: Intent, isForVideo: Boolean, fileName: String) = Intent(context, ScreenCaptureService::class.java)
+        fun getStartIntent(
+            context: Context,
+            resultCode: Int,
+            data: Intent,
+            isForVideo: Boolean,
+            fileName: String
+        ) = Intent(context, ScreenCaptureService::class.java)
             .putExtra(EXTRA_RESULT_CODE, resultCode)
             .putExtra(EXTRA_RESULT_INTENT, data)
             .putExtra(EXTRA_IS_FOR_VIDEO, isForVideo)

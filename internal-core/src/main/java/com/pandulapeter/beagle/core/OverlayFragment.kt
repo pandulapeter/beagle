@@ -52,11 +52,11 @@ internal class OverlayFragment : Fragment() {
                     requestNotificationPermission {
                         startService(
                             ScreenCaptureService.getStartIntent(
-                                this,
-                                resultCode,
-                                data,
-                                requestCode == SCREEN_RECORDING_REQUEST,
-                                fileName
+                                context = this,
+                                resultCode = resultCode,
+                                data = data,
+                                isForVideo = requestCode == SCREEN_RECORDING_REQUEST,
+                                fileName = fileName
                             )
                         )
                     }
