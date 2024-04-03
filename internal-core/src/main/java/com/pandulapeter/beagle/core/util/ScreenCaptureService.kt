@@ -101,13 +101,14 @@ internal class ScreenCaptureService : Service() {
         if (isForVideo) {
             var downscaledWidth = displayMetrics.widthPixels
             var downscaledHeight = displayMetrics.heightPixels
-            while (downscaledWidth > 720 && downscaledHeight > 720) {
+            while (downscaledWidth > 1440 && downscaledHeight > 1440) {
                 downscaledWidth /= 2
                 downscaledHeight /= 2
             }
             downscaledWidth = (downscaledWidth / 2) * 2
             downscaledHeight = (downscaledHeight / 2) * 2
-            mediaRecorder = MediaRecorder().apply {
+            @Suppress("DEPRECATION")
+            mediaRecorder = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(this) else MediaRecorder()).apply {
                 setVideoSource(MediaRecorder.VideoSource.SURFACE)
                 CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH).apply {
                     videoFrameHeight = downscaledWidth
@@ -169,7 +170,7 @@ internal class ScreenCaptureService : Service() {
                 NotificationChannel(
                     notificationChannelId,
                     text(BeagleCore.implementation.appearance.screenCaptureTexts.notificationChannelName),
-                    NotificationManager.IMPORTANCE_LOW
+                    NotificationManager.IMPORTANCE_HIGH
                 ).apply {
                     setSound(null, null)
                 }
@@ -188,14 +189,19 @@ internal class ScreenCaptureService : Service() {
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentTitle(text(BeagleCore.implementation.appearance.screenCaptureTexts.inProgressNotificationTitle))
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .apply {
                     if (isForVideo) {
-                        setContentIntent(
-                            PendingIntent.getService(
-                                this@ScreenCaptureService,
-                                0,
-                                Intent(this@ScreenCaptureService, ScreenCaptureService::class.java).setAction(ACTION_DONE),
-                                FLAG_IMMUTABLE
+                        addAction(
+                            NotificationCompat.Action(
+                                R.drawable.beagle_ic_recording,
+                                text(BeagleCore.implementation.appearance.screenCaptureTexts.inProgressNotificationStop),
+                                PendingIntent.getService(
+                                    this@ScreenCaptureService,
+                                    0,
+                                    Intent(this@ScreenCaptureService, ScreenCaptureService::class.java).setAction(ACTION_DONE),
+                                    FLAG_IMMUTABLE
+                                )
                             )
                         )
                         setStyle(NotificationCompat.BigTextStyle().bigText(text(BeagleCore.implementation.appearance.screenCaptureTexts.inProgressNotificationContent)))
@@ -206,6 +212,9 @@ internal class ScreenCaptureService : Service() {
     }
 
     private fun createVirtualDisplay(width: Int, height: Int, density: Int, surface: Surface?, flags: Int) {
+        projection?.registerCallback(object : MediaProjection.Callback() {
+            override fun onStop() = onReady(getUriForFile(file))
+        }, handler)
         virtualDisplay = projection?.createVirtualDisplay("captureDisplay", width, height, density, flags, surface, null, handler)
     }
 
@@ -227,7 +236,7 @@ internal class ScreenCaptureService : Service() {
         }
         cleanUp()
         BeagleCore.implementation.onScreenCaptureReady?.invoke(uri)
-        stopForeground(true)
+        stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
 

@@ -111,6 +111,7 @@ data class Appearance(
      * @param toastText - A Toast message displayed every time a screen recording is started, or null for no Toast. [DEFAULT_TOAST_TEXT] by default.
      * @param inProgressNotificationTitle - Recording the screen for screenshot images or videos requires a foreground service with a notification. The title for the notification, [DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE] by default.
      * @param inProgressNotificationContent - The content for the notification described for the [inProgressNotificationTitle] parameter. [DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT] by default.
+     * @param inProgressNotificationStop - The text displayed as the notification action. [DEFAULT_IN_PROGRESS_NOTIFICATION_STOP] by default.
      * @param readyNotificationTitle - The title for the notification displayed after a screen capture is done, [DEFAULT_READY_NOTIFICATION_TITLE] by default.
      * @param readyNotificationContent - The content for the notification described for the [readyNotificationTitle] parameter. [DEFAULT_READY_NOTIFICATION_CONTENT] by default.
      * @param notificationChannelName - The name for the notification channel that handles all notifications related to screen capture. [DEFAULT_NOTIFICATION_CHANNEL_NAME] by default.
@@ -121,6 +122,7 @@ data class Appearance(
         val toastText: Text? = DEFAULT_TOAST_TEXT.toText(),
         val inProgressNotificationTitle: Text = DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE.toText(),
         val inProgressNotificationContent: Text = DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT.toText(),
+        val inProgressNotificationStop: Text = DEFAULT_IN_PROGRESS_NOTIFICATION_STOP.toText(),
         val readyNotificationTitle: Text = DEFAULT_READY_NOTIFICATION_TITLE.toText(),
         val readyNotificationContent: Text = DEFAULT_READY_NOTIFICATION_CONTENT.toText(),
         val notificationChannelName: Text = DEFAULT_NOTIFICATION_CHANNEL_NAME.toText(),
@@ -130,7 +132,8 @@ data class Appearance(
         companion object {
             private const val DEFAULT_TOAST_TEXT = "Recording in progress. Tap on the notification to stop it."
             private const val DEFAULT_IN_PROGRESS_NOTIFICATION_TITLE = "Recording…"
-            private const val DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT = "Tap on this notification when done."
+            private const val DEFAULT_IN_PROGRESS_NOTIFICATION_CONTENT = "The app is recording a video of your screen."
+            private const val DEFAULT_IN_PROGRESS_NOTIFICATION_STOP = "Finish recording"
             private const val DEFAULT_READY_NOTIFICATION_TITLE = "Screen captured"
             private const val DEFAULT_READY_NOTIFICATION_CONTENT = "Tap on this notification to open the Gallery."
             private const val DEFAULT_NOTIFICATION_CHANNEL_NAME = "Screen capture notifications"

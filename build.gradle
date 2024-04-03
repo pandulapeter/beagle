@@ -4,7 +4,7 @@ buildscript {
         libraryVersion = "2.9.3"
         libraryMinimumSdkVersion = 24
         libraryCompileSdkVersion = 34
-        libraryTargetSdkVersion = 33
+        libraryTargetSdkVersion = 34
         libraryVersionCode = 1
     }
     repositories {
