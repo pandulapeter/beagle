@@ -138,8 +138,10 @@ internal class ScreenCaptureService : Service() {
         } else {
             val screenshotWriter = ScreenshotWriter(displayMetrics.widthPixels, displayMetrics.heightPixels, handler) { bitmap ->
                 GlobalScope.launch(Dispatchers.IO) {
-                    (createScreenshotFromBitmap(bitmap, fileName))?.let { uri ->
-                        launch(Dispatchers.Main) { onReady(uri) }
+                    if (BeagleCore.implementation.onScreenCaptureReady != null) {
+                        (createScreenshotFromBitmap(bitmap, fileName))?.let { uri ->
+                            launch(Dispatchers.Main) { onReady(uri) }
+                        }
                     }
                 }
             }
@@ -151,10 +153,8 @@ internal class ScreenCaptureService : Service() {
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
             )
             handler.postDelayed({
-                BeagleCore.implementation.onScreenCaptureReady?.let {
-                    if (!screenshotWriter.forceTry()) {
-                        onReady(null)
-                    }
+                if (!screenshotWriter.forceTry()) {
+                    onReady(null)
                 }
             }, SCREENSHOT_TIMEOUT)
         }

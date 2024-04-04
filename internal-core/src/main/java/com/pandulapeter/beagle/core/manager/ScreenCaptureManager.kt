@@ -11,6 +11,7 @@ import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
 internal class ScreenCaptureManager {
 
     var onScreenCaptureReady: ((Uri?) -> Unit)? = null
+        private set
     private val currentActivity get() = BeagleCore.implementation.currentActivity
     private val getImageFileName get() = BeagleCore.implementation.behavior.screenCaptureBehavior.getImageFileName
     private val onImageReady get() = BeagleCore.implementation.behavior.screenCaptureBehavior.onImageReady
@@ -18,29 +19,21 @@ internal class ScreenCaptureManager {
     private val onVideoReady get() = BeagleCore.implementation.behavior.screenCaptureBehavior.onVideoReady
 
     fun takeScreenshot() {
-        if (onScreenCaptureReady != null) {
-            onImageReady?.invoke(null)
-        } else {
-            onScreenCaptureReady = { uri ->
-                onImageReady?.invoke(uri)
-                onScreenCaptureReady = null
-            }
-            currentActivity?.run {
-                takeScreenshotWithMediaProjectionManager("${getImageFileName(currentTimestamp)}$IMAGE_EXTENSION")
-            }
+        onScreenCaptureReady = { uri ->
+            onImageReady?.invoke(uri)
+            onScreenCaptureReady = null
+        }
+        currentActivity?.run {
+            takeScreenshotWithMediaProjectionManager("${getImageFileName(currentTimestamp)}$IMAGE_EXTENSION")
         }
     }
 
     fun recordScreen() {
-        if (onScreenCaptureReady != null) {
-            onVideoReady?.invoke(null)
-        } else {
-            onScreenCaptureReady = { uri ->
-                onVideoReady?.invoke(uri)
-                onScreenCaptureReady = null
-            }
-            currentActivity?.recordScreenWithMediaProjectionManager("${getVideoFileName(currentTimestamp)}$VIDEO_EXTENSION")
+        onScreenCaptureReady = { uri ->
+            onVideoReady?.invoke(uri)
+            onScreenCaptureReady = null
         }
+        currentActivity?.recordScreenWithMediaProjectionManager("${getVideoFileName(currentTimestamp)}$VIDEO_EXTENSION")
     }
 
     fun openGallery() = BeagleCore.implementation.performOnHide { currentActivity?.run { startActivity(Intent(this, GalleryActivity::class.java)) } }
