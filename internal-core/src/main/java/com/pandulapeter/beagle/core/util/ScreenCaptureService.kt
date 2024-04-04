@@ -10,7 +10,6 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.display.DisplayManager
 import android.hardware.display.VirtualDisplay
-import android.media.CamcorderProfile
 import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
@@ -20,9 +19,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Process
-import android.util.DisplayMetrics
 import android.view.Surface
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Lifecycle
@@ -30,6 +27,7 @@ import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.util.extension.createScreenCaptureFile
 import com.pandulapeter.beagle.core.util.extension.createScreenshotFromBitmap
+import com.pandulapeter.beagle.core.util.extension.getScreenSize
 import com.pandulapeter.beagle.core.util.extension.getUriForFile
 import com.pandulapeter.beagle.core.util.extension.text
 import com.pandulapeter.beagle.core.view.gallery.GalleryActivity
@@ -39,6 +37,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
+import kotlin.math.roundToInt
 
 internal class ScreenCaptureService : Service() {
 
@@ -96,70 +95,64 @@ internal class ScreenCaptureService : Service() {
 
     private fun startCapture(resultCode: Int, resultData: Intent, isForVideo: Boolean, fileName: String) {
         projection = (getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager?)?.getMediaProjection(resultCode, resultData)
-        val displayMetrics = DisplayMetrics()
-        (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(displayMetrics)
-        if (isForVideo) {
-            var downscaledWidth = displayMetrics.widthPixels
-            var downscaledHeight = displayMetrics.heightPixels
-            while (downscaledWidth > 1440 && downscaledHeight > 1440) {
-                downscaledWidth /= 2
-                downscaledHeight /= 2
+        BeagleCore.implementation.currentActivity?.getScreenSize()?.let { (widthPixels, heightPixels, density) ->
+            var downscaledWidth = widthPixels
+            var downscaledHeight = heightPixels
+            while (downscaledWidth > 1920 && downscaledHeight > 1920) {
+                downscaledWidth = (downscaledWidth * 0.75f).roundToInt()
+                downscaledHeight = (downscaledHeight * 0.75f).roundToInt()
             }
             downscaledWidth = (downscaledWidth / 2) * 2
             downscaledHeight = (downscaledHeight / 2) * 2
-            @Suppress("DEPRECATION")
-            mediaRecorder = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(this) else MediaRecorder()).apply {
-                setVideoSource(MediaRecorder.VideoSource.SURFACE)
-                CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH).apply {
-                    videoFrameHeight = downscaledWidth
-                    videoFrameWidth = downscaledHeight
-                }.let { profile ->
+            if (isForVideo) {
+                @Suppress("DEPRECATION")
+                mediaRecorder = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(this) else MediaRecorder()).apply {
+                    setVideoSource(MediaRecorder.VideoSource.SURFACE)
                     setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-                    setVideoFrameRate(profile.videoFrameRate)
-                    setVideoSize(profile.videoFrameHeight, profile.videoFrameWidth)
-                    setVideoEncodingBitRate(profile.videoBitRate)
-                    setVideoEncoder(profile.videoCodec)
+                    setVideoEncoder(MediaRecorder.VideoEncoder.H264)
+                    setVideoSize(downscaledWidth, downscaledHeight)
+                    setVideoEncodingBitRate(6000)
+                    file = createScreenCaptureFile(fileName)
+                    setOutputFile(file.absolutePath)
+                    try {
+                        prepare()
+                    } catch (_: IllegalStateException) {
+                    } catch (_: IOException) {
+                        onReady(null)
+                    }
                 }
-                file = createScreenCaptureFile(fileName)
-                setOutputFile(file.absolutePath)
+                createVirtualDisplay(downscaledWidth, downscaledHeight, density, mediaRecorder?.surface, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR)
                 try {
-                    prepare()
+                    mediaRecorder?.start()
                 } catch (_: IllegalStateException) {
-                } catch (_: IOException) {
                     onReady(null)
                 }
-            }
-            createVirtualDisplay(downscaledWidth, downscaledHeight, displayMetrics.densityDpi, mediaRecorder?.surface, DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR)
-            try {
-                mediaRecorder?.start()
-            } catch (_: IllegalStateException) {
-                onReady(null)
-            }
-        } else {
-            val screenshotWriter = ScreenshotWriter(displayMetrics.widthPixels, displayMetrics.heightPixels, handler) { bitmap ->
-                GlobalScope.launch(Dispatchers.IO) {
-                    if (BeagleCore.implementation.onScreenCaptureReady != null) {
+            } else {
+                val screenshotWriter = ScreenshotWriter(downscaledWidth, downscaledHeight, handler) { bitmap ->
+                    GlobalScope.launch(Dispatchers.IO) {
                         (createScreenshotFromBitmap(bitmap, fileName))?.let { uri ->
-                            launch(Dispatchers.Main) { onReady(uri) }
+                            if (BeagleCore.implementation.onScreenCaptureReady != null) {
+                                launch(Dispatchers.Main) { onReady(uri) }
+                            }
                         }
                     }
                 }
+                createVirtualDisplay(
+                    downscaledWidth,
+                    downscaledHeight,
+                    density,
+                    screenshotWriter.surface,
+                    DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
+                )
+                handler.postDelayed({
+                    if (!screenshotWriter.forceTry()) {
+                        onReady(null)
+                    }
+                }, SCREENSHOT_TIMEOUT)
             }
-            createVirtualDisplay(
-                displayMetrics.widthPixels,
-                displayMetrics.heightPixels,
-                displayMetrics.densityDpi,
-                screenshotWriter.surface,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
-            )
-            handler.postDelayed({
-                if (!screenshotWriter.forceTry()) {
-                    onReady(null)
-                }
-            }, SCREENSHOT_TIMEOUT)
-        }
-        if (virtualDisplay?.surface == null) {
-            onReady(null)
+            if (virtualDisplay?.surface == null) {
+                onReady(null)
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.pandulapeter.beagle.core.util.extension
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.fragment.app.FragmentActivity
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.OverlayFragment
@@ -63,3 +64,13 @@ internal fun Activity.recordScreenWithMediaProjectionManager(fileName: String) {
         overlayFragment?.startCapture(true, fileName) ?: BeagleCore.implementation.onScreenCaptureReady?.invoke(null)
     }
 }
+
+internal fun Activity.getScreenSize() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) Triple(
+    windowManager.currentWindowMetrics.bounds.width(),
+    windowManager.currentWindowMetrics.bounds.height(),
+    resources.displayMetrics.densityDpi
+) else Triple(
+    resources.displayMetrics.widthPixels,
+    resources.displayMetrics.heightPixels,
+    resources.displayMetrics.densityDpi
+)
