@@ -132,7 +132,9 @@ internal class ScreenCaptureService : Service() {
                     GlobalScope.launch(Dispatchers.IO) {
                         (createScreenshotFromBitmap(bitmap, fileName))?.let { uri ->
                             if (BeagleCore.implementation.onScreenCaptureReady != null) {
-                                launch(Dispatchers.Main) { onReady(uri) }
+                                launch(Dispatchers.Main) {
+                                    onReady(uri)
+                                }
                             }
                         }
                     }
@@ -144,11 +146,6 @@ internal class ScreenCaptureService : Service() {
                     screenshotWriter.surface,
                     DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY or DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC
                 )
-                handler.postDelayed({
-                    if (!screenshotWriter.forceTry()) {
-                        onReady(null)
-                    }
-                }, SCREENSHOT_TIMEOUT)
             }
             if (virtualDisplay?.surface == null) {
                 onReady(null)
@@ -178,11 +175,10 @@ internal class ScreenCaptureService : Service() {
                 .setAutoCancel(false)
                 .setSound(null)
                 .setSmallIcon(R.drawable.beagle_ic_recording)
-                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentTitle(text(BeagleCore.implementation.appearance.screenCaptureTexts.inProgressNotificationTitle))
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setPriority(if (isForVideo) NotificationCompat.PRIORITY_MAX else NotificationCompat.PRIORITY_MIN)
+                .setSilent(!isForVideo)
                 .apply {
                     if (isForVideo) {
                         addAction(
