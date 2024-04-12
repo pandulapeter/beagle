@@ -32,7 +32,7 @@ class BeagleDemoApplication : Application() {
                     loggers = listOf(BeagleLogger)
                 ),
                 networkLogBehavior = Behavior.NetworkLogBehavior(
-                    baseUrl = Constants.BASE_URL,
+                    baseUrl = { Constants.BASE_URL },
                     networkLoggers = listOf(BeagleOkHttpLogger)
                 ),
                 bugReportingBehavior = Behavior.BugReportingBehavior(

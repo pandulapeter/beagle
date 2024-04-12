@@ -249,7 +249,7 @@ data class Appearance(
             url: String,
             formattedTimestamp: CharSequence?,
             headers: List<String>,
-            baseUrl: String
+            baseUrl: () -> String
         ) -> Text = DEFAULT_TITLE_FORMATTER
     ) {
         companion object {
@@ -267,14 +267,14 @@ data class Appearance(
                 url: String,
                 formattedTimestamp: CharSequence?,
                 headers: List<String>,
-                baseUrl: String
+                baseUrl: () -> String
             ) -> Text =
                 { isOutgoing,
                   url,
                   formattedTimestamp,
                   headers,
                   baseUrl ->
-                    url.replace(baseUrl, "").let { formattedUrl ->
+                    url.replace(baseUrl(), "").let { formattedUrl ->
                         (if (isOutgoing) "↑" else "↓").let { prefix ->
                             formattedTimestamp?.let { formattedTimestamp -> "$prefix [$formattedTimestamp] $formattedUrl" } ?: "$prefix $formattedUrl"
                         }

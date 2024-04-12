@@ -120,12 +120,12 @@ data class Behavior(
     data class NetworkLogBehavior(
         val maximumLogCount: Int = DEFAULT_MAXIMUM_LOG_COUNT,
         val networkLoggers: List<BeagleNetworkLoggerContract> = DEFAULT_NETWORK_LOGGERS,
-        val baseUrl: String = DEFAULT_BASE_URL,
+        val baseUrl: () -> String = DEFAULT_BASE_URL,
         val getFileName: (timestamp: Long, id: String) -> String = { timestamp, id -> "networkLog_${DEFAULT_LOG_FILE_NAME_DATE_FORMAT.format(timestamp)}_$id" }
     ) {
         companion object {
             private const val DEFAULT_MAXIMUM_LOG_COUNT = 4096
-            private const val DEFAULT_BASE_URL = ""
+            private val DEFAULT_BASE_URL = { "" }
             private val DEFAULT_NETWORK_LOGGERS = emptyList<BeagleNetworkLoggerContract>()
         }
     }
