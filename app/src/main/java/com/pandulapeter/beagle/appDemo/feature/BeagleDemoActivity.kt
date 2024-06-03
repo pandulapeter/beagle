@@ -59,6 +59,7 @@ class BeagleDemoActivity : AppCompatActivity() {
             .start()
     }
 
+    @Deprecated("Use OnBackPressedDispatcher instead")
     override fun onBackPressed() {
         if (binding.debugMenu is FrameLayout && binding.debugMenu.visible) {
             binding.debugMenu.visible = false

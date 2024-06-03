@@ -122,6 +122,7 @@ internal class GalleryActivity : AppCompatActivity(), DeleteConfirmationDialogFr
         }
     }
 
+    @Deprecated("Use OnBackPressedDispatcher instead")
     override fun onBackPressed() {
         if (viewModel.isInSelectionMode.value == true) {
             viewModel.exitSelectionMode()
