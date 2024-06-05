@@ -54,8 +54,17 @@ internal class DebugMenuDrawerLayout(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent) = if (isDrawerVisible(debugMenuView) || ev.action != MotionEvent.ACTION_DOWN) {
         super.onTouchEvent(ev)
-    } else (((width - 2 * ViewConfiguration.get(context).scaledTouchSlop) <= ev.x) && super.onTouchEvent(ev))
-
+    } else {
+        val scaledTouchSlop = ViewConfiguration.get(context).scaledTouchSlop
+        val isTouchOnEdge = if (layoutDirection == View.LAYOUT_DIRECTION_LTR) {
+            // Checking for touch on the right edge for LTR
+            (width - 2 * scaledTouchSlop) <= ev.x
+        } else {
+            // Checking for touch on the left edge for RTL
+            ev.x <= 2 * scaledTouchSlop
+        }
+        isTouchOnEdge && super.onTouchEvent(ev)
+    }
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         setDrawerLockMode(if (isDrawerLocked) LOCK_MODE_LOCKED_CLOSED else LOCK_MODE_UNDEFINED)
