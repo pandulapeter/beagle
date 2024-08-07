@@ -3,12 +3,13 @@ package com.pandulapeter.beagle.logCrash.implementation
 import android.app.Application
 import android.content.Intent
 import android.os.Process
+import android.util.Log
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.commonBase.currentTimestamp
 import com.pandulapeter.beagle.commonBase.randomId
 import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
-import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.util.model.RestoreModel
+import com.pandulapeter.beagle.core.util.model.SerializableCrashLogEntry
 import com.pandulapeter.beagle.core.util.restoreModelAdapter
 import com.pandulapeter.beagle.core.view.bugReport.BugReportActivity
 import kotlin.system.exitProcess
@@ -42,7 +43,9 @@ internal class ExceptionHandler private constructor(
                 ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
             tryToCallDefaultExceptionHandler(thread, exception)
-        } catch (_: Exception) {
+            Log.e("Beagle", "An uncaught exception has been thrown:", exception)
+        } catch (secondaryException: Exception) {
+            Log.e("Beagle", "An uncaught exception has been thrown:", secondaryException)
         } finally {
             killProcess()
         }
