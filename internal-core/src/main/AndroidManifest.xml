@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -11,12 +11,14 @@
             android:name=".view.gallery.GalleryActivity"
             android:exported="false"
             android:launchMode="singleTop"
+            android:theme="@style/BeagleDefaultTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".view.bugReport.BugReportActivity"
             android:exported="false"
             android:launchMode="singleTop"
+            android:theme="@style/BeagleDefaultTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <service

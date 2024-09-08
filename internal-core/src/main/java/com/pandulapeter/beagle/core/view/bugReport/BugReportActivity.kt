@@ -56,6 +56,9 @@ class BugReportActivity : AppCompatActivity() {
             }
         }
     }
+    private val themeResourceId by lazy {
+        intent.getIntExtra(THEME_RESOURCE_ID, -1)
+    }
 
     @Suppress("UNCHECKED_CAST")
     private val viewModel by lazy {
@@ -79,7 +82,9 @@ class BugReportActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        BeagleCore.implementation.appearance.themeResourceId?.let { setTheme(it) }
+        if (themeResourceId != -1) {
+            setTheme(themeResourceId)
+        }
         super.onCreate(savedInstanceState)
         binding = BeagleActivityBugReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -219,13 +224,16 @@ class BugReportActivity : AppCompatActivity() {
     companion object {
         private const val CRASH_LOG_ENTRY_TO_SHOW = "crashLogEntry"
         private const val RESTORE_MODEL = "restoreModel"
+        private const val THEME_RESOURCE_ID = "themeResourceId"
 
         fun newIntent(
             context: Context,
             crashLogEntryToShowJson: String = "",
-            restoreModelJson: String = ""
+            restoreModelJson: String = "",
+            themeResourceId: Int? = null,
         ) = Intent(context, BugReportActivity::class.java)
             .putExtra(CRASH_LOG_ENTRY_TO_SHOW, crashLogEntryToShowJson)
             .putExtra(RESTORE_MODEL, restoreModelJson)
+            .putExtra(THEME_RESOURCE_ID, themeResourceId)
     }
 }

@@ -50,7 +50,9 @@ private fun Context.toMaterialContext(): Context {
     return if (isMaterialTheme) {
         this
     } else {
-        ContextThemeWrapper(this, R.style.BeagleDefaultTheme)
+        ContextThemeWrapper(this, R.style.BeagleDefaultTheme).also {
+            BeagleCore.implementation.invalidateThemeOverride()
+        }
     }
 }
 

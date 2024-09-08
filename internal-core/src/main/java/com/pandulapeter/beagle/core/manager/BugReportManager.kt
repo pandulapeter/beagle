@@ -30,7 +30,12 @@ internal class BugReportManager {
 
     fun openBugReportingScreen() {
         BeagleCore.implementation.currentActivity?.run {
-            startActivity(BugReportActivity.newIntent(this))
+            startActivity(
+                BugReportActivity.newIntent(
+                    context = this,
+                    themeResourceId = BeagleCore.implementation.appearance.themeResourceId
+                )
+            )
         }
     }
 

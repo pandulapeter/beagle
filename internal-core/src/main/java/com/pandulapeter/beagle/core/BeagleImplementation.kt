@@ -96,6 +96,14 @@ class BeagleImplementation(val uiManager: UiManagerContract) : BeagleContract {
         BeagleCore.implementation = this
     }
 
+    internal fun invalidateThemeOverride() {
+        if (appearance.themeResourceId != null) {
+            appearance = appearance.copy(
+                themeResourceId = null
+            )
+        }
+    }
+
     override fun initialize(
         application: Application,
         appearance: Appearance,

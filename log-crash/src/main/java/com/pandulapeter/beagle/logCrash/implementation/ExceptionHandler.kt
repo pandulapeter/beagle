@@ -39,7 +39,8 @@ internal class ExceptionHandler private constructor(
                             networkLogs = networkLogsToRestore,
                             lifecycleLogs = lifecycleLogsToRestore
                         )
-                    )
+                    ),
+                    themeResourceId = BeagleCore.implementation.appearance.themeResourceId
                 ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
             tryToCallDefaultExceptionHandler(thread, exception)
