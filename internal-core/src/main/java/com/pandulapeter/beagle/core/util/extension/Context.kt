@@ -11,6 +11,7 @@ import androidx.core.content.FileProvider
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.common.configuration.Text
 import com.pandulapeter.beagle.commonBase.currentTimestamp
+import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.list.delegates.LifecycleLogListDelegate
 import com.pandulapeter.beagle.core.util.crashLogEntryAdapter
 import com.pandulapeter.beagle.core.util.getFolder
@@ -40,7 +41,18 @@ internal fun Context.unregisterSensorEventListener(sensorEventListener: SensorEv
     (getSystemService(Context.SENSOR_SERVICE) as? SensorManager?)?.unregisterListener(sensorEventListener)
 }
 
-fun Context.applyTheme() = BeagleCore.implementation.appearance.themeResourceId?.let { ContextThemeWrapper(this, it) } ?: this
+fun Context.applyTheme() = (BeagleCore.implementation.appearance.themeResourceId?.let { ContextThemeWrapper(this, it) } ?: this).toMaterialContext()
+
+private fun Context.toMaterialContext(): Context {
+    val typedArray = theme.obtainStyledAttributes(intArrayOf(com.google.android.material.R.attr.isMaterialTheme))
+    val isMaterialTheme = typedArray.getBoolean(0, false)
+    typedArray.recycle()
+    return if (isMaterialTheme) {
+        this
+    } else {
+        ContextThemeWrapper(this, R.style.BeagleDefaultTheme)
+    }
+}
 
 internal fun Context.getUriForFile(file: File) = FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".beagle.fileProvider", file)
 

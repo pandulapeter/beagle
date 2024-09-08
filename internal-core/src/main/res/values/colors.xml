@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="beagle_accent">#4F3D2F</color>
+    <color name="beagle_on_accent">#FFFFFF</color>
+</resources>

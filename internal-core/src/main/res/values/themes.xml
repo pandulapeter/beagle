@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BeagleDefaultTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/beagle_accent</item>
+        <item name="colorOnPrimary">@color/beagle_on_accent</item>
+        <item name="colorControlActivated">@color/beagle_accent</item>
+    </style>
+
+</resources>

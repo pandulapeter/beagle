@@ -15,4 +15,5 @@
     android:paddingBottom="@dimen/beagle_item_vertical_margin"
     android:textColor="?android:attr/textColorPrimary"
     app:switchPadding="@dimen/beagle_content_padding"
+    app:trackTint="?colorControlHighlight"
     tools:text="Text" />
