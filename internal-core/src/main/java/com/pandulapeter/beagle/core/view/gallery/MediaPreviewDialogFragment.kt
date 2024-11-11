@@ -7,8 +7,9 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import coil.load
-import coil.request.ImageRequest
+import coil3.load
+import coil3.request.ImageRequest
+import coil3.target.ImageViewTarget
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.R
 import com.pandulapeter.beagle.core.databinding.BeagleDialogFragmentMediaPreviewBinding
@@ -63,7 +64,7 @@ class MediaPreviewDialogFragment : DialogFragment(), DeleteConfirmationDialogFra
                         BeagleCore.implementation.videoThumbnailLoader.execute(
                             ImageRequest.Builder(context)
                                 .data(context.getScreenCapturesFolder().resolve(fileName))
-                                .target(this@run)
+                                .target(ImageViewTarget(this@run))
                                 .listener { _, _ -> setDialogSizeFromImage(this@run) }
                                 .build()
                         )

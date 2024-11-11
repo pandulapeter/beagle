@@ -3,7 +3,8 @@ package com.pandulapeter.beagle.core.view.gallery.list
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
-import coil.request.ImageRequest
+import coil3.request.ImageRequest
+import coil3.target.ImageViewTarget
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.databinding.BeagleItemGalleryVideoBinding
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
@@ -56,7 +57,7 @@ internal class VideoViewHolder private constructor(
                 BeagleCore.implementation.videoThumbnailLoader.execute(
                     ImageRequest.Builder(context)
                         .data(context.getScreenCapturesFolder().resolve(uiModel.fileName))
-                        .target(binding.beagleMediaView.imageView)
+                        .target(ImageViewTarget(binding.beagleMediaView.imageView))
                         .build()
                 )
             }

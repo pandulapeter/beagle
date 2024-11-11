@@ -3,7 +3,8 @@ package com.pandulapeter.beagle.core.view.bugReport.list.gallery
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
-import coil.request.ImageRequest
+import coil3.request.ImageRequest
+import coil3.target.ImageViewTarget
 import com.pandulapeter.beagle.BeagleCore
 import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportGalleryVideoBinding
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
@@ -54,7 +55,7 @@ internal class BugReportVideoViewHolder private constructor(
                     BeagleCore.implementation.videoThumbnailLoader.execute(
                         ImageRequest.Builder(context)
                             .data(context.getScreenCapturesFolder().resolve(uiModel.fileName))
-                            .target(imageView)
+                            .target(ImageViewTarget(imageView))
                             .build()
                     )
                 }

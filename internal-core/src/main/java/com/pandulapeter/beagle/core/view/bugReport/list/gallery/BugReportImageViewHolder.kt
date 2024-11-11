@@ -3,7 +3,7 @@ package com.pandulapeter.beagle.core.view.bugReport.list.gallery
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import coil3.load
 import com.pandulapeter.beagle.core.databinding.BeagleItemBugReportGalleryImageBinding
 import com.pandulapeter.beagle.core.util.extension.getScreenCapturesFolder
 import com.pandulapeter.beagle.utils.consume

@@ -8,7 +8,7 @@ android {
     }
     lint.abortOnError false
     kotlin{
-        jvmToolchain(17)
+        jvmToolchain(21)
     }
     publishing {
         singleVariant("release") {
