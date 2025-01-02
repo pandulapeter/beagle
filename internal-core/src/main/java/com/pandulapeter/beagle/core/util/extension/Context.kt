@@ -87,7 +87,7 @@ private fun Context.createPersistedLogFile(fileName: String) = File(getPersisted
 
 internal suspend fun readLogEntryFromLogFile(file: File): SerializableLogEntry? = withContext(Dispatchers.IO) {
     try {
-        val logEntry: SerializableLogEntry?
+        var logEntry: SerializableLogEntry? = null
         FileReader(file).run {
             logEntry = try {
                 logEntryAdapter.fromJson(readText())
@@ -119,7 +119,7 @@ internal suspend fun Context.createPersistedLogFile(logEntry: SerializableLogEnt
 
 internal suspend fun readCrashLogEntryFromLogFile(file: File): SerializableCrashLogEntry? = withContext(Dispatchers.IO) {
     try {
-        val crashLogEntry: SerializableCrashLogEntry?
+        var crashLogEntry: SerializableCrashLogEntry? = null
         FileReader(file).run {
             crashLogEntry = try {
                 crashLogEntryAdapter.fromJson(readText())
