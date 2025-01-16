@@ -341,10 +341,10 @@ Don't hesitate to open a new issue if you find a bug or if you have any question
 </details>
 
 <details>
-<summary>Buy me a beer</summary>
+<summary>Support the development</summary>
 <br/>
 
-If you found my work useful and are considering a small donation, the About section of the [the showcase app](https://play.google.com/store/apps/details?id=com.pandulapeter.beagle) has an option for you to do so. Thanks in advance!
+If you found my work useful, please consider making a donation via [Buy Me a Coffee](https://buymeacoffee.com/pandulapeter) or [GitHub Sponsors](https://github.com/sponsors/pandulapeter). Thanks in advance!
 </details>
 
 <details>
