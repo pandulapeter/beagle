@@ -81,7 +81,7 @@ internal class LocalStorageManager(context: Context) {
 
         class StringSet(preferences: SharedPreferences, mainKey: kotlin.String) : SharedPreferencesMap<Set<kotlin.String>?>(preferences, mainKey) {
 
-            override fun getFinal(key: kotlin.String) = preferences.getStringSet(key, null).orEmpty()
+            override fun getFinal(key: kotlin.String): Set<kotlin.String>? = preferences.getStringSet(key, null)
 
             override fun setFinal(key: kotlin.String, value: Set<kotlin.String>?) = preferences.edit().putStringSet(key, value).apply()
         }
