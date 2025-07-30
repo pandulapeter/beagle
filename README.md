@@ -56,7 +56,7 @@ So, for example, if you prefer the Drawer UI, something like the following needs
 ```groovy
 dependencies {
     …
-    def beagleVersion = "2.9.9"
+    def beagleVersion = "2.9.10"
     debugImplementation "io.github.pandulapeter.beagle:ui-drawer:$beagleVersion"
     releaseImplementation "io.github.pandulapeter.beagle:noop:$beagleVersion"
 }
@@ -64,7 +64,7 @@ dependencies {
 
 The latest version is:
 
-[![](https://maven-badges.herokuapp.com/maven-central/io.github.pandulapeter.beagle/ui-drawer/badge.svg?style=flat)](https://repo1.maven.org/maven2/io/github/pandulapeter/beagle/)
+[![](https://maven-badges.herokuapp.com/sonatype-central/io.github.pandulapeter.beagle/ui-drawer/badge.svg?style=flat)](https://repo1.maven.org/maven2/io/github/pandulapeter/beagle/)
 
 **Note**: In case of the drawer UI, if you have overwritten the `Activity`'s `onBackPressed()` method, you might notice that the default back navigation handling does not always work as expected. To fix this, in every `Activity`'s `onBackPressed()` you should check that `Beagle.hide()` returns false before doing any other checks or calling the super implementation.
 
