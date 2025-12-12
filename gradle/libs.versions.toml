@@ -2,24 +2,24 @@
 androidx-annotation = "1.9.1" # https://developer.android.com/jetpack/androidx/releases/annotation
 androidx-appcompat = "1.7.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidx-constraintlayout = "2.2.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
-androidx-lifecycle = "2.9.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidx-lifecycle = "2.10.0" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-recyclerview = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/recyclerview
 coil = "3.3.0" # https://github.com/coil-kt/coil/releases
-gradle = "8.11.1" # https://developer.android.com/studio/releases/gradle-plugin
+gradle = "8.13.2" # https://developer.android.com/studio/releases/gradle-plugin
 kotlin-coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlin-gradle = "2.2.0" # https://kotlinlang.org/docs/releases.html#release-details
-kotlin-ksp = "2.2.0-2.0.2" # https://github.com/google/ksp/releases
+kotlin-gradle = "2.2.21" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin-ksp = "2.3.3" # https://github.com/google/ksp/releases
 square-moshi = "1.15.2" # https://github.com/square/moshi/tags
-square-okhttp = "5.1.0" # https://github.com/square/okhttp/tags
+square-okhttp = "5.3.2" # https://github.com/square/okhttp/tags
 
 # The next dependency is only used for publishing
 nexus = "2.0.0" # https://github.com/gradle-nexus/publish-plugin/releases
 
 # The dependencies below are used only in the demo app
 androidx-multidex = "2.0.1" # https://developer.android.com/jetpack/androidx/releases/multidex
-androidx-splashscreen = "1.0.1" # https://developer.android.com/jetpack/androidx/releases/core
-google-material = "1.12.0" # https://github.com/material-components/material-components-android/releases
-koin = "4.1.0" # https://github.com/InsertKoinIO/koin/tags
+androidx-splashscreen = "1.2.0" # https://developer.android.com/jetpack/androidx/releases/core
+google-material = "1.13.0" # https://github.com/material-components/material-components-android/releases
+koin = "4.1.1" # https://github.com/InsertKoinIO/koin/tags
 square-leakcanary = "2.14" # https://square.github.io/leakcanary/changelog/
 square-retrofit = "3.0.0" # https://github.com/square/retrofit/tags
 
