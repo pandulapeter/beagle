@@ -22,6 +22,9 @@ internal class DrawerUiManager : UiManagerContract, DrawerLayout.DrawerListener 
     }
 
     override fun createOverlayLayout(activity: FragmentActivity, overlayFragment: Fragment) = InternalDebugMenuView(activity).let { drawer ->
+        // Detach the callback from any previous Activity's dispatcher before re-registering it, otherwise
+        // the singleton callback keeps accumulating references to destroyed Activities (leak on recreation).
+        onBackPressedCallback.remove()
         activity.onBackPressedDispatcher.addCallback(activity, onBackPressedCallback)
         DebugMenuDrawerLayout(
             context = activity,
