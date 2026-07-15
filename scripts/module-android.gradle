@@ -6,7 +6,7 @@ android {
         minSdkVersion libraryMinimumSdkVersion
         targetSdkVersion libraryTargetSdkVersion
     }
-    lint.abortOnError false
+    lint.abortOnError = false
     kotlin{
         jvmToolchain(21)
     }

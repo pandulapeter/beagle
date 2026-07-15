@@ -8,7 +8,7 @@ apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 android {
     namespace = "com.pandulapeter.beagle.core"
-    buildFeatures.viewBinding true
+    buildFeatures.viewBinding = true
 }
 
 dependencies {

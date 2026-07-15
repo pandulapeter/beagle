@@ -35,31 +35,31 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            shrinkResources false
-            multiDexEnabled true
+            shrinkResources = false
+            multiDexEnabled = true
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
-            signingConfig signingConfigs.internal
+            signingConfig = signingConfigs.internal
         }
         internal {
             debuggable false
             minifyEnabled true
-            shrinkResources true
-            multiDexEnabled false
+            shrinkResources = true
+            multiDexEnabled = false
             applicationIdSuffix ".internal"
             versionNameSuffix "-internal"
-            signingConfig signingConfigs.internal
+            signingConfig = signingConfigs.internal
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             matchingFallbacks = ["debug"]
         }
         release {
             debuggable false
             minifyEnabled true
-            shrinkResources true
-            multiDexEnabled false
+            shrinkResources = true
+            multiDexEnabled = false
             applicationIdSuffix ".release"
             versionNameSuffix "-release"
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
@@ -87,7 +87,7 @@ android {
         }
     }
     lint {
-        abortOnError false
+        abortOnError = false
     }
 }
 
