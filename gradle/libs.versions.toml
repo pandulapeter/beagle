@@ -1,16 +1,16 @@
 [versions]
 androidx-annotation = "1.10.0" # https://developer.android.com/jetpack/androidx/releases/annotation
-androidx-appcompat = "1.7.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidx-constraintlayout = "2.2.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
+androidx-appcompat = "1.8.0" # https://developer.android.com/jetpack/androidx/releases/appcompat
+androidx-constraintlayout = "2.2.2" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-lifecycle = "2.11.0" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-recyclerview = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/recyclerview
-coil = "3.5.0" # https://github.com/coil-kt/coil/releases
-gradle = "8.13.2" # https://developer.android.com/studio/releases/gradle-plugin
+coil = "3.6.1" # https://github.com/coil-kt/coil/releases
+gradle = "9.3.2" # https://developer.android.com/studio/releases/gradle-plugin
 kotlin-coroutines = "1.11.0" # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlin-gradle = "2.3.21" # https://kotlinlang.org/docs/releases.html#release-details
-kotlin-ksp = "2.3.10" # https://github.com/google/ksp/releases
+kotlin-gradle = "2.4.10" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin-ksp = "2.3.11" # https://github.com/google/ksp/releases
 square-moshi = "1.15.2" # https://github.com/square/moshi/tags
-square-okhttp = "5.4.0" # https://github.com/square/okhttp/tags
+square-okhttp = "5.5.0" # https://github.com/square/okhttp/tags
 
 # The next dependency is only used for publishing
 nexus = "2.0.0" # https://github.com/gradle-nexus/publish-plugin/releases
@@ -39,6 +39,7 @@ coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = 
 coil-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gradle-legacy-kapt = { module = "com.android.legacy-kapt:com.android.legacy-kapt.gradle.plugin", version.ref = "gradle" }
 koin = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-gradle" }

@@ -3,8 +3,8 @@ buildscript {
         libraryGroup = "io.github.pandulapeter.beagle"
         libraryVersion = "2.9.13"
         libraryMinimumSdkVersion = 24
-        libraryCompileSdkVersion = 36
-        libraryTargetSdkVersion = 35
+        libraryCompileSdkVersion = 37
+        libraryTargetSdkVersion = 37
         libraryVersionCode = 1
     }
     repositories {
@@ -13,6 +13,7 @@ buildscript {
     }
     dependencies {
         classpath libs.gradle
+        classpath libs.gradle.legacy.kapt
         classpath libs.kotlin.gradle
     }
 }

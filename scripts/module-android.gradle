@@ -1,10 +1,8 @@
-apply plugin: "kotlin-android"
-
 android {
-    compileSdkVersion libraryCompileSdkVersion
+    compileSdk = libraryCompileSdkVersion
     defaultConfig {
-        minSdkVersion libraryMinimumSdkVersion
-        targetSdkVersion libraryTargetSdkVersion
+        minSdk = libraryMinimumSdkVersion
+        targetSdk = libraryTargetSdkVersion
     }
     lint.abortOnError = false
     kotlin{
